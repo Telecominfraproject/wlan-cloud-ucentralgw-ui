@@ -1,58 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect } from 'react';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import './scss/style.scss';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
-}
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
+
+const TheLayout = React.lazy(() => import('./containers/TheLayout'));
+const Login = React.lazy(() => import('./views/pages/Login'));
+const Page404 = React.lazy(() => import('./views/pages/Page404'));
+const Page500 = React.lazy(() => import('./views/pages/Page500'));
+
+const App = () => {
+    const isLoggedIn  = useSelector(state => state.connected);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('access_token');
+        if (token !== undefined && token !== null) {
+            dispatch({type: 'set', connected: true});
+        }
+    }, [dispatch]);
+
+    return (
+        <HashRouter>
+                <React.Suspense fallback={loading}>
+                <Switch>
+                    <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
+                    <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
+                    <Route path="/" name="Devices" render={props => isLoggedIn ?  <TheLayout {...props}/> : <Login {...props}/>} />
+                </Switch>
+                </React.Suspense>
+            </HashRouter>
+    );
+};
 
 export default App;
