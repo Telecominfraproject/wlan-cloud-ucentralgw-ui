@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     CCard,
     CCardHeader,
@@ -13,17 +13,36 @@ import {
     CButton
 } from '@coreui/react'
 import { useSelector } from 'react-redux';
-import { cleanTimestamp} from '../utils/helper';
 
-const DeviceConfiguration = () => {
-    const [collapse, setCollapse] = useState(false)
+const DeviceStatus = () => {
     let device = useSelector(state => state.selectedDevice);
 
-    const toggle = (e) => {
-        setCollapse(!collapse);
-        e.preventDefault();
+    if(device){
+        let barColor = device.connected ? 'gradient-success' : 'gradient-warning';
+
+        return (
+            <CWidgetProgressIcon
+                header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
+                text="Device Health"
+                value={sanityLevel ?? 100}
+                color={barColor}
+                inverse
+            >
+                <CDropdown>
+                    {/* Need inline styling because CDropdownToggle does not take into account the
+                    parent's inverse value*/}
+                    <CDropdownToggle style={{color: 'white'}}>
+                        <CIcon content={cilSettings}/>
+                    </CDropdownToggle>
+                    <CDropdownMenu placement="bottom-end">
+                        <CDropdownItem>View Logs</CDropdownItem>
+                    </CDropdownMenu>
+                </CDropdown>
+            </CWidgetProgressIcon>
+    );
     }
 
+    
     if(device){
         return (
             <CCard>
@@ -146,4 +165,4 @@ const DeviceConfiguration = () => {
     );
 }
 
-export default DeviceConfiguration
+export default DeviceStatus;
