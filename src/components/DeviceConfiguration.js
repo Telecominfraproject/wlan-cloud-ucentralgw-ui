@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { cleanTimestamp} from '../utils/helper';
 
 const DeviceConfiguration = () => {
-    const [collapse, setCollapse] = useState(false)
+    const [collapse, setCollapse] = useState(false);
     let device = useSelector(state => state.selectedDevice);
 
     const toggle = (e) => {

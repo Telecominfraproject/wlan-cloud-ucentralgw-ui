@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons'
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
+import { cleanTimestamp } from '../utils/helper';
 
 const DeviceList = () => {
   const [devices, setDevices] = useState([]);
@@ -21,6 +22,7 @@ const DeviceList = () => {
   //Loading the devices
   const refreshDevices = useCallback(() => {
     const token = getToken();
+    setLoading(true);
 
     const headers = {
         'Accept': 'application/json',
@@ -63,10 +65,10 @@ const DeviceList = () => {
       })
       .catch(error => {
           setDevices(devices);
-          setLoading(false);
           console.log(error.response);
       });
     }
+    setLoading(false);
   }
 
   //Function called from the button on the table so that a user can see more details
@@ -99,13 +101,21 @@ const DeviceList = () => {
 const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, lastRefresh }) => {
   const columns = [
     { key: 'serialNumber'},
-    { key: 'UUID'},
-    { key: 'lastConfigurationChange'},
-    { key: 'lastConfigurationDownload'},
+    { key: 'UUID', label: 'Config Id'},
+    { 
+      key: 'lastConfigurationChange'
+      ,filter: false
+      ,label: 'Configuration Change'
+    },
+    { 
+      key: 'lastConfigurationDownload'
+      ,filter: false 
+      ,label: 'Configuration Download'
+    },
     { key: 'deviceType'},
     { key: 'connected'},
-    { key: 'txBytes'},
-    { key: 'rxBytes'},
+    { key: 'txBytes', filter: false },
+    { key: 'rxBytes', filter: false },
     { key: 'ipAddress'},
     {
       key: 'show_details',
@@ -146,18 +156,17 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
       sorter
       pagination
       loading = {loading}
-      //loadingSlot
       scopedSlots = {{
         'lastConfigurationChange':
         (item)=>(
           <td>
-            {item.lastConfigurationChange.replace('T', ' ').replace('Z', '')}
+            {cleanTimestamp(item.lastConfigurationChange)}
           </td>
         ),
         'lastConfigurationDownload':
         (item)=>(
           <td>
-            {item.lastConfigurationDownload.replace('T', ' ').replace('Z', '')}
+            {cleanTimestamp(item.lastConfigurationDownload)}
           </td>
         ),
         'connected':
