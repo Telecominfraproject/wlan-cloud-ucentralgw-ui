@@ -4,15 +4,16 @@ import {
     CCollapse,
     CButton,
     CDataTable,
-    CCard
+    CCard,
+    CCardBody
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilChevronBottom, cilChevronTop } from '@coreui/icons';
 import { useSelector } from 'react-redux';
 import { cleanTimestamp } from '../utils/helper';
 
 const DeviceHealth = () => {
     const [collapse, setCollapse] = useState(false);
+    const [details, setDetails] = useState([]);
     let selectedDevice = useSelector(state => state.selectedDevice);
     let sanityLevel;
     let healthChecks;
@@ -23,10 +24,31 @@ const DeviceHealth = () => {
         e.preventDefault();
     }
 
+    //Function called from the button on the table so that a user can see more details
+    const toggleDetails = (index) => {
+        const position = details.indexOf(index)
+        let newDetails = details.slice()
+        
+        if (position !== -1) {
+            newDetails.splice(position, 1)
+        }
+        else {
+            newDetails = [...details, index]
+        }
+        setDetails(newDetails)
+    }
+
     const columns = [
         { key: 'UUID', label: 'Config. Id'},
         { key: 'recorded'},
-        { key: 'sanity'}
+        { key: 'sanity'},
+        {
+            key: 'show_details',
+            label: '',
+            _style: { width: '1%' },
+            sorter: false,
+            filter: false
+          }
     ];
 
     if(selectedDevice && selectedDevice.healthChecks && selectedDevice.healthChecks.length > 0){
@@ -40,42 +62,72 @@ const DeviceHealth = () => {
             barColor = "gradient-danger";
     }
     return (
-            <CWidgetProgress
-                header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
-                text="Device Health"
-                value={sanityLevel ?? 100}
-                color={barColor}
-                inverse
-                footer={
-                    <div>
-                        <CCollapse show={collapse}>
-                            <CCard>
-                            <div className="overflow-auto" style={{height: '200px'}}>
-                                <CDataTable
-                                    items={healthChecks ?? [] }
-                                    fields={columns}
-                                    style={{color: 'white'}}
-                                    sorterValue={{column: 'recorded', desc:'true'}}
-                                    scopedSlots = {{
-                                        'recorded':
-                                        (item)=>(
-                                          <td>
-                                            {cleanTimestamp(item.recorded)}
-                                          </td>
-                                        ),
-                                    }}
-                                >
-                                </CDataTable>
-                            </div>
-                            </CCard>
-                        </CCollapse>
-                        <CButton show={collapse} color="transparent" onClick = { toggle } block>
-                            <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} style={{color: 'white'}} size="l"/>
-                        </CButton>
-                    </div>
-                }
-            >
-            </CWidgetProgress>
+        <CWidgetProgress
+            header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
+            text="Device Health"
+            value={sanityLevel ?? 100}
+            color={barColor}
+            inverse
+            footer={
+                <div>
+                    <CCollapse show={collapse}>
+                        <CCard>
+                        <div className="overflow-auto" style={{height: '200px'}}>
+                            <CDataTable
+                                items={healthChecks ?? [] }
+                                fields={columns}
+                                style={{color: 'white'}}
+                                sorterValue={{column: 'recorded', desc:'true'}}
+                                scopedSlots = {{
+                                    'recorded':
+                                    (item)=>(
+                                        <td>
+                                        {cleanTimestamp(item.recorded)}
+                                        </td>
+                                    ),
+                                    'show_details':
+                                    (item, index)=>{
+                                        if(item.sanity === 195){
+                                            return (<></>);
+                                        }
+                                        return (
+                                            <td className="py-2">
+                                                <CButton
+                                                color="primary"
+                                                variant="outline"
+                                                shape="square"
+                                                size="sm"
+                                                onClick={()=>{toggleDetails(index)}}
+                                                >
+                                                {details.includes(index) ? 'Hide' : 'Show'}
+                                                </CButton>
+                                            </td>
+                                        );
+                                    },
+                                    'details':
+                                        (item, index)=>{
+                                            return (
+                                                <CCollapse show={details.includes(index)}>
+                                                    <CCardBody>
+                                                        <h5>Details</h5>
+                                                        <p className="text-muted">item.values</p>
+                                                    </CCardBody>
+                                                </CCollapse>
+                                            );
+                                    }
+                                }}
+                            >
+                            </CDataTable>
+                        </div>
+                        </CCard>
+                    </CCollapse>
+                    <CButton show={collapse} color="transparent" onClick = { toggle } block>
+                        <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} style={{color: 'white'}} size="l"/>
+                    </CButton>
+                </div>
+            }
+        >
+        </CWidgetProgress>
     );
 }
 
