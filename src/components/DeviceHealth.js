@@ -87,7 +87,7 @@ const DeviceHealth = () => {
                                     ),
                                     'show_details':
                                     (item, index)=>{
-                                        if(item.sanity === 195){
+                                        if(item.sanity === 100){
                                             return (<></>);
                                         }
                                         return (
