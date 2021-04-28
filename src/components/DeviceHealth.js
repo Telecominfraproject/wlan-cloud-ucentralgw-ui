@@ -25,7 +25,7 @@ const DeviceHealth = () => {
 
     const columns = [
         { key: 'UUID', label: 'Config. Id'},
-        { key: 'recorded', sorterValue: 'descending'},
+        { key: 'recorded'},
         { key: 'sanity'}
     ];
 
@@ -55,6 +55,7 @@ const DeviceHealth = () => {
                                     items={healthChecks ?? [] }
                                     fields={columns}
                                     style={{color: 'white'}}
+                                    sorterValue={{column: 'recorded', desc:'true'}}
                                     scopedSlots = {{
                                         'recorded':
                                         (item)=>(
