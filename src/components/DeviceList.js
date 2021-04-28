@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons'
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
-import { cleanTimestamp } from '../utils/helper';
+import { cleanTimestamp, cleanBytesString } from '../utils/helper';
 
 const DeviceList = () => {
   const [devices, setDevices] = useState([]);
@@ -158,17 +158,41 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
       loading = {loading}
       scopedSlots = {{
         'lastConfigurationChange':
-        (item)=>(
-          <td>
-            {cleanTimestamp(item.lastConfigurationChange)}
-          </td>
-        ),
+          (item)=>(
+            <td>
+              {cleanTimestamp(item.lastConfigurationChange)}
+            </td>
+          ),
         'lastConfigurationDownload':
-        (item)=>(
-          <td>
-            {cleanTimestamp(item.lastConfigurationDownload)}
-          </td>
-        ),
+          (item)=>(
+            <td>
+              {cleanTimestamp(item.lastConfigurationDownload)}
+            </td>
+          ),
+        'txBytes':
+          (item)=>(
+            <td>
+              {cleanBytesString(item.txBytes)}
+            </td>
+          ),
+        'rxBytes':
+          (item)=>(
+            <td>
+              {cleanBytesString(item.rxBytes)}
+            </td>
+          ),
+        'ipAddress':
+          (item)=>(
+            <td>
+              {item.ipAddress ?? 'N/A'}
+            </td>
+          ),
+        'lastConfigurationDownload':
+          (item)=>(
+            <td>
+              {cleanTimestamp(item.lastConfigurationDownload)}
+            </td>
+          ),
         'connected':
           (item)=>(
             <td>
@@ -211,10 +235,6 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
                       Device Details
                     </CButton>
                   </CLink>
-                  
-                  <CButton size="sm" color="danger" className="ml-1">
-                    Reboot
-                  </CButton>
                 </CCardBody>
               </CCollapse>
             )
