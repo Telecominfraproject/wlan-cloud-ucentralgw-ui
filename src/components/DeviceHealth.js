@@ -85,6 +85,12 @@ const DeviceHealth = () => {
                                         {cleanTimestamp(item.recorded)}
                                         </td>
                                     ),
+                                    'sanity':
+                                    (item)=>(
+                                        <td>
+                                            {`${item.sanity}%`}
+                                        </td>
+                                    ),
                                     'show_details':
                                     (item, index)=>{
                                         if(item.sanity === 100){
