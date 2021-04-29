@@ -72,7 +72,7 @@ const DeviceHealth = () => {
                 <div>
                     <CCollapse show={collapse}>
                         <CCard>
-                        <div className="overflow-auto" style={{height: '200px'}}>
+                        <div className="overflow-auto" style={{height: '250px'}}>
                             <CDataTable
                                 items={healthChecks ?? [] }
                                 fields={columns}
@@ -116,7 +116,7 @@ const DeviceHealth = () => {
                                                 <CCollapse show={details.includes(index)}>
                                                     <CCardBody>
                                                         <h5>Details</h5>
-                                                        <p className="text-muted">item.values</p>
+                                                        <div><pre>{JSON.stringify(item.values, null, 4)}</pre></div>
                                                     </CCardBody>
                                                 </CCollapse>
                                             );
