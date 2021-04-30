@@ -163,12 +163,6 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
               {cleanTimestamp(item.lastConfigurationChange)}
             </td>
           ),
-        'lastConfigurationDownload':
-          (item)=>(
-            <td>
-              {cleanTimestamp(item.lastConfigurationDownload)}
-            </td>
-          ),
         'txBytes':
           (item)=>(
             <td>
