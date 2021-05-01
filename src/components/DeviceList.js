@@ -53,22 +53,28 @@ const DeviceList = () => {
         'Authorization': `Bearer ${token}`
     };
 
+    const promises = [];
+
     for(let i = 0; i< devices.length; i++){
-      axiosInstance.get(`/device/${devices[i].serialNumber}/status`, {
-        headers: headers
-      })
-      .then((response) => {
-          //Merging the device object in the array with the one we received from the API
-          devices[i] = {...devices[i], ...response.data};
-          devices[i].ipAddress = devices[i].ipAddress.substr(0, devices[i].ipAddress.indexOf(':'));
-          setDevices(devices);
-      })
-      .catch(error => {
-          setDevices(devices);
-          console.log(error.response);
-      });
+      promises.push(
+        axiosInstance.get(`/device/${devices[i].serialNumber}/status`, {
+          headers: headers
+        })
+        .then((response) => {
+            devices[i] = {...devices[i], ...response.data};
+            devices[i].ipAddress = devices[i].ipAddress.substr(0, devices[i].ipAddress.indexOf(':'));
+        })
+        .catch(error => {
+            console.log(error.response);
+        })
+      );
     }
-    setLoading(false);
+
+    //Waiting for all requests to finish before setting the device array
+    Promise.all(promises).then(() =>{
+      setDevices(devices);
+      setLoading(false);
+    });
   }
 
   //Function called from the button on the table so that a user can see more details
