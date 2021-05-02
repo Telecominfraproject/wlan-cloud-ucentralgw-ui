@@ -23,6 +23,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const onKeyDown = (event) => {
+    if(event.code === 'Enter' && formValidation()){
+      SignIn({ userId, password });
+    }
+  };
 
   const SignIn = (credentials) => {
     axiosInstance.post('/oauth2', credentials)
@@ -33,7 +39,7 @@ const Login = () => {
     .catch(error => {
         console.log(error.response);
     });
-  }
+  };
   
   const formValidation = () => {
       if (userId.trim() === '' || password.trim() === ''){
@@ -50,7 +56,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onKeyDown = { onKeyDown }>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
                     <CInputGroup className="mb-3">
