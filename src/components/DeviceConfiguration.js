@@ -127,7 +127,7 @@ const DeviceConfiguration = () => {
                             color="primary"
                             onClick={toggle}
                             className={'mb-1'}
-                            >More details</CButton>
+                            >{collapse ? 'Hide details' : 'Show Details'}</CButton>
                         </CCardFooter>
                     </CForm>
                 </CCardBody>
