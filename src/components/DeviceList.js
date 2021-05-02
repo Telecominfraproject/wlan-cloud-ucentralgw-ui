@@ -113,11 +113,7 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
       ,filter: false
       ,label: 'Configuration Change'
     },
-    { 
-      key: 'lastConfigurationDownload'
-      ,filter: false 
-      ,label: 'Configuration Download'
-    },
+    { key: 'firmware', filter: false },
     { key: 'deviceType'},
     { key: 'connected'},
     { key: 'txBytes', filter: false },
@@ -158,6 +154,7 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
       columnFilter
       itemsPerPageSelect
       itemsPerPage={10}
+      border
       hover
       sorter
       pagination
@@ -185,12 +182,6 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
           (item)=>(
             <td>
               {item.ipAddress ?? 'N/A'}
-            </td>
-          ),
-        'lastConfigurationDownload':
-          (item)=>(
-            <td>
-              {cleanTimestamp(item.lastConfigurationDownload)}
             </td>
           ),
         'connected':
