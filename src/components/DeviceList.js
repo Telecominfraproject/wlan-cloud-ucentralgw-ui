@@ -5,13 +5,19 @@ import {
   CDataTable,
   CCollapse,
   CButton,
-  CLink
+  CLink,
+  CCard,
+  CCardHeader
 } from '@coreui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync } from '@fortawesome/free-solid-svg-icons'
+import { faSync, faInfo } from '@fortawesome/free-solid-svg-icons'
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 import { cleanTimestamp, cleanBytesString } from '../utils/helper';
+import iotIcon from '../assets/icons/iot.png'
+import internetSwitch from '../assets/icons/networkswitch.png';
+import { cilRouter } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 
 const DeviceList = () => {
   const [devices, setDevices] = useState([]);
@@ -114,8 +120,8 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
       ,label: 'Configuration Change'
     },
     { key: 'firmware', filter: false },
-    { key: 'deviceType'},
-    { key: 'connected'},
+    { key: 'deviceType', filter: false, sorter: false},
+    { key: 'connected', _style: { width: '1%' }, sorter: false},
     { key: 'txBytes', filter: false },
     { key: 'rxBytes', filter: false },
     { key: 'ipAddress'},
@@ -128,7 +134,21 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
     }
   ];
 
-  const getStatusBadge = (status)=>{
+
+  const getDeviceIcon = (deviceType) =>{
+    if(deviceType === "AP_Default"){
+      return <CIcon name="cilRouter" size="2xl"></CIcon>;
+    }
+    else if(deviceType === "IOT"){
+      return <img src={iotIcon} style={{height:'32px', width:'32px'}}/>;
+    }
+    else if(deviceType === "SWITCH"){
+      return <img src={internetSwitch} style={{height:'32px', width:'32px'}}/>;
+    }
+    return null;
+  }
+
+  const getStatusBadge = (status) => {
     if(status){
       return 'success';
     }
@@ -137,101 +157,118 @@ const DeviceListDisplay = ({ devices, refresh, toggleDetails, details, loading, 
   
   return (
     <>
-    <div className='row'>
-      <div className='col'>
-      <CButton onClick={refresh}>
-            <FontAwesomeIcon icon={faSync} color='#007bff' size="2x"/>
-        </CButton>
-      </div>
-      <div className='col'><div className='form-inline justify-content-sm-end'>
-          Last refresh : {lastRefresh}
-        </div>
-      </div>
-    </div>
-    <CDataTable
-      items={devices}
-      fields={columns}
-      columnFilter
-      itemsPerPageSelect
-      itemsPerPage={10}
-      border
-      hover
-      sorter
-      pagination
-      loading = {loading}
-      scopedSlots = {{
-        'lastConfigurationChange':
-          (item)=>(
-            <td>
-              {cleanTimestamp(item.lastConfigurationChange)}
-            </td>
-          ),
-        'txBytes':
-          (item)=>(
-            <td>
-              {cleanBytesString(item.txBytes)}
-            </td>
-          ),
-        'rxBytes':
-          (item)=>(
-            <td>
-              {cleanBytesString(item.rxBytes)}
-            </td>
-          ),
-        'ipAddress':
-          (item)=>(
-            <td>
-              {item.ipAddress ?? 'N/A'}
-            </td>
-          ),
-        'connected':
-          (item)=>(
-            <td>
-              <CBadge color={getStatusBadge(item.connected)}>
-                {item.connected ? 'Connected' : 'Not connected'}
-              </CBadge>
-            </td>
-          ),
-        'show_details':
-          (item, index)=>{
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                  onClick={()=>{toggleDetails(index)}}
-                >
-                  {details.includes(index) ? 'Hide' : 'Show'}
-                </CButton>
-              </td>
-              )
-          },
-        'details':
-            (item, index)=>{
-              return (
-              <CCollapse show={details.includes(index)}>
-                <CCardBody>
-                  <h4>
-                    {item.notes}
-                  </h4>
-                  <p className="text-muted">Last configuration change: {item.lastConfigurationChange.replace('T', ' ').replace('Z', '')}</p>
-                  <CLink 
-                    className="c-subheader-nav-link" 
-                    aria-current="page" 
-                    to={() => `/devices/${item.serialNumber}`}
-                  > 
-                    <CButton size="sm" color="info">
-                      Device Details
+      <CCard>
+        <CCardHeader>
+          <div className='row'>
+            <div className='col'>
+            <CButton onClick={refresh}>
+                  <FontAwesomeIcon icon={faSync} color='#007bff' size="2x"/>
+              </CButton>
+            </div>
+            <div className='col'><div className='form-inline justify-content-sm-end'>
+                Last refresh : {lastRefresh}
+              </div>
+            </div>
+          </div>
+        </CCardHeader>
+        <CCardBody>
+          <CDataTable
+          items={devices}
+          fields={columns}
+          itemsPerPageSelect
+          itemsPerPage={10}
+          border
+          hover
+          sorter
+          pagination
+          columnFilter
+          loading = {loading}
+          scopedSlots = {{
+            'lastConfigurationChange':
+              (item)=>(
+                <td>
+                  {cleanTimestamp(item.lastConfigurationChange)}
+                </td>
+              ),
+            'deviceType':
+              (item)=>(
+                <td style={{textAlign: 'center'}}>
+                  {getDeviceIcon(item.deviceType) ?? item.deviceType}
+                </td>
+              ),
+            'firmware':
+              (item)=>(
+                <td>
+                  {item.firmware && item.firmware != "" ? item.firmware : 'N/A'}
+                </td>
+              ),
+            'txBytes':
+              (item)=>(
+                <td>
+                  {cleanBytesString(item.txBytes)}
+                </td>
+              ),
+            'rxBytes':
+              (item)=>(
+                <td>
+                  {cleanBytesString(item.rxBytes)}
+                </td>
+              ),
+            'ipAddress':
+              (item)=>(
+                <td>
+                  {item.ipAddress ?? 'N/A'}
+                </td>
+              ),
+            'connected':
+              (item)=>(
+                <td>
+                  <CBadge color={getStatusBadge(item.connected)}>
+                    {item.connected ? 'Connected' : 'Not connected'}
+                  </CBadge>
+                </td>
+              ),
+            'show_details':
+              (item, index)=>{
+                return (
+                  <td className="py-2">
+                    <CButton
+                      color="primary"
+                      variant="outline"
+                      shape="square"
+                      size="sm"
+                      onClick={()=>{toggleDetails(index)}}
+                    >
+                      <FontAwesomeIcon icon={faInfo}/>
                     </CButton>
-                  </CLink>
-                </CCardBody>
-              </CCollapse>
-            )
-          }
-      }}
-    />
+                  </td>
+                  )
+              },
+            'details':
+                (item, index)=>{
+                  return (
+                  <CCollapse show={details.includes(index)}>
+                    <CCardBody>
+                      <h4>
+                        {item.notes}
+                      </h4>
+                      <p className="text-muted">Last configuration change: {item.lastConfigurationChange.replace('T', ' ').replace('Z', '')}</p>
+                      <CLink 
+                        className="c-subheader-nav-link" 
+                        aria-current="page" 
+                        to={() => `/devices/${item.serialNumber}`}
+                      > 
+                        <CButton size="sm" color="info">
+                          Device Details
+                        </CButton>
+                      </CLink>
+                    </CCardBody>
+                  </CCollapse>
+                )
+              }
+          }}/>
+        </CCardBody>
+      </CCard>
     </>
   );
 };

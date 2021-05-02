@@ -26,7 +26,7 @@ import {
   cibStripe,
   cibPaypal,
   cibGooglePay,
-  cibCcAmex
+  cibCcAmex,
 } from '@coreui/icons'
 import {
   cifUs,
@@ -105,6 +105,7 @@ import {
   cilPhone,
   cilPrint,
   cilPuzzle,
+  cilRouter,
   cilSave,
   cilScrubber,
   cilSettings,
@@ -150,7 +151,6 @@ export const icons = Object.assign({}, {
   cilCalculator,
   cilCalendar,
   cilCloudDownload,
-
   cilChartPie,
   cilCheck,
   cilChevronBottom,
@@ -204,6 +204,7 @@ export const icons = Object.assign({}, {
   cilPhone,
   cilPrint,
   cilPuzzle,
+  cilRouter,
   cilSave,
   cilScrubber,
   cilSettings,
