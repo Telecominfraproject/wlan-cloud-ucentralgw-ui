@@ -59,7 +59,7 @@ const Login = () => {
                           <CIcon name="cilUser" content={cilUser}/>
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Username" autoComplete="username" onChange={event => setUsername(event.target.value)}/>
+                      <CInput autoFocus type="text" placeholder="Username" autoComplete="username" onChange={event => setUsername(event.target.value)}/>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
