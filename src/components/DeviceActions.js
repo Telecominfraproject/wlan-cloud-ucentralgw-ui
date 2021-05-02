@@ -93,7 +93,7 @@ const DeviceActions = () => {
 			'serialNumber': selectedDevice.serialNumber
 		};
 
-		axiosInstance.post(`/device/${selectedDevice.serialNumber}/blink`, {
+		axiosInstance.post(`/device/${selectedDevice.serialNumber}/leds`, {
 			serialNumber : selectedDevice.serialNumber
 		},{ headers: headers})
 		.then((response) => {
