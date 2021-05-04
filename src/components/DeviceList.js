@@ -66,10 +66,10 @@ const DeviceList = () => {
 		};
 
 		const startIndex = page * devicesPerPage;
-		const serialsToGet = serialNumbers.slice(startIndex, (startIndex + devicesPerPage)).join(',');
+		const endIndex = parseInt(startIndex) + parseInt(devicesPerPage);
+		const serialsToGet = serialNumbers.slice(startIndex, endIndex).join(',');
 		
-		console.log(serialsToGet);
-
+		console.log('yo ' + startIndex + ' ' + endIndex);
 		axiosInstance.get(`/devices?deviceWithStatus=true&select=${serialsToGet}`, {
 			headers: headers
 		})
