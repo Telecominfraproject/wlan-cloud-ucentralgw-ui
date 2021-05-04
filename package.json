@@ -22,9 +22,12 @@
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
+    "react-paginate": "^7.1.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-select": "^4.3.0",
+    "reactstrap": "^8.9.0",
     "sass": "^1.32.8",
     "uuid": "^8.3.2"
   },
