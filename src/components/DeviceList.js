@@ -13,14 +13,12 @@ import {
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate';
 import Select from 'react-select'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo } from '@fortawesome/free-solid-svg-icons'
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 import { cleanTimestamp, cleanBytesString } from '../utils/helper';
 import iotIcon from '../assets/icons/iot.png'
 import internetSwitch from '../assets/icons/networkswitch.png';
-import { cilRouter } from '@coreui/icons';
+import { cilRouter, cilSync, cilFullscreen } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 
 const DeviceList = () => {
@@ -147,26 +145,28 @@ const DeviceList = () => {
 
 const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDevicesPerPage, pageCount, updatePage }) => {
   const columns = [
-	{ key: 'serialNumber'},
-	{ key: 'UUID', label: 'Config Id'},
-	{ 
-	  key: 'lastConfigurationChange'
-	  ,filter: false
-	  ,label: 'Configuration Change'
-	},
-	{ key: 'firmware', filter: false },
-	{ key: 'deviceType', filter: false, sorter: false},
+	{ key: 'deviceType', label: 'Type', filter: false, sorter: false, _style: { width: '1%' },},
+	{ key: 'serialNumber', _style: { width: '1%' }},
+	{ key: 'UUID', label: 'Config Id', _style: { width: '1%' }},
+	{ key: 'firmware', filter: false, _style: { width: '20%' }, },
 	{ key: 'connected', _style: { width: '1%' }, sorter: false},
-	{ key: 'txBytes', filter: false },
-	{ key: 'rxBytes', filter: false },
-	{ key: 'ipAddress'},
+	{ key: 'txBytes', label: 'Tx', filter: false, _style: { width: '7%' } },
+	{ key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '7%' } },
+	{ key: 'ipAddress', _style: { width: '20%' }},
 	{
 	  key: 'show_details',
 	  label: '',
 	  _style: { width: '1%' },
 	  sorter: false,
 	  filter: false
-	}
+	},
+	{
+		key: 'refresh',
+		label: '',
+		_style: { width: '1%' },
+		sorter: false,
+		filter: false
+	  }
   ];
 
   const selectOptions = [
@@ -222,12 +222,6 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 			hover
 			loading = {loading}
 			scopedSlots = {{
-				'lastConfigurationChange':
-				(item)=>(
-					<td>
-					{cleanTimestamp(item.lastConfigurationChange)}
-					</td>
-				),
 				'deviceType':
 				(item)=>(
 					<td style={{textAlign: 'center'}}>
@@ -255,53 +249,45 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				'ipAddress':
 				(item)=>(
 					<td>
-					{item.ipAddress ?? 'N/A'}
+						{item.ipAddress ?? 'N/A'}
 					</td>
 				),
 				'connected':
 				(item)=>(
 					<td>
-					<CBadge color={getStatusBadge(item.connected)}>
-						{item.connected ? 'Connected' : 'Not connected'}
-					</CBadge>
+						<CBadge color={getStatusBadge(item.connected)}>
+							{item.connected ? 'Connected' : 'Not connected'}
+						</CBadge>
+					</td>
+				),
+				'refresh':
+				(item)=>(
+					<td className="py-2">
+						<CButton color="primary" variant="outline" size="sm">					
+							<CIcon name="cil-sync" content={cilSync} size="l"/>
+						</CButton>
 					</td>
 				),
 				'show_details':
 				(item, index)=>{
 					return (
 					<td className="py-2">
-						<CButton
-						color="primary"
-						variant="outline"
-						shape="square"
-						size="sm"
-						onClick={()=>{toggleDetails(index)}}
-						>
-						<FontAwesomeIcon icon={faInfo}/>
-						</CButton>
-					</td>
-					)
-				},
-				'details':
-					(item, index)=>{
-					return (
-					<CCollapse show={details.includes(index)}>
-						<CCardBody>
-						<h4>
-							{item.notes}
-						</h4>
-						<p className="text-muted">Last configuration change: {item.lastConfigurationChange.replace('T', ' ').replace('Z', '')}</p>
 						<CLink 
 							className="c-subheader-nav-link" 
 							aria-current="page" 
 							to={() => `/devices/${item.serialNumber}`}
 						> 
-							<CButton size="sm" color="info">
-							Device Details
+							<CButton
+								color="primary"
+								variant="outline"
+								shape="square"
+								size="sm"
+								onClick={()=>{toggleDetails(index)}}
+							>
+								<CIcon name="cil-fullscreen" content={cilFullscreen} size="l"/>
 							</CButton>
 						</CLink>
-						</CCardBody>
-					</CCollapse>
+					</td>
 					)
 				}
 			}}/>
