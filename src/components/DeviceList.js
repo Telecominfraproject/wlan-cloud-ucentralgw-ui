@@ -150,6 +150,7 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 	{ key: 'serialNumber', _style: { width: '1%' }},
 	{ key: 'UUID', label: 'Config Id', _style: { width: '1%' }},
 	{ key: 'firmware', filter: false, _style: { width: '20%' }, },
+	{ key: 'manufacturer', filter: false, _style: { width: '20%' }, },
 	{ key: 'txBytes', label: 'Tx', filter: false, _style: { width: '7%' } },
 	{ key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '7%' } },
 	{ key: 'ipAddress', _style: { width: '20%' }},
