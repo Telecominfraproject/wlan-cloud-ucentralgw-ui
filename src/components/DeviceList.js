@@ -9,7 +9,8 @@ import {
 	CCard,
 	CCardHeader,
 	CRow,
-	CCol
+	CCol,
+	CPopover
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate';
 import Select from 'react-select'
@@ -145,11 +146,10 @@ const DeviceList = () => {
 
 const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDevicesPerPage, pageCount, updatePage }) => {
   const columns = [
-	{ key: 'deviceType', label: 'Type', filter: false, sorter: false, _style: { width: '1%' },},
+	{ key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '1%' },},
 	{ key: 'serialNumber', _style: { width: '1%' }},
 	{ key: 'UUID', label: 'Config Id', _style: { width: '1%' }},
 	{ key: 'firmware', filter: false, _style: { width: '20%' }, },
-	{ key: 'connected', _style: { width: '1%' }, sorter: false},
 	{ key: 'txBytes', label: 'Tx', filter: false, _style: { width: '7%' } },
 	{ key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '7%' } },
 	{ key: 'ipAddress', _style: { width: '20%' }},
@@ -225,7 +225,14 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				'deviceType':
 				(item)=>(
 					<td style={{textAlign: 'center'}}>
-					{getDeviceIcon(item.deviceType) ?? item.deviceType}
+						<CPopover
+							content={ item.connected ? 'Connected' : 'Not Connected' }
+							placement="top"
+						>
+							<CBadge color={getStatusBadge(item.connected)}>
+								{getDeviceIcon(item.deviceType) ?? item.deviceType}
+							</CBadge>
+						</CPopover>
 					</td>
 				),
 				'firmware':
@@ -250,14 +257,6 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				(item)=>(
 					<td>
 						{item.ipAddress ?? 'N/A'}
-					</td>
-				),
-				'connected':
-				(item)=>(
-					<td>
-						<CBadge color={getStatusBadge(item.connected)}>
-							{item.connected ? 'Connected' : 'Not connected'}
-						</CBadge>
 					</td>
 				),
 				'refresh':
