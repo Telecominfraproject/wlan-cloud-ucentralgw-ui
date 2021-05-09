@@ -3,7 +3,6 @@ import {
 	CBadge,
 	CCardBody,
 	CDataTable,
-	CCollapse,
 	CButton,
 	CLink,
 	CCard,
@@ -16,10 +15,10 @@ import ReactPaginate from 'react-paginate';
 import Select from 'react-select'
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
-import { cleanTimestamp, cleanBytesString } from '../utils/helper';
+import { cleanBytesString, cropStringWithEllipsis } from '../utils/helper';
 import iotIcon from '../assets/icons/iot.png'
 import internetSwitch from '../assets/icons/networkswitch.png';
-import { cilRouter, cilSync, cilFullscreen } from '@coreui/icons';
+import {  cilSync, cilInfo } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 
 const DeviceList = () => {
@@ -31,7 +30,6 @@ const DeviceList = () => {
 	const [devices, setDevices] = useState([]);
 	const [details, setDetails] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [lastRefresh, setLastRefresh] = useState([]);
 
 	const getSerialNumbers = () => {
 		const token = getToken();
@@ -68,25 +66,17 @@ const DeviceList = () => {
 		const endIndex = parseInt(startIndex) + parseInt(devicesPerPage);
 		const serialsToGet = serialNumbers.slice(startIndex, endIndex).join(',');
 		
-		console.log('yo ' + startIndex + ' ' + endIndex);
 		axiosInstance.get(`/devices?deviceWithStatus=true&select=${serialsToGet}`, {
 			headers: headers
 		})
 		.then((response) => {
 			setDevices(response.data.devicesWithStatus);
 			setLoading(false);
-			updateRefresh();
 		})
 		.catch(error => {
 			setLoading(false);
 			console.log(error.response);
 		});
-	}
-
-	const updateRefresh = () => {
-		const date = new Date();
-		const dateAsString = date.toLocaleString();
-		setLastRefresh(dateAsString);
 	}
 
 	//Function called from the button on the table so that a user can see more details
@@ -102,7 +92,6 @@ const DeviceList = () => {
 	}
 
 	const updateDevicesPerPage = (value) => {
-		console.log('update devices per page ' + value)
 		setDevicesPerPage(value);
 	}
 
@@ -128,8 +117,6 @@ const DeviceList = () => {
 		} 
 	}, [devicesPerPage, loadedSerials]);
 
-
-
   	return (
 		<DeviceListDisplay 
 		devices={devices} 
@@ -146,25 +133,25 @@ const DeviceList = () => {
 
 const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDevicesPerPage, pageCount, updatePage }) => {
   const columns = [
-	{ key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '1%' },},
-	{ key: 'serialNumber', _style: { width: '1%' }},
-	{ key: 'UUID', label: 'Config Id', _style: { width: '1%' }},
+	{ key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' },},
+	{ key: 'serialNumber', _style: { width: '5%' }},
+	{ key: 'UUID', label: 'Config Id', _style: { width: '5%' }},
 	{ key: 'firmware', filter: false, _style: { width: '20%' }, },
 	{ key: 'manufacturer', filter: false, _style: { width: '20%' }, },
-	{ key: 'txBytes', label: 'Tx', filter: false, _style: { width: '7%' } },
-	{ key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '7%' } },
+	{ key: 'txBytes', label: 'Tx', filter: false, _style: { width: '10%' } },
+	{ key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '10%' } },
 	{ key: 'ipAddress', _style: { width: '20%' }},
 	{
 	  key: 'show_details',
 	  label: '',
-	  _style: { width: '1%' },
+	  _style: { width: '3%' },
 	  sorter: false,
 	  filter: false
 	},
 	{
 		key: 'refresh',
 		label: '',
-		_style: { width: '1%' },
+		_style: { width: '2%' },
 		sorter: false,
 		filter: false
 	  }
@@ -179,13 +166,13 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 
   const getDeviceIcon = (deviceType) =>{
 	if(deviceType === "AP_Default"){
-	  return <CIcon name="cilRouter" size="2xl"></CIcon>;
+	  return <CIcon name="cilRouter" size="2xl" alt='AP'></CIcon>;
 	}
 	else if(deviceType === "IOT"){
-	  return <img src={iotIcon} style={{height:'32px', width:'32px'}}/>;
+	  return <img src={iotIcon} style={{height:'32px', width:'32px'}} alt='IOT'/>;
 	}
 	else if(deviceType === "SWITCH"){
-	  return <img src={internetSwitch} style={{height:'32px', width:'32px'}}/>;
+	  return <img src={internetSwitch} style={{height:'32px', width:'32px'}} alt='SWITCH'/>;
 	}
 	return null;
   }
@@ -203,7 +190,6 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 		<CCardHeader>
 			<CRow>
 				<CCol>
-					Device List
 				</CCol>
 				<CCol xs={2}>
 					<Select 
@@ -239,7 +225,27 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				'firmware':
 				(item)=>(
 					<td>
-					{item.firmware && item.firmware !== "" ? item.firmware : 'N/A'}
+						<CPopover
+							content={ item.firmware ? item.firmware : 'N/A' }
+							placement="top"
+						>
+							<p>
+								{cropStringWithEllipsis(item.firmware, 22)}
+							</p>
+						</CPopover>
+					</td>
+				),
+				'manufacturer':
+				(item)=>(
+					<td>
+						<CPopover
+							content={ item.manufacturer ? item.manufacturer : 'N/A' }
+							placement="top"
+						>
+							<p>
+								{cropStringWithEllipsis(item.manufacturer, 23)}
+							</p>
+						</CPopover>
 					</td>
 				),
 				'txBytes':
@@ -257,7 +263,14 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				'ipAddress':
 				(item)=>(
 					<td>
-						{item.ipAddress ?? 'N/A'}
+						<CPopover
+							content={ item.ipAddress ? item.ipAddress : 'N/A' }
+							placement="top"
+						>
+							<p>
+								{cropStringWithEllipsis(item.ipAddress, 22)}
+							</p>
+						</CPopover>
 					</td>
 				),
 				'refresh':
@@ -284,7 +297,7 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 								size="sm"
 								onClick={()=>{toggleDetails(index)}}
 							>
-								<CIcon name="cil-fullscreen" content={cilFullscreen} size="l"/>
+								<CIcon name="cil-info" content={cilInfo} size="l"/>
 							</CButton>
 						</CLink>
 					</td>
