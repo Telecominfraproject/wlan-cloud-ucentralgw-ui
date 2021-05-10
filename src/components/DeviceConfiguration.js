@@ -12,6 +12,7 @@ import {
     CCardFooter,
     CButton
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
 import { useSelector } from 'react-redux';
 import { cleanTimestamp} from '../utils/helper';
 
@@ -28,7 +29,7 @@ const DeviceConfiguration = () => {
         return (
             <CCard>
                 <CCardHeader>
-                    Device #{device.serialNumber} Configuration
+                    #{device.serialNumber} Details
                 </CCardHeader>
                 <CCardBody>
                     <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
@@ -122,13 +123,9 @@ const DeviceConfiguration = () => {
                                 </CCol>
                             </CFormGroup>
                         </CCollapse>
-                        <CCardFooter>
-                            <CButton
-                            color="primary"
-                            onClick={toggle}
-                            className={'mb-1'}
-                            >{collapse ? 'Hide details' : 'Show Details'}</CButton>
-                        </CCardFooter>
+                        <CButton show={collapse} color="transparent" onClick = { toggle } block>
+                            <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} size="lg"/>
+                        </CButton>
                     </CForm>
                 </CCardBody>
             </CCard>

@@ -128,7 +128,7 @@ const DeviceHealth = () => {
                         </CCard>
                     </CCollapse>
                     <CButton show={collapse} color="transparent" onClick = { toggle } block>
-                        <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} style={{color: 'white'}} size="l"/>
+                        <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} style={{color: 'white'}} size="lg"/>
                     </CButton>
                 </div>
             }

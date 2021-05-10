@@ -119,14 +119,14 @@ const DeviceList = () => {
 
   	return (
 		<DeviceListDisplay 
-		devices={devices} 
-		toggleDetails={toggleDetails} 
-		details={details}
-		loading={loading} 
-		updateDevicesPerPage={updateDevicesPerPage}
-		pageCount={pageCount}
-		updatePage={updatePageCount}
-		pageRangeDisplayed={5}
+			devices={devices} 
+			toggleDetails={toggleDetails} 
+			details={details}
+			loading={loading} 
+			updateDevicesPerPage={updateDevicesPerPage}
+			pageCount={pageCount}
+			updatePage={updatePageCount}
+			pageRangeDisplayed={5}
 		/>
   	);
 }
@@ -277,7 +277,7 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 				(item)=>(
 					<td className="py-2">
 						<CButton color="primary" variant="outline" size="sm">					
-							<CIcon name="cil-sync" content={cilSync} size="l"/>
+							<CIcon name="cil-sync" content={cilSync} size="sm"/>
 						</CButton>
 					</td>
 				),
@@ -295,7 +295,6 @@ const DeviceListDisplay = ({ devices, toggleDetails, details, loading, updateDev
 								variant="outline"
 								shape="square"
 								size="sm"
-								onClick={()=>{toggleDetails(index)}}
 							>
 								<CIcon name="cil-info" content={cilInfo} size="l"/>
 							</CButton>
