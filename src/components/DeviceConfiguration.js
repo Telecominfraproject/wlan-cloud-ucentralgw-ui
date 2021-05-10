@@ -123,9 +123,11 @@ const DeviceConfiguration = () => {
                                 </CCol>
                             </CFormGroup>
                         </CCollapse>
-                        <CButton show={collapse} color="transparent" onClick = { toggle } block>
-                            <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} size="lg"/>
-                        </CButton>
+                        <CCardFooter>
+                            <CButton show={collapse} color="transparent" onClick = { toggle } block>
+                                <CIcon name={collapse ? "cilChevronTop" : "cilChevronBottom"} size="lg"/>
+                            </CButton>
+                        </CCardFooter>
                     </CForm>
                 </CCardBody>
             </CCard>
