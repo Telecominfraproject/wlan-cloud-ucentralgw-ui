@@ -5,37 +5,22 @@ import {
 	CCardHeader,
 	CCardBody,
 	CRow,
-	CCol,
-	CModal,
-	CModalHeader,
-	CModalTitle,
-	CModalBody,
-	CModalFooter,
-	CForm,
-	CInput,
-	CInvalidFeedback,
-	CSpinner,
-	CBadge
+	CCol
 } from '@coreui/react'
-import { useSelector } from 'react-redux';
-import axiosInstance from '../utils/axiosInstance';
-import { getToken } from '../utils/authHelper';
+import ActionModalWidget from '../widgets/ActionModalWidget';
 
 const DeviceActions = () => {
-	const [showModal, setShowModal] = useState(false);
+	const [showRebootModal, setShowRebootModal] = useState(false);
+	const [showBlinkModal, setShowBlinkModal] = useState(false);
 	const [firmwareUri, setFirmwareUri] = useState('');
 	const [validField, setValidField] = useState(true);
-	const [rebootIsLoading, setRebootLoading] = useState(false);
-	const [hadRebootSuccess, setRebootSuccess] = useState(false);
-	const [hadRebootFailure, setRebootFailure] = useState(false);
-	const [blinkIsLoading, setBlinkLoading] = useState(false);
-	const [hadBlinkSuccess, setBlinkSuccess] = useState(false);
-	const [hadBlinkFailure, setBlinkFailure] = useState(false);
-
-	let selectedDevice = useSelector(state => state.selectedDevice);
 	
-	const toggleModal = (e) => {
-		setShowModal(!showModal);
+	const toggleRebootModal = (e) => {
+		setShowRebootModal(!showRebootModal);
+	}
+
+	const toggleBlinkModal = (e) => {
+		setShowBlinkModal(!showBlinkModal);
 	}
 
 	const formChange = (fieldValue) => {
@@ -53,62 +38,6 @@ const DeviceActions = () => {
 		return true;
 	};
 
-	const reboot = () => {
-		setRebootSuccess(false);
-		setRebootFailure(false);
-		setRebootLoading(true);
-		const token = getToken();
-
-		const headers = {
-			'Accept': 'application/json',
-			'Authorization': `Bearer ${token}`,
-			'serialNumber': selectedDevice.serialNumber
-		};
-
-		axiosInstance.post(`/device/${selectedDevice.serialNumber}/reboot`, {
-			serialNumber : selectedDevice.serialNumber
-		},{ headers: headers})
-		.then((response) => {
-			setRebootSuccess(true);
-		})
-		.catch(error => {
-			setRebootFailure(true);
-			console.log(error);
-			console.log(error.response);
-		})
-		.finally (() => {
-			setRebootLoading(false);
-		});
-	}
-
-	const blink = () => {
-		setBlinkSuccess(false);
-		setBlinkFailure(false);
-		setBlinkLoading(true);
-		const token = getToken();
-
-		const headers = {
-			'Accept': 'application/json',
-			'Authorization': `Bearer ${token}`,
-			'serialNumber': selectedDevice.serialNumber
-		};
-
-		axiosInstance.post(`/device/${selectedDevice.serialNumber}/leds`, {
-			serialNumber : selectedDevice.serialNumber
-		},{ headers: headers})
-		.then((response) => {
-			setBlinkSuccess(true);
-		})
-		.catch(error => {
-			setBlinkFailure(true);
-			console.log(error);
-			console.log(error.response);
-		})
-		.finally (() => {
-			setBlinkLoading(false);
-		});
-	}
-
 	return (
 		<CCard>
 			<CCardHeader>
@@ -117,37 +46,39 @@ const DeviceActions = () => {
 			<CCardBody>
 				<CRow>
 					<CCol>
-						<CButton block disabled={ rebootIsLoading } color="primary" onClick={ reboot }>
-							{ rebootIsLoading ? 'Loading...' : 'Reboot'} {'   '}
-							<CSpinner hidden={ !rebootIsLoading } component="span" size="sm"/>
-							<CBadge hidden = { (rebootIsLoading || !hadRebootSuccess) } color="success" shape="rounded-pill">
-								Success
-							</CBadge>
-							<CBadge hidden = { (rebootIsLoading || !hadRebootFailure) }color="danger" shape="rounded-pill">
-								Request Failed
-							</CBadge>
-						</CButton>
+						<CButton block onClick = { toggleRebootModal } color="primary">Reboot</CButton>
 					</CCol>
 					<CCol>
-						<CButton block disabled={ blinkIsLoading } color="primary" onClick={ blink }>
-							{ blinkIsLoading ? 'Loading...' : 'Blink'} {'   '}
-							<CSpinner hidden={ !blinkIsLoading } component="span" size="sm"/>
-							<CBadge hidden = { (blinkIsLoading || !hadBlinkSuccess) } color="success" shape="rounded-pill">
-								Success
-							</CBadge>
-							<CBadge hidden = { (blinkIsLoading || !hadBlinkFailure) }color="danger" shape="rounded-pill">
-								Request Failed
-							</CBadge>
-						</CButton>
+						<CButton block onClick = { toggleBlinkModal } color="primary">Blink</CButton>
 					</CCol>
 				</CRow>
 				<CRow style={{marginTop :'10px'}}>
 					<CCol>
-						<CButton block onClick = { toggleModal } color="primary">Firmware Upgrade</CButton>
+						<CButton block color="primary">Firmware Upgrade</CButton>
+					</CCol>
+					<CCol>
 					</CCol>
 				</CRow>
 			</CCardBody>
-			<CModal 
+			<ActionModalWidget
+				show={showRebootModal}
+				toggleModal={toggleRebootModal}
+				title='Reboot Device'
+				directions='When would you like to reboot this device?'
+				actionLabel='reboot'
+				action='reboot'
+			/>
+			<ActionModalWidget
+				show={showBlinkModal}
+				toggleModal={toggleBlinkModal}
+				title='Blink LEDs of Device'
+				directions='When would you like make the LEDs of this device blink?'
+				actionLabel='blink'
+				action='leds'
+				extraParameters= {{ duration : 10, pattern : 'on' }}
+			/>
+			
+			{/*<CModal 
 				show={showModal} 
 				onClose={toggleModal}
 			>
@@ -178,7 +109,7 @@ const DeviceActions = () => {
 						Cancel
 					</CButton>
 				</CModalFooter>
-			</CModal>
+			</CModal>*/}
 		</CCard>
 	);
 }

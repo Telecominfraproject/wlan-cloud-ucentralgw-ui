@@ -18,3 +18,14 @@ export const cleanBytesString = (bytes, decimals = 2) => {
     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+
+export const convertDateToUtc = (date) => {
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return utcDate;
+}
+
+export const convertDateFromUtc = (utcDate) => {
+    const dateObj = new Date();
+    const date = new Date(utcDate.getTime() - dateObj.getTimezoneOffset() * 60000);
+    return date;
+}
