@@ -18,13 +18,13 @@ import "react-widgets/styles.css";
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 
-const ActionModalWidget = ({ show, toggleModal, title, directions, placeholder, handleClick, actionLabel, action, extraParameters }) => {
+const ActionModalWidget = ({ show, toggleModal, title, directions, actionLabel, action, extraParameters }) => {
 	const [hadSuccess, setHadSuccess] = useState(false);
 	const [hadFailure, setHadFailure] = useState(false);
     const [waiting, setWaiting] = useState(false);
 	const [chosenDate, setChosenDate] = useState(null);
     const [responseBody, setResponseBody] = useState('');
-    const selectedDevice = useSelector(state => state.selectedDevice);
+    const selectedDeviceId = useSelector(state => state.selectedDeviceId);
     
     const formValidation = () => {
         return (chosenDate !== null);
@@ -70,17 +70,17 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, placeholder, 
 		const headers = {
 			'Accept': 'application/json',
 			'Authorization': `Bearer ${token}`,
-			'serialNumber': selectedDevice.serialNumber
+			'serialNumber': selectedDeviceId
 		};
 
         const necessaryParameters = {
-            serialNumber : selectedDevice.serialNumber,
+            serialNumber : selectedDeviceId,
             when: chosenDate
         }
 
         const parameters = {...necessaryParameters, ...extraParameters };
 
-		axiosInstance.post(`/device/${selectedDevice.serialNumber}/${action}`, parameters,{ headers: headers})
+		axiosInstance.post(`/device/${selectedDeviceId}/${action}`, parameters,{ headers: headers})
 		.then((response) => {
             setResponseBody(JSON.stringify(response.data, null, 4));
 			setHadSuccess(true);
