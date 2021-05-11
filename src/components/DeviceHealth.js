@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     CWidgetProgress,
     CCollapse,
@@ -10,18 +10,41 @@ import {
 import CIcon from '@coreui/icons-react'
 import { useSelector } from 'react-redux';
 import { cleanTimestamp } from '../utils/helper';
+import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../utils/authHelper';
 
 const DeviceHealth = () => {
     const [collapse, setCollapse] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState([]);
-    let selectedDevice = useSelector(state => state.selectedDevice);
+    const [healthChecks, setHealthChecks] = useState([]);
+    const selectedDeviceId = useSelector(state => state.selectedDeviceId);
     let sanityLevel;
-    let healthChecks;
     let barColor;
 
     const toggle = (e) => {
         setCollapse(!collapse);
         e.preventDefault();
+    }
+
+    const getDeviceHealth = () => {
+        const options = {
+            headers : {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            }
+        };
+
+        axiosInstance.get(`/device/${selectedDeviceId}/healthchecks`, options)
+        .then((response) => {
+            setHealthChecks(response.data.values);
+            setLoading(false);
+        })
+        .catch(error => {
+            setLoading(false);
+            console.log(error);
+            console.log(error.response);
+        });
     }
 
     //Function called from the button on the table so that a user can see more details
@@ -51,9 +74,13 @@ const DeviceHealth = () => {
           }
     ];
 
-    if(selectedDevice && selectedDevice.healthChecks && selectedDevice.healthChecks.length > 0){
-        sanityLevel = selectedDevice.healthChecks[0].sanity;
-        healthChecks = selectedDevice.healthChecks;
+    useEffect(() => {
+        setLoading(true);
+        getDeviceHealth();
+    },[]);
+
+    if(healthChecks && healthChecks.length > 0){
+        sanityLevel = healthChecks[0].sanity;
         if(sanityLevel === 100)
             barColor = "gradient-success";
         else if (sanityLevel >= 90)
@@ -61,6 +88,7 @@ const DeviceHealth = () => {
         else
             barColor = "gradient-danger";
     }
+    
     return (
         <CWidgetProgress
             header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}

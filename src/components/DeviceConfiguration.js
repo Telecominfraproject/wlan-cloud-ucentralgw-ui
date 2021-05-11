@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     CCard,
     CCardHeader,
@@ -14,11 +14,41 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useSelector } from 'react-redux';
-import { cleanTimestamp} from '../utils/helper';
+import { cleanTimestamp } from '../utils/helper';
+import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../utils/authHelper';
+
 
 const DeviceConfiguration = () => {
     const [collapse, setCollapse] = useState(false);
-    let device = useSelector(state => state.selectedDevice);
+    const [device, setDevice] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const selectedDeviceId = useSelector(state => state.selectedDeviceId);
+
+    const getDevice = () => {
+        const options = {
+            headers : {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            }
+        };
+
+        axiosInstance.get(`/device/${selectedDeviceId}`, options)
+        .then((response) => {
+            setDevice(response.data);
+            setLoading(false);
+        })
+        .catch(error => {
+            setLoading(false);
+            console.log(error);
+            console.log(error.response);
+        });
+    }
+
+    useEffect(() => {
+        setLoading(true);
+        getDevice();
+    },[]);
 
     const toggle = (e) => {
         setCollapse(!collapse);
