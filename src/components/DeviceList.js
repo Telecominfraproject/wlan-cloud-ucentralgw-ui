@@ -106,7 +106,6 @@ const DeviceList = () => {
 
 	//Updating the devices only if serial numbers, page number or devices per page changes
 	useEffect(()=>{
-		console.log('in get device effect');
 		if(loadedSerials) getDeviceInformation();
     }, [serialNumbers, page, devicesPerPage, loadedSerials]);
 

@@ -32,7 +32,6 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, placeholder, 
 
     const setDateToNow = () => {
         const now = (new Date()).toISOString();
-        console.log('now to utc: ' + convertDateToUtc(new Date()));
         setChosenDate(now);
     }
 

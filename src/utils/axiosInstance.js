@@ -1,10 +1,7 @@
 import * as axios from 'axios';
 import axiosRetry from 'axios-retry';
-import configData from "../config.json";
 
-const axiosInstance = axios.create({
-    baseURL: `${configData.REACT_APP_BASE_URL}`
-});
+const axiosInstance = axios.create();
 
 axiosRetry(axiosInstance , {
     retries: 3,
@@ -17,9 +14,17 @@ axiosRetry(axiosInstance , {
 axiosInstance.defaults.headers.get['Accept'] = 'application/json'   // default header for all get request
 axiosInstance.defaults.headers.post['Accept'] = 'application/json'  // default header for all POST request
 
+axiosInstance.interceptors.request.use(function(config) {
+    const url = sessionStorage.getItem('gw_url');
+    if(url !== undefined && url !== null && !config.url.includes(url)){
+        config.url = url + config.url;
+    }
+    return config;
+});
+
 axiosInstance.interceptors.response.use(
     //Success actions
-    undefined, 
+    undefined,
     function(error) {
         console.log(error);
         switch(error.response.status){
