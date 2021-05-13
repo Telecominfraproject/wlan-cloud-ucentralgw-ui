@@ -8,10 +8,12 @@ import {
 	CCol
 } from '@coreui/react'
 import ActionModalWidget from '../widgets/ActionModalWidget';
+import FirmwareUpgradeModal from './FirmwareUpgradeModal';
 
 const DeviceActions = () => {
 	const [showRebootModal, setShowRebootModal] = useState(false);
 	const [showBlinkModal, setShowBlinkModal] = useState(false);
+	const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 	const [firmwareUri, setFirmwareUri] = useState('');
 	const [validField, setValidField] = useState(true);
 	
@@ -21,6 +23,10 @@ const DeviceActions = () => {
 
 	const toggleBlinkModal = (e) => {
 		setShowBlinkModal(!showBlinkModal);
+	}
+
+	const toggleUpgradeModal = (e) => {
+		setShowUpgradeModal(!showUpgradeModal);
 	}
 
 	const formChange = (fieldValue) => {
@@ -54,7 +60,7 @@ const DeviceActions = () => {
 				</CRow>
 				<CRow style={{marginTop :'10px'}}>
 					<CCol>
-						<CButton block color="primary">Firmware Upgrade</CButton>
+						<CButton block color="primary" onClick = { toggleUpgradeModal }>Firmware Upgrade</CButton>
 					</CCol>
 					<CCol>
 					</CCol>
@@ -76,6 +82,10 @@ const DeviceActions = () => {
 				actionLabel='blink'
 				action='leds'
 				extraParameters= {{ duration : 10, pattern : 'on' }}
+			/>
+			<FirmwareUpgradeModal
+				show={showUpgradeModal}
+				toggleModal={setShowUpgradeModal}
 			/>
 			
 			{/*<CModal 
