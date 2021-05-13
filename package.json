@@ -29,6 +29,7 @@
     "react-select": "^4.3.0",
     "react-widgets": "^5.1.1",
     "reactstrap": "^8.9.0",
+    "redux": "^4.1.0",
     "sass": "^1.32.8",
     "uuid": "^8.3.2"
   },

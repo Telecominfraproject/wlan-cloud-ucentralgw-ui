@@ -1,9 +1,9 @@
-const _nav =  [
+const nav = [
   {
     _tag: 'CSidebarNavItem',
     name: 'List of Devices',
     to: '/devices',
-    icon: 'cilNotes'
+    icon: 'cilNotes',
   },
   {
     _tag: 'CSidebarNavItem',
@@ -17,6 +17,6 @@ const _nav =  [
     to: '/Settings',
     icon: 'cil-settings',
   },
-]
+];
 
-export default _nav
+export default nav;

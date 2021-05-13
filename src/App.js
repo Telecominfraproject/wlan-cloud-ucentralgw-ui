@@ -5,33 +5,37 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const loading = (
   <div className="pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse"></div>
+    <div className="sk-spinner sk-spinner-pulse" />
   </div>
-)
+);
 
 const TheLayout = React.lazy(() => import('./containers/TheLayout'));
 const Login = React.lazy(() => import('./views/pages/Login'));
 
 const App = () => {
-    const isLoggedIn  = useSelector(state => state.connected);
-    const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.connected);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const token = sessionStorage.getItem('access_token');
-        if (token !== undefined && token !== null) {
-            dispatch({type: 'set', connected: true});
-        }
-    }, [dispatch]);
+  useEffect(() => {
+    const token = sessionStorage.getItem('access_token');
+    if (token !== undefined && token !== null) {
+      dispatch({ type: 'set', connected: true });
+    }
+  }, [dispatch]);
 
-    return (
-        <HashRouter>
-                <React.Suspense fallback={loading}>
-                <Switch>
-                    <Route path="/" name="Devices" render={props => isLoggedIn ?  <TheLayout {...props}/> : <Login {...props}/>} />
-                </Switch>
-                </React.Suspense>
-            </HashRouter>
-    );
+  return (
+    <HashRouter>
+      <React.Suspense fallback={loading}>
+        <Switch>
+          <Route
+            path="/"
+            name="Devices"
+            render={(props) => (isLoggedIn ? <TheLayout {...props} /> : <Login {...props} />)}
+          />
+        </Switch>
+      </React.Suspense>
+    </HashRouter>
+  );
 };
 
 export default App;

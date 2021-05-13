@@ -1,33 +1,27 @@
-import React from 'react'
-import {
-  TheContent,
-  TheSidebar,
-  TheFooter,
-  TheHeader
-} from './index';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import TheContent from './TheContent';
+import TheSidebar from './TheSidebar';
+import TheFooter from './TheFooter';
+import TheHeader from './TheHeader';
 
 const TheLayout = (props) => {
-  const { isLoggedIn } = useSelector(state => state.connected);
-  if(isLoggedIn){
-    return (
-        <div>
-            {props.children}
-        </div>
-    );
+  const { isLoggedIn } = useSelector((state) => state.connected);
+  if (isLoggedIn) {
+    return <div>{props.children}</div>;
   }
   return (
     <div className="c-app c-default-layout">
-      <TheSidebar/>
+      <TheSidebar />
       <div className="c-wrapper">
-        <TheHeader/>
+        <TheHeader />
         <div className="c-body">
-          <TheContent/>
+          <TheContent />
         </div>
-        <TheFooter/>
+        <TheFooter />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TheLayout
+export default TheLayout;

@@ -1,20 +1,20 @@
-import { createStore } from 'redux'
+import { createStore } from 'redux';
 
 const initialState = {
   sidebarShow: 'responsive',
   connected: false,
   selectedDeviceId: null,
-  selectedDevice: null
-}
+  selectedDevice: null,
+};
 
 const changeState = (state = initialState, { type, ...rest }) => {
   switch (type) {
     case 'set':
-      return {...state, ...rest }
+      return { ...state, ...rest };
     default:
-      return state
+      return state;
   }
-}
+};
 
-const store = createStore(changeState)
-export default store
+const store = createStore(changeState);
+export default store;
