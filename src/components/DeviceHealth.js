@@ -1,9 +1,10 @@
 /* eslint-disable-rule prefer-destructuring */
 import React, { useState, useEffect } from 'react';
-import { CWidgetProgress, CCollapse, CButton, CDataTable, CCard, CCardBody } from '@coreui/react';
+import { CWidgetProgress, CCollapse, CButton, CDataTable, CCard, CCardBody, CRow, CCol } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
-import { cleanTimestamp } from '../utils/helper';
+import DatePicker from 'react-widgets/DatePicker';
+import { cleanTimestamp, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
 
@@ -11,6 +12,8 @@ const DeviceHealth = () => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [healthChecks, setHealthChecks] = useState([]);
+  const [start, setStart] = useState(addDays(new Date(), -3).toString());
+  const [end, setEnd] = useState(new Date().toString());
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
   let sanityLevel;
   let barColor;
@@ -21,11 +24,18 @@ const DeviceHealth = () => {
   };
 
   const getDeviceHealth = () => {
+    const utcStart = new Date(start).toISOString();
+    const utcEnd = new Date(end).toISOString();
+
     const options = {
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${getToken()}`,
       },
+      params : {
+        startDate: utcStart,
+        endDate: utcEnd
+      }
     };
 
     axiosInstance
@@ -67,7 +77,13 @@ const DeviceHealth = () => {
 
   useEffect(() => {
     getDeviceHealth();
+    setStart(addDays(new Date(), -3).toString());
+    setEnd(new Date().toString());
   }, []);
+  
+  useEffect(() => {
+    getDeviceHealth();
+  }, [start, end]);
 
   if (healthChecks && healthChecks.length > 0) {
     sanityLevel = healthChecks[0].sanity;
@@ -86,6 +102,26 @@ const DeviceHealth = () => {
       footer={
         <div>
           <CCollapse show={collapse}>
+            <CRow  style={{ marginBottom: '10px' }}>
+              <CCol>
+                <DatePicker
+                    selected={start === '' ? new Date() : new Date(start)}
+                    value={start === '' ? new Date() : new Date(start)}
+                    includeTime
+                    selectTime
+                    onChange={(date) => setStart(date)}
+                  />
+              </CCol>
+              <CCol>
+                <DatePicker
+                  selected={end === '' ? new Date() : new Date(end)}
+                  value={end === '' ? new Date() : new Date(end)}
+                  includeTime
+                  selectTime
+                  onChange={(date) => setEnd(date)}
+                />
+              </CCol>
+            </CRow>
             <CCard>
               <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable

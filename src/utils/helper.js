@@ -29,3 +29,9 @@ export const convertDateFromUtc = (utcDate) => {
   const date = new Date(utcDate.getTime() - dateObj.getTimezoneOffset() * 60000);
   return date;
 };
+
+export const addDays = (date, days) => {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() + days);
+  return newDate;
+}
