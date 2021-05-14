@@ -9,6 +9,7 @@ import {
   CBadge,
   CCol,
   CRow,
+  CInvalidFeedback
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -23,21 +24,28 @@ const ActionModalWidget = ({
   toggleModal,
   title,
   directions,
-  actionLabel,
   action,
   extraParameters,
 }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [chosenDate, setChosenDate] = useState(null);
+  const [validDate, setValidDate] = useState(true);
+  const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [responseBody, setResponseBody] = useState('');
+  const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
-  const formValidation = () => chosenDate !== null;
+  const formValidation = () => {
+    if(chosenDate === ''){
+      setValidDate(false);
+      return false;
+    }
+    return true;
+  };
 
   const setDateToNow = () => {
-    const now = new Date().toISOString();
+    const now = new Date().toString();
     setChosenDate(now);
   };
 
@@ -49,21 +57,27 @@ const ActionModalWidget = ({
     date.setHours(3);
     date.setMinutes(0);
 
-    setChosenDate(convertDateFromUtc(date).toISOString());
+    setChosenDate(convertDateFromUtc(date).toString());
   };
 
   const setDate = (date) => {
     if (date) {
-      setChosenDate(convertDateFromUtc(date).toISOString());
+      setChosenDate(date.toString());
     }
+  };
+
+  const confirmingIfSure = () => {
+    setCheckingIfSure(true);
   };
 
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
     setWaiting(false);
-    setChosenDate(false);
+    setChosenDate(new Date().toString());
     setResponseBody('');
+    setValidDate(true);
+    setCheckingIfSure(false);
   }, [show]);
 
   const doAction = () => {
@@ -72,19 +86,18 @@ const ActionModalWidget = ({
     setWaiting(true);
 
     const token = getToken();
+    const utcDate = new Date(chosenDate);
+    const utcDateString = utcDate.toISOString();
+
+    const parameters = { ...{
+      serialNumber: selectedDeviceId,
+      when: utcDateString
+    }, ...extraParameters}
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-      serialNumber: selectedDeviceId,
-    };
-
-    const necessaryParameters = {
-      serialNumber: selectedDeviceId,
-      when: chosenDate,
-    };
-
-    const parameters = { ...necessaryParameters, ...extraParameters };
+      Authorization: `Bearer ${token}`
+    }
 
     axiosInstance
       .post(`/device/${selectedDeviceId}/${action}`, parameters, { headers })
@@ -98,6 +111,7 @@ const ActionModalWidget = ({
         console.log(error.response);
       })
       .finally(() => {
+        setCheckingIfSure(false);
         setWaiting(false);
       });
   };
@@ -111,38 +125,35 @@ const ActionModalWidget = ({
         <h6>{directions}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
-            <CButton block color="primary" onClick={() => setDateToNow()}>
+            <CButton disabled={waiting} block color="primary" onClick={() => setDateToNow()}>
               Now
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={() => setDateToLate()}>
+            <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
               Later tonight
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="4" style={{ marginTop: '7px' }}>
-            <p>Custom (UTC):</p>
+            <p>Date:</p>
           </CCol>
           <CCol xs="12" md="8">
             <DatePicker
-              selected={Date.parse(chosenDate)}
+              selected={new Date(chosenDate)}
               includeTime
               selectTime
-              placeholder="Select custom date in UTC"
+              className={('form-control', { 'is-invalid': !validDate })}
+              value={new Date(chosenDate)}
+              placeholder="Select custom date"
               disabled={waiting}
               onChange={(date) => setDate(date)}
               min={convertDateToUtc(new Date())}
             />
           </CCol>
         </CRow>
-
-        <div style={{ marginTop: '25px' }}>
-          <p>
-            Device will {actionLabel} at (UTC): <b>{chosenDate}</b>
-          </p>
-        </div>
+        <CInvalidFeedback>You need a date...</CInvalidFeedback>
 
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
@@ -151,12 +162,21 @@ const ActionModalWidget = ({
         </div>
       </CModalBody>
       <CModalFooter>
+        <div hidden={!checkingIfSure}>Are you sure?</div>
         <CButton
+          hidden={checkingIfSure}
+          color="primary"
+          onClick={() => (formValidation() ? confirmingIfSure() : null)}
+        >
+          Schedule
+        </CButton>
+        <CButton
+          hidden={!checkingIfSure}
           disabled={waiting}
           color="primary"
           onClick={() => (formValidation() ? doAction() : null)}
         >
-          {waiting ? 'Loading...' : 'Schedule'} {'   '}
+          {waiting ? 'Loading...' : 'Yes'} {'   '}
           <CSpinner hidden={!waiting} component="span" size="sm" />
           <CBadge hidden={waiting || !hadSuccess} color="success" shape="rounded-pill">
             Success
