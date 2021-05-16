@@ -9,7 +9,7 @@ import {
   CBadge,
   CCol,
   CRow,
-  CInvalidFeedback
+  CInvalidFeedback,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -19,14 +19,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 
-const ActionModalWidget = ({
-  show,
-  toggleModal,
-  title,
-  directions,
-  action,
-  extraParameters,
-}) => {
+const ActionModalWidget = ({ show, toggleModal, title, directions, action, extraParameters }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -37,7 +30,7 @@ const ActionModalWidget = ({
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const formValidation = () => {
-    if(chosenDate === ''){
+    if (chosenDate === '') {
       setValidDate(false);
       return false;
     }
@@ -89,15 +82,18 @@ const ActionModalWidget = ({
     const utcDate = new Date(chosenDate);
     const utcDateString = utcDate.toISOString();
 
-    const parameters = { ...{
-      serialNumber: selectedDeviceId,
-      when: utcDateString
-    }, ...extraParameters}
+    const parameters = {
+      ...{
+        serialNumber: selectedDeviceId,
+        when: utcDateString,
+      },
+      ...extraParameters,
+    };
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    };
 
     axiosInstance
       .post(`/device/${selectedDeviceId}/${action}`, parameters, { headers })

@@ -187,7 +187,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         </CCardHeader>
         <CCardBody>
           <CDataTable
-            items={devices}
+            items={devices ?? []}
             fields={columns}
             border
             hover

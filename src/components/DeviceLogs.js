@@ -1,14 +1,14 @@
 /* eslint-disable-rule prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import {
-  CWidgetProgress,
+  CWidgetDropdown,
+  CRow,
+  CCol,
   CCollapse,
   CButton,
   CDataTable,
   CCard,
   CCardBody,
-  CRow,
-  CCol,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
@@ -17,23 +17,21 @@ import { cleanTimestamp, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
 
-const DeviceHealth = () => {
+const DeviceLogs = () => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [healthChecks, setHealthChecks] = useState([]);
+  const [logs, setLogs] = useState([]);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
   const [end, setEnd] = useState(new Date().toString());
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-  let sanityLevel;
-  let barColor;
 
   const toggle = (e) => {
     setCollapse(!collapse);
     e.preventDefault();
   };
 
-  const getDeviceHealth = () => {
+  const getLogs = () => {
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();
@@ -50,9 +48,9 @@ const DeviceHealth = () => {
     };
 
     axiosInstance
-      .get(`/device/${selectedDeviceId}/healthchecks`, options)
+      .get(`/device/${selectedDeviceId}/logs`, options)
       .then((response) => {
-        setHealthChecks(response.data.values);
+        setLogs(response.data.values);
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +61,6 @@ const DeviceHealth = () => {
       });
   };
 
-  // Function called from the button on the table so that a user can see more details
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
     let newDetails = details.slice();
@@ -77,9 +74,9 @@ const DeviceHealth = () => {
   };
 
   const columns = [
-    { key: 'UUID', label: 'Config. Id' },
+    { key: 'log' },
+    { key: 'severity' },
     { key: 'recorded' },
-    { key: 'sanity' },
     {
       key: 'show_details',
       label: '',
@@ -90,31 +87,22 @@ const DeviceHealth = () => {
   ];
 
   useEffect(() => {
-    getDeviceHealth();
+    getLogs();
     setStart(addDays(new Date(), -3).toString());
     setEnd(new Date().toString());
   }, []);
 
   useEffect(() => {
-    getDeviceHealth();
+    getLogs();
   }, [start, end]);
 
-  if (healthChecks && healthChecks.length > 0) {
-    sanityLevel = healthChecks[0].sanity;
-    if (sanityLevel === 100) barColor = 'gradient-success';
-    else if (sanityLevel >= 90) barColor = 'gradient-warning';
-    else barColor = 'gradient-danger';
-  }
-
   return (
-    <CWidgetProgress
-      header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
-      text="Device Health"
-      value={sanityLevel ?? 100}
-      color={barColor}
+    <CWidgetDropdown
       inverse
-      footer={
-        <div>
+      color="gradient-info"
+      header="Device Logs"
+      footerSlot={
+        <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
@@ -139,41 +127,35 @@ const DeviceHealth = () => {
             <CCard>
               <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
-                  items={healthChecks ?? []}
-                  fields={columns}
-                  style={{ color: 'white' }}
-                  loading={loading}
                   border
+                  items={logs ?? []}
+                  fields={columns}
+                  loading={loading}
+                  style={{ color: 'white' }}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
                     recorded: (item) => <td>{cleanTimestamp(item.recorded)}</td>,
-                    sanity: (item) => <td>{`${item.sanity}%`}</td>,
-                    show_details: (item, index) => {
-                      if (item.sanity === 100) {
-                        return <></>;
-                      }
-                      return (
-                        <td className="py-2">
-                          <CButton
-                            color="primary"
-                            variant="outline"
-                            shape="square"
-                            size="sm"
-                            onClick={() => {
-                              toggleDetails(index);
-                            }}
-                          >
-                            {details.includes(index) ? 'Hide' : 'Show'}
-                          </CButton>
-                        </td>
-                      );
-                    },
+                    show_details: (item, index) => (
+                      <td className="py-2">
+                        <CButton
+                          color="primary"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleDetails(index);
+                          }}
+                        >
+                          {details.includes(index) ? 'Hide' : 'Show'}
+                        </CButton>
+                      </td>
+                    ),
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre>{JSON.stringify(item.values, null, 4)}</pre>
+                            <pre>{JSON.stringify(item, null, 4)}</pre>
                           </div>
                         </CCardBody>
                       </CCollapse>
@@ -192,8 +174,10 @@ const DeviceHealth = () => {
           </CButton>
         </div>
       }
-    />
+    >
+      <CIcon name="cilList" style={{ color: 'white' }} size="lg" />
+    </CWidgetDropdown>
   );
 };
 
-export default DeviceHealth;
+export default DeviceLogs;

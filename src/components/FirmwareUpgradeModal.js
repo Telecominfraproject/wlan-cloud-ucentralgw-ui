@@ -39,9 +39,9 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       valid = false;
     }
 
-    if (chosenDate.trim() === ''){
+    if (chosenDate.trim() === '') {
       setValidDate(false);
-      valid = false
+      valid = false;
     }
     return valid;
   };
@@ -105,7 +105,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-     when: utcDateString,
+      when: utcDateString,
       uri: firmware,
     };
     axiosInstance
@@ -163,9 +163,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <CInvalidFeedback>You need a date...</CInvalidFeedback>
           </CCol>
         </CRow>
-        <div>
-          Firmware URI:
-        </div>
+        <div>Firmware URI:</div>
         <CInput
           disabled={waiting}
           className={('form-control', { 'is-invalid': !validFirmware })}

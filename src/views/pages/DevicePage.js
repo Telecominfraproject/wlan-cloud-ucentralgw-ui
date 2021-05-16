@@ -5,6 +5,8 @@ import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from '../../components/DeviceHealth';
 import DeviceConfiguration from '../../components/DeviceConfiguration';
 import DeviceActions from '../../components/DeviceActions';
+import DeviceCommands from '../../components/DeviceCommands';
+import DeviceLogs from '../../components/DeviceLogs';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
@@ -27,9 +29,11 @@ const DevicePage = () => {
       <div className="App">
         <CRow>
           <CCol xs="12" sm="6">
+            <DeviceCommands />
             <DeviceConfiguration />
           </CCol>
           <CCol xs="12" sm="6">
+            <DeviceLogs />
             <DeviceHealth />
             <DeviceActions />
           </CCol>
