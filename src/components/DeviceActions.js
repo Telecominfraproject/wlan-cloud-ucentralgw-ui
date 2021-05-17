@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import ActionModalWidget from '../widgets/ActionModalWidget';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
+import TraceModalWidget from '../widgets/TraceModalWidget';
 
 const DeviceActions = () => {
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showTraceModal, setShowTraceModal] = useState(false);
 
   const toggleRebootModal = () => {
     setShowRebootModal(!showRebootModal);
@@ -18,6 +20,10 @@ const DeviceActions = () => {
 
   const toggleUpgradeModal = () => {
     setShowUpgradeModal(!showUpgradeModal);
+  };
+
+  const toggleTraceModal = () => {
+    setShowTraceModal(!showTraceModal);
   };
 
   return (
@@ -42,7 +48,11 @@ const DeviceActions = () => {
               Firmware Upgrade
             </CButton>
           </CCol>
-          <CCol />
+          <CCol>
+            <CButton block color="primary" onClick={toggleTraceModal}>
+              Trace
+            </CButton>
+          </CCol>
         </CRow>
       </CCardBody>
       <ActionModalWidget
@@ -63,6 +73,7 @@ const DeviceActions = () => {
         extraParameters={{ duration: 10, pattern: 'on' }}
       />
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={setShowUpgradeModal} />
+      <TraceModalWidget show={showTraceModal} toggleModal={setShowTraceModal} />
     </CCard>
   );
 };

@@ -118,6 +118,7 @@ const DeviceHealth = () => {
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
+                From:
                 <DatePicker
                   selected={start === '' ? new Date() : new Date(start)}
                   value={start === '' ? new Date() : new Date(start)}
@@ -127,6 +128,7 @@ const DeviceHealth = () => {
                 />
               </CCol>
               <CCol>
+                To:
                 <DatePicker
                   selected={end === '' ? new Date() : new Date(end)}
                   value={end === '' ? new Date() : new Date(end)}
@@ -163,7 +165,7 @@ const DeviceHealth = () => {
                               toggleDetails(index);
                             }}
                           >
-                            {details.includes(index) ? 'Hide' : 'Show'}
+                            <CIcon name="cilList" size="lg" />
                           </CButton>
                         </td>
                       );
