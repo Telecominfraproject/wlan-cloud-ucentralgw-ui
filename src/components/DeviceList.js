@@ -13,7 +13,7 @@ import {
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
-import { cilSync, cilInfo } from '@coreui/icons';
+import { cilSync, cilInfo, cilBadge } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
@@ -120,10 +120,11 @@ const DeviceList = () => {
 const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, updatePage }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
+    { key: 'verifiedCertificate', label: 'Certificate' },
     { key: 'serialNumber', _style: { width: '5%' } },
     { key: 'UUID', label: 'Config Id', _style: { width: '5%' } },
     { key: 'firmware', filter: false, _style: { width: '20%' } },
-    { key: 'manufacturer', filter: false, _style: { width: '20%' } },
+    { key: 'compatible', filter: false, _style: { width: '20%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '10%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '10%' } },
     { key: 'ipAddress', _style: { width: '20%' } },
@@ -161,6 +162,35 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
     }
     return null;
   };
+
+  const getCertBadge = (cert) => {
+    if(cert === 'NO_CERTIFICATE') {
+      return <p/>;
+    }
+
+    let color = 'transparent';
+    switch(cert) {
+      case 'VALID_CERTIFICATE':
+        color = 'danger'
+        break;
+      case 'MISMATCH_SERIAL':
+        color = 'warning'
+        break;
+      case 'VERIFIED':
+        color = 'success';
+        break;
+      default:
+        return(
+          <h6>Unknown</h6>
+        );
+    }
+    return (
+      <CBadge color={color}>
+        <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+      </CBadge>
+    );
+  }
+  
 
   const getStatusBadge = (status) => {
     if (status) {
@@ -205,17 +235,27 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
                   </CPopover>
                 </td>
               ),
-              firmware: (item) => (
-                <td>
-                  <CPopover content={item.firmware ? item.firmware : 'N/A'} placement="top">
-                    <p>{cropStringWithEllipsis(item.firmware, 22)}</p>
+              verifiedCertificate: (item) => (
+                <td style={{ textAlign: 'center' }}>
+                  <CPopover
+                    content={item.verifiedCertificate}
+                    placement="top"
+                  >
+                    {getCertBadge(item.verifiedCertificate)}
                   </CPopover>
                 </td>
               ),
-              manufacturer: (item) => (
+              firmware: (item) => (
                 <td>
-                  <CPopover content={item.manufacturer ? item.manufacturer : 'N/A'} placement="top">
-                    <p>{cropStringWithEllipsis(item.manufacturer, 23)}</p>
+                  <CPopover content={item.firmware ? item.firmware : 'N/A'} placement="top">
+                    <p>{cropStringWithEllipsis(item.firmware, 20)}</p>
+                  </CPopover>
+                </td>
+              ),
+              compatible: (item) => (
+                <td>
+                  <CPopover content={item.compatible ? item.compatible : 'N/A'} placement="top">
+                    <p>{cropStringWithEllipsis(item.compatible, 20)}</p>
                   </CPopover>
                 </td>
               ),
@@ -224,7 +264,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               ipAddress: (item) => (
                 <td>
                   <CPopover content={item.ipAddress ? item.ipAddress : 'N/A'} placement="top">
-                    <p>{cropStringWithEllipsis(item.ipAddress, 22)}</p>
+                    <p>{cropStringWithEllipsis(item.ipAddress, 20)}</p>
                   </CPopover>
                 </td>
               ),
