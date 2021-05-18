@@ -6,7 +6,6 @@ import {
     CModalBody,
     CModalFooter,
     CSpinner,
-    CBadge,
     CCol,
     CRow,
     CForm,
@@ -186,12 +185,6 @@ const BlinkModalWidget = ({show, toggleModal}) => {
           >
             {waiting ? 'Loading...' : 'Yes'} {'   '}
             <CSpinner hidden={!waiting} component="span" size="sm" />
-            <CBadge hidden={waiting || !hadSuccess} color="success" shape="rounded-pill">
-              Success
-            </CBadge>
-            <CBadge hidden={waiting || !hadFailure} color="danger" shape="rounded-pill">
-              Request Failed
-            </CBadge>
           </CButton>
           <CButton color="secondary" onClick={toggleModal}>
             Cancel
