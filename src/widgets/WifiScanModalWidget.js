@@ -10,15 +10,11 @@ import {
     CFormGroup,
     CInputRadio,
     CLabel,
-    CForm,
-    CCard,
-    CCardTitle,
-    CCardBody,
-    CDataTable,
-    CCardHeader
+    CForm
   } from '@coreui/react';
   import React, { useState, useEffect } from 'react';
   import { useSelector } from 'react-redux';
+  import WifiChannelTable from '../components/WifiChannels/WifiChannelTable';
   import 'react-widgets/styles.css';
   import { getToken } from '../utils/authHelper';
   import axiosInstance from '../utils/axiosInstance';
@@ -97,8 +93,15 @@ import {
         .post(`/device/${selectedDeviceId}/wifiscan`, parameters, { headers })
         .then((response) => {
             const scanList = response.data.results.status.scan.scan;
-            setChannelList(parseThroughList(scanList));
-            setHadSuccess(true);
+
+            if(scanList){
+              setChannelList(parseThroughList(scanList));
+              setHadSuccess(true);
+            }
+            else{
+              setHadFailure(true);
+            }
+            
         })
         .catch((error) => {
           setHadFailure(true);
@@ -111,13 +114,8 @@ import {
         });
     };
 
-    const columns = [
-        { key: 'SSID', _style: { width: '70%' }},
-        { key: 'Signal' },
-    ];
-  
     return (
-      <CModal show={show} onClose={toggleModal}>
+      <CModal size="lg" show={show} onClose={toggleModal}>
         <CModalHeader closeButton>
           <CModalTitle>Wifi Scan</CModalTitle>
         </CModalHeader>
@@ -138,30 +136,13 @@ import {
             </CForm>
           </CRow>
           <div style={{marginTop: '3%'}} hidden={!hadSuccess && !hadFailure}>
-            {
-                channelList.map((channel) => 
-                        <CCard>
-                            <CCardHeader>
-                                <CCardTitle>
-                                    Channel #{channel.channel}
-                                </CCardTitle>
-                            </CCardHeader>
-                            <CCardBody>
-                                <CDataTable
-                                    items={channel.devices}
-                                    fields={columns}
-                                    style={{ color: 'white' }}
-                                />
-                            </CCardBody>
-                        </CCard>
-                )
-            }
+            <WifiChannelTable channels={channelList}/>
           </div>
         </CModalBody>
         <CModalFooter>
           <div hidden={!checkingIfSure}>Are you sure?</div>
           <CButton hidden={checkingIfSure} color="primary" onClick={() => confirmingIfSure()}>
-            Scan
+            {(hadSuccess || hadFailure) ? 'Re-Scan' : 'Scan'}
           </CButton>
           <CButton
             hidden={!checkingIfSure}
