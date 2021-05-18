@@ -234,6 +234,17 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
             hover
             loading={loading}
             scopedSlots={{
+              serialNumber: (item) => (
+                <td style={{ textAlign: 'center' }}>
+                  <CLink
+                      className="c-subheader-nav-link"
+                      aria-current="page"
+                      to={() => `/devices/${item.serialNumber}`}
+                    >
+                      {item.serialNumber}
+                  </CLink>
+                </td>
+              ),
               deviceType: (item) => (
                 <td style={{ textAlign: 'center' }}>
                   <CPopover
