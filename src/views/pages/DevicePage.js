@@ -29,8 +29,8 @@ const DevicePage = () => {
       <div className="App">
         <CRow>
           <CCol xs="12" sm="6">
-            <DeviceCommands />
             <DeviceConfiguration />
+            <DeviceCommands />
           </CCol>
           <CCol xs="12" sm="6">
             <DeviceLogs />
