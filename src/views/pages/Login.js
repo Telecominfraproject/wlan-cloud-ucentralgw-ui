@@ -65,10 +65,8 @@ const Login = () => {
         sessionStorage.setItem('access_token', response.data.access_token);
         dispatch({ type: 'set', connected: true });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setHadError(true);
-        console.log(error.response);
       });
   };
 

@@ -52,9 +52,7 @@ const DeviceLogs = () => {
       .then((response) => {
         setLogs(response.data.values);
       })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.response);
+      .catch(() => {
       })
       .finally(() => {
         setLoading(false);

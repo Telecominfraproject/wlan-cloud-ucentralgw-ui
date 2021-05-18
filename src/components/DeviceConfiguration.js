@@ -36,9 +36,7 @@ const DeviceConfiguration = () => {
       .then((response) => {
         setDevice(response.data);
       })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.response);
+      .catch(() => {
       });
   };
 

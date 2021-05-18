@@ -5,10 +5,7 @@ const axiosInstance = axios.create();
 
 axiosRetry(axiosInstance, {
   retries: 3,
-  retryDelay: (retryCount) => {
-    console.log(`retry attempt: ${retryCount}`);
-    return axiosRetry.exponentialDelay;
-  },
+  retryDelay: () => axiosRetry.exponentialDelay,
 });
 
 axiosInstance.defaults.headers.get.Accept = 'application/json';
@@ -27,18 +24,14 @@ axiosInstance.interceptors.response.use(
   // Success actions
   undefined,
   (error) => {
-    console.log(error);
     switch (error.response.status) {
       case 401:
-        console.log(`Error 401 ${error}`);
         break;
       case 403:
-        console.log(`Error 403 ${error}`);
         sessionStorage.clear();
         window.location.href = '/';
         break;
       default:
-        console.log(`Default ${error.response.status}`);
         break;
     }
     return Promise.reject(error);

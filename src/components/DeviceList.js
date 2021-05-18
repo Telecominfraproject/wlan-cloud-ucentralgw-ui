@@ -47,9 +47,8 @@ const DeviceList = () => {
         setSerialNumbers(response.data.serialNumbers);
         setLoadedSerials(true);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        console.log(error.response);
       });
   };
 
@@ -74,9 +73,8 @@ const DeviceList = () => {
         setDevices(response.data.devicesWithStatus);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        console.log(error.response);
       });
   };
 

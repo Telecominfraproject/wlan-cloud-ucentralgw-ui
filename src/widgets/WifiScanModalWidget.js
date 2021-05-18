@@ -103,10 +103,8 @@ import {
             }
             
         })
-        .catch((error) => {
+        .catch(() => {
           setHadFailure(true);
-          console.log(error);
-          console.log(error.response);
         })
         .finally(() => {
           setCheckingIfSure(false);

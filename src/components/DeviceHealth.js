@@ -54,9 +54,7 @@ const DeviceHealth = () => {
       .then((response) => {
         setHealthChecks(response.data.values);
       })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.response);
+      .catch(() => {
       })
       .finally(() => {
         setLoading(false);

@@ -94,10 +94,8 @@ const BlinkModalWidget = ({show, toggleModal}) => {
           setResponseBody(JSON.stringify(response.data, null, 4));
           setHadSuccess(true);
         })
-        .catch((error) => {
+        .catch(() => {
           setHadFailure(true);
-          console.log(error);
-          console.log(error.response);
         })
         .finally(() => {
           setCheckingIfSure(false);

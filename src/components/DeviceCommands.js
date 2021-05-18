@@ -83,9 +83,7 @@ const DeviceCommands = () => {
       .then((response) => {
         setCommands(response.data.commands);
       })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.response);
+      .catch(() => {
       })
       .finally(() => {
         setLoading(false);
