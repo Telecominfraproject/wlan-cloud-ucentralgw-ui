@@ -24,6 +24,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
   const [waiting, setWaiting] = useState(false);
   const [validDate, setValidDate] = useState(true);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
+  const [doingNow, setDoingNow] = useState(false);
   const [responseBody, setResponseBody] = useState('');
   const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
@@ -34,11 +35,6 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
       return false;
     }
     return true;
-  };
-
-  const setDateToNow = () => {
-    const now = new Date().toString();
-    setChosenDate(now);
   };
 
   const setDateToLate = () => {
@@ -72,7 +68,8 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
     setCheckingIfSure(false);
   }, [show]);
 
-  const doAction = () => {
+  const doAction = (isNow) => {
+    setDoingNow(isNow);
     setHadFailure(false);
     setHadSuccess(false);
     setWaiting(true);
@@ -84,7 +81,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
     const parameters = {
       ...{
         serialNumber: selectedDeviceId,
-        when: utcDateString,
+        when: isNow ? 0 : utcDateString,
       },
       ...extraParameters,
     };
@@ -119,9 +116,15 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
         <h6>{directions}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
-            <CButton disabled={waiting} block color="primary" onClick={() => setDateToNow()}>
-              Now
-            </CButton>
+              <CButton 
+                onClick={() => doAction(true)} 
+                disabled={waiting} 
+                block 
+                color="primary"
+              >
+                {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+                <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
+              </CButton>
           </CCol>
           <CCol>
             <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
@@ -159,6 +162,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
         <div hidden={!checkingIfSure}>Are you sure?</div>
         <CButton
           hidden={checkingIfSure}
+          disabled={waiting}
           color="primary"
           onClick={() => (formValidation() ? confirmingIfSure() : null)}
         >
@@ -168,10 +172,10 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
           hidden={!checkingIfSure}
           disabled={waiting}
           color="primary"
-          onClick={() => (formValidation() ? doAction() : null)}
+          onClick={() => (formValidation() ? doAction(false) : null)}
         >
-          {waiting ? 'Loading...' : 'Yes'} {'   '}
-          <CSpinner hidden={!waiting} component="span" size="sm" />
+          {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
+          <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
         </CButton>
         <CButton color="secondary" onClick={toggleModal}>
           Cancel
