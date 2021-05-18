@@ -104,11 +104,16 @@ const DeviceCommands = () => {
 
   const getDetails = (command, commandDetails) => {
     if (command === 'wifiscan') {
-      const scanList = commandDetails.results.status.scan.scan;
-      if(scanList)
-        return (
-          <WifiChannelTable channels={parseThroughList(scanList)}/>
-        );
+      try{
+        const scanList = commandDetails.results.status.scan.scan;
+        if(scanList)
+          return (
+            <WifiChannelTable channels={parseThroughList(scanList)}/>
+          );
+      }
+      catch(error) {
+        console.log(error);
+      }
     }
     else if (command === 'reboot' || command === 'leds'){
       const result = commandDetails.results;
