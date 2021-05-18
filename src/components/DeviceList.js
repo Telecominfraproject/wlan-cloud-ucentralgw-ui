@@ -180,7 +180,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         break;
       case 'MISMATCH_SERIAL':
         return (
-          <CBadge color={color} style={{backgroundColor: '##FFFF5C'}}>
+          <CBadge color={color} style={{backgroundColor: '#FFFF5C'}}>
             <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           </CBadge>
         );
