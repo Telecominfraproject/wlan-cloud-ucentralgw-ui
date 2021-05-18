@@ -71,7 +71,7 @@ const TraceModalWidget = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: utcDateString,
+      when: dateChosen <= now ? '' : utcDateString,
       network: 'lan'
     };
 

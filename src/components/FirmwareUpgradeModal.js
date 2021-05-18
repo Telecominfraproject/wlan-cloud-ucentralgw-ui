@@ -6,7 +6,6 @@ import {
   CModalBody,
   CModalFooter,
   CSpinner,
-  CBadge,
   CCol,
   CRow,
   CInput,
@@ -26,10 +25,12 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [waiting, setWaiting] = useState(false);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [firmware, setFirmware] = useState('');
+  const [doingNow, setDoingNow] = useState(false);
   const [validFirmware, setValidFirmware] = useState(true);
   const [validDate, setValidDate] = useState(true);
   const [responseBody, setResponseBody] = useState('');
   const [checkingIfSure, setCheckingIfSure] = useState(false);
+  const [checkingIfNow, setCheckingIfNow] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const formValidation = () => {
@@ -45,12 +46,6 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
     }
     return valid;
   };
-
-  const setDateToNow = () => {
-    const now = new Date().toString();
-    setChosenDate(now);
-  };
-
   const setDateToLate = () => {
     const date = convertDateToUtc(new Date());
     if (date.getHours() >= 3) {
@@ -72,6 +67,10 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
     setCheckingIfSure(true);
   };
 
+  const confirmingIfNow = () => {
+    setCheckingIfNow(true);
+  }
+
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
@@ -81,6 +80,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
     setValidFirmware(true);
     setResponseBody('');
     setCheckingIfSure(false);
+    setDoingNow(false);
+    setCheckingIfNow(false);
   }, [show]);
 
   useEffect(() => {
@@ -88,7 +89,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
     setValidDate(true);
   }, [firmware, chosenDate]);
 
-  const postUpgrade = () => {
+  const postUpgrade = (isNow) => {
+    setDoingNow(isNow);
     setHadFailure(false);
     setHadSuccess(false);
     setWaiting(true);
@@ -105,19 +107,22 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: utcDateString,
+      when: isNow ? '' : utcDateString,
       uri: firmware,
     };
     axiosInstance
       .post(`/device/${selectedDeviceId}/upgrade`, parameters, { headers })
-      .then((response) => {
-        setResponseBody(JSON.stringify(response.data, null, 4));
+      .then(() => {
+        setResponseBody('Command submitted successfully');
         setHadSuccess(true);
       })
       .catch(() => {
+        setResponseBody('Error while submitting command');
         setHadFailure(true);
       })
       .finally(() => {
+        setCheckingIfNow(false);
+        setDoingNow(false);
         setCheckingIfSure(false);
         setWaiting(false);
       });
@@ -132,9 +137,25 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         <h6>Choose a time and a firmware version for this device</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
-            <CButton disabled={waiting} block color="primary" onClick={() => setDateToNow()}>
-              Now
-            </CButton>
+              <CButton
+                color="primary"
+                onClick={() => formValidation() ? confirmingIfNow() : null} 
+                disabled={waiting} 
+                hidden={checkingIfNow}
+                block 
+              >
+                Do Now!
+              </CButton>
+              <CButton
+                color="primary"
+                onClick={() => formValidation() ? postUpgrade(true) : null}
+                disabled={waiting}
+                hidden={!checkingIfNow}
+                block
+              >
+                {waiting && doingNow ? 'Loading...' : 'Confirm'}
+                <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
+              </CButton>
           </CCol>
           <CCol>
             <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
@@ -184,6 +205,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         <div hidden={!checkingIfSure}>Are you sure?</div>
         <CButton
           hidden={checkingIfSure}
+          disabled={waiting}
           color="primary"
           onClick={() => (formValidation() ? confirmingIfSure() : null)}
         >
@@ -195,14 +217,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
           color="primary"
           onClick={() => (formValidation() ? postUpgrade() : null)}
         >
-          {waiting ? 'Loading...' : 'Yes'} {'   '}
-          <CSpinner hidden={!waiting} component="span" size="sm" />
-          <CBadge hidden={waiting || !hadSuccess} color="success" shape="rounded-pill">
-            Success
-          </CBadge>
-          <CBadge hidden={waiting || !hadFailure} color="danger" shape="rounded-pill">
-            Request Failed
-          </CBadge>
+          {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
+          <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
         </CButton>
         <CButton color="secondary" onClick={toggleModal}>
           Cancel

@@ -76,7 +76,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
   
       const parameters = {
         serialNumber: selectedDeviceId,
-        when: isNow ? 0 : utcDateString,
+        when: isNow ? '' : utcDateString,
         pattern: chosenPattern,
         duration: 30
       };
@@ -189,7 +189,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
             onClick={() => doAction(false)}
           >
             {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
-            <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
+            <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
           </CButton>
           <CButton color="secondary" onClick={toggleModal}>
             Cancel

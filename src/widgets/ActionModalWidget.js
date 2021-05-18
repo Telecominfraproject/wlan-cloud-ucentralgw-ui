@@ -62,6 +62,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
     setHadSuccess(false);
     setHadFailure(false);
     setWaiting(false);
+    setDoingNow(false);
     setChosenDate(new Date().toString());
     setResponseBody('');
     setValidDate(true);
@@ -81,7 +82,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
     const parameters = {
       ...{
         serialNumber: selectedDeviceId,
-        when: isNow ? 0 : utcDateString,
+        when: isNow ? '' : utcDateString,
       },
       ...extraParameters,
     };
@@ -102,6 +103,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
         setHadFailure(true);
       })
       .finally(() => {
+        setDoingNow(false);
         setCheckingIfSure(false);
         setWaiting(false);
       });
