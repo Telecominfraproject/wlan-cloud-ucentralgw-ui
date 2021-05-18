@@ -19,7 +19,8 @@ import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 import { cleanBytesString, cropStringWithEllipsis } from '../utils/helper';
 import iotIcon from '../assets/icons/iot.png';
-import internetSwitch from '../assets/icons/networkswitch.png';
+import apIcon from '../assets/icons/AP.png';
+import internetSwitch from '../assets/icons/Switch.png';
 
 const DeviceList = () => {
   const [loadedSerials, setLoadedSerials] = useState(false);
@@ -150,9 +151,10 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
 
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default') {
-      return <CIcon name="cilRouter" size="2xl" alt="AP" />;
+      return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="IOT" />;
+      // return <CIcon name="cilRouter" size="2xl" alt="AP" />;
     }
-    if (deviceType === 'IOT') {
+    if (deviceType === 'MESH') {
       return <img src={iotIcon} style={{ height: '32px', width: '32px' }} alt="IOT" />;
     }
     if (deviceType === 'SWITCH') {
