@@ -16,9 +16,12 @@ import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
-import WifiChannelTable from './WifiChannels/WifiChannelTable';
+import WifiScanResultModalWidget from '../widgets/WifiScanResultModalWidget';
 
 const DeviceCommands = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [chosenWifiScan, setChosenWifiScan] = useState(null);
+  const [scanDate, setScanDate] = useState('');
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [commands, setCommands] = useState([]);
@@ -32,36 +35,10 @@ const DeviceCommands = () => {
     e.preventDefault();
   };
 
-  const parseThroughList = (scanList) => {
-    const dbmNumber = 4294967295;
-    const listOfChannels = [];
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
-    scanList.forEach((scan) => {
-        if(!listOfChannels.includes(scan.channel)){
-            listOfChannels.push(scan.channel);
-        }
-    });
-
-    const finalList = [];
-    listOfChannels.forEach((channelNumber) => {
-        const channel = { 
-            channel: channelNumber,
-            devices: []
-        };
-
-        scanList.forEach((device) => {
-           if(device.channel === channelNumber){
-               const deviceToAdd = {};
-               deviceToAdd.SSID = device.ssid ?? 'N/A';
-               deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
-               channel.devices.push(deviceToAdd);
-           } 
-        });
-
-        finalList.push(channel);
-    });
-    return finalList;
-  }
   const getCommands = () => {
     setLoading(true);
     const utcStart = new Date(start).toISOString();
@@ -90,39 +67,40 @@ const DeviceCommands = () => {
       });
   };
 
-  const toggleDetails = (index) => {
-    const position = details.indexOf(index);
-    let newDetails = details.slice();
-
-    if (position !== -1) {
-      newDetails.splice(position, 1);
-    } else {
-      newDetails = [...details, index];
+  const toggleDetails = (item, index) => {
+    if(item.command !== 'wifiscan'){
+      const position = details.indexOf(index);
+      let newDetails = details.slice();
+  
+      if (position !== -1) {
+        newDetails.splice(position, 1);
+      } else {
+        newDetails = [...details, index];
+      }
+      setDetails(newDetails);
     }
-    setDetails(newDetails);
+    else{
+      setChosenWifiScan(item.results.status.scan.scan);
+      setScanDate(item.completed);
+      console.log(scanDate);
+      setShowModal(true);
+    }
   };
 
   const getDetails = (command, commandDetails) => {
     if (command === 'wifiscan') {
-      try{
-        const scanList = commandDetails.results.status.scan.scan;
-        if(scanList)
-          return (
-            <WifiChannelTable channels={parseThroughList(scanList)}/>
-          );
-      }
-      catch(error) {
-        console.log(error);
-      }
+      return null;
     }
-    else if (command === 'reboot' || command === 'leds'){
+    
+    if (command === 'reboot' || command === 'leds'){
       const result = commandDetails.results;
       if(result)
         return (
           <pre>{JSON.stringify(result, null, 4)}</pre>
         );
     }
-      return <pre>{JSON.stringify(commandDetails, null, 4)}</pre>
+
+    return <pre>{JSON.stringify(commandDetails, null, 4)}</pre>
     
   }
   const columns = [
@@ -196,9 +174,8 @@ const DeviceCommands = () => {
                           variant={details.includes(index) ? "" : "outline"}
                           shape="square"
                           size="sm"
-
                           onClick={() => {
-                            toggleDetails(index);
+                            toggleDetails(item, index);
                           }}
                         >
                           <CIcon name="cilList" size="lg" />
@@ -230,6 +207,7 @@ const DeviceCommands = () => {
         </div>
       }
     >
+    <WifiScanResultModalWidget show={showModal} toggle={toggleModal} scanResults={chosenWifiScan} date={scanDate}/>
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>
   );

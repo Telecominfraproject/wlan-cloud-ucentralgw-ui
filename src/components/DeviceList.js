@@ -18,7 +18,7 @@ import CIcon from '@coreui/icons-react';
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
 import { cleanBytesString, cropStringWithEllipsis } from '../utils/helper';
-import iotIcon from '../assets/icons/iot.png';
+import meshIcon from '../assets/icons/Mesh.png';
 import apIcon from '../assets/icons/AP.png';
 import internetSwitch from '../assets/icons/Switch.png';
 
@@ -151,11 +151,11 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
 
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default' || deviceType === 'AP') {
-      return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="IOT" />;
+      return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="AP" />;
       // return <CIcon name="cilRouter" size="2xl" alt="AP" />;
     }
     if (deviceType === 'MESH') {
-      return <img src={iotIcon} style={{ height: '32px', width: '32px' }} alt="IOT" />;
+      return <img src={meshIcon} style={{ height: '32px', width: '32px' }} alt="MESH" />;
     }
     if (deviceType === 'SWITCH') {
       return <img src={internetSwitch} style={{ height: '32px', width: '32px' }} alt="SWITCH" />;
