@@ -28,7 +28,6 @@ import {
     const [checkingIfSure, setCheckingIfSure] = useState(false);
     const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
   
-    const dbmNumber = 4294967295;
 
     const confirmingIfSure = () => {
       setCheckingIfSure(true);
@@ -44,6 +43,7 @@ import {
     }, [show]);
   
     const parseThroughList = (scanList) => {
+        const dbmNumber = 4294967295;
         const listOfChannels = [];
 
         scanList.forEach((scan) => {

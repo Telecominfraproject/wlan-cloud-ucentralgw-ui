@@ -16,6 +16,7 @@ import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
+import WifiChannelTable from './WifiChannels/WifiChannelTable';
 
 const DeviceCommands = () => {
   const [collapse, setCollapse] = useState(false);
@@ -31,6 +32,36 @@ const DeviceCommands = () => {
     e.preventDefault();
   };
 
+  const parseThroughList = (scanList) => {
+    const dbmNumber = 4294967295;
+    const listOfChannels = [];
+
+    scanList.forEach((scan) => {
+        if(!listOfChannels.includes(scan.channel)){
+            listOfChannels.push(scan.channel);
+        }
+    });
+
+    const finalList = [];
+    listOfChannels.forEach((channelNumber) => {
+        const channel = { 
+            channel: channelNumber,
+            devices: []
+        };
+
+        scanList.forEach((device) => {
+           if(device.channel === channelNumber){
+               const deviceToAdd = {};
+               deviceToAdd.SSID = device.ssid ?? 'N/A';
+               deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
+               channel.devices.push(deviceToAdd);
+           } 
+        });
+
+        finalList.push(channel);
+    });
+    return finalList;
+  }
   const getCommands = () => {
     setLoading(true);
     const utcStart = new Date(start).toISOString();
@@ -73,6 +104,24 @@ const DeviceCommands = () => {
     setDetails(newDetails);
   };
 
+  const getDetails = (command, commandDetails) => {
+    if (command === 'wifiscan') {
+      const scanList = commandDetails.results.status.scan.scan;
+      if(scanList)
+        return (
+          <WifiChannelTable channels={parseThroughList(scanList)}/>
+        );
+    }
+    else if (command === 'reboot' || command === 'leds'){
+      const result = commandDetails.results;
+      if(result)
+        return (
+          <pre>{JSON.stringify(result, null, 4)}</pre>
+        );
+    }
+      return <pre>{JSON.stringify(commandDetails, null, 4)}</pre>
+    
+  }
   const columns = [
     { key: 'UUID', label: 'Id' },
     { key: 'command' },
@@ -158,7 +207,7 @@ const DeviceCommands = () => {
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre>{JSON.stringify(item.details, null, 4)}</pre>
+                            {getDetails(item.command, item)}
                           </div>
                         </CCardBody>
                       </CCollapse>
