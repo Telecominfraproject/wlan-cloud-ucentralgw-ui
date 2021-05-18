@@ -53,10 +53,6 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     setPackets(100);
   }, [show]);
 
-  useEffect(() => {
-    console.log(`packets: ${packets} duration: ${duration}`);
-  }, [duration, packets]);
-
   const doAction = () => {
     setHadFailure(false);
     setHadSuccess(false);
