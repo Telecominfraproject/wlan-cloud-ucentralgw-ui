@@ -141,9 +141,10 @@ const DeviceCommands = () => {
                       <td className="py-2">
                         <CButton
                           color="primary"
-                          variant="outline"
+                          variant={details.includes(index) ? "" : "outline"}
                           shape="square"
                           size="sm"
+
                           onClick={() => {
                             toggleDetails(index);
                           }}

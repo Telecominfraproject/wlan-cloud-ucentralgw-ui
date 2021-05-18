@@ -116,7 +116,7 @@ const DeviceLogs = () => {
                 />
               </CCol>
               <CCol>
-                Top:
+                To:
                 <DatePicker
                   selected={end === '' ? new Date() : new Date(end)}
                   value={end === '' ? new Date() : new Date(end)}
@@ -141,7 +141,7 @@ const DeviceLogs = () => {
                       <td className="py-2">
                         <CButton
                           color="primary"
-                          variant="outline"
+                          variant={details.includes(index) ? "" : "outline"}
                           shape="square"
                           size="sm"
                           onClick={() => {
