@@ -88,11 +88,12 @@ const TraceModalWidget = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(`/device/${selectedDeviceId}/trace`, parameters, { headers })
-      .then((response) => {
-        setResponseBody(JSON.stringify(response.data, null, 4));
+      .then(() => {
+        setResponseBody('Command submitted successfully');
         setHadSuccess(true);
       })
       .catch(() => {
+        setResponseBody('Error while submitting command');
         setHadFailure(true);
       })
       .finally(() => {

@@ -61,6 +61,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
       setResponseBody('');
       setPattern('on');
       setCheckingIfSure(false);
+      setDoingNow(false);
     }, [show]);
   
     const doAction = (isNow) => {
@@ -87,14 +88,16 @@ const BlinkModalWidget = ({show, toggleModal}) => {
   
       axiosInstance
         .post(`/device/${selectedDeviceId}/leds`, parameters, { headers })
-        .then((response) => {
-          setResponseBody(JSON.stringify(response.data, null, 4));
+        .then(() => {
+          setResponseBody('Command submitted!');
           setHadSuccess(true);
         })
         .catch(() => {
+          setResponseBody('Error while submitting command!');
           setHadFailure(true);
         })
         .finally(() => {
+          setDoingNow(false);
           setCheckingIfSure(false);
           setWaiting(false);
         });
@@ -116,7 +119,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
                 color="primary"
               >
                 {waiting && doingNow ? 'Loading...' : 'Do Now!'}
-                <CSpinner hidden={!waiting && doingNow} component="span" size="sm" />
+                <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
               </CButton>
             </CCol>
             <CCol>
@@ -186,7 +189,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
             onClick={() => doAction(false)}
           >
             {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
-            <CSpinner hidden={!waiting && doingNow} component="span" size="sm" />
+            <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
           </CButton>
           <CButton color="secondary" onClick={toggleModal}>
             Cancel

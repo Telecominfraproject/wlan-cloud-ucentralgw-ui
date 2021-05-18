@@ -67,7 +67,11 @@ const DeviceActions = () => {
               Wifi Scan
             </CButton>
           </CCol>
-          <CCol/>
+          <CCol>
+            <CButton block color="primary" disabled>
+              Factory Reset
+            </CButton>
+          </CCol>
         </CRow>
       </CCardBody>
       <ActionModalWidget

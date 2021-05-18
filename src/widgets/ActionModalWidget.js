@@ -96,11 +96,12 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
 
     axiosInstance
       .post(`/device/${selectedDeviceId}/${action}`, parameters, { headers })
-      .then((response) => {
-        setResponseBody(JSON.stringify(response.data, null, 4));
+      .then(() => {
+        setResponseBody('Command submitted successfully');
         setHadSuccess(true);
       })
       .catch(() => {
+        setResponseBody('Error while submitting command');
         setHadFailure(true);
       })
       .finally(() => {
