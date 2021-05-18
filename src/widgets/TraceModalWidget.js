@@ -76,14 +76,20 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     setWaiting(true);
 
     const token = getToken();
-    const utcDate = new Date(chosenDate);
-    const utcDateString = utcDate.toISOString();
+    const dateChosen = new Date(chosenDate);
+    const now = new Date();
+    let utcDateString = dateChosen.toISOString();
+
+    if(dateChosen <= now){
+      const newDate = new Date();
+      newDate.setSeconds(newDate.getSeconds() + 60);
+      utcDateString = newDate.toISOString();
+    }
 
     const parameters = {
       serialNumber: selectedDeviceId,
       when: utcDateString,
-      network: 'lan',
-      interface: 'lan',
+      network: 'lan'
     };
 
     if (usingDuration) {

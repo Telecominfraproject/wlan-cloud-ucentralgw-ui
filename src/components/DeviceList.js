@@ -13,7 +13,7 @@ import {
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
-import { cilSync, cilInfo, cilBadge } from '@coreui/icons';
+import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { getToken } from '../utils/authHelper';
 import axiosInstance from '../utils/axiosInstance';
@@ -120,7 +120,7 @@ const DeviceList = () => {
 const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, updatePage }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
-    { key: 'verifiedCertificate', label: 'Certificate' },
+    { key: 'verifiedCertificate', label: 'Certificate', _style: { width: '1%' } },
     { key: 'serialNumber', _style: { width: '5%' } },
     { key: 'UUID', label: 'Config Id', _style: { width: '5%' } },
     { key: 'firmware', filter: false, _style: { width: '20%' } },
@@ -165,7 +165,12 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
 
   const getCertBadge = (cert) => {
     if(cert === 'NO_CERTIFICATE') {
-      return <p/>;
+      return (
+        <div style={{position: 'relative'}}>
+          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}}name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+          <CIcon style={{position: 'absolute', zIndex: 99, left: '21%', color: '#e55353'}} name="cil-ban" content={cilBan} size="3xl" alt="AP" />
+        </div>
+      );
     }
 
     let color = 'transparent';
@@ -174,18 +179,19 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         color = 'danger'
         break;
       case 'MISMATCH_SERIAL':
-        color = 'warning'
+        color = '#fdfd96'
         break;
       case 'VERIFIED':
         color = 'success';
         break;
       default:
         return(
-          <h6>Unknown</h6>
+          <p>Unknown</p>
         );
     }
+    console.log(color);
     return (
-      <CBadge color={color}>
+      <CBadge color={color} style={{backgroundColor: '#fdfd96'}}>
         <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
       </CBadge>
     );
