@@ -24,17 +24,13 @@ import axiosInstance from '../utils/axiosInstance';
 const BlinkModalWidget = ({show, toggleModal}) => {
     const [hadSuccess, setHadSuccess] = useState(false);
     const [hadFailure, setHadFailure] = useState(false);
+    const [doingNow, setDoingNow] = useState(false);
     const [waiting, setWaiting] = useState(false);
     const [chosenDate, setChosenDate] = useState(new Date().toString());
     const [chosenPattern, setPattern] = useState('on');
     const [responseBody, setResponseBody] = useState('');
     const [checkingIfSure, setCheckingIfSure] = useState(false);
     const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-  
-    const setDateToNow = () => {
-      const now = new Date().toString();
-      setChosenDate(now);
-    };
   
     const setDateToLate = () => {
       const date = convertDateToUtc(new Date());
@@ -67,7 +63,8 @@ const BlinkModalWidget = ({show, toggleModal}) => {
       setCheckingIfSure(false);
     }, [show]);
   
-    const doAction = () => {
+    const doAction = (isNow) => {
+      setDoingNow(isNow);
       setHadFailure(false);
       setHadSuccess(false);
       setWaiting(true);
@@ -78,7 +75,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
   
       const parameters = {
         serialNumber: selectedDeviceId,
-        when: utcDateString,
+        when: isNow ? 0 : utcDateString,
         pattern: chosenPattern,
         duration: 30
       };
@@ -112,8 +109,14 @@ const BlinkModalWidget = ({show, toggleModal}) => {
           <h6>When would you like make the LEDs of this device blink?</h6>
           <CRow style={{ marginTop: '20px' }}>
             <CCol>
-              <CButton disabled={waiting} block color="primary" onClick={() => setDateToNow()}>
-                Now
+              <CButton 
+                onClick={() => doAction(true)} 
+                disabled={waiting} 
+                block 
+                color="primary"
+              >
+                {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+                <CSpinner hidden={!waiting && doingNow} component="span" size="sm" />
               </CButton>
             </CCol>
             <CCol>
@@ -169,6 +172,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
         <CModalFooter>
           <div hidden={!checkingIfSure}>Are you sure?</div>
           <CButton
+            disabled={waiting}
             hidden={checkingIfSure}
             color="primary"
             onClick={() => confirmingIfSure()}
@@ -179,10 +183,10 @@ const BlinkModalWidget = ({show, toggleModal}) => {
             hidden={!checkingIfSure}
             disabled={waiting}
             color="primary"
-            onClick={() => doAction()}
+            onClick={() => doAction(false)}
           >
-            {waiting ? 'Loading...' : 'Yes'} {'   '}
-            <CSpinner hidden={!waiting} component="span" size="sm" />
+            {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
+            <CSpinner hidden={!waiting && doingNow} component="span" size="sm" />
           </CButton>
           <CButton color="secondary" onClick={toggleModal}>
             Cancel
