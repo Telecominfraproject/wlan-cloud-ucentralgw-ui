@@ -270,14 +270,14 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               firmware: (item) => (
                 <td>
                   <CPopover content={item.firmware ? item.firmware : 'N/A'} placement="top">
-                    <p>{cropStringWithEllipsis(item.firmware, 20)}</p>
+                    <p>{cropStringWithEllipsis(item.firmware, 16)}</p>
                   </CPopover>
                 </td>
               ),
               compatible: (item) => (
                 <td>
                   <CPopover content={item.compatible ? item.compatible : 'N/A'} placement="top">
-                    <p>{cropStringWithEllipsis(item.compatible, 20)}</p>
+                    <p>{cropStringWithEllipsis(item.compatible, 16)}</p>
                   </CPopover>
                 </td>
               ),
