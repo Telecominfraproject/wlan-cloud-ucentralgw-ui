@@ -179,19 +179,24 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         color = 'danger'
         break;
       case 'MISMATCH_SERIAL':
-        color = '#fdfd96'
-        break;
+        return (
+          <CBadge color={color} style={{backgroundColor: '##FFFF5C'}}>
+            <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+          </CBadge>
+        );
       case 'VERIFIED':
         color = 'success';
         break;
       default:
         return(
-          <p>Unknown</p>
+        <div style={{position: 'relative'}}>
+          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}}name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+          <CIcon style={{position: 'absolute', zIndex: 99, left: '21%', color: '#e55353'}} name="cil-ban" content={cilBan} size="3xl" alt="AP" />
+        </div>
         );
     }
-    console.log(color);
     return (
-      <CBadge color={color} style={{backgroundColor: '#fdfd96'}}>
+      <CBadge color={color}>
         <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
       </CBadge>
     );
@@ -244,7 +249,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               verifiedCertificate: (item) => (
                 <td style={{ textAlign: 'center' }}>
                   <CPopover
-                    content={item.verifiedCertificate}
+                    content={item.verifiedCertificate ?? 'Unknown'}
                     placement="top"
                   >
                     {getCertBadge(item.verifiedCertificate)}
