@@ -10,7 +10,12 @@ import {
     CFormGroup,
     CInputRadio,
     CLabel,
-    CForm
+    CForm,
+    CCard,
+    CCardTitle,
+    CCardBody,
+    CDataTable,
+    CCardHeader
   } from '@coreui/react';
   import React, { useState, useEffect } from 'react';
   import { useSelector } from 'react-redux';
@@ -23,10 +28,12 @@ import {
     const [hadFailure, setHadFailure] = useState(false);
     const [waiting, setWaiting] = useState(false);
     const [choseVerbose, setVerbose] = useState(true);
-    const [responseBody, setResponseBody] = useState('');
+    const [channelList, setChannelList] = useState([]);
     const [checkingIfSure, setCheckingIfSure] = useState(false);
     const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
   
+    const dbmNumber = 4294967295;
+
     const confirmingIfSure = () => {
       setCheckingIfSure(true);
     };
@@ -35,11 +42,41 @@ import {
       setHadSuccess(false);
       setHadFailure(false);
       setWaiting(false);
-      setResponseBody('');
+      setChannelList([]);
       setCheckingIfSure(false);
       setVerbose(true);
     }, [show]);
   
+    const parseThroughList = (scanList) => {
+        const listOfChannels = [];
+
+        scanList.forEach((scan) => {
+            if(!listOfChannels.includes(scan.channel)){
+                listOfChannels.push(scan.channel);
+            }
+        });
+
+        const finalList = [];
+        listOfChannels.forEach((channelNumber) => {
+            const channel = { 
+                channel: channelNumber,
+                devices: []
+            };
+
+            scanList.forEach((device) => {
+               if(device.channel === channelNumber){
+                   const deviceToAdd = {};
+                   deviceToAdd.SSID = device.ssid ?? 'N/A';
+                   deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
+                   channel.devices.push(deviceToAdd);
+               } 
+            });
+
+            finalList.push(channel);
+        });
+        return finalList;
+    }
+
     const doAction = () => {
       setHadFailure(false);
       setHadSuccess(false);
@@ -59,8 +96,9 @@ import {
       axiosInstance
         .post(`/device/${selectedDeviceId}/wifiscan`, parameters, { headers })
         .then((response) => {
-          setResponseBody(JSON.stringify(response.data, null, 4));
-          setHadSuccess(true);
+            const scanList = response.data.results.status.scan.scan;
+            setChannelList(parseThroughList(scanList));
+            setHadSuccess(true);
         })
         .catch((error) => {
           setHadFailure(true);
@@ -72,6 +110,11 @@ import {
           setWaiting(false);
         });
     };
+
+    const columns = [
+        { key: 'SSID', _style: { width: '70%' }},
+        { key: 'Signal' },
+    ];
   
     return (
       <CModal show={show} onClose={toggleModal}>
@@ -94,10 +137,25 @@ import {
                 </CFormGroup>
             </CForm>
           </CRow>
-          <div hidden={!hadSuccess && !hadFailure}>
-            <div>
-              <pre>{responseBody} </pre>
-            </div>
+          <div style={{marginTop: '3%'}} hidden={!hadSuccess && !hadFailure}>
+            {
+                channelList.map((channel) => 
+                        <CCard>
+                            <CCardHeader>
+                                <CCardTitle>
+                                    Channel #{channel.channel}
+                                </CCardTitle>
+                            </CCardHeader>
+                            <CCardBody>
+                                <CDataTable
+                                    items={channel.devices}
+                                    fields={columns}
+                                    style={{ color: 'white' }}
+                                />
+                            </CCardBody>
+                        </CCard>
+                )
+            }
           </div>
         </CModalBody>
         <CModalFooter>
