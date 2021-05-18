@@ -17,7 +17,7 @@ const WifiChannelCard = ({ channel }) => {
     return (
         <CCard>
             <CCardHeader>
-                <CCardTitle>
+                <CCardTitle style={{color:'black'}}>
                     Channel #{channel.channel}
                 </CCardTitle>
             </CCardHeader>
