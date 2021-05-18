@@ -141,8 +141,8 @@ const BlinkModalWidget = ({show, toggleModal}) => {
               />
             </CCol>
           </CRow>
-          <CRow>
-            <CCol md="7" style={{ marginTop: '7px' }}>
+          <CRow style={{ marginTop: '20px' }}>
+            <CCol md="7">
                 Choose a pattern you would like to use:
             </CCol>
             <CCol>
