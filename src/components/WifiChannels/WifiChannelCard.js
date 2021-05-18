@@ -22,11 +22,13 @@ const WifiChannelCard = ({ channel }) => {
                 </CCardTitle>
             </CCardHeader>
             <CCardBody>
+            <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
                     items={channel.devices}
                     fields={columns}
                     style={{ color: 'white' }}
                 />
+            </div>
             </CCardBody>
         </CCard>
     );
