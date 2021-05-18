@@ -150,7 +150,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
   ];
 
   const getDeviceIcon = (deviceType) => {
-    if (deviceType === 'AP_Default') {
+    if (deviceType === 'AP_Default' || deviceType === 'AP') {
       return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="IOT" />;
       // return <CIcon name="cilRouter" size="2xl" alt="AP" />;
     }
