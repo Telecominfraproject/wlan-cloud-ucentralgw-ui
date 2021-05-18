@@ -36,7 +36,15 @@ export const addDays = (date, days) => {
   return newDate;
 };
 
+const prettyNumber = (number) => {
+  if (number >= 10){
+    return number;
+  }
+  return `0${number}`;
+}
+
 export const prettyDate = (dateString) => {
   const date = new Date(dateString);
-  return `${date.getFullYear()}-${(date.getMonth()+1)}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return `${date.getFullYear()}-${prettyNumber(date.getMonth())}-${prettyNumber(date.getDate())}
+  ${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(date.getSeconds())}`;
 }
