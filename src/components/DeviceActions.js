@@ -4,6 +4,7 @@ import ActionModalWidget from '../widgets/ActionModalWidget';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
 import TraceModalWidget from '../widgets/TraceModalWidget';
 import WifiScanModalWidget from '../widgets/WifiScanModalWidget';
+import BlinkModalWidget from '../widgets/BlinkModalWidget';
 
 const DeviceActions = () => {
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -77,15 +78,7 @@ const DeviceActions = () => {
         actionLabel="reboot"
         action="reboot"
       />
-      <ActionModalWidget
-        show={showBlinkModal}
-        toggleModal={toggleBlinkModal}
-        title="Blink LEDs of Device"
-        directions="When would you like make the LEDs of this device blink?"
-        actionLabel="blink"
-        action="leds"
-        extraParameters={{ duration: 10, pattern: 'on' }}
-      />
+      <BlinkModalWidget show={showBlinkModal} toggleModal={toggleBlinkModal}/>
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
       <TraceModalWidget show={showTraceModal} toggleModal={toggleTraceModal} />
       <WifiScanModalWidget show={showScanModal} toggleModal={toggleScanModal} />
