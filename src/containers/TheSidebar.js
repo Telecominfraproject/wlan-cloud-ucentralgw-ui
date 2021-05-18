@@ -11,8 +11,7 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from '@coreui/react';
-
-import CIcon from '@coreui/icons-react';
+import logoBar from '../assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 
 // sidebar nav config
 import navigation from './_nav';
@@ -24,8 +23,8 @@ const TheSidebar = () => {
   return (
     <CSidebar show={show} onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })}>
       <CSidebarBrand className="d-md-down-none" to="/devices">
-        <CIcon className="c-sidebar-brand-full" name="logo-negative" height={35} />
-        <CIcon className="c-sidebar-brand-minimized" name="sygnet" height={35} />
+        <img  className="c-sidebar-brand-full" src={logoBar} style={{ height: '75px'}} alt="OpenWifi" />
+        <img  className="c-sidebar-brand-minimized" src={logoBar} style={{ height: '75px', width: '75px' }} alt="OpenWifi" />
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement
