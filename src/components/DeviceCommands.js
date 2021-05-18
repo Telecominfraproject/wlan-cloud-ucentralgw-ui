@@ -13,7 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { cleanTimestamp, addDays } from '../utils/helper';
+import { prettyDate, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
 
@@ -136,7 +136,7 @@ const DeviceCommands = () => {
                   border
                   sorterValue={{ column: 'completed', desc: 'true' }}
                   scopedSlots={{
-                    completed: (item) => <td>{cleanTimestamp(item.completed)}</td>,
+                    completed: (item) => <td>{prettyDate(item.completed)}</td>,
                     show_details: (item, index) => (
                       <td className="py-2">
                         <CButton

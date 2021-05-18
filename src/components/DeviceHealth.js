@@ -13,7 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { cleanTimestamp, addDays } from '../utils/helper';
+import { prettyDate, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
 
@@ -100,10 +100,14 @@ const DeviceHealth = () => {
   }, [start, end]);
 
   if (healthChecks && healthChecks.length > 0) {
-    sanityLevel = healthChecks[0].sanity;
+    sanityLevel = healthChecks[healthChecks.length-1].sanity;
     if (sanityLevel === 100) barColor = 'gradient-success';
     else if (sanityLevel >= 90) barColor = 'gradient-warning';
     else barColor = 'gradient-danger';
+  }
+  else{
+    sanityLevel = 0;
+    barColor = 'gradient-dark';
   }
 
   return (
@@ -148,7 +152,7 @@ const DeviceHealth = () => {
                   border
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
-                    recorded: (item) => <td>{cleanTimestamp(item.recorded)}</td>,
+                    recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
                     sanity: (item) => <td>{`${item.sanity}%`}</td>,
                     show_details: (item, index) => {
                       if (item.sanity === 100) {

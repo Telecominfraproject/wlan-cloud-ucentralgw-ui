@@ -35,3 +35,8 @@ export const addDays = (date, days) => {
   newDate.setDate(date.getDate() + days);
   return newDate;
 };
+
+export const prettyDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}-${(date.getMonth()+1)}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}

@@ -13,7 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { cleanTimestamp, addDays } from '../utils/helper';
+import { addDays, prettyDate } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
 
@@ -136,7 +136,7 @@ const DeviceLogs = () => {
                   style={{ color: 'white' }}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
-                    recorded: (item) => <td>{cleanTimestamp(item.recorded)}</td>,
+                    recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
                     show_details: (item, index) => (
                       <td className="py-2">
                         <CButton
