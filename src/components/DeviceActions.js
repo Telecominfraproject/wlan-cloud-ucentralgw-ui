@@ -72,8 +72,8 @@ const DeviceActions = () => {
         action="leds"
         extraParameters={{ duration: 10, pattern: 'on' }}
       />
-      <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={setShowUpgradeModal} />
-      <TraceModalWidget show={showTraceModal} toggleModal={setShowTraceModal} />
+      <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
+      <TraceModalWidget show={showTraceModal} toggleModal={toggleTraceModal} />
     </CCard>
   );
 };
