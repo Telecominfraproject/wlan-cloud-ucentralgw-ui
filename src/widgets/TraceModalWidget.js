@@ -8,13 +8,13 @@ import {
   CSpinner,
   CBadge,
   CCol,
-  CRow,
+  CRow, 
   CInvalidFeedback,
+  CSelect
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import { useSelector } from 'react-redux';
-import NumberFormat from 'react-number-format';
 import { convertDateToUtc } from '../utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from '../utils/authHelper';
@@ -25,14 +25,12 @@ const TraceModalWidget = ({ show, toggleModal }) => {
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
   const [usingDuration, setUsingDuration] = useState(true);
-  const [duration, setDuration] = useState(1);
-  const [packets, setPackets] = useState(1);
+  const [duration, setDuration] = useState(20);
+  const [packets, setPackets] = useState(100);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [responseBody, setResponseBody] = useState('');
   const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-
-  const numberRegex = /^[0-9\b]+$/;
 
   const setDate = (date) => {
     if (date) {
@@ -44,17 +42,6 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     setCheckingIfSure(true);
   };
 
-  const isGoodPackets = (inputObj) => {
-    const { value } = inputObj;
-    if (value <= 1000 && numberRegex.test(value)) return inputObj;
-    return null;
-  };
-  const isGoodDuration = (inputObj) => {
-    const { value } = inputObj;
-    if (value <= 60 && numberRegex.test(value)) return inputObj;
-    return null;
-  };
-
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
@@ -62,8 +49,8 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     setChosenDate(new Date().toString());
     setResponseBody('');
     setCheckingIfSure(false);
-    setDuration(1);
-    setPackets(1);
+    setDuration(20);
+    setPackets(100);
   }, [show]);
 
   useEffect(() => {
@@ -153,23 +140,23 @@ const TraceModalWidget = ({ show, toggleModal }) => {
         </CRow>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="4" style={{ marginTop: '7px' }}>
-            {usingDuration ? 'Duration (s): ' : 'Packets: '}
+            {usingDuration ? 'Duration: ' : 'Packets: '}
           </CCol>
           <CCol xs="12" md="8">
             {usingDuration ? (
-              <NumberFormat
-                value={duration}
-                onValueChange={(values) => setDuration(values.value)}
-                isAllowed={isGoodDuration}
-                suffix="s"
-              />
+              <CSelect disabled={waiting}>
+                <option selected value="duration" onClick={() => setDuration(20)}>20s</option>
+                <option value="40" onClick={() => setDuration(40)}>40s</option>
+                <option value="60" onClick={() => setDuration(60)}>60s</option>
+                <option value="120" onClick={() => setDuration(120)}>120s</option>
+              </CSelect>
             ) : (
-              <NumberFormat
-                value={packets}
-                onValueChange={(values) => setPackets(values.value)}
-                isAllowed={isGoodPackets}
-                suffix=" packets"
-              />
+              <CSelect value={packets} disabled={waiting}>
+                <option value="100" onClick={() => setPackets(100)}>100</option>
+                <option value="250" onClick={() => setPackets(250)}>250</option>
+                <option value="500" onClick={() => setPackets(500)}>500</option>
+                <option value="1000" onClick={() => setPackets(1000)}>1000</option>
+              </CSelect>
             )}
           </CCol>
         </CRow>
