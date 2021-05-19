@@ -45,6 +45,6 @@ const prettyNumber = (number) => {
 
 export const prettyDate = (dateString) => {
   const date = new Date(dateString);
-  return `${date.getFullYear()}-${prettyNumber(date.getMonth())}-${prettyNumber(date.getDate())}
+  return `${date.getFullYear()}-${prettyNumber(date.getMonth() + 1)}-${prettyNumber(date.getDate())}
   ${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(date.getSeconds())}`;
 }
