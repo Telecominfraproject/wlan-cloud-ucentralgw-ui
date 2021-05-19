@@ -14,7 +14,6 @@ const DevicePage = () => {
   // Storing the deviceId in the store
   let selectedDeviceId = useSelector((state) => state.selectedDeviceId);
   const { deviceId } = useParams();
-
   if (!selectedDeviceId || selectedDeviceId !== deviceId) {
     dispatch({ type: 'set', selectedDeviceId: deviceId });
     selectedDeviceId = deviceId;
@@ -30,7 +29,7 @@ const DevicePage = () => {
         <CRow>
           <CCol xs="12" sm="6">
             <DeviceConfiguration />
-            <DeviceCommands />
+            <DeviceCommands/>
           </CCol>
           <CCol xs="12" sm="6">
             <DeviceLogs />

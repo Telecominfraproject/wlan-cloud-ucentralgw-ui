@@ -13,6 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
+import { cilSync } from '@coreui/icons';
 import { prettyDate, addDays } from '../utils/helper';
 import axiosInstance from '../utils/axiosInstance';
 import { getToken } from '../utils/authHelper';
@@ -87,6 +88,10 @@ const DeviceCommands = () => {
     }
   };
 
+  const refreshCommands = () => {
+    setEnd(new Date());
+  }
+
   const getDetails = (command, commandDetails) => {
     if (command === 'wifiscan') {
       return null;
@@ -134,6 +139,21 @@ const DeviceCommands = () => {
       footerSlot={
         <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
+            <CRow>
+              <CCol/>
+              <CCol>
+                <div  style={{float: 'right'}}>
+                <CButton onClick={() => refreshCommands()} size="sm">
+                    <CIcon 
+                      name="cil-sync" 
+                      content={cilSync} 
+                      style={{ color: 'white' }}
+                      size="2xl" 
+                      />
+                  </CButton>
+                </div>
+              </CCol>
+            </CRow>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
                 From:

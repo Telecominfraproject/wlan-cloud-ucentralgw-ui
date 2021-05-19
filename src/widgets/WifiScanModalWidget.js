@@ -27,7 +27,6 @@ import {
     const [channelList, setChannelList] = useState([]);
     const [checkingIfSure, setCheckingIfSure] = useState(false);
     const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-  
 
     const confirmingIfSure = () => {
       setCheckingIfSure(true);
