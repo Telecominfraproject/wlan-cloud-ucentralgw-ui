@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
-import ActionModalWidget from '../widgets/ActionModalWidget';
+import ActionModalWidget from './ActionModalWidget';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
-import TraceModalWidget from '../widgets/TraceModalWidget';
-import WifiScanModalWidget from '../widgets/WifiScanModalWidget';
-import BlinkModalWidget from '../widgets/BlinkModalWidget';
+import TraceModalWidget from './TraceModalWidget';
+import WifiScanModalWidget from './WifiScanModal';
+import BlinkModalWidget from './BlinkModalWidget';
 
 const DeviceActions = () => {
   const [showRebootModal, setShowRebootModal] = useState(false);

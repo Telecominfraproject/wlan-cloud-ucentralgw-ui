@@ -14,9 +14,9 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
-import { cleanTimestamp } from '../utils/helper';
-import axiosInstance from '../utils/axiosInstance';
-import { getToken } from '../utils/authHelper';
+import { cleanTimestamp } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
 
 const DeviceConfiguration = () => {
   const [collapse, setCollapse] = useState(false);

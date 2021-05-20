@@ -15,10 +15,10 @@ import {
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc } from '../utils/helper';
+import { convertDateToUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../utils/authHelper';
-import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
+import axiosInstance from '../../utils/axiosInstance';
 
 const TraceModalWidget = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -163,7 +163,6 @@ const TraceModalWidget = ({ show, toggleModal }) => {
             <DatePicker
               selected={new Date(chosenDate)}
               includeTime
-              selectTime
               value={new Date(chosenDate)}
               placeholder="Select custom date"
               disabled={waiting}

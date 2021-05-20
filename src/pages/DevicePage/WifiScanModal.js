@@ -14,10 +14,10 @@ import {
   } from '@coreui/react';
   import React, { useState, useEffect } from 'react';
   import { useSelector } from 'react-redux';
-  import WifiChannelTable from '../components/WifiChannels/WifiChannelTable';
+  import WifiChannelTable from './WifiChannelTable';
   import 'react-widgets/styles.css';
-  import { getToken } from '../utils/authHelper';
-  import axiosInstance from '../utils/axiosInstance';
+  import { getToken } from '../../utils/authHelper';
+  import axiosInstance from '../../utils/axiosInstance';
   
   const WifiScanModalWidget = ({ show, toggleModal }) => {
     const [hadSuccess, setHadSuccess] = useState(false);
@@ -123,11 +123,11 @@ import {
           <CRow style={{ marginTop: '20px' }}>
             <CForm style={{paddingLeft: '5%'}}>
                 <CFormGroup variant="checkbox" onClick={() => setVerbose(true)}>
-                    <CInputRadio checked={choseVerbose} id="radio1" name="radios" value="option1" />
+                    <CInputRadio defaultChecked={choseVerbose} id="radio1" name="radios" value="option1" />
                     <CLabel variant="checkbox" htmlFor="radio1">With verbose</CLabel>
                 </CFormGroup>
                 <CFormGroup variant="checkbox" onClick={() => setVerbose(false)}>
-                    <CInputRadio checked={!choseVerbose} id="radio2" name="radios" value="option2" />
+                    <CInputRadio defaultChecked={!choseVerbose} id="radio2" name="radios" value="option2" />
                     <CLabel variant="checkbox" htmlFor="radio2">Without verbose</CLabel>
                 </CFormGroup>
             </CForm>

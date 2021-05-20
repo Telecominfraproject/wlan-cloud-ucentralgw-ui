@@ -14,10 +14,10 @@ import {
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc, convertDateFromUtc } from '../utils/helper';
+import { convertDateToUtc, convertDateFromUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../utils/authHelper';
-import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
+import axiosInstance from '../../utils/axiosInstance';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -173,7 +173,6 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
               value={chosenDate === '' ? new Date() : new Date(chosenDate)}
               className={('form-control', { 'is-invalid': !validDate })}
               includeTime
-              selectTime
               placeholder="Select custom date in UTC"
               disabled={waiting}
               onChange={(date) => setDate(date)}

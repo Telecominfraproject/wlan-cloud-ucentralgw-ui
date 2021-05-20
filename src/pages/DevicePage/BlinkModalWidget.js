@@ -16,10 +16,10 @@ import {
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import { useSelector } from 'react-redux';
-import { convertDateFromUtc, convertDateToUtc } from '../utils/helper';
+import { convertDateFromUtc, convertDateToUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../utils/authHelper';
-import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
+import axiosInstance from '../../utils/axiosInstance';
 
 const BlinkModalWidget = ({show, toggleModal}) => {
     const [hadSuccess, setHadSuccess] = useState(false);
@@ -136,7 +136,6 @@ const BlinkModalWidget = ({show, toggleModal}) => {
               <DatePicker
                 selected={new Date(chosenDate)}
                 includeTime
-                selectTime
                 value={new Date(chosenDate)}
                 placeholder="Select custom date"
                 disabled={waiting}
@@ -152,15 +151,15 @@ const BlinkModalWidget = ({show, toggleModal}) => {
             <CCol>
                 <CForm>
                     <CFormGroup variant="checkbox" onClick={() => setPattern('on')}>
-                        <CInputRadio checked={chosenPattern === 'on'} id="radio1" name="radios" value="option1" />
+                        <CInputRadio defaultChecked={chosenPattern === 'on'} id="radio1" name="radios" value="option1" />
                         <CLabel variant="checkbox" htmlFor="radio1">On</CLabel>
                     </CFormGroup>
                     <CFormGroup variant="checkbox" onClick={() => setPattern('off')}>
-                        <CInputRadio checked={chosenPattern === 'off'} id="radio2" name="radios" value="option2" />
+                        <CInputRadio defaultChecked={chosenPattern === 'off'} id="radio2" name="radios" value="option2" />
                         <CLabel variant="checkbox" htmlFor="radio2">Off</CLabel>
                     </CFormGroup>
                     <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
-                        <CInputRadio checked={chosenPattern === 'blink'} id="radio2" name="radios" value="option2" />
+                        <CInputRadio defaultChecked={chosenPattern === 'blink'} id="radio2" name="radios" value="option2" />
                         <CLabel variant="checkbox" htmlFor="radio2">Blink</CLabel>
                     </CFormGroup>
                 </CForm>

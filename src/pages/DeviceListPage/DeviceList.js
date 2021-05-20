@@ -15,12 +15,12 @@ import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { getToken } from '../utils/authHelper';
-import axiosInstance from '../utils/axiosInstance';
-import { cleanBytesString, cropStringWithEllipsis } from '../utils/helper';
-import meshIcon from '../assets/icons/Mesh.png';
-import apIcon from '../assets/icons/AP.png';
-import internetSwitch from '../assets/icons/Switch.png';
+import { getToken } from '../../utils/authHelper';
+import axiosInstance from '../../utils/axiosInstance';
+import { cleanBytesString, cropStringWithEllipsis } from '../../utils/helper';
+import meshIcon from '../../assets/icons/Mesh.png';
+import apIcon from '../../assets/icons/AP.png';
+import internetSwitch from '../../assets/icons/Switch.png';
 
 const DeviceList = () => {
   const [loadedSerials, setLoadedSerials] = useState(false);

@@ -8,8 +8,8 @@ import {
   CModalTitle,
   CModalFooter
 } from '@coreui/react';
-import WifiChannelTable from '../components/WifiChannels/WifiChannelTable';
-import { prettyDate } from '../utils/helper';
+import WifiChannelTable from './WifiChannelTable';
+import { prettyDate } from '../../utils/helper';
 
 const WifiScanResultModalWidget = ({show, toggle, scanResults, date}) => {
     const parseThroughList = (scanList) => {

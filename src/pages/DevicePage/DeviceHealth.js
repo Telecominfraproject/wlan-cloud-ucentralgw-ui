@@ -13,9 +13,9 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
-import { prettyDate, addDays } from '../utils/helper';
-import axiosInstance from '../utils/axiosInstance';
-import { getToken } from '../utils/authHelper';
+import { prettyDate, addDays } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
 
 const DeviceHealth = () => {
   const [collapse, setCollapse] = useState(false);
@@ -125,7 +125,6 @@ const DeviceHealth = () => {
                   selected={start === '' ? new Date() : new Date(start)}
                   value={start === '' ? new Date() : new Date(start)}
                   includeTime
-                  selectTime
                   onChange={(date) => setStart(date)}
                 />
               </CCol>
@@ -135,7 +134,6 @@ const DeviceHealth = () => {
                   selected={end === '' ? new Date() : new Date(end)}
                   value={end === '' ? new Date() : new Date(end)}
                   includeTime
-                  selectTime
                   onChange={(date) => setEnd(date)}
                 />
               </CCol>

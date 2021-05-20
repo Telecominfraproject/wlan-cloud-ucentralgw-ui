@@ -13,10 +13,10 @@ import {
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc, convertDateFromUtc } from '../utils/helper';
+import { convertDateToUtc, convertDateFromUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../utils/authHelper';
-import axiosInstance from '../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
+import axiosInstance from '../../utils/axiosInstance';
 
 const ActionModalWidget = ({ show, toggleModal, title, directions, action, extraParameters }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -142,7 +142,6 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
             <DatePicker
               selected={new Date(chosenDate)}
               includeTime
-              selectTime
               className={('form-control', { 'is-invalid': !validDate })}
               value={new Date(chosenDate)}
               placeholder="Select custom date"

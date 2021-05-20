@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
-import DeviceHealth from '../../components/DeviceHealth';
-import DeviceConfiguration from '../../components/DeviceConfiguration';
-import DeviceActions from '../../components/DeviceActions';
-import DeviceCommands from '../../components/DeviceCommands';
-import DeviceLogs from '../../components/DeviceLogs';
+import DeviceHealth from './DeviceHealth';
+import DeviceConfiguration from './DeviceConfiguration';
+import DeviceActions from './DeviceActions';
+import DeviceCommands from './DeviceCommands';
+import DeviceLogs from './DeviceLogs';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
