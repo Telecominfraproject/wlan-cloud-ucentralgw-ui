@@ -190,7 +190,7 @@ const DeviceCommands = ({selectedDeviceId}) => {
                   border
                   sorterValue={{ column: 'completed', desc: 'true' }}
                   scopedSlots={{
-                    completed: (item) => <td>{item.completed ? prettyDate(item.completed) : 'Pending'}</td>,
+                    completed: (item) => <td>{(item.completed && item.completed !== "") ? prettyDate(item.completed) : 'Pending'}</td>,
                     show_details: (item, index) => (
                       <td className="py-2">
                         <CButton

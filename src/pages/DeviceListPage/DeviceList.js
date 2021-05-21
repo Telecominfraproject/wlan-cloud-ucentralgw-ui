@@ -79,6 +79,32 @@ const DeviceList = () => {
       });
   };
 
+  const refreshDevice = (serialNumber) => {
+    const token = getToken();
+    setLoading(true);
+
+    const headers = {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    axiosInstance
+      .get(`/devices?deviceWithStatus=true&select=${serialNumber}`, {
+        headers,
+      })
+      .then((response) => {
+        const device = response.data.devicesWithStatus[0];
+        const foundIndex = devices.findIndex(obj => obj.serialNumber === serialNumber);
+        const newList = devices;
+        newList[foundIndex] = device;
+        setDevices(newList);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }
+
   const updateDevicesPerPage = (value) => {
     setDevicesPerPage(value);
   };
@@ -112,11 +138,12 @@ const DeviceList = () => {
       pageCount={pageCount}
       updatePage={updatePageCount}
       pageRangeDisplayed={5}
+      refreshDevice={refreshDevice}
     />
   );
 };
 
-const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, updatePage }) => {
+const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, updatePage, refreshDevice }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
     { key: 'verifiedCertificate', label: 'Certificate', _style: { width: '1%' } },
@@ -290,9 +317,9 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
                   </CPopover>
                 </td>
               ),
-              refresh: () => (
+              refresh: (item) => (
                 <td className="py-2">
-                  <CButton color="primary" variant="outline" size="sm">
+                  <CButton onClick={() => refreshDevice(item.serialNumber)} color="primary" variant="outline" size="sm">
                     <CIcon name="cil-sync" content={cilSync} size="sm" />
                   </CButton>
                 </td>
