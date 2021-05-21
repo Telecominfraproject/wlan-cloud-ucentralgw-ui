@@ -11,7 +11,6 @@ import {
   CCardBody,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import { prettyDate, addDays } from '../../utils/helper';
@@ -19,7 +18,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 
-const DeviceCommands = () => {
+const DeviceCommands = ({selectedDeviceId}) => {
   const [showModal, setShowModal] = useState(false);
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
   const [scanDate, setScanDate] = useState('');
@@ -29,7 +28,6 @@ const DeviceCommands = () => {
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
   const [end, setEnd] = useState(new Date().toString());
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -122,18 +120,22 @@ const DeviceCommands = () => {
   ];
 
   useEffect(() => {
-    getCommands();
-    setStart(addDays(new Date(), -3).toString());
-    setEnd(new Date().toString());
-  }, []);
+    if(selectedDeviceId){
+      getCommands();
+    }
+  }, [selectedDeviceId, start, end]); 
 
   useEffect(() => {
-    getCommands();
-  }, [start, end]);
+    if(selectedDeviceId){
+      setStart(addDays(new Date(), -3).toString());
+      setEnd(new Date().toString());
+      getCommands();
+    }
+  }, [selectedDeviceId]);
 
   return (
     <CWidgetDropdown
-      inverse
+      inverse='true'
       color="gradient-primary"
       header="Device Commands"
       footerSlot={
@@ -215,7 +217,7 @@ const DeviceCommands = () => {
               </div>
             </CCard>
           </CCollapse>
-          <CButton show={collapse} color="transparent" onClick={toggle} block>
+          <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
               style={{ color: 'white' }}

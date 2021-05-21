@@ -29,8 +29,6 @@ const DeviceStatus = () => {
         inverse
       >
         <CDropdown>
-          {/* Need inline styling because CDropdownToggle does not take into account the
-                    parent's inverse value */}
           <CDropdownToggle style={{ color: 'white' }}>
             <CIcon content={cilSettings} />
           </CDropdownToggle>

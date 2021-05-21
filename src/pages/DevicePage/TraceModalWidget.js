@@ -139,14 +139,14 @@ const TraceModalWidget = ({ show, toggleModal }) => {
           </CCol>
           <CCol xs="12" md="8">
             {usingDuration ? (
-              <CSelect disabled={waiting}>
-                <option selected value="duration" onClick={() => setDuration(20)}>20s</option>
+              <CSelect defaultValue="duration" disabled={waiting}>
+                <option value="20" onClick={() => setDuration(20)}>20s</option>
                 <option value="40" onClick={() => setDuration(40)}>40s</option>
                 <option value="60" onClick={() => setDuration(60)}>60s</option>
                 <option value="120" onClick={() => setDuration(120)}>120s</option>
               </CSelect>
             ) : (
-              <CSelect value={packets} disabled={waiting}>
+              <CSelect defaultValue={packets} disabled={waiting}>
                 <option value="100" onClick={() => setPackets(100)}>100</option>
                 <option value="250" onClick={() => setPackets(250)}>250</option>
                 <option value="500" onClick={() => setPackets(500)}>500</option>
@@ -192,10 +192,10 @@ const TraceModalWidget = ({ show, toggleModal }) => {
         >
           {waiting ? 'Loading...' : 'Yes'} {'   '}
           <CSpinner hidden={!waiting} component="span" size="sm" />
-          <CBadge hidden={waiting || !hadSuccess} color="success" shape="rounded-pill">
+          <CBadge hidden={waiting || !hadSuccess} color="success" shape="pill">
             Success
           </CBadge>
-          <CBadge hidden={waiting || !hadFailure} color="danger" shape="rounded-pill">
+          <CBadge hidden={waiting || !hadFailure} color="danger" shape="pill">
             Request Failed
           </CBadge>
         </CButton>

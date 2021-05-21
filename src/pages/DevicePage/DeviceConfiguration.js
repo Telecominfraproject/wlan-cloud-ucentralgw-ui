@@ -13,15 +13,18 @@ import {
   CButton,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useSelector } from 'react-redux';
 import { cleanTimestamp } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceConfiguration = () => {
+const DeviceConfiguration = ({selectedDeviceId}) => {
   const [collapse, setCollapse] = useState(false);
   const [device, setDevice] = useState(null);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
+
+  const toggle = (e) => {
+    setCollapse(!collapse);
+    e.preventDefault();
+  };
 
   const getDevice = () => {
     const options = {
@@ -41,13 +44,9 @@ const DeviceConfiguration = () => {
   };
 
   useEffect(() => {
-    getDevice();
-  }, []);
-
-  const toggle = (e) => {
-    setCollapse(!collapse);
-    e.preventDefault();
-  };
+    if(selectedDeviceId)
+      getDevice();
+  }, [selectedDeviceId]);
 
   if (device) {
     return (
@@ -146,7 +145,7 @@ const DeviceConfiguration = () => {
               </CFormGroup>
             </CCollapse>
             <CCardFooter>
-              <CButton show={collapse} color="transparent" onClick={toggle} block>
+              <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
                 <CIcon name={collapse ? 'cilChevronTop' : 'cilChevronBottom'} size="lg" />
               </CButton>
             </CCardFooter>

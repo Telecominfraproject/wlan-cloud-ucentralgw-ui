@@ -11,20 +11,18 @@ import {
   CCardBody,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
 import { addDays, prettyDate } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceLogs = () => {
+const DeviceLogs = ({selectedDeviceId}) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
   const [end, setEnd] = useState(new Date().toString());
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -83,20 +81,16 @@ const DeviceLogs = () => {
       filter: false,
     },
   ];
-
+  
   useEffect(() => {
-    getLogs();
-    setStart(addDays(new Date(), -3).toString());
-    setEnd(new Date().toString());
-  }, []);
-
-  useEffect(() => {
-    getLogs();
-  }, [start, end]);
+    if(selectedDeviceId){
+      getLogs();
+    }
+  }, [start, end, selectedDeviceId]);
 
   return (
     <CWidgetDropdown
-      inverse
+      inverse='true'
       color="gradient-info"
       header="Device Logs"
       footerSlot={
@@ -163,7 +157,7 @@ const DeviceLogs = () => {
               </div>
             </CCard>
           </CCollapse>
-          <CButton show={collapse} color="transparent" onClick={toggle} block>
+          <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
               style={{ color: 'white' }}

@@ -11,20 +11,18 @@ import {
   CCol,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useSelector } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceHealth = () => {
+const DeviceHealth = ({selectedDeviceId}) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [healthChecks, setHealthChecks] = useState([]);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
   const [end, setEnd] = useState(new Date().toString());
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
   let sanityLevel;
   let barColor;
 
@@ -88,14 +86,11 @@ const DeviceHealth = () => {
   ];
 
   useEffect(() => {
-    getDeviceHealth();
-    setStart(addDays(new Date(), -3).toString());
-    setEnd(new Date().toString());
-  }, []);
+    if(selectedDeviceId){
+      getDeviceHealth();
+    }
+  }, [selectedDeviceId, start, end]);
 
-  useEffect(() => {
-    getDeviceHealth();
-  }, [start, end]);
 
   if (healthChecks && healthChecks.length > 0) {
     sanityLevel = healthChecks[healthChecks.length-1].sanity;
@@ -185,7 +180,7 @@ const DeviceHealth = () => {
               </div>
             </CCard>
           </CCollapse>
-          <CButton show={collapse} color="transparent" onClick={toggle} block>
+          <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
               style={{ color: 'white' }}
