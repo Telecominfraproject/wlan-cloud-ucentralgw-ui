@@ -1,7 +1,7 @@
 /* eslint-disable-rule prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import {
-  CWidgetProgress,
+  CWidgetDropdown,
   CCollapse,
   CButton,
   CDataTable,
@@ -9,6 +9,7 @@ import {
   CCardBody,
   CRow,
   CCol,
+  CProgress
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -104,14 +105,15 @@ const DeviceHealth = ({selectedDeviceId}) => {
   }
 
   return (
-    <CWidgetProgress
+    <CWidgetDropdown
       header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
       text="Device Health"
       value={sanityLevel ?? 100}
       color={barColor}
-      inverse
-      footer={
-        <div>
+      inverse="true"
+      footerSlot={
+        <div style={{ padding: '20px' }}>
+          <CProgress style={{marginBottom: '20px'}} color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
