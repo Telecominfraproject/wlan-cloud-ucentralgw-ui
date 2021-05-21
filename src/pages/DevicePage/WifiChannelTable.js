@@ -22,7 +22,7 @@ const WifiChannelTable = ({channels}) => {
                 {
                     channels.map((channel, index) => {
                         if(index % 2 === 0) return <WifiChannelCard key={createUuid()} channel={channel}/>;
-                        return <></>
+                        return <div key={createUuid()}/>
                     })
                 }
             </CCol>
@@ -30,7 +30,7 @@ const WifiChannelTable = ({channels}) => {
                 {
                     channels.map((channel, index) => {
                         if(index % 2 === 1) return <WifiChannelCard key={createUuid()} channel={channel}/>;
-                        return <></>
+                        return <div key={createUuid()}/>
                     })
                 }
             </CCol>
