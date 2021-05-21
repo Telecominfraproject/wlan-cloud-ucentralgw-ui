@@ -3,6 +3,7 @@ import {
     CRow
   } from '@coreui/react';
 import React from 'react';
+import { v4 as createUuid } from 'uuid';
 import WifiChannelCard from './WifiChannelCard';
 
 const WifiChannelTable = ({channels}) => (
@@ -10,7 +11,7 @@ const WifiChannelTable = ({channels}) => (
         <CCol>
             {
                 channels.map((channel, index) => {
-                    if(index % 2 === 0) return <WifiChannelCard channel={channel}/>;
+                    if(index % 2 === 0) return <WifiChannelCard key={createUuid()} channel={channel}/>;
                     return <></>
                 })
             }
@@ -18,7 +19,7 @@ const WifiChannelTable = ({channels}) => (
         <CCol>
             {
                 channels.map((channel, index) => {
-                    if(index % 2 === 1) return <WifiChannelCard channel={channel}/>;
+                    if(index % 2 === 1) return <WifiChannelCard key={createUuid()} channel={channel}/>;
                     return <></>
                 })
             }

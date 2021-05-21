@@ -67,7 +67,7 @@ const DeviceCommands = ({selectedDeviceId}) => {
   };
 
   const toggleDetails = (item, index) => {
-    if(item.command !== 'wifiscan'){
+    if(item.command !== 'wifiscan' || !item.results.status){
       const position = details.indexOf(index);
       let newDetails = details.slice();
   
@@ -91,10 +91,6 @@ const DeviceCommands = ({selectedDeviceId}) => {
   }
 
   const getDetails = (command, commandDetails) => {
-    if (command === 'wifiscan') {
-      return null;
-    }
-    
     if (command === 'reboot' || command === 'leds'){
       const result = commandDetails.results;
       if(result)
