@@ -38,6 +38,14 @@ const DeviceCommands = ({selectedDeviceId}) => {
     setShowModal(!showModal);
   };
 
+  const modifyStart = (value) => {
+    setStart(value);
+  }
+
+  const modifyEnd = (value) => {
+    setEnd(value);
+  }
+
   const getCommands = () => {
     setLoading(true);
     const utcStart = new Date(start).toISOString();
@@ -159,7 +167,7 @@ const DeviceCommands = ({selectedDeviceId}) => {
                   selected={start === '' ? new Date() : new Date(start)}
                   value={start === '' ? new Date() : new Date(start)}
                   includeTime
-                  onChange={(date) => setStart(date)}
+                  onChange={(date) => modifyStart(date)}
                 />
               </CCol>
               <CCol>
@@ -168,7 +176,7 @@ const DeviceCommands = ({selectedDeviceId}) => {
                   selected={end === '' ? new Date() : new Date(end)}
                   value={end === '' ? new Date() : new Date(end)}
                   includeTime
-                  onChange={(date) => setEnd(date)}
+                  onChange={(date) => modifyEnd(date)}
                 />
               </CCol>
             </CRow>

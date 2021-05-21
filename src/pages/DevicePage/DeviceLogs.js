@@ -29,6 +29,14 @@ const DeviceLogs = ({selectedDeviceId}) => {
     e.preventDefault();
   };
 
+  const modifyStart = (value) => {
+    setStart(value);
+  }
+
+  const modifyEnd = (value) => {
+    setEnd(value);
+  }
+
   const getLogs = () => {
     setLoading(true);
     const utcStart = new Date(start).toISOString();
@@ -103,7 +111,7 @@ const DeviceLogs = ({selectedDeviceId}) => {
                   selected={start === '' ? new Date() : new Date(start)}
                   value={start === '' ? new Date() : new Date(start)}
                   includeTime
-                  onChange={(date) => setStart(date)}
+                  onChange={(date) => modifyStart(date)}
                 />
               </CCol>
               <CCol>
@@ -112,7 +120,7 @@ const DeviceLogs = ({selectedDeviceId}) => {
                   selected={end === '' ? new Date() : new Date(end)}
                   value={end === '' ? new Date() : new Date(end)}
                   includeTime
-                  onChange={(date) => setEnd(date)}
+                  onChange={(date) => modifyEnd(date)}
                 />
               </CCol>
             </CRow>
