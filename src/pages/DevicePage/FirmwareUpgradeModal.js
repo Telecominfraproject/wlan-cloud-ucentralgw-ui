@@ -69,7 +69,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
 
   const confirmingIfNow = () => {
     setCheckingIfNow(true);
-  }
+  };
 
   useEffect(() => {
     setHadSuccess(false);
@@ -137,25 +137,25 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         <h6>Choose a time and a firmware version for this device</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
-              <CButton
-                color="primary"
-                onClick={() => formValidation() ? confirmingIfNow() : null} 
-                disabled={waiting} 
-                hidden={checkingIfNow}
-                block 
-              >
-                Do Now!
-              </CButton>
-              <CButton
-                color="primary"
-                onClick={() => formValidation() ? postUpgrade(true) : null}
-                disabled={waiting}
-                hidden={!checkingIfNow}
-                block
-              >
-                {waiting && doingNow ? 'Loading...' : 'Confirm'}
-                <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
-              </CButton>
+            <CButton
+              color="primary"
+              onClick={() => (formValidation() ? confirmingIfNow() : null)}
+              disabled={waiting}
+              hidden={checkingIfNow}
+              block
+            >
+              Do Now!
+            </CButton>
+            <CButton
+              color="primary"
+              onClick={() => (formValidation() ? postUpgrade(true) : null)}
+              disabled={waiting}
+              hidden={!checkingIfNow}
+              block
+            >
+              {waiting && doingNow ? 'Loading...' : 'Confirm'}
+              <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
+            </CButton>
           </CCol>
           <CCol>
             <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
@@ -196,7 +196,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         <CInvalidFeedback>You need a url...</CInvalidFeedback>
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
-            <pre className='ignore'>{responseBody}</pre>
+            <pre className="ignore">{responseBody}</pre>
           </div>
         </div>
       </CModalBody>

@@ -16,7 +16,7 @@ import { addDays, prettyDate } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceLogs = ({selectedDeviceId}) => {
+const DeviceLogs = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,11 +31,11 @@ const DeviceLogs = ({selectedDeviceId}) => {
 
   const modifyStart = (value) => {
     setStart(value);
-  }
+  };
 
   const modifyEnd = (value) => {
     setEnd(value);
-  }
+  };
 
   const getLogs = () => {
     setLoading(true);
@@ -58,8 +58,7 @@ const DeviceLogs = ({selectedDeviceId}) => {
       .then((response) => {
         setLogs(response.data.values);
       })
-      .catch(() => {
-      })
+      .catch(() => {})
       .finally(() => {
         setLoading(false);
       });
@@ -89,16 +88,16 @@ const DeviceLogs = ({selectedDeviceId}) => {
       filter: false,
     },
   ];
-  
+
   useEffect(() => {
-    if(selectedDeviceId){
+    if (selectedDeviceId) {
       getLogs();
     }
   }, [start, end, selectedDeviceId]);
 
   return (
     <CWidgetDropdown
-      inverse='true'
+      inverse="true"
       color="gradient-info"
       header="Device Logs"
       footerSlot={
@@ -139,7 +138,7 @@ const DeviceLogs = ({selectedDeviceId}) => {
                       <td className="py-2">
                         <CButton
                           color="primary"
-                          variant={details.includes(index) ? "" : "outline"}
+                          variant={details.includes(index) ? '' : 'outline'}
                           shape="square"
                           size="sm"
                           onClick={() => {
@@ -155,7 +154,7 @@ const DeviceLogs = ({selectedDeviceId}) => {
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre className='ignore'>{JSON.stringify(item, null, 4)}</pre>
+                            <pre className="ignore">{JSON.stringify(item, null, 4)}</pre>
                           </div>
                         </CCardBody>
                       </CCollapse>

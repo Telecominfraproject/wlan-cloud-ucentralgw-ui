@@ -94,7 +94,7 @@ const DeviceList = () => {
       })
       .then((response) => {
         const device = response.data.devicesWithStatus[0];
-        const foundIndex = devices.findIndex(obj => obj.serialNumber === serialNumber);
+        const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);
         const newList = devices;
         newList[foundIndex] = device;
         setDevices(newList);
@@ -103,7 +103,7 @@ const DeviceList = () => {
       .catch(() => {
         setLoading(false);
       });
-  }
+  };
 
   const updateDevicesPerPage = (value) => {
     setDevicesPerPage(value);
@@ -143,7 +143,14 @@ const DeviceList = () => {
   );
 };
 
-const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, updatePage, refreshDevice }) => {
+const DeviceListDisplay = ({
+  devices,
+  loading,
+  updateDevicesPerPage,
+  pageCount,
+  updatePage,
+  refreshDevice,
+}) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
     { key: 'verifiedCertificate', label: 'Certificate', _style: { width: '1%' } },
@@ -191,23 +198,35 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
   };
 
   const getCertBadge = (cert) => {
-    if(cert === 'NO_CERTIFICATE') {
+    if (cert === 'NO_CERTIFICATE') {
       return (
-        <div style={{position: 'relative'}}>
-          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
-          <CIcon style={{position: 'absolute', zIndex: 99, left: '21%', color: '#e55353'}} name="cil-ban" content={cilBan} size="3xl" alt="AP" />
+        <div style={{ position: 'relative' }}>
+          <CIcon
+            style={{ position: 'absolute', left: '31%', marginTop: '8%' }}
+            name="cil-badge"
+            content={cilBadge}
+            size="2xl"
+            alt="AP"
+          />
+          <CIcon
+            style={{ position: 'absolute', zIndex: 99, left: '21%', color: '#e55353' }}
+            name="cil-ban"
+            content={cilBan}
+            size="3xl"
+            alt="AP"
+          />
         </div>
       );
     }
 
     let color = 'transparent';
-    switch(cert) {
+    switch (cert) {
       case 'VALID_CERTIFICATE':
-        color = 'danger'
+        color = 'danger';
         break;
       case 'MISMATCH_SERIAL':
         return (
-          <CBadge color={color} style={{backgroundColor: '#FFFF5C'}}>
+          <CBadge color={color} style={{ backgroundColor: '#FFFF5C' }}>
             <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           </CBadge>
         );
@@ -215,11 +234,23 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         color = 'success';
         break;
       default:
-        return(
-        <div style={{position: 'relative'}}>
-          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}}name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
-          <CIcon style={{position: 'absolute', zIndex: 99, left: '21%', color: '#e55353'}} name="cil-ban" content={cilBan} size="3xl" alt="AP" />
-        </div>
+        return (
+          <div style={{ position: 'relative' }}>
+            <CIcon
+              style={{ position: 'absolute', left: '31%', marginTop: '8%' }}
+              name="cil-badge"
+              content={cilBadge}
+              size="2xl"
+              alt="AP"
+            />
+            <CIcon
+              style={{ position: 'absolute', zIndex: 99, left: '21%', color: '#e55353' }}
+              name="cil-ban"
+              content={cilBan}
+              size="3xl"
+              alt="AP"
+            />
+          </div>
         );
     }
     return (
@@ -227,8 +258,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
         <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
       </CBadge>
     );
-  }
-  
+  };
 
   const getStatusBadge = (status) => {
     if (status) {
@@ -264,11 +294,11 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               serialNumber: (item) => (
                 <td style={{ textAlign: 'center' }}>
                   <CLink
-                      className="c-subheader-nav-link"
-                      aria-current="page"
-                      to={() => `/devices/${item.serialNumber}`}
-                    >
-                      {item.serialNumber}
+                    className="c-subheader-nav-link"
+                    aria-current="page"
+                    to={() => `/devices/${item.serialNumber}`}
+                  >
+                    {item.serialNumber}
                   </CLink>
                 </td>
               ),
@@ -286,10 +316,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               ),
               verifiedCertificate: (item) => (
                 <td style={{ textAlign: 'center' }}>
-                  <CPopover
-                    content={item.verifiedCertificate ?? 'Unknown'}
-                    placement="top"
-                  >
+                  <CPopover content={item.verifiedCertificate ?? 'Unknown'} placement="top">
                     {getCertBadge(item.verifiedCertificate)}
                   </CPopover>
                 </td>
@@ -319,7 +346,12 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CButton onClick={() => refreshDevice(item.serialNumber)} color="primary" variant="outline" size="sm">
+                  <CButton
+                    onClick={() => refreshDevice(item.serialNumber)}
+                    color="primary"
+                    variant="outline"
+                    size="sm"
+                  >
                     <CIcon name="cil-sync" content={cilSync} size="sm" />
                   </CButton>
                 </td>

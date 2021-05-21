@@ -37,14 +37,16 @@ export const addDays = (date, days) => {
 };
 
 const prettyNumber = (number) => {
-  if (number >= 10){
+  if (number >= 10) {
     return number;
   }
   return `0${number}`;
-}
+};
 
 export const prettyDate = (dateString) => {
   const date = new Date(dateString);
   return `${date.getFullYear()}-${prettyNumber(date.getMonth() + 1)}-${prettyNumber(date.getDate())}
-  ${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(date.getSeconds())}`;
-}
+  ${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(
+    date.getSeconds(),
+  )}`;
+};

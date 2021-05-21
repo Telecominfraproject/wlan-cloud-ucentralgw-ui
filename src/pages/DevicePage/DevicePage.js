@@ -11,11 +11,10 @@ import DeviceLogs from './DeviceLogs';
 const DevicePage = () => {
   const dispatch = useDispatch();
 
-  const { deviceId }  = useParams();
+  const { deviceId } = useParams();
 
   useEffect(() => {
-    if(deviceId)
-      dispatch({ type: 'set', selectedDeviceId: deviceId });
+    if (deviceId) dispatch({ type: 'set', selectedDeviceId: deviceId });
   }, [deviceId]);
 
   return (
@@ -23,13 +22,13 @@ const DevicePage = () => {
       <div className="App">
         <CRow>
           <CCol xs="12" sm="6">
-            <DeviceConfiguration selectedDeviceId = {deviceId} />
-            <DeviceCommands selectedDeviceId = {deviceId} />
+            <DeviceConfiguration selectedDeviceId={deviceId} />
+            <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
           <CCol xs="12" sm="6">
-            <DeviceLogs selectedDeviceId = {deviceId} />
-            <DeviceHealth selectedDeviceId = {deviceId} />
-            <DeviceActions selectedDeviceId = {deviceId} />
+            <DeviceLogs selectedDeviceId={deviceId} />
+            <DeviceHealth selectedDeviceId={deviceId} />
+            <DeviceActions selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
       </div>

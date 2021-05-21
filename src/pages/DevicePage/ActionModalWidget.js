@@ -118,15 +118,10 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
         <h6>{directions}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
-              <CButton 
-                onClick={() => doAction(true)} 
-                disabled={waiting} 
-                block 
-                color="primary"
-              >
-                {waiting && doingNow ? 'Loading...' : 'Do Now!'}
-                <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
-              </CButton>
+            <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
+              {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+              <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
+            </CButton>
           </CCol>
           <CCol>
             <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
@@ -155,7 +150,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
 
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
-            <pre className='ignore'>{responseBody}</pre>
+            <pre className="ignore">{responseBody}</pre>
           </div>
         </div>
       </CModalBody>

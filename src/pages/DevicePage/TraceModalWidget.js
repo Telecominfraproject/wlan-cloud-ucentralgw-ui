@@ -8,9 +8,9 @@ import {
   CSpinner,
   CBadge,
   CCol,
-  CRow, 
+  CRow,
   CInvalidFeedback,
-  CSelect
+  CSelect,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -63,7 +63,7 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     const now = new Date();
     let utcDateString = dateChosen.toISOString();
 
-    if(dateChosen <= now){
+    if (dateChosen <= now) {
       const newDate = new Date();
       newDate.setSeconds(newDate.getSeconds() + 60);
       utcDateString = newDate.toISOString();
@@ -72,7 +72,7 @@ const TraceModalWidget = ({ show, toggleModal }) => {
     const parameters = {
       serialNumber: selectedDeviceId,
       when: dateChosen <= now ? '' : utcDateString,
-      network: 'lan'
+      network: 'lan',
     };
 
     if (usingDuration) {
@@ -140,17 +140,33 @@ const TraceModalWidget = ({ show, toggleModal }) => {
           <CCol xs="12" md="8">
             {usingDuration ? (
               <CSelect defaultValue="duration" disabled={waiting}>
-                <option value="20" onClick={() => setDuration(20)}>20s</option>
-                <option value="40" onClick={() => setDuration(40)}>40s</option>
-                <option value="60" onClick={() => setDuration(60)}>60s</option>
-                <option value="120" onClick={() => setDuration(120)}>120s</option>
+                <option value="20" onClick={() => setDuration(20)}>
+                  20s
+                </option>
+                <option value="40" onClick={() => setDuration(40)}>
+                  40s
+                </option>
+                <option value="60" onClick={() => setDuration(60)}>
+                  60s
+                </option>
+                <option value="120" onClick={() => setDuration(120)}>
+                  120s
+                </option>
               </CSelect>
             ) : (
               <CSelect defaultValue={packets} disabled={waiting}>
-                <option value="100" onClick={() => setPackets(100)}>100</option>
-                <option value="250" onClick={() => setPackets(250)}>250</option>
-                <option value="500" onClick={() => setPackets(500)}>500</option>
-                <option value="1000" onClick={() => setPackets(1000)}>1000</option>
+                <option value="100" onClick={() => setPackets(100)}>
+                  100
+                </option>
+                <option value="250" onClick={() => setPackets(250)}>
+                  250
+                </option>
+                <option value="500" onClick={() => setPackets(500)}>
+                  500
+                </option>
+                <option value="1000" onClick={() => setPackets(1000)}>
+                  1000
+                </option>
               </CSelect>
             )}
           </CCol>
@@ -175,7 +191,7 @@ const TraceModalWidget = ({ show, toggleModal }) => {
 
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
-            <pre className='ignore'>{responseBody} </pre>
+            <pre className="ignore">{responseBody} </pre>
           </div>
         </div>
       </CModalBody>

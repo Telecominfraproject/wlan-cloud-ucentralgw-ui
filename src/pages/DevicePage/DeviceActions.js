@@ -82,10 +82,10 @@ const DeviceActions = () => {
         actionLabel="reboot"
         action="reboot"
       />
-      <BlinkModalWidget show={showBlinkModal} toggleModal={toggleBlinkModal}/>
+      <BlinkModalWidget show={showBlinkModal} toggleModal={toggleBlinkModal} />
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
       <TraceModalWidget show={showTraceModal} toggleModal={toggleTraceModal} />
-      <WifiScanModalWidget show={showScanModal}  toggleModal={toggleScanModal} />
+      <WifiScanModalWidget show={showScanModal} toggleModal={toggleScanModal} />
     </CCard>
   );
 };

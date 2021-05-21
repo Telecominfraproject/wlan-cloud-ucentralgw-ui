@@ -9,7 +9,7 @@ import {
   CCardBody,
   CRow,
   CCol,
-  CProgress
+  CProgress,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -17,7 +17,7 @@ import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceHealth = ({selectedDeviceId}) => {
+const DeviceHealth = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,11 +34,11 @@ const DeviceHealth = ({selectedDeviceId}) => {
 
   const modifyStart = (value) => {
     setStart(value);
-  }
+  };
 
   const modifyEnd = (value) => {
     setEnd(value);
-  }
+  };
 
   const getDeviceHealth = () => {
     setLoading(true);
@@ -61,8 +61,7 @@ const DeviceHealth = ({selectedDeviceId}) => {
       .then((response) => {
         setHealthChecks(response.data.values);
       })
-      .catch(() => {
-      })
+      .catch(() => {})
       .finally(() => {
         setLoading(false);
       });
@@ -95,19 +94,17 @@ const DeviceHealth = ({selectedDeviceId}) => {
   ];
 
   useEffect(() => {
-    if(selectedDeviceId){
+    if (selectedDeviceId) {
       getDeviceHealth();
     }
   }, [selectedDeviceId, start, end]);
 
-
   if (healthChecks && healthChecks.length > 0) {
-    sanityLevel = healthChecks[healthChecks.length-1].sanity;
+    sanityLevel = healthChecks[healthChecks.length - 1].sanity;
     if (sanityLevel === 100) barColor = 'gradient-success';
     else if (sanityLevel >= 90) barColor = 'gradient-warning';
     else barColor = 'gradient-danger';
-  }
-  else{
+  } else {
     sanityLevel = 0;
     barColor = 'gradient-dark';
   }
@@ -121,7 +118,7 @@ const DeviceHealth = ({selectedDeviceId}) => {
       inverse="true"
       footerSlot={
         <div style={{ padding: '20px' }}>
-          <CProgress style={{marginBottom: '20px'}} color="white" value={sanityLevel ?? 0} />
+          <CProgress style={{ marginBottom: '20px' }} color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
@@ -163,7 +160,7 @@ const DeviceHealth = ({selectedDeviceId}) => {
                         <td className="py-2">
                           <CButton
                             color="primary"
-                            variant={details.includes(index) ? "" : "outline"}
+                            variant={details.includes(index) ? '' : 'outline'}
                             shape="square"
                             size="sm"
                             onClick={() => {
@@ -180,7 +177,7 @@ const DeviceHealth = ({selectedDeviceId}) => {
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre className='ignore'>{JSON.stringify(item.values, null, 4)}</pre>
+                            <pre className="ignore">{JSON.stringify(item.values, null, 4)}</pre>
                           </div>
                         </CCardBody>
                       </CCollapse>

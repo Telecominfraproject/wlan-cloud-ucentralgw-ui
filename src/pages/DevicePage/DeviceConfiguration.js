@@ -17,7 +17,7 @@ import { cleanTimestamp } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceConfiguration = ({selectedDeviceId}) => {
+const DeviceConfiguration = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [device, setDevice] = useState(null);
 
@@ -39,13 +39,11 @@ const DeviceConfiguration = ({selectedDeviceId}) => {
       .then((response) => {
         setDevice(response.data);
       })
-      .catch(() => {
-      });
+      .catch(() => {});
   };
 
   useEffect(() => {
-    if(selectedDeviceId)
-      getDevice();
+    if (selectedDeviceId) getDevice();
   }, [selectedDeviceId]);
 
   if (device) {
@@ -145,7 +143,12 @@ const DeviceConfiguration = ({selectedDeviceId}) => {
               </CFormGroup>
             </CCollapse>
             <CCardFooter>
-              <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
+              <CButton
+                show={collapse ? 'true' : 'false'}
+                color="transparent"
+                onClick={toggle}
+                block
+              >
                 <CIcon name={collapse ? 'cilChevronTop' : 'cilChevronBottom'} size="lg" />
               </CButton>
             </CCardFooter>

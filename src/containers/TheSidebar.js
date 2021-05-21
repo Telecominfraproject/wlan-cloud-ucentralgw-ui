@@ -23,8 +23,18 @@ const TheSidebar = () => {
   return (
     <CSidebar show={show} onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })}>
       <CSidebarBrand className="d-md-down-none" to="/devices">
-        <img  className="c-sidebar-brand-full" src={logoBar} style={{ height: '75px'}} alt="OpenWifi" />
-        <img  className="c-sidebar-brand-minimized" src={logoBar} style={{ height: '75px', width: '75px' }} alt="OpenWifi" />
+        <img
+          className="c-sidebar-brand-full"
+          src={logoBar}
+          style={{ height: '75px' }}
+          alt="OpenWifi"
+        />
+        <img
+          className="c-sidebar-brand-minimized"
+          src={logoBar}
+          style={{ height: '75px', width: '75px' }}
+          alt="OpenWifi"
+        />
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement

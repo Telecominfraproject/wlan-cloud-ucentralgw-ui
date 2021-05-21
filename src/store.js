@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 const initialState = {
   sidebarShow: 'responsive',
   connected: false,
-  selectedDeviceId: null
+  selectedDeviceId: null,
 };
 
 const changeState = (state = initialState, { type, ...rest }) => {

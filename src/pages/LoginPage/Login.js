@@ -20,7 +20,7 @@ import CIcon from '@coreui/icons-react';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import { useDispatch } from 'react-redux';
 import axiosInstance from '../../utils/axiosInstance';
-import logo from '../../assets/OpenWiFi_LogoLockup_DarkGreyColour.svg'
+import logo from '../../assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -92,7 +92,12 @@ const Login = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="8">
-            <img  className="c-sidebar-brand-full" src={logo} style={{ paddingLeft: '17%', width: '85%'}} alt="OpenWifi" />
+            <img
+              className="c-sidebar-brand-full"
+              src={logo}
+              style={{ paddingLeft: '17%', width: '85%' }}
+              alt="OpenWifi"
+            />
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>

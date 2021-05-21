@@ -18,7 +18,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 
-const DeviceCommands = ({selectedDeviceId}) => {
+const DeviceCommands = ({ selectedDeviceId }) => {
   const [showModal, setShowModal] = useState(false);
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
   const [scanDate, setScanDate] = useState('');
@@ -40,11 +40,11 @@ const DeviceCommands = ({selectedDeviceId}) => {
 
   const modifyStart = (value) => {
     setStart(value);
-  }
+  };
 
   const modifyEnd = (value) => {
     setEnd(value);
-  }
+  };
 
   const getCommands = () => {
     setLoading(true);
@@ -67,26 +67,24 @@ const DeviceCommands = ({selectedDeviceId}) => {
       .then((response) => {
         setCommands(response.data.commands);
       })
-      .catch(() => {
-      })
+      .catch(() => {})
       .finally(() => {
         setLoading(false);
       });
   };
 
   const toggleDetails = (item, index) => {
-    if(item.command !== 'wifiscan' || !item.results.status){
+    if (item.command !== 'wifiscan' || !item.results.status) {
       const position = details.indexOf(index);
       let newDetails = details.slice();
-  
+
       if (position !== -1) {
         newDetails.splice(position, 1);
       } else {
         newDetails = [...details, index];
       }
       setDetails(newDetails);
-    }
-    else{
+    } else {
       setChosenWifiScan(item.results.status.scan.scan);
       setScanDate(item.completed);
       console.log(scanDate);
@@ -96,20 +94,16 @@ const DeviceCommands = ({selectedDeviceId}) => {
 
   const refreshCommands = () => {
     setEnd(new Date());
-  }
+  };
 
   const getDetails = (command, commandDetails) => {
-    if (command === 'reboot' || command === 'leds'){
+    if (command === 'reboot' || command === 'leds') {
       const result = commandDetails.results;
-      if(result)
-        return (
-          <pre className='ignore'>{JSON.stringify(result, null, 4)}</pre>
-        );
+      if (result) return <pre className="ignore">{JSON.stringify(result, null, 4)}</pre>;
     }
 
-    return <pre className='ignore'>{JSON.stringify(commandDetails, null, 4)}</pre>
-    
-  }
+    return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
+  };
   const columns = [
     { key: 'UUID', label: 'Id' },
     { key: 'command' },
@@ -124,13 +118,13 @@ const DeviceCommands = ({selectedDeviceId}) => {
   ];
 
   useEffect(() => {
-    if(selectedDeviceId){
+    if (selectedDeviceId) {
       getCommands();
     }
-  }, [selectedDeviceId, start, end]); 
+  }, [selectedDeviceId, start, end]);
 
   useEffect(() => {
-    if(selectedDeviceId){
+    if (selectedDeviceId) {
       setStart(addDays(new Date(), -3).toString());
       setEnd(new Date().toString());
       getCommands();
@@ -139,23 +133,23 @@ const DeviceCommands = ({selectedDeviceId}) => {
 
   return (
     <CWidgetDropdown
-      inverse='true'
+      inverse="true"
       color="gradient-primary"
       header="Device Commands"
       footerSlot={
         <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
             <CRow>
-              <CCol/>
+              <CCol />
               <CCol>
-                <div  style={{float: 'right'}}>
-                <CButton onClick={() => refreshCommands()} size="sm">
-                    <CIcon 
-                      name="cil-sync" 
-                      content={cilSync} 
+                <div style={{ float: 'right' }}>
+                  <CButton onClick={() => refreshCommands()} size="sm">
+                    <CIcon
+                      name="cil-sync"
+                      content={cilSync}
                       style={{ color: 'white' }}
-                      size="2xl" 
-                      />
+                      size="2xl"
+                    />
                   </CButton>
                 </div>
               </CCol>
@@ -190,12 +184,18 @@ const DeviceCommands = ({selectedDeviceId}) => {
                   border
                   sorterValue={{ column: 'completed', desc: 'true' }}
                   scopedSlots={{
-                    completed: (item) => <td>{(item.completed && item.completed !== "") ? prettyDate(item.completed) : 'Pending'}</td>,
+                    completed: (item) => (
+                      <td>
+                        {item.completed && item.completed !== ''
+                          ? prettyDate(item.completed)
+                          : 'Pending'}
+                      </td>
+                    ),
                     show_details: (item, index) => (
                       <td className="py-2">
                         <CButton
                           color="primary"
-                          variant={details.includes(index) ? "" : "outline"}
+                          variant={details.includes(index) ? '' : 'outline'}
                           shape="square"
                           size="sm"
                           onClick={() => {
@@ -210,9 +210,7 @@ const DeviceCommands = ({selectedDeviceId}) => {
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>
-                            {getDetails(item.command, item)}
-                          </div>
+                          <div>{getDetails(item.command, item)}</div>
                         </CCardBody>
                       </CCollapse>
                     ),
@@ -231,7 +229,12 @@ const DeviceCommands = ({selectedDeviceId}) => {
         </div>
       }
     >
-    <WifiScanResultModalWidget show={showModal} toggle={toggleModal} scanResults={chosenWifiScan} date={scanDate}/>
+      <WifiScanResultModalWidget
+        show={showModal}
+        toggle={toggleModal}
+        scanResults={chosenWifiScan}
+        date={scanDate}
+      />
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>
   );
