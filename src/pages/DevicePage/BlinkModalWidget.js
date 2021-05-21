@@ -167,7 +167,7 @@ const BlinkModalWidget = ({show, toggleModal}) => {
           </CRow>
           <div hidden={!hadSuccess && !hadFailure}>
             <div>
-              <pre>{responseBody}</pre>
+              <pre className='ignore'>{responseBody}</pre>
             </div>
           </div>
         </CModalBody>

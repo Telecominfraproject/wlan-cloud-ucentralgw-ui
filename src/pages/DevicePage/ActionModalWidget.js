@@ -155,7 +155,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
 
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
-            <pre>{responseBody}</pre>
+            <pre className='ignore'>{responseBody}</pre>
           </div>
         </div>
       </CModalBody>

@@ -95,11 +95,11 @@ const DeviceCommands = ({selectedDeviceId}) => {
       const result = commandDetails.results;
       if(result)
         return (
-          <pre>{JSON.stringify(result, null, 4)}</pre>
+          <pre className='ignore'>{JSON.stringify(result, null, 4)}</pre>
         );
     }
 
-    return <pre>{JSON.stringify(commandDetails, null, 4)}</pre>
+    return <pre className='ignore'>{JSON.stringify(commandDetails, null, 4)}</pre>
     
   }
   const columns = [

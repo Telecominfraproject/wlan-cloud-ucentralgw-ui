@@ -196,7 +196,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         <CInvalidFeedback>You need a url...</CInvalidFeedback>
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
-            <pre>{responseBody}</pre>
+            <pre className='ignore'>{responseBody}</pre>
           </div>
         </div>
       </CModalBody>
