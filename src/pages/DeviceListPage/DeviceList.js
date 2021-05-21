@@ -167,7 +167,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
     if(cert === 'NO_CERTIFICATE') {
       return (
         <div style={{position: 'relative'}}>
-          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}}name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+          <CIcon style={{position: 'absolute', left: '31%', marginTop:'8%'}} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           <CIcon style={{position: 'absolute', zIndex: 99, left: '21%', color: '#e55353'}} name="cil-ban" content={cilBan} size="3xl" alt="AP" />
         </div>
       );
@@ -305,7 +305,7 @@ const DeviceListDisplay = ({ devices, loading, updateDevicesPerPage, pageCount, 
                     to={() => `/devices/${item.serialNumber}`}
                   >
                     <CButton color="primary" variant="outline" shape="square" size="sm">
-                      <CIcon name="cil-info" content={cilInfo} size="l" />
+                      <CIcon name="cil-info" content={cilInfo} size="sm" />
                     </CButton>
                   </CLink>
                 </td>
