@@ -13,6 +13,7 @@ import {
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { getToken } from '../../utils/authHelper';
@@ -391,6 +392,15 @@ const DeviceListDisplay = ({
       </CCard>
     </>
   );
+};
+
+DeviceListDisplay.propTypes = {
+  devices: PropTypes.instanceOf(Array).isRequired,
+  updateDevicesPerPage: PropTypes.func.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  updatePage: PropTypes.func.isRequired,
+  refreshDevice: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default DeviceList;

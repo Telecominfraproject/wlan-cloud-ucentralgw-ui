@@ -1,6 +1,7 @@
 import { CCol, CRow } from '@coreui/react';
 import React, { useEffect } from 'react';
 import { v4 as createUuid } from 'uuid';
+import PropTypes from 'prop-types';
 import WifiChannelCard from './WifiChannelCard';
 
 const WifiChannelTable = ({ channels }) => {
@@ -28,6 +29,14 @@ const WifiChannelTable = ({ channels }) => {
       </CCol>
     </CRow>
   );
+};
+
+WifiChannelTable.propTypes = {
+  channels: PropTypes.instanceOf(Array),
+};
+
+WifiChannelTable.defaultProps = {
+  channels: [],
 };
 
 export default WifiChannelTable;

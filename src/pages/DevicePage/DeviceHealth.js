@@ -13,6 +13,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
+import PropTypes from 'prop-types';
 import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
@@ -198,6 +199,10 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       }
     />
   );
+};
+
+DeviceHealth.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceHealth;

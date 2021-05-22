@@ -14,6 +14,7 @@ import {
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { convertDateToUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
@@ -221,6 +222,11 @@ const TraceModalWidget = ({ show, toggleModal }) => {
       </CModalFooter>
     </CModal>
   );
+};
+
+TraceModalWidget.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default TraceModalWidget;

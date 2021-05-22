@@ -1,5 +1,6 @@
 import { CCard, CCardTitle, CCardBody, CDataTable, CCardHeader } from '@coreui/react';
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
 
 const WifiChannelCard = ({ channel }) => {
@@ -17,6 +18,10 @@ const WifiChannelCard = ({ channel }) => {
       </CCardBody>
     </CCard>
   );
+};
+
+WifiChannelCard.propTypes = {
+  channel: PropTypes.func.isRequired,
 };
 
 export default WifiChannelCard;

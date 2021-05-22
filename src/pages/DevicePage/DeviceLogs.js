@@ -12,6 +12,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
+import PropTypes from 'prop-types';
 import { addDays, prettyDate } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
@@ -177,6 +178,10 @@ const DeviceLogs = ({ selectedDeviceId }) => {
       <CIcon name="cilList" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>
   );
+};
+
+DeviceLogs.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceLogs;

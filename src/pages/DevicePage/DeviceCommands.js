@@ -13,6 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
+import PropTypes from 'prop-types';
 import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
@@ -87,7 +88,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     } else {
       setChosenWifiScan(item.results.status.scan.scan);
       setScanDate(item.completed);
-      console.log(scanDate);
       setShowModal(true);
     }
   };
@@ -238,6 +238,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>
   );
+};
+
+DeviceCommands.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceCommands;

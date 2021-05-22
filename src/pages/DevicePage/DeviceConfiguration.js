@@ -13,6 +13,7 @@ import {
   CButton,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import PropTypes from 'prop-types';
 import { cleanTimestamp } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
@@ -164,6 +165,10 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
       <CCardBody />
     </CCard>
   );
+};
+
+DeviceConfiguration.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceConfiguration;

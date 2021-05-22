@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import TheContent from './TheContent';
 import TheSidebar from './TheSidebar';
 import TheFooter from './TheFooter';
@@ -22,6 +23,14 @@ const TheLayout = (props) => {
       </div>
     </div>
   );
+};
+
+TheLayout.propTypes = {
+  children: PropTypes.instanceOf(Object),
+};
+
+TheLayout.defaultProps = {
+  children: {},
 };
 
 export default TheLayout;

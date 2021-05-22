@@ -12,13 +12,14 @@ import {
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { convertDateToUtc, convertDateFromUtc } from '../../utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 
-const ActionModalWidget = ({ show, toggleModal, title, directions, action, extraParameters }) => {
+const ActionModalWidget = ({ show, toggleModal, title, directions, action }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -80,11 +81,8 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
     const utcDateString = utcDate.toISOString();
 
     const parameters = {
-      ...{
-        serialNumber: selectedDeviceId,
-        when: isNow ? '' : utcDateString,
-      },
-      ...extraParameters,
+      serialNumber: selectedDeviceId,
+      when: isNow ? '' : utcDateString,
     };
 
     const headers = {
@@ -179,6 +177,14 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action, extra
       </CModalFooter>
     </CModal>
   );
+};
+
+ActionModalWidget.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  directions: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired,
 };
 
 export default ActionModalWidget;

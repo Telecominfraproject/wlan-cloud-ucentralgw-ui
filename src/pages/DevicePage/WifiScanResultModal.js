@@ -8,6 +8,7 @@ import {
   CModalTitle,
   CModalFooter,
 } from '@coreui/react';
+import PropTypes from 'prop-types';
 import WifiChannelTable from './WifiChannelTable';
 import { prettyDate } from '../../utils/helper';
 
@@ -62,4 +63,16 @@ const WifiScanResultModalWidget = ({ show, toggle, scanResults, date }) => {
     </CModal>
   );
 };
+
+WifiScanResultModalWidget.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  scanResults: PropTypes.instanceOf(Array),
+  date: PropTypes.string.isRequired,
+};
+
+WifiScanResultModalWidget.defaultProps = {
+  scanResults: [],
+};
+
 export default WifiScanResultModalWidget;

@@ -14,6 +14,7 @@ import {
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import WifiChannelTable from './WifiChannelTable';
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
@@ -166,6 +167,11 @@ const WifiScanModalWidget = ({ show, toggleModal }) => {
       </CModalFooter>
     </CModal>
   );
+};
+
+WifiScanModalWidget.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default WifiScanModalWidget;
