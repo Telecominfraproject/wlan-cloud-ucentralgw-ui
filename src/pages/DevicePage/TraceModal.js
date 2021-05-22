@@ -21,7 +21,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 
-const TraceModalWidget = ({ show, toggleModal }) => {
+const TraceModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -224,9 +224,9 @@ const TraceModalWidget = ({ show, toggleModal }) => {
   );
 };
 
-TraceModalWidget.propTypes = {
+TraceModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
-export default TraceModalWidget;
+export default TraceModal;

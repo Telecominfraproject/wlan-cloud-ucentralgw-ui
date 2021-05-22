@@ -22,7 +22,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 
-const BlinkModalWidget = ({ show, toggleModal }) => {
+const BlinkModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -213,9 +213,9 @@ const BlinkModalWidget = ({ show, toggleModal }) => {
   );
 };
 
-BlinkModalWidget.propTypes = {
+BlinkModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
-export default BlinkModalWidget;
+export default BlinkModal;

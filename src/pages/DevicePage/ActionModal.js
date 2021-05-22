@@ -19,7 +19,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 
-const ActionModalWidget = ({ show, toggleModal, title, directions, action }) => {
+const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -179,7 +179,7 @@ const ActionModalWidget = ({ show, toggleModal, title, directions, action }) => 
   );
 };
 
-ActionModalWidget.propTypes = {
+ActionModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -187,4 +187,4 @@ ActionModalWidget.propTypes = {
   action: PropTypes.string.isRequired,
 };
 
-export default ActionModalWidget;
+export default ActionModal;

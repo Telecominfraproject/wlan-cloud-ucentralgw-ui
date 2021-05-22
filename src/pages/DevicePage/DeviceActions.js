@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
-import ActionModalWidget from './ActionModalWidget';
+import ActionModal from './ActionModal';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
-import TraceModalWidget from './TraceModalWidget';
-import WifiScanModalWidget from './WifiScanModal';
-import BlinkModalWidget from './BlinkModalWidget';
+import TraceModal from './TraceModal';
+import WifiScanModal from './WifiScanModal';
+import BlinkModal from './BlinkModal';
 
 const DeviceActions = () => {
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -74,7 +74,7 @@ const DeviceActions = () => {
           </CCol>
         </CRow>
       </CCardBody>
-      <ActionModalWidget
+      <ActionModal
         show={showRebootModal}
         toggleModal={toggleRebootModal}
         title="Reboot Device"
@@ -82,10 +82,10 @@ const DeviceActions = () => {
         actionLabel="reboot"
         action="reboot"
       />
-      <BlinkModalWidget show={showBlinkModal} toggleModal={toggleBlinkModal} />
+      <BlinkModal show={showBlinkModal} toggleModal={toggleBlinkModal} />
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
-      <TraceModalWidget show={showTraceModal} toggleModal={toggleTraceModal} />
-      <WifiScanModalWidget show={showScanModal} toggleModal={toggleScanModal} />
+      <TraceModal show={showTraceModal} toggleModal={toggleTraceModal} />
+      <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
     </CCard>
   );
 };

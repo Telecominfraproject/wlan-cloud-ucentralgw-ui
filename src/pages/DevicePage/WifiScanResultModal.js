@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import WifiChannelTable from './WifiChannelTable';
 import { prettyDate } from '../../utils/helper';
 
-const WifiScanResultModalWidget = ({ show, toggle, scanResults, date }) => {
+const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const parseThroughList = (scanList) => {
     const dbmNumber = 4294967295;
     const listOfChannels = [];
@@ -64,15 +64,15 @@ const WifiScanResultModalWidget = ({ show, toggle, scanResults, date }) => {
   );
 };
 
-WifiScanResultModalWidget.propTypes = {
+WifiScanResultModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   scanResults: PropTypes.instanceOf(Array),
   date: PropTypes.string.isRequired,
 };
 
-WifiScanResultModalWidget.defaultProps = {
+WifiScanResultModal.defaultProps = {
   scanResults: [],
 };
 
-export default WifiScanResultModalWidget;
+export default WifiScanResultModal;

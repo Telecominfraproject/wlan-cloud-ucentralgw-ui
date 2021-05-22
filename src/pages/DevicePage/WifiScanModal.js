@@ -20,7 +20,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 
-const WifiScanModalWidget = ({ show, toggleModal }) => {
+const WifiScanModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -169,9 +169,9 @@ const WifiScanModalWidget = ({ show, toggleModal }) => {
   );
 };
 
-WifiScanModalWidget.propTypes = {
+WifiScanModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
-export default WifiScanModalWidget;
+export default WifiScanModal;
