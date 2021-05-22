@@ -178,7 +178,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre className="ignore">{JSON.stringify(item.values, null, 4)}</pre>
+                            <pre className="ignore">{details.includes(index) ? JSON.stringify(item.values, null, 4) : ''}</pre>
                           </div>
                         </CCardBody>
                       </CCollapse>

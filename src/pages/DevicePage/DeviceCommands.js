@@ -210,7 +210,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>{getDetails(item.command, item)}</div>
+                          <div>{details.includes(index) ? getDetails(item.command, item) : ''}</div>
                         </CCardBody>
                       </CCollapse>
                     ),
