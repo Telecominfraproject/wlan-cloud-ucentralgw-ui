@@ -81,6 +81,12 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     setDetails(newDetails);
   };
 
+  const getDetails = (index, healthCheckDetails) => {
+    if (details.includes(index))
+     return <pre className="ignore">{JSON.stringify(healthCheckDetails, null, 4)}</pre>;
+    return <pre className="ignore"/>
+  };
+
   const columns = [
     { key: 'UUID', label: 'Config. Id' },
     { key: 'recorded' },
@@ -178,7 +184,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                         <CCardBody>
                           <h5>Details</h5>
                           <div>
-                            <pre className="ignore">{details.includes(index) ? JSON.stringify(item.values, null, 4) : ''}</pre>
+                            {getDetails(index, item.values)}
                           </div>
                         </CCardBody>
                       </CCollapse>

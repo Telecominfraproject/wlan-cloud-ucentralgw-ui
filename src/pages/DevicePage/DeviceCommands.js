@@ -96,7 +96,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setEnd(new Date());
   };
 
-  const getDetails = (command, commandDetails) => {
+  const getDetails = (command, commandDetails, index) => {
+    if(!details.includes(index)){
+      return <pre className="ignore"/>
+    }
     if (command === 'reboot' || command === 'leds') {
       const result = commandDetails.results;
       if (result) return <pre className="ignore">{JSON.stringify(result, null, 4)}</pre>;
@@ -130,6 +133,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       getCommands();
     }
   }, [selectedDeviceId]);
+
+  
 
   return (
     <CWidgetDropdown
@@ -210,7 +215,9 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>{details.includes(index) ? getDetails(item.command, item) : ''}</div>
+                          <div>
+                            {getDetails(item.command, item, index)}
+                          </div>
                         </CCardBody>
                       </CCollapse>
                     ),
