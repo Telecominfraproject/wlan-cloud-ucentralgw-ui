@@ -79,8 +79,8 @@ const DeviceLogs = ({ selectedDeviceId }) => {
 
   const getDetails = (index, logDetails) => {
     if (details.includes(index))
-     return <pre className="ignore">{JSON.stringify(logDetails, null, 4)}</pre>;
-    return <pre className="ignore"/>
+      return <pre className="ignore">{JSON.stringify(logDetails, null, 4)}</pre>;
+    return <pre className="ignore" />;
   };
 
   const columns = [
@@ -160,9 +160,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>
-                            {getDetails(index, item)}
-                          </div>
+                          <div>{getDetails(index, item)}</div>
                         </CCardBody>
                       </CCollapse>
                     ),

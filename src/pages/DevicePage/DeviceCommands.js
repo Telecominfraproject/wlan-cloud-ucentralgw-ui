@@ -18,10 +18,13 @@ import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
+import ConfirmModal from '../../components/ConfirmModal';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showScanModal, setShowScanModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
+  const [uuidDelete, setUuidDelete] = useState('');
   const [scanDate, setScanDate] = useState('');
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
@@ -36,8 +39,13 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     e.preventDefault();
   };
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
+  const toggleScanModal = () => {
+    setShowScanModal(!showScanModal);
+  };
+
+  const toggleConfirmModal = (uuid) => {
+    setUuidDelete(uuid);
+    setShowConfirmModal(!showConfirmModal);
   };
 
   const modifyStart = (value) => {
@@ -75,6 +83,30 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       });
   };
 
+  const deleteCommand= async () => {
+    if(uuidDelete === ''){
+      return false;
+    }
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+    return (
+      axiosInstance
+      .delete(`/command/${uuidDelete}`, options)
+      .then(() => {
+        setUuidDelete('');
+        return true;
+      })
+      .catch(() => {
+        setUuidDelete('');
+        return false;
+      })
+    );
+  };
+
   const toggleDetails = (item, index) => {
     if (item.command !== 'wifiscan' || !item.results.status) {
       const position = details.indexOf(index);
@@ -89,10 +121,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     } else {
       setChosenWifiScan(item.results.status.scan.scan);
       setScanDate(item.completed);
-      setShowModal(true);
+      setShowScanModal(true);
     }
   };
-  
+
   const toggleResponse = (item, index) => {
     const position = responses.indexOf(index);
     let newResponses = responses.slice();
@@ -110,8 +142,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const getDetails = (command, commandDetails, index) => {
-    if(!details.includes(index)){
-      return <pre className="ignore"/>
+    if (!details.includes(index)) {
+      return <pre className="ignore" />;
     }
     if (command === 'reboot' || command === 'leds') {
       const result = commandDetails.results;
@@ -121,9 +153,9 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
   };
 
-  const getResponse = (command, commandDetails, index) => {
-    if(!responses.includes(index)){
-      return <pre className="ignore"/>
+  const getResponse = (commandDetails, index) => {
+    if (!responses.includes(index)) {
+      return <pre className="ignore" />;
     }
     return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
   };
@@ -146,6 +178,13 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       sorter: false,
       filter: false,
     },
+    {
+      key: 'delete_command',
+      label: 'Delete',
+      _style: { width: '1%' },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   useEffect(() => {
@@ -161,8 +200,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       getCommands();
     }
   }, [selectedDeviceId]);
-
-  
 
   return (
     <CWidgetDropdown
@@ -256,24 +293,35 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                         </CButton>
                       </td>
                     ),
+                    delete_command: (item, index) => (
+                      <td className="py-2">
+                        <CButton
+                          color="primary"
+                          variant={responses.includes(index) ? '' : 'outline'}
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleConfirmModal(item.UUID);
+                          }}
+                        >
+                          <CIcon name="cilTrash" size="lg" />
+                        </CButton>
+                      </td>
+                    ),
                     details: (item, index) => (
                       <div>
-                      <CCollapse show={details.includes(index)}>
-                        <CCardBody>
-                          <h5>Result</h5>
-                          <div>
-                            {getDetails(item.command, item, index)}
-                          </div>
-                        </CCardBody>
-                      </CCollapse>
-                      <CCollapse show={responses.includes(index)}>
-                        <CCardBody>
-                          <h5>Details</h5>
-                          <div>
-                            {getResponse(item.command, item, index)}
-                          </div>
-                        </CCardBody>
-                      </CCollapse>
+                        <CCollapse show={details.includes(index)}>
+                          <CCardBody>
+                            <h5>Result</h5>
+                            <div>{getDetails(item.command, item, index)}</div>
+                          </CCardBody>
+                        </CCollapse>
+                        <CCollapse show={responses.includes(index)}>
+                          <CCardBody>
+                            <h5>Details</h5>
+                            <div>{getResponse(item.command, item, index)}</div>
+                          </CCardBody>
+                        </CCollapse>
                       </div>
                     ),
                   }}
@@ -292,10 +340,15 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       }
     >
       <WifiScanResultModalWidget
-        show={showModal}
-        toggle={toggleModal}
+        show={showScanModal}
+        toggle={toggleScanModal}
         scanResults={chosenWifiScan}
         date={scanDate}
+      />
+      <ConfirmModal
+        show={showConfirmModal}
+        toggle={toggleConfirmModal}
+        action={deleteCommand}
       />
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>

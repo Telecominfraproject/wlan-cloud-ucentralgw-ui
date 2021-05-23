@@ -83,8 +83,8 @@ const DeviceHealth = ({ selectedDeviceId }) => {
 
   const getDetails = (index, healthCheckDetails) => {
     if (details.includes(index))
-     return <pre className="ignore">{JSON.stringify(healthCheckDetails, null, 4)}</pre>;
-    return <pre className="ignore"/>
+      return <pre className="ignore">{JSON.stringify(healthCheckDetails, null, 4)}</pre>;
+    return <pre className="ignore" />;
   };
 
   const columns = [
@@ -183,9 +183,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>
-                            {getDetails(index, item.values)}
-                          </div>
+                          <div>{getDetails(index, item.values)}</div>
                         </CCardBody>
                       </CCollapse>
                     ),
