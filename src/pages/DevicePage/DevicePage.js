@@ -23,12 +23,16 @@ const DevicePage = () => {
         <CRow>
           <CCol xs="12" sm="6">
             <DeviceConfiguration selectedDeviceId={deviceId} />
-            <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
           <CCol xs="12" sm="6">
             <DeviceLogs selectedDeviceId={deviceId} />
             <DeviceHealth selectedDeviceId={deviceId} />
             <DeviceActions selectedDeviceId={deviceId} />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol>
+            <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
       </div>

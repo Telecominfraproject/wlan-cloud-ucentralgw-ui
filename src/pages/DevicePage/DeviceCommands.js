@@ -25,6 +25,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const [scanDate, setScanDate] = useState('');
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
+  const [responses, setResponses] = useState([]);
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
@@ -91,6 +92,18 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setShowModal(true);
     }
   };
+  
+  const toggleResponse = (item, index) => {
+    const position = responses.indexOf(index);
+    let newResponses = responses.slice();
+
+    if (position !== -1) {
+      newResponses.splice(position, 1);
+    } else {
+      newResponses = [...newResponses, index];
+    }
+    setResponses(newResponses);
+  };
 
   const refreshCommands = () => {
     setEnd(new Date());
@@ -107,13 +120,28 @@ const DeviceCommands = ({ selectedDeviceId }) => {
 
     return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
   };
+
+  const getResponse = (command, commandDetails, index) => {
+    if(!responses.includes(index)){
+      return <pre className="ignore"/>
+    }
+    return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
+  };
+
   const columns = [
     { key: 'UUID', label: 'Id' },
     { key: 'command' },
-    { key: 'completed' },
+    { key: 'completed', filter: false },
     {
       key: 'show_details',
-      label: '',
+      label: 'Result',
+      _style: { width: '1%' },
+      sorter: false,
+      filter: false,
+    },
+    {
+      key: 'show_response',
+      label: 'Details',
       _style: { width: '1%' },
       sorter: false,
       filter: false,
@@ -180,13 +208,15 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className="overflow-auto" style={{ height: '250px' }}>
+              <div className="overflow-auto" style={{ height: '400px' }}>
                 <CDataTable
                   loading={loading}
                   items={commands ?? []}
                   fields={columns}
                   style={{ color: 'white' }}
                   border
+                  columnFilter
+                  sorter
                   sorterValue={{ column: 'completed', desc: 'true' }}
                   scopedSlots={{
                     completed: (item) => (
@@ -211,15 +241,40 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                         </CButton>
                       </td>
                     ),
+                    show_response: (item, index) => (
+                      <td className="py-2">
+                        <CButton
+                          color="primary"
+                          variant={responses.includes(index) ? '' : 'outline'}
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleResponse(item, index);
+                          }}
+                        >
+                          <CIcon name="cilList" size="lg" />
+                        </CButton>
+                      </td>
+                    ),
                     details: (item, index) => (
+                      <div>
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
-                          <h5>Details</h5>
+                          <h5>Result</h5>
                           <div>
                             {getDetails(item.command, item, index)}
                           </div>
                         </CCardBody>
                       </CCollapse>
+                      <CCollapse show={responses.includes(index)}>
+                        <CCardBody>
+                          <h5>Details</h5>
+                          <div>
+                            {getResponse(item.command, item, index)}
+                          </div>
+                        </CCardBody>
+                      </CCollapse>
+                      </div>
                     ),
                   }}
                 />
