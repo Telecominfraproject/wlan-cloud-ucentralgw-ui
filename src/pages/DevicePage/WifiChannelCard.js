@@ -21,7 +21,7 @@ const WifiChannelCard = ({ channel }) => {
 };
 
 WifiChannelCard.propTypes = {
-  channel: PropTypes.func.isRequired,
+  channel: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default WifiChannelCard;

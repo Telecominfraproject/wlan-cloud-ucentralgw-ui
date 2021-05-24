@@ -9,6 +9,7 @@ import {
   CDataTable,
   CCard,
   CCardBody,
+  CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -19,6 +20,8 @@ import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 import ConfirmModal from '../../components/ConfirmModal';
+import BlueResultIcon from '../../assets/icons/BlueResultsIcon.png';
+import WhiteResultIcon from '../../assets/icons/WhiteResultsIcon.png';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
   const [showScanModal, setShowScanModal] = useState(false);
@@ -161,30 +164,18 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const columns = [
-    { key: 'UUID', label: 'Id' },
-    { key: 'command' },
-    { key: 'completed', filter: false },
+    { key: 'UUID', label: 'Id', _style: { width: '28%' } },
+    { key: 'command', _style: { width: '10%' } },
+    { key: 'completed', filter: false, _style: { width: '16%' } },
+    { key: 'submitted', filter: false, _style: { width: '16%' } },
+    { key: 'executed', filter: false, _style: { width: '16%' } },
     {
-      key: 'show_details',
-      label: 'Result',
-      _style: { width: '1%' },
+      key: 'show_buttons',
+      label: '',
       sorter: false,
       filter: false,
-    },
-    {
-      key: 'show_response',
-      label: 'Details',
-      _style: { width: '1%' },
-      sorter: false,
-      filter: false,
-    },
-    {
-      key: 'delete_command',
-      label: 'Delete',
-      _style: { width: '1%' },
-      sorter: false,
-      filter: false,
-    },
+      _style: { width: '14%' }
+    }
   ];
 
   useEffect(() => {
@@ -263,49 +254,78 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                           : 'Pending'}
                       </td>
                     ),
-                    show_details: (item, index) => (
-                      <td className="py-2">
-                        <CButton
-                          color="primary"
-                          variant={details.includes(index) ? '' : 'outline'}
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleDetails(item, index);
-                          }}
-                        >
-                          <CIcon name="cilList" size="lg" />
-                        </CButton>
+                    submitted: (item) => (
+                      <td>
+                        {item.submitted && item.submitted !== ''
+                          ? prettyDate(item.submitted)
+                          : 'Pending'}
                       </td>
                     ),
-                    show_response: (item, index) => (
-                      <td className="py-2">
-                        <CButton
-                          color="primary"
-                          variant={responses.includes(index) ? '' : 'outline'}
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleResponse(item, index);
-                          }}
-                        >
-                          <CIcon name="cilList" size="lg" />
-                        </CButton>
+                    executed: (item) => (
+                      <td>
+                        {item.executed && item.executed !== ''
+                          ? prettyDate(item.executed)
+                          : 'Pending'}
                       </td>
                     ),
-                    delete_command: (item, index) => (
-                      <td className="py-2">
-                        <CButton
-                          color="primary"
-                          variant={responses.includes(index) ? '' : 'outline'}
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleConfirmModal(item.UUID);
-                          }}
-                        >
-                          <CIcon name="cilTrash" size="lg" />
-                        </CButton>
+                    show_buttons: (item, index) => (
+                      <td>
+                        <CRow>
+                          <CCol>
+                            <CPopover content='Results'>
+                              <CButton
+                                color="primary"
+                                variant={details.includes(index) ? '' : 'outline'}
+                                disabled={item.completed === ''}
+                                shape="square"
+                                size="sm"
+                                onClick={() => {
+                                  toggleDetails(item, index);
+                                }}
+                              >
+                                <img 
+                                  src={details.includes(index) ? WhiteResultIcon : BlueResultIcon}
+                                  onMouseOver={e => (e.currentTarget.src = WhiteResultIcon)}
+                                  onMouseOut={e => (e.currentTarget.src = details.includes(index) ? WhiteResultIcon : BlueResultIcon)}
+                                  onBlur={e => (e.currentTarget.src = details.includes(index) ? WhiteResultIcon : BlueResultIcon)}
+                                  onFocus={e => (e.currentTarget.src = WhiteResultIcon)}
+                                  style={{ height: '26px', width: '25px', color: '#007bff'}} 
+                                  alt="AP" 
+                                />
+                              </CButton>
+                            </CPopover>
+                          </CCol>
+                          <CCol>
+                            <CPopover content='Full Details'>
+                                <CButton
+                                color="primary"
+                                variant={responses.includes(index) ? '' : 'outline'}
+                                shape="square"
+                                size="sm"
+                                onClick={() => {
+                                  toggleResponse(item, index);
+                                }}
+                              >
+                                <CIcon name="cilList" size="lg" />
+                              </CButton>
+                            </CPopover>
+                          </CCol>
+                          <CCol>
+                            <CPopover content='Delete'>
+                                <CButton
+                                color="primary"
+                                variant='outline'
+                                shape="square"
+                                size="sm"
+                                onClick={() => {
+                                  toggleConfirmModal(item.UUID);
+                                }}
+                              >
+                                <CIcon name="cilTrash" size="lg" />
+                              </CButton>
+                            </CPopover>
+                          </CCol>
+                        </CRow>
                       </td>
                     ),
                     details: (item, index) => (
@@ -319,7 +339,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                         <CCollapse show={responses.includes(index)}>
                           <CCardBody>
                             <h5>Details</h5>
-                            <div>{getResponse(item.command, item, index)}</div>
+                            <div>{getResponse(item, index)}</div>
                           </CCardBody>
                         </CCollapse>
                       </div>
