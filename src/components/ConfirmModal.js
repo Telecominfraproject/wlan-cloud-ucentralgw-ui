@@ -44,6 +44,7 @@ const ConfirmModal = ({ show, toggle, action }) => {
 		setSuccess(result);
 		setHaveResult(true);
 		setLoading(false);
+		if(result) toggle();
 	}
 
   useEffect(() => {
