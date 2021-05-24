@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import ActionModal from './ActionModal';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
 import TraceModal from './TraceModal';
 import WifiScanModal from './WifiScanModal';
 import BlinkModal from './BlinkModal';
+import axiosInstance from '../../utils/axiosInstance';
+import { getToken } from '../../utils/authHelper';
 
-const DeviceActions = () => {
+const DeviceActions = ({selectedDeviceId}) => {
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
@@ -32,6 +35,26 @@ const DeviceActions = () => {
   const toggleScanModal = () => {
     setShowScanModal(!showScanModal);
   };
+
+  const getRttysInfo = () => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+
+    axiosInstance
+      .get(`/device/${selectedDeviceId}/rtty`, options)
+      .then((response) => {
+        const url = `http://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+      })
+      .catch(() => {});
+  };
+  
+
 
   return (
     <CCard>
@@ -73,6 +96,14 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
+        <CRow style={{ marginTop: '10px' }}>
+          <CCol>
+            <CButton onClick={getRttysInfo} color='primary' block>
+              Connect
+            </CButton>
+          </CCol>
+          <CCol/>
+        </CRow>
       </CCardBody>
       <ActionModal
         show={showRebootModal}
@@ -88,6 +119,10 @@ const DeviceActions = () => {
       <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
     </CCard>
   );
+};
+
+DeviceActions.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceActions;
