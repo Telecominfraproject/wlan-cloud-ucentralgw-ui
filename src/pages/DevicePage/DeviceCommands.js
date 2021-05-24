@@ -22,6 +22,7 @@ import WifiScanResultModalWidget from './WifiScanResultModal';
 import ConfirmModal from '../../components/ConfirmModal';
 import BlueResultIcon from '../../assets/icons/BlueResultsIcon.png';
 import WhiteResultIcon from '../../assets/icons/WhiteResultsIcon.png';
+import eventBus from '../../utils/EventBus';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
   const [showScanModal, setShowScanModal] = useState(false);
@@ -31,6 +32,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const [scanDate, setScanDate] = useState('');
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
+  const [toDelete, setToDelete] = useState(null);
   const [responses, setResponses] = useState([]);
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setShowScanModal(!showScanModal);
   };
 
-  const toggleConfirmModal = (uuid) => {
+  const toggleConfirmModal = (uuid, index) => {
+    setToDelete(index);
     setUuidDelete(uuid);
     setShowConfirmModal(!showConfirmModal);
   };
@@ -58,6 +61,12 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const modifyEnd = (value) => {
     setEnd(value);
   };
+
+  const deleteCommandFromList = (index) => {
+    const newCommands = commands;
+    newCommands.splice(index, 1);
+    setCommands(newCommands);
+  }
 
   const getCommands = () => {
     setLoading(true);
@@ -86,8 +95,12 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       });
   };
 
-  const deleteCommand= async () => {
-    if(uuidDelete === ''){
+  eventBus.on("actionCompleted", () =>
+      getCommands()
+  );
+
+  const deleteCommand = async () => {
+    if (uuidDelete === '') {
       return false;
     }
     const options = {
@@ -96,18 +109,17 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
     };
-    return (
-      axiosInstance
+    return axiosInstance
       .delete(`/command/${uuidDelete}`, options)
       .then(() => {
+        deleteCommandFromList(toDelete);
         setUuidDelete('');
         return true;
       })
       .catch(() => {
         setUuidDelete('');
         return false;
-      })
-    );
+      });
   };
 
   const toggleDetails = (item, index) => {
@@ -174,8 +186,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       label: '',
       sorter: false,
       filter: false,
-      _style: { width: '14%' }
-    }
+      _style: { width: '14%' },
+    },
   ];
 
   useEffect(() => {
@@ -189,6 +201,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setStart(addDays(new Date(), -3).toString());
       setEnd(new Date().toString());
       getCommands();
+      setToDelete(null);
     }
   }, [selectedDeviceId]);
 
@@ -272,7 +285,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       <td>
                         <CRow>
                           <CCol>
-                            <CPopover content='Results'>
+                            <CPopover content="Results">
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
@@ -283,21 +296,29 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                   toggleDetails(item, index);
                                 }}
                               >
-                                <img 
+                                <img
                                   src={details.includes(index) ? WhiteResultIcon : BlueResultIcon}
-                                  onMouseOver={e => (e.currentTarget.src = WhiteResultIcon)}
-                                  onMouseOut={e => (e.currentTarget.src = details.includes(index) ? WhiteResultIcon : BlueResultIcon)}
-                                  onBlur={e => (e.currentTarget.src = details.includes(index) ? WhiteResultIcon : BlueResultIcon)}
-                                  onFocus={e => (e.currentTarget.src = WhiteResultIcon)}
-                                  style={{ height: '26px', width: '25px', color: '#007bff'}} 
-                                  alt="AP" 
+                                  onMouseOver={(e) => (e.currentTarget.src = WhiteResultIcon)}
+                                  onMouseOut={(e) =>
+                                    (e.currentTarget.src = details.includes(index)
+                                      ? WhiteResultIcon
+                                      : BlueResultIcon)
+                                  }
+                                  onBlur={(e) =>
+                                    (e.currentTarget.src = details.includes(index)
+                                      ? WhiteResultIcon
+                                      : BlueResultIcon)
+                                  }
+                                  onFocus={(e) => (e.currentTarget.src = WhiteResultIcon)}
+                                  style={{ height: '26px', width: '25px', color: '#007bff' }}
+                                  alt="AP"
                                 />
                               </CButton>
                             </CPopover>
                           </CCol>
                           <CCol>
-                            <CPopover content='Full Details'>
-                                <CButton
+                            <CPopover content="Full Details">
+                              <CButton
                                 color="primary"
                                 variant={responses.includes(index) ? '' : 'outline'}
                                 shape="square"
@@ -311,14 +332,14 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                             </CPopover>
                           </CCol>
                           <CCol>
-                            <CPopover content='Delete'>
-                                <CButton
+                            <CPopover content="Delete">
+                              <CButton
                                 color="primary"
-                                variant='outline'
+                                variant="outline"
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
-                                  toggleConfirmModal(item.UUID);
+                                  toggleConfirmModal(item.UUID, index);
                                 }}
                               >
                                 <CIcon name="cilTrash" size="lg" />
@@ -365,9 +386,9 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         scanResults={chosenWifiScan}
         date={scanDate}
       />
-      <ConfirmModal
-        show={showConfirmModal}
-        toggle={toggleConfirmModal}
+      <ConfirmModal 
+        show={showConfirmModal} 
+        toggle={toggleConfirmModal} 
         action={deleteCommand}
       />
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
