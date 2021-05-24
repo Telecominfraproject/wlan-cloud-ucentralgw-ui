@@ -22,6 +22,7 @@ import { cleanBytesString, cropStringWithEllipsis } from '../../utils/helper';
 import meshIcon from '../../assets/icons/Mesh.png';
 import apIcon from '../../assets/icons/AP.png';
 import internetSwitch from '../../assets/icons/Switch.png';
+import iotIcon from '../../assets/icons/IotIcon.png';
 
 const DeviceList = () => {
   const [loadedSerials, setLoadedSerials] = useState(false);
@@ -194,6 +195,9 @@ const DeviceListDisplay = ({
     }
     if (deviceType === 'SWITCH') {
       return <img src={internetSwitch} style={{ height: '32px', width: '32px' }} alt="SWITCH" />;
+    }
+    if (deviceType === 'IOT') {
+      return <img src={iotIcon} style={{ height: '32px', width: '32px' }} alt="SWITCH" />;
     }
     return null;
   };
