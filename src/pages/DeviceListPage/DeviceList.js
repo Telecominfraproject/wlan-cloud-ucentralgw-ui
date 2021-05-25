@@ -351,27 +351,31 @@ const DeviceListDisplay = ({
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CButton
-                    onClick={() => refreshDevice(item.serialNumber)}
-                    color="primary"
-                    variant="outline"
-                    size="sm"
-                  >
-                    <CIcon name="cil-sync" content={cilSync} size="sm" />
-                  </CButton>
+                  <CPopover content='Refresh Device'>
+                    <CButton
+                      onClick={() => refreshDevice(item.serialNumber)}
+                      color="primary"
+                      variant="outline"
+                      size="sm"
+                    >
+                      <CIcon name="cil-sync" content={cilSync} size="sm" />
+                    </CButton>
+                  </CPopover>
                 </td>
               ),
               show_details: (item) => (
                 <td className="py-2">
-                  <CLink
-                    className="c-subheader-nav-link"
-                    aria-current="page"
-                    to={() => `/devices/${item.serialNumber}`}
-                  >
-                    <CButton color="primary" variant="outline" shape="square" size="sm">
-                      <CIcon name="cil-info" content={cilInfo} size="sm" />
-                    </CButton>
-                  </CLink>
+                  <CPopover content='Device Details'>
+                    <CLink
+                      className="c-subheader-nav-link"
+                      aria-current="page"
+                      to={() => `/devices/${item.serialNumber}`}
+                    >
+                      <CButton color="primary" variant="outline" shape="square" size="sm">
+                        <CIcon name="cil-info" content={cilInfo} size="sm" />
+                      </CButton>
+                    </CLink>
+                  </CPopover>
                 </td>
               ),
             }}
