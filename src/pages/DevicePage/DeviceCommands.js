@@ -15,13 +15,13 @@ import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
 import { prettyDate, addDays } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 import ConfirmModal from '../../components/ConfirmModal';
-import BlueResultIcon from '../../assets/icons/BlueResultsIcon.png';
-import WhiteResultIcon from '../../assets/icons/WhiteResultsIcon.png';
 import eventBus from '../../utils/EventBus';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
@@ -32,7 +32,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const [scanDate, setScanDate] = useState('');
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
-  const [toDelete, setToDelete] = useState(null);
   const [responses, setResponses] = useState([]);
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,8 +47,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setShowScanModal(!showScanModal);
   };
 
-  const toggleConfirmModal = (uuid, index) => {
-    setToDelete(index);
+  const toggleConfirmModal = (uuid) => {
     setUuidDelete(uuid);
     setShowConfirmModal(!showConfirmModal);
   };
@@ -62,9 +60,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setEnd(value);
   };
 
-  const deleteCommandFromList = (index) => {
+  const deleteCommandFromList = (commandUuid) => {
+    const indexToDelete = commands.map(e => e.UUID).indexOf(commandUuid);
     const newCommands = commands;
-    newCommands.splice(index, 1);
+    newCommands.splice(indexToDelete, 1);
     setCommands(newCommands);
   }
 
@@ -112,7 +111,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     return axiosInstance
       .delete(`/command/${uuidDelete}`, options)
       .then(() => {
-        deleteCommandFromList(toDelete);
+        deleteCommandFromList(uuidDelete);
         setUuidDelete('');
         return true;
       })
@@ -201,7 +200,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setStart(addDays(new Date(), -3).toString());
       setEnd(new Date().toString());
       getCommands();
-      setToDelete(null);
     }
   }, [selectedDeviceId]);
 
@@ -296,23 +294,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                   toggleDetails(item, index);
                                 }}
                               >
-                                <img
-                                  src={details.includes(index) ? WhiteResultIcon : BlueResultIcon}
-                                  onMouseOver={(e) => (e.currentTarget.src = WhiteResultIcon)}
-                                  onMouseOut={(e) =>
-                                    (e.currentTarget.src = details.includes(index)
-                                      ? WhiteResultIcon
-                                      : BlueResultIcon)
-                                  }
-                                  onBlur={(e) =>
-                                    (e.currentTarget.src = details.includes(index)
-                                      ? WhiteResultIcon
-                                      : BlueResultIcon)
-                                  }
-                                  onFocus={(e) => (e.currentTarget.src = WhiteResultIcon)}
-                                  style={{ height: '26px', width: '25px', color: '#007bff' }}
-                                  alt="AP"
-                                />
+                                <FontAwesomeIcon icon={faClipboardCheck} className='c-icon c-icon-lg' style={{height:'19px'}}/>
                               </CButton>
                             </CPopover>
                           </CCol>
