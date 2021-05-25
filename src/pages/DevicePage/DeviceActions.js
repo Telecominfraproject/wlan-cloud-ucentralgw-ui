@@ -47,7 +47,7 @@ const DeviceActions = ({selectedDeviceId}) => {
     axiosInstance
       .get(`/device/${selectedDeviceId}/rtty`, options)
       .then((response) => {
-        const url = `http://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
+        const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
