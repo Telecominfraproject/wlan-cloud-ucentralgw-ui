@@ -93,8 +93,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 {device.macAddress}
               </CCol>
             </CFormGroup>
-            <CCollapse show={collapse}>
-              <CFormGroup row>
+            <CFormGroup row>
                 <CCol md="3">
                   <CLabel>Created : </CLabel>
                 </CCol>
@@ -110,6 +109,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                   {cleanTimestamp(device.lastConfigurationDownload)}
                 </CCol>
               </CFormGroup>
+            <CCollapse show={collapse}>
               <CFormGroup row>
                 <CCol md="3">
                   <CLabel>Manufacturer :</CLabel>
