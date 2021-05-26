@@ -17,7 +17,7 @@ import { cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
-import { prettyDate, addDays } from '../../utils/helper';
+import { prettyDate, addDays, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
@@ -78,8 +78,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: utcStart,
-        endDate: utcEnd,
+        startDate: dateToUnix(utcStart),
+        endDate: dateToUnix(utcEnd),
       },
     };
 

@@ -13,7 +13,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { addDays, prettyDate } from '../../utils/helper';
+import { addDays, prettyDate, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
@@ -49,8 +49,8 @@ const DeviceLogs = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: utcStart,
-        endDate: utcEnd,
+        startDate: dateToUnix(utcStart),
+        endDate: dateToUnix(utcEnd),
       },
     };
 

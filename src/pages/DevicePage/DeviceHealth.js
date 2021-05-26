@@ -14,7 +14,7 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { prettyDate, addDays } from '../../utils/helper';
+import { prettyDate, addDays, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
@@ -52,8 +52,8 @@ const DeviceHealth = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: utcStart,
-        endDate: utcEnd,
+        startDate: dateToUnix(utcStart),
+        endDate: dateToUnix(utcEnd),
       },
     };
 

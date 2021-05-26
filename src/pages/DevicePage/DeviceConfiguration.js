@@ -14,7 +14,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import PropTypes from 'prop-types';
-import { cleanTimestamp } from '../../utils/helper';
+import { prettyDate } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
@@ -82,7 +82,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 <CLabel>Last Configuration Change : </CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                {cleanTimestamp(device.lastConfigurationChange)}
+                {prettyDate(device.lastConfigurationChange)}
               </CCol>
             </CFormGroup>
             <CFormGroup row>
@@ -98,7 +98,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                   <CLabel>Created : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  {cleanTimestamp(device.createdTimestamp)}
+                  {prettyDate(device.createdTimestamp)}
                 </CCol>
               </CFormGroup>
               <CFormGroup row>
@@ -106,7 +106,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                   <CLabel>Last Configuration Download : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  {cleanTimestamp(device.lastConfigurationDownload)}
+                  {prettyDate(device.lastConfigurationDownload)}
                 </CCol>
               </CFormGroup>
             <CCollapse show={collapse}>
