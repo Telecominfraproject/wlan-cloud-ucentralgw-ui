@@ -94,11 +94,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         setLoading(false);
       });
   };
-
-  eventBus.on("actionCompleted", () =>
-      getCommands()
-  );
-
+  
   const deleteCommand = async () => {
     if (uuidDelete === '') {
       return false;
@@ -195,6 +191,16 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       getCommands();
     }
   }, [selectedDeviceId, start, end]);
+
+  useEffect(() => {
+    eventBus.on("actionCompleted", () =>
+      getCommands()
+    );
+
+    return () => {
+      eventBus.remove("actionCompleted");
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedDeviceId) {
