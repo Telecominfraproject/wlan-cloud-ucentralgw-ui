@@ -294,7 +294,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
-                                disabled={item.completed === ''}
+                                disabled={item.completed === 0}
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
