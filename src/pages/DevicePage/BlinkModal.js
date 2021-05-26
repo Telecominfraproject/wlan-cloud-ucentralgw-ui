@@ -17,7 +17,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateFromUtc, convertDateToUtc } from '../../utils/helper';
+import { convertDateFromUtc, convertDateToUtc, dateToUnix } from '../../utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
@@ -77,7 +77,7 @@ const BlinkModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: isNow ? '' : utcDateString,
+      when: isNow ? 0 : dateToUnix(utcDateString),
       pattern: chosenPattern,
       duration: 30,
     };

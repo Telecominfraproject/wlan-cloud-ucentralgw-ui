@@ -15,7 +15,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc, convertDateFromUtc } from '../../utils/helper';
+import { convertDateToUtc, convertDateFromUtc, dateToUnix } from '../../utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
@@ -108,7 +108,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: isNow ? '' : utcDateString,
+      when: isNow ? 0 : dateToUnix(utcDateString),
       uri: firmware,
     };
     axiosInstance

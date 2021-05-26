@@ -42,6 +42,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   };
 
   const getDeviceHealth = () => {
+    if(loading) return;
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();

@@ -68,6 +68,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }
 
   const getCommands = () => {
+    if(loading) return;
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();
@@ -133,7 +134,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       }
       setDetails(newDetails);
     } else {
-      setChosenWifiScan(item.results.status.scan.scan);
+      setChosenWifiScan(item.results.status.scan);
       setScanDate(item.completed);
       setShowScanModal(true);
     }
@@ -260,7 +261,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                   scopedSlots={{
                     completed: (item) => (
                       <td>
-                        {item.completed && item.completed !== ''
+                        {item.completed && item.completed === 0
                           ? prettyDate(item.completed)
                           : 'Pending'}
                       </td>

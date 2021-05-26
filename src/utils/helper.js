@@ -55,4 +55,4 @@ export const prettyDate = (dateString) => {
   )}`;
 };
 
-export const dateToUnix = (date) => new Date(date).getTime()/1000;
+export const dateToUnix = (date) => Math.floor(new Date(date).getTime()/1000);

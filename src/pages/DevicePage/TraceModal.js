@@ -16,7 +16,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc } from '../../utils/helper';
+import { convertDateToUtc, dateToUnix } from '../../utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
@@ -72,7 +72,7 @@ const TraceModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: dateChosen <= now ? '' : utcDateString,
+      when: dateChosen <= now ? 0 : dateToUnix(utcDateString),
       network: 'lan',
     };
 
