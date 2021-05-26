@@ -120,6 +120,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       <CModalBody>
         <h6>Launch a wifi scan of this device, which should take approximately 25 seconds.</h6>
         <CRow style={{ marginTop: '20px' }}>
+          <p style={{ paddingLeft: '2%' }}>Verbose:</p>
           <CForm style={{ paddingLeft: '5%' }}>
             <CFormGroup variant="checkbox" onClick={() => setVerbose(true)}>
               <CInputRadio
@@ -129,7 +130,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 value="option1"
               />
               <CLabel variant="checkbox" htmlFor="radio1">
-                With verbose
+                On
               </CLabel>
             </CFormGroup>
             <CFormGroup variant="checkbox" onClick={() => setVerbose(false)}>
@@ -140,7 +141,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 value="option2"
               />
               <CLabel variant="checkbox" htmlFor="radio2">
-                Without verbose
+                Off
               </CLabel>
             </CFormGroup>
           </CForm>
