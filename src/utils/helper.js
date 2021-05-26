@@ -45,7 +45,6 @@ const prettyNumber = (number) => {
 
 const unixToDateString = (unixNumber) => unixNumber * 1000;
 
-
 export const prettyDate = (dateString) => {
   const convertedTimestamp = unixToDateString(dateString);
   const date = new Date(convertedTimestamp);
@@ -55,4 +54,4 @@ export const prettyDate = (dateString) => {
   )}`;
 };
 
-export const dateToUnix = (date) => Math.floor(new Date(date).getTime()/1000);
+export const dateToUnix = (date) => Math.floor(new Date(date).getTime() / 1000);

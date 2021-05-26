@@ -8,7 +8,6 @@ import {
   CButton,
   CDataTable,
   CCard,
-  CCardBody,
   CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
@@ -16,12 +15,13 @@ import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
+import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { prettyDate, addDays, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 import ConfirmModal from '../../components/ConfirmModal';
+import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 import eventBus from '../../utils/EventBus';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
@@ -61,14 +61,14 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const deleteCommandFromList = (commandUuid) => {
-    const indexToDelete = commands.map(e => e.UUID).indexOf(commandUuid);
+    const indexToDelete = commands.map((e) => e.UUID).indexOf(commandUuid);
     const newCommands = commands;
     newCommands.splice(indexToDelete, 1);
     setCommands(newCommands);
-  }
+  };
 
   const getCommands = () => {
-    if(loading) return;
+    if (loading) return;
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();
@@ -94,7 +94,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         setLoading(false);
       });
   };
-  
+
   const deleteCommand = async () => {
     if (uuidDelete === '') {
       return false;
@@ -193,13 +193,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }, [selectedDeviceId, start, end]);
 
   useEffect(() => {
-    eventBus.on("actionCompleted", () =>
-      getCommands()
-    );
+    eventBus.on('actionCompleted', () => getCommands());
 
     return () => {
-      eventBus.remove("actionCompleted");
-    }
+      eventBus.remove('actionCompleted');
+    };
   }, []);
 
   useEffect(() => {
@@ -301,7 +299,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                   toggleDetails(item, index);
                                 }}
                               >
-                                <FontAwesomeIcon icon={faClipboardCheck} className='c-icon c-icon-lg' style={{height:'19px'}}/>
+                                <FontAwesomeIcon
+                                  icon={faClipboardCheck}
+                                  className="c-icon c-icon-lg"
+                                  style={{ height: '19px' }}
+                                />
                               </CButton>
                             </CPopover>
                           </CCol>
@@ -339,20 +341,14 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       </td>
                     ),
                     details: (item, index) => (
-                      <div>
-                        <CCollapse show={details.includes(index)}>
-                          <CCardBody>
-                            <h5>Result</h5>
-                            <div>{getDetails(item.command, item, index)}</div>
-                          </CCardBody>
-                        </CCollapse>
-                        <CCollapse show={responses.includes(index)}>
-                          <CCardBody>
-                            <h5>Details</h5>
-                            <div>{getResponse(item, index)}</div>
-                          </CCardBody>
-                        </CCollapse>
-                      </div>
+                      <DeviceCommandsCollapse
+                        details={details}
+                        responses={responses}
+                        index={index}
+                        getDetails={getDetails}
+                        getResponse={getResponse}
+                        item={item}
+                      />
                     ),
                   }}
                 />
@@ -375,11 +371,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         scanResults={chosenWifiScan}
         date={scanDate}
       />
-      <ConfirmModal 
-        show={showConfirmModal} 
-        toggle={toggleConfirmModal} 
-        action={deleteCommand}
-      />
+      <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
     </CWidgetDropdown>
   );

@@ -351,7 +351,7 @@ const DeviceListDisplay = ({
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CPopover content='Refresh Device'>
+                  <CPopover content="Refresh Device">
                     <CButton
                       onClick={() => refreshDevice(item.serialNumber)}
                       color="primary"
@@ -365,7 +365,7 @@ const DeviceListDisplay = ({
               ),
               show_details: (item) => (
                 <td className="py-2">
-                  <CPopover content='Device Details'>
+                  <CPopover content="Device Details">
                     <CLink
                       className="c-subheader-nav-link"
                       aria-current="page"

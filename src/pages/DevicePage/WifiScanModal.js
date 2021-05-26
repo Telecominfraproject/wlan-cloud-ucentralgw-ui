@@ -108,7 +108,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       .finally(() => {
         setCheckingIfSure(false);
         setWaiting(false);
-        eventBus.dispatch("actionCompleted", { message: "An action has been completed" });
+        eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
   };
 

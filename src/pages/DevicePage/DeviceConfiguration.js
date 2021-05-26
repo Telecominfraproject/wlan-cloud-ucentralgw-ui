@@ -94,21 +94,21 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CCol>
             </CFormGroup>
             <CFormGroup row>
-                <CCol md="3">
-                  <CLabel>Created : </CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  {prettyDate(device.createdTimestamp)}
-                </CCol>
-              </CFormGroup>
-              <CFormGroup row>
-                <CCol md="3">
-                  <CLabel>Last Configuration Download : </CLabel>
-                </CCol>
-                <CCol xs="12" md="9">
-                  {prettyDate(device.lastConfigurationDownload)}
-                </CCol>
-              </CFormGroup>
+              <CCol md="3">
+                <CLabel>Created : </CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                {prettyDate(device.createdTimestamp)}
+              </CCol>
+            </CFormGroup>
+            <CFormGroup row>
+              <CCol md="3">
+                <CLabel>Last Configuration Download : </CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                {prettyDate(device.lastConfigurationDownload)}
+              </CCol>
+            </CFormGroup>
             <CCollapse show={collapse}>
               <CFormGroup row>
                 <CCol md="3">

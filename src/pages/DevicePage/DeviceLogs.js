@@ -39,7 +39,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   };
 
   const getLogs = () => {
-    if(loading) return;
+    if (loading) return;
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();

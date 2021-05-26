@@ -9,7 +9,7 @@ import BlinkModal from './BlinkModal';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 
-const DeviceActions = ({selectedDeviceId}) => {
+const DeviceActions = ({ selectedDeviceId }) => {
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
@@ -53,8 +53,6 @@ const DeviceActions = ({selectedDeviceId}) => {
       })
       .catch(() => {});
   };
-  
-
 
   return (
     <CCard>
@@ -98,11 +96,11 @@ const DeviceActions = ({selectedDeviceId}) => {
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
-            <CButton onClick={getRttysInfo} color='primary' block>
+            <CButton onClick={getRttysInfo} color="primary" block>
               Connect
             </CButton>
           </CCol>
-          <CCol/>
+          <CCol />
         </CRow>
       </CCardBody>
       <ActionModal
