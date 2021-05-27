@@ -265,7 +265,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                   scopedSlots={{
                     completed: (item) => (
                       <td>
-                        {item.completed && item.completed === 0
+                        {item.completed && item.completed !== 0
                           ? prettyDate(item.completed)
                           : 'Pending'}
                       </td>
