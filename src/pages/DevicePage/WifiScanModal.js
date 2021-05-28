@@ -128,7 +128,8 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 color='primary'
                 defaultChecked={choseVerbose}
                 onClick={() => toggleVerbose()}
-                label='Verbose'
+                labelOn='On'
+                labelOff='Off'
               />
           </CForm>
         </CRow>
