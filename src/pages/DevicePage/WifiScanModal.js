@@ -7,10 +7,8 @@ import {
   CModalFooter,
   CSpinner,
   CRow,
-  CFormGroup,
-  CInputRadio,
-  CLabel,
   CForm,
+  CSwitch,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -29,6 +27,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [channelList, setChannelList] = useState([]);
   const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
+
+  const toggleVerbose = () => {
+    setVerbose(!choseVerbose);
+  }
 
   const confirmingIfSure = () => {
     setCheckingIfSure(true);
@@ -122,28 +124,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
         <CRow style={{ marginTop: '20px' }}>
           <p style={{ paddingLeft: '2%' }}>Verbose:</p>
           <CForm style={{ paddingLeft: '5%' }}>
-            <CFormGroup variant="checkbox" onClick={() => setVerbose(true)}>
-              <CInputRadio
+              <CSwitch
+                color='primary'
                 defaultChecked={choseVerbose}
-                id="radio1"
-                name="radios"
-                value="option1"
+                onClick={() => toggleVerbose()}
+                label='Verbose'
               />
-              <CLabel variant="checkbox" htmlFor="radio1">
-                On
-              </CLabel>
-            </CFormGroup>
-            <CFormGroup variant="checkbox" onClick={() => setVerbose(false)}>
-              <CInputRadio
-                defaultChecked={!choseVerbose}
-                id="radio2"
-                name="radios"
-                value="option2"
-              />
-              <CLabel variant="checkbox" htmlFor="radio2">
-                Off
-              </CLabel>
-            </CFormGroup>
           </CForm>
         </CRow>
         <div style={{ marginTop: '3%' }} hidden={!hadSuccess && !hadFailure}>
