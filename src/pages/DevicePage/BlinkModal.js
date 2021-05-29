@@ -21,6 +21,7 @@ import { convertDateFromUtc, convertDateToUtc, dateToUnix } from '../../utils/he
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
+import eventBus from '../../utils/EventBus';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -101,6 +102,7 @@ const BlinkModal = ({ show, toggleModal }) => {
         setDoingNow(false);
         setCheckingIfSure(false);
         setWaiting(false);
+        eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
   };
 
