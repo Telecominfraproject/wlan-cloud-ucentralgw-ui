@@ -4,7 +4,7 @@ import { CFooter } from '@coreui/react';
 const TheFooter = () => (
   <CFooter fixed={false}>
     <div>
-        Version 0.0.2
+        Version 0.0.3
     </div>
     <div className="mfs-auto">
       <span className="mr-1">Powered by</span>

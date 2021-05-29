@@ -19,6 +19,7 @@ import { convertDateToUtc, convertDateFromUtc, dateToUnix } from '../../utils/he
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
+import eventBus from '../../utils/EventBus';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -126,6 +127,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         setDoingNow(false);
         setCheckingIfSure(false);
         setWaiting(false);
+        eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
   };
 

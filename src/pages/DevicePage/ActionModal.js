@@ -18,6 +18,7 @@ import { convertDateToUtc, convertDateFromUtc, dateToUnix } from '../../utils/he
 import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
+import eventBus from '../../utils/EventBus';
 
 const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -104,6 +105,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
         setDoingNow(false);
         setCheckingIfSure(false);
         setWaiting(false);
+        eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
   };
 

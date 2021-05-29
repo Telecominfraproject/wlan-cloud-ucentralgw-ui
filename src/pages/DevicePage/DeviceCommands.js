@@ -193,7 +193,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }, [selectedDeviceId, start, end]);
 
   useEffect(() => {
-    eventBus.on('actionCompleted', () => getCommands());
+    eventBus.on('actionCompleted', () => refreshCommands());
 
     return () => {
       eventBus.remove('actionCompleted');
