@@ -8,6 +8,7 @@ import WifiScanModal from './WifiScanModal';
 import BlinkModal from './BlinkModal';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
+import LoadingButton from '../../components/LoadingButton';
 
 const DeviceActions = ({ selectedDeviceId }) => {
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -15,6 +16,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showTraceModal, setShowTraceModal] = useState(false);
   const [showScanModal, setShowScanModal] = useState(false);
+  const [connectLoading, setConnectLoading] = useState(false);
 
   const toggleRebootModal = () => {
     setShowRebootModal(!showRebootModal);
@@ -37,6 +39,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
   };
 
   const getRttysInfo = () => {
+    setConnectLoading(true);
     const options = {
       headers: {
         Accept: 'application/json',
@@ -51,7 +54,10 @@ const DeviceActions = ({ selectedDeviceId }) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        setConnectLoading(false);
+      });
   };
 
   return (
@@ -96,9 +102,12 @@ const DeviceActions = ({ selectedDeviceId }) => {
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
-            <CButton onClick={getRttysInfo} color="primary" block>
-              Connect
-            </CButton>
+            <LoadingButton
+              isLoading={connectLoading}
+              label="Connect"
+              isLoadingLabel="Connecting..."
+              action={getRttysInfo}
+            />
           </CCol>
           <CCol />
         </CRow>
