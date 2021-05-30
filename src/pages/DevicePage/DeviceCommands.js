@@ -228,8 +228,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }, [commandLimit]);
 
   useEffect(() => {
-    if (commands !== [] && commands.length < commandLimit) {
+    if (commands.length > 0 && commands.length < commandLimit) {
       setShowLoadingMore(false);
+    }
+    else {
+      setShowLoadingMore(true);
     }
   }, [commands]);
 
