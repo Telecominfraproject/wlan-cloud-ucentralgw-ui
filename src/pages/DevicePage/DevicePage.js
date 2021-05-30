@@ -7,6 +7,7 @@ import DeviceConfiguration from './DeviceConfiguration';
 import DeviceActions from './DeviceActions';
 import DeviceCommands from './DeviceCommands';
 import DeviceLogs from './DeviceLogs';
+import DeviceStatisticsCard from './DeviceStatistics/DeviceStatisticsCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const DevicePage = () => {
         </CRow>
         <CRow>
           <CCol>
+          <DeviceStatisticsCard selectedDeviceId={deviceId} />
             <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
