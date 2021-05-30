@@ -152,16 +152,15 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setEnd(new Date());
   };
 
-  const getDetails = (command, commandDetails, index) => {
+  const getDetails = (command, index) => {
     if (!details.includes(index)) {
       return <pre className="ignore" />;
     }
-    if (command === 'reboot' || command === 'leds') {
-      const result = commandDetails.results;
+    if (command.results) {
+      const result = command.results;
       if (result) return <pre className="ignore">{JSON.stringify(result, null, 4)}</pre>;
     }
-
-    return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
+    return <pre className="ignore">{JSON.stringify(command, null, 4)}</pre>;
   };
 
   const getResponse = (commandDetails, index) => {
