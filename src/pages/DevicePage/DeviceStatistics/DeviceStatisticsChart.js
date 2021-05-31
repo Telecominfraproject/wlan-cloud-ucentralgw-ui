@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { CChartLine } from '@coreui/react-chartjs';
+import Chart from 'react-apexcharts'
 import axiosInstance from '../../../utils/axiosInstance';
 import { getToken } from '../../../utils/authHelper';
-import { addDays, dateToUnix } from '../../../utils/helper';
 
 const DeviceStatisticsChart = ({ selectedDeviceId }) => {
     const [loading, setLoading] = useState(false);
-    const [dataset, setDataset] = useState([]);
-    const [start, setStart] = useState(addDays(new Date(), -7).toString());
-    const [end, setEnd] = useState(addDays(new Date(), -6).toString());
+    const [chartSeries, setChartSeries] = useState([]);
+    const [chartOptions, setChartOptions] = useState({});
 
     const transformIntoDataset = (data) => {
         const sortedData = data.sort((a,b) => {
@@ -17,39 +15,52 @@ const DeviceStatisticsChart = ({ selectedDeviceId }) => {
             if(b.recorded > a.recorded) return -1;
             return 0;
         });
+
         const interfaces = [
             {
-                label: 'wan',
+                name: 'wan',
                 backgroundColor: 'rgb(228,102,81,0.9)',
                 data: [],
                 fill: false
             },
             {
-                label: 'lan',
+                name: 'lan',
                 backgroundColor: 'rgb(0,216,255,0.9)',
                 data: [],
                 fill: false
             }
         ];
 
+        const options = {
+            chart: {
+                id: 'chart'
+              },
+            xaxis: {
+                categories: []
+            }
+        };
+
         const interfaceIndexes = {
             'wan': 0,
             'lan': 1
         };
 
+        console.log(sortedData);
         for (const log of sortedData){
+            options.xaxis.categories.push(log.recorded);
             for (const inter of log.data.interfaces){
+                console.log('hey');
                 interfaces[interfaceIndexes[inter.name]].data.push(inter.counters.tx_bytes);
             }
         }
-        setDataset(interfaces);
+
+        setChartOptions(options);
+        setChartSeries(interfaces);
     }
 
     const getStatistics = () => {
         if (loading) return;
         setLoading(true);
-        const utcStart = new Date(start).toISOString();
-        const utcEnd = new Date(end).toISOString();
 
         const options = {
             headers: {
@@ -57,16 +68,14 @@ const DeviceStatisticsChart = ({ selectedDeviceId }) => {
                 Authorization: `Bearer ${getToken()}`,
             },
             params: {
-                serialNumber: "24f5a207a130",
-                startDate: dateToUnix(utcStart),
-                endDate: dateToUnix(utcEnd),
+                serialNumber: "24f5a207a130"
             }
         };
 
         axiosInstance
-            .get(`/device/${selectedDeviceId}/statistics`, options)
+            .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
             .then((response) => {
-            transformIntoDataset(response.data.data);
+                transformIntoDataset(response.data.data);
             })
             .catch(() => {})
             .finally(() => {
@@ -76,16 +85,16 @@ const DeviceStatisticsChart = ({ selectedDeviceId }) => {
 
     useEffect(() => {
         if (selectedDeviceId) {
-            setStart(addDays(new Date(), -7).toString());
-            setEnd(addDays(new Date(), -6.8).toString());
             getStatistics();
         }
     }, [selectedDeviceId]);
 
     return (
         <div>
-            <CChartLine
-                datasets={dataset}
+            <Chart
+                series={chartSeries}
+                options={chartOptions}
+                type='bar'
             />
         </div>
     );
