@@ -86,9 +86,6 @@ const DeviceStatisticsChart = ({ selectedDeviceId }) => {
         <div>
             <CChartLine
                 datasets={dataset}
-            
-            
-            
             />
         </div>
     );
