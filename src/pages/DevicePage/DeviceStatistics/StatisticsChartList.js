@@ -4,9 +4,9 @@ import { v4 as createUuid } from 'uuid';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 import axiosInstance from '../../../utils/axiosInstance';
 import { getToken } from '../../../utils/authHelper';
-import { unixToTime } from '../../../utils/helper';
+import { unixToTime, capitalizeFirstLetter } from '../../../utils/helper';
 
-const StatisticsChartList = ({ selectedDeviceId }) => {
+const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
     const [loading, setLoading] = useState(false);
     const [deviceStats, setStats] = useState([]);
     const [statOptions, setStatOptions] = useState({});
@@ -31,12 +31,14 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
                 if(interfaceTypes[logInterface.name] === undefined) {
                     interfaceTypes[logInterface.name] = i;
                     interfaceList.push([{
+                        titleName: logInterface.name,
                         name: 'Tx',
                         backgroundColor: 'rgb(228,102,81,0.9)',
                         data: [],
                         fill: false
                     },
                     {
+                        titleName: logInterface.name,
                         name: 'Rx',
                         backgroundColor: 'rgb(0,216,255,0.9)',
                         data: [],
@@ -51,17 +53,8 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
         for (const log of sortedData){
             // Looping through the interfaces of the log
             for (const inter of log.data.interfaces){
-                if(inter.name === 'up'){
-                    interfaceList[0][0].data.push(inter.counters.tx_bytes);
-                    interfaceList[0][1].data.push(inter.counters.rx_bytes);
-                }
-                if(inter.name === 'down'){
-                    interfaceList[1][0].data.push(inter.counters.tx_bytes);
-                    interfaceList[1][1].data.push(inter.counters.rx_bytes);
-                }
-
-                /* interfaceList[interfaceTypes[inter.name]][0].data.push(inter.counters.tx_bytes);
-                interfaceList[interfaceTypes[inter.name]][1].data.push(inter.counters.rx_bytes); */
+                interfaceList[interfaceTypes[inter.name]][0].data.push(inter.counters.tx_bytes);
+                interfaceList[interfaceTypes[inter.name]][1].data.push(inter.counters.rx_bytes);
             }
         }
 
@@ -69,28 +62,36 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
             chart: {
                 id: 'chart',
                 group: 'txrx'
-              },
+            },
             xaxis: {
                 title: {
-                    text: 'Time'
+                    text: 'Time',
+                    style: {
+                        fontSize: '15px'
+                    },
                 },
-                categories
+                categories,
+                tickAmount:20
             },
             yaxis: {
+                labels: {
+                    minWidth: 40
+                },
                 title: {
-                    text: 'Data (KB)'
-                }
+                    text: 'Data (KB)',
+                    style: {
+                        fontSize: '15px'
+                    },
+                },
             },
             legend: {
                 position: 'top',
                 horizontalAlign: 'right',
-                floating: true,
-                offsetY: -20,
-                offsetX: -5
-            }
+                float: true
+            },
+            
         };
 
-        console.log(interfaceList);
         setStatOptions(options);
         setStats(interfaceList);
     }
@@ -126,12 +127,33 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
         }
     }, [selectedDeviceId]);
 
+    useEffect(() => {
+        if (lastRefresh !== '' && selectedDeviceId){
+            getStatistics();
+        }
+    }, [lastRefresh])
+
 
     return (
         <div>
             {
                 deviceStats.map(
-                    (data) =>  <div key={createUuid()}><DeviceStatisticsChart key={createUuid()} data={data} options={statOptions} /></div>
+                    (data) => 
+                    <div key={createUuid()}>
+                        <DeviceStatisticsChart 
+                            key={createUuid()} 
+                            data={data} 
+                            options={{
+                                ...statOptions, 
+                                title: {
+                                    text: capitalizeFirstLetter(data[0].titleName),
+                                    align: 'left',
+                                    style: {
+                                        fontSize: '25px'
+                                    },
+                                }
+                            }} />
+                    </div>
                 )
             }
         </div>
@@ -139,7 +161,12 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
 }
 
 StatisticsChartList.propTypes = {
+    lastRefresh: PropTypes.string,
     selectedDeviceId: PropTypes.string.isRequired,
 };
+
+StatisticsChartList.defaultProps = {
+    lastRefresh: ''
+}
 
 export default StatisticsChartList;
