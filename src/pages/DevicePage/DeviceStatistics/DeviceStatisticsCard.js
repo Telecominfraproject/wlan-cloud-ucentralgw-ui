@@ -9,7 +9,7 @@ import StatisticsChartList from './StatisticsChartList';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => (
     <CCard>
-        <CCardHeader>Device Statistics</CCardHeader>
+        <CCardHeader>Statistics</CCardHeader>
         <CCardBody style={{padding: '5%'}}>
             <StatisticsChartList selectedDeviceId={selectedDeviceId}/>
         </CCardBody>
