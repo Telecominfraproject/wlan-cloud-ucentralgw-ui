@@ -7,7 +7,7 @@ const DeviceCommandsCollapse = ({ details, responses, index, item, getDetails, g
     <CCollapse show={details.includes(index)}>
       <CCardBody>
         <h5>Result</h5>
-        <div>{getDetails(item.command, item, index)}</div>
+        <div>{getDetails(item, index)}</div>
       </CCardBody>
     </CCollapse>
     <CCollapse show={responses.includes(index)}>

@@ -30,7 +30,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
   const toggleVerbose = () => {
     setVerbose(!choseVerbose);
-  }
+  };
 
   const confirmingIfSure = () => {
     setCheckingIfSure(true);
@@ -93,7 +93,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${selectedDeviceId}/wifiscan`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/wifiscan`, parameters, { headers })
       .then((response) => {
         const scanList = response.data.results.status.scan;
 
@@ -124,13 +124,13 @@ const WifiScanModal = ({ show, toggleModal }) => {
         <CRow style={{ marginTop: '20px' }}>
           <p style={{ paddingLeft: '2%' }}>Verbose:</p>
           <CForm style={{ paddingLeft: '5%' }}>
-              <CSwitch
-                color='primary'
-                defaultChecked={choseVerbose}
-                onClick={() => toggleVerbose()}
-                labelOn='On'
-                labelOff='Off'
-              />
+            <CSwitch
+              color="primary"
+              defaultChecked={choseVerbose}
+              onClick={() => toggleVerbose()}
+              labelOn="On"
+              labelOff="Off"
+            />
           </CForm>
         </CRow>
         <div style={{ marginTop: '3%' }} hidden={!hadSuccess && !hadFailure}>

@@ -89,7 +89,7 @@ const BlinkModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${selectedDeviceId}/leds`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/leds`, parameters, { headers })
       .then(() => {
         setResponseBody('Command submitted!');
         setHadSuccess(true);

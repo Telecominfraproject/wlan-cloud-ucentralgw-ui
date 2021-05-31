@@ -92,7 +92,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
     };
 
     axiosInstance
-      .post(`/device/${selectedDeviceId}/${action}`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/${action}`, parameters, { headers })
       .then(() => {
         setResponseBody('Command submitted successfully');
         setHadSuccess(true);

@@ -113,7 +113,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       uri: firmware,
     };
     axiosInstance
-      .post(`/device/${selectedDeviceId}/upgrade`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/upgrade`, parameters, { headers })
       .then(() => {
         setResponseBody('Command submitted successfully');
         setHadSuccess(true);

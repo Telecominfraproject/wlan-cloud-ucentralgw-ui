@@ -36,7 +36,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/device/${selectedDeviceId}`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}`, options)
       .then((response) => {
         setDevice(response.data);
       })

@@ -22,6 +22,7 @@ import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
 import ConfirmModal from '../../components/ConfirmModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
+import LoadingButton from '../../components/LoadingButton';
 import eventBus from '../../utils/EventBus';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
@@ -37,6 +38,9 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(addDays(new Date(), -3).toString());
   const [end, setEnd] = useState(new Date().toString());
+  const [commandLimit, setCommandLimit] = useState(25);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [showLoadingMore, setShowLoadingMore] = useState(true);
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -51,6 +55,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setUuidDelete(uuid);
     setShowConfirmModal(!showConfirmModal);
   };
+
+  const showMoreCommands = () => {
+    setCommandLimit(commandLimit + 50);
+  }
 
   const modifyStart = (value) => {
     setStart(value);
@@ -69,6 +77,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
 
   const getCommands = () => {
     if (loading) return;
+    setLoadingMore(true);
     setLoading(true);
     const utcStart = new Date(start).toISOString();
     const utcEnd = new Date(end).toISOString();
@@ -81,17 +90,19 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       params: {
         startDate: dateToUnix(utcStart),
         endDate: dateToUnix(utcEnd),
+        limit: commandLimit
       },
     };
 
     axiosInstance
-      .get(`/commands?serialNumber=${selectedDeviceId}`, options)
+      .get(`/commands?serialNumber=${encodeURIComponent(selectedDeviceId)}`, options)
       .then((response) => {
         setCommands(response.data.commands);
       })
       .catch(() => {})
       .finally(() => {
         setLoading(false);
+        setLoadingMore(false);
       });
   };
 
@@ -152,16 +163,15 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     setEnd(new Date());
   };
 
-  const getDetails = (command, commandDetails, index) => {
+  const getDetails = (command, index) => {
     if (!details.includes(index)) {
       return <pre className="ignore" />;
     }
-    if (command === 'reboot' || command === 'leds') {
-      const result = commandDetails.results;
+    if (command.results) {
+      const result = command.results;
       if (result) return <pre className="ignore">{JSON.stringify(result, null, 4)}</pre>;
     }
-
-    return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
+    return <pre className="ignore">{JSON.stringify(command, null, 4)}</pre>;
   };
 
   const getResponse = (commandDetails, index) => {
@@ -202,11 +212,29 @@ const DeviceCommands = ({ selectedDeviceId }) => {
 
   useEffect(() => {
     if (selectedDeviceId) {
+      setCommandLimit(25);
+      setLoadingMore(false);
+      setShowLoadingMore(true);
       setStart(addDays(new Date(), -3).toString());
       setEnd(new Date().toString());
       getCommands();
     }
   }, [selectedDeviceId]);
+
+  useEffect(() => {
+    if (commandLimit !== 25) {
+      getCommands();
+    }
+  }, [commandLimit]);
+
+  useEffect(() => {
+    if (commands.length > 0 && commands.length < commandLimit) {
+      setShowLoadingMore(false);
+    }
+    else {
+      setShowLoadingMore(true);
+    }
+  }, [commands]);
 
   return (
     <CWidgetDropdown
@@ -352,6 +380,24 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
+                <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
+                  <CCol/>
+                  <CCol/>
+                  <CCol/>
+                  <CCol/>
+                  <CCol/>
+                  <CCol>
+                    {showLoadingMore && 
+                     <LoadingButton
+                        label="View More"
+                        isLoadingLabel="Loading More..."
+                        isLoading={loadingMore}
+                        action={showMoreCommands}
+                        variant="outline"
+                      />
+                    }
+                  </CCol>
+                </CRow>
               </div>
             </CCard>
           </CCollapse>

@@ -89,7 +89,7 @@ const TraceModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${selectedDeviceId}/trace`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/trace`, parameters, { headers })
       .then(() => {
         setResponseBody('Command submitted successfully');
         setHadSuccess(true);
