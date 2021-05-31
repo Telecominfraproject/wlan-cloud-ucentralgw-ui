@@ -95,7 +95,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/commands?serialNumber=${encodeURIComponent(selectedDeviceId)}`, options)
+      .get(`/commands?newest=true&serialNumber=${encodeURIComponent(selectedDeviceId)}`, options)
       .then((response) => {
         setCommands(response.data.commands);
       })
@@ -289,7 +289,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                   border
                   columnFilter
                   sorter
-                  sorterValue={{ column: 'completed', desc: 'true' }}
+                  sorterValue={{ column: 'submitted', desc: 'true' }}
                   scopedSlots={{
                     completed: (item) => (
                       <td>

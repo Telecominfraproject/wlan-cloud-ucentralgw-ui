@@ -50,7 +50,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
   if (device) {
     return (
       <CCard>
-        <CCardHeader>#{device.serialNumber} Details</CCardHeader>
+        <CCardHeader>Device Details</CCardHeader>
         <CCardBody>
           <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
             <CFormGroup row>
@@ -146,11 +146,10 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
             <CCardFooter>
               <CButton
                 show={collapse ? 'true' : 'false'}
-                color="transparent"
                 onClick={toggle}
                 block
               >
-                <CIcon name={collapse ? 'cilChevronTop' : 'cilChevronBottom'} size="lg" />
+                <CIcon style={{color: 'black'}} name={collapse ? 'cilChevronTop' : 'cilChevronBottom'} size="lg" />
               </CButton>
             </CCardFooter>
           </CForm>
