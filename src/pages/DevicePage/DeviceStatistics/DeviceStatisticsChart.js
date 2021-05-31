@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts'
 
 const DeviceStatisticsChart = ({ data, options }) => (
-    <div>
+    <div style={{height: '360px'}}>
         <Chart
             series={data}
             options={options}
             type='line'
-            height={360}
+            height='100%'
         />
     </div>
 );

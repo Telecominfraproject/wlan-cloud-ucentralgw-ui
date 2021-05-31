@@ -97,28 +97,29 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
     }
 
     const getStatistics = () => {
-        if (loading) return;
-        setLoading(true);
+        if (!loading){
+            setLoading(true);
 
-        const options = {
-            headers: {
-                Accept: 'application/json',
-                Authorization: `Bearer ${getToken()}`,
-            },
-            params: {
-                serialNumber: "24f5a207a130"
-            }
-        };
-
-        axiosInstance
-            .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
-            .then((response) => {
-                transformIntoDataset(response.data.data);
-            })
-            .catch(() => {})
-            .finally(() => {
-            setLoading(false);
-        });
+            const options = {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${getToken()}`,
+                },
+                params: {
+                    serialNumber: "24f5a207a130"
+                }
+            };
+    
+            axiosInstance
+                .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
+                .then((response) => {
+                    transformIntoDataset(response.data.data);
+                })
+                .catch(() => {})
+                .finally(() => {
+                setLoading(false);
+            });
+        }
     };
 
     useEffect(() => {
