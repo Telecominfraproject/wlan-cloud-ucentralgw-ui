@@ -63,3 +63,6 @@ export const unixToTime = (dateString) => {
 }
 
 export const dateToUnix = (date) => Math.floor(new Date(date).getTime() / 1000);
+
+export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
