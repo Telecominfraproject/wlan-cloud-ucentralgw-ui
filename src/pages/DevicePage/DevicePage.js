@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from './DeviceHealth';
@@ -7,14 +7,16 @@ import DeviceConfiguration from './DeviceConfiguration';
 import DeviceActions from './DeviceActions';
 import DeviceCommands from './DeviceCommands';
 import DeviceLogs from './DeviceLogs';
+import DeviceStatisticsCard from './DeviceStatistics/DeviceStatisticsCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
 
   const { deviceId } = useParams();
+  const previouslySelectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   useEffect(() => {
-    if (deviceId) dispatch({ type: 'set', selectedDeviceId: deviceId });
+    if (deviceId && deviceId !== previouslySelectedDeviceId) dispatch({ type: 'set', selectedDeviceId: deviceId });
   }, [deviceId]);
 
   return (
@@ -32,6 +34,7 @@ const DevicePage = () => {
         </CRow>
         <CRow>
           <CCol>
+          <DeviceStatisticsCard selectedDeviceId={deviceId} />
             <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
         </CRow>

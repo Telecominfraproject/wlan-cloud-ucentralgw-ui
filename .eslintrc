@@ -17,6 +17,7 @@
     "react/prop-types": ["warn"],
     "no-return-assign": ["off"],
     "react/jsx-props-no-spreading": ["off"],
-    "react/destructuring-assignment": ["off"]
+    "react/destructuring-assignment": ["off"],
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
   }
 }
