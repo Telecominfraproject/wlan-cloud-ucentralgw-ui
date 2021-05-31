@@ -5,13 +5,13 @@ import {
     CCardHeader, 
     CCardBody
 } from '@coreui/react';
-import DeviceStatisticsChart from './DeviceStatisticsChart';
+import StatisticsChartList from './StatisticsChartList';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => (
     <CCard>
         <CCardHeader>Device Statistics</CCardHeader>
-        <CCardBody>
-            <DeviceStatisticsChart selectedDeviceId={selectedDeviceId} />
+        <CCardBody style={{padding: '5%'}}>
+            <StatisticsChartList selectedDeviceId={selectedDeviceId}/>
         </CCardBody>
     </CCard>
 );

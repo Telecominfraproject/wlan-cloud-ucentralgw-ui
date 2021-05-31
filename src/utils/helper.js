@@ -54,4 +54,12 @@ export const prettyDate = (dateString) => {
   )}`;
 };
 
+export const unixToTime = (dateString) => {
+  const convertedTimestamp = unixToDateString(dateString);
+  const date = new Date(convertedTimestamp);
+  return `${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(
+    date.getSeconds(),
+  )}`;
+}
+
 export const dateToUnix = (date) => Math.floor(new Date(date).getTime() / 1000);
