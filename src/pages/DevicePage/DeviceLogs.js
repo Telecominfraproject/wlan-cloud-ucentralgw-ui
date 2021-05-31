@@ -56,7 +56,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/device/${selectedDeviceId}/logs`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}/logs`, options)
       .then((response) => {
         setLogs(response.data.values);
       })

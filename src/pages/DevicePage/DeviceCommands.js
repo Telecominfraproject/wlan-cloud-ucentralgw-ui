@@ -95,7 +95,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/commands?serialNumber=${selectedDeviceId}`, options)
+      .get(`/commands?serialNumber=${encodeURIComponent(selectedDeviceId)}`, options)
       .then((response) => {
         setCommands(response.data.commands);
       })

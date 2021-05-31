@@ -59,7 +59,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/device/${selectedDeviceId}/healthchecks`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}/healthchecks`, options)
       .then((response) => {
         setHealthChecks(response.data.values);
       })

@@ -93,7 +93,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${selectedDeviceId}/wifiscan`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/wifiscan`, parameters, { headers })
       .then((response) => {
         const scanList = response.data.results.status.scan;
 
