@@ -66,3 +66,13 @@ export const dateToUnix = (date) => Math.floor(new Date(date).getTime() / 1000);
 
 export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
+export const checkIfJson = (string) => {
+  try {
+    JSON.parse(string);
+  }
+  catch (e) {
+    return false
+  }
+  return true;
+}
+

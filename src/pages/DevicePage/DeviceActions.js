@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import ActionModal from './ActionModal';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
+import ConfigureModal from './ConfigureModal';
 import TraceModal from './TraceModal';
 import WifiScanModal from './WifiScanModal';
 import BlinkModal from './BlinkModal';
@@ -17,6 +18,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
   const [showTraceModal, setShowTraceModal] = useState(false);
   const [showScanModal, setShowScanModal] = useState(false);
   const [connectLoading, setConnectLoading] = useState(false);
+  const [showConfigModal, setConfigModal] = useState(false);
 
   const toggleRebootModal = () => {
     setShowRebootModal(!showRebootModal);
@@ -36,6 +38,10 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   const toggleScanModal = () => {
     setShowScanModal(!showScanModal);
+  };
+
+  const toggleConfigModal = () => {
+    setConfigModal(!showConfigModal);
   };
 
   const getRttysInfo = () => {
@@ -109,7 +115,11 @@ const DeviceActions = ({ selectedDeviceId }) => {
               action={getRttysInfo}
             />
           </CCol>
-          <CCol />
+          <CCol>
+            <CButton block color="primary" onClick={toggleConfigModal}>
+                Configure
+            </CButton>
+          </CCol>
         </CRow>
       </CCardBody>
       <ActionModal
@@ -124,6 +134,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
       <TraceModal show={showTraceModal} toggleModal={toggleTraceModal} />
       <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
+      <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
     </CCard>
   );
 };
