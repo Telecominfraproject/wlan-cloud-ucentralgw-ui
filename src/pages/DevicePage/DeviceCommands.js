@@ -16,7 +16,7 @@ import { cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
-import { prettyDate, addDays, dateToUnix } from '../../utils/helper';
+import { prettyDate, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import WifiScanResultModalWidget from './WifiScanResultModal';
@@ -36,8 +36,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const [responses, setResponses] = useState([]);
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [start, setStart] = useState(addDays(new Date(), -3).toString());
-  const [end, setEnd] = useState(new Date().toString());
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
   const [commandLimit, setCommandLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
@@ -79,8 +79,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     if (loading) return;
     setLoadingMore(true);
     setLoading(true);
-    const utcStart = new Date(start).toISOString();
-    const utcEnd = new Date(end).toISOString();
 
     const options = {
       headers: {
@@ -88,14 +86,21 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: dateToUnix(utcStart),
-        endDate: dateToUnix(utcEnd),
         limit: commandLimit
       },
     };
 
+    let extraParams = '&newest=true';
+    if(start !=='' && end !==''){
+      const utcStart = new Date(start).toISOString();
+      const utcEnd = new Date(end).toISOString();
+      options.params.startDate = dateToUnix(utcStart);
+      options.params.endDate = dateToUnix(utcEnd);
+      extraParams='';
+    }
+
     axiosInstance
-      .get(`/commands?newest=true&serialNumber=${encodeURIComponent(selectedDeviceId)}`, options)
+      .get(`/commands?serialNumber=${encodeURIComponent(selectedDeviceId)}${extraParams}`, options)
       .then((response) => {
         setCommands(response.data.commands);
       })
@@ -160,7 +165,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const refreshCommands = () => {
-    setEnd(new Date());
+    getCommands();
   };
 
   const getDetails = (command, index) => {
@@ -197,7 +202,10 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   ];
 
   useEffect(() => {
-    if (selectedDeviceId) {
+    if (selectedDeviceId && start !== '' && end !== '') {
+      getCommands();
+    }
+    else if(selectedDeviceId && start === '' && end === ''){
       getCommands();
     }
   }, [selectedDeviceId, start, end]);
@@ -215,8 +223,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setCommandLimit(25);
       setLoadingMore(false);
       setShowLoadingMore(true);
-      setStart(addDays(new Date(), -3).toString());
-      setEnd(new Date().toString());
+      setStart('');
+      setEnd('');
       getCommands();
     }
   }, [selectedDeviceId]);
@@ -228,7 +236,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }, [commandLimit]);
 
   useEffect(() => {
-    if (commands.length > 0 && commands.length < commandLimit) {
+    if (commands.length === 0 || (commands.length > 0 && commands.length < commandLimit)) {
       setShowLoadingMore(false);
     }
     else {
@@ -263,8 +271,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               <CCol>
                 From:
                 <DatePicker
-                  selected={start === '' ? new Date() : new Date(start)}
-                  value={start === '' ? new Date() : new Date(start)}
                   includeTime
                   onChange={(date) => modifyStart(date)}
                 />
@@ -272,8 +278,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               <CCol>
                 To:
                 <DatePicker
-                  selected={end === '' ? new Date() : new Date(end)}
-                  value={end === '' ? new Date() : new Date(end)}
                   includeTime
                   onChange={(date) => modifyEnd(date)}
                 />
@@ -381,12 +385,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                   }}
                 />
                 <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
-                  <CCol/>
-                  <CCol/>
-                  <CCol/>
-                  <CCol/>
-                  <CCol/>
-                  <CCol>
                     {showLoadingMore && 
                      <LoadingButton
                         label="View More"
@@ -396,7 +394,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                         variant="outline"
                       />
                     }
-                  </CCol>
                 </CRow>
               </div>
             </CCard>
