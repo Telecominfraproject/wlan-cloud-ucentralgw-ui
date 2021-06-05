@@ -13,17 +13,21 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { addDays, prettyDate, dateToUnix } from '../../utils/helper';
+import { prettyDate, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
+import LoadingButton from '../../components/LoadingButton';
 
 const DeviceLogs = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
-  const [start, setStart] = useState(addDays(new Date(), -3).toString());
-  const [end, setEnd] = useState(new Date().toString());
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+  const [logLimit, setLogLimit] = useState(25);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [showLoadingMore, setShowLoadingMore] = useState(true);
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -38,11 +42,14 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     setEnd(value);
   };
 
+  const showMoreLogs = () => {
+    setLogLimit(logLimit + 50);
+  }
+
   const getLogs = () => {
     if (loading) return;
+    setLoadingMore(true);
     setLoading(true);
-    const utcStart = new Date(start).toISOString();
-    const utcEnd = new Date(end).toISOString();
 
     const options = {
       headers: {
@@ -50,19 +57,28 @@ const DeviceLogs = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: dateToUnix(utcStart),
-        endDate: dateToUnix(utcEnd),
+        limit: logLimit
       },
     };
 
+    let extraParams = '?newest=true';
+    if(start !=='' && end !==''){
+      const utcStart = new Date(start).toISOString();
+      const utcEnd = new Date(end).toISOString();
+      options.params.startDate = dateToUnix(utcStart);
+      options.params.endDate = dateToUnix(utcEnd);
+      extraParams='';
+    }
+
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/logs`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}/logs${extraParams}`, options)
       .then((response) => {
         setLogs(response.data.values);
       })
       .catch(() => {})
       .finally(() => {
         setLoading(false);
+        setLoadingMore(false);
       });
   };
 
@@ -99,6 +115,35 @@ const DeviceLogs = ({ selectedDeviceId }) => {
 
   useEffect(() => {
     if (selectedDeviceId) {
+      setLogLimit(25);
+      setLoadingMore(false);
+      setShowLoadingMore(true);
+      setStart('');
+      setEnd('');
+      getLogs();
+    }
+  }, [selectedDeviceId]);
+
+  useEffect(() => {
+    if (logLimit !== 25) {
+      getLogs();
+    }
+  }, [logLimit]);
+
+  useEffect(() => {
+    if (logs.length === 0 || (logs.length > 0 && logs.length < logLimit)) {
+      setShowLoadingMore(false);
+    }
+    else {
+      setShowLoadingMore(true);
+    }
+  }, [logs]);
+
+  useEffect(() => {
+    if (selectedDeviceId && start !== '' && end !== '') {
+      getLogs();
+    }
+    else if(selectedDeviceId && start === '' && end === ''){
       getLogs();
     }
   }, [start, end, selectedDeviceId]);
@@ -115,8 +160,6 @@ const DeviceLogs = ({ selectedDeviceId }) => {
               <CCol>
                 From:
                 <DatePicker
-                  selected={start === '' ? new Date() : new Date(start)}
-                  value={start === '' ? new Date() : new Date(start)}
                   includeTime
                   onChange={(date) => modifyStart(date)}
                 />
@@ -124,8 +167,6 @@ const DeviceLogs = ({ selectedDeviceId }) => {
               <CCol>
                 To:
                 <DatePicker
-                  selected={end === '' ? new Date() : new Date(end)}
-                  value={end === '' ? new Date() : new Date(end)}
                   includeTime
                   onChange={(date) => modifyEnd(date)}
                 />
@@ -167,6 +208,17 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
+                <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
+                    {showLoadingMore && 
+                     <LoadingButton
+                        label="View More"
+                        isLoadingLabel="Loading More..."
+                        isLoading={loadingMore}
+                        action={showMoreLogs}
+                        variant="outline"
+                      />
+                    }
+                </CRow>
               </div>
             </CCard>
           </CCollapse>
