@@ -117,7 +117,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleConfigModal}>
-                Configure
+              Configure
             </CButton>
           </CCol>
         </CRow>

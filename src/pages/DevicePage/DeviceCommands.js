@@ -58,7 +58,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
 
   const showMoreCommands = () => {
     setCommandLimit(commandLimit + 50);
-  }
+  };
 
   const modifyStart = (value) => {
     setStart(value);
@@ -86,17 +86,17 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        limit: commandLimit
+        limit: commandLimit,
       },
     };
 
     let extraParams = '&newest=true';
-    if(start !=='' && end !==''){
+    if (start !== '' && end !== '') {
       const utcStart = new Date(start).toISOString();
       const utcEnd = new Date(end).toISOString();
       options.params.startDate = dateToUnix(utcStart);
       options.params.endDate = dateToUnix(utcEnd);
-      extraParams='';
+      extraParams = '';
     }
 
     axiosInstance
@@ -204,8 +204,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   useEffect(() => {
     if (selectedDeviceId && start !== '' && end !== '') {
       getCommands();
-    }
-    else if(selectedDeviceId && start === '' && end === ''){
+    } else if (selectedDeviceId && start === '' && end === '') {
       getCommands();
     }
   }, [selectedDeviceId, start, end]);
@@ -238,8 +237,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   useEffect(() => {
     if (commands.length === 0 || (commands.length > 0 && commands.length < commandLimit)) {
       setShowLoadingMore(false);
-    }
-    else {
+    } else {
       setShowLoadingMore(true);
     }
   }, [commands]);
@@ -270,17 +268,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
                 From:
-                <DatePicker
-                  includeTime
-                  onChange={(date) => modifyStart(date)}
-                />
+                <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
                 To:
-                <DatePicker
-                  includeTime
-                  onChange={(date) => modifyEnd(date)}
-                />
+                <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
             <CCard>
@@ -384,16 +376,16 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
-                <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
-                    {showLoadingMore && 
-                     <LoadingButton
-                        label="View More"
-                        isLoadingLabel="Loading More..."
-                        isLoading={loadingMore}
-                        action={showMoreCommands}
-                        variant="outline"
-                      />
-                    }
+                <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
+                  {showLoadingMore && (
+                    <LoadingButton
+                      label="View More"
+                      isLoadingLabel="Loading More..."
+                      isLoading={loadingMore}
+                      action={showMoreCommands}
+                      variant="outline"
+                    />
+                  )}
                 </CRow>
               </div>
             </CCard>

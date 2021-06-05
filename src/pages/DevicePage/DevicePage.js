@@ -16,7 +16,8 @@ const DevicePage = () => {
   const previouslySelectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   useEffect(() => {
-    if (deviceId && deviceId !== previouslySelectedDeviceId) dispatch({ type: 'set', selectedDeviceId: deviceId });
+    if (deviceId && deviceId !== previouslySelectedDeviceId)
+      dispatch({ type: 'set', selectedDeviceId: deviceId });
   }, [deviceId]);
 
   return (
@@ -34,7 +35,7 @@ const DevicePage = () => {
         </CRow>
         <CRow>
           <CCol>
-          <DeviceStatisticsCard selectedDeviceId={deviceId} />
+            <DeviceStatisticsCard selectedDeviceId={deviceId} />
             <DeviceCommands selectedDeviceId={deviceId} />
           </CCol>
         </CRow>

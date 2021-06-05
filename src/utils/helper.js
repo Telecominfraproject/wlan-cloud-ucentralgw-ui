@@ -60,7 +60,7 @@ export const unixToTime = (dateString) => {
   return `${prettyNumber(date.getHours())}:${prettyNumber(date.getMinutes())}:${prettyNumber(
     date.getSeconds(),
   )}`;
-}
+};
 
 export const dateToUnix = (date) => Math.floor(new Date(date).getTime() / 1000);
 
@@ -69,10 +69,8 @@ export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() 
 export const checkIfJson = (string) => {
   try {
     JSON.parse(string);
-  }
-  catch (e) {
-    return false
+  } catch (e) {
+    return false;
   }
   return true;
-}
-
+};
