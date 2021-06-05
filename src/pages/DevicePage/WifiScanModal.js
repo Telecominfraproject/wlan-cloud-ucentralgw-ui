@@ -5,7 +5,6 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
-  CSpinner,
   CRow,
   CForm,
   CSwitch,
@@ -18,6 +17,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 import eventBus from '../../utils/EventBus';
+import LoadingButton from '../../components/LoadingButton';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -25,15 +25,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [waiting, setWaiting] = useState(false);
   const [choseVerbose, setVerbose] = useState(true);
   const [channelList, setChannelList] = useState([]);
-  const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleVerbose = () => {
     setVerbose(!choseVerbose);
-  };
-
-  const confirmingIfSure = () => {
-    setCheckingIfSure(true);
   };
 
   useEffect(() => {
@@ -41,7 +36,6 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setHadFailure(false);
     setWaiting(false);
     setChannelList([]);
-    setCheckingIfSure(false);
     setVerbose(true);
   }, [show]);
 
@@ -108,7 +102,6 @@ const WifiScanModal = ({ show, toggleModal }) => {
         setHadFailure(true);
       })
       .finally(() => {
-        setCheckingIfSure(false);
         setWaiting(false);
         eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
@@ -138,19 +131,15 @@ const WifiScanModal = ({ show, toggleModal }) => {
         </div>
       </CModalBody>
       <CModalFooter>
-        <div hidden={!checkingIfSure}>Are you sure?</div>
-        <CButton hidden={checkingIfSure} color="primary" onClick={() => confirmingIfSure()}>
-          {hadSuccess || hadFailure ? 'Re-Scan' : 'Scan'}
-        </CButton>
-        <CButton
-          hidden={!checkingIfSure}
+        <LoadingButton
+          label="Schedule"
+          isLoadingLabel="Loading..."
+          isLoading={waiting}
+          action={doAction}
+          variant="outline"
+          block={false}
           disabled={waiting}
-          color="primary"
-          onClick={() => doAction()}
-        >
-          {waiting ? 'Loading...' : 'Yes'} {'   '}
-          <CSpinner hidden={!waiting} component="span" size="sm" />
-        </CButton>
+        />
         <CButton color="secondary" onClick={toggleModal}>
           Cancel
         </CButton>

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CButton, CSpinner } from '@coreui/react';
 
-const LoadingButton = ({ isLoading, label, isLoadingLabel, action, color, variant}) => (
-  <CButton variant={variant} disabled={isLoading} color={color} onClick={() => action()} block>
+const LoadingButton = ({ isLoading, label, isLoadingLabel, action, color, variant, block, disabled}) => (
+  <CButton variant={variant} color={color} onClick={() => action()} block={block} disabled={isLoading || disabled}>
     {isLoading ? isLoadingLabel : label}
     <CSpinner hidden={!isLoading} component="span" size="sm" />
   </CButton>
@@ -11,6 +11,8 @@ const LoadingButton = ({ isLoading, label, isLoadingLabel, action, color, varian
 
 LoadingButton.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  block: PropTypes.bool,
+  disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   isLoadingLabel: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
@@ -20,7 +22,9 @@ LoadingButton.propTypes = {
 
 LoadingButton.defaultProps = {
   color: "primary",
-  variant: ""
+  variant: "",
+  block: true,
+  disabled: false
 }
 
 export default LoadingButton;

@@ -19,6 +19,8 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 import eventBus from '../../utils/EventBus';
+import LoadingButton from '../../components/LoadingButton';
+import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
 
 const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -28,16 +30,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [doingNow, setDoingNow] = useState(false);
   const [responseBody, setResponseBody] = useState('');
-  const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-
-  const formValidation = () => {
-    if (chosenDate === '') {
-      setValidDate(false);
-      return false;
-    }
-    return true;
-  };
 
   const setDateToLate = () => {
     const date = convertDateToUtc(new Date());
@@ -56,23 +49,20 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
     }
   };
 
-  const confirmingIfSure = () => {
-    setCheckingIfSure(true);
-  };
-
   useEffect(() => {
-    setHadSuccess(false);
-    setHadFailure(false);
-    setWaiting(false);
-    setDoingNow(false);
-    setChosenDate(new Date().toString());
-    setResponseBody('');
-    setValidDate(true);
-    setCheckingIfSure(false);
+    if(show) {
+      setHadSuccess(false);
+      setHadFailure(false);
+      setWaiting(false);
+      setDoingNow(false);
+      setChosenDate(new Date().toString());
+      setResponseBody('');
+      setValidDate(true);
+    }
   }, [show]);
 
   const doAction = (isNow) => {
-    setDoingNow(isNow);
+    if(isNow !== undefined) setDoingNow(isNow);
     setHadFailure(false);
     setHadSuccess(false);
     setWaiting(true);
@@ -103,7 +93,6 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
       })
       .finally(() => {
         setDoingNow(false);
-        setCheckingIfSure(false);
         setWaiting(false);
         eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
@@ -114,69 +103,65 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
       <CModalHeader closeButton>
         <CModalTitle>{title}</CModalTitle>
       </CModalHeader>
-      <CModalBody>
-        <h6>{directions}</h6>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol>
-            <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-              {waiting && doingNow ? 'Loading...' : 'Do Now!'}
-              <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
-            </CButton>
-          </CCol>
-          <CCol>
-            <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
-              Later tonight
-            </CButton>
-          </CCol>
-        </CRow>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol md="4" style={{ marginTop: '7px' }}>
-            <p>Date:</p>
-          </CCol>
-          <CCol xs="12" md="8">
-            <DatePicker
-              selected={new Date(chosenDate)}
-              includeTime
-              className={('form-control', { 'is-invalid': !validDate })}
-              value={new Date(chosenDate)}
-              placeholder="Select custom date"
-              disabled={waiting}
-              onChange={(date) => setDate(date)}
-              min={convertDateToUtc(new Date())}
-            />
-          </CCol>
-        </CRow>
-        <CInvalidFeedback>You need a date...</CInvalidFeedback>
+      {hadSuccess ? 
+        <SuccessfulActionModalBody toggleModal={toggleModal} /> 
+        :
+        <div>
+          <CModalBody>
+            <h6>{directions}</h6>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol>
+                <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
+                  {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+                  <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
+                </CButton>
+              </CCol>
+              <CCol>
+                <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
+                  Later tonight
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="4" style={{ marginTop: '7px' }}>
+                <p>Date:</p>
+              </CCol>
+              <CCol xs="12" md="8">
+                <DatePicker
+                  selected={new Date(chosenDate)}
+                  includeTime
+                  className={('form-control', { 'is-invalid': !validDate })}
+                  value={new Date(chosenDate)}
+                  placeholder="Select custom date"
+                  disabled={waiting}
+                  onChange={(date) => setDate(date)}
+                  min={convertDateToUtc(new Date())}
+                />
+              </CCol>
+            </CRow>
+            <CInvalidFeedback>You need a date...</CInvalidFeedback>
 
-        <div hidden={!hadSuccess && !hadFailure}>
-          <div>
-            <pre className="ignore">{responseBody}</pre>
-          </div>
-        </div>
-      </CModalBody>
-      <CModalFooter>
-        <div hidden={!checkingIfSure}>Are you sure?</div>
-        <CButton
-          hidden={checkingIfSure}
-          disabled={waiting}
-          color="primary"
-          onClick={() => (formValidation() ? confirmingIfSure() : null)}
-        >
-          Schedule
-        </CButton>
-        <CButton
-          hidden={!checkingIfSure}
-          disabled={waiting}
-          color="primary"
-          onClick={() => (formValidation() ? doAction(false) : null)}
-        >
-          {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
-          <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
-        </CButton>
-        <CButton color="secondary" onClick={toggleModal}>
-          Cancel
-        </CButton>
-      </CModalFooter>
+            <div hidden={!hadSuccess && !hadFailure}>
+              <div>
+                <pre className="ignore">{responseBody}</pre>
+              </div>
+            </div>
+          </CModalBody>
+          <CModalFooter>
+            <LoadingButton
+              label="Schedule"
+              isLoadingLabel="Loading..."
+              isLoading={waiting}
+              action={doAction}
+              variant="outline"
+              block={false}
+              disabled={waiting}
+            />
+            <CButton color="secondary" onClick={toggleModal}>
+              Cancel
+            </CButton>
+          </CModalFooter>
+        </div>}
     </CModal>
   );
 };

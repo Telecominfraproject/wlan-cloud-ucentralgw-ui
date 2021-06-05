@@ -5,8 +5,6 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
-  CSpinner,
-  CBadge,
   CCol,
   CRow,
   CInvalidFeedback,
@@ -21,6 +19,7 @@ import 'react-widgets/styles.css';
 import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 import eventBus from '../../utils/EventBus';
+import LoadingButton from '../../components/LoadingButton';
 
 const TraceModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -31,7 +30,6 @@ const TraceModal = ({ show, toggleModal }) => {
   const [packets, setPackets] = useState(100);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [responseBody, setResponseBody] = useState('');
-  const [checkingIfSure, setCheckingIfSure] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const setDate = (date) => {
@@ -40,17 +38,12 @@ const TraceModal = ({ show, toggleModal }) => {
     }
   };
 
-  const confirmingIfSure = () => {
-    setCheckingIfSure(true);
-  };
-
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
     setWaiting(false);
     setChosenDate(new Date().toString());
     setResponseBody('');
-    setCheckingIfSure(false);
     setDuration(20);
     setPackets(100);
   }, [show]);
@@ -99,7 +92,6 @@ const TraceModal = ({ show, toggleModal }) => {
         setHadFailure(true);
       })
       .finally(() => {
-        setCheckingIfSure(false);
         setWaiting(false);
         eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
@@ -199,25 +191,15 @@ const TraceModal = ({ show, toggleModal }) => {
         </div>
       </CModalBody>
       <CModalFooter>
-        <div hidden={!checkingIfSure}>Are you sure?</div>
-        <CButton hidden={checkingIfSure} color="primary" onClick={() => confirmingIfSure()}>
-          Schedule
-        </CButton>
-        <CButton
-          hidden={!checkingIfSure}
+        <LoadingButton
+          label="Schedule"
+          isLoadingLabel="Loading..."
+          isLoading={waiting}
+          action={doAction}
+          variant="outline"
+          block={false}
           disabled={waiting}
-          color="primary"
-          onClick={() => doAction()}
-        >
-          {waiting ? 'Loading...' : 'Yes'} {'   '}
-          <CSpinner hidden={!waiting} component="span" size="sm" />
-          <CBadge hidden={waiting || !hadSuccess} color="success" shape="pill">
-            Success
-          </CBadge>
-          <CBadge hidden={waiting || !hadFailure} color="danger" shape="pill">
-            Request Failed
-          </CBadge>
-        </CButton>
+        />
         <CButton color="secondary" onClick={toggleModal}>
           Cancel
         </CButton>
