@@ -202,22 +202,22 @@ const TraceModal = ({ show, toggleModal }) => {
                   <CFormGroup variant="checkbox" onClick={() => setChosenInterface('up')}>
                     <CInputRadio
                       defaultChecked={chosenInterface === 'up'}
-                      id="radio1"
+                      id="traceRadio1"
                       name="radios"
-                      value="option1"
+                      value="traceOption1"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio1">
+                    <CLabel variant="checkbox" htmlFor="traceRadio1">
                       Up
                     </CLabel>
                   </CFormGroup>
                   <CFormGroup variant="checkbox" onClick={() => setChosenInterface('down')}>
                     <CInputRadio
                       defaultChecked={chosenInterface === 'down'}
-                      id="radio2"
+                      id="traceRadio2"
                       name="radios"
-                      value="option2"
+                      value="traceOption2"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio2">
+                    <CLabel variant="checkbox" htmlFor="traceRadio2">
                       Down
                     </CLabel>
                   </CFormGroup>

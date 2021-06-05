@@ -172,11 +172,11 @@ const BlinkModal = ({ show, toggleModal }) => {
                   <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
                     <CInputRadio
                       defaultChecked={chosenPattern === 'blink'}
-                      id="radio2"
+                      id="radio3"
                       name="radios"
-                      value="option2"
+                      value="option3"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio2">
+                    <CLabel variant="checkbox" htmlFor="radio3">
                       Blink
                     </CLabel>
                   </CFormGroup>
