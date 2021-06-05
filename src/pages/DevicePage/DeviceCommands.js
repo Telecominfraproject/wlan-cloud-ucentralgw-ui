@@ -12,7 +12,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
-import { cilSync } from '@coreui/icons';
+import { cilCloudDownload, cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
@@ -111,6 +111,25 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       });
   };
 
+  const downloadTrace = (uuid) => {
+    const options = {
+      headers: {
+        Accept: 'application/octet-stream',
+        Authorization: `Bearer ${getToken()}`,
+      },
+      responseType: 'arraybuffer'
+    };
+
+    axiosInstance.get(`/file/${uuid}?serialNumber=${selectedDeviceId}`, options)
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/octet-stream' })
+        const link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = `Trace_${uuid}.pcap`;
+        link.click()
+    });
+  } 
+
   const deleteCommand = async () => {
     if (uuidDelete === '') {
       return false;
@@ -135,7 +154,15 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const toggleDetails = (item, index) => {
-    if (item.command !== 'wifiscan' || !item.results.status) {
+    if (item.command === 'wifiscan') {
+      setChosenWifiScan(item.results.status.scan);
+      setScanDate(item.completed);
+      setShowScanModal(true);
+    }
+    else if (item.command === 'trace' && item.waitingForFile === 0) {
+      downloadTrace(item.UUID);
+    }
+    else {
       const position = details.indexOf(index);
       let newDetails = details.slice();
 
@@ -145,10 +172,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         newDetails = [...details, index];
       }
       setDetails(newDetails);
-    } else {
-      setChosenWifiScan(item.results.status.scan);
-      setScanDate(item.completed);
-      setShowScanModal(true);
     }
   };
 
@@ -316,18 +339,23 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
-                                disabled={item.completed === 0}
+                                disabled={item.completed === 0 || (item.command === 'trace' && item.waitingForFile !== 0)}
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
                                   toggleDetails(item, index);
                                 }}
                               >
-                                <FontAwesomeIcon
-                                  icon={faClipboardCheck}
-                                  className="c-icon c-icon-lg"
-                                  style={{ height: '19px' }}
-                                />
+                                {
+                                  item.command === 'trace'  ?
+                                  <CIcon content={cilCloudDownload} size="lg"/>
+                                  :
+                                  <FontAwesomeIcon
+                                    icon={faClipboardCheck}
+                                    className="c-icon c-icon-lg"
+                                    style={{ height: '19px' }}
+                                  />
+                                }
                               </CButton>
                             </CPopover>
                           </CCol>
