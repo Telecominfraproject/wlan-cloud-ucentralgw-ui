@@ -7,6 +7,7 @@ import ConfigureModal from './ConfigureModal';
 import TraceModal from './TraceModal';
 import WifiScanModal from './WifiScanModal';
 import BlinkModal from './BlinkModal';
+import FactoryResetModal from './FactoryResetModal';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
 import LoadingButton from '../../components/LoadingButton';
@@ -19,6 +20,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
   const [showScanModal, setShowScanModal] = useState(false);
   const [connectLoading, setConnectLoading] = useState(false);
   const [showConfigModal, setConfigModal] = useState(false);
+  const [showFactoryModal, setShowFactoryModal] = useState(false);
 
   const toggleRebootModal = () => {
     setShowRebootModal(!showRebootModal);
@@ -43,6 +45,10 @@ const DeviceActions = ({ selectedDeviceId }) => {
   const toggleConfigModal = () => {
     setConfigModal(!showConfigModal);
   };
+
+  const toggleFactoryResetModal = () => {
+    setShowFactoryModal(!showFactoryModal);
+  }
 
   const getRttysInfo = () => {
     setConnectLoading(true);
@@ -101,7 +107,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" disabled>
+            <CButton block color="primary" onClick={toggleFactoryResetModal}>
               Factory Reset
             </CButton>
           </CCol>
@@ -135,6 +141,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
       <TraceModal show={showTraceModal} toggleModal={toggleTraceModal} />
       <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
       <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
+      <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
     </CCard>
   );
 };
