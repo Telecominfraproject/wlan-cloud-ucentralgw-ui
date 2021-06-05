@@ -125,7 +125,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' })
         const link = document.createElement('a')
         link.href = window.URL.createObjectURL(blob)
-        link.download = 'Report.pdf'
+        link.download = `Trace_${uuid}.pcap`;
         link.click()
     });
   } 
@@ -159,7 +159,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setScanDate(item.completed);
       setShowScanModal(true);
     }
-    else if (item.command === 'trace') {
+    else if (item.command === 'trace' && item.waitingForFile === 0) {
       downloadTrace(item.UUID);
     }
     else {
@@ -339,7 +339,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
-                                disabled={item.completed === 0}
+                                disabled={item.completed === 0 || (item.command === 'trace' && item.waitingForFile !== 0)}
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
@@ -347,8 +347,8 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                 }}
                               >
                                 {
-                                  item.command === 'trace' ?
-                                  <CIcon content={cilCloudDownload}/>
+                                  item.command === 'trace'  ?
+                                  <CIcon content={cilCloudDownload} size="lg"/>
                                   :
                                   <FontAwesomeIcon
                                     icon={faClipboardCheck}
