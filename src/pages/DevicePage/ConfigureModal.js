@@ -11,6 +11,7 @@ import {
   CForm,
   CTextarea,
   CInvalidFeedback,
+  CInputFile,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -31,7 +32,9 @@ const ConfigureModal = ({ show, toggleModal }) => {
   const [responseBody, setResponseBody] = useState('');
   const [checkingIfSure, setCheckingIfSure] = useState(false);
   const [errorJson, setErrorJson] = useState(false);
+  const [inputKey, setInputKey] = useState(0);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
+  let fileReader;
 
   const confirmingIfSure = () => {
     if (checkIfJson(newConfig)) {
@@ -94,6 +97,27 @@ const ConfigureModal = ({ show, toggleModal }) => {
       });
   };
 
+  const handleJsonRead = () => {
+    setErrorJson(false);
+    const content = fileReader.result;
+    if (checkIfJson(content)) {
+      setNewConfig(content);
+    } else {
+      setErrorJson(true);
+    }
+  };
+
+  const handleJsonFile = (file) => {
+    fileReader = new FileReader();
+    fileReader.onloadend = handleJsonRead;
+    fileReader.readAsText(file);
+  };
+
+  const resetText = () => {
+    setInputKey(inputKey + 1);
+    setNewConfig('');
+  };
+
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
@@ -104,7 +128,22 @@ const ConfigureModal = ({ show, toggleModal }) => {
       ) : (
         <div>
           <CModalBody>
-            <h6>Enter new device configuration: </h6>
+            <CRow>
+              <CCol md="10" style={{ marginTop: '3px' }}>
+                <h6>Enter new device configuration: </h6>
+              </CCol>
+              <CCol>
+                <CButton
+                  type="reset"
+                  size="sm"
+                  onClick={() => resetText()}
+                  color="danger"
+                  variant="outline"
+                >
+                  Clear
+                </CButton>
+              </CCol>
+            </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CForm>
@@ -121,6 +160,18 @@ const ConfigureModal = ({ show, toggleModal }) => {
                     You need to enter valid JSON
                   </CInvalidFeedback>
                 </CForm>
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol>Choose a JSON config file:</CCol>
+              <CCol>
+                <CInputFile
+                  id="file-input"
+                  name="file-input"
+                  accept=".json"
+                  onChange={(e) => handleJsonFile(e.target.files[0])}
+                  key={inputKey}
+                />
               </CCol>
             </CRow>
             <div hidden={!hadSuccess && !hadFailure}>

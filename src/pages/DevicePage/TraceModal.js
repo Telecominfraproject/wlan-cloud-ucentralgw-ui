@@ -12,7 +12,7 @@ import {
   CForm,
   CInputRadio,
   CFormGroup,
-  CLabel
+  CLabel,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -52,7 +52,7 @@ const TraceModal = ({ show, toggleModal }) => {
     setResponseBody('');
     setDuration(20);
     setPackets(100);
-    setChosenInterface('up')
+    setChosenInterface('up');
   }, [show]);
 
   const doAction = () => {
@@ -109,13 +109,14 @@ const TraceModal = ({ show, toggleModal }) => {
       <CModalHeader closeButton>
         <CModalTitle>Trace Device</CModalTitle>
       </CModalHeader>
-      {hadSuccess ?
+      {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
-        :
+      ) : (
         <div>
           <CModalBody>
             <h6>
-              Launch a remote trace of this device for either a specific duration or a number of packets
+              Launch a remote trace of this device for either a specific duration or a number of
+              packets
             </h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
@@ -244,7 +245,7 @@ const TraceModal = ({ show, toggleModal }) => {
             </CButton>
           </CModalFooter>
         </div>
-      }
+      )}
     </CModal>
   );
 };
