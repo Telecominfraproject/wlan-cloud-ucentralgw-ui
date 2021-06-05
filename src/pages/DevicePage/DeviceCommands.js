@@ -335,7 +335,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       <td>
                         <CRow>
                           <CCol>
-                            <CPopover content="Results">
+                            <CPopover content={item.command === 'trace' ? 'Download' : 'Results'}>
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
