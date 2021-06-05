@@ -14,17 +14,21 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { prettyDate, addDays, dateToUnix } from '../../utils/helper';
+import { prettyDate, dateToUnix } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { getToken } from '../../utils/authHelper';
+import LoadingButton from '../../components/LoadingButton';
 
 const DeviceHealth = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [healthChecks, setHealthChecks] = useState([]);
-  const [start, setStart] = useState(addDays(new Date(), -3).toString());
-  const [end, setEnd] = useState(new Date().toString());
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+  const [logLimit, setLogLimit] = useState(25);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [showLoadingMore, setShowLoadingMore] = useState(true);
   let sanityLevel;
   let barColor;
 
@@ -41,11 +45,14 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     setEnd(value);
   };
 
+  const showMoreLogs = () => {
+    setLogLimit(logLimit + 50);
+  }
+
   const getDeviceHealth = () => {
     if (loading) return;
+    setLoadingMore(true);
     setLoading(true);
-    const utcStart = new Date(start).toISOString();
-    const utcEnd = new Date(end).toISOString();
 
     const options = {
       headers: {
@@ -53,19 +60,28 @@ const DeviceHealth = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        startDate: dateToUnix(utcStart),
-        endDate: dateToUnix(utcEnd),
+        limit: logLimit
       },
     };
 
+    let extraParams = '?newest=true';
+    if(start !=='' && end !==''){
+      const utcStart = new Date(start).toISOString();
+      const utcEnd = new Date(end).toISOString();
+      options.params.startDate = dateToUnix(utcStart);
+      options.params.endDate = dateToUnix(utcEnd);
+      extraParams='';
+    }
+
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/healthchecks`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}/healthchecks${extraParams}`, options)
       .then((response) => {
         setHealthChecks(response.data.values);
       })
       .catch(() => {})
       .finally(() => {
         setLoading(false);
+        setLoadingMore(false);
       });
   };
 
@@ -103,9 +119,38 @@ const DeviceHealth = ({ selectedDeviceId }) => {
 
   useEffect(() => {
     if (selectedDeviceId) {
+      setLogLimit(25);
+      setLoadingMore(false);
+      setShowLoadingMore(true);
+      setStart('');
+      setEnd('');
       getDeviceHealth();
     }
-  }, [selectedDeviceId, start, end]);
+  }, [selectedDeviceId]);
+
+  useEffect(() => {
+    if (logLimit !== 25) {
+      getDeviceHealth();
+    }
+  }, [logLimit]);
+  
+  useEffect(() => {
+    if (healthChecks.length === 0 || (healthChecks.length > 0 && healthChecks.length < logLimit)) {
+      setShowLoadingMore(false);
+    }
+    else {
+      setShowLoadingMore(true);
+    }
+  }, [healthChecks]);
+
+  useEffect(() => {
+    if (selectedDeviceId && start !== '' && end !== '') {
+      getDeviceHealth();
+    }
+    else if(selectedDeviceId && start === '' && end === ''){
+      getDeviceHealth();
+    }
+  }, [start, end, selectedDeviceId]);
 
   if (healthChecks && healthChecks.length > 0) {
     sanityLevel = healthChecks[healthChecks.length - 1].sanity;
@@ -132,8 +177,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               <CCol>
                 From:
                 <DatePicker
-                  selected={start === '' ? new Date() : new Date(start)}
-                  value={start === '' ? new Date() : new Date(start)}
                   includeTime
                   onChange={(date) => modifyStart(date)}
                 />
@@ -141,8 +184,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               <CCol>
                 To:
                 <DatePicker
-                  selected={end === '' ? new Date() : new Date(end)}
-                  value={end === '' ? new Date() : new Date(end)}
                   includeTime
                   onChange={(date) => modifyEnd(date)}
                 />
@@ -190,6 +231,17 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
+                <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
+                    {showLoadingMore && 
+                     <LoadingButton
+                        label="View More"
+                        isLoadingLabel="Loading More..."
+                        isLoading={loadingMore}
+                        action={showMoreLogs}
+                        variant="outline"
+                      />
+                    }
+                </CRow>
               </div>
             </CCard>
           </CCollapse>
