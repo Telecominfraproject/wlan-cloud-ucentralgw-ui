@@ -53,6 +53,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
     setDoingNow(false);
     setNewConfig('');
     setErrorJson(false);
+    setInputKey(0);
   }, [show]);
 
   useEffect(() => {
