@@ -53,7 +53,7 @@ const BlinkModal = ({ show, toggleModal }) => {
   };
 
   useEffect(() => {
-    if(show){
+    if (show) {
       setWaiting(false);
       setChosenDate(new Date().toString());
       setResponseBody('');
@@ -65,7 +65,7 @@ const BlinkModal = ({ show, toggleModal }) => {
   }, [show]);
 
   const doAction = (isNow) => {
-    if(isNow !== undefined) setDoingNow(isNow);
+    if (isNow !== undefined) setDoingNow(isNow);
     setHadFailure(false);
     setHadSuccess(false);
     setWaiting(true);
@@ -108,102 +108,103 @@ const BlinkModal = ({ show, toggleModal }) => {
       <CModalHeader closeButton>
         <CModalTitle>LEDs of Device</CModalTitle>
       </CModalHeader>
-      {hadSuccess ? 
-        <SuccessfulActionModalBody toggleModal={toggleModal} /> 
-        :
+      {hadSuccess ? (
+        <SuccessfulActionModalBody toggleModal={toggleModal} />
+      ) : (
         <div>
           <CModalBody>
-          <h6>When would you like make the LEDs of this device blink?</h6>
-          <CRow style={{ marginTop: '20px' }}>
-            <CCol>
-              <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-                {waiting && doingNow ? 'Loading...' : 'Do Now!'}
-                <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
-              </CButton>
-            </CCol>
-            <CCol>
-              <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
-                Later tonight
-              </CButton>
-            </CCol>
-          </CRow>
-          <CRow style={{ marginTop: '20px' }}>
-            <CCol md="4" style={{ marginTop: '7px' }}>
-              <p>Date:</p>
-            </CCol>
-            <CCol xs="12" md="8">
-              <DatePicker
-                selected={new Date(chosenDate)}
-                includeTime
-                value={new Date(chosenDate)}
-                placeholder="Select custom date"
-                disabled={waiting}
-                onChange={(date) => setDate(date)}
-                min={convertDateToUtc(new Date())}
-              />
-            </CCol>
-          </CRow>
-          <CRow style={{ marginTop: '20px' }}>
-            <CCol md="7">Choose a pattern you would like to use:</CCol>
-            <CCol>
-              <CForm>
-                <CFormGroup variant="checkbox" onClick={() => setPattern('on')}>
-                  <CInputRadio
-                    defaultChecked={chosenPattern === 'on'}
-                    id="radio1"
-                    name="radios"
-                    value="option1"
-                  />
-                  <CLabel variant="checkbox" htmlFor="radio1">
-                    On
-                  </CLabel>
-                </CFormGroup>
-                <CFormGroup variant="checkbox" onClick={() => setPattern('off')}>
-                  <CInputRadio
-                    defaultChecked={chosenPattern === 'off'}
-                    id="radio2"
-                    name="radios"
-                    value="option2"
-                  />
-                  <CLabel variant="checkbox" htmlFor="radio2">
-                    Off
-                  </CLabel>
-                </CFormGroup>
-                <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
-                  <CInputRadio
-                    defaultChecked={chosenPattern === 'blink'}
-                    id="radio2"
-                    name="radios"
-                    value="option2"
-                  />
-                  <CLabel variant="checkbox" htmlFor="radio2">
-                    Blink
-                  </CLabel>
-                </CFormGroup>
-              </CForm>
-            </CCol>
-          </CRow>
-          <div hidden={!hadSuccess && !hadFailure}>
-            <div>
-              <pre className="ignore">{responseBody}</pre>
+            <h6>When would you like make the LEDs of this device blink?</h6>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol>
+                <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
+                  {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+                  <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
+                </CButton>
+              </CCol>
+              <CCol>
+                <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
+                  Later tonight
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="4" style={{ marginTop: '7px' }}>
+                <p>Date:</p>
+              </CCol>
+              <CCol xs="12" md="8">
+                <DatePicker
+                  selected={new Date(chosenDate)}
+                  includeTime
+                  value={new Date(chosenDate)}
+                  placeholder="Select custom date"
+                  disabled={waiting}
+                  onChange={(date) => setDate(date)}
+                  min={convertDateToUtc(new Date())}
+                />
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="7">Choose a pattern you would like to use:</CCol>
+              <CCol>
+                <CForm>
+                  <CFormGroup variant="checkbox" onClick={() => setPattern('on')}>
+                    <CInputRadio
+                      defaultChecked={chosenPattern === 'on'}
+                      id="radio1"
+                      name="radios"
+                      value="option1"
+                    />
+                    <CLabel variant="checkbox" htmlFor="radio1">
+                      On
+                    </CLabel>
+                  </CFormGroup>
+                  <CFormGroup variant="checkbox" onClick={() => setPattern('off')}>
+                    <CInputRadio
+                      defaultChecked={chosenPattern === 'off'}
+                      id="radio2"
+                      name="radios"
+                      value="option2"
+                    />
+                    <CLabel variant="checkbox" htmlFor="radio2">
+                      Off
+                    </CLabel>
+                  </CFormGroup>
+                  <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
+                    <CInputRadio
+                      defaultChecked={chosenPattern === 'blink'}
+                      id="radio2"
+                      name="radios"
+                      value="option2"
+                    />
+                    <CLabel variant="checkbox" htmlFor="radio2">
+                      Blink
+                    </CLabel>
+                  </CFormGroup>
+                </CForm>
+              </CCol>
+            </CRow>
+            <div hidden={!hadSuccess && !hadFailure}>
+              <div>
+                <pre className="ignore">{responseBody}</pre>
+              </div>
             </div>
-          </div>
-        </CModalBody>
-        <CModalFooter>
-          <LoadingButton
-            label="Schedule"
-            isLoadingLabel="Loading..."
-            isLoading={waiting && !doingNow}
-            action={doAction}
-            variant="outline"
-            block={false}
-            disabled={waiting}
-          />
-          <CButton color="secondary" onClick={toggleModal}>
-            Cancel
-          </CButton>
-        </CModalFooter>
-      </div>}
+          </CModalBody>
+          <CModalFooter>
+            <LoadingButton
+              label="Schedule"
+              isLoadingLabel="Loading..."
+              isLoading={waiting && !doingNow}
+              action={doAction}
+              variant="outline"
+              block={false}
+              disabled={waiting}
+            />
+            <CButton color="secondary" onClick={toggleModal}>
+              Cancel
+            </CButton>
+          </CModalFooter>
+        </div>
+      )}
     </CModal>
   );
 };

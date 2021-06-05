@@ -44,7 +44,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
 
   const showMoreLogs = () => {
     setLogLimit(logLimit + 50);
-  }
+  };
 
   const getLogs = () => {
     if (loading) return;
@@ -57,17 +57,17 @@ const DeviceLogs = ({ selectedDeviceId }) => {
         Authorization: `Bearer ${getToken()}`,
       },
       params: {
-        limit: logLimit
+        limit: logLimit,
       },
     };
 
     let extraParams = '?newest=true';
-    if(start !=='' && end !==''){
+    if (start !== '' && end !== '') {
       const utcStart = new Date(start).toISOString();
       const utcEnd = new Date(end).toISOString();
       options.params.startDate = dateToUnix(utcStart);
       options.params.endDate = dateToUnix(utcEnd);
-      extraParams='';
+      extraParams = '';
     }
 
     axiosInstance
@@ -133,8 +133,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   useEffect(() => {
     if (logs.length === 0 || (logs.length > 0 && logs.length < logLimit)) {
       setShowLoadingMore(false);
-    }
-    else {
+    } else {
       setShowLoadingMore(true);
     }
   }, [logs]);
@@ -142,8 +141,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   useEffect(() => {
     if (selectedDeviceId && start !== '' && end !== '') {
       getLogs();
-    }
-    else if(selectedDeviceId && start === '' && end === ''){
+    } else if (selectedDeviceId && start === '' && end === '') {
       getLogs();
     }
   }, [start, end, selectedDeviceId]);
@@ -159,17 +157,11 @@ const DeviceLogs = ({ selectedDeviceId }) => {
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
                 From:
-                <DatePicker
-                  includeTime
-                  onChange={(date) => modifyStart(date)}
-                />
+                <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
                 To:
-                <DatePicker
-                  includeTime
-                  onChange={(date) => modifyEnd(date)}
-                />
+                <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
             <CCard>
@@ -208,16 +200,16 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
-                <CRow  style={{marginBottom: '1%', marginRight: '1%'}}>
-                    {showLoadingMore && 
-                     <LoadingButton
-                        label="View More"
-                        isLoadingLabel="Loading More..."
-                        isLoading={loadingMore}
-                        action={showMoreLogs}
-                        variant="outline"
-                      />
-                    }
+                <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
+                  {showLoadingMore && (
+                    <LoadingButton
+                      label="View More"
+                      isLoadingLabel="Loading More..."
+                      isLoading={loadingMore}
+                      action={showMoreLogs}
+                      variant="outline"
+                    />
+                  )}
                 </CRow>
               </div>
             </CCard>

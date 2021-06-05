@@ -50,7 +50,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   };
 
   useEffect(() => {
-    if(show) {
+    if (show) {
       setHadSuccess(false);
       setHadFailure(false);
       setWaiting(false);
@@ -62,7 +62,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   }, [show]);
 
   const doAction = (isNow) => {
-    if(isNow !== undefined) setDoingNow(isNow);
+    if (isNow !== undefined) setDoingNow(isNow);
     setHadFailure(false);
     setHadSuccess(false);
     setWaiting(true);
@@ -103,9 +103,9 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
       <CModalHeader closeButton>
         <CModalTitle>{title}</CModalTitle>
       </CModalHeader>
-      {hadSuccess ? 
-        <SuccessfulActionModalBody toggleModal={toggleModal} /> 
-        :
+      {hadSuccess ? (
+        <SuccessfulActionModalBody toggleModal={toggleModal} />
+      ) : (
         <div>
           <CModalBody>
             <h6>{directions}</h6>
@@ -161,7 +161,8 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
               Cancel
             </CButton>
           </CModalFooter>
-        </div>}
+        </div>
+      )}
     </CModal>
   );
 };
