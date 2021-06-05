@@ -38,24 +38,24 @@ const Login = () => {
   const formValidation = () => {
     setHadError(false);
 
-    let isSuccesful = true;
+    let isSuccessful = true;
 
     if (userId.trim() === '') {
       setEmptyUsername(true);
-      isSuccesful = false;
+      isSuccessful = false;
     }
 
     if (password.trim() === '') {
       setEmptyPassword(true);
-      isSuccesful = false;
+      isSuccessful = false;
     }
 
     if (gatewayUrl.trim() === '') {
       setEmptyGateway(true);
-      isSuccesful = false;
+      isSuccessful = false;
     }
 
-    return isSuccesful;
+    return isSuccessful;
   };
 
   const SignIn = (credentials) => {
