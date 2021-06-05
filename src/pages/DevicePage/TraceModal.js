@@ -9,6 +9,10 @@ import {
   CRow,
   CInvalidFeedback,
   CSelect,
+  CForm,
+  CInputRadio,
+  CFormGroup,
+  CLabel
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -20,6 +24,7 @@ import { getToken } from '../../utils/authHelper';
 import axiosInstance from '../../utils/axiosInstance';
 import eventBus from '../../utils/EventBus';
 import LoadingButton from '../../components/LoadingButton';
+import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
 
 const TraceModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -30,6 +35,7 @@ const TraceModal = ({ show, toggleModal }) => {
   const [packets, setPackets] = useState(100);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [responseBody, setResponseBody] = useState('');
+  const [chosenInterface, setChosenInterface] = useState('up');
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const setDate = (date) => {
@@ -46,6 +52,7 @@ const TraceModal = ({ show, toggleModal }) => {
     setResponseBody('');
     setDuration(20);
     setPackets(100);
+    setChosenInterface('up')
   }, [show]);
 
   const doAction = () => {
@@ -67,7 +74,7 @@ const TraceModal = ({ show, toggleModal }) => {
     const parameters = {
       serialNumber: selectedDeviceId,
       when: dateChosen <= now ? 0 : dateToUnix(utcDateString),
-      network: 'lan',
+      network: chosenInterface,
     };
 
     if (usingDuration) {
@@ -102,108 +109,142 @@ const TraceModal = ({ show, toggleModal }) => {
       <CModalHeader closeButton>
         <CModalTitle>Trace Device</CModalTitle>
       </CModalHeader>
-      <CModalBody>
-        <h6>
-          Launch a remote trace of this device for either a specific duration or a number of packets
-        </h6>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol>
-            <CButton
+      {hadSuccess ?
+        <SuccessfulActionModalBody toggleModal={toggleModal} />
+        :
+        <div>
+          <CModalBody>
+            <h6>
+              Launch a remote trace of this device for either a specific duration or a number of packets
+            </h6>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol>
+                <CButton
+                  disabled={waiting}
+                  block
+                  color="primary"
+                  onClick={() => setUsingDuration(true)}
+                >
+                  Duration
+                </CButton>
+              </CCol>
+              <CCol>
+                <CButton
+                  disabled={waiting}
+                  block
+                  color="primary"
+                  onClick={() => setUsingDuration(false)}
+                >
+                  Packets
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="4" style={{ marginTop: '7px' }}>
+                {usingDuration ? 'Duration: ' : 'Packets: '}
+              </CCol>
+              <CCol xs="12" md="8">
+                {usingDuration ? (
+                  <CSelect defaultValue="duration" disabled={waiting}>
+                    <option value="20" onClick={() => setDuration(20)}>
+                      20s
+                    </option>
+                    <option value="40" onClick={() => setDuration(40)}>
+                      40s
+                    </option>
+                    <option value="60" onClick={() => setDuration(60)}>
+                      60s
+                    </option>
+                    <option value="120" onClick={() => setDuration(120)}>
+                      120s
+                    </option>
+                  </CSelect>
+                ) : (
+                  <CSelect defaultValue={packets} disabled={waiting}>
+                    <option value="100" onClick={() => setPackets(100)}>
+                      100
+                    </option>
+                    <option value="250" onClick={() => setPackets(250)}>
+                      250
+                    </option>
+                    <option value="500" onClick={() => setPackets(500)}>
+                      500
+                    </option>
+                    <option value="1000" onClick={() => setPackets(1000)}>
+                      1000
+                    </option>
+                  </CSelect>
+                )}
+              </CCol>
+            </CRow>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="4" style={{ marginTop: '7px' }}>
+                <p>Date:</p>
+              </CCol>
+              <CCol xs="12" md="8">
+                <DatePicker
+                  selected={new Date(chosenDate)}
+                  includeTime
+                  value={new Date(chosenDate)}
+                  placeholder="Select custom date"
+                  disabled={waiting}
+                  onChange={(date) => setDate(date)}
+                  min={convertDateToUtc(new Date())}
+                />
+              </CCol>
+            </CRow>
+            <CInvalidFeedback>You need a date...</CInvalidFeedback>
+            <CRow style={{ marginTop: '20px' }}>
+              <CCol md="7">Choose the interface:</CCol>
+              <CCol>
+                <CForm>
+                  <CFormGroup variant="checkbox" onClick={() => setChosenInterface('up')}>
+                    <CInputRadio
+                      defaultChecked={chosenInterface === 'up'}
+                      id="radio1"
+                      name="radios"
+                      value="option1"
+                    />
+                    <CLabel variant="checkbox" htmlFor="radio1">
+                      Up
+                    </CLabel>
+                  </CFormGroup>
+                  <CFormGroup variant="checkbox" onClick={() => setChosenInterface('down')}>
+                    <CInputRadio
+                      defaultChecked={chosenInterface === 'down'}
+                      id="radio2"
+                      name="radios"
+                      value="option2"
+                    />
+                    <CLabel variant="checkbox" htmlFor="radio2">
+                      Down
+                    </CLabel>
+                  </CFormGroup>
+                </CForm>
+              </CCol>
+            </CRow>
+            <div hidden={!hadSuccess && !hadFailure}>
+              <div>
+                <pre className="ignore">{responseBody} </pre>
+              </div>
+            </div>
+          </CModalBody>
+          <CModalFooter>
+            <LoadingButton
+              label="Schedule"
+              isLoadingLabel="Loading..."
+              isLoading={waiting}
+              action={doAction}
+              variant="outline"
+              block={false}
               disabled={waiting}
-              block
-              color="primary"
-              onClick={() => setUsingDuration(true)}
-            >
-              Duration
-            </CButton>
-          </CCol>
-          <CCol>
-            <CButton
-              disabled={waiting}
-              block
-              color="primary"
-              onClick={() => setUsingDuration(false)}
-            >
-              Packets
-            </CButton>
-          </CCol>
-        </CRow>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol md="4" style={{ marginTop: '7px' }}>
-            {usingDuration ? 'Duration: ' : 'Packets: '}
-          </CCol>
-          <CCol xs="12" md="8">
-            {usingDuration ? (
-              <CSelect defaultValue="duration" disabled={waiting}>
-                <option value="20" onClick={() => setDuration(20)}>
-                  20s
-                </option>
-                <option value="40" onClick={() => setDuration(40)}>
-                  40s
-                </option>
-                <option value="60" onClick={() => setDuration(60)}>
-                  60s
-                </option>
-                <option value="120" onClick={() => setDuration(120)}>
-                  120s
-                </option>
-              </CSelect>
-            ) : (
-              <CSelect defaultValue={packets} disabled={waiting}>
-                <option value="100" onClick={() => setPackets(100)}>
-                  100
-                </option>
-                <option value="250" onClick={() => setPackets(250)}>
-                  250
-                </option>
-                <option value="500" onClick={() => setPackets(500)}>
-                  500
-                </option>
-                <option value="1000" onClick={() => setPackets(1000)}>
-                  1000
-                </option>
-              </CSelect>
-            )}
-          </CCol>
-        </CRow>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol md="4" style={{ marginTop: '7px' }}>
-            <p>Date:</p>
-          </CCol>
-          <CCol xs="12" md="8">
-            <DatePicker
-              selected={new Date(chosenDate)}
-              includeTime
-              value={new Date(chosenDate)}
-              placeholder="Select custom date"
-              disabled={waiting}
-              onChange={(date) => setDate(date)}
-              min={convertDateToUtc(new Date())}
             />
-          </CCol>
-        </CRow>
-        <CInvalidFeedback>You need a date...</CInvalidFeedback>
-
-        <div hidden={!hadSuccess && !hadFailure}>
-          <div>
-            <pre className="ignore">{responseBody} </pre>
-          </div>
+            <CButton color="secondary" onClick={toggleModal}>
+              Cancel
+            </CButton>
+          </CModalFooter>
         </div>
-      </CModalBody>
-      <CModalFooter>
-        <LoadingButton
-          label="Schedule"
-          isLoadingLabel="Loading..."
-          isLoading={waiting}
-          action={doAction}
-          variant="outline"
-          block={false}
-          disabled={waiting}
-        />
-        <CButton color="secondary" onClick={toggleModal}>
-          Cancel
-        </CButton>
-      </CModalFooter>
+      }
     </CModal>
   );
 };
