@@ -20,6 +20,7 @@ import {
   import { checkIfJson } from '../../utils/helper';
   import axiosInstance from '../../utils/axiosInstance';
   import eventBus from '../../utils/EventBus';
+  import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
   
   const ConfigureModal = ({ show, toggleModal }) => {
     const [hadSuccess, setHadSuccess] = useState(false);
@@ -99,55 +100,59 @@ import {
         <CModalHeader closeButton>
           <CModalTitle>Configure Device</CModalTitle>
         </CModalHeader>
-        <CModalBody>
-          <h6>Enter new device configuration: </h6>
-          <CRow style={{ marginTop: '20px' }}>
-            <CCol>
-                <CForm>
-                    <CTextarea 
-                        name="textarea-input" 
-                        id="textarea-input" 
-                        rows="9"
-                        placeholder="Config JSON" 
-                        value={newConfig}
-                        onChange={(event) => setNewConfig(event.target.value)}
-                        invalid={errorJson}
-                    />
-                    <CInvalidFeedback className="help-block">
-                      You need to enter valid JSON
-                    </CInvalidFeedback>
-                </CForm>
-            </CCol>
-          </CRow>
-          <div hidden={!hadSuccess && !hadFailure}>
-            <div>
-              <pre className="ignore">{responseBody}</pre>
-            </div>
-          </div>
-        </CModalBody>
-        <CModalFooter>
-          <div hidden={!checkingIfSure}>Are you sure?</div>
-          <CButton
-            disabled={waiting}
-            hidden={checkingIfSure}
-            color="primary"
-            onClick={() => confirmingIfSure()}
-          >
-            Submit
-          </CButton>
-          <CButton
-            hidden={!checkingIfSure}
-            disabled={waiting}
-            color="primary"
-            onClick={() => doAction(false)}
-          >
-            {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
-            <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
-          </CButton>
-          <CButton color="secondary" onClick={toggleModal}>
-            Cancel
-          </CButton>
-        </CModalFooter>
+        {hadSuccess ?
+          <SuccessfulActionModalBody toggleModal={toggleModal} /> :
+          <div>
+            <CModalBody>
+              <h6>Enter new device configuration: </h6>
+              <CRow style={{ marginTop: '20px' }}>
+                <CCol>
+                    <CForm>
+                        <CTextarea 
+                            name="textarea-input" 
+                            id="textarea-input" 
+                            rows="9"
+                            placeholder="Config JSON" 
+                            value={newConfig}
+                            onChange={(event) => setNewConfig(event.target.value)}
+                            invalid={errorJson}
+                        />
+                        <CInvalidFeedback className="help-block">
+                          You need to enter valid JSON
+                        </CInvalidFeedback>
+                    </CForm>
+                </CCol>
+              </CRow>
+              <div hidden={!hadSuccess && !hadFailure}>
+                <div>
+                  <pre className="ignore">{responseBody}</pre>
+                </div>
+              </div>
+            </CModalBody>
+            <CModalFooter>
+              <div hidden={!checkingIfSure}>Are you sure?</div>
+              <CButton
+                disabled={waiting}
+                hidden={checkingIfSure}
+                color="primary"
+                onClick={() => confirmingIfSure()}
+              >
+                Submit
+              </CButton>
+              <CButton
+                hidden={!checkingIfSure}
+                disabled={waiting}
+                color="primary"
+                onClick={() => doAction(false)}
+              >
+                {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
+                <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
+              </CButton>
+              <CButton color="secondary" onClick={toggleModal}>
+                Cancel
+              </CButton>
+            </CModalFooter>
+            </div>}
       </CModal>
     );
   };
