@@ -196,7 +196,7 @@ const TraceModal = ({ show, toggleModal }) => {
             </CRow>
             <CInvalidFeedback>You need a date...</CInvalidFeedback>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol md="7">Choose the interface:</CCol>
+              <CCol md="7">Choose the network:</CCol>
               <CCol>
                 <CForm>
                   <CFormGroup variant="checkbox" onClick={() => setChosenInterface('up')}>
