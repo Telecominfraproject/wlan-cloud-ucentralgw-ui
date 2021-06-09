@@ -132,7 +132,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       </CModalBody>
       <CModalFooter>
         <LoadingButton
-          label="Schedule"
+          label="Start"
           isLoadingLabel="Loading..."
           isLoading={waiting}
           action={doAction}
