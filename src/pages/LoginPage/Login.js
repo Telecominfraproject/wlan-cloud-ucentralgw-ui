@@ -183,11 +183,7 @@ const Login = () => {
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
+                      <CCol xs="6" className="text-right"/>
                     </CRow>
                   </CForm>
                 </CCardBody>
