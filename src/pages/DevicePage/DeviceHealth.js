@@ -29,8 +29,8 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   const [logLimit, setLogLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
-  let sanityLevel;
-  let barColor;
+  const [sanityLevel, setSanityLevel] = useState(null);
+  const [barColor, setBarColor] = useState('gradient-dark')
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -140,27 +140,35 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     } else {
       setShowLoadingMore(true);
     }
+
+    if (healthChecks && healthChecks.length > 0) {
+      const sortedHealthchecks = healthChecks.sort((a, b) => (a.recorded > b.recorded ? 1 : -1));
+      const tempSanityLevel = sortedHealthchecks[healthChecks.length - 1].sanity;
+      setSanityLevel(tempSanityLevel);
+      if (tempSanityLevel === 100) {
+        setBarColor('gradient-success');
+      }
+      else if (tempSanityLevel >= 90) {
+        setBarColor('gradient-warning');
+      }
+      else {
+        setBarColor('gradient-danger');
+      }
+    } 
+    else {
+      setBarColor('gradient-dark');
+    }
   }, [healthChecks]);
 
   useEffect(() => {
     if (selectedDeviceId && start !== '' && end !== '') {
-      getDeviceHealth();
-    } else if (selectedDeviceId && start === '' && end === '') {
-      getDeviceHealth();
-    }
-  }, [start, end, selectedDeviceId]);
-
-  if (healthChecks && healthChecks.length > 0) {
-    sanityLevel = healthChecks[healthChecks.length - 1].sanity;
-    if (sanityLevel === 100) barColor = 'gradient-success';
-    else if (sanityLevel >= 90) barColor = 'gradient-warning';
-    else barColor = 'gradient-danger';
-  } else {
-    sanityLevel = 0;
-    barColor = 'gradient-dark';
-  }
-
-  return (
+        getDeviceHealth();
+      } else if (selectedDeviceId && start === '' && end === '') {
+        getDeviceHealth();
+      }
+    }, [start, end, selectedDeviceId]);
+    
+    return (
     <CWidgetDropdown
       header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
       text="Device Health"
