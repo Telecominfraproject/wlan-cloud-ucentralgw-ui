@@ -60,7 +60,7 @@ const Login = () => {
 
   const SignIn = (credentials) => {
     axiosInstance
-      .post(`${gatewayUrl}/oauth2`, credentials)
+      .post(`${gatewayUrl}/api/v1/oauth2`, credentials)
       .then((response) => {
         sessionStorage.setItem('gw_url', `${gatewayUrl}/api/v1`);
         sessionStorage.setItem('access_token', response.data.access_token);
