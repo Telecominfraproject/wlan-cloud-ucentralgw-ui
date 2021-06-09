@@ -26,12 +26,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [gatewayUrl, setGatewayUrl] = useState('https://ucentral.dpaas.arilia.com:16001/api/v1');
+  const [gatewayUrl, setGatewayUrl] = useState('https://ucentral.dpaas.arilia.com:16001');
   const [hadError, setHadError] = useState(false);
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
-  const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001/api/v1)';
+  const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
   const loginErrorText =
     'Login error, confirm that your username, password and gateway url are valid';
 
@@ -62,7 +62,7 @@ const Login = () => {
     axiosInstance
       .post(`${gatewayUrl}/oauth2`, credentials)
       .then((response) => {
-        sessionStorage.setItem('gw_url', gatewayUrl);
+        sessionStorage.setItem('gw_url', `${gatewayUrl}/api/v1`);
         sessionStorage.setItem('access_token', response.data.access_token);
         dispatch({ type: 'set', connected: true });
       })
