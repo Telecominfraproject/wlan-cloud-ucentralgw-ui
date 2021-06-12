@@ -40,12 +40,7 @@ const TheHeader = () => {
 
       <CHeaderNav className="px-3">
         <CLink className="c-subheader-nav-link">
-          <CIcon
-            name="cilAccountLogout"
-            content={cilAccountLogout}
-            size="2xl"
-            onClick={logout}
-          />
+          <CIcon name="cilAccountLogout" content={cilAccountLogout} size="2xl" onClick={logout} />
         </CLink>
       </CHeaderNav>
 

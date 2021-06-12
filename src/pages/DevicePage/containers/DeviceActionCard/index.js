@@ -128,10 +128,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
           </CCol>
         </CRow>
       </CCardBody>
-      <RebootModal
-        show={showRebootModal}
-        toggleModal={toggleRebootModal}
-      />
+      <RebootModal show={showRebootModal} toggleModal={toggleRebootModal} />
       <BlinkModal show={showBlinkModal} toggleModal={toggleBlinkModal} />
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />
       <TraceModal show={showTraceModal} toggleModal={toggleTraceModal} />
