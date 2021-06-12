@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
-import DeviceHealth from './DeviceHealth';
-import DeviceConfiguration from './DeviceConfiguration';
-import DeviceActions from './DeviceActions';
-import DeviceCommands from './DeviceCommands';
-import DeviceLogs from './DeviceLogs';
-import DeviceStatisticsCard from './DeviceStatistics/DeviceStatisticsCard';
+import DeviceHealth from 'components/DeviceHealth/DeviceHealth';
+import DeviceConfiguration from 'components/DeviceConfiguration';
+import DeviceCommandsLog from 'components/DeviceCommandsLog';
+import DeviceLogs from 'components/DeviceLogs/DeviceLogs';
+import DeviceStatisticsCard from 'components/InterfaceStatistics';
+import DeviceActionCard from './containers/DeviceActionCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
@@ -30,13 +30,13 @@ const DevicePage = () => {
           <CCol xs="12" sm="6">
             <DeviceLogs selectedDeviceId={deviceId} />
             <DeviceHealth selectedDeviceId={deviceId} />
-            <DeviceActions selectedDeviceId={deviceId} />
+            <DeviceActionCard selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
         <CRow>
           <CCol>
             <DeviceStatisticsCard selectedDeviceId={deviceId} />
-            <DeviceCommands selectedDeviceId={deviceId} />
+            <DeviceCommandsLog selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
       </div>

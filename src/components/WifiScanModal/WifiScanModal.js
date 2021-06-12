@@ -16,8 +16,8 @@ import PropTypes from 'prop-types';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/EventBus';
-import LoadingButton from 'components/LoadingButton';
-import WifiChannelTable from './WifiChannelTable';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
+import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 
 const WifiScanModal = ({ show, toggleModal }) => {

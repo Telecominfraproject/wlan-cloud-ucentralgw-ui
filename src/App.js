@@ -10,7 +10,7 @@ const loading = (
 );
 
 const TheLayout = React.lazy(() => import('layout/TheLayout'));
-const Login = React.lazy(() => import('pages/LoginPage/Login'));
+const Login = React.lazy(() => import('pages/LoginPage'));
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.connected);

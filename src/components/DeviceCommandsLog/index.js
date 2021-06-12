@@ -20,9 +20,9 @@ import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import eventBus from 'utils/EventBus';
-import ConfirmModal from 'components/ConfirmModal';
-import LoadingButton from 'components/LoadingButton';
-import WifiScanResultModalWidget from './WifiScanResultModal';
+import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
+import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 
 const DeviceCommands = ({ selectedDeviceId }) => {

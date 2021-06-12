@@ -22,8 +22,8 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/EventBus';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import LoadingButton from 'components/LoadingButton';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

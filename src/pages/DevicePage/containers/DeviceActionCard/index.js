@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import LoadingButton from 'components/LoadingButton';
-import ActionModal from './ActionModal';
-import FirmwareUpgradeModal from './FirmwareUpgradeModal';
-import ConfigureModal from './ConfigureModal';
-import TraceModal from './TraceModal';
-import WifiScanModal from './WifiScanModal';
-import BlinkModal from './BlinkModal';
-import FactoryResetModal from './FactoryResetModal';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
+import RebootModal from 'components/RebootModal/RebootModal';
+import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal/FirmwareUpgradeModal';
+import ConfigureModal from 'components/ConfigureModal/ConfigureModal';
+import TraceModal from 'components/TraceModal/TraceModal';
+import WifiScanModal from 'components/WifiScanModal/WifiScanModal';
+import BlinkModal from 'components/BlinkModal/BlinkModal';
+import FactoryResetModal from 'components/FactoryResetModal/FactoryResetModal';
 
 const DeviceActions = ({ selectedDeviceId }) => {
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -128,13 +128,9 @@ const DeviceActions = ({ selectedDeviceId }) => {
           </CCol>
         </CRow>
       </CCardBody>
-      <ActionModal
+      <RebootModal
         show={showRebootModal}
         toggleModal={toggleRebootModal}
-        title="Reboot Device"
-        directions="When would you like to reboot this device?"
-        actionLabel="reboot"
-        action="reboot"
       />
       <BlinkModal show={showBlinkModal} toggleModal={toggleBlinkModal} />
       <FirmwareUpgradeModal show={showUpgradeModal} toggleModal={toggleUpgradeModal} />

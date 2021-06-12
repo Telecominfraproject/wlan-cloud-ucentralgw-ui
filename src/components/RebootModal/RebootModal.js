@@ -19,10 +19,10 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/EventBus';
-import LoadingButton from 'components/LoadingButton';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
-const ActionModal = ({ show, toggleModal, title, directions, action }) => {
+const ActionModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -82,7 +82,7 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/${action}`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
       .then(() => {
         setResponseBody('Command submitted successfully');
         setHadSuccess(true);
@@ -101,14 +101,14 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{title}</CModalTitle>
+        <CModalTitle>Reboot Device</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <h6>{directions}</h6>
+            <h6>When would you like to reboot this device?</h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
@@ -170,9 +170,6 @@ const ActionModal = ({ show, toggleModal, title, directions, action }) => {
 ActionModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  directions: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
 };
 
 export default ActionModal;

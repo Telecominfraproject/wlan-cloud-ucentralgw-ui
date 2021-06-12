@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

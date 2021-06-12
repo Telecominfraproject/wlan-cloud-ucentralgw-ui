@@ -2,14 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import {
   CWidgetDropdown,
+  CRow,
+  CCol,
   CCollapse,
   CButton,
   CDataTable,
   CCard,
   CCardBody,
-  CRow,
-  CCol,
-  CProgress,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -17,20 +16,18 @@ import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import LoadingButton from 'components/LoadingButton';
+import LoadingButton from 'components/LoadingButton/LoadingButton';
 
-const DeviceHealth = ({ selectedDeviceId }) => {
+const DeviceLogs = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [healthChecks, setHealthChecks] = useState([]);
+  const [logs, setLogs] = useState([]);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [logLimit, setLogLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
-  const [sanityLevel, setSanityLevel] = useState(null);
-  const [barColor, setBarColor] = useState('gradient-dark');
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -49,7 +46,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     setLogLimit(logLimit + 50);
   };
 
-  const getDeviceHealth = () => {
+  const getLogs = () => {
     if (loading) return;
     setLoadingMore(true);
     setLoading(true);
@@ -74,9 +71,9 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     }
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/healthchecks${extraParams}`, options)
+      .get(`/device/${encodeURIComponent(selectedDeviceId)}/logs${extraParams}`, options)
       .then((response) => {
-        setHealthChecks(response.data.values);
+        setLogs(response.data.values);
       })
       .catch(() => {})
       .finally(() => {
@@ -85,7 +82,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       });
   };
 
-  // Function called from the button on the table so that a user can see more details
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
     let newDetails = details.slice();
@@ -98,16 +94,16 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     setDetails(newDetails);
   };
 
-  const getDetails = (index, healthCheckDetails) => {
+  const getDetails = (index, logDetails) => {
     if (details.includes(index))
-      return <pre className="ignore">{JSON.stringify(healthCheckDetails, null, 4)}</pre>;
+      return <pre className="ignore">{JSON.stringify(logDetails, null, 4)}</pre>;
     return <pre className="ignore" />;
   };
 
   const columns = [
-    { key: 'UUID', label: 'Config. Id' },
+    { key: 'log' },
+    { key: 'severity' },
     { key: 'recorded' },
-    { key: 'sanity' },
     {
       key: 'show_details',
       label: '',
@@ -124,57 +120,39 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       setShowLoadingMore(true);
       setStart('');
       setEnd('');
-      getDeviceHealth();
+      getLogs();
     }
   }, [selectedDeviceId]);
 
   useEffect(() => {
     if (logLimit !== 25) {
-      getDeviceHealth();
+      getLogs();
     }
   }, [logLimit]);
 
   useEffect(() => {
-    if (healthChecks.length === 0 || (healthChecks.length > 0 && healthChecks.length < logLimit)) {
+    if (logs.length === 0 || (logs.length > 0 && logs.length < logLimit)) {
       setShowLoadingMore(false);
     } else {
       setShowLoadingMore(true);
     }
-
-    if (healthChecks && healthChecks.length > 0) {
-      const sortedHealthchecks = healthChecks.sort((a, b) => (a.recorded > b.recorded ? 1 : -1));
-      const tempSanityLevel = sortedHealthchecks[healthChecks.length - 1].sanity;
-      setSanityLevel(tempSanityLevel);
-      if (tempSanityLevel === 100) {
-        setBarColor('gradient-success');
-      } else if (tempSanityLevel >= 90) {
-        setBarColor('gradient-warning');
-      } else {
-        setBarColor('gradient-danger');
-      }
-    } else {
-      setBarColor('gradient-dark');
-    }
-  }, [healthChecks]);
+  }, [logs]);
 
   useEffect(() => {
     if (selectedDeviceId && start !== '' && end !== '') {
-      getDeviceHealth();
+      getLogs();
     } else if (selectedDeviceId && start === '' && end === '') {
-      getDeviceHealth();
+      getLogs();
     }
   }, [start, end, selectedDeviceId]);
 
   return (
     <CWidgetDropdown
-      header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
-      text="Device Health"
-      value={sanityLevel ?? 100}
-      color={barColor}
       inverse="true"
+      color="gradient-info"
+      header="Device Logs"
       footerSlot={
         <div style={{ padding: '20px' }}>
-          <CProgress style={{ marginBottom: '20px' }} color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
@@ -189,40 +167,34 @@ const DeviceHealth = ({ selectedDeviceId }) => {
             <CCard>
               <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
-                  items={healthChecks ?? []}
-                  fields={columns}
-                  style={{ color: 'white' }}
-                  loading={loading}
                   border
+                  items={logs ?? []}
+                  fields={columns}
+                  loading={loading}
+                  style={{ color: 'white' }}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
                     recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
-                    sanity: (item) => <td>{`${item.sanity}%`}</td>,
-                    show_details: (item, index) => {
-                      if (item.sanity === 100) {
-                        return <></>;
-                      }
-                      return (
-                        <td className="py-2">
-                          <CButton
-                            color="primary"
-                            variant={details.includes(index) ? '' : 'outline'}
-                            shape="square"
-                            size="sm"
-                            onClick={() => {
-                              toggleDetails(index);
-                            }}
-                          >
-                            <CIcon name="cilList" size="lg" />
-                          </CButton>
-                        </td>
-                      );
-                    },
+                    show_details: (item, index) => (
+                      <td className="py-2">
+                        <CButton
+                          color="primary"
+                          variant={details.includes(index) ? '' : 'outline'}
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleDetails(index);
+                          }}
+                        >
+                          <CIcon name="cilList" size="lg" />
+                        </CButton>
+                      </td>
+                    ),
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
                           <h5>Details</h5>
-                          <div>{getDetails(index, item.values)}</div>
+                          <div>{getDetails(index, item)}</div>
                         </CCardBody>
                       </CCollapse>
                     ),
@@ -251,12 +223,14 @@ const DeviceHealth = ({ selectedDeviceId }) => {
           </CButton>
         </div>
       }
-    />
+    >
+      <CIcon name="cilList" style={{ color: 'white' }} size="lg" />
+    </CWidgetDropdown>
   );
 };
 
-DeviceHealth.propTypes = {
+DeviceLogs.propTypes = {
   selectedDeviceId: PropTypes.string.isRequired,
 };
 
-export default DeviceHealth;
+export default DeviceLogs;

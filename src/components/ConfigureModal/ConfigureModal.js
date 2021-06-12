@@ -21,7 +21,7 @@ import { getToken } from 'utils/authHelper';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/EventBus';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
