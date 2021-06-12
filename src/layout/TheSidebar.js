@@ -13,8 +13,14 @@ import {
 } from '@coreui/react';
 import logoBar from 'assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 
-// sidebar nav config
-import navigation from './_nav';
+const navigation = [
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'List of Devices',
+    to: '/devices',
+    icon: 'cilNotes',
+  },
+];
 
 const TheSidebar = () => {
   const dispatch = useDispatch();
