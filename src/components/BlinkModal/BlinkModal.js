@@ -21,7 +21,7 @@ import { convertDateFromUtc, convertDateToUtc, dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
-import eventBus from 'utils/EventBus';
+import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 import LoadingButton from 'components/LoadingButton/LoadingButton';
 

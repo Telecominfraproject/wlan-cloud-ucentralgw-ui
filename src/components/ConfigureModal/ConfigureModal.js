@@ -20,7 +20,7 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import eventBus from 'utils/EventBus';
+import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {

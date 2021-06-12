@@ -19,7 +19,7 @@ import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import eventBus from 'utils/EventBus';
+import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import LoadingButton from 'components/LoadingButton/LoadingButton';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';

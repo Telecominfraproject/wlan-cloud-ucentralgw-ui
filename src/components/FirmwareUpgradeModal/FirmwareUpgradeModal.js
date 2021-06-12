@@ -19,7 +19,7 @@ import { convertDateToUtc, convertDateFromUtc, dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
-import eventBus from 'utils/EventBus';
+import eventBus from 'utils/eventBus';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
