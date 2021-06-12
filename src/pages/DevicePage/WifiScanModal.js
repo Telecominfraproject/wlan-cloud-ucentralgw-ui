@@ -8,6 +8,7 @@ import {
   CRow,
   CForm,
   CSwitch,
+  CCol
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,6 +25,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
   const [choseVerbose, setVerbose] = useState(true);
+  const [activeScan, setActiveScan] = useState(false);
   const [channelList, setChannelList] = useState([]);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
@@ -31,12 +33,17 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setVerbose(!choseVerbose);
   };
 
+  const toggleActiveScan = () => {
+    setActiveScan(!activeScan);
+  }
+
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
     setWaiting(false);
     setChannelList([]);
     setVerbose(true);
+    setActiveScan(false);
   }, [show]);
 
   const parseThroughList = (scanList) => {
@@ -80,6 +87,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     const parameters = {
       serialNumber: selectedDeviceId,
       verbose: choseVerbose,
+      activeScan
     };
     const headers = {
       Accept: 'application/json',
@@ -115,16 +123,36 @@ const WifiScanModal = ({ show, toggleModal }) => {
       <CModalBody>
         <h6>Launch a wifi scan of this device, which should take approximately 25 seconds.</h6>
         <CRow style={{ marginTop: '20px' }}>
-          <p style={{ paddingLeft: '2%' }}>Verbose:</p>
-          <CForm style={{ paddingLeft: '5%' }}>
-            <CSwitch
-              color="primary"
-              defaultChecked={choseVerbose}
-              onClick={() => toggleVerbose()}
-              labelOn="On"
-              labelOff="Off"
-            />
-          </CForm>
+          <CCol md="3">
+            <p style={{ paddingLeft: '2%' }}>Verbose:</p>
+          </CCol>
+          <CCol>
+            <CForm style={{ paddingLeft: '5%' }}>
+              <CSwitch
+                color="primary"
+                defaultChecked={choseVerbose}
+                onClick={() => toggleVerbose()}
+                labelOn="On"
+                labelOff="Off"
+              />
+            </CForm>
+          </CCol>
+        </CRow>
+        <CRow style={{ marginTop: '20px' }}>
+          <CCol md="3">
+            <p style={{ paddingLeft: '2%' }}>Enable active scan:</p>
+          </CCol>
+          <CCol>
+            <CForm style={{ paddingLeft: '5%' }}>
+              <CSwitch
+                color="primary"
+                defaultChecked={activeScan}
+                onClick={() => toggleActiveScan()}
+                labelOn="On"
+                labelOff="Off"
+              />
+            </CForm>
+          </CCol>
         </CRow>
         <div style={{ marginTop: '3%' }} hidden={!hadSuccess && !hadFailure}>
           <WifiChannelTable channels={channelList} />
