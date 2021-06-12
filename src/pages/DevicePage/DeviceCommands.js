@@ -26,19 +26,25 @@ import WifiScanResultModalWidget from './WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
-  const [showScanModal, setShowScanModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  // Wifiscan result related
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
+  const [showScanModal, setShowScanModal] = useState(false);
+  const [chosenWifiScanDate, setChosenWifiScanDate] = useState('');
+  // Delete modal related
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [uuidDelete, setUuidDelete] = useState('');
-  const [scanDate, setScanDate] = useState('');
+  // Main collapsible
   const [collapse, setCollapse] = useState(false);
+  // Two other open collapsible lists
   const [details, setDetails] = useState([]);
   const [responses, setResponses] = useState([]);
+  // General states
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [commandLimit, setCommandLimit] = useState(25);
+  // Load more button related
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
 
@@ -157,7 +163,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   const toggleDetails = (item, index) => {
     if (item.command === 'wifiscan') {
       setChosenWifiScan(item.results.status.scan);
-      setScanDate(item.completed);
+      setChosenWifiScanDate(item.completed);
       setShowScanModal(true);
     } else if (item.command === 'trace' && item.waitingForFile === 0) {
       downloadTrace(item.UUID);
@@ -433,7 +439,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         show={showScanModal}
         toggle={toggleScanModal}
         scanResults={chosenWifiScan}
-        date={scanDate}
+        date={chosenWifiScanDate}
       />
       <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
       <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
