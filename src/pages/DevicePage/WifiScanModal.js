@@ -131,7 +131,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
               <CSwitch
                 color="primary"
                 defaultChecked={choseVerbose}
-                onClick={() => toggleVerbose()}
+                onClick={toggleVerbose}
                 labelOn="On"
                 labelOff="Off"
               />
@@ -147,7 +147,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
               <CSwitch
                 color="primary"
                 defaultChecked={activeScan}
-                onClick={() => toggleActiveScan()}
+                onClick={toggleActiveScan}
                 labelOn="On"
                 labelOff="Off"
               />

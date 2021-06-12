@@ -15,7 +15,7 @@ const LoadingButton = ({
   <CButton
     variant={variant}
     color={color}
-    onClick={() => action()}
+    onClick={action}
     block={block}
     disabled={isLoading || disabled}
   >

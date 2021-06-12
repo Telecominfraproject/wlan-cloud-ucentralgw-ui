@@ -94,7 +94,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 <CSwitch
                   color="primary"
                   defaultChecked={keepRedirector}
-                  onClick={() => toggleRedirector()}
+                  onClick={toggleRedirector}
                   labelOn="Yes"
                   labelOff="No"
                 />

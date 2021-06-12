@@ -20,7 +20,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
           <CCol style={{ textAlign: 'right' }}>
             <CPopover content="Refresh">
               <CIcon
-                onClick={() => refresh()}
+                onClick={refresh}
                 name="cil-sync"
                 content={cilSync}
                 size="lg"

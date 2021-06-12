@@ -276,7 +276,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               <CCol />
               <CCol>
                 <div style={{ float: 'right' }}>
-                  <CButton onClick={() => refreshCommands()} size="sm">
+                  <CButton onClick={refreshCommands} size="sm">
                     <CIcon
                       name="cil-sync"
                       content={cilSync}

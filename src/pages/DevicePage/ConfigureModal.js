@@ -137,7 +137,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 <CButton
                   type="reset"
                   size="sm"
-                  onClick={() => resetText()}
+                  onClick={resetText}
                   color="danger"
                   variant="outline"
                 >
@@ -187,7 +187,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               disabled={waiting}
               hidden={checkingIfSure}
               color="primary"
-              onClick={() => confirmingIfSure()}
+              onClick={confirmingIfSure}
             >
               Submit
             </CButton>

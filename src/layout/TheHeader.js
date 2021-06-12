@@ -44,9 +44,7 @@ const TheHeader = () => {
             name="cilAccountLogout"
             content={cilAccountLogout}
             size="2xl"
-            onClick={() => {
-              logout();
-            }}
+            onClick={logout}
           />
         </CLink>
       </CHeaderNav>

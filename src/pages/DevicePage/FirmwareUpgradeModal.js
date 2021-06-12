@@ -161,7 +161,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             </CButton>
           </CCol>
           <CCol>
-            <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
+            <CButton disabled={waiting} block color="primary" onClick={setDateToLate}>
               Later tonight
             </CButton>
           </CCol>

@@ -66,7 +66,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               <CCol>
                 <div style={{ float: 'right' }}>
                   <CPopover content="View raw JSON">
-                    <CButton color="secondary" onClick={() => toggleModal()} size="sm">
+                    <CButton color="secondary" onClick={toggleModal} size="sm">
                       <CIcon content={cilWindowMaximize} />
                     </CButton>
                   </CPopover>
