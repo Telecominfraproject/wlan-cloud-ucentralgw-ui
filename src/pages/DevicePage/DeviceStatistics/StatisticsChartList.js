@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as createUuid } from 'uuid';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
-import axiosInstance from '../../../utils/axiosInstance';
-import { getToken } from '../../../utils/authHelper';
-import { unixToTime, capitalizeFirstLetter } from '../../../utils/helper';
 
 const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   const [loading, setLoading] = useState(false);

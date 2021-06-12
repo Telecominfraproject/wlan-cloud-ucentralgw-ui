@@ -14,13 +14,13 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc, convertDateFromUtc, dateToUnix } from '../../utils/helper';
+import { convertDateToUtc, convertDateFromUtc, dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../../utils/authHelper';
-import axiosInstance from '../../utils/axiosInstance';
-import eventBus from '../../utils/EventBus';
-import LoadingButton from '../../components/LoadingButton';
-import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
+import { getToken } from 'utils/authHelper';
+import axiosInstance from 'utils/axiosInstance';
+import eventBus from 'utils/EventBus';
+import LoadingButton from 'components/LoadingButton';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const ActionModal = ({ show, toggleModal, title, directions, action }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

@@ -12,15 +12,15 @@ import {
   CCardFooter,
   CButton,
   CRow,
-  CPopover
+  CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import PropTypes from 'prop-types';
 import { cilWindowMaximize } from '@coreui/icons';
-import { prettyDate } from '../../utils/helper';
-import axiosInstance from '../../utils/axiosInstance';
-import { getToken } from '../../utils/authHelper';
-import DeviceConfigurationModal from './DeviceConfigurationModal'
+import { prettyDate } from 'utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import DeviceConfigurationModal from './DeviceConfigurationModal';
 
 const DeviceConfiguration = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
@@ -34,7 +34,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
-  }
+  };
 
   const getDevice = () => {
     const options = {
@@ -48,7 +48,6 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
       .get(`/device/${encodeURIComponent(selectedDeviceId)}`, options)
       .then((response) => {
         setDevice(response.data);
-
       })
       .catch(() => {});
   };
@@ -62,23 +61,26 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
       <div>
         <CCard>
           <CCardHeader>
-          <CRow>
-            <CCol>
-              Device Details
-            </CCol>
-            <CCol>
-              <div style={{ float: 'right'}}>
-                <CPopover content="View raw JSON">
-                  <CButton color="secondary" onClick={() => toggleModal()} size="sm">
-                    <CIcon content={cilWindowMaximize}/>
-                  </CButton>
-                </CPopover>
-              </div>
-            </CCol>
-          </CRow>
+            <CRow>
+              <CCol>Device Details</CCol>
+              <CCol>
+                <div style={{ float: 'right' }}>
+                  <CPopover content="View raw JSON">
+                    <CButton color="secondary" onClick={() => toggleModal()} size="sm">
+                      <CIcon content={cilWindowMaximize} />
+                    </CButton>
+                  </CPopover>
+                </div>
+              </CCol>
+            </CRow>
           </CCardHeader>
           <CCardBody>
-            <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
+            <CForm
+              action=""
+              method="post"
+              encType="multipart/form-data"
+              className="form-horizontal"
+            >
               <CFormGroup row>
                 <CCol md="3">
                   <CLabel>UUID : </CLabel>
@@ -181,7 +183,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
             </CForm>
           </CCardBody>
         </CCard>
-        <DeviceConfigurationModal show={showModal} toggle={toggleModal} configuration={device}/>
+        <DeviceConfigurationModal show={showModal} toggle={toggleModal} configuration={device} />
       </div>
     );
   }

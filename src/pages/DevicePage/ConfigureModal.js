@@ -17,11 +17,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
-import { getToken } from '../../utils/authHelper';
-import { checkIfJson } from '../../utils/helper';
-import axiosInstance from '../../utils/axiosInstance';
-import eventBus from '../../utils/EventBus';
-import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
+import { getToken } from 'utils/authHelper';
+import { checkIfJson } from 'utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import eventBus from 'utils/EventBus';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

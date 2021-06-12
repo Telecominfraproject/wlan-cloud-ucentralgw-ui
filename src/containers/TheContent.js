@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { v4 as createUuid } from 'uuid';
 import { CContainer, CFade } from '@coreui/react';
-import routes from '../routes';
+import routes from 'routes';
 
 const loading = (
   <div className="pt-3 text-center">

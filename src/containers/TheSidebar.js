@@ -11,7 +11,7 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from '@coreui/react';
-import logoBar from '../assets/OpenWiFi_LogoLockup_WhiteColour.svg';
+import logoBar from 'assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 
 // sidebar nav config
 import navigation from './_nav';

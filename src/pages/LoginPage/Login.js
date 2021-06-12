@@ -19,8 +19,8 @@ import {
 import CIcon from '@coreui/icons-react';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import { useDispatch } from 'react-redux';
-import axiosInstance from '../../utils/axiosInstance';
-import logo from '../../assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
+import axiosInstance from 'utils/axiosInstance';
+import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -183,7 +183,7 @@ const Login = () => {
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs="6" className="text-right"/>
+                      <CCol xs="6" className="text-right" />
                     </CRow>
                   </CForm>
                 </CCardBody>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DevicePage = React.lazy(() => import('./pages/DevicePage/DevicePage'));
-const DeviceListPage = React.lazy(() => import('./pages/DeviceListPage/DeviceListPage'));
+const DevicePage = React.lazy(() => import('pages/DevicePage/DevicePage'));
+const DeviceListPage = React.lazy(() => import('pages/DeviceListPage/DeviceListPage'));
 
 const routes = [
   { path: '/devices', exact: true, name: 'Devices', component: DeviceListPage },

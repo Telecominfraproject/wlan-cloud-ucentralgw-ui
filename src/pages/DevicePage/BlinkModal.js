@@ -17,13 +17,13 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateFromUtc, convertDateToUtc, dateToUnix } from '../../utils/helper';
+import { convertDateFromUtc, convertDateToUtc, dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from '../../utils/authHelper';
-import axiosInstance from '../../utils/axiosInstance';
-import eventBus from '../../utils/EventBus';
-import SuccessfulActionModalBody from '../../components/SuccessfulActionModalBody';
-import LoadingButton from '../../components/LoadingButton';
+import { getToken } from 'utils/authHelper';
+import axiosInstance from 'utils/axiosInstance';
+import eventBus from 'utils/EventBus';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import LoadingButton from 'components/LoadingButton';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

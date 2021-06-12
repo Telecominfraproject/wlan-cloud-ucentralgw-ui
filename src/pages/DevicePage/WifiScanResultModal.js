@@ -9,8 +9,8 @@ import {
   CModalFooter,
 } from '@coreui/react';
 import PropTypes from 'prop-types';
+import { prettyDate } from 'utils/helper';
 import WifiChannelTable from './WifiChannelTable';
-import { prettyDate } from '../../utils/helper';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const parseThroughList = (scanList) => {

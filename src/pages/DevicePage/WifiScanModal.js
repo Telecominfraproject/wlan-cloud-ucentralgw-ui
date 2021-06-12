@@ -8,17 +8,17 @@ import {
   CRow,
   CForm,
   CSwitch,
-  CCol
+  CCol,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getToken } from 'utils/authHelper';
+import axiosInstance from 'utils/axiosInstance';
+import eventBus from 'utils/EventBus';
+import LoadingButton from 'components/LoadingButton';
 import WifiChannelTable from './WifiChannelTable';
 import 'react-widgets/styles.css';
-import { getToken } from '../../utils/authHelper';
-import axiosInstance from '../../utils/axiosInstance';
-import eventBus from '../../utils/EventBus';
-import LoadingButton from '../../components/LoadingButton';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -35,7 +35,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
   const toggleActiveScan = () => {
     setActiveScan(!activeScan);
-  }
+  };
 
   useEffect(() => {
     setHadSuccess(false);
@@ -87,7 +87,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     const parameters = {
       serialNumber: selectedDeviceId,
       verbose: choseVerbose,
-      activeScan
+      activeScan,
     };
     const headers = {
       Accept: 'application/json',

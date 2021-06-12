@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { CChartLine } from '@coreui/react-chartjs';
-import axiosInstance from '../../../utils/axiosInstance';
-import { getToken } from '../../../utils/authHelper';
-import { addDays, dateToUnix } from '../../../utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
 
 const DeviceLifetimeStatistics = ({ selectedDeviceId }) => {
   const [loading, setLoading] = useState(false);

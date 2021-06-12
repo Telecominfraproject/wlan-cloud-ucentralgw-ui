@@ -13,10 +13,10 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { prettyDate, dateToUnix } from '../../utils/helper';
-import axiosInstance from '../../utils/axiosInstance';
-import { getToken } from '../../utils/authHelper';
-import LoadingButton from '../../components/LoadingButton';
+import { prettyDate, dateToUnix } from 'utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import LoadingButton from 'components/LoadingButton';
 
 const DeviceLogs = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);

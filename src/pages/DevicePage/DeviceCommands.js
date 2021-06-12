@@ -16,14 +16,14 @@ import { cilCloudDownload, cilSync } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
-import { prettyDate, dateToUnix } from '../../utils/helper';
-import axiosInstance from '../../utils/axiosInstance';
-import { getToken } from '../../utils/authHelper';
+import { prettyDate, dateToUnix } from 'utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import eventBus from 'utils/EventBus';
+import ConfirmModal from 'components/ConfirmModal';
+import LoadingButton from 'components/LoadingButton';
 import WifiScanResultModalWidget from './WifiScanResultModal';
-import ConfirmModal from '../../components/ConfirmModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
-import LoadingButton from '../../components/LoadingButton';
-import eventBus from '../../utils/EventBus';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
   const [showScanModal, setShowScanModal] = useState(false);

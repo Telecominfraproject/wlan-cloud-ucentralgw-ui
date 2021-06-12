@@ -14,10 +14,10 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { prettyDate, dateToUnix } from '../../utils/helper';
-import axiosInstance from '../../utils/axiosInstance';
-import { getToken } from '../../utils/authHelper';
-import LoadingButton from '../../components/LoadingButton';
+import { prettyDate, dateToUnix } from 'utils/helper';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import LoadingButton from 'components/LoadingButton';
 
 const DeviceHealth = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
@@ -30,7 +30,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
   const [sanityLevel, setSanityLevel] = useState(null);
-  const [barColor, setBarColor] = useState('gradient-dark')
+  const [barColor, setBarColor] = useState('gradient-dark');
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -147,28 +147,25 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       setSanityLevel(tempSanityLevel);
       if (tempSanityLevel === 100) {
         setBarColor('gradient-success');
-      }
-      else if (tempSanityLevel >= 90) {
+      } else if (tempSanityLevel >= 90) {
         setBarColor('gradient-warning');
-      }
-      else {
+      } else {
         setBarColor('gradient-danger');
       }
-    } 
-    else {
+    } else {
       setBarColor('gradient-dark');
     }
   }, [healthChecks]);
 
   useEffect(() => {
     if (selectedDeviceId && start !== '' && end !== '') {
-        getDeviceHealth();
-      } else if (selectedDeviceId && start === '' && end === '') {
-        getDeviceHealth();
-      }
-    }, [start, end, selectedDeviceId]);
-    
-    return (
+      getDeviceHealth();
+    } else if (selectedDeviceId && start === '' && end === '') {
+      getDeviceHealth();
+    }
+  }, [start, end, selectedDeviceId]);
+
+  return (
     <CWidgetDropdown
       header={sanityLevel ? `${sanityLevel}%` : 'Unknown'}
       text="Device Health"

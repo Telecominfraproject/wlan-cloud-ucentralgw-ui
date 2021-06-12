@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import LoadingButton from 'components/LoadingButton';
 import ActionModal from './ActionModal';
 import FirmwareUpgradeModal from './FirmwareUpgradeModal';
 import ConfigureModal from './ConfigureModal';
@@ -8,9 +11,6 @@ import TraceModal from './TraceModal';
 import WifiScanModal from './WifiScanModal';
 import BlinkModal from './BlinkModal';
 import FactoryResetModal from './FactoryResetModal';
-import axiosInstance from '../../utils/axiosInstance';
-import { getToken } from '../../utils/authHelper';
-import LoadingButton from '../../components/LoadingButton';
 
 const DeviceActions = ({ selectedDeviceId }) => {
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -48,7 +48,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   const toggleFactoryResetModal = () => {
     setShowFactoryModal(!showFactoryModal);
-  }
+  };
 
   const getRttysInfo = () => {
     setConnectLoading(true);

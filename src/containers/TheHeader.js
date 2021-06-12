@@ -11,8 +11,8 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilAccountLogout } from '@coreui/icons';
-import { logout } from '../utils/authHelper';
-import routes from '../routes';
+import { logout } from 'utils/authHelper';
+import routes from 'routes';
 
 const TheHeader = () => {
   const dispatch = useDispatch();
