@@ -12,5 +12,13 @@
     "factory_reset": "Factory Reset",
     "connect": "Connect",
     "connecting": "Connecting...",
-    "configure": "Configure"
+    "configure": "Configure",
+    "login": "Login",
+    "sign_in_to_account": "Sign in to your account",
+    "username": "Username",
+    "password": "Password",
+    "please_enter_username": "Please enter your username",
+    "please_enter_password": "Please enter your password",
+    "please_enter_gateway": "Please enter a gateway URL",
+    "login error": "Login error, confirm that your username, password and gateway url are valid"
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CButton,
   CCard,
@@ -23,6 +24,7 @@ import axiosInstance from 'utils/axiosInstance';
 import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
 
 const Login = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,8 +34,7 @@ const Login = () => {
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
   const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
-  const loginErrorText =
-    'Login error, confirm that your username, password and gateway url are valid';
+  const loginErrorText = t("login_error");
 
   const formValidation = () => {
     setHadError(false);
@@ -102,8 +103,8 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onKeyDown={onKeyDown}>
-                    <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    <h1>{t("login")}</h1>
+                    <p className="text-muted">{t("sign_in_to_account")}</p>
                     <CInputGroup className="mb-3">
                       <CPopover content="Username">
                         <CInputGroupPrepend>
@@ -117,12 +118,12 @@ const Login = () => {
                         autoFocus
                         required
                         type="text"
-                        placeholder="Username"
+                        placeholder={t("username")}
                         autoComplete="username"
                         onChange={(event) => setUsername(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        Please enter your username
+                        {t("please_enter_username")}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -137,12 +138,12 @@ const Login = () => {
                         invalid={emptyPassword}
                         required
                         type="password"
-                        placeholder="Password"
+                        placeholder={t("password")}
                         autoComplete="current-password"
                         onChange={(event) => setPassword(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        Please enter your password
+                        {t("please_enter_password")}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -163,7 +164,7 @@ const Login = () => {
                         onChange={(event) => setGatewayUrl(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        Please enter a gateway url
+                        {t("please_enter_gateway")}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CRow>
@@ -180,7 +181,7 @@ const Login = () => {
                           className="px-4"
                           onClick={() => (formValidation() ? SignIn({ userId, password }) : null)}
                         >
-                          Login
+                          {t("login")}
                         </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right" />
