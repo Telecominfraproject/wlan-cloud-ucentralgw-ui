@@ -14,6 +14,7 @@ import {
   CInputFile,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
@@ -24,6 +25,7 @@ import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -83,7 +85,6 @@ const ConfigureModal = ({ show, toggleModal }) => {
     axiosInstance
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/configure`, parameters, { headers })
       .then(() => {
-        setResponseBody('Command submitted!');
         setHadSuccess(true);
       })
       .catch(() => {
@@ -122,7 +123,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Configure Device</CModalTitle>
+        <CModalTitle>{t("configure.title")}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
@@ -131,7 +132,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
           <CModalBody>
             <CRow>
               <CCol md="10" style={{ marginTop: '3px' }}>
-                <h6>Enter new device configuration: </h6>
+                <h6>{t("configure.enter_new")}</h6>
               </CCol>
               <CCol>
                 <CButton
@@ -141,7 +142,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                   color="danger"
                   variant="outline"
                 >
-                  Clear
+                  {t("common.clear")}
                 </CButton>
               </CCol>
             </CRow>
@@ -152,19 +153,19 @@ const ConfigureModal = ({ show, toggleModal }) => {
                     name="textarea-input"
                     id="textarea-input"
                     rows="9"
-                    placeholder="Config JSON"
+                    placeholder={t("configure.placeholder")}
                     value={newConfig}
                     onChange={(event) => setNewConfig(event.target.value)}
                     invalid={errorJson}
                   />
                   <CInvalidFeedback className="help-block">
-                    You need to enter valid JSON
+                    {t("configure.valid_json")}
                   </CInvalidFeedback>
                 </CForm>
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol>Choose a JSON config file:</CCol>
+              <CCol>{t("configure.choose_file")}</CCol>
               <CCol>
                 <CInputFile
                   id="file-input"
@@ -189,7 +190,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={confirmingIfSure}
             >
-              Submit
+              {t("common.submit")}
             </CButton>
             <CButton
               hidden={!checkingIfSure}
@@ -201,7 +202,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>
-              Cancel
+              {t("common.cancel")}
             </CButton>
           </CModalFooter>
         </div>

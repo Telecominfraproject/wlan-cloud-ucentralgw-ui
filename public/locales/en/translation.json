@@ -26,7 +26,16 @@
         "loading_ellipsis": "Loading...",
         "on": "On",
         "off": "Off",
-        "schedule": "Schedule"
+        "schedule": "Schedule",
+        "clear": "Clear",
+        "submit": "Submit"
+    },
+    "configure": {
+        "title": "Configure Device",
+        "enter_new": "Enter new device configuration JSON: ",
+        "placeholder": "Config JSON",
+        "valid_json": "You need to enter valid JSON",
+        "choose_file": "You need to choose a valid .json file: "
     },
     "footer": {
         "coreui_for_react": "CoreUI for React",
