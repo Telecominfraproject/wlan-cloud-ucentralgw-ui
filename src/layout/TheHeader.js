@@ -42,7 +42,7 @@ const TheHeader = () => {
       <CHeaderNav className="d-md-down-none mr-auto" />
 
       <CHeaderNav className="px-3">
-        <CPopover content={t('logout')}>
+        <CPopover content={t('common.logout')}>
           <CLink className="c-subheader-nav-link">
             <CIcon name="cilAccountLogout" content={cilAccountLogout} size="2xl" onClick={logout} />
           </CLink>
