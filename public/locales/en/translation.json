@@ -31,7 +31,19 @@
         "submit": "Submit",
         "success": "Success",
         "error": "Error",
-        "yes": "Yes"
+        "yes": "Yes",
+        "result": "Result",
+        "details": "Details",
+        "id": "Id",
+        "command": "Command",
+        "completed": "Completed",
+        "executed": "Executed",
+        "submitted": "Submitted",
+        "delete": "Delete",
+        "download": "Download"
+    },
+    "commands":{
+        "title": "Device Commands"
     },
     "configure": {
         "title": "Configure Device",
