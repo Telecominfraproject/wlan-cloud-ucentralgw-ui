@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CButton,
   CModal,
@@ -12,6 +13,7 @@ import {
 import PropTypes from 'prop-types';
 
 const ConfirmModal = ({ show, toggle, action }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [haveResult, setHaveResult] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -21,25 +23,25 @@ const ConfirmModal = ({ show, toggle, action }) => {
       if (success) {
         return (
           <CBadge color="success" shape="pill">
-            Success
+            {t("common.success")}
           </CBadge>
         );
       }
       return (
         <CBadge color="danger" shape="pill">
-          Error
+          {t("common.failure")}
         </CBadge>
       );
     }
     if (loading) {
       return (
         <div>
-          Loading...
+          {t("common.loading_ellipsis")}
           <CSpinner component="span" size="sm" />
         </div>
       );
     }
-    return 'Yes';
+    return t("common.yes");
   };
 
   const doAction = async () => {
@@ -62,17 +64,17 @@ const ConfirmModal = ({ show, toggle, action }) => {
   return (
     <CModal style={{ color: '#3c4b64' }} show={show} onClose={toggle}>
       <CModalHeader closeButton>
-        <CModalTitle>Delete Command</CModalTitle>
+        <CModalTitle>{t("delete_command.title")}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <h6>Are you sure you want to delete this command? this action is not reversible.</h6>
+        <h6>{t("delete_command.explanation")}</h6>
       </CModalBody>
       <CModalFooter>
         <CButton disabled={loading} color="primary" onClick={() => doAction()}>
           {getButtonContent()}
         </CButton>
         <CButton color="secondary" onClick={toggle}>
-          Cancel
+          {t("common.cancel")}
         </CButton>
       </CModalFooter>
     </CModal>

@@ -28,7 +28,10 @@
         "off": "Off",
         "schedule": "Schedule",
         "clear": "Clear",
-        "submit": "Submit"
+        "submit": "Submit",
+        "success": "Success",
+        "error": "Error",
+        "yes": "Yes"
     },
     "configure": {
         "title": "Configure Device",
@@ -36,6 +39,10 @@
         "placeholder": "Config JSON",
         "valid_json": "You need to enter valid JSON",
         "choose_file": "You need to choose a valid .json file: "
+    },
+    "delete_command": {
+        "title": "Delete Command",
+        "explanation": "Are you sure you want to delete this command? This action is not reversible."
     },
     "footer": {
         "coreui_for_react": "CoreUI for React",
