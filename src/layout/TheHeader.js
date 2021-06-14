@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   CHeader,
   CToggler,
@@ -8,6 +9,7 @@ import {
   CSubheader,
   CBreadcrumbRouter,
   CLink,
+  CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilAccountLogout } from '@coreui/icons';
@@ -15,6 +17,7 @@ import { logout } from 'utils/authHelper';
 import routes from 'routes';
 
 const TheHeader = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
 
@@ -39,9 +42,11 @@ const TheHeader = () => {
       <CHeaderNav className="d-md-down-none mr-auto" />
 
       <CHeaderNav className="px-3">
-        <CLink className="c-subheader-nav-link">
-          <CIcon name="cilAccountLogout" content={cilAccountLogout} size="2xl" onClick={logout} />
-        </CLink>
+        <CPopover content={t('logout')}>
+          <CLink className="c-subheader-nav-link">
+            <CIcon name="cilAccountLogout" content={cilAccountLogout} size="2xl" onClick={logout} />
+          </CLink>
+        </CPopover>
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">
