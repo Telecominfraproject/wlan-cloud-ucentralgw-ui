@@ -1,6 +1,16 @@
 {
     "logout": "Logout",
     "version": "Version",
-    "poweredby": "Powered by",
-    "coreuiforreact": "CoreUI for React"
+    "powered_by": "Powered by",
+    "coreui_for_react": "CoreUI for React",
+    "device_actions": "Device Actions",
+    "reboot": "Reboot",
+    "blink": "Blink",
+    "firmware_upgrade": "Firmware Upgrade",
+    "trace": "Trace",
+    "wifi_scan": "Wifi Scan",
+    "factory_reset": "Factory Reset",
+    "connect": "Connect",
+    "connecting": "Connecting...",
+    "configure": "Configure"
 }

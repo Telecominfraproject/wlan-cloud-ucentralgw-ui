@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
@@ -13,6 +14,7 @@ import BlinkModal from 'components/BlinkModal/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal/FactoryResetModal';
 
 const DeviceActions = ({ selectedDeviceId }) => {
+  const { t } = useTranslation();
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
@@ -74,41 +76,41 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   return (
     <CCard>
-      <CCardHeader>Device Actions</CCardHeader>
+      <CCardHeader>{t("device_actions")}</CCardHeader>
       <CCardBody>
         <CRow>
           <CCol>
             <CButton block onClick={toggleRebootModal} color="primary">
-              Reboot
+              {t("reboot")}
             </CButton>
           </CCol>
           <CCol>
             <CButton block onClick={toggleBlinkModal} color="primary">
-              Blink
+              {t("blink")}
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
-              Firmware Upgrade
+              {t("firmware_upgrade")}
             </CButton>
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleTraceModal}>
-              Trace
+              {t("trace")}
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
-              Wifi Scan
+              {t("wifi_scan")}
             </CButton>
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleFactoryResetModal}>
-              Factory Reset
+              {t("factory_reset")}
             </CButton>
           </CCol>
         </CRow>
@@ -116,14 +118,14 @@ const DeviceActions = ({ selectedDeviceId }) => {
           <CCol>
             <LoadingButton
               isLoading={connectLoading}
-              label="Connect"
-              isLoadingLabel="Connecting..."
+              label={t("connect")}
+              isLoadingLabel={t("connecting")}
               action={getRttysInfo}
             />
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleConfigModal}>
-              Configure
+              {t("configure")}
             </CButton>
           </CCol>
         </CRow>
