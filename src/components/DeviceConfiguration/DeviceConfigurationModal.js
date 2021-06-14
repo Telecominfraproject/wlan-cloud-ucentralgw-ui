@@ -9,21 +9,27 @@ import {
   CModalFooter,
 } from '@coreui/react';
 import PropTypes from 'prop-types';
+import { Translation } from "react-i18next";
 
 const DeviceConfigurationModal = ({ show, toggle, configuration }) => (
-  <CModal size="lg" show={show} onClose={toggle}>
-    <CModalHeader closeButton>
-      <CModalTitle style={{ color: 'black' }}>Device Configuration</CModalTitle>
-    </CModalHeader>
-    <CModalBody>
-      <pre className="ignore">{JSON.stringify(configuration, null, 4)}</pre>
-    </CModalBody>
-    <CModalFooter>
-      <CButton color="secondary" onClick={toggle}>
-        Close
-      </CButton>
-    </CModalFooter>
-  </CModal>
+  <Translation>
+    {(t) => (
+      <CModal size="lg" show={show} onClose={toggle}>
+        <CModalHeader closeButton>
+          <CModalTitle style={{ color: 'black' }}>{t("configuration.title")}</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <pre className="ignore">{JSON.stringify(configuration, null, 4)}</pre>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={toggle}>
+            {t("common.close")}
+          </CButton>
+        </CModalFooter>
+      </CModal>
+    )}
+    
+  </Translation>
 );
 
 DeviceConfigurationModal.propTypes = {

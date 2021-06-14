@@ -40,7 +40,12 @@
         "executed": "Executed",
         "submitted": "Submitted",
         "delete": "Delete",
-        "download": "Download"
+        "download": "Download",
+        "close": "Close",
+        "uuid": "UUID",
+        "serial_number": "Serial Number",
+        "mac": "MAC Address",
+        "manufacturer": "Manufacturer"
     },
     "commands":{
         "title": "Device Commands"
@@ -51,6 +56,18 @@
         "placeholder": "Config JSON",
         "valid_json": "You need to enter valid JSON",
         "choose_file": "You need to choose a valid .json file: "
+    },
+    "configuration": {
+        "title": "Device Configuration",
+        "details": "Device Details",
+        "type": "Device Type",
+        "last_configuration_change": "Last Configuration Change",
+        "last_configuration_download": "Last Configuration Download",
+        "created": "Created",
+        "notes": "Notes",
+        "owner": "Owner",
+        "location": "Location",
+        "view_json": "View raw JSON"
     },
     "delete_command": {
         "title": "Delete Command",
