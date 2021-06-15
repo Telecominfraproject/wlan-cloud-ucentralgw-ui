@@ -91,6 +91,11 @@
         "title": "Delete Command",
         "explanation": "Are you sure you want to delete this command? This action is not reversible."
     },
+    "device_logs": {
+        "title": "Device Logs",
+        "log": "Log",
+        "severity": "Severity"
+    },
     "footer": {
         "coreui_for_react": "CoreUI for React",
         "powered_by": "Powered by",

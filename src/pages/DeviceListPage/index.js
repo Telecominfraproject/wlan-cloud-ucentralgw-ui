@@ -1,5 +1,5 @@
 import React from 'react';
-import DeviceList from '../../components/DeviceListTable/DeviceList';
+import DeviceList from '../../components/DeviceListTable';
 
 const DeviceListPage = () => (
   <div className="App">

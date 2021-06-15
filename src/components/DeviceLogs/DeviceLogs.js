@@ -11,6 +11,7 @@ import {
   CCardBody,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
@@ -19,6 +20,7 @@ import { getToken } from 'utils/authHelper';
 import LoadingButton from 'components/LoadingButton/LoadingButton';
 
 const DeviceLogs = ({ selectedDeviceId }) => {
+  const { t } = useTranslation();
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -101,9 +103,9 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   };
 
   const columns = [
-    { key: 'log' },
-    { key: 'severity' },
-    { key: 'recorded' },
+    { key: 'log', label: t("device_logs.log") },
+    { key: 'severity', label: t("device_logs.severity") },
+    { key: 'recorded', label: t("common.recorded") },
     {
       key: 'show_details',
       label: '',
@@ -150,17 +152,17 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     <CWidgetDropdown
       inverse="true"
       color="gradient-info"
-      header="Device Logs"
+      header={t("device_logs.title")}
       footerSlot={
         <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
-                From:
+                {t("common.from")}
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
-                To:
+                {t("common.to")}
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
@@ -193,7 +195,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
-                          <h5>Details</h5>
+                          <h5>{t("common.details")}</h5>
                           <div>{getDetails(index, item)}</div>
                         </CCardBody>
                       </CCollapse>
@@ -203,8 +205,8 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                 <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
                   {showLoadingMore && (
                     <LoadingButton
-                      label="View More"
-                      isLoadingLabel="Loading More..."
+                      label={t("common.view_more")}
+                      isLoadingLabel={t("common.loading_more_ellipsis")}
                       isLoading={loadingMore}
                       action={showMoreLogs}
                       variant="outline"
