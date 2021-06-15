@@ -146,6 +146,7 @@ const DeviceList = () => {
       updatePage={updatePageCount}
       pageRangeDisplayed={5}
       refreshDevice={refreshDevice}
+      t={t}
     />
   );
 };
@@ -157,6 +158,7 @@ const DeviceListDisplay = ({
   pageCount,
   updatePage,
   refreshDevice,
+  t
 }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
@@ -412,6 +414,7 @@ DeviceListDisplay.propTypes = {
   pageCount: PropTypes.number.isRequired,
   updatePage: PropTypes.func.isRequired,
   refreshDevice: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 
