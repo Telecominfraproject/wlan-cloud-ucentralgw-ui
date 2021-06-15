@@ -61,6 +61,7 @@
         "not_connected": "Not Connected",
         "na": "N/A",
         "refresh_device": "Refresh Device",
+        "refresh": "Refresh",
         "confirm": "Confirm",
         "need_date": "You need a date...",
         "are_you_sure": "Are you sure?"
@@ -116,6 +117,10 @@
         "coreui_for_react": "CoreUI for React",
         "powered_by": "Powered by",
         "version": "Version"
+    },
+    "statistics": {
+        "title": "Statistics",
+        "data": "Data (KB)"
     },
     "login": {
         "login": "Login",

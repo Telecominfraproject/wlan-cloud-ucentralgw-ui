@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
@@ -7,6 +8,7 @@ import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
 const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [deviceStats, setStats] = useState([]);
   const [statOptions, setStatOptions] = useState({});
@@ -82,7 +84,7 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
           minWidth: 40,
         },
         title: {
-          text: 'Data (KB)',
+          text: t("statistics.data"),
           style: {
             fontSize: '15px',
           },
