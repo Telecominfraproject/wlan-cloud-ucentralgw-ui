@@ -1,5 +1,6 @@
 /* eslint-disable-rule prefer-destructuring */
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CButton,
   CModal,
@@ -13,6 +14,8 @@ import { prettyDate } from 'utils/helper';
 import WifiChannelTable from './WifiChannelTable';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
+  const { t } = useTranslation();
+
   const parseThroughList = (scanList) => {
     const dbmNumber = 4294967295;
     const listOfChannels = [];
@@ -47,7 +50,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
     <CModal size="lg" show={show} onClose={toggle}>
       <CModalHeader closeButton>
         <CModalTitle style={{ color: 'black' }}>
-          {date !== '' ? prettyDate(date) : ''} Wifi Scan Results
+          {date !== '' ? prettyDate(date) : ''} {t("scan.results")}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -57,7 +60,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={toggle}>
-          Close
+          {t("common.close")}
         </CButton>
       </CModalFooter>
     </CModal>

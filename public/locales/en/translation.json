@@ -148,6 +148,8 @@
     },
     "scan": {
         "directions": "Launch a wifi scan of this device, which should take approximately 25 seconds.",
-        "active": "Enable active scan"
+        "active": "Enable active scan",
+        "results": "Wifi Scan Results",
+        "channel": "Channel"
     }
 }
