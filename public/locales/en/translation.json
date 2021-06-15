@@ -45,7 +45,14 @@
         "uuid": "UUID",
         "serial_number": "Serial Number",
         "mac": "MAC Address",
-        "manufacturer": "Manufacturer"
+        "manufacturer": "Manufacturer",
+        "unknown": "Unknown",
+        "from": "From",
+        "to": "To",
+        "view_more": "View more",
+        "loading_more_ellipsis": "Loading more...",
+        "config_id": "Config. Id",
+        "recorded": "Recorded"
     },
     "commands":{
         "title": "Device Commands"
@@ -68,6 +75,9 @@
         "owner": "Owner",
         "location": "Location",
         "view_json": "View raw JSON"
+    },
+    "health": {
+        "sanity": "Sanity"
     },
     "delete_command": {
         "title": "Delete Command",
