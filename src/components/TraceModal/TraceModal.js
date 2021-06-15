@@ -24,7 +24,7 @@ import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const TraceModal = ({ show, toggleModal }) => {
   const [hadSuccess, setHadSuccess] = useState(false);

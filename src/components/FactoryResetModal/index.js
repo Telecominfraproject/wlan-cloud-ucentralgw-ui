@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();

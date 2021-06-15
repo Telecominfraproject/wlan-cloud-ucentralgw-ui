@@ -22,7 +22,7 @@ import { getToken } from 'utils/authHelper';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();

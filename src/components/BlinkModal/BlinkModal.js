@@ -23,7 +23,7 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
+import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import LoadingButton from 'components/LoadingButton';
 
 const BlinkModal = ({ show, toggleModal }) => {
