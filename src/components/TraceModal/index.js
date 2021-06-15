@@ -15,6 +15,7 @@ import {
   CLabel,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -27,6 +28,7 @@ import LoadingButton from 'components/LoadingButton';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const TraceModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -91,11 +93,10 @@ const TraceModal = ({ show, toggleModal }) => {
     axiosInstance
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/trace`, parameters, { headers })
       .then(() => {
-        setResponseBody('Command submitted successfully');
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody('Error while submitting command');
+        setResponseBody(t("commands.error"));
         setHadFailure(true);
       })
       .finally(() => {
@@ -107,7 +108,7 @@ const TraceModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Trace Device</CModalTitle>
+        <CModalTitle>{t("trace.title")}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
@@ -115,8 +116,7 @@ const TraceModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <h6>
-              Launch a remote trace of this device for either a specific duration or a number of
-              packets
+              {t("trace.directions")}
             </h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
@@ -126,7 +126,7 @@ const TraceModal = ({ show, toggleModal }) => {
                   color="primary"
                   onClick={() => setUsingDuration(true)}
                 >
-                  Duration
+                  {t("common.duration")}
                 </CButton>
               </CCol>
               <CCol>
@@ -136,7 +136,7 @@ const TraceModal = ({ show, toggleModal }) => {
                   color="primary"
                   onClick={() => setUsingDuration(false)}
                 >
-                  Packets
+                  {t("trace.packets")}
                 </CButton>
               </CCol>
             </CRow>
@@ -180,7 +180,7 @@ const TraceModal = ({ show, toggleModal }) => {
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol md="4" style={{ marginTop: '7px' }}>
-                <p>Date:</p>
+                <p>{t("common.date")}:</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
@@ -194,9 +194,9 @@ const TraceModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CInvalidFeedback>You need a date...</CInvalidFeedback>
+            <CInvalidFeedback>{t("common.need_date")}</CInvalidFeedback>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol md="7">Choose the network:</CCol>
+              <CCol md="7">{t("trace.choose_network")}:</CCol>
               <CCol>
                 <CForm>
                   <CFormGroup variant="checkbox" onClick={() => setChosenInterface('up')}>
@@ -241,7 +241,7 @@ const TraceModal = ({ show, toggleModal }) => {
               disabled={waiting}
             />
             <CButton color="secondary" onClick={toggleModal}>
-              Cancel
+              {t("common.cancel")}
             </CButton>
           </CModalFooter>
         </div>

@@ -64,11 +64,20 @@
         "refresh": "Refresh",
         "confirm": "Confirm",
         "need_date": "You need a date...",
-        "are_you_sure": "Are you sure?"
+        "are_you_sure": "Are you sure?",
+        "dismiss": "Dismiss",
+        "duration": "Duration"
     },
     "commands":{
         "title": "Device Commands",
-        "error": "Error while submitting command!"
+        "error": "Error while submitting command!",
+        "success": "Command submitted successfully"
+    },
+    "trace": {
+        "title": "Trace Device",
+        "directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
+        "packets": "Packets",
+        "choose_network": "Choose network"
     },
     "configure": {
         "title": "Configure Device",
