@@ -1,0 +1,155 @@
+{
+	"actions": {
+		"blink": "Cligner",
+		"configure": "configurer",
+		"connect": "Relier",
+		"connecting": "De liaison...",
+		"factory_reset": "Retour aux paramètres d'usine",
+		"firmware_upgrade": "Mise à jour du firmware",
+		"reboot": "Redémarrer",
+		"title": "Actions de l'appareil",
+		"trace": "Trace",
+		"wifi_scan": "Balayage Wi-Fi"
+	},
+	"blink": {
+		"blink": "Cligner",
+		"device_leds": "LED de l'appareil",
+		"pattern": "Choisissez le modèle que vous souhaitez utiliser :",
+		"when_blink_leds": "Quand souhaitez-vous faire clignoter les LED de l'appareil ?"
+	},
+	"commands": {
+		"error": "Erreur lors de la soumission de la commande !",
+		"success": "Commande soumise avec succès",
+		"title": "Commandes de l'appareil"
+	},
+	"common": {
+		"are_you_sure": "Êtes-vous sûr?",
+		"cancel": "annuler",
+		"certificate": "Certificat",
+		"clear": "Clair",
+		"close": "Fermer",
+		"command": "Commander",
+		"compatible": "Compatible",
+		"completed": "Terminé",
+		"config_id": "Config. Identifiant",
+		"confirm": "Confirmer",
+		"connected": "Connecté",
+		"date": "Rendez-vous amoureux",
+		"delete": "Effacer",
+		"details": "Détails",
+		"dismiss": "Rejeter",
+		"do_now": "Faire maintenant!",
+		"download": "Télécharger",
+		"duration": "Durée",
+		"error": "erreur",
+		"executed": "réalisé",
+		"firmware": "Micrologiciel",
+		"from": "De",
+		"id": "Id",
+		"ip_address": "Adresse IP",
+		"later_tonight": "Plus tard ce soir",
+		"loading_ellipsis": "Chargement...",
+		"loading_more_ellipsis": "Chargement plus ...",
+		"logout": "Connectez - Out",
+		"mac": "ADRESSE MAC",
+		"manufacturer": "fabricant",
+		"na": "N / A",
+		"need_date": "Vous avez besoin d'un rendez-vous...",
+		"not_connected": "Pas connecté",
+		"off": "De",
+		"on": "sur",
+		"recorded": "Enregistré",
+		"refresh": "Rafraîchir",
+		"refresh_device": "Actualiser l'appareil",
+		"result": "Résultat",
+		"schedule": "Programme",
+		"serial_number": "Numéro de série",
+		"start": "Début",
+		"submit": "Soumettre",
+		"submitted": "Soumis",
+		"success": "Succès",
+		"to": "à",
+		"unknown": "Inconnu",
+		"uuid": "UUID",
+		"view_more": "Afficher plus",
+		"yes": "Oui"
+	},
+	"configuration": {
+		"created": "Créé",
+		"details": "Détails de l'appareil",
+		"last_configuration_change": "Dernière modification de configuration",
+		"last_configuration_download": "Téléchargement de la dernière configuration",
+		"location": "Emplacement",
+		"notes": "Remarques",
+		"owner": "Propriétaire",
+		"title": "Configuration de l'appareil",
+		"type": "Type d'appareil",
+		"view_json": "Afficher le JSON brut"
+	},
+	"configure": {
+		"choose_file": "Vous devez choisir un fichier .json valide :",
+		"enter_new": "Entrez la nouvelle configuration de l'appareil JSON :",
+		"placeholder": "Configurer JSON",
+		"title": "Configurer l'appareil",
+		"valid_json": "Vous devez entrer un JSON valide"
+	},
+	"delete_command": {
+		"explanation": "Êtes-vous sûr de vouloir supprimer cette commande ? Cette action n'est pas réversible.",
+		"title": "Supprimer la commande"
+	},
+	"device_logs": {
+		"log": "Bûche",
+		"severity": "Gravité",
+		"title": "Journaux de l'appareil"
+	},
+	"factory_reset": {
+		"redirector": "Conserver le redirecteur :",
+		"title": "Dispositif de réinitialisation d'usine",
+		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
+	},
+	"footer": {
+		"coreui_for_react": "CoreUI pour React",
+		"powered_by": "Alimenté par",
+		"version": "Version"
+	},
+	"health": {
+		"sanity": "Santé mentale"
+	},
+	"login": {
+		"login": "S'identifier",
+		"login error": "Erreur de connexion, confirmez que votre nom d'utilisateur, mot de passe et URL de passerelle sont valides",
+		"password": "Mot de passe",
+		"please_enter_gateway": "Veuillez saisir une URL de passerelle",
+		"please_enter_password": "s'il vous plait entrez votre mot de passe",
+		"please_enter_username": "s'il vous plaît entrez votre nom d'utilisateur",
+		"sign_in_to_account": "Connectez-vous à votre compte",
+		"username": "Nom d'utilisateur"
+	},
+	"reboot": {
+		"directions": "Quand souhaitez-vous redémarrer cet appareil ?",
+		"title": "Redémarrez l'appareil"
+	},
+	"scan": {
+		"active": "Activer l'analyse active",
+		"channel": "Canal",
+		"directions": "Lancez une analyse wifi de cet appareil, ce qui devrait prendre environ 25 secondes.",
+		"results": "Résultats de l'analyse Wi-Fi"
+	},
+	"statistics": {
+		"data": "Données (Ko)",
+		"title": "statistiques"
+	},
+	"trace": {
+		"choose_network": "Choisir le réseau",
+		"directions": "Lancer une trace à distance de cet appareil pour une durée spécifique ou un nombre de paquets",
+		"packets": "Paquets",
+		"title": "Dispositif de traçage"
+	},
+	"upgrade": {
+		"directions": "Choisissez une heure et une version de firmware pour cet appareil",
+		"firmware_uri": "URI du micrologiciel :",
+		"need_uri": "Vous avez besoin d'un URI...",
+		"time": "Heure de la mise à niveau :",
+		"title": "Mise à jour du firmware"
+	}
+}
