@@ -12,6 +12,7 @@ import {
   CPopover,
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
+import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
@@ -25,6 +26,7 @@ import internetSwitch from 'assets/icons/Switch.png';
 import iotIcon from 'assets/icons/IotIcon.png';
 
 const DeviceList = () => {
+  const { t } = useTranslation();
   const [loadedSerials, setLoadedSerials] = useState(false);
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
@@ -158,14 +160,14 @@ const DeviceListDisplay = ({
 }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
-    { key: 'verifiedCertificate', label: 'Certificate', _style: { width: '1%' } },
-    { key: 'serialNumber', _style: { width: '5%' } },
-    { key: 'UUID', label: 'Config Id', _style: { width: '5%' } },
-    { key: 'firmware', filter: false, _style: { width: '20%' } },
-    { key: 'compatible', filter: false, _style: { width: '20%' } },
+    { key: 'verifiedCertificate', label: t("common.certificate"), _style: { width: '1%' } },
+    { key: 'serialNumber', label: t("common.serial_number"), _style: { width: '5%' } },
+    { key: 'UUID', label: t("common.config_id"), _style: { width: '5%' } },
+    { key: 'firmware', label: t("common.firmware"), filter: false, _style: { width: '20%' } },
+    { key: 'compatible', label: t("common.compatible"), filter: false, _style: { width: '20%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '10%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '10%' } },
-    { key: 'ipAddress', _style: { width: '20%' } },
+    { key: 'ipAddress', label: t("common.ip_address"), _style: { width: '20%' } },
     {
       key: 'show_details',
       label: '',
@@ -191,7 +193,6 @@ const DeviceListDisplay = ({
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default' || deviceType === 'AP') {
       return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="AP" />;
-      // return <CIcon name="cilRouter" size="2xl" alt="AP" />;
     }
     if (deviceType === 'MESH') {
       return <img src={meshIcon} style={{ height: '32px', width: '32px' }} alt="MESH" />;
@@ -313,7 +314,7 @@ const DeviceListDisplay = ({
               deviceType: (item) => (
                 <td style={{ textAlign: 'center' }}>
                   <CPopover
-                    content={item.connected ? 'Connected' : 'Not Connected'}
+                    content={item.connected ? t("common.connected") : t("common.not_connected")}
                     placement="top"
                   >
                     <CBadge color={getStatusBadge(item.connected)}>
@@ -324,21 +325,21 @@ const DeviceListDisplay = ({
               ),
               verifiedCertificate: (item) => (
                 <td style={{ textAlign: 'center' }}>
-                  <CPopover content={item.verifiedCertificate ?? 'Unknown'} placement="top">
+                  <CPopover content={item.verifiedCertificate ?? t("common.unknown")} placement="top">
                     {getCertBadge(item.verifiedCertificate)}
                   </CPopover>
                 </td>
               ),
               firmware: (item) => (
                 <td>
-                  <CPopover content={item.firmware ? item.firmware : 'N/A'} placement="top">
+                  <CPopover content={item.firmware ? item.firmware : t("common.na")} placement="top">
                     <p>{cropStringWithEllipsis(item.firmware, 16)}</p>
                   </CPopover>
                 </td>
               ),
               compatible: (item) => (
                 <td>
-                  <CPopover content={item.compatible ? item.compatible : 'N/A'} placement="top">
+                  <CPopover content={item.compatible ? item.compatible : t("common.na")} placement="top">
                     <p>{cropStringWithEllipsis(item.compatible, 16)}</p>
                   </CPopover>
                 </td>
@@ -347,14 +348,14 @@ const DeviceListDisplay = ({
               rxBytes: (item) => <td>{cleanBytesString(item.rxBytes)}</td>,
               ipAddress: (item) => (
                 <td>
-                  <CPopover content={item.ipAddress ? item.ipAddress : 'N/A'} placement="top">
+                  <CPopover content={item.ipAddress ? item.ipAddress : t("common.na")} placement="top">
                     <p>{cropStringWithEllipsis(item.ipAddress, 20)}</p>
                   </CPopover>
                 </td>
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CPopover content="Refresh Device">
+                  <CPopover content={t("common.refres_device")}>
                     <CButton
                       onClick={() => refreshDevice(item.serialNumber)}
                       color="primary"
@@ -368,7 +369,7 @@ const DeviceListDisplay = ({
               ),
               show_details: (item) => (
                 <td className="py-2">
-                  <CPopover content="Device Details">
+                  <CPopover content={t("configuration.details")}>
                     <CLink
                       className="c-subheader-nav-link"
                       aria-current="page"

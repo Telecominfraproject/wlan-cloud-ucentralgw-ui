@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
-import DeviceHealth from 'components/DeviceHealth/DeviceHealth';
+import DeviceHealth from 'components/DeviceHealth';
 import DeviceConfiguration from 'components/DeviceConfiguration';
 import DeviceCommandsLog from 'components/DeviceCommandsLog';
 import DeviceLogs from 'components/DeviceLogs/DeviceLogs';

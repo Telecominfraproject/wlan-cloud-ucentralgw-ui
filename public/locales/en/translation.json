@@ -52,7 +52,15 @@
         "view_more": "View more",
         "loading_more_ellipsis": "Loading more...",
         "config_id": "Config. Id",
-        "recorded": "Recorded"
+        "recorded": "Recorded",
+        "firmware": "Firmware",
+        "certificate": "Certificate",
+        "compatible": "Compatible",
+        "ip_address": "Ip Address",
+        "connected": "Connected",
+        "not_connected": "Not Connected",
+        "na": "N/A",
+        "refresh_device": "Refresh Device"
     },
     "commands":{
         "title": "Device Commands"
