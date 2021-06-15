@@ -11,6 +11,7 @@ import {
   CCol,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getToken } from 'utils/authHelper';
@@ -21,6 +22,7 @@ import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 
 const WifiScanModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -118,10 +120,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
   return (
     <CModal size="lg" show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Wifi Scan</CModalTitle>
+        <CModalTitle>{t("actions.wifi_scan")}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <h6>Launch a wifi scan of this device, which should take approximately 25 seconds.</h6>
+        <h6>{t("scan.directions")}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="3">
             <p style={{ paddingLeft: '2%' }}>Verbose:</p>
@@ -140,7 +142,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
         </CRow>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="3">
-            <p style={{ paddingLeft: '2%' }}>Enable active scan:</p>
+            <p style={{ paddingLeft: '2%' }}>{t("scan.active")}:</p>
           </CCol>
           <CCol>
             <CForm style={{ paddingLeft: '5%' }}>
@@ -148,8 +150,8 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 color="primary"
                 defaultChecked={activeScan}
                 onClick={toggleActiveScan}
-                labelOn="On"
-                labelOff="Off"
+                labelOn={t("common.on")}
+                labelOff={t("common.off")}
               />
             </CForm>
           </CCol>
@@ -160,8 +162,8 @@ const WifiScanModal = ({ show, toggleModal }) => {
       </CModalBody>
       <CModalFooter>
         <LoadingButton
-          label="Start"
-          isLoadingLabel="Loading..."
+          label={t("common.start")}
+          isLoadingLabel={t("common.loading_ellipsis")}
           isLoading={waiting}
           action={doAction}
           variant="outline"
@@ -169,7 +171,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           disabled={waiting}
         />
         <CButton color="secondary" onClick={toggleModal}>
-          Cancel
+          {t("common.cancel")}
         </CButton>
       </CModalFooter>
     </CModal>

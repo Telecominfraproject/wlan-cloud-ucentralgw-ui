@@ -9,7 +9,7 @@ import RebootModal from 'components/RebootModal';
 import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal';
 import ConfigureModal from 'components/ConfigureModal';
 import TraceModal from 'components/TraceModal';
-import WifiScanModal from 'components/WifiScanModal/WifiScanModal';
+import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
 
