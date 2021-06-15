@@ -12,6 +12,7 @@ import {
   CAlert,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
@@ -20,6 +21,7 @@ import axiosInstance from 'utils/axiosInstance';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ConfigureModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -63,11 +65,10 @@ const ConfigureModal = ({ show, toggleModal }) => {
     axiosInstance
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/factory`, parameters, { headers })
       .then(() => {
-        setResponseBody('Command submitted!');
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody('Error while submitting command!');
+        setResponseBody(t("commands.error"));
         setHadFailure(true);
       })
       .finally(() => {
@@ -80,16 +81,16 @@ const ConfigureModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Factory Reset Device</CModalTitle>
+        <CModalTitle>{t("factory_reset.title")}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <CAlert color="danger">Warning: Once you submit this cannot be reverted</CAlert>
+            <CAlert color="danger">{t("factory_reset.warning")}</CAlert>
             <CRow style={{ marginTop: '20px' }}>
-              <p style={{ paddingLeft: '5%' }}>Keep redirector :</p>
+              <p style={{ paddingLeft: '5%' }}>{t("factory_reset.redirector")}</p>
               <CForm style={{ paddingLeft: '5%' }}>
                 <CSwitch
                   color="primary"
@@ -114,7 +115,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={() => confirmingIfSure()}
             >
-              Submit
+              {t("common.submit")}
             </CButton>
             <CButton
               hidden={!checkingIfSure}
@@ -126,7 +127,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>
-              Cancel
+              {t("common.cancel")}
             </CButton>
           </CModalFooter>
         </div>

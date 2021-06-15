@@ -11,7 +11,7 @@ import ConfigureModal from 'components/ConfigureModal/ConfigureModal';
 import TraceModal from 'components/TraceModal/TraceModal';
 import WifiScanModal from 'components/WifiScanModal/WifiScanModal';
 import BlinkModal from 'components/BlinkModal/BlinkModal';
-import FactoryResetModal from 'components/FactoryResetModal/FactoryResetModal';
+import FactoryResetModal from 'components/FactoryResetModal';
 
 const DeviceActions = ({ selectedDeviceId }) => {
   const { t } = useTranslation();

@@ -63,7 +63,8 @@
         "refresh_device": "Refresh Device"
     },
     "commands":{
-        "title": "Device Commands"
+        "title": "Device Commands",
+        "error": "Error while submitting command!"
     },
     "configure": {
         "title": "Configure Device",
@@ -95,6 +96,11 @@
         "title": "Device Logs",
         "log": "Log",
         "severity": "Severity"
+    },
+    "factory_reset": {
+        "title": "Factory Reset Device",
+        "warning": "Warning: Once you submit this cannot be reverted",
+        "redirector": "Keep redirector: "
     },
     "footer": {
         "coreui_for_react": "CoreUI for React",
