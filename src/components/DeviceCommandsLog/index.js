@@ -22,7 +22,7 @@ import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
-import LoadingButton from 'components/LoadingButton/LoadingButton';
+import LoadingButton from 'components/LoadingButton';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 

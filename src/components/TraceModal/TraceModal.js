@@ -23,7 +23,7 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import LoadingButton from 'components/LoadingButton/LoadingButton';
+import LoadingButton from 'components/LoadingButton';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const TraceModal = ({ show, toggleModal }) => {

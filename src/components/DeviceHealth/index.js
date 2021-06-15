@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import LoadingButton from 'components/LoadingButton/LoadingButton';
+import LoadingButton from 'components/LoadingButton';
 
 const DeviceHealth = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
