@@ -103,9 +103,9 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   };
 
   const columns = [
-    { key: 'log', label: t("device_logs.log") },
-    { key: 'severity', label: t("device_logs.severity") },
-    { key: 'recorded', label: t("common.recorded") },
+    { key: 'log', label: t('device_logs.log') },
+    { key: 'severity', label: t('device_logs.severity') },
+    { key: 'recorded', label: t('common.recorded') },
     {
       key: 'show_details',
       label: '',
@@ -152,17 +152,17 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     <CWidgetDropdown
       inverse="true"
       color="gradient-info"
-      header={t("device_logs.title")}
+      header={t('device_logs.title')}
       footerSlot={
         <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
-                {t("common.from")}
+                {t('common.from')}
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
-                {t("common.to")}
+                {t('common.to')}
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
@@ -195,7 +195,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
-                          <h5>{t("common.details")}</h5>
+                          <h5>{t('common.details')}</h5>
                           <div>{getDetails(index, item)}</div>
                         </CCardBody>
                       </CCollapse>
@@ -205,8 +205,8 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                 <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
                   {showLoadingMore && (
                     <LoadingButton
-                      label={t("common.view_more")}
-                      isLoadingLabel={t("common.loading_more_ellipsis")}
+                      label={t('common.view_more')}
+                      isLoadingLabel={t('common.loading_more_ellipsis')}
                       isLoading={loadingMore}
                       action={showMoreLogs}
                       variant="outline"

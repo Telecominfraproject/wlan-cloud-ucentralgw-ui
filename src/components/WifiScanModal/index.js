@@ -120,10 +120,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
   return (
     <CModal size="lg" show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("actions.wifi_scan")}</CModalTitle>
+        <CModalTitle>{t('actions.wifi_scan')}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <h6>{t("scan.directions")}</h6>
+        <h6>{t('scan.directions')}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="3">
             <p style={{ paddingLeft: '2%' }}>Verbose:</p>
@@ -134,15 +134,15 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 color="primary"
                 defaultChecked={choseVerbose}
                 onClick={toggleVerbose}
-                labelOn="On"
-                labelOff="Off"
+                labelOn={t('common.on')}
+                labelOff={t('common.off')}
               />
             </CForm>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="3">
-            <p style={{ paddingLeft: '2%' }}>{t("scan.active")}:</p>
+            <p style={{ paddingLeft: '2%' }}>{t('scan.active')}:</p>
           </CCol>
           <CCol>
             <CForm style={{ paddingLeft: '5%' }}>
@@ -150,8 +150,8 @@ const WifiScanModal = ({ show, toggleModal }) => {
                 color="primary"
                 defaultChecked={activeScan}
                 onClick={toggleActiveScan}
-                labelOn={t("common.on")}
-                labelOff={t("common.off")}
+                labelOn={t('common.on')}
+                labelOff={t('common.off')}
               />
             </CForm>
           </CCol>
@@ -162,8 +162,8 @@ const WifiScanModal = ({ show, toggleModal }) => {
       </CModalBody>
       <CModalFooter>
         <LoadingButton
-          label={t("common.start")}
-          isLoadingLabel={t("common.loading_ellipsis")}
+          label={t('common.start')}
+          isLoadingLabel={t('common.loading_ellipsis')}
           isLoading={waiting}
           action={doAction}
           variant="outline"
@@ -171,7 +171,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           disabled={waiting}
         />
         <CButton color="secondary" onClick={toggleModal}>
-          {t("common.cancel")}
+          {t('common.cancel')}
         </CButton>
       </CModalFooter>
     </CModal>

@@ -96,7 +96,7 @@ const TraceModal = ({ show, toggleModal }) => {
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody(t("commands.error"));
+        setResponseBody(t('commands.error'));
         setHadFailure(true);
       })
       .finally(() => {
@@ -108,16 +108,14 @@ const TraceModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("trace.title")}</CModalTitle>
+        <CModalTitle>{t('trace.title')}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <h6>
-              {t("trace.directions")}
-            </h6>
+            <h6>{t('trace.directions')}</h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CButton
@@ -126,7 +124,7 @@ const TraceModal = ({ show, toggleModal }) => {
                   color="primary"
                   onClick={() => setUsingDuration(true)}
                 >
-                  {t("common.duration")}
+                  {t('common.duration')}
                 </CButton>
               </CCol>
               <CCol>
@@ -136,7 +134,7 @@ const TraceModal = ({ show, toggleModal }) => {
                   color="primary"
                   onClick={() => setUsingDuration(false)}
                 >
-                  {t("trace.packets")}
+                  {t('trace.packets')}
                 </CButton>
               </CCol>
             </CRow>
@@ -180,7 +178,7 @@ const TraceModal = ({ show, toggleModal }) => {
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol md="4" style={{ marginTop: '7px' }}>
-                <p>{t("common.date")}:</p>
+                <p>{t('common.date')}:</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
@@ -194,9 +192,9 @@ const TraceModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CInvalidFeedback>{t("common.need_date")}</CInvalidFeedback>
+            <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol md="7">{t("trace.choose_network")}:</CCol>
+              <CCol md="7">{t('trace.choose_network')}:</CCol>
               <CCol>
                 <CForm>
                   <CFormGroup variant="checkbox" onClick={() => setChosenInterface('up')}>
@@ -241,7 +239,7 @@ const TraceModal = ({ show, toggleModal }) => {
               disabled={waiting}
             />
             <CButton color="secondary" onClick={toggleModal}>
-              {t("common.cancel")}
+              {t('common.cancel')}
             </CButton>
           </CModalFooter>
         </div>

@@ -68,7 +68,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody(t("commands.error"));
+        setResponseBody(t('commands.error'));
         setHadFailure(true);
       })
       .finally(() => {
@@ -81,16 +81,16 @@ const ConfigureModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("factory_reset.title")}</CModalTitle>
+        <CModalTitle>{t('factory_reset.title')}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <CAlert color="danger">{t("factory_reset.warning")}</CAlert>
+            <CAlert color="danger">{t('factory_reset.warning')}</CAlert>
             <CRow style={{ marginTop: '20px' }}>
-              <p style={{ paddingLeft: '5%' }}>{t("factory_reset.redirector")}</p>
+              <p style={{ paddingLeft: '5%' }}>{t('factory_reset.redirector')}</p>
               <CForm style={{ paddingLeft: '5%' }}>
                 <CSwitch
                   color="primary"
@@ -115,7 +115,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={() => confirmingIfSure()}
             >
-              {t("common.submit")}
+              {t('common.submit')}
             </CButton>
             <CButton
               hidden={!checkingIfSure}
@@ -127,7 +127,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>
-              {t("common.cancel")}
+              {t('common.cancel')}
             </CButton>
           </CModalFooter>
         </div>

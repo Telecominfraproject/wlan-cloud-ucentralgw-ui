@@ -89,7 +89,7 @@ const ActionModal = ({ show, toggleModal }) => {
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody(t("commands.error"));
+        setResponseBody(t('commands.error'));
         setHadFailure(true);
       })
       .finally(() => {
@@ -102,30 +102,30 @@ const ActionModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("reboot.title")}</CModalTitle>
+        <CModalTitle>{t('reboot.title')}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <h6>{t("reboot.directions")}</h6>
+            <h6>{t('reboot.directions')}</h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-                  {waiting && doingNow ? t("common.loading_ellipsis"): t("common.do_now")}
+                  {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
                   <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
                 </CButton>
               </CCol>
               <CCol>
                 <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
-                  {t("common.later_tonight")}
+                  {t('common.later_tonight')}
                 </CButton>
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol md="4" style={{ marginTop: '7px' }}>
-                <p>{t("common.date")}:</p>
+                <p>{t('common.date')}:</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
@@ -140,7 +140,7 @@ const ActionModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CInvalidFeedback>{t("common.need_date")}</CInvalidFeedback>
+            <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
 
             <div hidden={!hadSuccess && !hadFailure}>
               <div>
@@ -150,8 +150,8 @@ const ActionModal = ({ show, toggleModal }) => {
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label={t("common.schedule")}
-              isLoadingLabel={t("common.loading_ellipsis")}
+              label={t('common.schedule')}
+              isLoadingLabel={t('common.loading_ellipsis')}
               isLoading={waiting}
               action={doAction}
               variant="outline"
@@ -159,7 +159,7 @@ const ActionModal = ({ show, toggleModal }) => {
               disabled={waiting}
             />
             <CButton color="secondary" onClick={toggleModal}>
-              {t("common.cancel")}
+              {t('common.cancel')}
             </CButton>
           </CModalFooter>
         </div>

@@ -50,7 +50,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
     <CModal size="lg" show={show} onClose={toggle}>
       <CModalHeader closeButton>
         <CModalTitle style={{ color: 'black' }}>
-          {date !== '' ? prettyDate(date) : ''} {t("scan.results")}
+          {date !== '' ? prettyDate(date) : ''} {t('scan.results')}
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -60,7 +60,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={toggle}>
-          {t("common.close")}
+          {t('common.close')}
         </CButton>
       </CModalFooter>
     </CModal>

@@ -158,18 +158,18 @@ const DeviceListDisplay = ({
   pageCount,
   updatePage,
   refreshDevice,
-  t
+  t,
 }) => {
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
-    { key: 'verifiedCertificate', label: t("common.certificate"), _style: { width: '1%' } },
-    { key: 'serialNumber', label: t("common.serial_number"), _style: { width: '5%' } },
-    { key: 'UUID', label: t("common.config_id"), _style: { width: '5%' } },
-    { key: 'firmware', label: t("common.firmware"), filter: false, _style: { width: '20%' } },
-    { key: 'compatible', label: t("common.compatible"), filter: false, _style: { width: '20%' } },
+    { key: 'verifiedCertificate', label: t('common.certificate'), _style: { width: '1%' } },
+    { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '5%' } },
+    { key: 'UUID', label: t('common.config_id'), _style: { width: '5%' } },
+    { key: 'firmware', label: t('common.firmware'), filter: false, _style: { width: '20%' } },
+    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '20%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '10%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '10%' } },
-    { key: 'ipAddress', label: t("common.ip_address"), _style: { width: '20%' } },
+    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '20%' } },
     {
       key: 'show_details',
       label: '',
@@ -316,7 +316,7 @@ const DeviceListDisplay = ({
               deviceType: (item) => (
                 <td style={{ textAlign: 'center' }}>
                   <CPopover
-                    content={item.connected ? t("common.connected") : t("common.not_connected")}
+                    content={item.connected ? t('common.connected') : t('common.not_connected')}
                     placement="top"
                   >
                     <CBadge color={getStatusBadge(item.connected)}>
@@ -327,21 +327,30 @@ const DeviceListDisplay = ({
               ),
               verifiedCertificate: (item) => (
                 <td style={{ textAlign: 'center' }}>
-                  <CPopover content={item.verifiedCertificate ?? t("common.unknown")} placement="top">
+                  <CPopover
+                    content={item.verifiedCertificate ?? t('common.unknown')}
+                    placement="top"
+                  >
                     {getCertBadge(item.verifiedCertificate)}
                   </CPopover>
                 </td>
               ),
               firmware: (item) => (
                 <td>
-                  <CPopover content={item.firmware ? item.firmware : t("common.na")} placement="top">
+                  <CPopover
+                    content={item.firmware ? item.firmware : t('common.na')}
+                    placement="top"
+                  >
                     <p>{cropStringWithEllipsis(item.firmware, 16)}</p>
                   </CPopover>
                 </td>
               ),
               compatible: (item) => (
                 <td>
-                  <CPopover content={item.compatible ? item.compatible : t("common.na")} placement="top">
+                  <CPopover
+                    content={item.compatible ? item.compatible : t('common.na')}
+                    placement="top"
+                  >
                     <p>{cropStringWithEllipsis(item.compatible, 16)}</p>
                   </CPopover>
                 </td>
@@ -350,14 +359,17 @@ const DeviceListDisplay = ({
               rxBytes: (item) => <td>{cleanBytesString(item.rxBytes)}</td>,
               ipAddress: (item) => (
                 <td>
-                  <CPopover content={item.ipAddress ? item.ipAddress : t("common.na")} placement="top">
+                  <CPopover
+                    content={item.ipAddress ? item.ipAddress : t('common.na')}
+                    placement="top"
+                  >
                     <p>{cropStringWithEllipsis(item.ipAddress, 20)}</p>
                   </CPopover>
                 </td>
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CPopover content={t("common.refres_device")}>
+                  <CPopover content={t('common.refres_device')}>
                     <CButton
                       onClick={() => refreshDevice(item.serialNumber)}
                       color="primary"
@@ -371,7 +383,7 @@ const DeviceListDisplay = ({
               ),
               show_details: (item) => (
                 <td className="py-2">
-                  <CPopover content={t("configuration.details")}>
+                  <CPopover content={t('configuration.details')}>
                     <CLink
                       className="c-subheader-nav-link"
                       aria-current="page"

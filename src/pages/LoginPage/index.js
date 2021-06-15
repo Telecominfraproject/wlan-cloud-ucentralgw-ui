@@ -34,7 +34,7 @@ const Login = () => {
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
   const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
-  const loginErrorText = t("login.login_error");
+  const loginErrorText = t('login.login_error');
 
   const formValidation = () => {
     setHadError(false);
@@ -103,8 +103,8 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onKeyDown={onKeyDown}>
-                    <h1>{t("login.login")}</h1>
-                    <p className="text-muted">{t("login.sign_in_to_account")}</p>
+                    <h1>{t('login.login')}</h1>
+                    <p className="text-muted">{t('login.sign_in_to_account')}</p>
                     <CInputGroup className="mb-3">
                       <CPopover content="Username">
                         <CInputGroupPrepend>
@@ -118,12 +118,12 @@ const Login = () => {
                         autoFocus
                         required
                         type="text"
-                        placeholder={t("login.username")}
+                        placeholder={t('login.username')}
                         autoComplete="username"
                         onChange={(event) => setUsername(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        {t("login.please_enter_username")}
+                        {t('login.please_enter_username')}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -138,12 +138,12 @@ const Login = () => {
                         invalid={emptyPassword}
                         required
                         type="password"
-                        placeholder={t("login.password")}
+                        placeholder={t('login.password')}
                         autoComplete="current-password"
                         onChange={(event) => setPassword(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        {t("login.please_enter_password")}
+                        {t('login.please_enter_password')}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -164,7 +164,7 @@ const Login = () => {
                         onChange={(event) => setGatewayUrl(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
-                        {t("login.please_enter_gateway")}
+                        {t('login.please_enter_gateway')}
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CRow>
@@ -181,7 +181,7 @@ const Login = () => {
                           className="px-4"
                           onClick={() => (formValidation() ? SignIn({ userId, password }) : null)}
                         >
-                          {t("login.login")}
+                          {t('login.login')}
                         </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right" />

@@ -11,7 +11,9 @@ const WifiChannelCard = ({ channel }) => {
   return (
     <CCard>
       <CCardHeader>
-        <CCardTitle style={{ color: 'black' }}>{t("scan.channel")} #{channel.channel}</CCardTitle>
+        <CCardTitle style={{ color: 'black' }}>
+          {t('scan.channel')} #{channel.channel}
+        </CCardTitle>
       </CCardHeader>
       <CCardBody>
         <div className="overflow-auto" style={{ height: '250px' }}>

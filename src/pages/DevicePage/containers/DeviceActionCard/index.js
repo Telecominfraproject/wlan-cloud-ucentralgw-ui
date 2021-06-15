@@ -76,41 +76,41 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   return (
     <CCard>
-      <CCardHeader>{t("actions.title")}</CCardHeader>
+      <CCardHeader>{t('actions.title')}</CCardHeader>
       <CCardBody>
         <CRow>
           <CCol>
             <CButton block onClick={toggleRebootModal} color="primary">
-              {t("actions.reboot")}
+              {t('actions.reboot')}
             </CButton>
           </CCol>
           <CCol>
             <CButton block onClick={toggleBlinkModal} color="primary">
-              {t("actions.blink")}
+              {t('actions.blink')}
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
-              {t("actions.firmware_upgrade")}
+              {t('actions.firmware_upgrade')}
             </CButton>
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleTraceModal}>
-              {t("actions.trace")}
+              {t('actions.trace')}
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '10px' }}>
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
-              {t("actions.wifi_scan")}
+              {t('actions.wifi_scan')}
             </CButton>
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleFactoryResetModal}>
-              {t("actions.factory_reset")}
+              {t('actions.factory_reset')}
             </CButton>
           </CCol>
         </CRow>
@@ -118,14 +118,14 @@ const DeviceActions = ({ selectedDeviceId }) => {
           <CCol>
             <LoadingButton
               isLoading={connectLoading}
-              label={t("actions.connect")}
-              isLoadingLabel={t("actions.connecting")}
+              label={t('actions.connect')}
+              isLoadingLabel={t('actions.connecting')}
               action={getRttysInfo}
             />
           </CCol>
           <CCol>
             <CButton block color="primary" onClick={toggleConfigModal}>
-              {t("actions.configure")}
+              {t('actions.configure')}
             </CButton>
           </CCol>
         </CRow>

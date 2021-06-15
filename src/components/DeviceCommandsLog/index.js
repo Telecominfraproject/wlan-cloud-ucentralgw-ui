@@ -217,11 +217,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   };
 
   const columns = [
-    { key: 'UUID', label: t("common.id"), _style: { width: '28%' } },
-    { key: 'command', label: t("common.command"), _style: { width: '10%' } },
-    { key: 'completed', label: t("common.completed"), filter: false, _style: { width: '16%' } },
-    { key: 'submitted', label: t("common.submitted"), filter: false, _style: { width: '16%' } },
-    { key: 'executed', label: t("common.executed"), filter: false, _style: { width: '16%' } },
+    { key: 'UUID', label: t('common.id'), _style: { width: '28%' } },
+    { key: 'command', label: t('common.command'), _style: { width: '10%' } },
+    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '16%' } },
+    { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '16%' } },
+    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '16%' } },
     {
       key: 'show_buttons',
       label: '',
@@ -276,7 +276,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     <CWidgetDropdown
       inverse="true"
       color="gradient-primary"
-      header={t("commands.title")}
+      header={t('commands.title')}
       footerSlot={
         <div style={{ padding: '20px' }}>
           <CCollapse show={collapse}>
@@ -342,7 +342,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                       <td>
                         <CRow>
                           <CCol>
-                            <CPopover content={item.command === 'trace' ? t("common.download") : t("common.result")}>
+                            <CPopover
+                              content={
+                                item.command === 'trace' ? t('common.download') : t('common.result')
+                              }
+                            >
                               <CButton
                                 color="primary"
                                 variant={details.includes(index) ? '' : 'outline'}
@@ -369,7 +373,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                             </CPopover>
                           </CCol>
                           <CCol>
-                            <CPopover content={t("common.details")}>
+                            <CPopover content={t('common.details')}>
                               <CButton
                                 color="primary"
                                 variant={responses.includes(index) ? '' : 'outline'}
@@ -384,7 +388,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                             </CPopover>
                           </CCol>
                           <CCol>
-                            <CPopover content={t("common.delete")}>
+                            <CPopover content={t('common.delete')}>
                               <CButton
                                 color="primary"
                                 variant="outline"

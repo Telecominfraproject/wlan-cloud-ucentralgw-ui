@@ -64,10 +64,10 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
         <CCard>
           <CCardHeader>
             <CRow>
-              <CCol>{t("configuration.details")}</CCol>
+              <CCol>{t('configuration.details')}</CCol>
               <CCol>
                 <div style={{ float: 'right' }}>
-                  <CPopover content={t("configuration.view_json")}>
+                  <CPopover content={t('configuration.view_json')}>
                     <CButton color="secondary" onClick={toggleModal} size="sm">
                       <CIcon content={cilWindowMaximize} />
                     </CButton>
@@ -85,7 +85,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
             >
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("common.uuid")} : </CLabel>
+                  <CLabel>{t('common.uuid')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.UUID}
@@ -93,7 +93,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("common.serial_number")} : </CLabel>
+                  <CLabel>{t('common.serial_number')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.serialNumber}
@@ -101,7 +101,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("configuration.type")} : </CLabel>
+                  <CLabel>{t('configuration.type')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.deviceType}
@@ -109,7 +109,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("configuration.last_configuration_change")} : </CLabel>
+                  <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {prettyDate(device.lastConfigurationChange)}
@@ -117,7 +117,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("common.mac")} :</CLabel>
+                  <CLabel>{t('common.mac')} :</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.macAddress}
@@ -125,7 +125,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("configuration.created")} : </CLabel>
+                  <CLabel>{t('configuration.created')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {prettyDate(device.createdTimestamp)}
@@ -133,7 +133,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               </CFormGroup>
               <CFormGroup row>
                 <CCol md="3">
-                  <CLabel>{t("configuration.last_configuration_download")} : </CLabel>
+                  <CLabel>{t('configuration.last_configuration_download')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
                   {prettyDate(device.lastConfigurationDownload)}
@@ -142,7 +142,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               <CCollapse show={collapse}>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>{t("common.manufacturer")} :</CLabel>
+                    <CLabel>{t('common.manufacturer')} :</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     {device.manufacturer}
@@ -150,7 +150,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="text-input">{t("configuration.notes")} :</CLabel>
+                    <CLabel htmlFor="text-input">{t('configuration.notes')} :</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput id="text-input" name="text-input" placeholder={device.notes} />
@@ -158,7 +158,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>{t("configuration.owner")} :</CLabel>
+                    <CLabel>{t('configuration.owner')} :</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     {device.owner}
@@ -166,7 +166,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>{t("configuration.location")} :</CLabel>
+                    <CLabel>{t('configuration.location')} :</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     {device.location}
@@ -192,7 +192,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
 
   return (
     <CCard>
-      <CCardHeader>{t("configuration.details")}</CCardHeader>
+      <CCardHeader>{t('configuration.details')}</CCardHeader>
       <CCardBody />
     </CCard>
   );

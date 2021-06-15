@@ -1,7 +1,7 @@
 import React from 'react';
 import { CCollapse, CCardBody } from '@coreui/react';
 import PropTypes from 'prop-types';
-import { Translation } from "react-i18next";
+import { Translation } from 'react-i18next';
 
 const DeviceCommandsCollapse = ({ details, responses, index, item, getDetails, getResponse }) => (
   <Translation>
@@ -9,13 +9,13 @@ const DeviceCommandsCollapse = ({ details, responses, index, item, getDetails, g
       <div>
         <CCollapse show={details.includes(index)}>
           <CCardBody>
-            <h5>{t("common.result")}</h5>
+            <h5>{t('common.result')}</h5>
             <div>{getDetails(item, index)}</div>
           </CCardBody>
         </CCollapse>
         <CCollapse show={responses.includes(index)}>
           <CCardBody>
-            <h5>{t("common.details")}</h5>
+            <h5>{t('common.details')}</h5>
             <div>{getResponse(item, index)}</div>
           </CCardBody>
         </CCollapse>

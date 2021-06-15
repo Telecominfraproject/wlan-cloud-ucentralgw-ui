@@ -107,9 +107,9 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   };
 
   const columns = [
-    { key: 'UUID', label: t("common.config_id") },
-    { key: 'recorded', label: t("common.recorded") },
-    { key: 'sanity', label: t("health.sanity") },
+    { key: 'UUID', label: t('common.config_id') },
+    { key: 'recorded', label: t('common.recorded') },
+    { key: 'sanity', label: t('health.sanity') },
     {
       key: 'show_details',
       label: '',
@@ -169,7 +169,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
 
   return (
     <CWidgetDropdown
-      header={sanityLevel ? `${sanityLevel}%` : t("common.unknown")}
+      header={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
       text="Device Health"
       value={sanityLevel ?? 100}
       color={barColor}
@@ -180,11 +180,11 @@ const DeviceHealth = ({ selectedDeviceId }) => {
           <CCollapse show={collapse}>
             <CRow style={{ marginBottom: '10px' }}>
               <CCol>
-                {t("common.from")}:
+                {t('common.from')}:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
-                {t("common.to")}:
+                {t('common.to')}:
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
@@ -223,7 +223,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
-                          <h5>{t("common.details")}</h5>
+                          <h5>{t('common.details')}</h5>
                           <div>{getDetails(index, item.values)}</div>
                         </CCardBody>
                       </CCollapse>
@@ -233,8 +233,8 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                 <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
                   {showLoadingMore && (
                     <LoadingButton
-                      label={t("common.view_more")}
-                      isLoadingLabel={t("common.loading_more_ellipsis")}
+                      label={t('common.view_more')}
+                      isLoadingLabel={t('common.loading_more_ellipsis')}
                       isLoading={loadingMore}
                       action={showMoreLogs}
                       variant="outline"

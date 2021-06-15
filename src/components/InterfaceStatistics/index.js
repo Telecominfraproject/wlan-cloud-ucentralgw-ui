@@ -18,9 +18,9 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
     <CCard>
       <CCardHeader>
         <CRow>
-          <CCol>{t("statistics.title")}</CCol>
+          <CCol>{t('statistics.title')}</CCol>
           <CCol style={{ textAlign: 'right' }}>
-            <CPopover content={t("common.refresh")}>
+            <CPopover content={t('common.refresh')}>
               <CIcon
                 onClick={refresh}
                 name="cil-sync"

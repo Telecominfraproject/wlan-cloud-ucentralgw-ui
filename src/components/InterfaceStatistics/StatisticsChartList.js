@@ -84,7 +84,7 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
           minWidth: 40,
         },
         title: {
-          text: t("statistics.data"),
+          text: t('statistics.data'),
           style: {
             fontSize: '15px',
           },

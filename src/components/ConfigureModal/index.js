@@ -123,7 +123,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("configure.title")}</CModalTitle>
+        <CModalTitle>{t('configure.title')}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
@@ -132,7 +132,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
           <CModalBody>
             <CRow>
               <CCol md="10" style={{ marginTop: '3px' }}>
-                <h6>{t("configure.enter_new")}</h6>
+                <h6>{t('configure.enter_new')}</h6>
               </CCol>
               <CCol>
                 <CButton
@@ -142,7 +142,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                   color="danger"
                   variant="outline"
                 >
-                  {t("common.clear")}
+                  {t('common.clear')}
                 </CButton>
               </CCol>
             </CRow>
@@ -153,19 +153,19 @@ const ConfigureModal = ({ show, toggleModal }) => {
                     name="textarea-input"
                     id="textarea-input"
                     rows="9"
-                    placeholder={t("configure.placeholder")}
+                    placeholder={t('configure.placeholder')}
                     value={newConfig}
                     onChange={(event) => setNewConfig(event.target.value)}
                     invalid={errorJson}
                   />
                   <CInvalidFeedback className="help-block">
-                    {t("configure.valid_json")}
+                    {t('configure.valid_json')}
                   </CInvalidFeedback>
                 </CForm>
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol>{t("configure.choose_file")}</CCol>
+              <CCol>{t('configure.choose_file')}</CCol>
               <CCol>
                 <CInputFile
                   id="file-input"
@@ -190,7 +190,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={confirmingIfSure}
             >
-              {t("common.submit")}
+              {t('common.submit')}
             </CButton>
             <CButton
               hidden={!checkingIfSure}
@@ -202,7 +202,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>
-              {t("common.cancel")}
+              {t('common.cancel')}
             </CButton>
           </CModalFooter>
         </div>

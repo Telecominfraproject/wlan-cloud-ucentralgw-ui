@@ -107,30 +107,30 @@ const BlinkModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>{t("blink.device_leds")}</CModalTitle>
+        <CModalTitle>{t('blink.device_leds')}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <h6>{t("blink.when_blink_leds")}</h6>
+            <h6>{t('blink.when_blink_leds')}</h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-                  {waiting && doingNow ? t("common.loading_ellipsis") : t("common.do_now")}
+                  {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
                   <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
                 </CButton>
               </CCol>
               <CCol>
                 <CButton disabled={waiting} block color="primary" onClick={setDateToLate}>
-                  {t("common.later_tonight")}
+                  {t('common.later_tonight')}
                 </CButton>
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol md="4" style={{ marginTop: '7px' }}>
-                <p>{t("common.date")}</p>
+                <p>{t('common.date')}</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
@@ -145,7 +145,7 @@ const BlinkModal = ({ show, toggleModal }) => {
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
-              <CCol md="7">{t("blink.pattern")}</CCol>
+              <CCol md="7">{t('blink.pattern')}</CCol>
               <CCol>
                 <CForm>
                   <CFormGroup variant="checkbox" onClick={() => setPattern('on')}>
@@ -156,7 +156,7 @@ const BlinkModal = ({ show, toggleModal }) => {
                       value="option1"
                     />
                     <CLabel variant="checkbox" htmlFor="radio1">
-                      {t("common.on")}
+                      {t('common.on')}
                     </CLabel>
                   </CFormGroup>
                   <CFormGroup variant="checkbox" onClick={() => setPattern('off')}>
@@ -167,7 +167,7 @@ const BlinkModal = ({ show, toggleModal }) => {
                       value="option2"
                     />
                     <CLabel variant="checkbox" htmlFor="radio2">
-                      {t("common.off")}
+                      {t('common.off')}
                     </CLabel>
                   </CFormGroup>
                   <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
@@ -178,7 +178,7 @@ const BlinkModal = ({ show, toggleModal }) => {
                       value="option3"
                     />
                     <CLabel variant="checkbox" htmlFor="radio3">
-                      {t("blink.blink")}
+                      {t('blink.blink')}
                     </CLabel>
                   </CFormGroup>
                 </CForm>
@@ -192,8 +192,8 @@ const BlinkModal = ({ show, toggleModal }) => {
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label={t("common.schedule")}
-              isLoadingLabel={t("common.loading_ellipsis")}
+              label={t('common.schedule')}
+              isLoadingLabel={t('common.loading_ellipsis')}
               isLoading={waiting && !doingNow}
               action={doAction}
               variant="outline"
@@ -201,7 +201,7 @@ const BlinkModal = ({ show, toggleModal }) => {
               disabled={waiting}
             />
             <CButton color="secondary" onClick={toggleModal}>
-              {t("common.cancel")}
+              {t('common.cancel')}
             </CButton>
           </CModalFooter>
         </div>
