@@ -5,7 +5,7 @@ import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
 import DeviceConfiguration from 'components/DeviceConfiguration';
 import DeviceCommandsLog from 'components/DeviceCommandsLog';
-import DeviceLogs from 'components/DeviceLogs/DeviceLogs';
+import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from './containers/DeviceActionCard';
 
