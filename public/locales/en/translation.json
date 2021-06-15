@@ -60,7 +60,10 @@
         "connected": "Connected",
         "not_connected": "Not Connected",
         "na": "N/A",
-        "refresh_device": "Refresh Device"
+        "refresh_device": "Refresh Device",
+        "confirm": "Confirm",
+        "need_date": "You need a date...",
+        "are_you_sure": "Are you sure?"
     },
     "commands":{
         "title": "Device Commands",
@@ -84,6 +87,13 @@
         "owner": "Owner",
         "location": "Location",
         "view_json": "View raw JSON"
+    },
+    "upgrade": {
+        "title": "Firmware Upgrade",
+        "directions": "Choose a time and a firmware version for this device",
+        "time": "Time of upgrade:",
+        "firmware_uri": "Firmware URI:",
+        "need_uri": "You need a URI..."
     },
     "health": {
         "sanity": "Sanity"

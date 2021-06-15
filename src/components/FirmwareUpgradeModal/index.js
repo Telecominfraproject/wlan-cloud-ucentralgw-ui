@@ -12,6 +12,7 @@ import {
   CInvalidFeedback,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -119,7 +121,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody('Error while submitting command');
+        setResponseBody(t("commands.error"));
         setHadFailure(true);
       })
       .finally(() => {
@@ -134,10 +136,10 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Firmware Upgrade</CModalTitle>
+        <CModalTitle>{t("upgrade.title")}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <h6>Choose a time and a firmware version for this device</h6>
+        <h6>{t("upgrade.directions")}</h6>
         <CRow style={{ marginTop: '20px' }}>
           <CCol>
             <CButton
@@ -147,7 +149,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
               hidden={checkingIfNow}
               block
             >
-              Do Now!
+              {t("common.do_now")}
             </CButton>
             <CButton
               color="primary"
@@ -156,19 +158,19 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
               hidden={!checkingIfNow}
               block
             >
-              {waiting && doingNow ? 'Loading...' : 'Confirm'}
+              {waiting && doingNow ? t("common.loading_ellipsis") : t("common.confirm")}
               <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
           </CCol>
           <CCol>
             <CButton disabled={waiting} block color="primary" onClick={setDateToLate}>
-              Later tonight
+              {t("common.later_tonight")}
             </CButton>
           </CCol>
         </CRow>
         <CRow style={{ marginTop: '20px' }}>
           <CCol md="4" style={{ marginTop: '7px' }}>
-            <p>Time of upgrade:</p>
+            <p>{t("upgrade.time")}</p>
           </CCol>
           <CCol xs="12" md="8">
             <DatePicker
@@ -181,10 +183,10 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
               onChange={(date) => setDate(date)}
               min={new Date()}
             />
-            <CInvalidFeedback>You need a date...</CInvalidFeedback>
+            <CInvalidFeedback>{t("common.need_date")}</CInvalidFeedback>
           </CCol>
         </CRow>
-        <div>Firmware URI:</div>
+        <div>{t("upgrade.firmware_uri")}</div>
         <CInput
           disabled={waiting}
           className={('form-control', { 'is-invalid': !validFirmware })}
@@ -196,7 +198,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
           onChange={(event) => setFirmware(event.target.value)}
           value={firmware}
         />
-        <CInvalidFeedback>You need a url...</CInvalidFeedback>
+        <CInvalidFeedback>{t("upgrade.need_uri")}</CInvalidFeedback>
         <div hidden={!hadSuccess && !hadFailure}>
           <div>
             <pre className="ignore">{responseBody}</pre>
@@ -204,14 +206,14 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         </div>
       </CModalBody>
       <CModalFooter>
-        <div hidden={!checkingIfSure}>Are you sure?</div>
+        <div hidden={!checkingIfSure}>{t("common.are_you_sure")}</div>
         <CButton
           hidden={checkingIfSure}
           disabled={waiting}
           color="primary"
           onClick={() => (formValidation() ? confirmingIfSure() : null)}
         >
-          Schedule Upgrade
+          {t("common.schedule")}
         </CButton>
         <CButton
           hidden={!checkingIfSure}
@@ -223,7 +225,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
           <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
         </CButton>
         <CButton color="secondary" onClick={toggleModal}>
-          Cancel
+          {t("common.cancel")}
         </CButton>
       </CModalFooter>
     </CModal>

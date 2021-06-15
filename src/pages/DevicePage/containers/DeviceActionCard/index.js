@@ -6,7 +6,7 @@ import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import LoadingButton from 'components/LoadingButton/LoadingButton';
 import RebootModal from 'components/RebootModal/RebootModal';
-import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal/FirmwareUpgradeModal';
+import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal';
 import ConfigureModal from 'components/ConfigureModal/ConfigureModal';
 import TraceModal from 'components/TraceModal/TraceModal';
 import WifiScanModal from 'components/WifiScanModal/WifiScanModal';
