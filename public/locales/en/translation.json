@@ -122,6 +122,10 @@
         "title": "Statistics",
         "data": "Data (KB)"
     },
+    "reboot": {
+        "title": "Reboot Device",
+        "directions": "When would you like to reboot this device?"
+    },
     "login": {
         "login": "Login",
         "login error": "Login error, confirm that your username, password and gateway url are valid",

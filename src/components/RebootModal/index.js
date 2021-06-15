@@ -11,6 +11,7 @@ import {
   CInvalidFeedback,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -23,6 +24,7 @@ import LoadingButton from 'components/LoadingButton';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody/SuccessfulActionModalBody';
 
 const ActionModal = ({ show, toggleModal }) => {
+  const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -84,11 +86,10 @@ const ActionModal = ({ show, toggleModal }) => {
     axiosInstance
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
       .then(() => {
-        setResponseBody('Command submitted successfully');
         setHadSuccess(true);
       })
       .catch(() => {
-        setResponseBody('Error while submitting command');
+        setResponseBody(t("commands.error"));
         setHadFailure(true);
       })
       .finally(() => {
@@ -101,30 +102,30 @@ const ActionModal = ({ show, toggleModal }) => {
   return (
     <CModal show={show} onClose={toggleModal}>
       <CModalHeader closeButton>
-        <CModalTitle>Reboot Device</CModalTitle>
+        <CModalTitle>{t("reboot.title")}</CModalTitle>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
-            <h6>When would you like to reboot this device?</h6>
+            <h6>{t("reboot.directions")}</h6>
             <CRow style={{ marginTop: '20px' }}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-                  {waiting && doingNow ? 'Loading...' : 'Do Now!'}
+                  {waiting && doingNow ? t("common.loading_ellipsis"): t("common.do_now")}
                   <CSpinner hidden={!waiting || !doingNow} component="span" size="sm" />
                 </CButton>
               </CCol>
               <CCol>
                 <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
-                  Later tonight
+                  {t("common.later_tonight")}
                 </CButton>
               </CCol>
             </CRow>
             <CRow style={{ marginTop: '20px' }}>
               <CCol md="4" style={{ marginTop: '7px' }}>
-                <p>Date:</p>
+                <p>{t("common.date")}:</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
@@ -139,7 +140,7 @@ const ActionModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CInvalidFeedback>You need a date...</CInvalidFeedback>
+            <CInvalidFeedback>{t("common.need_date")}</CInvalidFeedback>
 
             <div hidden={!hadSuccess && !hadFailure}>
               <div>
@@ -149,8 +150,8 @@ const ActionModal = ({ show, toggleModal }) => {
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label="Schedule"
-              isLoadingLabel="Loading..."
+              label={t("common.schedule")}
+              isLoadingLabel={t("common.loading_ellipsis")}
               isLoading={waiting}
               action={doAction}
               variant="outline"
@@ -158,7 +159,7 @@ const ActionModal = ({ show, toggleModal }) => {
               disabled={waiting}
             />
             <CButton color="secondary" onClick={toggleModal}>
-              Cancel
+              {t("common.cancel")}
             </CButton>
           </CModalFooter>
         </div>
