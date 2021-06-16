@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,6 +19,7 @@ import routes from 'routes';
 const TheHeader = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [translatedRoutes, setTranslatedRoutes] = useState(routes);
   const sidebarShow = useSelector((state) => state.sidebarShow);
 
   const toggleSidebar = () => {
@@ -30,6 +31,10 @@ const TheHeader = () => {
     const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive';
     dispatch({ type: 'set', sidebarShow: val });
   };
+
+  useEffect(() => {
+    setTranslatedRoutes(routes.map(({name, ...rest}) => ({...rest, name: t(name)})));
+  }, []);
 
   return (
     <CHeader withSubheader>
@@ -50,7 +55,7 @@ const TheHeader = () => {
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">
-        <CBreadcrumbRouter className="border-0 c-subheader-nav m-0 px-0 px-md-3" routes={routes} />
+        <CBreadcrumbRouter className="border-0 c-subheader-nav m-0 px-0 px-md-3" routes={translatedRoutes} />
       </CSubheader>
     </CHeader>
   );

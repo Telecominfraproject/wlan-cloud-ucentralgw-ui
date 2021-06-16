@@ -1,7 +1,7 @@
 {
 	"actions": {
 		"blink": "Piscar",
-		"configure": "configurar",
+		"configure": "Configurar",
 		"connect": "Conectar",
 		"connecting": "A ligar ...",
 		"factory_reset": "Restauração de fábrica",
@@ -37,6 +37,9 @@
 		"date": "Encontro",
 		"delete": "Excluir",
 		"details": "Detalhes",
+		"device_list": "Lista de Dispositivos",
+		"device_page": "Página do dispositivo",
+		"devices": "Devices",
 		"dismiss": "Dispensar",
 		"do_now": "Faça agora!",
 		"download": "Baixar",

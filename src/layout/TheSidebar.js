@@ -11,20 +11,24 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from '@coreui/react';
+import { useTranslation } from 'react-i18next';
 import logoBar from 'assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 
-const navigation = [
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'List of Devices',
-    to: '/devices',
-    icon: 'cilNotes',
-  },
-];
+
 
 const TheSidebar = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const show = useSelector((state) => state.sidebarShow);
+
+  const navigation = [
+    {
+      _tag: 'CSidebarNavItem',
+      name: t("common.device_list"),
+      to: '/devices',
+      icon: 'cilNotes',
+    },
+  ];
 
   return (
     <CSidebar show={show} onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })}>

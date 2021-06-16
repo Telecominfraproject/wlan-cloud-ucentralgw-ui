@@ -6,9 +6,9 @@ i18next
   .use(initReactI18next)
   .use(HttpApi)
   .init({
-    supportedLngs: ['en'],
+    supportedLngs: ['en', 'fr'],
     fallbackLng: 'en',
-    lng: 'en',
+    lng: 'fr',
     interpolation: {
       escapeValue: false,
     },

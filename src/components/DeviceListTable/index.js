@@ -369,7 +369,7 @@ const DeviceListDisplay = ({
               ),
               refresh: (item) => (
                 <td className="py-2">
-                  <CPopover content={t('common.refres_device')}>
+                  <CPopover content={t('common.refresh_device')}>
                     <CButton
                       onClick={() => refreshDevice(item.serialNumber)}
                       color="primary"

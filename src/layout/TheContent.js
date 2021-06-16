@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { v4 as createUuid } from 'uuid';
 import { CContainer, CFade } from '@coreui/react';
 import routes from 'routes';
+import { Translation } from 'react-i18next';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -15,25 +16,29 @@ const TheContent = () => (
   <main className="c-main">
     <CContainer fluid>
       <Suspense fallback={loading}>
-        <Switch>
-          {routes.map(
-            (route) =>
-              route.component && (
-                <Route
-                  key={createUuid()}
-                  path={route.path}
-                  exact={route.exact}
-                  name={route.name}
-                  render={(props) => (
-                    <CFade>
-                      <route.component {...props} />
-                    </CFade>
-                  )}
-                />
-              ),
+        <Translation>
+          {(t) => (
+            <Switch>
+              {routes.map(
+                (route) =>
+                  route.component && (
+                    <Route
+                      key={createUuid()}
+                      path={route.path}
+                      exact={t(route.name)}
+                      name={t(route.name)}
+                      render={(props) => (
+                        <CFade>
+                          <route.component {...props} />
+                        </CFade>
+                      )}
+                    />
+                  ),
+              )}
+              <Redirect from="/" to="/devices" />
+            </Switch>
           )}
-          <Redirect from="/" to="/devices" />
-        </Switch>
+        </Translation>
       </Suspense>
     </CContainer>
   </main>

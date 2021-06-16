@@ -1,7 +1,7 @@
 {
 	"actions": {
 		"blink": "Cligner",
-		"configure": "configurer",
+		"configure": "Configurer",
 		"connect": "Relier",
 		"connecting": "De liaison...",
 		"factory_reset": "Retour aux paramètres d'usine",
@@ -37,6 +37,9 @@
 		"date": "Rendez-vous amoureux",
 		"delete": "Effacer",
 		"details": "Détails",
+		"device_list": "Liste des appareils",
+		"device_page": "Page de l'appareil",
+		"devices": "Dispositifs",
 		"dismiss": "Rejeter",
 		"do_now": "Faire maintenant!",
 		"download": "Télécharger",
