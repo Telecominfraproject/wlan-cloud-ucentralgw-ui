@@ -25,7 +25,7 @@ const TheContent = () => (
                     <Route
                       key={createUuid()}
                       path={route.path}
-                      exact={t(route.name)}
+                      exact={route.exact}
                       name={t(route.name)}
                       render={(props) => (
                         <CFade>
