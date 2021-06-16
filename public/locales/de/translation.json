@@ -116,7 +116,8 @@
 		"version": "Ausführung"
 	},
 	"health": {
-		"sanity": "Gesundheit"
+		"sanity": "Gesundheit",
+		"title": "Gerätezustand"
 	},
 	"login": {
 		"login": "Anmeldung",

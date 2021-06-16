@@ -116,7 +116,8 @@
 		"version": "Versión"
 	},
 	"health": {
-		"sanity": "Cordura"
+		"sanity": "Cordura",
+		"title": "Salud del dispositivo"
 	},
 	"login": {
 		"login": "Iniciar sesión",

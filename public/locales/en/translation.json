@@ -116,7 +116,8 @@
 		"version": "Version"
 	},
 	"health": {
-		"sanity": "Sanity"
+		"sanity": "Sanity",
+		"title": "Device Health"
 	},
 	"login": {
 		"login": "Login",

@@ -116,7 +116,8 @@
 		"version": "Versão"
 	},
 	"health": {
-		"sanity": "Sanidade"
+		"sanity": "Sanidade",
+		"title": "Saúde do Dispositivo"
 	},
 	"login": {
 		"login": "Entrar",

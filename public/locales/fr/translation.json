@@ -116,7 +116,8 @@
 		"version": "Version"
 	},
 	"health": {
-		"sanity": "Santé mentale"
+		"sanity": "Santé mentale",
+		"title": "Santé de l'appareil"
 	},
 	"login": {
 		"login": "S'identifier",

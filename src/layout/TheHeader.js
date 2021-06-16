@@ -15,9 +15,10 @@ import CIcon from '@coreui/icons-react';
 import { cilAccountLogout } from '@coreui/icons';
 import { logout } from 'utils/authHelper';
 import routes from 'routes';
+import LanguageSwitcher from 'components/LanguageSwitcher';
 
 const TheHeader = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const [translatedRoutes, setTranslatedRoutes] = useState(routes);
   const sidebarShow = useSelector((state) => state.sidebarShow);
@@ -34,7 +35,7 @@ const TheHeader = () => {
 
   useEffect(() => {
     setTranslatedRoutes(routes.map(({name, ...rest}) => ({...rest, name: t(name)})));
-  }, []);
+  }, [i18n.language]);
 
   return (
     <CHeader withSubheader>
@@ -46,6 +47,10 @@ const TheHeader = () => {
 
       <CHeaderNav className="d-md-down-none mr-auto" />
 
+      <CHeaderNav className="px-3">
+        <LanguageSwitcher/>
+      </CHeaderNav>
+      
       <CHeaderNav className="px-3">
         <CPopover content={t('common.logout')}>
           <CLink className="c-subheader-nav-link">
