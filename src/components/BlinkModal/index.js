@@ -26,6 +26,8 @@ import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import LoadingButton from 'components/LoadingButton';
 
+import styles from './index.module.scss';
+
 const BlinkModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const [hadSuccess, setHadSuccess] = useState(false);
@@ -115,7 +117,7 @@ const BlinkModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <h6>{t('blink.when_blink_leds')}</h6>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
                   {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
@@ -128,8 +130,8 @@ const BlinkModal = ({ show, toggleModal }) => {
                 </CButton>
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
-              <CCol md="4" style={{ marginTop: '7px' }}>
+            <CRow className={styles.spacedRow}>
+              <CCol md="4" className={styles.spacedDate}>
                 <p>{t('common.date')}</p>
               </CCol>
               <CCol xs="12" md="8">
@@ -144,7 +146,7 @@ const BlinkModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol md="7">{t('blink.pattern')}</CCol>
               <CCol>
                 <CForm>
