@@ -11,7 +11,8 @@ import {
 } from '@coreui/react';
 import PropTypes from 'prop-types';
 import { prettyDate } from 'utils/helper';
-import WifiChannelTable from './WifiChannelTable';
+import WifiChannelTable from './containers/WifiChannelTable';
+import styles from './index.module.scss';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   return (
     <CModal size="lg" show={show} onClose={toggle}>
       <CModalHeader closeButton>
-        <CModalTitle style={{ color: 'black' }}>
+        <CModalTitle className={styles.modalTitle}>
           {date !== '' ? prettyDate(date) : ''} {t('scan.results')}
         </CModalTitle>
       </CModalHeader>

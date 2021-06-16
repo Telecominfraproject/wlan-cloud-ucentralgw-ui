@@ -19,6 +19,7 @@ import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import LoadingButton from 'components/LoadingButton';
+import styles from './index.module.scss';
 
 const DeviceHealth = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -175,10 +176,10 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       color={barColor}
       inverse="true"
       footerSlot={
-        <div style={{ padding: '20px' }}>
-          <CProgress style={{ marginBottom: '20px' }} color="white" value={sanityLevel ?? 0} />
+        <div className={styles.footer}>
+          <CProgress className={styles.progressBar} color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
-            <CRow style={{ marginBottom: '10px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>
                 {t('common.from')}:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
@@ -189,11 +190,11 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className="overflow-auto" style={{ height: '250px' }}>
+              <div className={[styles.scrollable, "overflow-auto"].join(" ")}>
                 <CDataTable
                   items={healthChecks ?? []}
                   fields={columns}
-                  style={{ color: 'white' }}
+                  className={styles.dataTable}
                   loading={loading}
                   border
                   sorterValue={{ column: 'recorded', desc: 'true' }}
@@ -230,7 +231,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
-                <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
+                <CRow className={styles.loadMoreRow}>
                   {showLoadingMore && (
                     <LoadingButton
                       label={t('common.view_more')}
@@ -247,7 +248,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
           <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              style={{ color: 'white' }}
+              className={styles.icon}
               size="lg"
             />
           </CButton>

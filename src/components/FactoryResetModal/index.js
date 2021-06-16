@@ -91,8 +91,8 @@ const ConfigureModal = ({ show, toggleModal }) => {
           <CModalBody>
             <CAlert color="danger">{t('factory_reset.warning')}</CAlert>
             <CRow className={styles.spacedRow}>
-              <p style={{ paddingLeft: '5%' }}>{t('factory_reset.redirector')}</p>
-              <CForm style={{ paddingLeft: '5%' }}>
+              <p className={styles.spacedForm}>{t('factory_reset.redirector')}</p>
+              <CForm className={styles.spacedForm}>
                 <CSwitch
                   color="primary"
                   defaultChecked={keepRedirector}

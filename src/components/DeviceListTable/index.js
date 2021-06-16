@@ -24,6 +24,7 @@ import meshIcon from 'assets/icons/Mesh.png';
 import apIcon from 'assets/icons/AP.png';
 import internetSwitch from 'assets/icons/Switch.png';
 import iotIcon from 'assets/icons/IotIcon.png';
+import styles from './index.module.scss';
 
 const DeviceList = () => {
   const { t } = useTranslation();
@@ -194,16 +195,16 @@ const DeviceListDisplay = ({
 
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default' || deviceType === 'AP') {
-      return <img src={apIcon} style={{ height: '32px', width: '32px' }} alt="AP" />;
+      return <img src={apIcon} className={styles.icon} alt="AP" />;
     }
     if (deviceType === 'MESH') {
-      return <img src={meshIcon} style={{ height: '32px', width: '32px' }} alt="MESH" />;
+      return <img src={meshIcon} className={styles.icon}  alt="MESH" />;
     }
     if (deviceType === 'SWITCH') {
-      return <img src={internetSwitch} style={{ height: '32px', width: '32px' }} alt="SWITCH" />;
+      return <img src={internetSwitch} className={styles.icon}  alt="SWITCH" />;
     }
     if (deviceType === 'IOT') {
-      return <img src={iotIcon} style={{ height: '32px', width: '32px' }} alt="SWITCH" />;
+      return <img src={iotIcon} className={styles.icon}  alt="SWITCH" />;
     }
     return null;
   };
@@ -211,16 +212,16 @@ const DeviceListDisplay = ({
   const getCertBadge = (cert) => {
     if (cert === 'NO_CERTIFICATE') {
       return (
-        <div style={{ position: 'relative' }}>
+        <div className={styles.certificateWrapper}>
           <CIcon
-            style={{ position: 'absolute', left: '31%', marginTop: '8%' }}
+            className={styles.badge}
             name="cil-badge"
             content={cilBadge}
             size="2xl"
             alt="AP"
           />
           <CIcon
-            style={{ position: 'absolute', zIndex: 99, left: '21%', color: '#e55353' }}
+            className={styles.badCertificate}
             name="cil-ban"
             content={cilBan}
             size="3xl"
@@ -237,7 +238,7 @@ const DeviceListDisplay = ({
         break;
       case 'MISMATCH_SERIAL':
         return (
-          <CBadge color={color} style={{ backgroundColor: '#FFFF5C' }}>
+          <CBadge color={color} className={styles.mismatchBackground}>
             <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           </CBadge>
         );
@@ -246,16 +247,16 @@ const DeviceListDisplay = ({
         break;
       default:
         return (
-          <div style={{ position: 'relative' }}>
+          <div className={styles.certificateWrapper}>
             <CIcon
-              style={{ position: 'absolute', left: '31%', marginTop: '8%' }}
+              className={styles.badge}
               name="cil-badge"
               content={cilBadge}
               size="2xl"
               alt="AP"
             />
             <CIcon
-              style={{ position: 'absolute', zIndex: 99, left: '21%', color: '#e55353' }}
+              className={styles.badCertificate}
               name="cil-ban"
               content={cilBan}
               size="3xl"
@@ -303,7 +304,7 @@ const DeviceListDisplay = ({
             loading={loading}
             scopedSlots={{
               serialNumber: (item) => (
-                <td style={{ textAlign: 'center' }}>
+                <td className={styles.column}>
                   <CLink
                     className="c-subheader-nav-link"
                     aria-current="page"
@@ -314,7 +315,7 @@ const DeviceListDisplay = ({
                 </td>
               ),
               deviceType: (item) => (
-                <td style={{ textAlign: 'center' }}>
+                <td className={styles.column}>
                   <CPopover
                     content={item.connected ? t('common.connected') : t('common.not_connected')}
                     placement="top"
@@ -326,7 +327,7 @@ const DeviceListDisplay = ({
                 </td>
               ),
               verifiedCertificate: (item) => (
-                <td style={{ textAlign: 'center' }}>
+                <td className={styles.column}>
                   <CPopover
                     content={item.verifiedCertificate ?? t('common.unknown')}
                     placement="top"

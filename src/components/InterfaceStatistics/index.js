@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { CCard, CCardHeader, CCardBody, CPopover, CRow, CCol } from '@coreui/react';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import StatisticsChartList from './StatisticsChartList';
+import StatisticsChartList from './containers/StatisticsChartList';
+import styles from './index.module.scss';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
       <CCardHeader>
         <CRow>
           <CCol>{t('statistics.title')}</CCol>
-          <CCol style={{ textAlign: 'right' }}>
+          <CCol className={styles.alignRight}>
             <CPopover content={t('common.refresh')}>
               <CIcon
                 onClick={refresh}
@@ -32,7 +33,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
           </CCol>
         </CRow>
       </CCardHeader>
-      <CCardBody style={{ padding: '5%' }}>
+      <CCardBody className={styles.statsBody}>
         <StatisticsChartList selectedDeviceId={selectedDeviceId} lastRefresh={lastRefresh} />
       </CCardBody>
     </CCard>

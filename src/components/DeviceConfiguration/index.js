@@ -21,7 +21,8 @@ import { cilWindowMaximize } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import DeviceConfigurationModal from './DeviceConfigurationModal';
+import DeviceConfigurationModal from './containers/DeviceConfigurationModal/index';
+import styles from './index.module.scss';
 
 const DeviceConfiguration = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -66,7 +67,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
             <CRow>
               <CCol>{t('configuration.details')}</CCol>
               <CCol>
-                <div style={{ float: 'right' }}>
+                <div className={styles.alignRight}>
                   <CPopover content={t('configuration.view_json')}>
                     <CButton color="secondary" onClick={toggleModal} size="sm">
                       <CIcon content={cilWindowMaximize} />
@@ -176,7 +177,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
               <CCardFooter>
                 <CButton show={collapse ? 'true' : 'false'} onClick={toggle} block>
                   <CIcon
-                    style={{ color: 'black' }}
+                    className={styles.blackIcon}
                     name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
                     size="lg"
                   />
