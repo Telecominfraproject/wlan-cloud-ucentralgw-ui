@@ -1,0 +1,159 @@
+{
+	"actions": {
+		"blink": "Blink",
+		"configure": "Configure",
+		"connect": "Connect",
+		"connecting": "Connecting...",
+		"factory_reset": "Factory Reset",
+		"firmware_upgrade": "Firmware Upgrade",
+		"reboot": "Reboot",
+		"title": "Device Actions",
+		"trace": "Trace",
+		"wifi_scan": "Wifi Scan"
+	},
+	"blink": {
+		"blink": "Blink",
+		"device_leds": "Device LEDs",
+		"pattern": "Choose the pattern you would like to use: ",
+		"when_blink_leds": "When would you like to make the device LEDs blink?"
+	},
+	"commands": {
+		"error": "Error while submitting command!",
+		"success": "Command submitted successfully",
+		"title": "Device Commands"
+	},
+	"common": {
+		"are_you_sure": "Are you sure?",
+		"cancel": "Cancel",
+		"certificate": "Certificate",
+		"clear": "Clear",
+		"close": "Close",
+		"command": "Command",
+		"compatible": "Compatible",
+		"completed": "Completed",
+		"config_id": "Config. Id",
+		"confirm": "Confirm",
+		"connected": "Connected",
+		"date": "Date",
+		"delete": "Delete",
+		"details": "Details",
+		"device_list": "List of Devices",
+		"device_page": "Device Page",
+		"devices": "Devices",
+		"dismiss": "Dismiss",
+		"do_now": "Do Now!",
+		"download": "Download",
+		"duration": "Duration",
+		"error": "Error",
+		"executed": "Executed",
+		"firmware": "Firmware",
+		"from": "From",
+		"id": "Id",
+		"ip_address": "Ip Address",
+		"later_tonight": "Later tonight",
+		"loading_ellipsis": "Loading...",
+		"loading_more_ellipsis": "Loading more...",
+		"logout": "Logout",
+		"mac": "MAC Address",
+		"manufacturer": "Manufacturer",
+		"na": "N/A",
+		"need_date": "You need a date...",
+		"not_connected": "Not Connected",
+		"off": "Off",
+		"on": "On",
+		"recorded": "Recorded",
+		"refresh": "Refresh",
+		"refresh_device": "Refresh Device",
+		"result": "Result",
+		"schedule": "Schedule",
+		"serial_number": "Serial Number",
+		"start": "Start",
+		"submit": "Submit",
+		"submitted": "Submitted",
+		"success": "Success",
+		"to": "To",
+		"unknown": "Unknown",
+		"uuid": "UUID",
+		"view_more": "View more",
+		"yes": "Yes"
+	},
+	"configuration": {
+		"created": "Created",
+		"details": "Device Details",
+		"last_configuration_change": "Last Configuration Change",
+		"last_configuration_download": "Last Configuration Download",
+		"location": "Location",
+		"notes": "Notes",
+		"owner": "Owner",
+		"title": "Device Configuration",
+		"type": "Device Type",
+		"view_json": "View raw JSON"
+	},
+	"configure": {
+		"choose_file": "You need to choose a valid .json file: ",
+		"enter_new": "Enter new device configuration JSON: ",
+		"placeholder": "Config JSON",
+		"title": "Configure Device",
+		"valid_json": "You need to enter valid JSON"
+	},
+	"delete_command": {
+		"explanation": "Are you sure you want to delete this command? This action is not reversible.",
+		"title": "Delete Command"
+	},
+	"device_logs": {
+		"log": "Log",
+		"severity": "Severity",
+		"title": "Device Logs"
+	},
+	"factory_reset": {
+		"redirector": "Keep redirector: ",
+		"title": "Factory Reset Device",
+		"warning": "Warning: Once you submit this cannot be reverted"
+	},
+	"footer": {
+		"coreui_for_react": "CoreUI for React",
+		"powered_by": "Powered by",
+		"version": "Version"
+	},
+	"health": {
+		"sanity": "Sanity",
+		"title": "Device Health"
+	},
+	"login": {
+		"login": "Login",
+		"login error": "Login error, confirm that your username, password and gateway url are valid",
+		"password": "Password",
+		"please_enter_gateway": "Please enter a gateway URL",
+		"please_enter_password": "Please enter your password",
+		"please_enter_username": "Please enter your username",
+		"sign_in_to_account": "Sign in to your account",
+		"username": "Username"
+	},
+	"reboot": {
+		"directions": "When would you like to reboot this device?",
+		"title": "Reboot Device"
+	},
+	"scan": {
+		"active": "Enable active scan",
+		"channel": "Channel",
+		"directions": "Launch a wifi scan of this device, which should take approximately 25 seconds.",
+		"results": "Wifi Scan Results"
+	},
+	"statistics": {
+		"data": "Data (KB)",
+		"title": "Statistics"
+	},
+	"trace": {
+		"choose_network": "Choose network",
+		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
+		"packets": "Packets",
+		"title": "Trace Device"
+	},
+	"upgrade": {
+		"directions": "Choose a time and a firmware version for this device",
+		"firmware_uri": "Firmware URI:",
+		"need_uri": "You need a URI...",
+		"time": "Time of upgrade:",
+		"title": "Firmware Upgrade"
+	}
+}

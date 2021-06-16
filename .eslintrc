@@ -19,5 +19,12 @@
     "react/jsx-props-no-spreading": ["off"],
     "react/destructuring-assignment": ["off"],
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
-  }
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    },
+  },
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import './scss/style.scss';
+import 'scss/style.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
 const loading = (
@@ -9,8 +9,8 @@ const loading = (
   </div>
 );
 
-const TheLayout = React.lazy(() => import('./containers/TheLayout'));
-const Login = React.lazy(() => import('./pages/LoginPage/Login'));
+const TheLayout = React.lazy(() => import('layout'));
+const Login = React.lazy(() => import('pages/LoginPage'));
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.connected);
