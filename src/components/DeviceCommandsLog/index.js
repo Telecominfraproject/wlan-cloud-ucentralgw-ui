@@ -25,6 +25,7 @@ import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import LoadingButton from 'components/LoadingButton';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
+import styles from './index.module.scss';
 
 const DeviceCommands = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -278,24 +279,24 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       color="gradient-primary"
       header={t('commands.title')}
       footerSlot={
-        <div style={{ padding: '20px' }}>
+        <div className={styles.footer}>
           <CCollapse show={collapse}>
             <CRow>
               <CCol />
               <CCol>
-                <div style={{ float: 'right' }}>
+                <div className={styles.alignRight}>
                   <CButton onClick={refreshCommands} size="sm">
                     <CIcon
                       name="cil-sync"
                       content={cilSync}
-                      style={{ color: 'white' }}
+                      className={styles.whiteIcon}
                       size="2xl"
                     />
                   </CButton>
                 </div>
               </CCol>
             </CRow>
-            <CRow style={{ marginBottom: '10px' }}>
+            <CRow className={styles.datepickerRow}>
               <CCol>
                 From:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
@@ -306,12 +307,12 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className="overflow-auto" style={{ height: '400px' }}>
+              <div className={["overflow-auto", styles.scrollableBox].join(" ")}>
                 <CDataTable
                   loading={loading}
                   items={commands ?? []}
                   fields={columns}
-                  style={{ color: 'white' }}
+                  className={styles.whiteIcon}
                   border
                   columnFilter
                   sorter
@@ -365,8 +366,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                 ) : (
                                   <FontAwesomeIcon
                                     icon={faClipboardCheck}
-                                    className="c-icon c-icon-lg"
-                                    style={{ height: '19px' }}
+                                    className={[styles.customIconHeight, "c-icon c-icon-lg"].join(" ")}
                                   />
                                 )}
                               </CButton>
@@ -417,7 +417,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
-                <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
+                <CRow className={styles.loadMoreSpacing}>
                   {showLoadingMore && (
                     <LoadingButton
                       label="View More"
@@ -434,7 +434,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
           <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              style={{ color: 'white' }}
+              className={styles.whiteIcon}
               size="lg"
             />
           </CButton>
@@ -448,7 +448,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         date={chosenWifiScanDate}
       />
       <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
-      <CIcon name="cilNotes" style={{ color: 'white' }} size="lg" />
+      <CIcon name="cilNotes" className={styles.whiteIcon} size="lg" />
     </CWidgetDropdown>
   );
 };

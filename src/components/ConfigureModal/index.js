@@ -23,6 +23,7 @@ import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -131,7 +132,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <CRow>
-              <CCol md="10" style={{ marginTop: '3px' }}>
+              <CCol md="10" className={styles.spacedColumn}>
                 <h6>{t('configure.enter_new')}</h6>
               </CCol>
               <CCol>
@@ -146,7 +147,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 </CButton>
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>
                 <CForm>
                   <CTextarea
@@ -164,7 +165,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 </CForm>
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>{t('configure.choose_file')}</CCol>
               <CCol>
                 <CInputFile

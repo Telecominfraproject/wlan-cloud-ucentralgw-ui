@@ -26,6 +26,7 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import styles from './index.module.scss';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -116,7 +117,7 @@ const TraceModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <h6>{t('trace.directions')}</h6>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>
                 <CButton
                   disabled={waiting}
@@ -138,8 +139,8 @@ const TraceModal = ({ show, toggleModal }) => {
                 </CButton>
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
-              <CCol md="4" style={{ marginTop: '7px' }}>
+            <CRow className={styles.spacedRow}>
+              <CCol md="4" className={styles.spacedColumn}>
                 {usingDuration ? 'Duration: ' : 'Packets: '}
               </CCol>
               <CCol xs="12" md="8">
@@ -176,8 +177,8 @@ const TraceModal = ({ show, toggleModal }) => {
                 )}
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
-              <CCol md="4" style={{ marginTop: '7px' }}>
+            <CRow className={styles.spacedRow}>
+              <CCol md="4" className={styles.spacedColumn}>
                 <p>{t('common.date')}:</p>
               </CCol>
               <CCol xs="12" md="8">
@@ -193,7 +194,7 @@ const TraceModal = ({ show, toggleModal }) => {
               </CCol>
             </CRow>
             <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol md="7">{t('trace.choose_network')}:</CCol>
               <CCol>
                 <CForm>

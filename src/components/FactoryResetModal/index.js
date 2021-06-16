@@ -19,6 +19,7 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -89,7 +90,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <CAlert color="danger">{t('factory_reset.warning')}</CAlert>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <p style={{ paddingLeft: '5%' }}>{t('factory_reset.redirector')}</p>
               <CForm style={{ paddingLeft: '5%' }}>
                 <CSwitch

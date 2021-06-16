@@ -21,6 +21,7 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
+import styles from './index.module.scss';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -140,7 +141,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('upgrade.directions')}</h6>
-        <CRow style={{ marginTop: '20px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol>
             <CButton
               color="primary"
@@ -168,8 +169,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow style={{ marginTop: '20px' }}>
-          <CCol md="4" style={{ marginTop: '7px' }}>
+        <CRow className={styles.spacedRow}>
+          <CCol md="4" className={styles.spacedColumn}>
             <p>{t('upgrade.time')}</p>
           </CCol>
           <CCol xs="12" md="8">

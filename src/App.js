@@ -9,7 +9,7 @@ const loading = (
   </div>
 );
 
-const TheLayout = React.lazy(() => import('layout/TheLayout'));
+const TheLayout = React.lazy(() => import('layout'));
 const Login = React.lazy(() => import('pages/LoginPage'));
 
 const App = () => {

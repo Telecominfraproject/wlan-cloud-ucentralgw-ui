@@ -18,6 +18,7 @@ import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import LoadingButton from 'components/LoadingButton';
+import styles from './index.module.scss';
 
 const DeviceLogs = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -154,9 +155,9 @@ const DeviceLogs = ({ selectedDeviceId }) => {
       color="gradient-info"
       header={t('device_logs.title')}
       footerSlot={
-        <div style={{ padding: '20px' }}>
+        <div className={styles.footer}>
           <CCollapse show={collapse}>
-            <CRow style={{ marginBottom: '10px' }}>
+            <CRow className={styles.datepickerRow}>
               <CCol>
                 {t('common.from')}
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
@@ -167,13 +168,13 @@ const DeviceLogs = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className="overflow-auto" style={{ height: '250px' }}>
+              <div className={[styles.scrollableCard, "overflow-auto"].join(" ")}>
                 <CDataTable
                   border
                   items={logs ?? []}
                   fields={columns}
                   loading={loading}
-                  style={{ color: 'white' }}
+                  className={styles.whiteIcon}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
                     recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
@@ -202,7 +203,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
                     ),
                   }}
                 />
-                <CRow style={{ marginBottom: '1%', marginRight: '1%' }}>
+                <CRow className={styles.loadMoreRow}>
                   {showLoadingMore && (
                     <LoadingButton
                       label={t('common.view_more')}
@@ -219,14 +220,14 @@ const DeviceLogs = ({ selectedDeviceId }) => {
           <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              style={{ color: 'white' }}
+              className={styles.whiteIcon}
               size="lg"
             />
           </CButton>
         </div>
       }
     >
-      <CIcon name="cilList" style={{ color: 'white' }} size="lg" />
+      <CIcon name="cilList" className={styles.whiteIcon} size="lg" />
     </CWidgetDropdown>
   );
 };

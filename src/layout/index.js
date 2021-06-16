@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import TheContent from './TheContent';
-import TheSidebar from './TheSidebar';
-import TheFooter from './TheFooter';
-import TheHeader from './TheHeader';
+import TheContent from './Content';
+import TheSidebar from './Sidebar';
+import TheFooter from './Footer';
+import TheHeader from './Header';
 
 const TheLayout = (props) => {
   const { isLoggedIn } = useSelector((state) => state.connected);

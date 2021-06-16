@@ -12,6 +12,7 @@ import TraceModal from 'components/TraceModal';
 import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
+import styles from './index.module.scss';
 
 const DeviceActions = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow style={{ marginTop: '10px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
@@ -102,7 +103,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow style={{ marginTop: '10px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
@@ -114,7 +115,7 @@ const DeviceActions = ({ selectedDeviceId }) => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow style={{ marginTop: '10px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol>
             <LoadingButton
               isLoading={connectLoading}

@@ -20,6 +20,7 @@ import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
+import styles from './index.module.scss';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -124,12 +125,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('scan.directions')}</h6>
-        <CRow style={{ marginTop: '20px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol md="3">
-            <p style={{ paddingLeft: '2%' }}>Verbose:</p>
+            <p className={styles.spacedText}>Verbose:</p>
           </CCol>
           <CCol>
-            <CForm style={{ paddingLeft: '5%' }}>
+            <CForm className={styles.spacedSwitch}>
               <CSwitch
                 color="primary"
                 defaultChecked={choseVerbose}
@@ -140,12 +141,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
             </CForm>
           </CCol>
         </CRow>
-        <CRow style={{ marginTop: '20px' }}>
+        <CRow className={styles.spacedRow}>
           <CCol md="3">
-            <p style={{ paddingLeft: '2%' }}>{t('scan.active')}:</p>
+            <p className={styles.spacedText}>{t('scan.active')}:</p>
           </CCol>
           <CCol>
-            <CForm style={{ paddingLeft: '5%' }}>
+            <CForm className={styles.spacedSwitch}>
               <CSwitch
                 color="primary"
                 defaultChecked={activeScan}
@@ -156,7 +157,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
             </CForm>
           </CCol>
         </CRow>
-        <div style={{ marginTop: '3%' }} hidden={!hadSuccess && !hadFailure}>
+        <div className={styles.spacedRow} hidden={!hadSuccess && !hadFailure}>
           <WifiChannelTable channels={channelList} />
         </div>
       </CModalBody>

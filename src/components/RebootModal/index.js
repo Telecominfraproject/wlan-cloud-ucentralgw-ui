@@ -22,6 +22,7 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import styles from './index.module.scss';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -110,7 +111,7 @@ const ActionModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <h6>{t('reboot.directions')}</h6>
-            <CRow style={{ marginTop: '20px' }}>
+            <CRow className={styles.spacedRow}>
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
                   {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
@@ -123,8 +124,8 @@ const ActionModal = ({ show, toggleModal }) => {
                 </CButton>
               </CCol>
             </CRow>
-            <CRow style={{ marginTop: '20px' }}>
-              <CCol md="4" style={{ marginTop: '7px' }}>
+            <CRow className={styles.spacedRow}>
+              <CCol md="4" className={styles.spacedColumn}>
                 <p>{t('common.date')}:</p>
               </CCol>
               <CCol xs="12" md="8">

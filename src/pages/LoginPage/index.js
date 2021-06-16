@@ -22,6 +22,7 @@ import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import { useDispatch } from 'react-redux';
 import axiosInstance from 'utils/axiosInstance';
 import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
+import styles from './index.module.scss';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -94,9 +95,8 @@ const Login = () => {
         <CRow className="justify-content-center">
           <CCol md="8">
             <img
-              className="c-sidebar-brand-full"
+              className={[styles.logo, "c-sidebar-brand-full"].join(" ")}
               src={logo}
-              style={{ paddingLeft: '17%', width: '85%' }}
               alt="OpenWifi"
             />
             <CCardGroup>
