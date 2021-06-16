@@ -168,7 +168,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className={[styles.scrollableCard, "overflow-auto"].join(" ")}>
+              <div className={[styles.scrollableCard, 'overflow-auto'].join(' ')}>
                 <CDataTable
                   border
                   items={logs ?? []}

@@ -1,29 +1,29 @@
 .icon {
-    height: 32px;
-    width: 32px;
+  height: 32px;
+  width: 32px;
 }
 
 .column {
-    text-align: center;
+  text-align: center;
 }
 
 .certificateWrapper {
-    position: relative;
+  position: relative;
 }
 
 .badge {
-    position: 'absolute';
-    left: '31%';
-    margin-top: '8%';
+  position: 'absolute';
+  left: '31%';
+  margin-top: '8%';
 }
 
 .badCertificate {
-    position: 'absolute'; 
-    z-index: 99; 
-    left: '21%'; 
-    color: '#e55353';
+  position: 'absolute';
+  z-index: 99;
+  left: '21%';
+  color: '#e55353';
 }
 
 .mismatchBackground {
-    background-color: #FFFF5C;
+  background-color: #ffff5c;
 }

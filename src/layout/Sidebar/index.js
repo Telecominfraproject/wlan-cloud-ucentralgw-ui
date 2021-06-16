@@ -23,7 +23,7 @@ const TheSidebar = () => {
   const navigation = [
     {
       _tag: 'CSidebarNavItem',
-      name: t("common.device_list"),
+      name: t('common.device_list'),
       to: '/devices',
       icon: 'cilNotes',
     },
@@ -33,12 +33,12 @@ const TheSidebar = () => {
     <CSidebar show={show} onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })}>
       <CSidebarBrand className="d-md-down-none" to="/devices">
         <img
-          className={[styles.sidebarImgFull, "c-sidebar-brand-full"].join(" ")}
+          className={[styles.sidebarImgFull, 'c-sidebar-brand-full'].join(' ')}
           src={logoBar}
           alt="OpenWifi"
         />
         <img
-          className={[styles.sidebarImgMinimized, "c-sidebar-brand-minimized"].join(" ")}
+          className={[styles.sidebarImgMinimized, 'c-sidebar-brand-minimized'].join(' ')}
           src={logoBar}
           alt="OpenWifi"
         />

@@ -34,7 +34,7 @@ const TheHeader = () => {
   };
 
   useEffect(() => {
-    setTranslatedRoutes(routes.map(({name, ...rest}) => ({...rest, name: t(name)})));
+    setTranslatedRoutes(routes.map(({ name, ...rest }) => ({ ...rest, name: t(name) })));
   }, [i18n.language]);
 
   return (
@@ -48,9 +48,9 @@ const TheHeader = () => {
       <CHeaderNav className="d-md-down-none mr-auto" />
 
       <CHeaderNav className="px-3">
-        <LanguageSwitcher/>
+        <LanguageSwitcher />
       </CHeaderNav>
-      
+
       <CHeaderNav className="px-3">
         <CPopover content={t('common.logout')}>
           <CLink className="c-subheader-nav-link">
@@ -60,7 +60,10 @@ const TheHeader = () => {
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">
-        <CBreadcrumbRouter className="border-0 c-subheader-nav m-0 px-0 px-md-3" routes={translatedRoutes} />
+        <CBreadcrumbRouter
+          className="border-0 c-subheader-nav m-0 px-0 px-md-3"
+          routes={translatedRoutes}
+        />
       </CSubheader>
     </CHeader>
   );

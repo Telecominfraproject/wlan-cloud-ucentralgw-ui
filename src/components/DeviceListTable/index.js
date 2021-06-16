@@ -198,13 +198,13 @@ const DeviceListDisplay = ({
       return <img src={apIcon} className={styles.icon} alt="AP" />;
     }
     if (deviceType === 'MESH') {
-      return <img src={meshIcon} className={styles.icon}  alt="MESH" />;
+      return <img src={meshIcon} className={styles.icon} alt="MESH" />;
     }
     if (deviceType === 'SWITCH') {
-      return <img src={internetSwitch} className={styles.icon}  alt="SWITCH" />;
+      return <img src={internetSwitch} className={styles.icon} alt="SWITCH" />;
     }
     if (deviceType === 'IOT') {
-      return <img src={iotIcon} className={styles.icon}  alt="SWITCH" />;
+      return <img src={iotIcon} className={styles.icon} alt="SWITCH" />;
     }
     return null;
   };
@@ -213,13 +213,7 @@ const DeviceListDisplay = ({
     if (cert === 'NO_CERTIFICATE') {
       return (
         <div className={styles.certificateWrapper}>
-          <CIcon
-            className={styles.badge}
-            name="cil-badge"
-            content={cilBadge}
-            size="2xl"
-            alt="AP"
-          />
+          <CIcon className={styles.badge} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           <CIcon
             className={styles.badCertificate}
             name="cil-ban"

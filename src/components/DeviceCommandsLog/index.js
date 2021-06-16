@@ -307,7 +307,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className={["overflow-auto", styles.scrollableBox].join(" ")}>
+              <div className={['overflow-auto', styles.scrollableBox].join(' ')}>
                 <CDataTable
                   loading={loading}
                   items={commands ?? []}
@@ -366,7 +366,9 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                 ) : (
                                   <FontAwesomeIcon
                                     icon={faClipboardCheck}
-                                    className={[styles.customIconHeight, "c-icon c-icon-lg"].join(" ")}
+                                    className={[styles.customIconHeight, 'c-icon c-icon-lg'].join(
+                                      ' ',
+                                    )}
                                   />
                                 )}
                               </CButton>

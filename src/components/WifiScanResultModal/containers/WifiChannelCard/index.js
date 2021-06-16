@@ -17,7 +17,7 @@ const WifiChannelCard = ({ channel }) => {
         </CCardTitle>
       </CCardHeader>
       <CCardBody>
-        <div className={[styles.scrollable, "overflow-auto"].join(" ")}>
+        <div className={[styles.scrollable, 'overflow-auto'].join(' ')}>
           <CDataTable items={channel.devices} fields={columns} className={styles.datatable} />
         </div>
       </CCardBody>

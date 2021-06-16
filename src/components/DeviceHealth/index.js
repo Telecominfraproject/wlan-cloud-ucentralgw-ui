@@ -171,7 +171,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   return (
     <CWidgetDropdown
       header={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
-      text={t("health.title")}
+      text={t('health.title')}
       value={sanityLevel ?? 100}
       color={barColor}
       inverse="true"
@@ -190,7 +190,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               </CCol>
             </CRow>
             <CCard>
-              <div className={[styles.scrollable, "overflow-auto"].join(" ")}>
+              <div className={[styles.scrollable, 'overflow-auto'].join(' ')}>
                 <CDataTable
                   items={healthChecks ?? []}
                   fields={columns}

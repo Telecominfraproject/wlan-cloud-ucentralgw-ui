@@ -95,7 +95,7 @@ const Login = () => {
         <CRow className="justify-content-center">
           <CCol md="8">
             <img
-              className={[styles.logo, "c-sidebar-brand-full"].join(" ")}
+              className={[styles.logo, 'c-sidebar-brand-full'].join(' ')}
               src={logo}
               alt="OpenWifi"
             />
