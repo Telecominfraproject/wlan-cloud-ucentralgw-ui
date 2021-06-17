@@ -22,6 +22,7 @@ import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import { useDispatch } from 'react-redux';
 import axiosInstance from 'utils/axiosInstance';
 import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
+import LanguageSwitcher from 'components/LanguageSwitcher';
 import styles from './index.module.scss';
 
 const Login = () => {
@@ -184,7 +185,11 @@ const Login = () => {
                           {t('login.login')}
                         </CButton>
                       </CCol>
-                      <CCol xs="6" className="text-right" />
+                      <CCol xs="6">
+                        <div className={styles.languageSwitcher}>
+                          <LanguageSwitcher/>
+                        </div>
+                      </CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
