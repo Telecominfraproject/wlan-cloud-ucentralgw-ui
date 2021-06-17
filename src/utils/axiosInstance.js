@@ -12,6 +12,7 @@ axiosRetry(axiosInstance, {
   retryDelay: () => axiosRetry.exponentialDelay,
 });
 
+axiosInstance.defaults.timeout = 30000;
 axiosInstance.defaults.headers.get.Accept = 'application/json';
 axiosInstance.defaults.headers.post.Accept = 'application/json';
 

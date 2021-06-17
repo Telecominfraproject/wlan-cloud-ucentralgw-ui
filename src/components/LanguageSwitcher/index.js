@@ -6,7 +6,7 @@ const LanguageSwitcher = () => {
 
   return (
     <div className="select">
-      <select value={i18n.language} onChange={(e) => i18n.changeLanguage(e.target.value)}>
+      <select value={i18n.language.split("-")[0]} onChange={(e) => i18n.changeLanguage(e.target.value)}>
         <option value="de">Deutsche</option>
         <option value="es">Español</option>
         <option value="en">English</option>
