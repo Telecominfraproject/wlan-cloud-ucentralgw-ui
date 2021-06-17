@@ -200,7 +200,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               onClick={() => doAction(false)}
             >
               {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
-              <CSpinner hidden={!waiting || doingNow} component="span" size="sm" />
+              <CSpinner color="light" hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>
               {t('common.cancel')}

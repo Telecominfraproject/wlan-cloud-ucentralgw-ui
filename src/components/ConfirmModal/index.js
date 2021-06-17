@@ -38,7 +38,7 @@ const ConfirmModal = ({ show, toggle, action }) => {
       return (
         <div>
           {t('common.loading_ellipsis')}
-          <CSpinner component="span" size="sm" />
+          <CSpinner color="light" component="span" size="sm" />
         </div>
       );
     }

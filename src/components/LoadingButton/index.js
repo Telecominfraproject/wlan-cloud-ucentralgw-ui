@@ -20,7 +20,7 @@ const LoadingButton = ({
     disabled={isLoading || disabled}
   >
     {isLoading ? isLoadingLabel : label}
-    <CSpinner hidden={!isLoading} component="span" size="sm" />
+    <CSpinner hidden={!isLoading} color="light" component="span" size="sm" />
   </CButton>
 );
 
