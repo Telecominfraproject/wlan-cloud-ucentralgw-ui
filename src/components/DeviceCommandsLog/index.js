@@ -313,7 +313,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                   items={commands ?? []}
                   fields={columns}
                   className={styles.whiteIcon}
-                  border
                   columnFilter
                   sorter
                   sorterValue={{ column: 'submitted', desc: 'true' }}

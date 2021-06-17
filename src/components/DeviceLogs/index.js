@@ -170,7 +170,6 @@ const DeviceLogs = ({ selectedDeviceId }) => {
             <CCard>
               <div className={[styles.scrollableCard, 'overflow-auto'].join(' ')}>
                 <CDataTable
-                  border
                   items={logs ?? []}
                   fields={columns}
                   loading={loading}

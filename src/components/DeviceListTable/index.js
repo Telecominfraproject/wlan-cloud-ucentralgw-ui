@@ -293,7 +293,6 @@ const DeviceListDisplay = ({
           <CDataTable
             items={devices ?? []}
             fields={columns}
-            border
             hover
             loading={loading}
             scopedSlots={{

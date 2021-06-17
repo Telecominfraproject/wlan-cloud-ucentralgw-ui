@@ -196,7 +196,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
                   fields={columns}
                   className={styles.dataTable}
                   loading={loading}
-                  border
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
                     recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
