@@ -168,9 +168,9 @@ const DeviceListDisplay = ({
     { key: 'UUID', label: t('common.config_id'), _style: { width: '5%' } },
     { key: 'firmware', label: t('common.firmware'), filter: false, _style: { width: '20%' } },
     { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '20%' } },
-    { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '10%' } },
-    { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '10%' } },
-    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '20%' } },
+    { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '12%' } },
+    { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '12%' } },
+    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '16%' } },
     {
       key: 'show_details',
       label: '',
@@ -213,7 +213,13 @@ const DeviceListDisplay = ({
     if (cert === 'NO_CERTIFICATE') {
       return (
         <div className={styles.certificateWrapper}>
-          <CIcon className={styles.badge} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
+          <CIcon
+            className={styles.badge} 
+            name="cil-badge" 
+            content={cilBadge} 
+            size="2xl" 
+            alt="AP" 
+          />
           <CIcon
             className={styles.badCertificate}
             name="cil-ban"
