@@ -124,7 +124,7 @@
 	},
 	"login": {
 		"login": "Iniciar sesión",
-		"login error": "Error de inicio de sesión, confirme que su nombre de usuario, contraseña y URL de puerta de enlace son válidos",
+		"login_error": "Error de inicio de sesión, confirme que su nombre de usuario, contraseña y URL de puerta de enlace son válidos",
 		"password": "Contraseña",
 		"please_enter_gateway": "Ingrese una URL de puerta de enlace",
 		"please_enter_password": "Por favor, introduzca su contraseña",

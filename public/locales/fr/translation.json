@@ -124,7 +124,7 @@
 	},
 	"login": {
 		"login": "S'identifier",
-		"login error": "Erreur de connexion, confirmez que votre nom d'utilisateur, mot de passe et URL de passerelle sont valides",
+		"login_error": "Erreur de connexion, confirmez que votre nom d'utilisateur, mot de passe et URL de passerelle sont valides",
 		"password": "Mot de passe",
 		"please_enter_gateway": "Veuillez saisir une URL de passerelle",
 		"please_enter_password": "s'il vous plait entrez votre mot de passe",

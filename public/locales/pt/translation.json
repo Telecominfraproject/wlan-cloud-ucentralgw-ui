@@ -124,7 +124,7 @@
 	},
 	"login": {
 		"login": "Entrar",
-		"login error": "Erro de login, confirme se seu nome de usuário, senha e url de gateway são válidos",
+		"login_error": "Erro de login, confirme se seu nome de usuário, senha e url de gateway são válidos",
 		"password": "Senha",
 		"please_enter_gateway": "Insira um URL de gateway",
 		"please_enter_password": "Por favor, insira sua senha",

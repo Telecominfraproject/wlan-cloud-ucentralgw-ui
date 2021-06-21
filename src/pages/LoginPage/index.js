@@ -30,12 +30,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [gatewayUrl, setGatewayUrl] = useState('https://ucentral.dpaas.arilia.com:16001');
+  const [gatewayUrl, setGatewayUrl] = useState(process.env.REACT_APP_DEFAULT_GATEWAY_URL);
   const [hadError, setHadError] = useState(false);
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
   const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
+  const defaultGatewayUrl = process.env.REACT_APP_DEFAULT_GATEWAY_URL;
+  const allowUrlChange = process.env.REACT_APP_ALLOW_GATEWAY_CHANGE === "true";
   const loginErrorText = t('login.login_error');
 
   const formValidation = () => {
@@ -62,10 +64,12 @@ const Login = () => {
   };
 
   const SignIn = (credentials) => {
+    const gatewayUrlToUse = allowUrlChange ? gatewayUrl : defaultGatewayUrl;
+
     axiosInstance
-      .post(`${gatewayUrl}/api/v1/oauth2`, credentials)
+      .post(`${gatewayUrlToUse}/api/v1/oauth2`, credentials)
       .then((response) => {
-        sessionStorage.setItem('gw_url', `${gatewayUrl}/api/v1`);
+        sessionStorage.setItem('gw_url', `${gatewayUrlToUse}/api/v1`);
         sessionStorage.setItem('access_token', response.data.access_token);
         dispatch({ type: 'set', connected: true });
       })
@@ -147,7 +151,7 @@ const Login = () => {
                         {t('login.please_enter_password')}
                       </CInvalidFeedback>
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className="mb-4" hidden={!allowUrlChange}>
                       <CPopover content="Gateway URL">
                         <CInputGroupPrepend>
                           <CInputGroupText>

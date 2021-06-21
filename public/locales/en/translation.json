@@ -124,7 +124,7 @@
 	},
 	"login": {
 		"login": "Login",
-		"login error": "Login error, confirm that your username, password and gateway url are valid",
+		"login_error": "Login error, confirm that your username, password and gateway url are valid",
 		"password": "Password",
 		"please_enter_gateway": "Please enter a gateway URL",
 		"please_enter_password": "Please enter your password",
