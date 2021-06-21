@@ -121,7 +121,12 @@ const BlinkModal = ({ show, toggleModal }) => {
               <CCol>
                 <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
                   {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
-                  <CSpinner color="light" hidden={!waiting || !doingNow} component="span" size="sm" />
+                  <CSpinner
+                    color="light"
+                    hidden={!waiting || !doingNow}
+                    component="span"
+                    size="sm"
+                  />
                 </CButton>
               </CCol>
               <CCol>

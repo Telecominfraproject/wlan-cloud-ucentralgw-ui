@@ -34,6 +34,8 @@
 		"config_id": "Konfig. Ich würde",
 		"confirm": "Bestätigen",
 		"connected": "In Verbindung gebracht",
+		"copied": "kopiert!",
+		"copy_to_clipboard": "In die Zwischenablage kopieren",
 		"date": "Datum",
 		"delete": "Löschen",
 		"details": "Einzelheiten",
@@ -80,6 +82,7 @@
 	"configuration": {
 		"created": "Erstellt",
 		"details": "Gerätedetails",
+		"device_password": "Passwort",
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",

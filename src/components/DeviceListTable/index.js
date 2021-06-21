@@ -213,13 +213,7 @@ const DeviceListDisplay = ({
     if (cert === 'NO_CERTIFICATE') {
       return (
         <div className={styles.certificateWrapper}>
-          <CIcon
-            className={styles.badge} 
-            name="cil-badge" 
-            content={cilBadge} 
-            size="2xl" 
-            alt="AP" 
-          />
+          <CIcon className={styles.badge} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
           <CIcon
             className={styles.badCertificate}
             name="cil-ban"

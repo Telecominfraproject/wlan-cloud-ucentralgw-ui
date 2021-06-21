@@ -17,7 +17,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import PropTypes from 'prop-types';
-import { cilWindowMaximize } from '@coreui/icons';
+import { cilWindowMaximize, cilClone } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
@@ -29,6 +29,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
   const [collapse, setCollapse] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [device, setDevice] = useState(null);
+  const [copyPasswordSuccess, setCopyPasswordSuccess] = useState('');
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -37,6 +38,12 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const copyPasswordToClipboard = () => {
+    const password = device.devicePassword === '' ? 'openwifi' : device.devicePassword;
+    navigator.clipboard.writeText(password);
+    setCopyPasswordSuccess(t('common.copied'));
   };
 
   const getDevice = () => {
@@ -57,6 +64,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
 
   useEffect(() => {
     if (selectedDeviceId) getDevice();
+    setCopyPasswordSuccess(null);
   }, [selectedDeviceId]);
 
   if (device) {
@@ -138,6 +146,20 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
                 </CCol>
                 <CCol xs="12" md="9">
                   {prettyDate(device.lastConfigurationDownload)}
+                </CCol>
+              </CFormGroup>
+              <CFormGroup row>
+                <CCol md="3">
+                  <CLabel>{t('configuration.device_password')} : </CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  {device.devicePassword === '' ? 'openwifi' : device.devicePassword}
+                  <CPopover content={t('common.copy_to_clipboard')}>
+                    <CButton onClick={copyPasswordToClipboard} size="sm">
+                      <CIcon content={cilClone} />
+                    </CButton>
+                  </CPopover>
+                  {copyPasswordSuccess}
                 </CCol>
               </CFormGroup>
               <CCollapse show={collapse}>

@@ -187,7 +187,7 @@ const Login = () => {
                       </CCol>
                       <CCol xs="6">
                         <div className={styles.languageSwitcher}>
-                          <LanguageSwitcher/>
+                          <LanguageSwitcher />
                         </div>
                       </CCol>
                     </CRow>
