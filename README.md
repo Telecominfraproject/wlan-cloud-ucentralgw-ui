@@ -31,3 +31,6 @@ During development, you will need to stop and start the project again to see tho
 REACT_APP_DEFAULT_GATEWAY_URL=https://ucentral.dpaas.arilia.com:16001
 REACT_APP_ALLOW_GATEWAY_CHANGE=false
 ```
+- `REACT_APP_DEFAULT_GATEWAY_URL` points to the actual uCentral gateway, including the port.
+- `REACT_APP_ALLOW_GATEWAY_CHANGE` : when set to `true` will allow a user to change the gateway name she wants to use. When set to `false`, will not show a text field for the gateway and will only allow users to go to the gateway speficied in `REACT_APP_DEFAULT_GATEWAY_URL`.
+
