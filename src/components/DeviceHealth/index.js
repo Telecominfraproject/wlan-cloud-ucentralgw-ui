@@ -88,7 +88,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       });
   };
 
-  // Function called from the button on the table so that a user can see more details
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
     let newDetails = details.slice();

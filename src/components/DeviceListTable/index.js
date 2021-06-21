@@ -121,12 +121,10 @@ const DeviceList = () => {
     setPage(selectedPage);
   };
 
-  // Initial load
   useEffect(() => {
     getSerialNumbers();
   }, []);
 
-  // Updating the devices only if serial numbers, page number or devices per page changes
   useEffect(() => {
     if (loadedSerials) getDeviceInformation();
   }, [serialNumbers, page, devicesPerPage, loadedSerials]);
