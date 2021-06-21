@@ -10,8 +10,10 @@ import DeviceStatisticsChart from '../DeviceStatisticsChart';
 const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [deviceStats, setStats] = useState([]);
-  const [statOptions, setStatOptions] = useState({});
+  const [statOptions, setStatOptions] = useState({
+    interfaceList: [],
+    settings: {}
+  });
 
   const transformIntoDataset = (data) => {
     const sortedData = data.sort((a, b) => {
@@ -97,8 +99,16 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       },
     };
 
-    setStatOptions(options);
-    setStats(interfaceList);
+    console.log('loading stats');
+
+    const newOptions = {
+      interfaceList,
+      settings: options
+    };
+
+    if(statOptions !== newOptions){
+      setStatOptions(newOptions);
+    }
   };
 
   const getStatistics = () => {
@@ -134,20 +144,20 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   }, [selectedDeviceId]);
 
   useEffect(() => {
-    if (lastRefresh !== '' && selectedDeviceId) {
+    if (!loading && lastRefresh !== '' && selectedDeviceId) {
       getStatistics();
     }
   }, [lastRefresh]);
 
   return (
     <div>
-      {deviceStats.map((data) => (
+      {statOptions.interfaceList.map((data) => (
         <div key={createUuid()}>
           <DeviceStatisticsChart
             key={createUuid()}
             data={data}
             options={{
-              ...statOptions,
+              ...statOptions.settings,
               title: {
                 text: capitalizeFirstLetter(data[0].titleName),
                 align: 'left',
