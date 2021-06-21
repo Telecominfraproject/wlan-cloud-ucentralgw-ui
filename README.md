@@ -24,7 +24,7 @@ npm run build
 Once the build is done, you can move the `build` folder on your server.
 
 ### Environment variables
-There are two environment variables currently used to control the gateway URL and also controlling if the users can modify the gateway URL. You can modify these values by going to the .env file at the root of the project. 
+There are two environment variables currently used to control the gateway URL and also controlling if the users can modify the gateway URL. You can modify these values in the `.env` file located in the root of the project. 
 
 During development, you will need to stop and start the project again to see those changes come into effect.
 ```asm
