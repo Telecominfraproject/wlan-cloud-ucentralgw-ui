@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import 'scss/style.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector, useDispatch } from 'react-redux';
 
 const loading = (
