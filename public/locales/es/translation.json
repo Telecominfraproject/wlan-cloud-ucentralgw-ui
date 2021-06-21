@@ -1,0 +1,162 @@
+{
+	"actions": {
+		"blink": "Parpadeo",
+		"configure": "Configurar",
+		"connect": "Conectar",
+		"connecting": "Conectando ...",
+		"factory_reset": "Restablecimiento De Fábrica",
+		"firmware_upgrade": "Actualización de firmware",
+		"reboot": "Reiniciar",
+		"title": "Acciones del dispositivo",
+		"trace": "Rastro",
+		"wifi_scan": "Escaneo Wifi"
+	},
+	"blink": {
+		"blink": "Parpadeo",
+		"device_leds": "LED de dispositivo",
+		"pattern": "Elija el patrón que le gustaría usar:",
+		"when_blink_leds": "¿Cuándo desea que los LED del dispositivo parpadeen?"
+	},
+	"commands": {
+		"error": "¡Error al enviar el comando!",
+		"success": "Comando enviado con éxito",
+		"title": "Comandos del dispositivo"
+	},
+	"common": {
+		"are_you_sure": "¿Estás seguro?",
+		"cancel": "Cancelar",
+		"certificate": "Certificado",
+		"clear": "Claro",
+		"close": "Cerrar",
+		"command": "Mando",
+		"compatible": "Compatible",
+		"completed": "terminado",
+		"config_id": "Config. Identificación",
+		"confirm": "Confirmar",
+		"connected": "Conectado",
+		"copied": "Copiado!",
+		"copy_to_clipboard": "Copiar al portapapeles",
+		"date": "Fecha",
+		"delete": "Borrar",
+		"details": "Detalles",
+		"device_list": "Listado de dispositivos",
+		"device_page": "Página del dispositivo",
+		"devices": "Dispositivos",
+		"dismiss": "Despedir",
+		"do_now": "¡Hagan ahora!",
+		"download": "Descargar",
+		"duration": "Duración",
+		"error": "Error",
+		"executed": "ejecutado",
+		"firmware": "Firmware",
+		"from": "Desde",
+		"id": "Carné de identidad",
+		"ip_address": "Dirección IP",
+		"later_tonight": "Más tarde esta noche",
+		"loading_ellipsis": "Cargando...",
+		"loading_more_ellipsis": "Cargando más ...",
+		"logout": "Cerrar sesión",
+		"mac": "Dirección MAC",
+		"manufacturer": "Fabricante",
+		"na": "N / A",
+		"need_date": "Necesitas una cita ...",
+		"not_connected": "No conectado",
+		"off": "Apagado",
+		"on": "en",
+		"recorded": "Grabado",
+		"refresh": "Refrescar",
+		"refresh_device": "Actualizar dispositivo",
+		"result": "Resultado",
+		"schedule": "Programar",
+		"serial_number": "Número de serie",
+		"start": "comienzo",
+		"submit": "Enviar",
+		"submitted": "Presentado",
+		"success": "Éxito",
+		"to": "a",
+		"unknown": "Desconocido",
+		"uuid": "UUID",
+		"view_more": "Ver más",
+		"yes": "Sí"
+	},
+	"configuration": {
+		"created": "creado",
+		"details": "Detalles del dispositivo",
+		"device_password": "Contraseña",
+		"last_configuration_change": "Último cambio de configuración",
+		"last_configuration_download": "Descarga de la última configuración",
+		"location": "Ubicación",
+		"notes": "Notas",
+		"owner": "Propietario",
+		"title": "Configuración del dispositivo",
+		"type": "Tipo de dispositivo",
+		"view_json": "Ver JSON sin procesar"
+	},
+	"configure": {
+		"choose_file": "Debe elegir un archivo .json válido:",
+		"enter_new": "Ingrese la nueva configuración del dispositivo JSON:",
+		"placeholder": "Configurar JSON",
+		"title": "Configurar dispositivo",
+		"valid_json": "Debes ingresar un JSON válido"
+	},
+	"delete_command": {
+		"explanation": "¿Está seguro de que desea eliminar este comando? Esta acción no es reversible.",
+		"title": "Eliminar comando"
+	},
+	"device_logs": {
+		"log": "Iniciar sesión",
+		"severity": "Gravedad",
+		"title": "Registros de dispositivos"
+	},
+	"factory_reset": {
+		"redirector": "Mantener el redirector:",
+		"title": "Dispositivo de restablecimiento de fábrica",
+		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
+	},
+	"footer": {
+		"coreui_for_react": "CoreUI para React",
+		"powered_by": "energizado por",
+		"version": "Versión"
+	},
+	"health": {
+		"sanity": "Cordura",
+		"title": "Salud del dispositivo"
+	},
+	"login": {
+		"login": "Iniciar sesión",
+		"login_error": "Error de inicio de sesión, confirme que su nombre de usuario, contraseña y URL de puerta de enlace son válidos",
+		"password": "Contraseña",
+		"please_enter_gateway": "Ingrese una URL de puerta de enlace",
+		"please_enter_password": "Por favor, introduzca su contraseña",
+		"please_enter_username": "Por favor, ingrese su nombre de usuario",
+		"sign_in_to_account": "Iniciar sesión en su cuenta",
+		"username": "Nombre de usuario"
+	},
+	"reboot": {
+		"directions": "¿Cuándo le gustaría reiniciar este dispositivo?",
+		"title": "Reiniciar dispositivo"
+	},
+	"scan": {
+		"active": "Habilitar escaneo activo",
+		"channel": "Canal",
+		"directions": "Ejecute un escaneo wifi de este dispositivo, que debería tomar aproximadamente 25 segundos.",
+		"results": "Resultados de escaneo Wifi"
+	},
+	"statistics": {
+		"data": "Datos (KB)",
+		"title": "estadística"
+	},
+	"trace": {
+		"choose_network": "Elija la red",
+		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
+		"packets": "Paquetes",
+		"title": "Dispositivo de seguimiento"
+	},
+	"upgrade": {
+		"directions": "Elija una hora y una versión de firmware para este dispositivo",
+		"firmware_uri": "URI de firmware:",
+		"need_uri": "Necesitas un URI ...",
+		"time": "Hora de actualización:",
+		"title": "Actualización de firmware"
+	}
+}
