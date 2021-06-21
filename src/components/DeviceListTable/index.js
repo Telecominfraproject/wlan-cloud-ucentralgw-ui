@@ -24,6 +24,7 @@ import meshIcon from 'assets/icons/Mesh.png';
 import apIcon from 'assets/icons/AP.png';
 import internetSwitch from 'assets/icons/Switch.png';
 import iotIcon from 'assets/icons/IotIcon.png';
+import { getItem, setItem } from 'utils/localStorageHelper';
 import styles from './index.module.scss';
 
 const DeviceList = () => {
@@ -32,7 +33,7 @@ const DeviceList = () => {
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const [devicesPerPage, setDevicesPerPage] = useState(10);
+  const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || 10);
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -114,6 +115,7 @@ const DeviceList = () => {
   };
 
   const updateDevicesPerPage = (value) => {
+    setItem('devicesPerPage', value);
     setDevicesPerPage(value);
   };
 
@@ -141,6 +143,7 @@ const DeviceList = () => {
       devices={devices}
       loading={loading}
       updateDevicesPerPage={updateDevicesPerPage}
+      devicesPerPage={devicesPerPage}
       pageCount={pageCount}
       updatePage={updatePageCount}
       pageRangeDisplayed={5}
@@ -152,6 +155,7 @@ const DeviceList = () => {
 
 const DeviceListDisplay = ({
   devices,
+  devicesPerPage,
   loading,
   updateDevicesPerPage,
   pageCount,
@@ -281,7 +285,7 @@ const DeviceListDisplay = ({
               <Select
                 isClearable={false}
                 options={selectOptions}
-                defaultValue={{ value: '10', label: '10' }}
+                defaultValue={{ value: devicesPerPage, label: devicesPerPage }}
                 onChange={(value) => updateDevicesPerPage(value.value)}
               />
             </CCol>
@@ -417,6 +421,7 @@ DeviceListDisplay.propTypes = {
   updateDevicesPerPage: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   updatePage: PropTypes.func.isRequired,
+  devicesPerPage: PropTypes.string.isRequired,
   refreshDevice: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,

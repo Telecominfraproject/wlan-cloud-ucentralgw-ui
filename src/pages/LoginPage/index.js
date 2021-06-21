@@ -37,7 +37,7 @@ const Login = () => {
   const [emptyGateway, setEmptyGateway] = useState(false);
   const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
   const defaultGatewayUrl = process.env.REACT_APP_DEFAULT_GATEWAY_URL;
-  const allowUrlChange = process.env.REACT_APP_ALLOW_GATEWAY_CHANGE === "true";
+  const allowUrlChange = process.env.REACT_APP_ALLOW_GATEWAY_CHANGE === 'true';
   const loginErrorText = t('login.login_error');
 
   const formValidation = () => {
