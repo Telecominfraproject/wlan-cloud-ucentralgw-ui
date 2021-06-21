@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
-  const [lastRefresh, setLastRefresh] = useState('');
+  const [lastRefresh, setLastRefresh] = useState(new Date().toString());
 
   const refresh = () => {
     setLastRefresh(new Date().toString());
