@@ -99,8 +99,6 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       },
     };
 
-    console.log('loading stats');
-
     const newOptions = {
       interfaceList,
       settings: options
