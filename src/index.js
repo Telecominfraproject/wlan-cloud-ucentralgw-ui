@@ -6,7 +6,6 @@ import App from 'App';
 import store from 'store';
 import { icons } from 'assets/icons';
 import 'i18n';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 React.icons = icons;
 
