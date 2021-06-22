@@ -25,26 +25,26 @@ const DeleteLogModal = ({ serialNumber, show, toggle, object }) => {
     setLoading(true);
 
     const options = {
-        headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-            endDate: dateToUnix(maxDate),
-        },
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+      params: {
+        endDate: dateToUnix(maxDate),
+      },
     };
     return axiosInstance
-    .delete(`/device/${serialNumber}/${object}`, options)
-    .then(() => {
-    })
-    .catch(() => {
-    })
-    .finally(() => {
-        if(object === "healthchecks") eventBus.dispatch('deletedHealth', { message: 'Healthcheck was deleted' });
-        else if(object === "logs") eventBus.dispatch('deletedLogs', { message: 'Deleted device logs'});
+      .delete(`/device/${serialNumber}/${object}`, options)
+      .then(() => {})
+      .catch(() => {})
+      .finally(() => {
+        if (object === 'healthchecks')
+          eventBus.dispatch('deletedHealth', { message: 'Healthcheck was deleted' });
+        else if (object === 'logs')
+          eventBus.dispatch('deletedLogs', { message: 'Deleted device logs' });
         setLoading(false);
         toggle();
-    });
+      });
   };
 
   useEffect(() => {
@@ -79,7 +79,13 @@ const DeleteLogModal = ({ serialNumber, show, toggle, object }) => {
           </CCol>
         </CRow>
       </CModalBody>
-      <ConfirmFooter isShown={show} isLoading={loading} action={deleteLog} color="primary" toggleParent={toggle} />
+      <ConfirmFooter
+        isShown={show}
+        isLoading={loading}
+        action={deleteLog}
+        color="primary"
+        toggleParent={toggle}
+      />
     </CModal>
   );
 };
@@ -88,7 +94,7 @@ DeleteLogModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   object: PropTypes.string.isRequired,
-  serialNumber: PropTypes.string.isRequired
+  serialNumber: PropTypes.string.isRequired,
 };
 
 export default DeleteLogModal;

@@ -280,7 +280,12 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               size="lg"
             />
           </CButton>
-          <DeleteLogModal serialNumber={selectedDeviceId} object="healthchecks" show={showDeleteModal} toggle={toggleDeleteModal} />
+          <DeleteLogModal
+            serialNumber={selectedDeviceId}
+            object="healthchecks"
+            show={showDeleteModal}
+            toggle={toggleDeleteModal}
+          />
         </div>
       }
     />

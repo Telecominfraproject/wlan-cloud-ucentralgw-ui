@@ -52,7 +52,7 @@ ConfirmFooter.propTypes = {
   color: PropTypes.string,
   variant: PropTypes.string,
   toggleParent: PropTypes.func.isRequired,
-  isShown: PropTypes.bool.isRequired
+  isShown: PropTypes.bool.isRequired,
 };
 
 ConfirmFooter.defaultProps = {
