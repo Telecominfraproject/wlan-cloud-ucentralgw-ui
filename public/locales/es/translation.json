@@ -103,6 +103,12 @@
 		"explanation": "¿Está seguro de que desea eliminar este comando? Esta acción no es reversible.",
 		"title": "Eliminar comando"
 	},
+	"delete_logs": {
+		"date": "Seleccione la fecha del registro más antiguo que le gustaría conservar",
+		"device_logs_title": "Eliminar registros de dispositivos",
+		"explanation": "Esto eliminará todos los {{object}} antes de la fecha que elija. Tenga cuidado, esta acción no es reversible.",
+		"healthchecks_title": "Eliminar comprobaciones de estado"
+	},
 	"device_logs": {
 		"log": "Iniciar sesión",
 		"severity": "Gravedad",

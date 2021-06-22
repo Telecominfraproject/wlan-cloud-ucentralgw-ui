@@ -30,15 +30,30 @@ const Login = () => {
   const dispatch = useDispatch();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [gatewayUrl, setGatewayUrl] = useState(process.env.REACT_APP_DEFAULT_GATEWAY_URL);
+  const [gatewayUrl, setGatewayUrl] = useState('');
   const [hadError, setHadError] = useState(false);
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
-  const placeholderUrl = 'Gateway URL (ex: https://ucentral.dpaas.arilia.com:16001)';
-  const defaultGatewayUrl = process.env.REACT_APP_DEFAULT_GATEWAY_URL;
-  const allowUrlChange = process.env.REACT_APP_ALLOW_GATEWAY_CHANGE === 'true';
-  const loginErrorText = t('login.login_error');
+  const [defaultConfig, setDefaultConfig] = useState({
+    DEFAULT_GATEWAY_URL: '',
+    ALLOW_GATEWAY_CHANGE: true,
+  });
+  const placeholderUrl = 'Gateway URL (ex: https://your-url:port)';
+
+  const getDefaultConfig = async () => {
+    fetch('./config.json', {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setDefaultConfig(json);
+      })
+      .catch();
+  };
 
   const formValidation = () => {
     setHadError(false);
@@ -59,12 +74,13 @@ const Login = () => {
       setEmptyGateway(true);
       isSuccessful = false;
     }
-
     return isSuccessful;
   };
 
   const SignIn = (credentials) => {
-    const gatewayUrlToUse = allowUrlChange ? gatewayUrl : defaultGatewayUrl;
+    const gatewayUrlToUse = defaultConfig.ALLOW_GATEWAY_CHANGE
+      ? gatewayUrl
+      : defaultConfig.DEFAULT_GATEWAY_URL;
 
     axiosInstance
       .post(`${gatewayUrlToUse}/api/v1/oauth2`, credentials)
@@ -93,6 +109,12 @@ const Login = () => {
   useEffect(() => {
     if (emptyGateway) setEmptyGateway(false);
   }, [gatewayUrl]);
+  useEffect(() => {
+    getDefaultConfig();
+  }, []);
+  useEffect(() => {
+    setGatewayUrl(defaultConfig.DEFAULT_GATEWAY_URL);
+  }, [defaultConfig]);
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -151,7 +173,7 @@ const Login = () => {
                         {t('login.please_enter_password')}
                       </CInvalidFeedback>
                     </CInputGroup>
-                    <CInputGroup className="mb-4" hidden={!allowUrlChange}>
+                    <CInputGroup className="mb-4" hidden={!defaultConfig.ALLOW_GATEWAY_CHANGE}>
                       <CPopover content="Gateway URL">
                         <CInputGroupPrepend>
                           <CInputGroupText>
@@ -175,7 +197,7 @@ const Login = () => {
                     <CRow>
                       <CCol>
                         <CAlert show={hadError} color="danger">
-                          {loginErrorText}
+                          {t('login.login_error')}
                         </CAlert>
                       </CCol>
                     </CRow>

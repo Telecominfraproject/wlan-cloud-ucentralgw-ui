@@ -103,6 +103,12 @@
 		"explanation": "Êtes-vous sûr de vouloir supprimer cette commande ? Cette action n'est pas réversible.",
 		"title": "Supprimer la commande"
 	},
+	"delete_logs": {
+		"date": "Sélectionnez la date du plus ancien journal que vous souhaitez conserver",
+		"device_logs_title": "Supprimer les journaux de l'appareil",
+		"explanation": "Cela supprimera tous les {{object}} avant la date que vous choisissez. Attention, cette action n'est pas réversible.",
+		"healthchecks_title": "Supprimer les vérifications d'état"
+	},
 	"device_logs": {
 		"log": "Bûche",
 		"severity": "Gravité",

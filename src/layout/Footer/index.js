@@ -6,7 +6,7 @@ const TheFooter = () => (
   <Translation>
     {(t) => (
       <CFooter fixed={false}>
-        <div>{t('footer.version')} 0.9.2</div>
+        <div>{t('footer.version')} 0.9.3</div>
         <div className="mfs-auto">
           <span className="mr-1">{t('footer.powered_by')}</span>
           <a href="https://coreui.io/react" target="_blank" rel="noopener noreferrer">

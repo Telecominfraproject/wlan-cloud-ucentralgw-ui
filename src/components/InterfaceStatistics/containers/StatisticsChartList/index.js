@@ -12,7 +12,7 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   const [loading, setLoading] = useState(false);
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
-    settings: {}
+    settings: {},
   });
 
   const transformIntoDataset = (data) => {
@@ -62,7 +62,9 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
         interfaceList[interfaceTypes[inter.name]][0].data.push(
           Math.floor(inter.counters.tx_bytes / 1024),
         );
-        interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(inter.counters.rx_bytes / 1024));
+        interfaceList[interfaceTypes[inter.name]][1].data.push(
+          Math.floor(inter.counters.rx_bytes / 1024),
+        );
       }
     }
 
@@ -101,10 +103,10 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
 
     const newOptions = {
       interfaceList,
-      settings: options
+      settings: options,
     };
 
-    if(statOptions !== newOptions){
+    if (statOptions !== newOptions) {
       setStatOptions(newOptions);
     }
   };

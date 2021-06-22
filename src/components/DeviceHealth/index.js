@@ -10,6 +10,7 @@ import {
   CRow,
   CCol,
   CProgress,
+  CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +19,9 @@ import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
+import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
+import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
 const DeviceHealth = ({ selectedDeviceId }) => {
@@ -34,6 +37,11 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   const [showLoadingMore, setShowLoadingMore] = useState(true);
   const [sanityLevel, setSanityLevel] = useState(null);
   const [barColor, setBarColor] = useState('gradient-dark');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -167,6 +175,14 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     }
   }, [start, end, selectedDeviceId]);
 
+  useEffect(() => {
+    eventBus.on('deletedHealth', () => getDeviceHealth());
+
+    return () => {
+      eventBus.remove('deletedHealth');
+    };
+  }, []);
+
   return (
     <CWidgetDropdown
       header={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
@@ -178,6 +194,20 @@ const DeviceHealth = ({ selectedDeviceId }) => {
         <div className={styles.footer}>
           <CProgress className={styles.progressBar} color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
+            <div className={styles.alignRight}>
+              <CPopover content={t('common.delete')}>
+                <CButton
+                  color="light"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    toggleDeleteModal();
+                  }}
+                >
+                  <CIcon name="cilTrash" size="lg" />
+                </CButton>
+              </CPopover>
+            </div>
             <CRow className={styles.spacedRow}>
               <CCol>
                 {t('common.from')}:
@@ -250,6 +280,12 @@ const DeviceHealth = ({ selectedDeviceId }) => {
               size="lg"
             />
           </CButton>
+          <DeleteLogModal
+            serialNumber={selectedDeviceId}
+            object="healthchecks"
+            show={showDeleteModal}
+            toggle={toggleDeleteModal}
+          />
         </div>
       }
     />
