@@ -103,6 +103,12 @@
 		"explanation": "Are you sure you want to delete this command? This action is not reversible.",
 		"title": "Delete Command"
 	},
+	"delete_logs": {
+		"date": "Select the date of the oldest log you would like to keep",
+		"device_logs_title": "Delete Device Logs",
+		"explanation": "This will delete all of the {{object}} before the date you choose. Be careful, this action is not reversible.",
+		"healthchecks_title": "Delete Healthchecks"
+	},
 	"device_logs": {
 		"log": "Log",
 		"severity": "Severity",
