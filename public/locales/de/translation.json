@@ -103,6 +103,12 @@
 		"explanation": "Möchten Sie diesen Befehl wirklich löschen? Diese Aktion ist nicht umkehrbar.",
 		"title": "Befehl löschen"
 	},
+	"delete_logs": {
+		"date": "Wählen Sie das Datum des ältesten Protokolls aus, das Sie behalten möchten",
+		"device_logs_title": "Geräteprotokolle löschen",
+		"explanation": "Dadurch werden alle {{object}} vor dem von Ihnen gewählten Datum gelöscht. Seien Sie vorsichtig, diese Aktion ist nicht umkehrbar.",
+		"healthchecks_title": "Healthchecks löschen"
+	},
 	"device_logs": {
 		"log": "Log",
 		"severity": "Schwere",

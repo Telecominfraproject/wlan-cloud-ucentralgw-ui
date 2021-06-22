@@ -9,6 +9,7 @@ import {
   CDataTable,
   CCard,
   CCardBody,
+  CPopover
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +18,9 @@ import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
+import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
+import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
 const DeviceLogs = ({ selectedDeviceId }) => {
@@ -31,6 +34,11 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   const [logLimit, setLogLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  }
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -149,7 +157,16 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     }
   }, [start, end, selectedDeviceId]);
 
+  useEffect(() => {
+    eventBus.on('deletedLogs', () => getLogs());
+
+    return () => {
+      eventBus.remove('deletedLogs');
+    };
+  }, []);
+
   return (
+    <div>
     <CWidgetDropdown
       inverse="true"
       color="gradient-info"
@@ -157,6 +174,20 @@ const DeviceLogs = ({ selectedDeviceId }) => {
       footerSlot={
         <div className={styles.footer}>
           <CCollapse show={collapse}>
+            <div className={styles.alignRight}>
+                <CPopover content={t('common.delete')}>
+                  <CButton
+                    color="light"
+                    shape="square"
+                    size="sm"
+                    onClick={() => {
+                      toggleDeleteModal();
+                    }}
+                  >
+                    <CIcon name="cilTrash" size="lg" />
+                  </CButton>
+              </CPopover>
+            </div>
             <CRow className={styles.datepickerRow}>
               <CCol>
                 {t('common.from')}
@@ -228,6 +259,8 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     >
       <CIcon name="cilList" className={styles.whiteIcon} size="lg" />
     </CWidgetDropdown>
+    <DeleteLogModal serialNumber={selectedDeviceId} object="logs" show={showDeleteModal} toggle={toggleDeleteModal} />
+    </div>
   );
 };
 

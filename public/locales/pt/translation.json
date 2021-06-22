@@ -103,6 +103,12 @@
 		"explanation": "Tem certeza de que deseja excluir este comando? esta ação não é reversível.",
 		"title": "Apagar Comando"
 	},
+	"delete_logs": {
+		"date": "Selecione a data do registro mais antigo que você gostaria de manter",
+		"device_logs_title": "Excluir registros do dispositivo",
+		"explanation": "Isso excluirá todos os {{object}} antes da data que você escolheu. Cuidado, esta ação não é reversível.",
+		"healthchecks_title": "Excluir verificações de saúde"
+	},
 	"device_logs": {
 		"log": "Registro",
 		"severity": "Gravidade",
