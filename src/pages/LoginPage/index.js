@@ -36,7 +36,7 @@ const Login = () => {
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
   const [defaultConfig, setDefaultConfig] = useState({
-    DEFAULT_GATEWAY_URL: 'https://ucentral.dpaas.arilia.com:16001',
+    DEFAULT_GATEWAY_URL: '',
     ALLOW_GATEWAY_CHANGE: true,
   });
   const placeholderUrl = 'Gateway URL (ex: https://your-url:port)';
