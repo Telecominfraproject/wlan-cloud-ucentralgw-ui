@@ -47,6 +47,7 @@
 		"download": "Herunterladen",
 		"duration": "Dauer",
 		"error": "Error",
+		"execute_now": "Möchten Sie diesen Befehl jetzt ausführen?",
 		"executed": "Hingerichtet",
 		"firmware": "Firmware",
 		"from": "Von",
@@ -60,6 +61,7 @@
 		"manufacturer": "Hersteller",
 		"na": "N / A",
 		"need_date": "Du brauchst ein Datum...",
+		"no": "Nein",
 		"not_connected": "Nicht verbunden",
 		"off": "aus",
 		"on": "auf",
@@ -68,6 +70,7 @@
 		"refresh_device": "Gerät aktualisieren",
 		"result": "Ergebnis",
 		"schedule": "Zeitplan",
+		"seconds_elapsed": "Sekunden verstrichen",
 		"serial_number": "Ordnungsnummer",
 		"start": "Start",
 		"submit": "einreichen",
@@ -159,10 +162,18 @@
 		"title": "Trace-Gerät"
 	},
 	"upgrade": {
+		"command_submitted": "Befehl gesendet",
+		"device_disconnected": "Gerät getrennt",
+		"device_reconnected": "Gerät wieder verbunden",
+		"device_upgrading_firmware": "Geräte-Firmware-Upgrade",
 		"directions": "Wählen Sie eine Uhrzeit und eine Firmware-Version für dieses Gerät",
 		"firmware_uri": "Firmware-URI:",
 		"need_uri": "Du brauchst eine URI...",
+		"new_version": "Neue Version ist",
+		"offline_device": "Diese Option ist gesperrt, da dieses Gerät nicht verbunden ist",
 		"time": "Zeitpunkt der Aktualisierung:",
-		"title": "Firmware-Aktualisierung"
+		"title": "Firmware-Aktualisierung",
+		"wait_for_upgrade": "Möchten Sie warten, bis das Upgrade abgeschlossen ist?",
+		"waiting_for_device": "Warten, bis das Gerät wieder verbunden ist"
 	}
 }

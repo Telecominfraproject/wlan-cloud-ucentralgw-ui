@@ -47,6 +47,7 @@
 		"download": "Download",
 		"duration": "Duration",
 		"error": "Error",
+		"execute_now": "Would you like to execute this command now?",
 		"executed": "Executed",
 		"firmware": "Firmware",
 		"from": "From",
@@ -60,6 +61,7 @@
 		"manufacturer": "Manufacturer",
 		"na": "N/A",
 		"need_date": "You need a date...",
+		"no": "No",
 		"not_connected": "Not Connected",
 		"off": "Off",
 		"on": "On",
@@ -68,6 +70,7 @@
 		"refresh_device": "Refresh Device",
 		"result": "Result",
 		"schedule": "Schedule",
+		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
 		"start": "Start",
 		"submit": "Submit",
@@ -159,10 +162,18 @@
 		"title": "Trace Device"
 	},
 	"upgrade": {
+		"command_submitted": "Command submitted",
+		"device_disconnected": "Device disconnected",
+		"device_reconnected": "Device reconnected",
+		"device_upgrading_firmware": "Device upgrading firmware",
 		"directions": "Choose a time and a firmware version for this device",
 		"firmware_uri": "Firmware URI:",
 		"need_uri": "You need a URI...",
+		"new_version": "New version is ",
+		"offline_device": "This option is blocked because this device is not connected",
 		"time": "Time of upgrade:",
-		"title": "Firmware Upgrade"
+		"title": "Firmware Upgrade",
+		"wait_for_upgrade": "Would you like to wait for the upgrade to finish?",
+		"waiting_for_device": "Waiting for device to reconnect"
 	}
 }

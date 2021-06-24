@@ -47,6 +47,7 @@
 		"download": "Baixar",
 		"duration": "Duração",
 		"error": "Erro",
+		"execute_now": "Você gostaria de executar este comando agora?",
 		"executed": "Executado",
 		"firmware": "Firmware",
 		"from": "De",
@@ -60,6 +61,7 @@
 		"manufacturer": "Fabricante",
 		"na": "N / D",
 		"need_date": "Você precisa de um encontro ...",
+		"no": "Não",
 		"not_connected": "Não conectado",
 		"off": "Fora",
 		"on": "em",
@@ -68,6 +70,7 @@
 		"refresh_device": "Atualizar dispositivo",
 		"result": "Resultado",
 		"schedule": "Cronograma",
+		"seconds_elapsed": "Segundos decorridos",
 		"serial_number": "Número de série",
 		"start": "Começar",
 		"submit": "Enviar",
@@ -159,10 +162,18 @@
 		"title": "Dispositivo de rastreamento"
 	},
 	"upgrade": {
+		"command_submitted": "Comando enviado",
+		"device_disconnected": "Dispositivo desconectado",
+		"device_reconnected": "Dispositivo reconectado",
+		"device_upgrading_firmware": "Firmware de atualização de dispositivo",
 		"directions": "Escolha um horário e uma versão de firmware para este dispositivo",
 		"firmware_uri": "URI de firmware:",
 		"need_uri": "Você precisa de um URI ...",
+		"new_version": "Nova versão é",
+		"offline_device": "Esta opção está bloqueada porque este dispositivo não está conectado",
 		"time": "Tempo de atualização:",
-		"title": "Atualização de firmware"
+		"title": "Atualização de firmware",
+		"wait_for_upgrade": "Você gostaria de esperar a conclusão da atualização?",
+		"waiting_for_device": "Esperando que o dispositivo se reconecte"
 	}
 }

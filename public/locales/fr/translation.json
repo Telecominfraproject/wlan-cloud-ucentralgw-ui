@@ -47,6 +47,7 @@
 		"download": "Télécharger",
 		"duration": "Durée",
 		"error": "erreur",
+		"execute_now": "Souhaitez-vous exécuter cette commande maintenant ?",
 		"executed": "réalisé",
 		"firmware": "Micrologiciel",
 		"from": "De",
@@ -60,6 +61,7 @@
 		"manufacturer": "fabricant",
 		"na": "N / A",
 		"need_date": "Vous avez besoin d'un rendez-vous...",
+		"no": "Non",
 		"not_connected": "Pas connecté",
 		"off": "De",
 		"on": "sur",
@@ -68,6 +70,7 @@
 		"refresh_device": "Actualiser l'appareil",
 		"result": "Résultat",
 		"schedule": "Programme",
+		"seconds_elapsed": "Secondes écoulées",
 		"serial_number": "Numéro de série",
 		"start": "Début",
 		"submit": "Soumettre",
@@ -159,10 +162,18 @@
 		"title": "Dispositif de traçage"
 	},
 	"upgrade": {
+		"command_submitted": "Commande soumise",
+		"device_disconnected": "Appareil déconnecté",
+		"device_reconnected": "Appareil reconnecté",
+		"device_upgrading_firmware": "Mise à niveau du micrologiciel de l'appareil",
 		"directions": "Choisissez une heure et une version de firmware pour cet appareil",
 		"firmware_uri": "URI du micrologiciel :",
 		"need_uri": "Vous avez besoin d'un URI...",
+		"new_version": "La nouvelle version est",
+		"offline_device": "Cette option est bloquée car cet appareil n'est pas connecté",
 		"time": "Heure de la mise à niveau :",
-		"title": "Mise à jour du firmware"
+		"title": "Mise à jour du firmware",
+		"wait_for_upgrade": "Souhaitez-vous attendre la fin de la mise à niveau ?",
+		"waiting_for_device": "En attente de la reconnexion de l'appareil"
 	}
 }
