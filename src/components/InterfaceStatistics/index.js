@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { CCard, CCardHeader, CCardBody, CPopover, CRow, CCol } from '@coreui/react';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import StatisticsChartList from './containers/StatisticsChartList';
+import StatisticsChartList from './StatisticsChartList';
 import styles from './index.module.scss';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => {
