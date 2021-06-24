@@ -11,7 +11,7 @@ import {
 } from '@coreui/react';
 import PropTypes from 'prop-types';
 import { prettyDate } from 'utils/helper';
-import WifiChannelTable from './containers/WifiChannelTable';
+import WifiChannelTable from './WifiChannelTable';
 import styles from './index.module.scss';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {

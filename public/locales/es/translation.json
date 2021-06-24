@@ -150,6 +150,8 @@
 	},
 	"statistics": {
 		"data": "Datos (KB)",
+		"latest_statistics": "Últimas estadísticas",
+		"show_latest": "Mostrar las últimas estadísticas JSON",
 		"title": "estadística"
 	},
 	"trace": {
