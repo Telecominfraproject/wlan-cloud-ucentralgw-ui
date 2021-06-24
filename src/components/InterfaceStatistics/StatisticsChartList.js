@@ -5,7 +5,7 @@ import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
-import DeviceStatisticsChart from '../DeviceStatisticsChart';
+import DeviceStatisticsChart from './DeviceStatisticsChart';
 
 const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   const { t } = useTranslation();
@@ -182,4 +182,4 @@ StatisticsChartList.defaultProps = {
   lastRefresh: '',
 };
 
-export default StatisticsChartList;
+export default React.memo(StatisticsChartList);

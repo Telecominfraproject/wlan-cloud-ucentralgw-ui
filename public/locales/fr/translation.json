@@ -153,6 +153,8 @@
 	},
 	"statistics": {
 		"data": "Données (Ko)",
+		"latest_statistics": "Dernières statistiques",
+		"show_latest": "Afficher les dernières statistiques JSON",
 		"title": "statistiques"
 	},
 	"trace": {

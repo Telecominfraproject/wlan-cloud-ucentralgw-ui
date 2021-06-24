@@ -2,7 +2,7 @@ import { CCol, CRow } from '@coreui/react';
 import React, { useEffect } from 'react';
 import { v4 as createUuid } from 'uuid';
 import PropTypes from 'prop-types';
-import WifiChannelCard from '../WifiChannelCard';
+import WifiChannelCard from './WifiChannelCard';
 
 const WifiChannelTable = ({ channels }) => {
   const sortChannels = () => {

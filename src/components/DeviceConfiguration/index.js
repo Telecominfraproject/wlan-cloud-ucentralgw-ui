@@ -21,7 +21,7 @@ import { cilWindowMaximize, cilClone } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
-import DeviceConfigurationModal from './containers/DeviceConfigurationModal/index';
+import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 
 const DeviceConfiguration = ({ selectedDeviceId }) => {
