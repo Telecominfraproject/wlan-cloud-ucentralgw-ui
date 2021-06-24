@@ -182,4 +182,4 @@ StatisticsChartList.defaultProps = {
   lastRefresh: '',
 };
 
-export default StatisticsChartList;
+export default React.memo(StatisticsChartList);
