@@ -4,6 +4,8 @@
 The uCentralGW Client is a user interface that lets you monitor and manage devices connected to the [uCentral gateway](https://github.com/Telecominfraproject/wlan-cloud-ucentralgw). To use the interface,
 you either need to run it on your machine for [development](#development) or build it for [production](#production).
 
+NOTE: This UI will be evolving as micro services are added to the uCentral program most notably with provisioning, base dashboard, firmware, device management
+
 ## Running the solution
 
 ### Development
