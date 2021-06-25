@@ -108,10 +108,9 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         uri: firmware,
       };
       axiosInstance
-        .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
+        .post(`/device/${encodeURIComponent(selectedDeviceId)}/upgrade`, parameters, { headers })
         .then(() => {
           if (waitForUpgrade) {
-            console.log('waiting');
             setShowWaitingConsole(true);
           }
         })
@@ -199,7 +198,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow} hidden={!isNow || disabledWaiting || !deviceConnected}>
+        <CRow className={styles.spacedRow} hidden={true || !isNow || disabledWaiting || !deviceConnected}>
           <CCol md="8">
             <p className={styles.spacedText}>
               {t('upgrade.wait_for_upgrade')}
