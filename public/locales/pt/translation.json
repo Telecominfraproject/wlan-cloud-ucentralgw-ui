@@ -163,6 +163,7 @@
 		"download_trace": "Clique aqui para baixar",
 		"packets": "Pacotes",
 		"title": "Dispositivo de rastreamento",
+		"waiting_directions": "Você pode fechar este modal a qualquer momento e recuperar o arquivo mais tarde no registro de comandos",
 		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
 	},
 	"upgrade": {

@@ -163,6 +163,7 @@
 		"download_trace": "Click here to download",
 		"packets": "Packets",
 		"title": "Trace Device",
+		"waiting_directions": "You can close this modal at any time and retrieve the file later in the Commands log",
 		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
 	},
 	"upgrade": {

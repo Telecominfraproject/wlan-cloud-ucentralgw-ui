@@ -163,6 +163,7 @@
 		"download_trace": "Klicke hier zum herunterladen",
 		"packets": "Pakete",
 		"title": "Trace-Gerät",
+		"waiting_directions": "Sie können dieses Modal jederzeit schließen und die Datei später im Befehlsprotokoll abrufen",
 		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
 	},
 	"upgrade": {

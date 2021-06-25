@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { CModalBody, CButton, CSpinner } from '@coreui/react';
+import { CModalBody, CButton, CSpinner, CModalFooter } from '@coreui/react';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 
 import styles from './index.module.scss';
 
-const WaitingForTraceBody = ({serialNumber, commandUuid}) => {
+const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
   const { t } = useTranslation();
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [waitingForFile, setWaitingForFile] = useState(true);
@@ -75,27 +75,37 @@ const WaitingForTraceBody = ({serialNumber, commandUuid}) => {
   }, [waitingForFile]);
 
   return (
-    <CModalBody>
-      <p>{t('trace.waiting_seconds', {seconds: secondsElapsed})}</p>
-      <div className={styles.centerDiv}>
-        <CSpinner hidden={!waitingForFile} />
-      </div>
-      <CButton
-        hidden={waitingForFile}
-        onClick={downloadTrace}
-        disabled={waitingForFile}
-        color="link"
-        block
-      >
-        {t('trace.download_trace')}
-      </CButton>
-    </CModalBody>
+    <div>
+      <CModalBody>
+        <h6>{t('trace.waiting_seconds', {seconds: secondsElapsed})}</h6>
+        <p>{t('trace.waiting_directions')}</p>
+        <div className={styles.centerDiv}>
+          <CSpinner hidden={!waitingForFile} />
+        </div>
+        <CButton
+          hidden={waitingForFile}
+          onClick={downloadTrace}
+          disabled={waitingForFile}
+          color="link"
+          block
+        >
+          {t('trace.download_trace')}
+        </CButton>
+      </CModalBody>
+      <CModalFooter>
+        <CButton color="secondary" block onClick={toggle}>
+          {t('common.close')}
+        </CButton>
+      </CModalFooter>
+    </div>
+
   );
 }
 
 WaitingForTraceBody.propTypes = {
   serialNumber: PropTypes.string.isRequired,
   commandUuid: PropTypes.string.isRequired,
+  toggle: PropTypes.func.isRequired
 };
 
 export default WaitingForTraceBody;

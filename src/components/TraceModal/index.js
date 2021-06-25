@@ -134,7 +134,7 @@ const TraceModal = ({ show, toggleModal }) => {
   const getBody = () => {
     if(waitingForTrace){
       return (
-        <WaitingForTraceBody serialNumber={selectedDeviceId} commandUuid={commandUuid}/>
+        <WaitingForTraceBody toggle={toggleModal} serialNumber={selectedDeviceId} commandUuid={commandUuid}/>
       );
     }
     if(hadSuccess){
