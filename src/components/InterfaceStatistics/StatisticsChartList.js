@@ -60,13 +60,14 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       // Looping through the interfaces of the log
       for (const inter of log.data.interfaces) {
         interfaceList[interfaceTypes[inter.name]][0].data.push(
-          Math.floor(inter.counters.tx_bytes / 1024),
+          inter.counters?.tx_bytes? Math.floor(inter.counters.tx_bytes / 1024) : 0
         );
         interfaceList[interfaceTypes[inter.name]][1].data.push(
-          Math.floor(inter.counters.rx_bytes / 1024),
+          inter.counters?.rx_bytes? Math.floor(inter.counters.rx_bytes / 1024) : 0
         );
       }
     }
+
 
     const options = {
       chart: {
@@ -105,7 +106,6 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       interfaceList,
       settings: options,
     };
-
     if (statOptions !== newOptions) {
       setStatOptions(newOptions);
     }

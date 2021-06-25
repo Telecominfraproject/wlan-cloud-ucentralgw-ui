@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "Erro ao enviar comando!",
-		"success": "Comando enviado com sucesso",
+		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
 		"title": "Comandos de dispositivo"
 	},
 	"common": {
@@ -160,8 +160,10 @@
 	"trace": {
 		"choose_network": "Escolha a rede",
 		"directions": "Lançar um rastreamento remoto deste dispositivo para uma duração específica ou um número de pacotes",
+		"download_trace": "Clique aqui para baixar",
 		"packets": "Pacotes",
-		"title": "Dispositivo de rastreamento"
+		"title": "Dispositivo de rastreamento",
+		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
 	},
 	"upgrade": {
 		"command_submitted": "Comando enviado",

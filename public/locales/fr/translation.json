@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "Erreur lors de la soumission de la commande !",
-		"success": "Commande soumise avec succès",
+		"success": "Commande soumise avec succès, vous pouvez consulter le journal des commandes pour le résultat",
 		"title": "Commandes de l'appareil"
 	},
 	"common": {
@@ -160,8 +160,10 @@
 	"trace": {
 		"choose_network": "Choisir le réseau",
 		"directions": "Lancer une trace à distance de cet appareil pour une durée spécifique ou un nombre de paquets",
+		"download_trace": "Cliquez ici pour télécharger",
 		"packets": "Paquets",
-		"title": "Dispositif de traçage"
+		"title": "Dispositif de traçage",
+		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
 	},
 	"upgrade": {
 		"command_submitted": "Commande soumise",

@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
-		"success": "Befehl erfolgreich übermittelt",
+		"success": "Der Befehl wurde erfolgreich gesendet. Sie können das Ergebnis im Befehlsprotokoll anzeigen",
 		"title": "Gerätebefehle"
 	},
 	"common": {
@@ -160,8 +160,10 @@
 	"trace": {
 		"choose_network": "Netzwerk auswählen",
 		"directions": "Starten Sie eine Fernverfolgung dieses Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
+		"download_trace": "Klicke hier zum herunterladen",
 		"packets": "Pakete",
-		"title": "Trace-Gerät"
+		"title": "Trace-Gerät",
+		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
 	},
 	"upgrade": {
 		"command_submitted": "Befehl gesendet",

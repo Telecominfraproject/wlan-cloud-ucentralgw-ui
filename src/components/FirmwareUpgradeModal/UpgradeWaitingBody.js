@@ -24,7 +24,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
       .get(`/device/${encodeURIComponent(serialNumber)}/status`, options)
       .then((response) => response.data.connected)
       .catch(() => {});
-  }
+  };
 
   const getFirmwareVersion = () => {
     const options = {
@@ -38,28 +38,27 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
       .get(`/device/${encodeURIComponent(serialNumber)}`, options)
       .then((response) => response.data.firmware)
       .catch(() => {});
-  }
+  };
 
   const refreshStep = () => {
-    if(currentStep === 0 && !getDeviceConnection){
+    if (currentStep === 0 && !getDeviceConnection) {
       const labelsToAdd = [
         t('upgrade.device_disconnected'),
         t('upgrade.device_upgrading_firmware'),
         t('upgrade.waiting_for_device'),
       ];
-      setLabelsToShow([...labelsToShow, ...labelsToAdd])
+      setLabelsToShow([...labelsToShow, ...labelsToAdd]);
       setCurrentStep(1);
-    }
-    else if(currentStep === 1 && getDeviceConnection()){
+    } else if (currentStep === 1 && getDeviceConnection()) {
       const newFirmware = `: ${getFirmwareVersion()}`;
       const labelsToAdd = [
         t('upgrade.device_reconnected'),
-        `${t('upgrade.new_version')}: ${newFirmware}`
+        `${t('upgrade.new_version')}: ${newFirmware}`,
       ];
       setLabelsToShow([...labelsToShow, ...labelsToAdd]);
       setCurrentStep(2);
     }
-  }
+  };
 
   useEffect(() => {
     const refreshIntervalId = setInterval(() => {
@@ -68,7 +67,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
 
     const timerIntervalId = setInterval(() => {
       setSecondsElapsed(secondsElapsed + 1);
-    })
+    }, 1000);
 
     return () => {
       clearInterval(refreshIntervalId);
@@ -79,10 +78,14 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
   return (
     <CModalBody>
       <div className="consoleBox">
-        {
-          labelsToShow.map((label) => <p key={createUuid()}>{new Date().toString()}: {label}</p>)
-        }
-        <p>{t('common.seconds_elapsed')}: {secondsElapsed}</p>
+        {labelsToShow.map((label) => (
+          <p key={createUuid()}>
+            {new Date().toString()}: {label}
+          </p>
+        ))}
+        <p>
+          {t('common.seconds_elapsed')}: {secondsElapsed}
+        </p>
       </div>
     </CModalBody>
   );

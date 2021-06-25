@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "Error while submitting command!",
-		"success": "Command submitted successfully",
+		"success": "Command submitted successfully, you can look at the Commands log for the result",
 		"title": "Device Commands"
 	},
 	"common": {
@@ -160,8 +160,10 @@
 	"trace": {
 		"choose_network": "Choose network",
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
+		"download_trace": "Click here to download",
 		"packets": "Packets",
-		"title": "Trace Device"
+		"title": "Trace Device",
+		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
 	},
 	"upgrade": {
 		"command_submitted": "Command submitted",

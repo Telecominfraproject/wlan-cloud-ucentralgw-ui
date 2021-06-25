@@ -9,7 +9,7 @@ import {
   CRow,
   CInput,
   CInvalidFeedback,
-  CModalFooter
+  CModalFooter,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,9 +21,10 @@ import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import ButtonFooter from './containers/UpgradeFooter';
+import getDeviceConnection from 'utils/deviceHelper';
+import ButtonFooter from './UpgradeFooter';
 import styles from './index.module.scss';
-import UpgradeWaitingBody from './containers/UpgradeWaitingBody';
+import UpgradeWaitingBody from './UpgradeWaitingBody';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -37,30 +38,24 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [disabledWaiting, setDisableWaiting] = useState(false);
   const [waitingForUpgrade, setWaitingForUpgrade] = useState(false);
   const [showWaitingConsole, setShowWaitingConsole] = useState(false);
-  const [lastResult, setLastResult] = useState(null);
+  const [deviceConnected, setDeviceConnected] = useState(true);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleNow = () => {
+    if(isNow){
+      setWaitForUpgrade(false);
+      setDisableWaiting(true);
+    }
+    else{
+      setDisableWaiting(false);
+    }
+
     setIsNow(!isNow);
   };
 
   const toggleWaitForUpgrade = () => {
     setWaitForUpgrade(waitForUpgrade);
   };
-
-  const getDeviceConnection = async () => {
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
-      },
-    };
-
-    return axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/status`, options)
-      .then((response) => response.data.connected)
-      .catch(() => false);
-  }
 
   const formValidation = () => {
     let valid = true;
@@ -87,11 +82,12 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   }, [firmware, date]);
 
   useEffect(() => {
-    if(selectedDeviceId !== null && show){
+    if (selectedDeviceId !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection();
+        const isConnected = await getDeviceConnection(selectedDeviceId);
         setDisableWaiting(!isConnected);
-      }
+        setDeviceConnected(isConnected);
+      };
       asyncGet();
     }
   }, [show]);
@@ -112,18 +108,16 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         uri: firmware,
       };
       axiosInstance
-        .post(`/device/${encodeURIComponent(selectedDeviceId)}/upgrade`, parameters, { headers })
-        .then((response) => {
-          setLastResult(response);
-          if(waitForUpgrade) {
+        .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
+        .then(() => {
+          if (waitForUpgrade) {
+            console.log('waiting');
             setShowWaitingConsole(true);
           }
         })
         .catch(() => {
-          setLastResult('error');
         })
         .finally(() => {
-          console.log(lastResult);
           setBlockFields(false);
           setWaitingForUpgrade(false);
           eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
@@ -131,16 +125,14 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
     }
   };
 
-  if(showWaitingConsole){
+  if (showWaitingConsole) {
     return (
       <CModal show={show} onClose={toggleModal}>
         <CModalHeader closeButton>
           <CModalTitle>{t('upgrade.title')}</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <UpgradeWaitingBody
-            serialNumber={selectedDeviceId}
-          />
+          <UpgradeWaitingBody serialNumber={selectedDeviceId} />
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={toggleModal}>
@@ -158,37 +150,6 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('upgrade.directions')}</h6>
-        <CRow className={styles.spacedRow}>
-          <CCol md="8">
-            <p className={styles.spacedText}>{t('common.execute_now')}</p>
-          </CCol>
-          <CCol>
-            <CSwitch
-              disabled={blockFields}
-              color="primary"
-              defaultChecked={isNow}
-              onClick={toggleNow}
-              labelOn={t('common.yes')}
-              labelOff={t('common.no')}
-            />
-          </CCol>
-        </CRow>
-        <CRow hidden={isNow}>
-          <CCol md="4" className={styles.spacedColumn}>
-            <p>{t('upgrade.time')}</p>
-          </CCol>
-          <CCol xs="12" md="8">
-            <DatePicker
-              selected={new Date(date)}
-              value={new Date(date)}
-              className={('form-control', { 'is-invalid': !validDate })}
-              includeTime
-              disabled={blockFields}
-              onChange={(newDate) => setDate(newDate.toString())}
-            />
-            <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
-          </CCol>
-        </CRow>
         <CRow className={styles.spacedRow}>
           <CCol md="4" className={styles.spacedColumn}>
             <p>{t('upgrade.firmware_uri')}</p>
@@ -209,7 +170,41 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         </CRow>
         <CRow className={styles.spacedRow}>
           <CCol md="8">
-            <p className={styles.spacedText}>{t('upgrade.wait_for_upgrade')}<b hidden={!disabledWaiting}> {t('upgrade.offline_device')}</b></p>
+            <p className={styles.spacedText}>{t('common.execute_now')}</p>
+          </CCol>
+          <CCol>
+            <CSwitch
+              disabled={blockFields}
+              color="primary"
+              defaultChecked={isNow}
+              onClick={toggleNow}
+              labelOn={t('common.yes')}
+              labelOff={t('common.no')}
+            />
+          </CCol>
+        </CRow>
+        <CRow className={styles.spacedRow} hidden={isNow}>
+          <CCol md="4" className={styles.spacedColumn}>
+            <p>{t('upgrade.time')}</p>
+          </CCol>
+          <CCol xs="12" md="8">
+            <DatePicker
+              selected={new Date(date)}
+              value={new Date(date)}
+              className={('form-control', { 'is-invalid': !validDate })}
+              includeTime
+              disabled={blockFields}
+              onChange={(newDate) => setDate(newDate.toString())}
+            />
+            <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
+          </CCol>
+        </CRow>
+        <CRow className={styles.spacedRow} hidden={!isNow || disabledWaiting || !deviceConnected}>
+          <CCol md="8">
+            <p className={styles.spacedText}>
+              {t('upgrade.wait_for_upgrade')}
+              <b hidden={!disabledWaiting}> {t('upgrade.offline_device')}</b>
+            </p>
           </CCol>
           <CCol>
             <CSwitch
