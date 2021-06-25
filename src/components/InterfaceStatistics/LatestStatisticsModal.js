@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CButton,
   CModal,
@@ -30,11 +30,11 @@ const LatestStatisticsModal = ({ show, toggle, serialNumber }) => {
       .then((response) => {
         setLatestStats(response.data);
       })
-      .catch(() => {})
-  }
+      .catch(() => {});
+  };
 
   useEffect(() => {
-    if(show){
+    if (show) {
       getLatestStats();
     }
   }, [show]);
@@ -54,7 +54,7 @@ const LatestStatisticsModal = ({ show, toggle, serialNumber }) => {
       </CModalFooter>
     </CModal>
   );
-}
+};
 
 LatestStatisticsModal.propTypes = {
   serialNumber: PropTypes.string.isRequired,
