@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "Error while submitting command!",
-		"success": "Command submitted successfully",
+		"success": "Command submitted successfully, you can look at the Commands log for the result",
 		"title": "Device Commands"
 	},
 	"common": {
@@ -47,6 +47,7 @@
 		"download": "Download",
 		"duration": "Duration",
 		"error": "Error",
+		"execute_now": "Would you like to execute this command now?",
 		"executed": "Executed",
 		"firmware": "Firmware",
 		"from": "From",
@@ -60,6 +61,7 @@
 		"manufacturer": "Manufacturer",
 		"na": "N/A",
 		"need_date": "You need a date...",
+		"no": "No",
 		"not_connected": "Not Connected",
 		"off": "Off",
 		"on": "On",
@@ -68,6 +70,7 @@
 		"refresh_device": "Refresh Device",
 		"result": "Result",
 		"schedule": "Schedule",
+		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
 		"start": "Start",
 		"submit": "Submit",
@@ -150,19 +153,33 @@
 	},
 	"statistics": {
 		"data": "Data (KB)",
+		"latest_statistics": "Latest Statistics",
+		"show_latest": "Show latest statistics JSON",
 		"title": "Statistics"
 	},
 	"trace": {
 		"choose_network": "Choose network",
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
+		"download_trace": "Click here to download",
 		"packets": "Packets",
-		"title": "Trace Device"
+		"title": "Trace Device",
+		"wait_for_file": "Would you like to wait until the trace file is ready?",
+		"waiting_directions": "You can close this modal at any time and retrieve the file later in the Commands log",
+		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
 	},
 	"upgrade": {
+		"command_submitted": "Command submitted",
+		"device_disconnected": "Device disconnected",
+		"device_reconnected": "Device reconnected",
+		"device_upgrading_firmware": "Device upgrading firmware",
 		"directions": "Choose a time and a firmware version for this device",
 		"firmware_uri": "Firmware URI:",
 		"need_uri": "You need a URI...",
+		"new_version": "New version is ",
+		"offline_device": "This option is blocked because this device is not connected",
 		"time": "Time of upgrade:",
-		"title": "Firmware Upgrade"
+		"title": "Firmware Upgrade",
+		"wait_for_upgrade": "Would you like to wait for the upgrade to finish?",
+		"waiting_for_device": "Waiting for device to reconnect"
 	}
 }

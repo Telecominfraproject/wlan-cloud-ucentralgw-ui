@@ -18,7 +18,7 @@ import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
-import WifiChannelTable from 'components/WifiScanResultModal/containers/WifiChannelTable';
+import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 import styles from './index.module.scss';
 

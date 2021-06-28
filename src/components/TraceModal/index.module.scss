@@ -5,3 +5,10 @@
 .spacedColumn {
   margin-top: 7px;
 }
+
+.centerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+}

@@ -7,7 +7,7 @@ import DeviceConfiguration from 'components/DeviceConfiguration';
 import DeviceCommandsLog from 'components/DeviceCommandsLog';
 import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
-import DeviceActionCard from './containers/DeviceActionCard';
+import DeviceActionCard from './DeviceActionCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();

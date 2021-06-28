@@ -19,7 +19,7 @@
 	},
 	"commands": {
 		"error": "¡Error al enviar el comando!",
-		"success": "Comando enviado con éxito",
+		"success": "Comando enviado con éxito, puede consultar el registro de Comandos para ver el resultado",
 		"title": "Comandos del dispositivo"
 	},
 	"common": {
@@ -47,6 +47,7 @@
 		"download": "Descargar",
 		"duration": "Duración",
 		"error": "Error",
+		"execute_now": "¿Le gustaría ejecutar este comando ahora?",
 		"executed": "ejecutado",
 		"firmware": "Firmware",
 		"from": "Desde",
@@ -60,6 +61,7 @@
 		"manufacturer": "Fabricante",
 		"na": "N / A",
 		"need_date": "Necesitas una cita ...",
+		"no": "No",
 		"not_connected": "No conectado",
 		"off": "Apagado",
 		"on": "en",
@@ -68,6 +70,7 @@
 		"refresh_device": "Actualizar dispositivo",
 		"result": "Resultado",
 		"schedule": "Programar",
+		"seconds_elapsed": "Segundos transcurridos",
 		"serial_number": "Número de serie",
 		"start": "comienzo",
 		"submit": "Enviar",
@@ -150,19 +153,33 @@
 	},
 	"statistics": {
 		"data": "Datos (KB)",
+		"latest_statistics": "Últimas estadísticas",
+		"show_latest": "Mostrar las últimas estadísticas JSON",
 		"title": "estadística"
 	},
 	"trace": {
 		"choose_network": "Elija la red",
 		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
+		"download_trace": "Haga click aquí para descargar",
 		"packets": "Paquetes",
-		"title": "Dispositivo de seguimiento"
+		"title": "Dispositivo de seguimiento",
+		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
+		"waiting_directions": "Puede cerrar este modal en cualquier momento y recuperar el archivo más tarde en el registro de comandos",
+		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"
 	},
 	"upgrade": {
+		"command_submitted": "Comando enviado",
+		"device_disconnected": "Dispositivo desconectado",
+		"device_reconnected": "Dispositivo reconectado",
+		"device_upgrading_firmware": "Firmware de actualización del dispositivo",
 		"directions": "Elija una hora y una versión de firmware para este dispositivo",
 		"firmware_uri": "URI de firmware:",
 		"need_uri": "Necesitas un URI ...",
+		"new_version": "La nueva versión es",
+		"offline_device": "Esta opción está bloqueada porque este dispositivo no está conectado",
 		"time": "Hora de actualización:",
-		"title": "Actualización de firmware"
+		"title": "Actualización de firmware",
+		"wait_for_upgrade": "¿Le gustaría esperar a que finalice la actualización?",
+		"waiting_for_device": "Esperando que el dispositivo se vuelva a conectar"
 	}
 }

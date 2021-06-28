@@ -5,17 +5,16 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
-  CSpinner,
+  CSwitch,
   CCol,
   CRow,
-  CInvalidFeedback,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { convertDateToUtc, convertDateFromUtc, dateToUnix } from 'utils/helper';
+import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
@@ -26,25 +25,15 @@ import styles from './index.module.scss';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
-  const [hadSuccess, setHadSuccess] = useState(false);
-  const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [validDate, setValidDate] = useState(true);
+  const [result, setResult] = useState(null);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
-  const [doingNow, setDoingNow] = useState(false);
-  const [responseBody, setResponseBody] = useState('');
+  const [isNow, setIsNow] = useState(false);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
-  const setDateToLate = () => {
-    const date = convertDateToUtc(new Date());
-    if (date.getHours() >= 3) {
-      date.setDate(date.getDate() + 1);
-    }
-    date.setHours(3);
-    date.setMinutes(0);
-
-    setChosenDate(convertDateFromUtc(date).toString());
-  };
+  const toggleNow = () => {
+    setIsNow(!isNow);
+  }
 
   const setDate = (date) => {
     if (date) {
@@ -54,29 +43,21 @@ const ActionModal = ({ show, toggleModal }) => {
 
   useEffect(() => {
     if (show) {
-      setHadSuccess(false);
-      setHadFailure(false);
+      setResult(null);
       setWaiting(false);
-      setDoingNow(false);
       setChosenDate(new Date().toString());
-      setResponseBody('');
-      setValidDate(true);
     }
   }, [show]);
 
-  const doAction = (isNow) => {
-    if (isNow !== undefined) setDoingNow(isNow);
-    setHadFailure(false);
-    setHadSuccess(false);
+  const doAction = () => {
     setWaiting(true);
 
     const token = getToken();
     const utcDate = new Date(chosenDate);
-    const utcDateString = utcDate.toISOString();
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: isNow ? 0 : dateToUnix(utcDateString),
+      when: isNow ? 0 : dateToUnix(utcDate),
     };
 
     const headers = {
@@ -87,14 +68,12 @@ const ActionModal = ({ show, toggleModal }) => {
     axiosInstance
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
       .then(() => {
-        setHadSuccess(true);
+        setResult('success');
       })
       .catch(() => {
-        setResponseBody(t('commands.error'));
-        setHadFailure(true);
+        setResult('error');
       })
       .finally(() => {
-        setDoingNow(false);
         setWaiting(false);
         eventBus.dispatch('actionCompleted', { message: 'An action has been completed' });
       });
@@ -105,54 +84,43 @@ const ActionModal = ({ show, toggleModal }) => {
       <CModalHeader closeButton>
         <CModalTitle>{t('reboot.title')}</CModalTitle>
       </CModalHeader>
-      {hadSuccess ? (
+      {result === 'success' ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />
       ) : (
         <div>
           <CModalBody>
             <h6>{t('reboot.directions')}</h6>
             <CRow className={styles.spacedRow}>
-              <CCol>
-                <CButton onClick={() => doAction(true)} disabled={waiting} block color="primary">
-                  {waiting && doingNow ? t('common.loading_ellipsis') : t('common.do_now')}
-                  <CSpinner
-                    color="light"
-                    hidden={!waiting || !doingNow}
-                    component="span"
-                    size="sm"
-                  />
-                </CButton>
+              <CCol md="8">
+                <p className={styles.spacedText}>{t('common.execute_now')}</p>
               </CCol>
               <CCol>
-                <CButton disabled={waiting} block color="primary" onClick={() => setDateToLate()}>
-                  {t('common.later_tonight')}
-                </CButton>
+                <CSwitch
+                  disabled={waiting}
+                  color="primary"
+                  defaultChecked={isNow}
+                  onClick={toggleNow}
+                  labelOn={t('common.yes')}
+                  labelOff={t('common.no')}
+                />
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
-              <CCol md="4" className={styles.spacedColumn}>
-                <p>{t('common.date')}:</p>
+            <CRow hidden={isNow} className={styles.spacedRow}>
+              <CCol md="4" className={styles.spacedDate}>
+                <p>{t('common.date')}</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker
                   selected={new Date(chosenDate)}
                   includeTime
-                  className={('form-control', { 'is-invalid': !validDate })}
                   value={new Date(chosenDate)}
                   placeholder="Select custom date"
                   disabled={waiting}
                   onChange={(date) => setDate(date)}
-                  min={convertDateToUtc(new Date())}
+                  min={new Date()}
                 />
               </CCol>
             </CRow>
-            <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
-
-            <div hidden={!hadSuccess && !hadFailure}>
-              <div>
-                <pre className="ignore">{responseBody}</pre>
-              </div>
-            </div>
           </CModalBody>
           <CModalFooter>
             <LoadingButton
