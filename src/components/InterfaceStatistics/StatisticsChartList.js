@@ -5,11 +5,11 @@ import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
 import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
+import eventBus from 'utils/eventBus';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
+const StatisticsChartList = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
     settings: {},
@@ -68,7 +68,6 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       }
     }
 
-
     const options = {
       chart: {
         id: 'chart',
@@ -106,15 +105,13 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
       interfaceList,
       settings: options,
     };
+
     if (statOptions !== newOptions) {
       setStatOptions(newOptions);
     }
   };
 
   const getStatistics = () => {
-    if (!loading) {
-      setLoading(true);
-
       const options = {
         headers: {
           Accept: 'application/json',
@@ -130,11 +127,7 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
         .then((response) => {
           transformIntoDataset(response.data.data);
         })
-        .catch(() => {})
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+        .catch(() => {});
   };
 
   useEffect(() => {
@@ -144,42 +137,41 @@ const StatisticsChartList = ({ selectedDeviceId, lastRefresh }) => {
   }, [selectedDeviceId]);
 
   useEffect(() => {
-    if (!loading && lastRefresh !== '' && selectedDeviceId) {
-      getStatistics();
-    }
-  }, [lastRefresh]);
+    eventBus.on('refreshInterfaceStatistics', () => getStatistics());
+
+    return () => {
+      eventBus.remove('refreshInterfaceStatistics');
+    };
+  }, []);
 
   return (
     <div>
-      {statOptions.interfaceList.map((data) => (
-        <div key={createUuid()}>
-          <DeviceStatisticsChart
-            key={createUuid()}
-            data={data}
-            options={{
-              ...statOptions.settings,
-              title: {
-                text: capitalizeFirstLetter(data[0].titleName),
-                align: 'left',
-                style: {
-                  fontSize: '25px',
-                },
+      {statOptions.interfaceList.map((data) => {
+        const options = {
+          data,
+          options: {
+            ...statOptions.settings,
+            title: {
+              text: capitalizeFirstLetter(data[0].titleName),
+              align: 'left',
+              style: {
+                fontSize: '25px',
               },
-            }}
-          />
-        </div>
-      ))}
+            },
+          }
+        }
+        return (
+          <div key={createUuid()}>
+            <DeviceStatisticsChart chart={ options } />
+          </div>
+        );
+      })}
     </div>
   );
 };
 
 StatisticsChartList.propTypes = {
-  lastRefresh: PropTypes.string,
   selectedDeviceId: PropTypes.string.isRequired,
-};
-
-StatisticsChartList.defaultProps = {
-  lastRefresh: '',
 };
 
 export default React.memo(StatisticsChartList);
