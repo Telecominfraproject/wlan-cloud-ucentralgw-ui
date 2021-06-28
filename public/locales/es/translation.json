@@ -163,6 +163,7 @@
 		"download_trace": "Haga click aquí para descargar",
 		"packets": "Paquetes",
 		"title": "Dispositivo de seguimiento",
+		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
 		"waiting_directions": "Puede cerrar este modal en cualquier momento y recuperar el archivo más tarde en el registro de comandos",
 		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"
 	},

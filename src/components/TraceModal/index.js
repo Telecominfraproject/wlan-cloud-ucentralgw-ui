@@ -270,7 +270,7 @@ const TraceModal = ({ show, toggleModal }) => {
           <CRow className={styles.spacedRow} hidden={!isNow || !isDeviceConnected}>
             <CCol md="8">
               <p className={styles.spacedText}>
-                {t('upgrade.wait_for_upgrade')}
+                {t('trace.wait_for_file')}
               </p>
             </CCol>
             <CCol>

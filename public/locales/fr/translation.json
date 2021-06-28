@@ -163,6 +163,7 @@
 		"download_trace": "Cliquez ici pour télécharger",
 		"packets": "Paquets",
 		"title": "Dispositif de traçage",
+		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
 		"waiting_directions": "Vous pouvez fermer ce modal à tout moment et récupérer le fichier plus tard dans le journal des commandes",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
 	},
