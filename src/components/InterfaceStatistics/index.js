@@ -14,13 +14,13 @@ import {
 } from '@coreui/react';
 import { cilOptions } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
+import eventBus from 'utils/eventBus';
 import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsModal from './LatestStatisticsModal';
 import styles from './index.module.scss';
 
 const DeviceStatisticsCard = ({ selectedDeviceId }) => {
   const { t } = useTranslation();
-  const [lastRefresh, setLastRefresh] = useState(new Date().toString());
   const [showLatestModal, setShowLatestModal] = useState(false);
 
   const toggleLatestModal = () => {
@@ -28,7 +28,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
   };
 
   const refresh = () => {
-    setLastRefresh(new Date().toString());
+    eventBus.dispatch('refreshInterfaceStatistics', { message: 'Refresh interface statistics' });
   };
 
   return (
@@ -55,7 +55,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
           </CRow>
         </CCardHeader>
         <CCardBody className={styles.statsBody}>
-          <StatisticsChartList selectedDeviceId={selectedDeviceId} lastRefresh={lastRefresh} />
+          <StatisticsChartList selectedDeviceId={selectedDeviceId} />
         </CCardBody>
       </CCard>
       <LatestStatisticsModal
