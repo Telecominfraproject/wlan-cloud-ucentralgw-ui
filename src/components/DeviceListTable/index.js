@@ -19,7 +19,7 @@ import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
-import { cleanBytesString, cropStringWithEllipsis } from 'utils/helper';
+import { cleanBytesString } from 'utils/helper';
 import meshIcon from 'assets/icons/Mesh.png';
 import apIcon from 'assets/icons/AP.png';
 import internetSwitch from 'assets/icons/Switch.png';
@@ -168,7 +168,7 @@ const DeviceListDisplay = ({
     { key: 'verifiedCertificate', label: t('common.certificate'), _style: { width: '1%' } },
     { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '5%' } },
     { key: 'UUID', label: t('common.config_id'), _style: { width: '5%' } },
-    { key: 'firmware', label: t('common.firmware'), filter: false, _style: { width: '20%' } },
+    { key: 'firmware', label: t('common.firmware'), filter: false },
     { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '20%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '12%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '12%' } },
@@ -337,7 +337,7 @@ const DeviceListDisplay = ({
                     content={item.firmware ? item.firmware : t('common.na')}
                     placement="top"
                   >
-                    <p>{cropStringWithEllipsis(item.firmware, 16)}</p>
+                    <p style={{width: '225px'}} className="text-truncate">{item.firmware}</p>
                   </CPopover>
                 </td>
               ),
@@ -347,7 +347,7 @@ const DeviceListDisplay = ({
                     content={item.compatible ? item.compatible : t('common.na')}
                     placement="top"
                   >
-                    <p>{cropStringWithEllipsis(item.compatible, 16)}</p>
+                    <p style={{width: '150px'}} className="text-truncate">{item.compatible}</p>
                   </CPopover>
                 </td>
               ),
@@ -359,7 +359,7 @@ const DeviceListDisplay = ({
                     content={item.ipAddress ? item.ipAddress : t('common.na')}
                     placement="top"
                   >
-                    <p>{cropStringWithEllipsis(item.ipAddress, 20)}</p>
+                    <p style={{width: '150px'}} className="text-truncate">{item.ipAddress}</p>
                   </CPopover>
                 </td>
               ),
