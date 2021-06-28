@@ -37,7 +37,7 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
         <CCardHeader>
           <CRow>
             <CCol>
-              <h4>{t('statistics.title')}</h4>
+            <div className="text-value-lg">{t('statistics.title')}</div>
             </CCol>
             <CCol className={styles.alignRight}>
               <CDropdown className="m-1 btn-group">
