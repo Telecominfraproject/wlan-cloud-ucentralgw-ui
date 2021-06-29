@@ -449,7 +449,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
         date={chosenWifiScanDate}
       />
       <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
-      <CIcon name="cilNotes" className={styles.whiteIcon} size="lg" />
     </CWidgetDropdown>
   );
 };

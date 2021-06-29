@@ -7,7 +7,7 @@
 		"factory_reset": "Restauração de fábrica",
 		"firmware_upgrade": "Atualização de firmware",
 		"reboot": "Reiniciar",
-		"title": "Ações do dispositivo",
+		"title": "Comandos",
 		"trace": "Vestígio",
 		"wifi_scan": "Wifi Scan"
 	},
@@ -20,7 +20,7 @@
 	"commands": {
 		"error": "Erro ao enviar comando!",
 		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
-		"title": "Comandos de dispositivo"
+		"title": "Histórico de Comandos"
 	},
 	"common": {
 		"are_you_sure": "Você tem certeza?",
@@ -70,6 +70,8 @@
 		"refresh": "REFRESH",
 		"refresh_device": "Atualizar dispositivo",
 		"result": "Resultado",
+		"save": "Salve",
+		"saving": "Salvando ...",
 		"schedule": "Cronograma",
 		"seconds_elapsed": "Segundos decorridos",
 		"serial_number": "Número de série",
@@ -85,14 +87,14 @@
 	},
 	"configuration": {
 		"created": "Criado",
-		"details": "Detalhes do dispositivo",
+		"details": "Detalhes",
 		"device_password": "Senha",
 		"last_configuration_change": "Última Mudança de Configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
 		"notes": "notas",
 		"owner": "Proprietário",
-		"title": "Configuração do dispositivo",
+		"title": "Configuração",
 		"type": "Tipo de dispositivo",
 		"view_json": "Exibir JSON bruto"
 	},
@@ -100,7 +102,7 @@
 		"choose_file": "Você precisa escolher um arquivo .json válido:",
 		"enter_new": "Insira a nova configuração do dispositivo JSON:",
 		"placeholder": "Config JSON",
-		"title": "Configurar dispositivo",
+		"title": "Configurar",
 		"valid_json": "Você precisa inserir um JSON válido"
 	},
 	"delete_command": {
@@ -116,11 +118,13 @@
 	"device_logs": {
 		"log": "Registro",
 		"severity": "Gravidade",
-		"title": "Registros de dispositivos"
+		"title": "Toras"
 	},
 	"factory_reset": {
 		"redirector": "Manter redirecionador:",
-		"title": "Dispositivo de redefinição de fábrica",
+		"reset": "Restabelecer",
+		"resetting": "Reiniciando ...",
+		"title": "Restauração de fábrica",
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"footer": {
@@ -130,7 +134,7 @@
 	},
 	"health": {
 		"sanity": "Sanidade",
-		"title": "Saúde do Dispositivo"
+		"title": "Saúde"
 	},
 	"login": {
 		"login": "Entrar",
@@ -144,7 +148,7 @@
 	},
 	"reboot": {
 		"directions": "Quando você gostaria de reinicializar este dispositivo?",
-		"title": "Reiniciar dispositivo"
+		"title": "Reiniciar"
 	},
 	"scan": {
 		"active": "Habilitar varredura ativa",
@@ -168,7 +172,8 @@
 		"directions": "Lançar um rastreamento remoto deste dispositivo para uma duração específica ou um número de pacotes",
 		"download_trace": "Clique aqui para baixar",
 		"packets": "Pacotes",
-		"title": "Dispositivo de rastreamento",
+		"title": "Vestígio",
+		"trace": "Vestígio",
 		"wait_for_file": "Você gostaria de esperar até que o arquivo de rastreamento esteja pronto?",
 		"waiting_directions": "Aguarde o arquivo de dados de rastreamento. Isto pode tomar algum tempo. Você pode sair da espera e recuperar o arquivo de rastreamento da tabela de comandos mais tarde.",
 		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
@@ -185,6 +190,7 @@
 		"offline_device": "Esta opção está bloqueada porque este dispositivo não está conectado",
 		"time": "Tempo de atualização:",
 		"title": "Atualização de firmware",
+		"upgrade": "Melhorar",
 		"wait_for_upgrade": "Você gostaria de esperar a conclusão da atualização?",
 		"waiting_for_device": "Esperando que o dispositivo se reconecte"
 	}
