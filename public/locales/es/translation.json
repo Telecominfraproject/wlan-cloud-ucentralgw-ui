@@ -150,7 +150,12 @@
 		"active": "Habilitar escaneo activo",
 		"channel": "Canal",
 		"directions": "Ejecute un escaneo wifi de este dispositivo, que debería tomar aproximadamente 25 segundos.",
-		"results": "Resultados de escaneo Wifi"
+		"re_scan": "Vuelva a escanear",
+		"result_directions": "Haga clic en el botón '$ t (scan.re_scan)' si desea realizar un escaneo con la misma configuración que el anterior.",
+		"results": "Resultados de escaneo Wifi",
+		"scan": "Escanear",
+		"scanning": "Exploración... ",
+		"waiting_directions": "Espere el resultado del escaneo. Esto puede tardar hasta 25 segundos. Puede salir y ver los resultados de la tabla de comandos más adelante."
 	},
 	"statistics": {
 		"data": "Datos (KB)",

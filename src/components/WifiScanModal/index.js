@@ -9,6 +9,7 @@ import {
   CForm,
   CSwitch,
   CCol,
+  CSpinner
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +30,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [waiting, setWaiting] = useState(false);
   const [choseVerbose, setVerbose] = useState(true);
   const [activeScan, setActiveScan] = useState(false);
+  const [hideOptions, setHideOptions] = useState(false);
   const [channelList, setChannelList] = useState([]);
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
@@ -47,6 +49,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setChannelList([]);
     setVerbose(true);
     setActiveScan(false);
+    setHideOptions(false);
   }, [show]);
 
   const parseThroughList = (scanList) => {
@@ -104,6 +107,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
         if (scanList) {
           setChannelList(parseThroughList(scanList));
+          setHideOptions(true);
           setHadSuccess(true);
         } else {
           setHadFailure(true);
@@ -124,47 +128,66 @@ const WifiScanModal = ({ show, toggleModal }) => {
         <CModalTitle>{t('actions.wifi_scan')}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <h6>{t('scan.directions')}</h6>
-        <CRow className={styles.spacedRow}>
-          <CCol md="3">
-            <p className={styles.spacedText}>Verbose:</p>
-          </CCol>
-          <CCol>
-            <CForm className={styles.spacedSwitch}>
-              <CSwitch
-                color="primary"
-                defaultChecked={choseVerbose}
-                onClick={toggleVerbose}
-                labelOn={t('common.on')}
-                labelOff={t('common.off')}
-              />
-            </CForm>
-          </CCol>
-        </CRow>
-        <CRow className={styles.spacedRow}>
-          <CCol md="3">
-            <p className={styles.spacedText}>{t('scan.active')}:</p>
-          </CCol>
-          <CCol>
-            <CForm className={styles.spacedSwitch}>
-              <CSwitch
-                color="primary"
-                defaultChecked={activeScan}
-                onClick={toggleActiveScan}
-                labelOn={t('common.on')}
-                labelOff={t('common.off')}
-              />
-            </CForm>
-          </CCol>
-        </CRow>
-        <div className={styles.spacedRow} hidden={!hadSuccess && !hadFailure}>
+        <div hidden={hideOptions || waiting}>
+          <h6>{t('scan.directions')}</h6>
+          <CRow className={styles.spacedRow}>
+            <CCol md="3">
+              <p className={styles.spacedText}>Verbose:</p>
+            </CCol>
+            <CCol>
+              <CForm className={styles.spacedSwitch}>
+                <CSwitch
+                  color="primary"
+                  defaultChecked={choseVerbose}
+                  onClick={toggleVerbose}
+                  labelOn={t('common.on')}
+                  labelOff={t('common.off')}
+                />
+              </CForm>
+            </CCol>
+          </CRow>
+          <CRow className={styles.spacedRow}>
+            <CCol md="3">
+              <p className={styles.spacedText}>{t('scan.active')}:</p>
+            </CCol>
+            <CCol>
+              <CForm className={styles.spacedSwitch}>
+                <CSwitch
+                  color="primary"
+                  defaultChecked={activeScan}
+                  onClick={toggleActiveScan}
+                  labelOn={t('common.on')}
+                  labelOff={t('common.off')}
+                />
+              </CForm>
+            </CCol>
+          </CRow>
+        </div>
+        <div hidden={!waiting}>
+          <CRow>
+            <CCol>
+              <h6>{t('scan.waiting_directions')}</h6>
+            </CCol>
+          </CRow>
+          <CRow>
+            <CCol className={styles.centerDiv}>
+              <CSpinner />
+            </CCol>
+          </CRow>
+        </div>
+        <div hidden={!hadSuccess && !hadFailure}>
+          <CRow className={styles.bottomSpace}>
+            <CCol>
+              <h6>{t('scan.result_directions')}</h6>
+            </CCol>
+          </CRow>
           <WifiChannelTable channels={channelList} />
         </div>
       </CModalBody>
       <CModalFooter>
         <LoadingButton
-          label={t('common.start')}
-          isLoadingLabel={t('common.loading_ellipsis')}
+          label={(!hadSuccess && !hadFailure) ? t('scan.scan') : t('scan.re_scan')}
+          isLoadingLabel={t('scan.scanning')}
           isLoading={waiting}
           action={doAction}
           variant="outline"
@@ -172,7 +195,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           disabled={waiting}
         />
         <CButton color="secondary" onClick={toggleModal}>
-          {t('common.cancel')}
+        {(!hadSuccess && !hadFailure && waiting) ? t('common.cancel') : t('common.close')}
         </CButton>
       </CModalFooter>
     </CModal>

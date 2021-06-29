@@ -150,7 +150,12 @@
 		"active": "Enable active scan",
 		"channel": "Channel",
 		"directions": "Launch a wifi scan of this device, which should take approximately 25 seconds.",
-		"results": "Wifi Scan Results"
+		"re_scan": "Re-Scan",
+		"result_directions": "Please click the '$t(scan.re_scan)' button if you would like to do a scan with the same configuration as the last.",
+		"results": "Wifi Scan Results",
+		"scan": "Scan",
+		"scanning": "Scanning... ",
+		"waiting_directions": "Please wait for the scan result. This may take up to 25 seconds. You can exit and look at the results from the commands table later."
 	},
 	"statistics": {
 		"data": "Data (KB)",

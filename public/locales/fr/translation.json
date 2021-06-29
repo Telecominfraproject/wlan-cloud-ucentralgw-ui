@@ -150,7 +150,12 @@
 		"active": "Activer l'analyse active",
 		"channel": "Canal",
 		"directions": "Lancez une analyse wifi de cet appareil, ce qui devrait prendre environ 25 secondes.",
-		"results": "Résultats de l'analyse Wi-Fi"
+		"re_scan": "Nouvelle analyse",
+		"result_directions": "Veuillez cliquer sur le bouton '$t(scan.re_scan)' si vous souhaitez effectuer un scan avec la même configuration que le précédent.",
+		"results": "Résultats de l'analyse Wi-Fi",
+		"scan": "Balayage",
+		"scanning": "Balayage... ",
+		"waiting_directions": "Veuillez attendre le résultat de l'analyse. Cela peut prendre jusqu'à 25 secondes. Vous pouvez quitter et consulter les résultats du tableau des commandes plus tard."
 	},
 	"statistics": {
 		"data": "Données (Ko)",
