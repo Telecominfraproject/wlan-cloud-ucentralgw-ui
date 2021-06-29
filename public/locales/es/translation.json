@@ -7,7 +7,7 @@
 		"factory_reset": "Restablecimiento De Fábrica",
 		"firmware_upgrade": "Actualización de firmware",
 		"reboot": "Reiniciar",
-		"title": "Acciones del dispositivo",
+		"title": "Comandos",
 		"trace": "Rastro",
 		"wifi_scan": "Escaneo Wifi"
 	},
@@ -20,7 +20,7 @@
 	"commands": {
 		"error": "¡Error al enviar el comando!",
 		"success": "Comando enviado con éxito, puede consultar el registro de Comandos para ver el resultado",
-		"title": "Comandos del dispositivo"
+		"title": "Historial de Comandos"
 	},
 	"common": {
 		"are_you_sure": "¿Estás seguro?",
@@ -85,14 +85,14 @@
 	},
 	"configuration": {
 		"created": "creado",
-		"details": "Detalles del dispositivo",
+		"details": "Detalles",
 		"device_password": "Contraseña",
 		"last_configuration_change": "Último cambio de configuración",
 		"last_configuration_download": "Descarga de la última configuración",
 		"location": "Ubicación",
 		"notes": "Notas",
 		"owner": "Propietario",
-		"title": "Configuración del dispositivo",
+		"title": "Configuración",
 		"type": "Tipo de dispositivo",
 		"view_json": "Ver JSON sin procesar"
 	},
@@ -100,7 +100,7 @@
 		"choose_file": "Debe elegir un archivo .json válido:",
 		"enter_new": "Ingrese la nueva configuración del dispositivo JSON:",
 		"placeholder": "Configurar JSON",
-		"title": "Configurar dispositivo",
+		"title": "Configurar",
 		"valid_json": "Debes ingresar un JSON válido"
 	},
 	"delete_command": {
@@ -116,11 +116,11 @@
 	"device_logs": {
 		"log": "Iniciar sesión",
 		"severity": "Gravedad",
-		"title": "Registros de dispositivos"
+		"title": "Registros"
 	},
 	"factory_reset": {
 		"redirector": "Mantener el redirector:",
-		"title": "Dispositivo de restablecimiento de fábrica",
+		"title": "Restablecimiento De Fábrica",
 		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
 	},
 	"footer": {
@@ -130,7 +130,7 @@
 	},
 	"health": {
 		"sanity": "Cordura",
-		"title": "Salud del dispositivo"
+		"title": "Salud"
 	},
 	"login": {
 		"login": "Iniciar sesión",
@@ -144,7 +144,7 @@
 	},
 	"reboot": {
 		"directions": "¿Cuándo le gustaría reiniciar este dispositivo?",
-		"title": "Reiniciar dispositivo"
+		"title": "Reiniciar"
 	},
 	"scan": {
 		"active": "Habilitar escaneo activo",
@@ -168,7 +168,7 @@
 		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
 		"download_trace": "Haga click aquí para descargar",
 		"packets": "Paquetes",
-		"title": "Dispositivo de seguimiento",
+		"title": "Rastro",
 		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
 		"waiting_directions": "Espere el archivo de datos de seguimiento. Esto puede tomar algo de tiempo. Puede salir de la espera y recuperar el archivo de seguimiento de la tabla de comandos más tarde.",
 		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"

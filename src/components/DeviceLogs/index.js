@@ -256,9 +256,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
             </CButton>
           </div>
         }
-      >
-        <CIcon name="cilList" className={styles.whiteIcon} size="lg" />
-      </CWidgetDropdown>
+      />
       <DeleteLogModal
         serialNumber={selectedDeviceId}
         object="logs"

@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
 import DeviceConfiguration from 'components/DeviceConfiguration';
-import DeviceCommandsLog from 'components/DeviceCommandsLog';
+import CommandHistory from 'components/CommandHistory';
 import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
-import DeviceActionCard from './DeviceActionCard';
+import DeviceActionCard from '../../components/DeviceActionCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const DevicePage = () => {
         <CRow>
           <CCol>
             <DeviceStatisticsCard selectedDeviceId={deviceId} />
-            <DeviceCommandsLog selectedDeviceId={deviceId} />
+            <CommandHistory selectedDeviceId={deviceId} />
           </CCol>
         </CRow>
       </div>

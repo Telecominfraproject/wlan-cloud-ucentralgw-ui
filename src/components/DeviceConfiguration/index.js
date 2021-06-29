@@ -73,7 +73,7 @@ const DeviceConfiguration = ({ selectedDeviceId }) => {
         <CCard>
           <CCardHeader>
             <CRow>
-              <CCol><div className="text-value-lg">{t('configuration.details')}</div></CCol>
+              <CCol><div className="text-value-lg">{t('configuration.title')}</div></CCol>
               <CCol>
                 <div className={styles.alignRight}>
                   <CPopover content={t('configuration.view_json')}>

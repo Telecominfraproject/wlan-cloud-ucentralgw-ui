@@ -7,7 +7,7 @@
 		"factory_reset": "Werkseinstellungen zurückgesetzt",
 		"firmware_upgrade": "Firmware-Aktualisierung",
 		"reboot": "Starten Sie neu",
-		"title": "Geräteaktionen",
+		"title": "Befehle",
 		"trace": "Spur",
 		"wifi_scan": "WLAN-Scan"
 	},
@@ -20,7 +20,7 @@
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
 		"success": "Der Befehl wurde erfolgreich gesendet. Sie können das Ergebnis im Befehlsprotokoll anzeigen",
-		"title": "Gerätebefehle"
+		"title": "Befehlsverlauf"
 	},
 	"common": {
 		"are_you_sure": "Bist du sicher?",
@@ -85,14 +85,14 @@
 	},
 	"configuration": {
 		"created": "Erstellt",
-		"details": "Gerätedetails",
+		"details": "Einzelheiten",
 		"device_password": "Passwort",
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
-		"title": "Gerätekonfiguration",
+		"title": "Aufbau",
 		"type": "Gerätetyp",
 		"view_json": "Rohes JSON anzeigen"
 	},
@@ -100,7 +100,7 @@
 		"choose_file": "Sie müssen eine gültige .json-Datei auswählen:",
 		"enter_new": "Geben Sie die JSON für die neue Gerätekonfiguration ein:",
 		"placeholder": "JSON konfigurieren",
-		"title": "Gerät konfigurieren",
+		"title": "Konfigurieren",
 		"valid_json": "Sie müssen gültiges JSON eingeben"
 	},
 	"delete_command": {
@@ -120,7 +120,7 @@
 	},
 	"factory_reset": {
 		"redirector": "Weiterleitung beibehalten:",
-		"title": "Gerät auf Werkseinstellungen zurücksetzen",
+		"title": "Werkseinstellungen zurückgesetzt",
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"footer": {
@@ -130,7 +130,7 @@
 	},
 	"health": {
 		"sanity": "Gesundheit",
-		"title": "Gerätezustand"
+		"title": "Gesundheit"
 	},
 	"login": {
 		"login": "Anmeldung",
@@ -144,7 +144,7 @@
 	},
 	"reboot": {
 		"directions": "Wann möchten Sie dieses Gerät neu starten?",
-		"title": "Gerät neustarten"
+		"title": "Starten Sie neu"
 	},
 	"scan": {
 		"active": "Aktiven Scan aktivieren",
@@ -168,7 +168,7 @@
 		"directions": "Starten Sie eine Fernverfolgung dieses Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
 		"download_trace": "Klicke hier zum herunterladen",
 		"packets": "Pakete",
-		"title": "Trace-Gerät",
+		"title": "Spur",
 		"wait_for_file": "Möchten Sie warten, bis die Trace-Datei fertig ist?",
 		"waiting_directions": "Bitte warten Sie auf die Trace-Datendatei. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
 		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
