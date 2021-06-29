@@ -195,7 +195,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           disabled={waiting}
         />
         <CButton color="secondary" onClick={toggleModal}>
-        {(!hadSuccess && !hadFailure && waiting) ? t('common.cancel') : t('common.close')}
+        {(!hadSuccess && !hadFailure) ? t('common.cancel') : t('common.close')}
         </CButton>
       </CModalFooter>
     </CModal>
