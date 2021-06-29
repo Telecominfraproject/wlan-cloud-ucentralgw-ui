@@ -1,71 +1,71 @@
 {
 	"actions": {
-		"blink": "Blinken",
+		"blink": "LEDs Blinken",
 		"configure": "Konfigurieren",
-		"connect": "Verbinden",
-		"connecting": "Verbindung wird hergestellt ...",
-		"factory_reset": "Werkseinstellungen zurückgesetzt",
-		"firmware_upgrade": "Firmware-Aktualisierung",
-		"reboot": "Starten Sie neu",
-		"title": "Befehle",
-		"trace": "Spur",
-		"wifi_scan": "WLAN-Scan"
+		"connect": "Konsole öffnen",
+		"connecting": "Die Verbindung wird hergestellt ...",
+		"factory_reset": "Auf Werkseinstellungen zurückgesetzt",
+		"firmware_upgrade": "Firmware Aktualisierung",
+		"reboot": "Gerät neustarten",
+		"title": "Geräte Administrations",
+		"trace": "Tcpdump starten",
+		"wifi_scan": "WiFi Scan"
 	},
 	"blink": {
-		"blink": "Blinken",
-		"device_leds": "Geräte-LEDs",
+		"blink": "LEDs Blinken",
+		"device_leds": "LEDs",
 		"pattern": "Wählen Sie das Muster, das Sie verwenden möchten:",
-		"when_blink_leds": "Wann möchten Sie die Geräte-LEDs blinken lassen?"
+		"when_blink_leds": "Wann möchten Sie die LEDs blinken lassen?"
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
-		"success": "Der Befehl wurde erfolgreich gesendet. Sie können das Ergebnis im Befehlsprotokoll anzeigen",
-		"title": "Befehlsverlauf"
+		"success": "Befehl wurde erfolgreich übermittelt",
+		"title": "Gerätebefehle"
 	},
 	"common": {
 		"are_you_sure": "Bist du sicher?",
-		"cancel": "Stornieren",
+		"cancel": "Abbrechen",
 		"certificate": "Zertifikat",
-		"clear": "klar",
+		"clear": "Löschen",
 		"close": "Schließen",
 		"command": "Befehl",
 		"compatible": "kompatibel",
 		"completed": "Abgeschlossen",
-		"config_id": "Konfig. Ich würde",
+		"config_id": "Konfigurations ID",
 		"confirm": "Bestätigen",
-		"connected": "In Verbindung gebracht",
+		"connected": "Verbindung wurde hergestellt",
 		"copied": "kopiert!",
 		"copy_to_clipboard": "In die Zwischenablage kopieren",
 		"date": "Datum",
 		"delete": "Löschen",
 		"details": "Einzelheiten",
 		"device_list": "Liste der Geräte",
-		"device_page": "Geräteseite",
+		"device_page": "Geräte",
 		"devices": "Geräte",
 		"dismiss": "entlassen",
-		"do_now": "Jetzt tun!",
+		"do_now": "Sofort",
 		"download": "Herunterladen",
 		"duration": "Dauer",
-		"error": "Error",
+		"error": "Fehler",
 		"execute_now": "Möchten Sie diesen Befehl jetzt ausführen?",
-		"executed": "Hingerichtet",
+		"executed": "Ausgeführt",
 		"exit": "Ausgang",
 		"firmware": "Firmware",
 		"from": "Von",
-		"id": "Ich würde",
+		"id": "ID",
 		"ip_address": "IP Adresse",
-		"later_tonight": "Heute Abend später",
+		"later_tonight": "Später am Abend",
 		"loading_ellipsis": "Wird geladen...",
 		"loading_more_ellipsis": "Mehr laden ...",
 		"logout": "Ausloggen",
 		"mac": "MAC-Adresse",
 		"manufacturer": "Hersteller",
-		"na": "N / A",
+		"na": "(unbekannt)",
 		"need_date": "Du brauchst ein Datum...",
 		"no": "Nein",
 		"not_connected": "Nicht verbunden",
-		"off": "aus",
-		"on": "auf",
+		"off": "Aus",
+		"on": "An",
 		"recorded": "Verzeichnet",
 		"refresh": "Aktualisierung",
 		"refresh_device": "Gerät aktualisieren",
@@ -74,36 +74,36 @@
 		"saving": "Speichern ...",
 		"schedule": "Zeitplan",
 		"seconds_elapsed": "Sekunden verstrichen",
-		"serial_number": "Ordnungsnummer",
+		"serial_number": "Seriennummer",
 		"start": "Start",
-		"submit": "einreichen",
+		"submit": "Absenden",
 		"submitted": "Eingereicht",
 		"success": "Erfolg",
 		"to": "zu",
 		"unknown": "unbekannte",
 		"uuid": "UUID",
-		"view_more": "Mehr sehen",
+		"view_more": "Mehr anzeigen",
 		"yes": "Ja"
 	},
 	"configuration": {
 		"created": "Erstellt",
-		"details": "Einzelheiten",
+		"details": "Gerätedetails",
 		"device_password": "Passwort",
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
-		"title": "Aufbau",
+		"title": "Gerätekonfiguration",
 		"type": "Gerätetyp",
-		"view_json": "Rohes JSON anzeigen"
+		"view_json": "Rohe Konfiguration anzeigen"
 	},
 	"configure": {
 		"choose_file": "Sie müssen eine gültige .json-Datei auswählen:",
 		"enter_new": "Geben Sie die JSON für die neue Gerätekonfiguration ein:",
-		"placeholder": "JSON konfigurieren",
-		"title": "Konfigurieren",
-		"valid_json": "Sie müssen gültiges JSON eingeben"
+		"placeholder": "Konfiguration",
+		"title": "Gerät konfigurieren",
+		"valid_json": "Sie müssen ein gültiges JSON eingeben"
 	},
 	"delete_command": {
 		"explanation": "Möchten Sie diesen Befehl wirklich löschen? Diese Aktion ist nicht umkehrbar.",
@@ -116,25 +116,25 @@
 		"healthchecks_title": "Healthchecks löschen"
 	},
 	"device_logs": {
-		"log": "Log",
-		"severity": "Schwere",
+		"log": "Protokoll",
+		"severity": "Wichtigkeit",
 		"title": "Geräteprotokolle"
 	},
 	"factory_reset": {
-		"redirector": "Weiterleitung beibehalten:",
+		"redirector": "Gatewaykonfiguration beibehalten:",
 		"reset": "Zurücksetzen",
 		"resetting": "Zurücksetzen...",
-		"title": "Werkseinstellungen zurückgesetzt",
+		"title": "Gerät auf Werkseinstellungen zurücksetzen",
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI für React",
 		"powered_by": "Unterstützt von",
-		"version": "Ausführung"
+		"version": "Version"
 	},
 	"health": {
-		"sanity": "Gesundheit",
-		"title": "Gesundheit"
+		"sanity": "Gesundheitzustand",
+		"title": "Gesundheitzustand"
 	},
 	"login": {
 		"login": "Anmeldung",
@@ -144,19 +144,19 @@
 		"please_enter_password": "Bitte geben Sie Ihr Passwort ein",
 		"please_enter_username": "Bitte geben Sie Ihren Benutzernamen ein",
 		"sign_in_to_account": "Melden Sie sich bei Ihrem Konto an",
-		"username": "Nutzername"
+		"username": "Benutzername"
 	},
 	"reboot": {
 		"directions": "Wann möchten Sie dieses Gerät neu starten?",
-		"title": "Starten Sie neu"
+		"title": "Gerät neustarten"
 	},
 	"scan": {
 		"active": "Aktiven Scan aktivieren",
 		"channel": "Kanal",
-		"directions": "Starten Sie einen WLAN-Scan dieses Geräts, der ungefähr 25 Sekunden dauern sollte.",
+		"directions": "Starten Sie einen WiFi-Scan dieses Geräts, der ungefähr 25 Sekunden dauern sollte.",
 		"re_scan": "Erneut scannen",
 		"result_directions": "Bitte klicken Sie auf die Schaltfläche '$t(scan.re_scan)', wenn Sie einen Scan mit derselben Konfiguration wie beim letzten Scan durchführen möchten.",
-		"results": "Ergebnisse des WLAN-Scans",
+		"results": "Ergebnisse des WiFi-Scans",
 		"scan": "Scan",
 		"scanning": "Scannen... ",
 		"waiting_directions": "Bitte warten Sie auf das Scanergebnis. Dies kann bis zu 25 Sekunden dauern. Sie können den Vorgang später beenden und die Ergebnisse aus der Befehlstabelle anzeigen."
@@ -169,10 +169,10 @@
 	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",
-		"directions": "Starten Sie eine Fernverfolgung dieses Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
+		"directions": "Starten Sie eine Tcpdump auf diesem Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
 		"download_trace": "Klicke hier zum herunterladen",
 		"packets": "Pakete",
-		"title": "Spur",
+		"title": "Tcpdump",
 		"trace": "Spur",
 		"wait_for_file": "Möchten Sie warten, bis die Trace-Datei fertig ist?",
 		"waiting_directions": "Bitte warten Sie auf die Trace-Datendatei. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
@@ -184,12 +184,12 @@
 		"device_reconnected": "Gerät wieder verbunden",
 		"device_upgrading_firmware": "Geräte-Firmware-Upgrade",
 		"directions": "Wählen Sie eine Uhrzeit und eine Firmware-Version für dieses Gerät",
-		"firmware_uri": "Firmware-URI:",
-		"need_uri": "Du brauchst eine URI...",
+		"firmware_uri": "Firmware-URL:",
+		"need_uri": "Sie brauchen eine URL...",
 		"new_version": "Neue Version ist",
 		"offline_device": "Diese Option ist gesperrt, da dieses Gerät nicht verbunden ist",
-		"time": "Zeitpunkt der Aktualisierung:",
-		"title": "Firmware-Aktualisierung",
+		"time": "Zeitpunkt für Aktualisierung:",
+		"title": "Firmware Aktualisieren",
 		"upgrade": "Aktualisierung",
 		"wait_for_upgrade": "Möchten Sie warten, bis das Upgrade abgeschlossen ist?",
 		"waiting_for_device": "Warten, bis das Gerät wieder verbunden ist"
