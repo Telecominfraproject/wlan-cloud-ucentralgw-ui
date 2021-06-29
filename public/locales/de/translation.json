@@ -49,6 +49,7 @@
 		"error": "Error",
 		"execute_now": "Möchten Sie diesen Befehl jetzt ausführen?",
 		"executed": "Hingerichtet",
+		"exit": "Ausgang",
 		"firmware": "Firmware",
 		"from": "Von",
 		"id": "Ich würde",
@@ -149,7 +150,12 @@
 		"active": "Aktiven Scan aktivieren",
 		"channel": "Kanal",
 		"directions": "Starten Sie einen WLAN-Scan dieses Geräts, der ungefähr 25 Sekunden dauern sollte.",
-		"results": "Ergebnisse des WLAN-Scans"
+		"re_scan": "Erneut scannen",
+		"result_directions": "Bitte klicken Sie auf die Schaltfläche '$t(scan.re_scan)', wenn Sie einen Scan mit derselben Konfiguration wie beim letzten Scan durchführen möchten.",
+		"results": "Ergebnisse des WLAN-Scans",
+		"scan": "Scan",
+		"scanning": "Scannen... ",
+		"waiting_directions": "Bitte warten Sie auf das Scanergebnis. Dies kann bis zu 25 Sekunden dauern. Sie können den Vorgang später beenden und die Ergebnisse aus der Befehlstabelle anzeigen."
 	},
 	"statistics": {
 		"data": "Daten (KB)",
@@ -164,7 +170,7 @@
 		"packets": "Pakete",
 		"title": "Trace-Gerät",
 		"wait_for_file": "Möchten Sie warten, bis die Trace-Datei fertig ist?",
-		"waiting_directions": "Sie können dieses Modal jederzeit schließen und die Datei später im Befehlsprotokoll abrufen",
+		"waiting_directions": "Bitte warten Sie auf die Trace-Datendatei. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
 		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
 	},
 	"upgrade": {

@@ -49,6 +49,7 @@
 		"error": "erreur",
 		"execute_now": "Souhaitez-vous exécuter cette commande maintenant ?",
 		"executed": "réalisé",
+		"exit": "Sortie",
 		"firmware": "Micrologiciel",
 		"from": "De",
 		"id": "Id",
@@ -149,7 +150,12 @@
 		"active": "Activer l'analyse active",
 		"channel": "Canal",
 		"directions": "Lancez une analyse wifi de cet appareil, ce qui devrait prendre environ 25 secondes.",
-		"results": "Résultats de l'analyse Wi-Fi"
+		"re_scan": "Nouvelle analyse",
+		"result_directions": "Veuillez cliquer sur le bouton '$t(scan.re_scan)' si vous souhaitez effectuer un scan avec la même configuration que le précédent.",
+		"results": "Résultats de l'analyse Wi-Fi",
+		"scan": "Balayage",
+		"scanning": "Balayage... ",
+		"waiting_directions": "Veuillez attendre le résultat de l'analyse. Cela peut prendre jusqu'à 25 secondes. Vous pouvez quitter et consulter les résultats du tableau des commandes plus tard."
 	},
 	"statistics": {
 		"data": "Données (Ko)",
@@ -164,7 +170,7 @@
 		"packets": "Paquets",
 		"title": "Dispositif de traçage",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
-		"waiting_directions": "Vous pouvez fermer ce modal à tout moment et récupérer le fichier plus tard dans le journal des commandes",
+		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
 	},
 	"upgrade": {

@@ -49,6 +49,7 @@
 		"error": "Error",
 		"execute_now": "¿Le gustaría ejecutar este comando ahora?",
 		"executed": "ejecutado",
+		"exit": "salida",
 		"firmware": "Firmware",
 		"from": "Desde",
 		"id": "Carné de identidad",
@@ -149,7 +150,12 @@
 		"active": "Habilitar escaneo activo",
 		"channel": "Canal",
 		"directions": "Ejecute un escaneo wifi de este dispositivo, que debería tomar aproximadamente 25 segundos.",
-		"results": "Resultados de escaneo Wifi"
+		"re_scan": "Vuelva a escanear",
+		"result_directions": "Haga clic en el botón '$ t (scan.re_scan)' si desea realizar un escaneo con la misma configuración que el anterior.",
+		"results": "Resultados de escaneo Wifi",
+		"scan": "Escanear",
+		"scanning": "Exploración... ",
+		"waiting_directions": "Espere el resultado del escaneo. Esto puede tardar hasta 25 segundos. Puede salir y ver los resultados de la tabla de comandos más adelante."
 	},
 	"statistics": {
 		"data": "Datos (KB)",
@@ -164,7 +170,7 @@
 		"packets": "Paquetes",
 		"title": "Dispositivo de seguimiento",
 		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
-		"waiting_directions": "Puede cerrar este modal en cualquier momento y recuperar el archivo más tarde en el registro de comandos",
+		"waiting_directions": "Espere el archivo de datos de seguimiento. Esto puede tomar algo de tiempo. Puede salir de la espera y recuperar el archivo de seguimiento de la tabla de comandos más tarde.",
 		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"
 	},
 	"upgrade": {
