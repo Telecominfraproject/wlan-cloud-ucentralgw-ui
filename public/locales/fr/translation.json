@@ -7,7 +7,7 @@
 		"factory_reset": "Retour aux paramètres d'usine",
 		"firmware_upgrade": "Mise à jour du firmware",
 		"reboot": "Redémarrer",
-		"title": "Actions de l'appareil",
+		"title": "Les commandes",
 		"trace": "Trace",
 		"wifi_scan": "Balayage Wi-Fi"
 	},
@@ -20,7 +20,7 @@
 	"commands": {
 		"error": "Erreur lors de la soumission de la commande !",
 		"success": "Commande soumise avec succès, vous pouvez consulter le journal des commandes pour le résultat",
-		"title": "Commandes de l'appareil"
+		"title": "Historique des commandes"
 	},
 	"common": {
 		"are_you_sure": "Êtes-vous sûr?",
@@ -70,6 +70,8 @@
 		"refresh": "Rafraîchir",
 		"refresh_device": "Actualiser l'appareil",
 		"result": "Résultat",
+		"save": "Sauvegarder",
+		"saving": "Économie...",
 		"schedule": "Programme",
 		"seconds_elapsed": "Secondes écoulées",
 		"serial_number": "Numéro de série",
@@ -85,14 +87,14 @@
 	},
 	"configuration": {
 		"created": "Créé",
-		"details": "Détails de l'appareil",
+		"details": "Détails",
 		"device_password": "Mot de passe",
 		"last_configuration_change": "Dernière modification de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
 		"notes": "Remarques",
 		"owner": "Propriétaire",
-		"title": "Configuration de l'appareil",
+		"title": "Configuration",
 		"type": "Type d'appareil",
 		"view_json": "Afficher le JSON brut"
 	},
@@ -100,7 +102,7 @@
 		"choose_file": "Vous devez choisir un fichier .json valide :",
 		"enter_new": "Entrez la nouvelle configuration de l'appareil JSON :",
 		"placeholder": "Configurer JSON",
-		"title": "Configurer l'appareil",
+		"title": "Configurer",
 		"valid_json": "Vous devez entrer un JSON valide"
 	},
 	"delete_command": {
@@ -116,11 +118,13 @@
 	"device_logs": {
 		"log": "Bûche",
 		"severity": "Gravité",
-		"title": "Journaux de l'appareil"
+		"title": "Journaux"
 	},
 	"factory_reset": {
 		"redirector": "Conserver le redirecteur :",
-		"title": "Dispositif de réinitialisation d'usine",
+		"reset": "Réinitialiser",
+		"resetting": "Réinitialisation…",
+		"title": "Retour aux paramètres d'usine",
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
 	"footer": {
@@ -130,7 +134,7 @@
 	},
 	"health": {
 		"sanity": "Santé mentale",
-		"title": "Santé de l'appareil"
+		"title": "Santé"
 	},
 	"login": {
 		"login": "S'identifier",
@@ -144,7 +148,7 @@
 	},
 	"reboot": {
 		"directions": "Quand souhaitez-vous redémarrer cet appareil ?",
-		"title": "Redémarrez l'appareil"
+		"title": "Redémarrer"
 	},
 	"scan": {
 		"active": "Activer l'analyse active",
@@ -168,7 +172,8 @@
 		"directions": "Lancer une trace à distance de cet appareil pour une durée spécifique ou un nombre de paquets",
 		"download_trace": "Cliquez ici pour télécharger",
 		"packets": "Paquets",
-		"title": "Dispositif de traçage",
+		"title": "Trace",
+		"trace": "Trace",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
 		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
@@ -185,6 +190,7 @@
 		"offline_device": "Cette option est bloquée car cet appareil n'est pas connecté",
 		"time": "Heure de la mise à niveau :",
 		"title": "Mise à jour du firmware",
+		"upgrade": "Améliorer",
 		"wait_for_upgrade": "Souhaitez-vous attendre la fin de la mise à niveau ?",
 		"waiting_for_device": "En attente de la reconnexion de l'appareil"
 	}

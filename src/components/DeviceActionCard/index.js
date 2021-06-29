@@ -12,6 +12,7 @@ import TraceModal from 'components/TraceModal';
 import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
+
 import styles from './index.module.scss';
 
 const DeviceActions = ({ selectedDeviceId }) => {

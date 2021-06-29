@@ -7,7 +7,6 @@ import {
   CModalFooter,
   CCol,
   CRow,
-  CInvalidFeedback,
   CSelect,
   CSwitch,
   CForm,
@@ -17,10 +16,8 @@ import {
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
@@ -39,11 +36,9 @@ const TraceModal = ({ show, toggleModal }) => {
   const [usingDuration, setUsingDuration] = useState(true);
   const [duration, setDuration] = useState(20);
   const [packets, setPackets] = useState(100);
-  const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [responseBody, setResponseBody] = useState('');
   const [chosenInterface, setChosenInterface] = useState('up');
   const [isDeviceConnected, setIsDeviceConnected] = useState(false);
-  const [isNow, setIsNow] = useState(true);
   const [waitForTrace, setWaitForTrace] = useState(false);
   const [waitingForTrace, setWaitingForTrace] = useState(false);
   const [commandUuid, setCommandUuid] = useState(null);
@@ -54,21 +49,10 @@ const TraceModal = ({ show, toggleModal }) => {
     setWaitForTrace(!waitForTrace);
   }
 
-  const toggleNow = () => {
-    setIsNow(!isNow);
-  }
-
-  const setDate = (date) => {
-    if (date) {
-      setChosenDate(date.toString());
-    }
-  };
-
   useEffect(() => {
     setWaitForTrace(false);
     setHadSuccess(false);
     setHadFailure(false);
-    setChosenDate(new Date().toString());
     setResponseBody('');
     setDuration(20);
     setPackets(100);
@@ -85,7 +69,7 @@ const TraceModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: selectedDeviceId,
-      when: isNow ? 0 : dateToUnix(new Date(chosenDate)),
+      when: 0,
       network: chosenInterface,
     };
 
@@ -235,39 +219,7 @@ const TraceModal = ({ show, toggleModal }) => {
               </CForm>
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow}>
-            <CCol md="8">
-              <p className={styles.spacedText}>{t('common.execute_now')}</p>
-            </CCol>
-            <CCol>
-              <CSwitch
-                disabled={blockFields}
-                color="primary"
-                defaultChecked={isNow}
-                onClick={toggleNow}
-                labelOn={t('common.yes')}
-                labelOff={t('common.no')}
-              />
-            </CCol>
-          </CRow>
-          <CRow className={styles.spacedRow} hidden={isNow}>
-            <CCol md="4" className={styles.spacedColumn}>
-              <p>{t('common.date')}:</p>
-            </CCol>
-            <CCol xs="12" md="8">
-              <DatePicker
-                selected={new Date(chosenDate)}
-                includeTime
-                value={new Date(chosenDate)}
-                placeholder="Select custom date"
-                disabled={blockFields}
-                onChange={(date) => setDate(date)}
-                min={new Date()}
-              />
-            </CCol>
-          </CRow>
-          <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
-          <CRow className={styles.spacedRow} hidden={!isNow || !isDeviceConnected}>
+          <CRow className={styles.spacedRow} hidden={!isDeviceConnected}>
             <CCol md="8">
               <p className={styles.spacedText}>
                 {t('trace.wait_for_file')}
@@ -292,11 +244,10 @@ const TraceModal = ({ show, toggleModal }) => {
         </CModalBody>
         <CModalFooter>
           <LoadingButton
-            label="Schedule"
-            isLoadingLabel="Loading..."
+            label={t('trace.trace')}
+            isLoadingLabel={t('common.loading_ellipsis')}
             isLoading={blockFields}
             action={doAction}
-            variant="outline"
             block={false}
             disabled={blockFields}
           />

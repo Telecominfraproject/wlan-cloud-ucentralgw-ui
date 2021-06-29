@@ -7,7 +7,7 @@
 		"factory_reset": "Factory Reset",
 		"firmware_upgrade": "Firmware Upgrade",
 		"reboot": "Reboot",
-		"title": "Device Actions",
+		"title": "Commands",
 		"trace": "Trace",
 		"wifi_scan": "Wifi Scan"
 	},
@@ -20,7 +20,7 @@
 	"commands": {
 		"error": "Error while submitting command!",
 		"success": "Command submitted successfully, you can look at the Commands log for the result",
-		"title": "Device Commands"
+		"title": "Command History"
 	},
 	"common": {
 		"are_you_sure": "Are you sure?",
@@ -70,6 +70,8 @@
 		"refresh": "Refresh",
 		"refresh_device": "Refresh Device",
 		"result": "Result",
+		"save": "Save",
+		"saving": "Saving... ",
 		"schedule": "Schedule",
 		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
@@ -85,14 +87,14 @@
 	},
 	"configuration": {
 		"created": "Created",
-		"details": "Device Details",
+		"details": "Details",
 		"device_password": "Password",
 		"last_configuration_change": "Last Configuration Change",
 		"last_configuration_download": "Last Configuration Download",
 		"location": "Location",
 		"notes": "Notes",
 		"owner": "Owner",
-		"title": "Device Configuration",
+		"title": "Configuration",
 		"type": "Device Type",
 		"view_json": "View raw JSON"
 	},
@@ -100,7 +102,7 @@
 		"choose_file": "You need to choose a valid .json file: ",
 		"enter_new": "Enter new device configuration JSON: ",
 		"placeholder": "Config JSON",
-		"title": "Configure Device",
+		"title": "Configure",
 		"valid_json": "You need to enter valid JSON"
 	},
 	"delete_command": {
@@ -116,11 +118,13 @@
 	"device_logs": {
 		"log": "Log",
 		"severity": "Severity",
-		"title": "Device Logs"
+		"title": "Logs"
 	},
 	"factory_reset": {
 		"redirector": "Keep redirector: ",
-		"title": "Factory Reset Device",
+		"reset": "Reset",
+		"resetting": "Resetting... ",
+		"title": "Factory Reset",
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"footer": {
@@ -130,7 +134,7 @@
 	},
 	"health": {
 		"sanity": "Sanity",
-		"title": "Device Health"
+		"title": "Health"
 	},
 	"login": {
 		"login": "Login",
@@ -144,7 +148,7 @@
 	},
 	"reboot": {
 		"directions": "When would you like to reboot this device?",
-		"title": "Reboot Device"
+		"title": "Reboot"
 	},
 	"scan": {
 		"active": "Enable active scan",
@@ -168,7 +172,8 @@
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
 		"download_trace": "Click here to download",
 		"packets": "Packets",
-		"title": "Trace Device",
+		"title": "Trace",
+		"trace": "Trace",
 		"wait_for_file": "Would you like to wait until the trace file is ready?",
 		"waiting_directions": "Please wait for the trace data file. This may take some time. You can exit the wait and retrieve the trace file from the commands table later.",
 		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
@@ -185,6 +190,7 @@
 		"offline_device": "This option is blocked because this device is not connected",
 		"time": "Time of upgrade:",
 		"title": "Firmware Upgrade",
+		"upgrade": "Upgrade",
 		"wait_for_upgrade": "Would you like to wait for the upgrade to finish?",
 		"waiting_for_device": "Waiting for device to reconnect"
 	}
