@@ -73,6 +73,9 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
         id: 'chart',
         group: 'txrx',
       },
+      stroke: {
+        curve: 'smooth'
+      },
       xaxis: {
         title: {
           text: 'Time',
