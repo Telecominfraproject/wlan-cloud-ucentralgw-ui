@@ -70,6 +70,8 @@
 		"refresh": "Refresh",
 		"refresh_device": "Refresh Device",
 		"result": "Result",
+		"save": "Save",
+		"saving": "Saving... ",
 		"schedule": "Schedule",
 		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
@@ -120,6 +122,8 @@
 	},
 	"factory_reset": {
 		"redirector": "Keep redirector: ",
+		"reset": "Reset",
+		"resetting": "Resetting... ",
 		"title": "Factory Reset",
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
@@ -169,6 +173,7 @@
 		"download_trace": "Click here to download",
 		"packets": "Packets",
 		"title": "Trace",
+		"trace": "Trace",
 		"wait_for_file": "Would you like to wait until the trace file is ready?",
 		"waiting_directions": "Please wait for the trace data file. This may take some time. You can exit the wait and retrieve the trace file from the commands table later.",
 		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
@@ -185,6 +190,7 @@
 		"offline_device": "This option is blocked because this device is not connected",
 		"time": "Time of upgrade:",
 		"title": "Firmware Upgrade",
+		"upgrade": "Upgrade",
 		"wait_for_upgrade": "Would you like to wait for the upgrade to finish?",
 		"waiting_for_device": "Waiting for device to reconnect"
 	}

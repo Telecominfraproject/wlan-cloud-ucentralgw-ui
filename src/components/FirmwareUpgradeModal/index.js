@@ -218,6 +218,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         </CRow>
       </CModalBody>
       <ButtonFooter
+        isNow={isNow}
         isShown={show}
         isLoading={waitingForUpgrade}
         action={postUpgrade}

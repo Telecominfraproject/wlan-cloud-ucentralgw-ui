@@ -70,6 +70,8 @@
 		"refresh": "Rafraîchir",
 		"refresh_device": "Actualiser l'appareil",
 		"result": "Résultat",
+		"save": "Sauvegarder",
+		"saving": "Économie...",
 		"schedule": "Programme",
 		"seconds_elapsed": "Secondes écoulées",
 		"serial_number": "Numéro de série",
@@ -120,6 +122,8 @@
 	},
 	"factory_reset": {
 		"redirector": "Conserver le redirecteur :",
+		"reset": "Réinitialiser",
+		"resetting": "Réinitialisation…",
 		"title": "Retour aux paramètres d'usine",
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
@@ -169,6 +173,7 @@
 		"download_trace": "Cliquez ici pour télécharger",
 		"packets": "Paquets",
 		"title": "Trace",
+		"trace": "Trace",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
 		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
@@ -185,6 +190,7 @@
 		"offline_device": "Cette option est bloquée car cet appareil n'est pas connecté",
 		"time": "Heure de la mise à niveau :",
 		"title": "Mise à jour du firmware",
+		"upgrade": "Améliorer",
 		"wait_for_upgrade": "Souhaitez-vous attendre la fin de la mise à niveau ?",
 		"waiting_for_device": "En attente de la reconnexion de l'appareil"
 	}

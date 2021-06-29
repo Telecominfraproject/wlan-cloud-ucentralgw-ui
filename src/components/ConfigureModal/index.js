@@ -191,7 +191,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={confirmingIfSure}
             >
-              {t('common.submit')}
+              {t('common.save')}
             </CButton>
             <CButton
               hidden={!checkingIfSure}
@@ -199,7 +199,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
               color="primary"
               onClick={() => doAction(false)}
             >
-              {waiting && !doingNow ? 'Loading...' : 'Yes'} {'   '}
+              {waiting && !doingNow ? t('common.saving') : t('common.yes')} {'   '}
               <CSpinner color="light" hidden={!waiting || doingNow} component="span" size="sm" />
             </CButton>
             <CButton color="secondary" onClick={toggleModal}>

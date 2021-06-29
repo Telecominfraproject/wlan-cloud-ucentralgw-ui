@@ -173,11 +173,10 @@ const BlinkModal = ({ show, toggleModal }) => {
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label={t('common.schedule')}
+              label={isNow ? t('blink.blink') : t('common.schedule')}
               isLoadingLabel={t('common.loading_ellipsis')}
               isLoading={waiting}
               action={doAction}
-              variant="outline"
               block={false}
               disabled={waiting}
             />

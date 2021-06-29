@@ -70,6 +70,8 @@
 		"refresh": "Aktualisierung",
 		"refresh_device": "Gerät aktualisieren",
 		"result": "Ergebnis",
+		"save": "Sparen",
+		"saving": "Speichern ...",
 		"schedule": "Zeitplan",
 		"seconds_elapsed": "Sekunden verstrichen",
 		"serial_number": "Ordnungsnummer",
@@ -120,6 +122,8 @@
 	},
 	"factory_reset": {
 		"redirector": "Weiterleitung beibehalten:",
+		"reset": "Zurücksetzen",
+		"resetting": "Zurücksetzen...",
 		"title": "Werkseinstellungen zurückgesetzt",
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
@@ -169,6 +173,7 @@
 		"download_trace": "Klicke hier zum herunterladen",
 		"packets": "Pakete",
 		"title": "Spur",
+		"trace": "Spur",
 		"wait_for_file": "Möchten Sie warten, bis die Trace-Datei fertig ist?",
 		"waiting_directions": "Bitte warten Sie auf die Trace-Datendatei. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
 		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
@@ -185,6 +190,7 @@
 		"offline_device": "Diese Option ist gesperrt, da dieses Gerät nicht verbunden ist",
 		"time": "Zeitpunkt der Aktualisierung:",
 		"title": "Firmware-Aktualisierung",
+		"upgrade": "Aktualisierung",
 		"wait_for_upgrade": "Möchten Sie warten, bis das Upgrade abgeschlossen ist?",
 		"waiting_for_device": "Warten, bis das Gerät wieder verbunden ist"
 	}

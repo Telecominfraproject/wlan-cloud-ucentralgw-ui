@@ -70,6 +70,8 @@
 		"refresh": "REFRESH",
 		"refresh_device": "Atualizar dispositivo",
 		"result": "Resultado",
+		"save": "Salve",
+		"saving": "Salvando ...",
 		"schedule": "Cronograma",
 		"seconds_elapsed": "Segundos decorridos",
 		"serial_number": "Número de série",
@@ -120,6 +122,8 @@
 	},
 	"factory_reset": {
 		"redirector": "Manter redirecionador:",
+		"reset": "Restabelecer",
+		"resetting": "Reiniciando ...",
 		"title": "Restauração de fábrica",
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
@@ -169,6 +173,7 @@
 		"download_trace": "Clique aqui para baixar",
 		"packets": "Pacotes",
 		"title": "Vestígio",
+		"trace": "Vestígio",
 		"wait_for_file": "Você gostaria de esperar até que o arquivo de rastreamento esteja pronto?",
 		"waiting_directions": "Aguarde o arquivo de dados de rastreamento. Isto pode tomar algum tempo. Você pode sair da espera e recuperar o arquivo de rastreamento da tabela de comandos mais tarde.",
 		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
@@ -185,6 +190,7 @@
 		"offline_device": "Esta opção está bloqueada porque este dispositivo não está conectado",
 		"time": "Tempo de atualização:",
 		"title": "Atualização de firmware",
+		"upgrade": "Melhorar",
 		"wait_for_upgrade": "Você gostaria de esperar a conclusão da atualização?",
 		"waiting_for_device": "Esperando que o dispositivo se reconecte"
 	}
