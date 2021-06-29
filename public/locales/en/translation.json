@@ -49,6 +49,7 @@
 		"error": "Error",
 		"execute_now": "Would you like to execute this command now?",
 		"executed": "Executed",
+		"exit": "Exit",
 		"firmware": "Firmware",
 		"from": "From",
 		"id": "Id",
@@ -164,7 +165,7 @@
 		"packets": "Packets",
 		"title": "Trace Device",
 		"wait_for_file": "Would you like to wait until the trace file is ready?",
-		"waiting_directions": "You can close this modal at any time and retrieve the file later in the Commands log",
+		"waiting_directions": "Please wait for the trace data file. This may take some time. You can exit the wait and retrieve the trace file from the commands table later.",
 		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
 	},
 	"upgrade": {

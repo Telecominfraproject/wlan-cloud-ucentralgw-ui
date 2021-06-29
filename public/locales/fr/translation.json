@@ -49,6 +49,7 @@
 		"error": "erreur",
 		"execute_now": "Souhaitez-vous exécuter cette commande maintenant ?",
 		"executed": "réalisé",
+		"exit": "Sortie",
 		"firmware": "Micrologiciel",
 		"from": "De",
 		"id": "Id",
@@ -164,7 +165,7 @@
 		"packets": "Paquets",
 		"title": "Dispositif de traçage",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
-		"waiting_directions": "Vous pouvez fermer ce modal à tout moment et récupérer le fichier plus tard dans le journal des commandes",
+		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
 	},
 	"upgrade": {

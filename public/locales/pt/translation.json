@@ -49,6 +49,7 @@
 		"error": "Erro",
 		"execute_now": "Você gostaria de executar este comando agora?",
 		"executed": "Executado",
+		"exit": "Saída",
 		"firmware": "Firmware",
 		"from": "De",
 		"id": "identidade",
@@ -164,7 +165,7 @@
 		"packets": "Pacotes",
 		"title": "Dispositivo de rastreamento",
 		"wait_for_file": "Você gostaria de esperar até que o arquivo de rastreamento esteja pronto?",
-		"waiting_directions": "Você pode fechar este modal a qualquer momento e recuperar o arquivo mais tarde no registro de comandos",
+		"waiting_directions": "Aguarde o arquivo de dados de rastreamento. Isto pode tomar algum tempo. Você pode sair da espera e recuperar o arquivo de rastreamento da tabela de comandos mais tarde.",
 		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
 	},
 	"upgrade": {

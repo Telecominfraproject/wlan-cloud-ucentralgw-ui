@@ -94,7 +94,7 @@ const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" block onClick={toggle}>
-          {t('common.close')}
+          {t('common.exit')}
         </CButton>
       </CModalFooter>
     </div>
