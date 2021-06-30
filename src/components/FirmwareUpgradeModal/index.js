@@ -42,11 +42,10 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleNow = () => {
-    if(isNow){
+    if (isNow) {
       setWaitForUpgrade(false);
       setDisableWaiting(true);
-    }
-    else{
+    } else {
       setDisableWaiting(false);
     }
 
@@ -114,8 +113,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             setShowWaitingConsole(true);
           }
         })
-        .catch(() => {
-        })
+        .catch(() => {})
         .finally(() => {
           setBlockFields(false);
           setWaitingForUpgrade(false);
@@ -198,7 +196,10 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow} hidden={true || !isNow || disabledWaiting || !deviceConnected}>
+        <CRow
+          className={styles.spacedRow}
+          hidden={true || !isNow || disabledWaiting || !deviceConnected}
+        >
           <CCol md="8">
             <p className={styles.spacedText}>
               {t('upgrade.wait_for_upgrade')}

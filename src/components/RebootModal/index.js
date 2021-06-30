@@ -33,7 +33,7 @@ const ActionModal = ({ show, toggleModal }) => {
 
   const toggleNow = () => {
     setIsNow(!isNow);
-  }
+  };
 
   const setDate = (date) => {
     if (date) {

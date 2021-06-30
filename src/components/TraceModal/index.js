@@ -47,7 +47,7 @@ const TraceModal = ({ show, toggleModal }) => {
 
   const toggleWaitForTrace = () => {
     setWaitForTrace(!waitForTrace);
-  }
+  };
 
   useEffect(() => {
     setWaitForTrace(false);
@@ -88,7 +88,7 @@ const TraceModal = ({ show, toggleModal }) => {
       .post(`/device/${encodeURIComponent(selectedDeviceId)}/trace`, parameters, { headers })
       .then((response) => {
         setHadSuccess(true);
-        if(waitForTrace) {
+        if (waitForTrace) {
           setCommandUuid(response.data.UUID);
           setWaitingForTrace(true);
         }
@@ -114,17 +114,18 @@ const TraceModal = ({ show, toggleModal }) => {
     }
   }, [show]);
 
-
   const getBody = () => {
-    if(waitingForTrace){
+    if (waitingForTrace) {
       return (
-        <WaitingForTraceBody toggle={toggleModal} serialNumber={selectedDeviceId} commandUuid={commandUuid}/>
+        <WaitingForTraceBody
+          toggle={toggleModal}
+          serialNumber={selectedDeviceId}
+          commandUuid={commandUuid}
+        />
       );
     }
-    if(hadSuccess){
-      return(
-        <SuccessfulActionModalBody toggleModal={toggleModal} />
-      );
+    if (hadSuccess) {
+      return <SuccessfulActionModalBody toggleModal={toggleModal} />;
     }
     return (
       <div>
@@ -221,9 +222,7 @@ const TraceModal = ({ show, toggleModal }) => {
           </CRow>
           <CRow className={styles.spacedRow} hidden={!isDeviceConnected}>
             <CCol md="8">
-              <p className={styles.spacedText}>
-                {t('trace.wait_for_file')}
-              </p>
+              <p className={styles.spacedText}>{t('trace.wait_for_file')}</p>
             </CCol>
             <CCol>
               <CSwitch
@@ -257,7 +256,7 @@ const TraceModal = ({ show, toggleModal }) => {
         </CModalFooter>
       </div>
     );
-  }
+  };
 
   return (
     <CModal show={show} onClose={toggleModal}>
