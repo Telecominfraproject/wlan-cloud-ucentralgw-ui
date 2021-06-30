@@ -185,8 +185,8 @@ const DeviceHealth = ({ selectedDeviceId }) => {
 
   return (
     <CWidgetDropdown
-      header={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
-      text={t('health.title')}
+      header={t('health.title')}
+      text={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
       value={sanityLevel ?? 100}
       color={barColor}
       inverse="true"
