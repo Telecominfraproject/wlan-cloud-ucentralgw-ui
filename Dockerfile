@@ -6,9 +6,10 @@ RUN npm install
 
 COPY . .
 
-RUN echo '{"DEFAULT_GATEWAY_URL": "https://ucentral.dpaas.arilia.com:16001","ALLOW_GATEWAY_CHANGE": true}' > public/config.json \
-    && npm run build
+RUN npm run build
 
 FROM nginx:1.20.1-alpine AS runtime
 
 COPY --from=build /build/ /usr/share/nginx/html/
+
+COPY --from=build docker-entrypoint.d/40-generate-config.sh /docker-entrypoint.d/40-generate-config.sh
