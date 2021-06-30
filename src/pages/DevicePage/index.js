@@ -7,7 +7,8 @@ import DeviceConfiguration from 'components/DeviceConfiguration';
 import CommandHistory from 'components/CommandHistory';
 import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
-import DeviceActionCard from '../../components/DeviceActionCard';
+import DeviceActionCard from 'components/DeviceActionCard';
+import DeviceStatusCard from 'components/DeviceStatusCard';
 
 const DevicePage = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const DevicePage = () => {
       <div className="App">
         <CRow>
           <CCol xs="12" sm="6">
+            <DeviceStatusCard selectedDeviceId={deviceId} />
             <DeviceConfiguration selectedDeviceId={deviceId} />
           </CCol>
           <CCol xs="12" sm="6">

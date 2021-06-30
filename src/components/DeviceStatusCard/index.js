@@ -1,0 +1,193 @@
+import React, { useState, useEffect } from 'react';
+import {
+  CCard,
+  CCardHeader,
+  CRow,
+  CCol,
+  CCardBody,
+  CBadge,
+  CModalBody,
+  CAlert,
+  CPopover,
+  CButton,
+  CSpinner,
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilSync } from '@coreui/icons';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+import axiosInstance from 'utils/axiosInstance';
+import { getToken } from 'utils/authHelper';
+import { prettyDate, secondsToDetailed } from 'utils/helper';
+import MemoryBar from './MemoryBar';
+
+import styles from './index.module.scss';
+
+const DeviceStatusCard = ({ selectedDeviceId }) => {
+  const { t } = useTranslation();
+  const [lastStats, setLastStats] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const transformLoad = (load) => {
+    if (load === undefined) return t('common.na');
+    return `${((load / 65536) * 100).toFixed(2)}%`;
+  };
+
+  const getData = () => {
+    setLoading(true);
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+
+    const lastStatsRequest = axiosInstance.get(
+      `/device/${encodeURIComponent(selectedDeviceId)}/statistics?lastOnly=true`,
+      options,
+    );
+    const statusRequest = axiosInstance.get(
+      `/device/${encodeURIComponent(selectedDeviceId)}/status`,
+      options,
+    );
+
+    Promise.all([lastStatsRequest, statusRequest])
+      .then(([newStats, newStatus]) => {
+        setLastStats(newStats.data);
+        setStatus(newStatus.data);
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    setError(false);
+    if (selectedDeviceId) getData();
+  }, [selectedDeviceId]);
+
+  if (!error) {
+    return (
+      <CCard>
+        <CCardHeader>
+          <CRow>
+            <CCol>
+              <div className="text-value-lg">
+                {t('status.title', { serialNumber: selectedDeviceId })}
+              </div>
+            </CCol>
+            <CCol>
+              <div className={styles.alignRight}>
+                <CPopover content={t('common.refresh')}>
+                  <CButton color="secondary" onClick={getData} size="sm">
+                    <CIcon content={cilSync} />
+                  </CButton>
+                </CPopover>
+              </div>
+            </CCol>
+          </CRow>
+        </CCardHeader>
+        <CCardBody>
+          {(!lastStats || !status) && loading ? (
+            <div className={styles.centerContainer}>
+              <CSpinner className={styles.spinner} />
+            </div>
+          ) : (
+            <div style={{ position: 'relative' }}>
+              <div className={styles.overlayContainer} hidden={!loading}>
+                <CSpinner className={styles.spinner} />
+              </div>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.connection_status')} :</CCol>
+                <CCol xs="12" md="9">
+                  {status?.connected ? (
+                    <CBadge color="success">{t('common.connected')}</CBadge>
+                  ) : (
+                    <CBadge color="danger">{t('common.not_connected')}</CBadge>
+                  )}
+                </CCol>
+              </CRow>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.uptime')} :</CCol>
+                <CCol xs="12" md="9">
+                  {secondsToDetailed(
+                    lastStats?.unit?.uptime,
+                    t('common.day'),
+                    t('common.days'),
+                    t('common.hour'),
+                    t('common.hours'),
+                    t('common.minute'),
+                    t('common.minutes'),
+                    t('common.second'),
+                    t('common.seconds'),
+                  )}
+                </CCol>
+              </CRow>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.last_contact')} :</CCol>
+                <CCol xs="12" md="9">
+                  {prettyDate(status?.lastContact)}
+                </CCol>
+              </CRow>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.localtime')} :</CCol>
+                <CCol xs="12" md="9">
+                  {prettyDate(lastStats?.unit?.localtime)}
+                </CCol>
+              </CRow>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.load_averages')} :</CCol>
+                <CCol xs="12" md="9">
+                  {transformLoad(lastStats?.unit?.load[0])}
+                  {' / '}
+                  {transformLoad(lastStats?.unit?.load[1])}
+                  {' / '}
+                  {transformLoad(lastStats?.unit?.load[2])}
+                </CCol>
+              </CRow>
+              <CRow className={styles.spacedRow}>
+                <CCol md="3">{t('status.memory')} :</CCol>
+                <CCol xs="9" md="6">
+                  <MemoryBar
+                    usedBytes={lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free}
+                    totalBytes={lastStats?.unit?.memory?.total}
+                  />
+                </CCol>
+              </CRow>
+            </div>
+          )}
+        </CCardBody>
+      </CCard>
+    );
+  }
+
+  return (
+    <CCard>
+      <CCardHeader>
+        <CRow>
+          <CCol>
+            <div className="text-value-lg">
+              {t('status.title', { serialNumber: selectedDeviceId })}
+            </div>
+          </CCol>
+        </CRow>
+      </CCardHeader>
+      <CModalBody>
+        <CAlert hidden={!error} color="danger" className={styles.centerContainer}>
+          {t('status.error')}
+        </CAlert>
+      </CModalBody>
+    </CCard>
+  );
+};
+
+DeviceStatusCard.propTypes = {
+  selectedDeviceId: PropTypes.string.isRequired,
+};
+
+export default React.memo(DeviceStatusCard);
