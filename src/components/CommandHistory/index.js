@@ -13,10 +13,8 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
-import { cilCloudDownload, cilSync } from '@coreui/icons';
+import { cilCloudDownload, cilSync, cilCalendarCheck } from '@coreui/icons';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { getToken } from 'utils/authHelper';
@@ -363,12 +361,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                 {item.command === 'trace' ? (
                                   <CIcon content={cilCloudDownload} size="lg" />
                                 ) : (
-                                  <FontAwesomeIcon
-                                    icon={faClipboardCheck}
-                                    className={[styles.customIconHeight, 'c-icon c-icon-lg'].join(
-                                      ' ',
-                                    )}
-                                  />
+                                  <CIcon content={cilCalendarCheck} size="lg" />
                                 )}
                               </CButton>
                             </CPopover>
