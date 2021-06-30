@@ -78,7 +78,9 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   return (
     <CCard>
-      <CCardHeader><div className="text-value-lg">{t('actions.title')}</div></CCardHeader>
+      <CCardHeader>
+        <div className="text-value-lg">{t('actions.title')}</div>
+      </CCardHeader>
       <CCardBody>
         <CRow>
           <CCol>

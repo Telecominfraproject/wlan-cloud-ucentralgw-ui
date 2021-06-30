@@ -5,28 +5,29 @@ import { cilClone } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { CButton, CPopover } from '@coreui/react';
 
-const CopyToClipboardButton = ({content, size}) => {
+const CopyToClipboardButton = ({ content, size }) => {
   const { t } = useTranslation();
   const [result, setResult] = useState('');
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(content);
     setResult(t('common.copied'));
-  }
+  };
 
   return (
-      <CPopover content={t('common.copy_to_clipboard')}>
-        <CButton onClick={copyToClipboard} size={size}>
-          <CIcon content={cilClone} />
-          {'   '}{result || ''}
-        </CButton>
-      </CPopover>
+    <CPopover content={t('common.copy_to_clipboard')}>
+      <CButton onClick={copyToClipboard} size={size}>
+        <CIcon content={cilClone} />
+        {'   '}
+        {result || ''}
+      </CButton>
+    </CPopover>
   );
-}
+};
 
 CopyToClipboardButton.propTypes = {
   content: PropTypes.string.isRequired,
-  size: PropTypes.string
+  size: PropTypes.string,
 };
 
 CopyToClipboardButton.defaultProps = {
