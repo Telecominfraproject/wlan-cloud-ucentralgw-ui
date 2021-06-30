@@ -81,16 +81,15 @@ const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
         <p>{t('trace.waiting_directions')}</p>
         <div className={styles.centerDiv}>
           <CSpinner hidden={!waitingForFile} />
+          <CButton
+            hidden={waitingForFile}
+            onClick={downloadTrace}
+            disabled={waitingForFile}
+            color="primary"
+          >
+            {t('trace.download_trace')}
+          </CButton>
         </div>
-        <CButton
-          hidden={waitingForFile}
-          onClick={downloadTrace}
-          disabled={waitingForFile}
-          color="link"
-          block
-        >
-          {t('trace.download_trace')}
-        </CButton>
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" block onClick={toggle}>
