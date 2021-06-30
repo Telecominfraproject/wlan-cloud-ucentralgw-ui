@@ -337,7 +337,9 @@ const DeviceListDisplay = ({
                     content={item.firmware ? item.firmware : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '225px'}} className="text-truncate">{item.firmware}</p>
+                    <p style={{ width: '225px' }} className="text-truncate">
+                      {item.firmware}
+                    </p>
                   </CPopover>
                 </td>
               ),
@@ -347,7 +349,9 @@ const DeviceListDisplay = ({
                     content={item.compatible ? item.compatible : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '150px'}} className="text-truncate">{item.compatible}</p>
+                    <p style={{ width: '150px' }} className="text-truncate">
+                      {item.compatible}
+                    </p>
                   </CPopover>
                 </td>
               ),
@@ -359,7 +363,9 @@ const DeviceListDisplay = ({
                     content={item.ipAddress ? item.ipAddress : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '150px'}} className="text-truncate">{item.ipAddress}</p>
+                    <p style={{ width: '150px' }} className="text-truncate">
+                      {item.ipAddress}
+                    </p>
                   </CPopover>
                 </td>
               ),

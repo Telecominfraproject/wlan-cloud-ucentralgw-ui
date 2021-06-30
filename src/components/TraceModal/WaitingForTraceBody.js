@@ -7,7 +7,7 @@ import axiosInstance from 'utils/axiosInstance';
 
 import styles from './index.module.scss';
 
-const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
+const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
   const { t } = useTranslation();
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [waitingForFile, setWaitingForFile] = useState(true);
@@ -23,12 +23,12 @@ const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
     axiosInstance
       .get(`/command/${encodeURIComponent(commandUuid)}`, options)
       .then((response) => {
-        if(response.data.waitingForFile === 0){
+        if (response.data.waitingForFile === 0) {
           setWaitingForFile(false);
         }
       })
       .catch(() => {});
-  }
+  };
 
   const downloadTrace = () => {
     const options = {
@@ -48,36 +48,36 @@ const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
         link.download = `Trace_${commandUuid}.pcap`;
         link.click();
       });
-  }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
       setSecondsElapsed(secondsElapsed + 1);
     }, 1000);
-    if(!waitingForFile){
+    if (!waitingForFile) {
       clearInterval(timer);
     }
     return () => {
       clearInterval(timer);
-    }
+    };
   }, [waitingForFile, secondsElapsed]);
 
   useEffect(() => {
     const refreshStatus = setInterval(() => {
       getTraceResult();
     }, 5000);
-    if(!waitingForFile){
+    if (!waitingForFile) {
       clearInterval(refreshStatus);
     }
     return () => {
       clearInterval(refreshStatus);
-    }
+    };
   }, [waitingForFile]);
 
   return (
     <div>
       <CModalBody>
-        <h6>{t('trace.waiting_seconds', {seconds: secondsElapsed})}</h6>
+        <h6>{t('trace.waiting_seconds', { seconds: secondsElapsed })}</h6>
         <p>{t('trace.waiting_directions')}</p>
         <div className={styles.centerDiv}>
           <CSpinner hidden={!waitingForFile} />
@@ -97,14 +97,13 @@ const WaitingForTraceBody = ({serialNumber, commandUuid, toggle}) => {
         </CButton>
       </CModalFooter>
     </div>
-
   );
-}
+};
 
 WaitingForTraceBody.propTypes = {
   serialNumber: PropTypes.string.isRequired,
   commandUuid: PropTypes.string.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
 };
 
 export default WaitingForTraceBody;

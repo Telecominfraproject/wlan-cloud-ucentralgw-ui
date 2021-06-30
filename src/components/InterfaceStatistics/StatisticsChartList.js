@@ -60,10 +60,10 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
       // Looping through the interfaces of the log
       for (const inter of log.data.interfaces) {
         interfaceList[interfaceTypes[inter.name]][0].data.push(
-          inter.counters?.tx_bytes? Math.floor(inter.counters.tx_bytes / 1024) : 0
+          inter.counters?.tx_bytes ? Math.floor(inter.counters.tx_bytes / 1024) : 0,
         );
         interfaceList[interfaceTypes[inter.name]][1].data.push(
-          inter.counters?.rx_bytes? Math.floor(inter.counters.rx_bytes / 1024) : 0
+          inter.counters?.rx_bytes ? Math.floor(inter.counters.rx_bytes / 1024) : 0,
         );
       }
     }
@@ -74,7 +74,7 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
         group: 'txrx',
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'smooth',
       },
       xaxis: {
         title: {
@@ -115,22 +115,22 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
   };
 
   const getStatistics = () => {
-      const options = {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
-        params: {
-          serialNumber: '24f5a207a130',
-        },
-      };
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+      params: {
+        serialNumber: '24f5a207a130',
+      },
+    };
 
-      axiosInstance
-        .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
-        .then((response) => {
-          transformIntoDataset(response.data.data);
-        })
-        .catch(() => {});
+    axiosInstance
+      .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
+      .then((response) => {
+        transformIntoDataset(response.data.data);
+      })
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -161,11 +161,11 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
                 fontSize: '25px',
               },
             },
-          }
-        }
+          },
+        };
         return (
           <div key={createUuid()}>
-            <DeviceStatisticsChart chart={ options } />
+            <DeviceStatisticsChart chart={options} />
           </div>
         );
       })}

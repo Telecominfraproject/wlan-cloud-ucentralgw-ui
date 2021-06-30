@@ -66,3 +66,47 @@ export const checkIfJson = (string) => {
   }
   return true;
 };
+
+export const secondsToDetailed = (
+  seconds,
+  dayLabel,
+  daysLabel,
+  hourLabel,
+  hoursLabel,
+  minuteLabel,
+  minutesLabel,
+  secondLabel,
+  secondsLabel,
+) => {
+  if (!seconds || seconds === 0) return `0 ${secondsLabel}`;
+  let secondsLeft = seconds;
+  const days = Math.floor(secondsLeft / (3600 * 24));
+  secondsLeft -= days * (3600 * 24);
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft -= hours * 3600;
+  const minutes = Math.floor(secondsLeft / 60);
+  secondsLeft -= minutes * 60;
+
+  let finalString = '';
+
+  if (days > 0)
+    finalString =
+      days === 1 ? `${finalString}${days} ${dayLabel}, ` : `${finalString}${days} ${daysLabel}, `;
+  if (hours > 0)
+    finalString =
+      hours === 1
+        ? `${finalString}${hours} ${hourLabel}, `
+        : `${finalString}${hours} ${hoursLabel}, `;
+  if (minutes > 0)
+    finalString =
+      minutes === 1
+        ? `${finalString}${minutes} ${minuteLabel}, `
+        : `${finalString}${minutes} ${minutesLabel}, `;
+  if (secondsLeft > 0)
+    finalString =
+      secondsLeft === 1
+        ? `${finalString}${secondsLeft} ${secondLabel}`
+        : `${finalString}${secondsLeft} ${secondsLabel}`;
+
+  return finalString;
+};

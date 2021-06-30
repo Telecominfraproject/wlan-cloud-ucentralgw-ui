@@ -9,7 +9,7 @@ import {
   CForm,
   CSwitch,
   CCol,
-  CSpinner
+  CSpinner,
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -186,7 +186,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       </CModalBody>
       <CModalFooter>
         <LoadingButton
-          label={(!hadSuccess && !hadFailure) ? t('scan.scan') : t('scan.re_scan')}
+          label={!hadSuccess && !hadFailure ? t('scan.scan') : t('scan.re_scan')}
           isLoadingLabel={t('scan.scanning')}
           isLoading={waiting}
           action={doAction}
@@ -195,7 +195,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           disabled={waiting}
         />
         <CButton color="secondary" onClick={toggleModal}>
-        {(!hadSuccess && !hadFailure) ? t('common.cancel') : t('common.exit')}
+          {!hadSuccess && !hadFailure ? t('common.cancel') : t('common.exit')}
         </CButton>
       </CModalFooter>
     </CModal>
