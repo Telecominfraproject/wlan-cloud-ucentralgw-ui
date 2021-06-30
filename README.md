@@ -24,3 +24,14 @@ cd wlan-cloud-ucentralgw-ui
 npm run build
 ```
 Once the build is done, you can move the `build` folder on your server.
+
+### Configuration
+You can use the config.json file in the solution's public directory to decide what the default gateway URL will be and also if the users are able to modify that URL at the login page. 
+
+Here are the values that are present by default : 
+```
+{
+  "DEFAULT_GATEWAY_URL": "https://ucentral.dpaas.arilia.com:16001",
+  "ALLOW_GATEWAY_CHANGE": false
+}
+```
