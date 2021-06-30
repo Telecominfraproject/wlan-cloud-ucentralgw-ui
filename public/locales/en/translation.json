@@ -15,6 +15,7 @@
 		"blink": "Blink",
 		"device_leds": "Device LEDs",
 		"pattern": "Choose the pattern you would like to use: ",
+		"set_leds": "Set LEDs",
 		"when_blink_leds": "When would you like to make the device LEDs blink?"
 	},
 	"commands": {

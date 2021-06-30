@@ -15,6 +15,7 @@
 		"blink": "LEDs Blinken",
 		"device_leds": "LEDs",
 		"pattern": "Wählen Sie das Muster, das Sie verwenden möchten:",
+		"set_leds": "LEDs einstellen",
 		"when_blink_leds": "Wann möchten Sie die LEDs blinken lassen?"
 	},
 	"commands": {

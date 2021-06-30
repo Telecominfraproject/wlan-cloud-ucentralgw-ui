@@ -15,6 +15,7 @@
 		"blink": "Cligner",
 		"device_leds": "LED de l'appareil",
 		"pattern": "Choisissez le modèle que vous souhaitez utiliser :",
+		"set_leds": "Définir les LED",
 		"when_blink_leds": "Quand souhaitez-vous faire clignoter les LED de l'appareil ?"
 	},
 	"commands": {
