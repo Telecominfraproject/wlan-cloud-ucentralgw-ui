@@ -10,23 +10,26 @@ import {
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import styles from './index.module.scss';
 
-const LatestStatisticsModal = ({ show, toggle, serialNumber }) => {
+const LatestStatisticsModal = ({ show, toggle }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [latestStats, setLatestStats] = useState('');
 
   const getLatestStats = () => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 
     axiosInstance
-      .get(`/device/${serialNumber}/statistics?lastOnly=true`, options)
+      .get(`/device/${deviceSerialNumber}/statistics?lastOnly=true`, options)
       .then((response) => {
         setLatestStats(response.data);
       })
@@ -57,7 +60,6 @@ const LatestStatisticsModal = ({ show, toggle, serialNumber }) => {
 };
 
 LatestStatisticsModal.propTypes = {
-  serialNumber: PropTypes.string.isRequired,
   toggle: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
 };

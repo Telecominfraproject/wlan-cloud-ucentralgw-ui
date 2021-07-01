@@ -16,9 +16,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
@@ -27,6 +27,8 @@ import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -36,7 +38,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
   const [checkingIfSure, setCheckingIfSure] = useState(false);
   const [errorJson, setErrorJson] = useState(false);
   const [inputKey, setInputKey] = useState(0);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
+
   let fileReader;
 
   const confirmingIfSure = () => {
@@ -69,10 +71,8 @@ const ConfigureModal = ({ show, toggleModal }) => {
     setHadSuccess(false);
     setWaiting(true);
 
-    const token = getToken();
-
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       when: 0,
       UUID: 1,
       configuration: JSON.parse(newConfig),
@@ -80,11 +80,11 @@ const ConfigureModal = ({ show, toggleModal }) => {
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/configure`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/configure`, parameters, { headers })
       .then(() => {
         setHadSuccess(true);
       })

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
 import eventBus from 'utils/eventBus';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ selectedDeviceId }) => {
+const StatisticsChartList = () => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
     settings: {},
@@ -118,7 +120,7 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       params: {
         serialNumber: '24f5a207a130',
@@ -126,7 +128,7 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
     };
 
     axiosInstance
-      .get(`/device/${selectedDeviceId}/statistics?newest=true&limit=50`, options)
+      .get(`/device/${deviceSerialNumber}/statistics?newest=true&limit=50`, options)
       .then((response) => {
         transformIntoDataset(response.data.data);
       })
@@ -134,10 +136,10 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
   };
 
   useEffect(() => {
-    if (selectedDeviceId) {
+    if (deviceSerialNumber) {
       getStatistics();
     }
-  }, [selectedDeviceId]);
+  }, [deviceSerialNumber]);
 
   useEffect(() => {
     eventBus.on('refreshInterfaceStatistics', () => getStatistics());
@@ -171,10 +173,6 @@ const StatisticsChartList = ({ selectedDeviceId }) => {
       })}
     </div>
   );
-};
-
-StatisticsChartList.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default React.memo(StatisticsChartList);

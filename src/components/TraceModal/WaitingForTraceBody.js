@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CModalBody, CButton, CSpinner, CModalFooter } from '@coreui/react';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
 
 import styles from './index.module.scss';
 
 const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [waitingForFile, setWaitingForFile] = useState(true);
 
@@ -16,7 +17,7 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 
@@ -34,7 +35,7 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     const options = {
       headers: {
         Accept: 'application/octet-stream',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       responseType: 'arraybuffer',
     };

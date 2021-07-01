@@ -195,7 +195,7 @@
 	"trace": {
 		"choose_network": "Elija la red",
 		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
-		"download_trace": "Haga click aquí para descargar",
+		"download_trace": "Descargar archivo de seguimiento",
 		"packets": "Paquetes",
 		"title": "Rastro",
 		"trace": "Rastro",

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   CHeader,
@@ -11,26 +10,25 @@ import {
   CLink,
   CPopover,
 } from '@coreui/react';
+import PropTypes from 'prop-types';
 import CIcon from '@coreui/icons-react';
 import { cilAccountLogout } from '@coreui/icons';
 import { logout } from 'utils/authHelper';
 import routes from 'routes';
 import LanguageSwitcher from 'components/LanguageSwitcher';
 
-const TheHeader = () => {
+const TheHeader = ({ showSidebar, setShowSidebar }) => {
   const { t, i18n } = useTranslation();
-  const dispatch = useDispatch();
   const [translatedRoutes, setTranslatedRoutes] = useState(routes);
-  const sidebarShow = useSelector((state) => state.sidebarShow);
 
   const toggleSidebar = () => {
-    const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive';
-    dispatch({ type: 'set', sidebarShow: val });
+    const val = [true, 'responsive'].includes(showSidebar) ? false : 'responsive';
+    setShowSidebar(val);
   };
 
   const toggleSidebarMobile = () => {
-    const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive';
-    dispatch({ type: 'set', sidebarShow: val });
+    const val = [false, 'responsive'].includes(showSidebar) ? true : 'responsive';
+    setShowSidebar(val);
   };
 
   useEffect(() => {
@@ -67,6 +65,11 @@ const TheHeader = () => {
       </CSubheader>
     </CHeader>
   );
+};
+
+TheHeader.propTypes = {
+  showSidebar: PropTypes.string.isRequired,
+  setShowSidebar: PropTypes.func.isRequired,
 };
 
 export default TheHeader;

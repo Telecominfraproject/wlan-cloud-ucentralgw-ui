@@ -1,11 +1,10 @@
-import { getToken } from 'utils/authHelper';
 import axiosInstance from 'utils/axiosInstance';
 
-export default async (deviceId) => {
+export default async (deviceId, token) => {
   const options = {
     headers: {
       Accept: 'application/json',
-      Authorization: `Bearer ${getToken()}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
