@@ -1,0 +1,84 @@
+{{- $root := . -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ucentralgwui.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ucentralgwui.name" . }}
+    helm.sh/chart: {{ include "ucentralgwui.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ucentralgwui.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- with .Values.services.ucentralgwui.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ucentralgwui.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- with .Values.services.ucentralgwui.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+
+      containers:
+
+        - name: ucentralgwui
+          image: "{{ .Values.images.ucentralgwui.repository }}:{{ .Values.images.ucentralgwui.tag }}"
+          imagePullPolicy: {{ .Values.images.ucentralgwui.pullPolicy }}
+
+          env:
+          {{- range $key, $value := .Values.public_env_variables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+
+          ports:
+          {{- range $key, $value := .Values.services.ucentralgwui.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $value.targetPort }}
+              protocol: {{ $value.protocol }}
+          {{- end }}
+
+          {{- if .Values.checks.ucentralgwui.liveness }}
+          livenessProbe:
+            {{- toYaml .Values.checks.ucentralgwui.liveness | nindent 12 }}
+          {{- end }}
+          {{- if .Values.checks.ucentralgwui.readiness }}
+          readinessProbe:
+            {{- toYaml .Values.checks.ucentralgwui.readiness | nindent 12 }}
+          {{- end }}
+
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+
+      imagePullSecrets:
+      {{- range $image, $imageValue := .Values.images }}
+        {{- if $imageValue.regcred }}
+      - name: {{ include "ucentralgwui.fullname" $root }}-{{ $image }}-regcred
+        {{- end }}
+      {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
