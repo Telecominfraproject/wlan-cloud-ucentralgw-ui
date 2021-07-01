@@ -103,8 +103,8 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
                 <CSpinner className={styles.spinner} />
               </div>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.connection_status')} :</CCol>
-                <CCol xs="12" md="9">
+                <CCol md="5">{t('status.connection_status')} :</CCol>
+                <CCol xs="10" md="7">
                   {status?.connected ? (
                     <CBadge color="success">{t('common.connected')}</CBadge>
                   ) : (
@@ -113,8 +113,8 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.uptime')} :</CCol>
-                <CCol xs="12" md="9">
+                <CCol md="5">{t('status.uptime')} :</CCol>
+                <CCol xs="10" md="7">
                   {secondsToDetailed(
                     lastStats?.unit?.uptime,
                     t('common.day'),
@@ -129,20 +129,20 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.last_contact')} :</CCol>
-                <CCol xs="12" md="9">
+                <CCol md="5">{t('status.last_contact')} :</CCol>
+                <CCol xs="10" md="7">
                   {prettyDate(status?.lastContact)}
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.localtime')} :</CCol>
-                <CCol xs="12" md="9">
+                <CCol md="5">{t('status.localtime')} :</CCol>
+                <CCol xs="10" md="7">
                   {prettyDate(lastStats?.unit?.localtime)}
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.load_averages')} :</CCol>
-                <CCol xs="12" md="9">
+                <CCol md="5">{t('status.load_averages')} :</CCol>
+                <CCol xs="10" md="7">
                   {transformLoad(lastStats?.unit?.load[0])}
                   {' / '}
                   {transformLoad(lastStats?.unit?.load[1])}
@@ -151,7 +151,7 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
-                <CCol md="3">{t('status.memory')} :</CCol>
+                <CCol md="5">{t('status.memory')} :</CCol>
                 <CCol xs="9" md="6">
                   <MemoryBar
                     usedBytes={lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free}
