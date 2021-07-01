@@ -8,7 +8,6 @@ import {
   CSwitch,
   CCol,
   CRow,
-  CForm,
   CFormGroup,
   CInputRadio,
   CLabel,
@@ -98,50 +97,52 @@ const BlinkModal = ({ show, toggleModal }) => {
       ) : (
         <div>
           <CModalBody>
-            <h6>{t('blink.when_blink_leds')}</h6>
-            <CRow className={styles.spacedRow}>
-              <CCol md="7">{t('blink.pattern')}</CCol>
+            <CFormGroup row>
+              <CCol md="3">
+                <CLabel>{t('blink.pattern')}</CLabel>
+              </CCol>
               <CCol>
-                <CForm disabled={waiting}>
-                  <CFormGroup variant="checkbox" onClick={() => setPattern('on')}>
+                  <CFormGroup variant="custom-radio" onClick={() => setPattern('on')} inline>
                     <CInputRadio
+                      custom
                       defaultChecked={chosenPattern === 'on'}
                       id="radio1"
                       name="radios"
                       value="option1"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio1">
+                    <CLabel variant="custom-checkbox" htmlFor="radio1">
                       {t('common.on')}
                     </CLabel>
                   </CFormGroup>
-                  <CFormGroup variant="checkbox" onClick={() => setPattern('off')}>
+                  <CFormGroup variant="custom-radio" onClick={() => setPattern('off')} inline>
                     <CInputRadio
+                      custom
                       defaultChecked={chosenPattern === 'off'}
                       id="radio2"
                       name="radios"
                       value="option2"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio2">
+                    <CLabel variant="custom-checkbox" htmlFor="radio2">
                       {t('common.off')}
                     </CLabel>
                   </CFormGroup>
-                  <CFormGroup variant="checkbox" onClick={() => setPattern('blink')}>
+                  <CFormGroup variant="custom-radio" onClick={() => setPattern('blink')} inline>
                     <CInputRadio
+                      custom
                       defaultChecked={chosenPattern === 'blink'}
                       id="radio3"
                       name="radios"
                       value="option3"
                     />
-                    <CLabel variant="checkbox" htmlFor="radio3">
+                    <CLabel variant="custom-checkbox" htmlFor="radio3">
                       {t('blink.blink')}
                     </CLabel>
                   </CFormGroup>
-                </CForm>
               </CCol>
-            </CRow>
+            </CFormGroup>
             <CRow className={styles.spacedRow}>
               <CCol md="8">
-                <p className={styles.spacedText}>{t('common.execute_now')}</p>
+                <p className={styles.spacedText}>{t('blink.execute_now')}</p>
               </CCol>
               <CCol>
                 <CSwitch
@@ -156,7 +157,7 @@ const BlinkModal = ({ show, toggleModal }) => {
             </CRow>
             <CRow hidden={isNow} className={styles.spacedRow}>
               <CCol md="4" className={styles.spacedDate}>
-                <p>{t('common.date')}</p>
+                <p>{t('common.custom_date')}</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker

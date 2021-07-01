@@ -90,8 +90,8 @@ const ActionModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <CRow>
-              <CCol md="8" className={styles.executeNow}>
-                <h6 className={styles.spacedText}>{t('reboot.now')}</h6>
+              <CCol md="8">
+                <p>{t('reboot.now')}</p>
               </CCol>
               <CCol>
                 <CSwitch
@@ -106,7 +106,7 @@ const ActionModal = ({ show, toggleModal }) => {
             </CRow>
             <CRow hidden={isNow} className={styles.spacedRow}>
               <CCol md="4" className={styles.spacedDate}>
-                <h6>{t('common.custom_date')}:</h6>
+                <p>{t('common.custom_date')}:</p>
               </CCol>
               <CCol xs="12" md="8">
                 <DatePicker

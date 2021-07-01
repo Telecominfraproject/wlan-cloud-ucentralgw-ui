@@ -14,6 +14,7 @@
 	"blink": {
 		"blink": "Piscar",
 		"device_leds": "LEDs do dispositivo",
+		"execute_now": "Você gostaria de definir este padrão agora?",
 		"pattern": "Escolha o padrão que deseja usar:",
 		"set_leds": "Definir LEDs",
 		"when_blink_leds": "Quando você gostaria de fazer os LEDs do dispositivo piscarem?"

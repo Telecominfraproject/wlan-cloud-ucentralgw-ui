@@ -14,6 +14,7 @@
 	"blink": {
 		"blink": "Parpadeo",
 		"device_leds": "LED de dispositivo",
+		"execute_now": "¿Le gustaría establecer este patrón ahora?",
 		"pattern": "Elija el patrón que le gustaría usar:",
 		"set_leds": "Establecer LED",
 		"when_blink_leds": "¿Cuándo desea que los LED del dispositivo parpadeen?"
