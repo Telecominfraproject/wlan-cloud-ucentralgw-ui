@@ -37,6 +37,7 @@
 		"connected": "Connected",
 		"copied": "Copied!",
 		"copy_to_clipboard": "Copy to clipboard",
+		"custom_date": "Custom Date",
 		"date": "Date",
 		"day": "day",
 		"days": "days",
@@ -157,6 +158,7 @@
 	},
 	"reboot": {
 		"directions": "When would you like to reboot this device?",
+		"now": "Would you like to reboot this device now?",
 		"title": "Reboot"
 	},
 	"scan": {

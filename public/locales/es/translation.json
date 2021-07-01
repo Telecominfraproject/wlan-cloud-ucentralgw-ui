@@ -37,6 +37,7 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar al portapapeles",
+		"custom_date": "Fecha personalizada",
 		"date": "Fecha",
 		"day": "día",
 		"days": "días",
@@ -157,6 +158,7 @@
 	},
 	"reboot": {
 		"directions": "¿Cuándo le gustaría reiniciar este dispositivo?",
+		"now": "¿Le gustaría reiniciar este dispositivo ahora?",
 		"title": "Reiniciar"
 	},
 	"scan": {

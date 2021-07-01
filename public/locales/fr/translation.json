@@ -37,6 +37,7 @@
 		"connected": "Connecté",
 		"copied": "Copié!",
 		"copy_to_clipboard": "Copier dans le presse-papier",
+		"custom_date": "Date personnalisée",
 		"date": "Rendez-vous amoureux",
 		"day": "journée",
 		"days": "journées",
@@ -157,6 +158,7 @@
 	},
 	"reboot": {
 		"directions": "Quand souhaitez-vous redémarrer cet appareil ?",
+		"now": "Souhaitez-vous redémarrer cet appareil maintenant ?",
 		"title": "Redémarrer"
 	},
 	"scan": {
