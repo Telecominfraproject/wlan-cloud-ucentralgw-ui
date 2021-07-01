@@ -152,7 +152,7 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
               </CRow>
               <CRow className={styles.spacedRow}>
                 <CCol md="5">{t('status.memory')} :</CCol>
-                <CCol xs="9" md="6">
+                <CCol xs="9" md="6" style={{paddingTop: '5px'}}>
                   <MemoryBar
                     usedBytes={lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free}
                     totalBytes={lastStats?.unit?.memory?.total}
