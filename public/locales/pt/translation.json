@@ -195,7 +195,7 @@
 	"trace": {
 		"choose_network": "Escolha a rede",
 		"directions": "Lançar um rastreamento remoto deste dispositivo para uma duração específica ou um número de pacotes",
-		"download_trace": "Clique aqui para baixar",
+		"download_trace": "Baixar arquivo de rastreamento",
 		"packets": "Pacotes",
 		"title": "Vestígio",
 		"trace": "Vestígio",

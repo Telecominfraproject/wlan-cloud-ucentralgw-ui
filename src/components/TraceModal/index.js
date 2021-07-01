@@ -17,9 +17,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import getDeviceConnection from 'utils/deviceHelper';
@@ -30,6 +30,8 @@ import styles from './index.module.scss';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [blockFields, setBlockFields] = useState(false);
@@ -42,8 +44,6 @@ const TraceModal = ({ show, toggleModal }) => {
   const [waitForTrace, setWaitForTrace] = useState(false);
   const [waitingForTrace, setWaitingForTrace] = useState(false);
   const [commandUuid, setCommandUuid] = useState(null);
-
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleWaitForTrace = () => {
     setWaitForTrace(!waitForTrace);
@@ -65,10 +65,8 @@ const TraceModal = ({ show, toggleModal }) => {
     setHadFailure(false);
     setHadSuccess(false);
 
-    const token = getToken();
-
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       when: 0,
       network: chosenInterface,
     };
@@ -81,11 +79,11 @@ const TraceModal = ({ show, toggleModal }) => {
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/trace`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/trace`, parameters, { headers })
       .then((response) => {
         setHadSuccess(true);
         if (waitForTrace) {
@@ -105,9 +103,9 @@ const TraceModal = ({ show, toggleModal }) => {
   };
 
   useEffect(() => {
-    if (selectedDeviceId !== null && show) {
+    if (deviceSerialNumber !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection(selectedDeviceId);
+        const isConnected = await getDeviceConnection(deviceSerialNumber, currentToken);
         setIsDeviceConnected(isConnected);
       };
       asyncGet();
@@ -119,7 +117,7 @@ const TraceModal = ({ show, toggleModal }) => {
       return (
         <WaitingForTraceBody
           toggle={toggleModal}
-          serialNumber={selectedDeviceId}
+          serialNumber={deviceSerialNumber}
           commandUuid={commandUuid}
         />
       );

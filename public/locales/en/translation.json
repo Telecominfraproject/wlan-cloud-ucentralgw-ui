@@ -195,7 +195,7 @@
 	"trace": {
 		"choose_network": "Choose network",
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
-		"download_trace": "Click here to download",
+		"download_trace": "Download Trace File",
 		"packets": "Packets",
 		"title": "Trace",
 		"trace": "Trace",

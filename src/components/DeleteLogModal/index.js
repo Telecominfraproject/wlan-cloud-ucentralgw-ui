@@ -6,12 +6,15 @@ import PropTypes from 'prop-types';
 import ConfirmFooter from 'components/ConfirmFooter';
 import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useDevice } from 'contexts/DeviceProvider';
+import { useAuth } from 'contexts/AuthProvider';
 import eventBus from 'utils/eventBus';
 import styles from './index.module.scss';
 
-const DeleteLogModal = ({ serialNumber, show, toggle, object }) => {
+const DeleteLogModal = ({ show, toggle, object }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState(new Date().toString());
 
@@ -27,14 +30,14 @@ const DeleteLogModal = ({ serialNumber, show, toggle, object }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       params: {
         endDate: dateToUnix(maxDate),
       },
     };
     return axiosInstance
-      .delete(`/device/${serialNumber}/${object}`, options)
+      .delete(`/device/${deviceSerialNumber}/${object}`, options)
       .then(() => {})
       .catch(() => {})
       .finally(() => {
@@ -94,7 +97,6 @@ DeleteLogModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   object: PropTypes.string.isRequired,
-  serialNumber: PropTypes.string.isRequired,
 };
 
 export default DeleteLogModal;

@@ -14,15 +14,17 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -30,7 +32,6 @@ const ConfigureModal = ({ show, toggleModal }) => {
   const [keepRedirector, setKeepRedirector] = useState(true);
   const [responseBody, setResponseBody] = useState('');
   const [checkingIfSure, setCheckingIfSure] = useState(false);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleRedirector = () => {
     setKeepRedirector(!keepRedirector);
@@ -54,17 +55,17 @@ const ConfigureModal = ({ show, toggleModal }) => {
     setWaiting(true);
 
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       keepRedirector,
     };
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${getToken()}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/factory`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/factory`, parameters, { headers })
       .then(() => {
         setHadSuccess(true);
       })

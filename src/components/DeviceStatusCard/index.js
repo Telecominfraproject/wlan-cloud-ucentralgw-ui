@@ -13,18 +13,20 @@ import {
   CSpinner,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import { cilSync } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
 import { prettyDate, secondsToDetailed } from 'utils/helper';
 import MemoryBar from './MemoryBar';
 
 import styles from './index.module.scss';
 
-const DeviceStatusCard = ({ selectedDeviceId }) => {
+const DeviceStatusCard = () => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [lastStats, setLastStats] = useState(null);
   const [status, setStatus] = useState(null);
   const [error, setError] = useState(false);
@@ -40,16 +42,16 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 
     const lastStatsRequest = axiosInstance.get(
-      `/device/${encodeURIComponent(selectedDeviceId)}/statistics?lastOnly=true`,
+      `/device/${encodeURIComponent(deviceSerialNumber)}/statistics?lastOnly=true`,
       options,
     );
     const statusRequest = axiosInstance.get(
-      `/device/${encodeURIComponent(selectedDeviceId)}/status`,
+      `/device/${encodeURIComponent(deviceSerialNumber)}/status`,
       options,
     );
 
@@ -68,8 +70,8 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
 
   useEffect(() => {
     setError(false);
-    if (selectedDeviceId) getData();
-  }, [selectedDeviceId]);
+    if (deviceSerialNumber) getData();
+  }, [deviceSerialNumber]);
 
   if (!error) {
     return (
@@ -78,7 +80,7 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
           <CRow>
             <CCol>
               <div className="text-value-lg">
-                {t('status.title', { serialNumber: selectedDeviceId })}
+                {t('status.title', { serialNumber: deviceSerialNumber })}
               </div>
             </CCol>
             <CCol>
@@ -152,10 +154,14 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
               </CRow>
               <CRow className={styles.spacedRow}>
                 <CCol md="5">{t('status.memory')} :</CCol>
-                <CCol xs="9" md="6" style={{paddingTop: '5px'}}>
+                <CCol xs="9" md="6" style={{ paddingTop: '5px' }}>
                   <MemoryBar
-                    usedBytes={lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free}
-                    totalBytes={lastStats?.unit?.memory?.total}
+                    usedBytes={
+                      lastStats?.unit?.memory?.total && lastStats?.unit?.memory?.free
+                        ? lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free
+                        : 0
+                    }
+                    totalBytes={lastStats?.unit?.memory?.total ?? 0}
                   />
                 </CCol>
               </CRow>
@@ -172,7 +178,7 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
         <CRow>
           <CCol>
             <div className="text-value-lg">
-              {t('status.title', { serialNumber: selectedDeviceId })}
+              {t('status.title', { serialNumber: deviceSerialNumber })}
             </div>
           </CCol>
         </CRow>
@@ -184,10 +190,6 @@ const DeviceStatusCard = ({ selectedDeviceId }) => {
       </CModalBody>
     </CCard>
   );
-};
-
-DeviceStatusCard.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default React.memo(DeviceStatusCard);

@@ -16,10 +16,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
@@ -29,12 +29,13 @@ import styles from './index.module.scss';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [isNow, setIsNow] = useState(false);
   const [waiting, setWaiting] = useState(false);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [chosenPattern, setPattern] = useState('on');
   const [result, setResult] = useState(null);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleNow = () => {
     setIsNow(!isNow);
@@ -57,12 +58,10 @@ const BlinkModal = ({ show, toggleModal }) => {
 
   const doAction = () => {
     setWaiting(true);
-
-    const token = getToken();
     const utcDate = new Date(chosenDate);
 
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       when: isNow ? 0 : dateToUnix(utcDate),
       pattern: chosenPattern,
       duration: 30,
@@ -70,11 +69,11 @@ const BlinkModal = ({ show, toggleModal }) => {
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/leds`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/leds`, parameters, { headers })
       .then(() => {
         setResult('success');
       })
@@ -102,42 +101,42 @@ const BlinkModal = ({ show, toggleModal }) => {
                 <CLabel>{t('blink.pattern')}</CLabel>
               </CCol>
               <CCol>
-                  <CFormGroup variant="custom-radio" onClick={() => setPattern('on')} inline>
-                    <CInputRadio
-                      custom
-                      defaultChecked={chosenPattern === 'on'}
-                      id="radio1"
-                      name="radios"
-                      value="option1"
-                    />
-                    <CLabel variant="custom-checkbox" htmlFor="radio1">
-                      {t('common.on')}
-                    </CLabel>
-                  </CFormGroup>
-                  <CFormGroup variant="custom-radio" onClick={() => setPattern('off')} inline>
-                    <CInputRadio
-                      custom
-                      defaultChecked={chosenPattern === 'off'}
-                      id="radio2"
-                      name="radios"
-                      value="option2"
-                    />
-                    <CLabel variant="custom-checkbox" htmlFor="radio2">
-                      {t('common.off')}
-                    </CLabel>
-                  </CFormGroup>
-                  <CFormGroup variant="custom-radio" onClick={() => setPattern('blink')} inline>
-                    <CInputRadio
-                      custom
-                      defaultChecked={chosenPattern === 'blink'}
-                      id="radio3"
-                      name="radios"
-                      value="option3"
-                    />
-                    <CLabel variant="custom-checkbox" htmlFor="radio3">
-                      {t('blink.blink')}
-                    </CLabel>
-                  </CFormGroup>
+                <CFormGroup variant="custom-radio" onClick={() => setPattern('on')} inline>
+                  <CInputRadio
+                    custom
+                    defaultChecked={chosenPattern === 'on'}
+                    id="radio1"
+                    name="radios"
+                    value="option1"
+                  />
+                  <CLabel variant="custom-checkbox" htmlFor="radio1">
+                    {t('common.on')}
+                  </CLabel>
+                </CFormGroup>
+                <CFormGroup variant="custom-radio" onClick={() => setPattern('off')} inline>
+                  <CInputRadio
+                    custom
+                    defaultChecked={chosenPattern === 'off'}
+                    id="radio2"
+                    name="radios"
+                    value="option2"
+                  />
+                  <CLabel variant="custom-checkbox" htmlFor="radio2">
+                    {t('common.off')}
+                  </CLabel>
+                </CFormGroup>
+                <CFormGroup variant="custom-radio" onClick={() => setPattern('blink')} inline>
+                  <CInputRadio
+                    custom
+                    defaultChecked={chosenPattern === 'blink'}
+                    id="radio3"
+                    name="radios"
+                    value="option3"
+                  />
+                  <CLabel variant="custom-checkbox" htmlFor="radio3">
+                    {t('blink.blink')}
+                  </CLabel>
+                </CFormGroup>
               </CCol>
             </CFormGroup>
             <CRow className={styles.spacedRow}>

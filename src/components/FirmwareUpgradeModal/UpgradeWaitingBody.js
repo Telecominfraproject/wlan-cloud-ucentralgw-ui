@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CModalBody } from '@coreui/react';
 import { v4 as createUuid } from 'uuid';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
 
 const UpgradeWaitingBody = ({ serialNumber }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [labelsToShow, setLabelsToShow] = useState(['upgrade.command_submitted']);
@@ -16,7 +17,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 
@@ -30,7 +31,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 

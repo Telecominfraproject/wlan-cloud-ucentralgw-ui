@@ -13,9 +13,9 @@ import {
 } from '@coreui/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
@@ -25,6 +25,8 @@ import styles from './index.module.scss';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -32,7 +34,6 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [activeScan, setActiveScan] = useState(false);
   const [hideOptions, setHideOptions] = useState(false);
   const [channelList, setChannelList] = useState([]);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleVerbose = () => {
     setVerbose(!choseVerbose);
@@ -88,20 +89,18 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setHadSuccess(false);
     setWaiting(true);
 
-    const token = getToken();
-
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       verbose: choseVerbose,
       activeScan,
     };
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/wifiscan`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`, parameters, { headers })
       .then((response) => {
         const scanList = response?.data?.results?.status?.scan;
 

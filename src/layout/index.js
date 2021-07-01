@@ -1,21 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import TheContent from './Content';
 import TheSidebar from './Sidebar';
 import TheFooter from './Footer';
 import TheHeader from './Header';
 
-const TheLayout = (props) => {
-  const { isLoggedIn } = useSelector((state) => state.connected);
-  if (isLoggedIn) {
-    return <div>{props.children}</div>;
-  }
+const TheLayout = () => {
+  const [showSidebar, setShowSidebar] = useState('responsive');
+
   return (
     <div className="c-app c-default-layout">
-      <TheSidebar />
+      <TheSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className="c-wrapper">
-        <TheHeader />
+        <TheHeader showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         <div className="c-body">
           <TheContent />
         </div>
@@ -23,14 +19,6 @@ const TheLayout = (props) => {
       </div>
     </div>
   );
-};
-
-TheLayout.propTypes = {
-  children: PropTypes.instanceOf(Object),
-};
-
-TheLayout.defaultProps = {
-  children: {},
 };
 
 export default TheLayout;

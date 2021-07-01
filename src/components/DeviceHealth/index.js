@@ -15,17 +15,19 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
-import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
 import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
-const DeviceHealth = ({ selectedDeviceId }) => {
+const DeviceHealth = () => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,7 +70,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       params: {
         limit: logLimit,
@@ -85,7 +87,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
     }
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/healthchecks${extraParams}`, options)
+      .get(`/device/${encodeURIComponent(deviceSerialNumber)}/healthchecks${extraParams}`, options)
       .then((response) => {
         setHealthChecks(response.data.values);
       })
@@ -128,7 +130,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   ];
 
   useEffect(() => {
-    if (selectedDeviceId) {
+    if (deviceSerialNumber) {
       setLogLimit(25);
       setLoadingMore(false);
       setShowLoadingMore(true);
@@ -136,7 +138,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       setEnd('');
       getDeviceHealth();
     }
-  }, [selectedDeviceId]);
+  }, [deviceSerialNumber]);
 
   useEffect(() => {
     if (logLimit !== 25) {
@@ -168,12 +170,12 @@ const DeviceHealth = ({ selectedDeviceId }) => {
   }, [healthChecks]);
 
   useEffect(() => {
-    if (selectedDeviceId && start !== '' && end !== '') {
+    if (deviceSerialNumber && start !== '' && end !== '') {
       getDeviceHealth();
-    } else if (selectedDeviceId && start === '' && end === '') {
+    } else if (deviceSerialNumber && start === '' && end === '') {
       getDeviceHealth();
     }
-  }, [start, end, selectedDeviceId]);
+  }, [start, end, deviceSerialNumber]);
 
   useEffect(() => {
     eventBus.on('deletedHealth', () => getDeviceHealth());
@@ -281,7 +283,7 @@ const DeviceHealth = ({ selectedDeviceId }) => {
             />
           </CButton>
           <DeleteLogModal
-            serialNumber={selectedDeviceId}
+            serialNumber={deviceSerialNumber}
             object="healthchecks"
             show={showDeleteModal}
             toggle={toggleDeleteModal}
@@ -290,10 +292,6 @@ const DeviceHealth = ({ selectedDeviceId }) => {
       }
     />
   );
-};
-
-DeviceHealth.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceHealth;

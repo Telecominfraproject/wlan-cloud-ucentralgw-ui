@@ -195,7 +195,7 @@
 	"trace": {
 		"choose_network": "Netzwerk auswählen",
 		"directions": "Starten Sie eine Tcpdump auf diesem Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
-		"download_trace": "Klicke hier zum herunterladen",
+		"download_trace": "Trace-Datei herunterladen",
 		"packets": "Pakete",
 		"title": "Tcpdump",
 		"trace": "Spur",

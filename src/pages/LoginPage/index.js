@@ -18,8 +18,8 @@ import {
   CInvalidFeedback,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { useAuth } from 'contexts/AuthProvider';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
-import { useDispatch } from 'react-redux';
 import axiosInstance from 'utils/axiosInstance';
 import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
 import LanguageSwitcher from 'components/LanguageSwitcher';
@@ -27,7 +27,7 @@ import styles from './index.module.scss';
 
 const Login = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { setCurrentToken } = useAuth();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [gatewayUrl, setGatewayUrl] = useState('');
@@ -87,7 +87,7 @@ const Login = () => {
       .then((response) => {
         sessionStorage.setItem('gw_url', `${gatewayUrlToUse}/api/v1`);
         sessionStorage.setItem('access_token', response.data.access_token);
-        dispatch({ type: 'set', connected: true });
+        setCurrentToken(response.data.access_token);
       })
       .catch(() => {
         setHadError(true);

@@ -15,10 +15,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import getDeviceConnection from 'utils/deviceHelper';
@@ -28,6 +28,8 @@ import UpgradeWaitingBody from './UpgradeWaitingBody';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [isNow, setIsNow] = useState(true);
   const [waitForUpgrade, setWaitForUpgrade] = useState(false);
   const [date, setDate] = useState(new Date().toString());
@@ -39,7 +41,6 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const [waitingForUpgrade, setWaitingForUpgrade] = useState(false);
   const [showWaitingConsole, setShowWaitingConsole] = useState(false);
   const [deviceConnected, setDeviceConnected] = useState(true);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleNow = () => {
     if (isNow) {
@@ -81,9 +82,9 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   }, [firmware, date]);
 
   useEffect(() => {
-    if (selectedDeviceId !== null && show) {
+    if (deviceSerialNumber !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection(selectedDeviceId);
+        const isConnected = await getDeviceConnection(deviceSerialNumber, currentToken);
         setDisableWaiting(!isConnected);
         setDeviceConnected(isConnected);
       };
@@ -97,17 +98,17 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       setBlockFields(true);
       const headers = {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
-        serialNumber: selectedDeviceId,
+        Authorization: `Bearer ${currentToken}`,
+        serialNumber: deviceSerialNumber,
       };
 
       const parameters = {
-        serialNumber: selectedDeviceId,
+        serialNumber: deviceSerialNumber,
         when: isNow ? 0 : dateToUnix(date),
         uri: firmware,
       };
       axiosInstance
-        .post(`/device/${encodeURIComponent(selectedDeviceId)}/upgrade`, parameters, { headers })
+        .post(`/device/${encodeURIComponent(deviceSerialNumber)}/upgrade`, parameters, { headers })
         .then(() => {
           if (waitForUpgrade) {
             setShowWaitingConsole(true);
@@ -129,7 +130,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
           <CModalTitle>{t('upgrade.title')}</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <UpgradeWaitingBody serialNumber={selectedDeviceId} />
+          <UpgradeWaitingBody serialNumber={deviceSerialNumber} />
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={toggleModal}>

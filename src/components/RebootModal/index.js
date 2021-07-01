@@ -13,10 +13,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
@@ -25,11 +25,12 @@ import styles from './index.module.scss';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [waiting, setWaiting] = useState(false);
   const [result, setResult] = useState(null);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
   const [isNow, setIsNow] = useState(false);
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
 
   const toggleNow = () => {
     setIsNow(!isNow);
@@ -52,21 +53,20 @@ const ActionModal = ({ show, toggleModal }) => {
   const doAction = () => {
     setWaiting(true);
 
-    const token = getToken();
     const utcDate = new Date(chosenDate);
 
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       when: isNow ? 0 : dateToUnix(utcDate),
     };
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/reboot`, parameters, { headers })
+      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/reboot`, parameters, { headers })
       .then(() => {
         setResult('success');
       })

@@ -17,7 +17,7 @@ import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
 import { cleanBytesString } from 'utils/helper';
 import meshIcon from 'assets/icons/Mesh.png';
@@ -29,6 +29,7 @@ import styles from './index.module.scss';
 
 const DeviceList = () => {
   const { t } = useTranslation();
+  const { currentToken } = useAuth();
   const [loadedSerials, setLoadedSerials] = useState(false);
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
@@ -38,12 +39,11 @@ const DeviceList = () => {
   const [loading, setLoading] = useState(true);
 
   const getSerialNumbers = () => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
@@ -60,12 +60,11 @@ const DeviceList = () => {
   };
 
   const getDeviceInformation = () => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     const startIndex = page * devicesPerPage;
@@ -89,12 +88,11 @@ const DeviceList = () => {
   };
 
   const refreshDevice = (serialNumber) => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
