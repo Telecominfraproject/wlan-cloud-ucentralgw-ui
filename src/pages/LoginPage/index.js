@@ -38,7 +38,7 @@ const Login = () => {
   const [emptyGateway, setEmptyGateway] = useState(false);
   const [defaultConfig, setDefaultConfig] = useState({
     DEFAULT_UCENTRALSEC_URL: '',
-    ALLOW_GATEWAY_CHANGE: true,
+    ALLOW_UCENTRALSEC_CHANGE: true,
   });
   const placeholderUrl = 'Gateway URL (ex: https://your-url:port)';
 
@@ -80,7 +80,7 @@ const Login = () => {
 
   const SignIn = (credentials) => {
     let token = '';
-    const uCentralSecUrl = defaultConfig.ALLOW_GATEWAY_CHANGE
+    const uCentralSecUrl = defaultConfig.ALLOW_UCENTRALSEC_CHANGE
       ? gatewayUrl
       : defaultConfig.DEFAULT_UCENTRALSEC_URL;
 
@@ -189,7 +189,7 @@ const Login = () => {
                         {t('login.please_enter_password')}
                       </CInvalidFeedback>
                     </CInputGroup>
-                    <CInputGroup className="mb-4" hidden={!defaultConfig.ALLOW_GATEWAY_CHANGE}>
+                    <CInputGroup className="mb-4" hidden={!defaultConfig.ALLOW_UCENTRALSEC_CHANGE}>
                       <CPopover content="Gateway URL">
                         <CInputGroupPrepend>
                           <CInputGroupText>
