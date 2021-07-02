@@ -151,10 +151,11 @@
 		"login": "Iniciar sesión",
 		"login_error": "Error de inicio de sesión, confirme que su nombre de usuario, contraseña y URL de puerta de enlace son válidos",
 		"password": "Contraseña",
-		"please_enter_gateway": "Ingrese una URL de puerta de enlace",
+		"please_enter_gateway": "Ingrese una URL de uCentralSec",
 		"please_enter_password": "Por favor, introduzca su contraseña",
 		"please_enter_username": "Por favor, ingrese su nombre de usuario",
 		"sign_in_to_account": "Iniciar sesión en su cuenta",
+		"url": "URL de uCentralSec",
 		"username": "Nombre de usuario"
 	},
 	"reboot": {

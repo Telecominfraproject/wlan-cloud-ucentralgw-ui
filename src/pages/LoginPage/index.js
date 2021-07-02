@@ -31,7 +31,7 @@ const Login = () => {
   const { setCurrentToken, setEndpoints } = useAuth();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [gatewayUrl, setGatewayUrl] = useState('');
+  const [uCentralSecUrl, setUCentralSecUrl] = useState('');
   const [hadError, setHadError] = useState(false);
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
@@ -71,7 +71,7 @@ const Login = () => {
       isSuccessful = false;
     }
 
-    if (gatewayUrl.trim() === '') {
+    if (uCentralSecUrl.trim() === '') {
       setEmptyGateway(true);
       isSuccessful = false;
     }
@@ -80,23 +80,23 @@ const Login = () => {
 
   const SignIn = (credentials) => {
     let token = '';
-    const uCentralSecUrl = defaultConfig.ALLOW_UCENTRALSEC_CHANGE
-      ? gatewayUrl
+    const finalUCentralSecUrl = defaultConfig.ALLOW_UCENTRALSEC_CHANGE
+      ? uCentralSecUrl
       : defaultConfig.DEFAULT_UCENTRALSEC_URL;
 
     axiosInstance
-      .post(`${uCentralSecUrl}/api/v1/oauth2`, credentials)
+      .post(`${finalUCentralSecUrl}/api/v1/oauth2`, credentials)
       .then((response) => {
         sessionStorage.setItem('access_token', response.data.access_token);
         token = response.data.access_token;
-        return axiosInstance.get(`${uCentralSecUrl}/api/v1/systemEndpoints`, { headers: {
+        return axiosInstance.get(`${finalUCentralSecUrl}/api/v1/systemEndpoints`, { headers: {
           Accept: 'application/json',
           Authorization: `Bearer ${response.data.access_token}`,
         }});
       })
       .then ((response) => {
         const endpoints = {
-          ucentralsec: uCentralSecUrl
+          ucentralsec: finalUCentralSecUrl
         };
         for (const endpoint of response.data.endpoints){
           endpoints[endpoint.type] = endpoint.uri;
@@ -124,12 +124,12 @@ const Login = () => {
   }, [password]);
   useEffect(() => {
     if (emptyGateway) setEmptyGateway(false);
-  }, [gatewayUrl]);
+  }, [uCentralSecUrl]);
   useEffect(() => {
     getDefaultConfig();
   }, []);
   useEffect(() => {
-    setGatewayUrl(defaultConfig.DEFAULT_UCENTRALSEC_URL);
+    setUCentralSecUrl(defaultConfig.DEFAULT_UCENTRALSEC_URL);
   }, [defaultConfig]);
 
   return (
@@ -149,7 +149,7 @@ const Login = () => {
                     <h1>{t('login.login')}</h1>
                     <p className="text-muted">{t('login.sign_in_to_account')}</p>
                     <CInputGroup className="mb-3">
-                      <CPopover content="Username">
+                      <CPopover content={t('login.username')}>
                         <CInputGroupPrepend>
                           <CInputGroupText>
                             <CIcon name="cilUser" content={cilUser} />
@@ -170,7 +170,7 @@ const Login = () => {
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
-                      <CPopover content="Password">
+                      <CPopover content={t('login.password')}>
                         <CInputGroupPrepend>
                           <CInputGroupText>
                             <CIcon content={cilLockLocked} />
@@ -190,7 +190,7 @@ const Login = () => {
                       </CInvalidFeedback>
                     </CInputGroup>
                     <CInputGroup className="mb-4" hidden={!defaultConfig.ALLOW_UCENTRALSEC_CHANGE}>
-                      <CPopover content="Gateway URL">
+                      <CPopover content={t('login.url')}>
                         <CInputGroupPrepend>
                           <CInputGroupText>
                             <CIcon name="cilLink" content={cilLink} />
@@ -202,9 +202,9 @@ const Login = () => {
                         type="text"
                         required
                         placeholder={placeholderUrl}
-                        value={gatewayUrl}
+                        value={uCentralSecUrl}
                         autoComplete="gateway-url"
-                        onChange={(event) => setGatewayUrl(event.target.value)}
+                        onChange={(event) => setUCentralSecUrl(event.target.value)}
                       />
                       <CInvalidFeedback className="help-block">
                         {t('login.please_enter_gateway')}

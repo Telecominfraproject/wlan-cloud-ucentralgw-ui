@@ -151,10 +151,11 @@
 		"login": "Entrar",
 		"login_error": "Erro de login, confirme se seu nome de usuário, senha e url de gateway são válidos",
 		"password": "Senha",
-		"please_enter_gateway": "Insira um URL de gateway",
+		"please_enter_gateway": "Insira um URL uCentralSec",
 		"please_enter_password": "Por favor, insira sua senha",
 		"please_enter_username": "Por favor insira seu nome de usuário",
 		"sign_in_to_account": "Faça login em sua conta",
+		"url": "URL uCentralSec",
 		"username": "Nome de usuário"
 	},
 	"reboot": {
