@@ -26,12 +26,12 @@ npm run build
 Once the build is done, you can move the `build` folder on your server.
 
 ### Configuration
-You must change the `config.json` file in `public` directory to point to your gateway URL. You may also limit the ability for users to change the default gateway. If you do not allow a gateway change, the gateway URL will not appear on the login screen. 
+You must change the `config.json` file in `public` directory to point to your uCentral Security Service URL (uCentralSec). You may also limit the ability for users to change the default uCentralSec. If you do not allow a uCentralSec change, the uCentralSec URL will not appear on the login screen. 
 
 Here are the current default values: 
 ```
 {
-  "DEFAULT_GATEWAY_URL": "https://ucentral.dpaas.arilia.com:16001",
-  "ALLOW_GATEWAY_CHANGE": false
+  "DEFAULT_UCENTRALSEC_URL": "https://ucentral.dpaas.arilia.com:16001",
+  "ALLOW_UCENTRALSEC_CHANGE": false
 }
 ```
