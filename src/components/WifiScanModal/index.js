@@ -25,7 +25,7 @@ import styles from './index.module.scss';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
@@ -100,7 +100,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`, parameters, { headers })
+      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`, parameters, { headers })
       .then((response) => {
         const scanList = response?.data?.results?.status?.scan;
 

@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 
 const LatestStatisticsModal = ({ show, toggle }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [latestStats, setLatestStats] = useState('');
 
@@ -29,7 +29,7 @@ const LatestStatisticsModal = ({ show, toggle }) => {
     };
 
     axiosInstance
-      .get(`/device/${deviceSerialNumber}/statistics?lastOnly=true`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?lastOnly=true`, options)
       .then((response) => {
         setLatestStats(response.data);
       })

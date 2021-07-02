@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 
 const DeleteLogModal = ({ show, toggle, object }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState(new Date().toString());
@@ -37,7 +37,7 @@ const DeleteLogModal = ({ show, toggle, object }) => {
       },
     };
     return axiosInstance
-      .delete(`/device/${deviceSerialNumber}/${object}`, options)
+      .delete(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/${object}`, options)
       .then(() => {})
       .catch(() => {})
       .finally(() => {

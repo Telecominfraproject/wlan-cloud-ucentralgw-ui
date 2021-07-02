@@ -3,6 +3,7 @@ import { HashRouter, Switch } from 'react-router-dom';
 import 'scss/style.scss';
 import Router from 'router';
 import { AuthProvider } from 'contexts/AuthProvider';
+import { checkIfJson } from 'utils/helper';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -12,9 +13,10 @@ const loading = (
 
 const App = () => {
   const storageToken = sessionStorage.getItem('access_token');
+  const apiEndpoints = checkIfJson(sessionStorage.getItem('gateway_endpoints')) ? JSON.parse(sessionStorage.getItem('gateway_endpoints')) : {};
 
   return (
-    <AuthProvider token={storageToken ?? ''}>
+    <AuthProvider token={storageToken ?? ''} apiEndpoints={apiEndpoints}>
       <HashRouter>
         <React.Suspense fallback={loading}>
           <Switch>

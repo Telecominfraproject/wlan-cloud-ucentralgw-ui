@@ -30,7 +30,7 @@ import styles from './index.module.scss';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
@@ -83,7 +83,7 @@ const TraceModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/trace`, parameters, { headers })
+      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/trace`, parameters, { headers })
       .then((response) => {
         setHadSuccess(true);
         if (waitForTrace) {
@@ -105,7 +105,7 @@ const TraceModal = ({ show, toggleModal }) => {
   useEffect(() => {
     if (deviceSerialNumber !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection(deviceSerialNumber, currentToken);
+        const isConnected = await getDeviceConnection(deviceSerialNumber, currentToken, endpoints.ucentralgw);
         setIsDeviceConnected(isConnected);
       };
       asyncGet();

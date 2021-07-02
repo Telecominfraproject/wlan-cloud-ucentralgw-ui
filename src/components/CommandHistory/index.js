@@ -27,7 +27,7 @@ import styles from './index.module.scss';
 
 const DeviceCommands = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   // Wifiscan result related
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
@@ -110,7 +110,7 @@ const DeviceCommands = () => {
 
     axiosInstance
       .get(
-        `/commands?serialNumber=${encodeURIComponent(deviceSerialNumber)}${extraParams}`,
+        `${endpoints.ucentralgw}/api/v1/commands?serialNumber=${encodeURIComponent(deviceSerialNumber)}${extraParams}`,
         options,
       )
       .then((response) => {
@@ -133,7 +133,7 @@ const DeviceCommands = () => {
     };
 
     axiosInstance
-      .get(`/file/${uuid}?serialNumber=${deviceSerialNumber}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`, options)
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');
@@ -154,7 +154,7 @@ const DeviceCommands = () => {
       },
     };
     return axiosInstance
-      .delete(`/command/${uuidDelete}`, options)
+      .delete(`${endpoints.ucentralgw}/api/v1/command/${uuidDelete}`, options)
       .then(() => {
         deleteCommandFromList(uuidDelete);
         setUuidDelete('');

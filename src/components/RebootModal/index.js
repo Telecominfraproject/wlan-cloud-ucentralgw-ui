@@ -25,7 +25,7 @@ import styles from './index.module.scss';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [waiting, setWaiting] = useState(false);
   const [result, setResult] = useState(null);
@@ -66,7 +66,7 @@ const ActionModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/reboot`, parameters, { headers })
+      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/reboot`, parameters, { headers })
       .then(() => {
         setResult('success');
       })

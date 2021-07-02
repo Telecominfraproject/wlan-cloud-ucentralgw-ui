@@ -25,7 +25,7 @@ import styles from './index.module.scss';
 
 const DeviceStatusCard = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [lastStats, setLastStats] = useState(null);
   const [status, setStatus] = useState(null);
@@ -47,11 +47,11 @@ const DeviceStatusCard = () => {
     };
 
     const lastStatsRequest = axiosInstance.get(
-      `/device/${encodeURIComponent(deviceSerialNumber)}/statistics?lastOnly=true`,
+      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/statistics?lastOnly=true`,
       options,
     );
     const statusRequest = axiosInstance.get(
-      `/device/${encodeURIComponent(deviceSerialNumber)}/status`,
+      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/status`,
       options,
     );
 

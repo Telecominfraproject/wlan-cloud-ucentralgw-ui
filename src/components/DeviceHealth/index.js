@@ -26,7 +26,7 @@ import styles from './index.module.scss';
 
 const DeviceHealth = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
@@ -87,7 +87,7 @@ const DeviceHealth = () => {
     }
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(deviceSerialNumber)}/healthchecks${extraParams}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/healthchecks${extraParams}`, options)
       .then((response) => {
         setHealthChecks(response.data.values);
       })

@@ -29,7 +29,7 @@ import styles from './index.module.scss';
 
 const DeviceList = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const [loadedSerials, setLoadedSerials] = useState(false);
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
@@ -47,7 +47,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get('/devices?serialOnly=true', {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true`, {
         headers,
       })
       .then((response) => {
@@ -75,7 +75,7 @@ const DeviceList = () => {
       .join(',');
 
     axiosInstance
-      .get(`/devices?deviceWithStatus=true&select=${serialsToGet}`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${serialsToGet}`, {
         headers,
       })
       .then((response) => {
@@ -96,7 +96,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`/devices?deviceWithStatus=true&select=${encodeURIComponent(serialNumber)}`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(serialNumber)}`, {
         headers,
       })
       .then((response) => {

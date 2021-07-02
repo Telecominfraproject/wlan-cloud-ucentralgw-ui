@@ -10,7 +10,7 @@ import DeviceStatisticsChart from './DeviceStatisticsChart';
 
 const StatisticsChartList = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
@@ -128,7 +128,7 @@ const StatisticsChartList = () => {
     };
 
     axiosInstance
-      .get(`/device/${deviceSerialNumber}/statistics?newest=true&limit=50`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`, options)
       .then((response) => {
         transformIntoDataset(response.data.data);
       })

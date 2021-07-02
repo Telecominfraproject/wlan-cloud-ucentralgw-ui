@@ -1,6 +1,6 @@
 import axiosInstance from 'utils/axiosInstance';
 
-export default async (deviceId, token) => {
+export default async (deviceId, token, endpoint) => {
   const options = {
     headers: {
       Accept: 'application/json',
@@ -9,7 +9,7 @@ export default async (deviceId, token) => {
   };
 
   return axiosInstance
-    .get(`/device/${encodeURIComponent(deviceId)}/status`, options)
+    .get(`${endpoint}/api/v1/device/${encodeURIComponent(deviceId)}/status`, options)
     .then((response) => response.data.connected)
     .catch(() => false);
 };

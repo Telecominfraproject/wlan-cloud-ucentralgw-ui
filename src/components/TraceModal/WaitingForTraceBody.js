@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [waitingForFile, setWaitingForFile] = useState(true);
 
@@ -22,7 +22,7 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     };
 
     axiosInstance
-      .get(`/command/${encodeURIComponent(commandUuid)}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/command/${encodeURIComponent(commandUuid)}`, options)
       .then((response) => {
         if (response.data.waitingForFile === 0) {
           setWaitingForFile(false);
@@ -41,7 +41,7 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     };
 
     axiosInstance
-      .get(`/file/${commandUuid}?serialNumber=${serialNumber}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/file/${commandUuid}?serialNumber=${serialNumber}`, options)
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');

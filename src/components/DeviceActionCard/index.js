@@ -17,7 +17,7 @@ import styles from './index.module.scss';
 
 const DeviceActions = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
@@ -66,7 +66,7 @@ const DeviceActions = () => {
     };
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(deviceSerialNumber)}/rtty`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`, options)
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');

@@ -17,6 +17,7 @@ import {
   CAlert,
   CInvalidFeedback,
 } from '@coreui/react';
+
 import CIcon from '@coreui/icons-react';
 import { useAuth } from 'contexts/AuthProvider';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
@@ -27,7 +28,7 @@ import styles from './index.module.scss';
 
 const Login = () => {
   const { t } = useTranslation();
-  const { setCurrentToken } = useAuth();
+  const { setCurrentToken, setEndpoints } = useAuth();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [gatewayUrl, setGatewayUrl] = useState('');
@@ -36,7 +37,7 @@ const Login = () => {
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyGateway, setEmptyGateway] = useState(false);
   const [defaultConfig, setDefaultConfig] = useState({
-    DEFAULT_GATEWAY_URL: '',
+    DEFAULT_UCENTRALSEC_URL: '',
     ALLOW_GATEWAY_CHANGE: true,
   });
   const placeholderUrl = 'Gateway URL (ex: https://your-url:port)';
@@ -78,16 +79,31 @@ const Login = () => {
   };
 
   const SignIn = (credentials) => {
-    const gatewayUrlToUse = defaultConfig.ALLOW_GATEWAY_CHANGE
+    let token = '';
+    const uCentralSecUrl = defaultConfig.ALLOW_GATEWAY_CHANGE
       ? gatewayUrl
-      : defaultConfig.DEFAULT_GATEWAY_URL;
+      : defaultConfig.DEFAULT_UCENTRALSEC_URL;
 
     axiosInstance
-      .post(`${gatewayUrlToUse}/api/v1/oauth2`, credentials)
+      .post(`${uCentralSecUrl}/api/v1/oauth2`, credentials)
       .then((response) => {
-        sessionStorage.setItem('gw_url', `${gatewayUrlToUse}/api/v1`);
         sessionStorage.setItem('access_token', response.data.access_token);
-        setCurrentToken(response.data.access_token);
+        token = response.data.access_token;
+        return axiosInstance.get(`${uCentralSecUrl}/api/v1/systemEndpoints`, { headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${response.data.access_token}`,
+        }});
+      })
+      .then ((response) => {
+        const endpoints = {
+          ucentralsec: uCentralSecUrl
+        };
+        for (const endpoint of response.data.endpoints){
+          endpoints[endpoint.type] = endpoint.uri;
+        }
+        sessionStorage.setItem('gateway_endpoints', JSON.stringify(endpoints));
+        setEndpoints(endpoints);
+        setCurrentToken(token);
       })
       .catch(() => {
         setHadError(true);
@@ -113,7 +129,7 @@ const Login = () => {
     getDefaultConfig();
   }, []);
   useEffect(() => {
-    setGatewayUrl(defaultConfig.DEFAULT_GATEWAY_URL);
+    setGatewayUrl(defaultConfig.DEFAULT_UCENTRALSEC_URL);
   }, [defaultConfig]);
 
   return (

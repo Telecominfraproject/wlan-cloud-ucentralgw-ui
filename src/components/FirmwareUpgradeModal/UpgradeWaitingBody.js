@@ -8,7 +8,7 @@ import axiosInstance from 'utils/axiosInstance';
 
 const UpgradeWaitingBody = ({ serialNumber }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [labelsToShow, setLabelsToShow] = useState(['upgrade.command_submitted']);
@@ -22,7 +22,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     };
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(serialNumber)}/status`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}/status`, options)
       .then((response) => response.data.connected)
       .catch(() => {});
   };
@@ -36,7 +36,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     };
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(serialNumber)}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
       .then((response) => response.data.firmware)
       .catch(() => {});
   };

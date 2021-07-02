@@ -16,15 +16,6 @@ axiosInstance.defaults.timeout = 30000;
 axiosInstance.defaults.headers.get.Accept = 'application/json';
 axiosInstance.defaults.headers.post.Accept = 'application/json';
 
-axiosInstance.interceptors.request.use((config) => {
-  const newConfig = config;
-  const url = sessionStorage.getItem('gw_url');
-  if (url !== undefined && url !== null && !newConfig.url.includes(url)) {
-    newConfig.url = url + newConfig.url;
-  }
-  return newConfig;
-});
-
 axiosInstance.interceptors.response.use(
   // Success actions
   undefined,

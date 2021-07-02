@@ -25,7 +25,7 @@ import styles from './index.module.scss';
 
 const DeviceLogs = () => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
@@ -84,7 +84,7 @@ const DeviceLogs = () => {
     }
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(deviceSerialNumber)}/logs${extraParams}`, options)
+ .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/logs${extraParams}`, options)
       .then((response) => {
         setLogs(response.data.values);
       })

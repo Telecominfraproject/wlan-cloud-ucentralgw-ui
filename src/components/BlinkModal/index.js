@@ -29,7 +29,7 @@ import styles from './index.module.scss';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
-  const { currentToken } = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [isNow, setIsNow] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -73,7 +73,7 @@ const BlinkModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(deviceSerialNumber)}/leds`, parameters, { headers })
+      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/leds`, parameters, { headers })
       .then(() => {
         setResult('success');
       })
