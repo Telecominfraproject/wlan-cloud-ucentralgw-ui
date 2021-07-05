@@ -13,13 +13,11 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
-import { cilCloudDownload, cilSync } from '@coreui/icons';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
+import { cilCloudDownload, cilSync, cilCalendarCheck } from '@coreui/icons';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
 import LoadingButton from 'components/LoadingButton';
@@ -27,8 +25,10 @@ import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 import styles from './index.module.scss';
 
-const DeviceCommands = ({ selectedDeviceId }) => {
+const DeviceCommands = () => {
   const { t } = useTranslation();
+  const { currentToken, endpoints } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   // Wifiscan result related
   const [chosenWifiScan, setChosenWifiScan] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
@@ -92,7 +92,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       params: {
         limit: commandLimit,
@@ -109,7 +109,12 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     }
 
     axiosInstance
-      .get(`/commands?serialNumber=${encodeURIComponent(selectedDeviceId)}${extraParams}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/commands?serialNumber=${encodeURIComponent(
+          deviceSerialNumber,
+        )}${extraParams}`,
+        options,
+      )
       .then((response) => {
         setCommands(response.data.commands);
       })
@@ -124,13 +129,16 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/octet-stream',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       responseType: 'arraybuffer',
     };
 
     axiosInstance
-      .get(`/file/${uuid}?serialNumber=${selectedDeviceId}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`,
+        options,
+      )
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');
@@ -147,11 +155,11 @@ const DeviceCommands = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
     return axiosInstance
-      .delete(`/command/${uuidDelete}`, options)
+      .delete(`${endpoints.ucentralgw}/api/v1/command/${uuidDelete}`, options)
       .then(() => {
         deleteCommandFromList(uuidDelete);
         setUuidDelete('');
@@ -233,12 +241,12 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   ];
 
   useEffect(() => {
-    if (selectedDeviceId && start !== '' && end !== '') {
+    if (deviceSerialNumber && start !== '' && end !== '') {
       getCommands();
-    } else if (selectedDeviceId && start === '' && end === '') {
+    } else if (deviceSerialNumber && start === '' && end === '') {
       getCommands();
     }
-  }, [selectedDeviceId, start, end]);
+  }, [deviceSerialNumber, start, end]);
 
   useEffect(() => {
     eventBus.on('actionCompleted', () => refreshCommands());
@@ -249,7 +257,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
   }, []);
 
   useEffect(() => {
-    if (selectedDeviceId) {
+    if (deviceSerialNumber) {
       setCommandLimit(25);
       setLoadingMore(false);
       setShowLoadingMore(true);
@@ -257,7 +265,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       setEnd('');
       getCommands();
     }
-  }, [selectedDeviceId]);
+  }, [deviceSerialNumber]);
 
   useEffect(() => {
     if (commandLimit !== 25) {
@@ -363,12 +371,7 @@ const DeviceCommands = ({ selectedDeviceId }) => {
                                 {item.command === 'trace' ? (
                                   <CIcon content={cilCloudDownload} size="lg" />
                                 ) : (
-                                  <FontAwesomeIcon
-                                    icon={faClipboardCheck}
-                                    className={[styles.customIconHeight, 'c-icon c-icon-lg'].join(
-                                      ' ',
-                                    )}
-                                  />
+                                  <CIcon content={cilCalendarCheck} size="lg" />
                                 )}
                               </CButton>
                             </CPopover>
@@ -451,10 +454,6 @@ const DeviceCommands = ({ selectedDeviceId }) => {
       <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
     </CWidgetDropdown>
   );
-};
-
-DeviceCommands.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceCommands;

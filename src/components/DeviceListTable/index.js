@@ -10,14 +10,14 @@ import {
   CRow,
   CCol,
   CPopover,
+  CSelect,
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
 import { cleanBytesString } from 'utils/helper';
 import meshIcon from 'assets/icons/Mesh.png';
@@ -29,6 +29,7 @@ import styles from './index.module.scss';
 
 const DeviceList = () => {
   const { t } = useTranslation();
+  const { currentToken, endpoints } = useAuth();
   const [loadedSerials, setLoadedSerials] = useState(false);
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
@@ -38,16 +39,15 @@ const DeviceList = () => {
   const [loading, setLoading] = useState(true);
 
   const getSerialNumbers = () => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .get('/devices?serialOnly=true', {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true`, {
         headers,
       })
       .then((response) => {
@@ -60,12 +60,11 @@ const DeviceList = () => {
   };
 
   const getDeviceInformation = () => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     const startIndex = page * devicesPerPage;
@@ -76,7 +75,7 @@ const DeviceList = () => {
       .join(',');
 
     axiosInstance
-      .get(`/devices?deviceWithStatus=true&select=${serialsToGet}`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${serialsToGet}`, {
         headers,
       })
       .then((response) => {
@@ -89,18 +88,22 @@ const DeviceList = () => {
   };
 
   const refreshDevice = (serialNumber) => {
-    const token = getToken();
     setLoading(true);
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .get(`/devices?deviceWithStatus=true&select=${encodeURIComponent(serialNumber)}`, {
-        headers,
-      })
+      .get(
+        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
+          serialNumber,
+        )}`,
+        {
+          headers,
+        },
+      )
       .then((response) => {
         const device = response.data.devicesWithStatus[0];
         const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);
@@ -189,12 +192,6 @@ const DeviceListDisplay = ({
     },
   ];
 
-  const selectOptions = [
-    { value: '10', label: '10' },
-    { value: '25', label: '25' },
-    { value: '50', label: '50' },
-  ];
-
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default' || deviceType === 'AP') {
       return <img src={apIcon} className={styles.icon} alt="AP" />;
@@ -281,13 +278,17 @@ const DeviceListDisplay = ({
         <CCardHeader>
           <CRow>
             <CCol />
-            <CCol xs={2}>
-              <Select
-                isClearable={false}
-                options={selectOptions}
-                defaultValue={{ value: devicesPerPage, label: devicesPerPage }}
-                onChange={(value) => updateDevicesPerPage(value.value)}
-              />
+            <CCol xs={1}>
+              <CSelect
+                custom
+                defaultValue={devicesPerPage}
+                onChange={(e) => updateDevicesPerPage(e.target.value)}
+                disabled={loading}
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </CSelect>
             </CCol>
           </CRow>
         </CCardHeader>
@@ -337,7 +338,9 @@ const DeviceListDisplay = ({
                     content={item.firmware ? item.firmware : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '225px'}} className="text-truncate">{item.firmware}</p>
+                    <p style={{ width: '225px' }} className="text-truncate">
+                      {item.firmware}
+                    </p>
                   </CPopover>
                 </td>
               ),
@@ -347,7 +350,9 @@ const DeviceListDisplay = ({
                     content={item.compatible ? item.compatible : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '150px'}} className="text-truncate">{item.compatible}</p>
+                    <p style={{ width: '150px' }} className="text-truncate">
+                      {item.compatible}
+                    </p>
                   </CPopover>
                 </td>
               ),
@@ -359,7 +364,9 @@ const DeviceListDisplay = ({
                     content={item.ipAddress ? item.ipAddress : t('common.na')}
                     placement="top"
                   >
-                    <p style={{width: '150px'}} className="text-truncate">{item.ipAddress}</p>
+                    <p style={{ width: '150px' }} className="text-truncate">
+                      {item.ipAddress}
+                    </p>
                   </CPopover>
                 </td>
               ),

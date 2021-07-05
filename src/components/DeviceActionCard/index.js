@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import LoadingButton from 'components/LoadingButton';
 import RebootModal from 'components/RebootModal';
 import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal';
@@ -15,8 +15,10 @@ import FactoryResetModal from 'components/FactoryResetModal';
 
 import styles from './index.module.scss';
 
-const DeviceActions = ({ selectedDeviceId }) => {
+const DeviceActions = () => {
   const { t } = useTranslation();
+  const { currentToken, endpoints } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [showRebootModal, setShowRebootModal] = useState(false);
   const [showBlinkModal, setShowBlinkModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
@@ -59,12 +61,15 @@ const DeviceActions = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
     };
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/rtty`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`,
+        options,
+      )
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
@@ -78,7 +83,9 @@ const DeviceActions = ({ selectedDeviceId }) => {
 
   return (
     <CCard>
-      <CCardHeader><div className="text-value-lg">{t('actions.title')}</div></CCardHeader>
+      <CCardHeader>
+        <div className="text-value-lg">{t('actions.title')}</div>
+      </CCardHeader>
       <CCardBody>
         <CRow>
           <CCol>
@@ -141,10 +148,6 @@ const DeviceActions = ({ selectedDeviceId }) => {
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
     </CCard>
   );
-};
-
-DeviceActions.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceActions;
