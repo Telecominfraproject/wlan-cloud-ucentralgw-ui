@@ -1,11 +1,7 @@
 import * as axios from 'axios';
 import axiosRetry from 'axios-retry';
-import http from 'http';
-import https from 'https';
 
-const httpAgent = new http.Agent({ keepAlive: true });
-const httpsAgent = new https.Agent({ keepAlive: true });
-const axiosInstance = axios.create(httpAgent, httpsAgent);
+const axiosInstance = axios.create();
 
 axiosRetry(axiosInstance, {
   retries: 3,
