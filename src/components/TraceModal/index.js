@@ -165,32 +165,40 @@ const TraceModal = ({ show, toggleModal }) => {
             </CCol>
             <CCol xs="12" md="8">
               {usingDuration ? (
-                <CSelect defaultValue="duration" disabled={blockFields}>
-                  <option value="20" onClick={() => setDuration(20)}>
+                <CSelect
+                  defaultValue={duration}
+                  disabled={blockFields}
+                  onChange={(e) => setDuration(e.target.value)}
+                >
+                  <option value="20">
                     20s
                   </option>
-                  <option value="40" onClick={() => setDuration(40)}>
+                  <option value="40">
                     40s
                   </option>
-                  <option value="60" onClick={() => setDuration(60)}>
+                  <option value="60">
                     60s
                   </option>
-                  <option value="120" onClick={() => setDuration(120)}>
+                  <option value="120">
                     120s
                   </option>
                 </CSelect>
               ) : (
-                <CSelect defaultValue={packets} disabled={blockFields}>
-                  <option value="100" onClick={() => setPackets(100)}>
+                <CSelect
+                  defaultValue={packets}
+                  disabled={blockFields}
+                  onChange={(e) => setPackets(e.target.value)}
+                >
+                  <option value="100">
                     100
                   </option>
-                  <option value="250" onClick={() => setPackets(250)}>
+                  <option value="250">
                     250
                   </option>
-                  <option value="500" onClick={() => setPackets(500)}>
+                  <option value="500">
                     500
                   </option>
-                  <option value="1000" onClick={() => setPackets(1000)}>
+                  <option value="1000">
                     1000
                   </option>
                 </CSelect>
