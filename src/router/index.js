@@ -12,7 +12,13 @@ const Routes = () => {
     <Route
       path="/"
       name="Devices"
-      render={(props) => (currentToken !== '' && Object.keys(endpoints).length !== 0 ? <TheLayout {...props} /> : <Login {...props} />)}
+      render={(props) =>
+        currentToken !== '' && Object.keys(endpoints).length !== 0 ? (
+          <TheLayout {...props} />
+        ) : (
+          <Login {...props} />
+        )
+      }
     />
   );
 };

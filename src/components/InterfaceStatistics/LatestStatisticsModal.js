@@ -29,7 +29,10 @@ const LatestStatisticsModal = ({ show, toggle }) => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?lastOnly=true`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?lastOnly=true`,
+        options,
+      )
       .then((response) => {
         setLatestStats(response.data);
       })

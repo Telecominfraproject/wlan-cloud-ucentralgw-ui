@@ -20,7 +20,7 @@ import { useAuth } from 'contexts/AuthProvider';
 
 const TheHeader = ({ showSidebar, setShowSidebar }) => {
   const { t, i18n } = useTranslation();
-  const { currentToken, endpoints} = useAuth();
+  const { currentToken, endpoints } = useAuth();
   const [translatedRoutes, setTranslatedRoutes] = useState(routes);
 
   const toggleSidebar = () => {
@@ -54,7 +54,12 @@ const TheHeader = ({ showSidebar, setShowSidebar }) => {
       <CHeaderNav className="px-3">
         <CPopover content={t('common.logout')}>
           <CLink className="c-subheader-nav-link">
-            <CIcon name="cilAccountLogout" content={cilAccountLogout} size="2xl" onClick={() => logout(currentToken, endpoints.ucentralsec)} />
+            <CIcon
+              name="cilAccountLogout"
+              content={cilAccountLogout}
+              size="2xl"
+              onClick={() => logout(currentToken, endpoints.ucentralsec)}
+            />
           </CLink>
         </CPopover>
       </CHeaderNav>

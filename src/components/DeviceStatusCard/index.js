@@ -47,7 +47,9 @@ const DeviceStatusCard = () => {
     };
 
     const lastStatsRequest = axiosInstance.get(
-      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/statistics?lastOnly=true`,
+      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
+        deviceSerialNumber,
+      )}/statistics?lastOnly=true`,
       options,
     );
     const statusRequest = axiosInstance.get(

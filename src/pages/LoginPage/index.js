@@ -89,16 +89,18 @@ const Login = () => {
       .then((response) => {
         sessionStorage.setItem('access_token', response.data.access_token);
         token = response.data.access_token;
-        return axiosInstance.get(`${finalUCentralSecUrl}/api/v1/systemEndpoints`, { headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${response.data.access_token}`,
-        }});
+        return axiosInstance.get(`${finalUCentralSecUrl}/api/v1/systemEndpoints`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
       })
-      .then ((response) => {
+      .then((response) => {
         const endpoints = {
-          ucentralsec: finalUCentralSecUrl
+          ucentralsec: finalUCentralSecUrl,
         };
-        for (const endpoint of response.data.endpoints){
+        for (const endpoint of response.data.endpoints) {
           endpoints[endpoint.type] = endpoint.uri;
         }
         sessionStorage.setItem('gateway_endpoints', JSON.stringify(endpoints));

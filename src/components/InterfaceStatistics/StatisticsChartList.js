@@ -128,7 +128,10 @@ const StatisticsChartList = () => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`,
+        options,
+      )
       .then((response) => {
         transformIntoDataset(response.data.data);
       })

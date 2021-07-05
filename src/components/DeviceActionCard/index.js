@@ -66,7 +66,10 @@ const DeviceActions = () => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`,
+        options,
+      )
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');

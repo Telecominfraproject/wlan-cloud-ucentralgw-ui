@@ -13,7 +13,9 @@ const loading = (
 
 const App = () => {
   const storageToken = sessionStorage.getItem('access_token');
-  const apiEndpoints = checkIfJson(sessionStorage.getItem('gateway_endpoints')) ? JSON.parse(sessionStorage.getItem('gateway_endpoints')) : {};
+  const apiEndpoints = checkIfJson(sessionStorage.getItem('gateway_endpoints'))
+    ? JSON.parse(sessionStorage.getItem('gateway_endpoints'))
+    : {};
 
   return (
     <AuthProvider token={storageToken ?? ''} apiEndpoints={apiEndpoints}>

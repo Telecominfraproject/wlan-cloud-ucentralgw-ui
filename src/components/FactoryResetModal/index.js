@@ -65,7 +65,11 @@ const ConfigureModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/factory`, parameters, { headers })
+      .post(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/factory`,
+        parameters,
+        { headers },
+      )
       .then(() => {
         setHadSuccess(true);
       })

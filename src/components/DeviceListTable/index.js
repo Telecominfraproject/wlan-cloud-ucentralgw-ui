@@ -96,9 +96,14 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(serialNumber)}`, {
-        headers,
-      })
+      .get(
+        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
+          serialNumber,
+        )}`,
+        {
+          headers,
+        },
+      )
       .then((response) => {
         const device = response.data.devicesWithStatus[0];
         const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);

@@ -110,7 +110,9 @@ const DeviceCommands = () => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/commands?serialNumber=${encodeURIComponent(deviceSerialNumber)}${extraParams}`,
+        `${endpoints.ucentralgw}/api/v1/commands?serialNumber=${encodeURIComponent(
+          deviceSerialNumber,
+        )}${extraParams}`,
         options,
       )
       .then((response) => {
@@ -133,7 +135,10 @@ const DeviceCommands = () => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`,
+        options,
+      )
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');

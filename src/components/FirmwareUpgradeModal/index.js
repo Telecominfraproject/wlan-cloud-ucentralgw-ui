@@ -84,7 +84,11 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   useEffect(() => {
     if (deviceSerialNumber !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection(deviceSerialNumber, currentToken, endpoints.ucentralgw);
+        const isConnected = await getDeviceConnection(
+          deviceSerialNumber,
+          currentToken,
+          endpoints.ucentralgw,
+        );
         setDisableWaiting(!isConnected);
         setDeviceConnected(isConnected);
       };
@@ -108,7 +112,11 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         uri: firmware,
       };
       axiosInstance
-        .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/upgrade`, parameters, { headers })
+        .post(
+          `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/upgrade`,
+          parameters,
+          { headers },
+        )
         .then(() => {
           if (waitForUpgrade) {
             setShowWaitingConsole(true);

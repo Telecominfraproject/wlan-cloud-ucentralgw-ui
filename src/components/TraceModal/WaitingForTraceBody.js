@@ -22,7 +22,7 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/command/${encodeURIComponent(commandUuid)}`, options)
+      .get(`${endpoints.ucentralgw}/api/v1/command/${encodeURIComponent(commandUuid)}`, options)
       .then((response) => {
         if (response.data.waitingForFile === 0) {
           setWaitingForFile(false);
@@ -41,7 +41,10 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
     };
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/file/${commandUuid}?serialNumber=${serialNumber}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/file/${commandUuid}?serialNumber=${serialNumber}`,
+        options,
+      )
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');

@@ -66,7 +66,11 @@ const ActionModal = ({ show, toggleModal }) => {
     };
 
     axiosInstance
-      .post(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/reboot`, parameters, { headers })
+      .post(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/reboot`,
+        parameters,
+        { headers },
+      )
       .then(() => {
         setResult('success');
       })

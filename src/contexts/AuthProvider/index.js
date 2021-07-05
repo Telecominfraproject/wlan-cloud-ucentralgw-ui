@@ -17,11 +17,11 @@ export const AuthProvider = ({ token, apiEndpoints, children }) => {
 AuthProvider.propTypes = {
   token: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  apiEndpoints: PropTypes.instanceOf(Object)
+  apiEndpoints: PropTypes.instanceOf(Object),
 };
 
 AuthProvider.defaultProps = {
-  apiEndpoints: {}
-}
+  apiEndpoints: {},
+};
 
 export const useAuth = () => React.useContext(AuthContext);

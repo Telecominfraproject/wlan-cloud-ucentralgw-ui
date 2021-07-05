@@ -84,7 +84,12 @@ const DeviceLogs = () => {
     }
 
     axiosInstance
- .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/logs${extraParams}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
+          deviceSerialNumber,
+        )}/logs${extraParams}`,
+        options,
+      )
       .then((response) => {
         setLogs(response.data.values);
       })
