@@ -10,10 +10,10 @@ import {
   CRow,
   CCol,
   CPopover,
+  CSelect,
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
@@ -192,12 +192,6 @@ const DeviceListDisplay = ({
     },
   ];
 
-  const selectOptions = [
-    { value: '10', label: '10' },
-    { value: '25', label: '25' },
-    { value: '50', label: '50' },
-  ];
-
   const getDeviceIcon = (deviceType) => {
     if (deviceType === 'AP_Default' || deviceType === 'AP') {
       return <img src={apIcon} className={styles.icon} alt="AP" />;
@@ -284,13 +278,17 @@ const DeviceListDisplay = ({
         <CCardHeader>
           <CRow>
             <CCol />
-            <CCol xs={2}>
-              <Select
-                isClearable={false}
-                options={selectOptions}
-                defaultValue={{ value: devicesPerPage, label: devicesPerPage }}
-                onChange={(value) => updateDevicesPerPage(value.value)}
-              />
+            <CCol xs={1}>
+              <CSelect
+                custom
+                defaultValue={devicesPerPage}
+                onChange={(e) => updateDevicesPerPage(e.target.value)}
+                disabled={loading}
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </CSelect>
             </CCol>
           </CRow>
         </CCardHeader>
