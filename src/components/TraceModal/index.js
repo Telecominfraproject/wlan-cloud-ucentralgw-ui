@@ -170,18 +170,10 @@ const TraceModal = ({ show, toggleModal }) => {
                   disabled={blockFields}
                   onChange={(e) => setDuration(e.target.value)}
                 >
-                  <option value="20">
-                    20s
-                  </option>
-                  <option value="40">
-                    40s
-                  </option>
-                  <option value="60">
-                    60s
-                  </option>
-                  <option value="120">
-                    120s
-                  </option>
+                  <option value="20">20s</option>
+                  <option value="40">40s</option>
+                  <option value="60">60s</option>
+                  <option value="120">120s</option>
                 </CSelect>
               ) : (
                 <CSelect
@@ -189,18 +181,10 @@ const TraceModal = ({ show, toggleModal }) => {
                   disabled={blockFields}
                   onChange={(e) => setPackets(e.target.value)}
                 >
-                  <option value="100">
-                    100
-                  </option>
-                  <option value="250">
-                    250
-                  </option>
-                  <option value="500">
-                    500
-                  </option>
-                  <option value="1000">
-                    1000
-                  </option>
+                  <option value="100">100</option>
+                  <option value="250">250</option>
+                  <option value="500">500</option>
+                  <option value="1000">1000</option>
                 </CSelect>
               )}
             </CCol>
