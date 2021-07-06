@@ -124,9 +124,6 @@ import {
 } from '@coreui/icons';
 
 export const icons = {
-  sygnet,
-  logo,
-  logoNegative,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,
