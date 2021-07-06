@@ -25,6 +25,8 @@
 		"title": "Command History"
 	},
 	"common": {
+		"add": "Add",
+		"adding_ellipsis": "Adding...",
 		"are_you_sure": "Are you sure?",
 		"cancel": "Cancel",
 		"certificate": "Certificate",
@@ -38,6 +40,7 @@
 		"connected": "Connected",
 		"copied": "Copied!",
 		"copy_to_clipboard": "Copy to clipboard",
+		"created_by": "Created By",
 		"custom_date": "Custom Date",
 		"date": "Date",
 		"day": "day",
@@ -103,6 +106,7 @@
 		"last_configuration_change": "Last Configuration Change",
 		"last_configuration_download": "Last Configuration Download",
 		"location": "Location",
+		"note": "Note",
 		"notes": "Notes",
 		"owner": "Owner",
 		"title": "Configuration",

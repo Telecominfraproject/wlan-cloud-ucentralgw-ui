@@ -25,6 +25,8 @@
 		"title": "Historique des commandes"
 	},
 	"common": {
+		"add": "Ajouter",
+		"adding_ellipsis": "Ajouter...",
 		"are_you_sure": "Êtes-vous sûr?",
 		"cancel": "annuler",
 		"certificate": "Certificat",
@@ -38,6 +40,7 @@
 		"connected": "Connecté",
 		"copied": "Copié!",
 		"copy_to_clipboard": "Copier dans le presse-papier",
+		"created_by": "Créé par",
 		"custom_date": "Date personnalisée",
 		"date": "Rendez-vous amoureux",
 		"day": "journée",
@@ -103,6 +106,7 @@
 		"last_configuration_change": "Dernière modification de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
+		"note": "Remarque",
 		"notes": "Remarques",
 		"owner": "Propriétaire",
 		"title": "Configuration",

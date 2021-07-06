@@ -6,7 +6,6 @@ import {
   CCardBody,
   CCol,
   CLabel,
-  CInput,
   CCollapse,
   CCardFooter,
   CButton,
@@ -20,6 +19,7 @@ import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
 import { useDevice } from 'contexts/DeviceProvider';
 import CopyToClipboardButton from 'components/CopyToClipboardButton';
+import DeviceNotes from 'components/DeviceNotes';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 
@@ -133,14 +133,11 @@ const DeviceConfiguration = () => {
                 {prettyDate(device.createdTimestamp)}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
-              <CCol md="3">
-                <CLabel>{t('configuration.last_configuration_download')} : </CLabel>
-              </CCol>
-              <CCol xs="12" md="9">
-                {prettyDate(device.lastConfigurationDownload)}
-              </CCol>
-            </CRow>
+            <DeviceNotes
+              notes={device.notes}
+              refreshNotes={getDevice}
+              serialNumber={deviceSerialNumber}
+            />
             <CRow className={styles.spacedRow}>
               <CCol md="3" className={styles.topPadding}>
                 <CLabel>{t('configuration.device_password')} : </CLabel>
@@ -156,18 +153,18 @@ const DeviceConfiguration = () => {
             <CCollapse show={collapse}>
               <CRow className={styles.spacedRow}>
                 <CCol md="3">
-                  <CLabel>{t('common.manufacturer')} :</CLabel>
+                  <CLabel>{t('configuration.last_configuration_download')} : </CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  {device.manufacturer}
+                  {prettyDate(device.lastConfigurationDownload)}
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>
                 <CCol md="3">
-                  <CLabel htmlFor="text-input">{t('configuration.notes')} :</CLabel>
+                  <CLabel>{t('common.manufacturer')} :</CLabel>
                 </CCol>
                 <CCol xs="12" md="9">
-                  <CInput id="text-input" name="text-input" placeholder={device.notes} />
+                  {device.manufacturer}
                 </CCol>
               </CRow>
               <CRow className={styles.spacedRow}>

@@ -25,6 +25,8 @@
 		"title": "Gerätebefehle"
 	},
 	"common": {
+		"add": "Hinzufügen",
+		"adding_ellipsis": "Hinzufügen ...",
 		"are_you_sure": "Bist du sicher?",
 		"cancel": "Abbrechen",
 		"certificate": "Zertifikat",
@@ -38,6 +40,7 @@
 		"connected": "Verbindung wurde hergestellt",
 		"copied": "kopiert!",
 		"copy_to_clipboard": "In die Zwischenablage kopieren",
+		"created_by": "Erstellt von",
 		"custom_date": "Benutzerdefiniertes Datum",
 		"date": "Datum",
 		"day": "tag",
@@ -103,6 +106,7 @@
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
+		"note": "Hinweis",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
 		"title": "Gerätekonfiguration",
