@@ -122,9 +122,6 @@ import {
   cilXCircle,
   cilWarning,
 } from '@coreui/icons';
-import { sygnet } from './sygnet';
-import { logo } from './logo';
-import { logoNegative } from './logo-negative';
 
 export const icons = {
   sygnet,
