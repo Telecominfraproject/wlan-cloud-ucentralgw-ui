@@ -297,6 +297,7 @@ const DeviceListDisplay = ({
             items={devices ?? []}
             fields={columns}
             hover
+            border
             loading={loading}
             scopedSlots={{
               serialNumber: (item) => (

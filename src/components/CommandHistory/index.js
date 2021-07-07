@@ -321,9 +321,7 @@ const DeviceCommands = () => {
                   items={commands ?? []}
                   fields={columns}
                   className={styles.whiteIcon}
-                  columnFilter
-                  sorter
-                  sorterValue={{ column: 'submitted', desc: 'true' }}
+                  sorterValue={{ column: 'created', desc: 'true' }}
                   scopedSlots={{
                     completed: (item) => (
                       <td>

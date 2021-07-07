@@ -123,7 +123,10 @@ import {
   cilWarning,
 } from '@coreui/icons';
 
+import { logo } from './CoreuiLogo';
+
 export const icons = {
+  logo,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,
