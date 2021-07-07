@@ -25,6 +25,8 @@
 		"title": "Histórico de Comandos"
 	},
 	"common": {
+		"add": "Adicionar",
+		"adding_ellipsis": "Adicionando ...",
 		"are_you_sure": "Você tem certeza?",
 		"cancel": "Cancelar",
 		"certificate": "Certificado",
@@ -38,6 +40,7 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar para área de transferência",
+		"created_by": "Criado Por",
 		"custom_date": "Data personalizada",
 		"date": "Encontro",
 		"day": "dia",
@@ -72,6 +75,7 @@
 		"na": "N / D",
 		"need_date": "Você precisa de um encontro ...",
 		"no": "Não",
+		"no_items": "Nenhum item",
 		"not_connected": "Não conectado",
 		"off": "Fora",
 		"on": "em",
@@ -103,6 +107,7 @@
 		"last_configuration_change": "Última Mudança de Configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
+		"note": "Nota",
 		"notes": "notas",
 		"owner": "Proprietário",
 		"title": "Configuração",
