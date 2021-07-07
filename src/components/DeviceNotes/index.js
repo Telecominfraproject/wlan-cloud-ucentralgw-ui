@@ -4,6 +4,7 @@ import { CDataTable, CRow, CCol, CLabel, CInput } from '@coreui/react';
 import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
+import { prettyDate } from 'utils/helper';
 import LoadingButton from 'components/LoadingButton';
 
 import styles from './index.module.scss';
@@ -19,7 +20,7 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
 
     const parameters = {
       serialNumber,
-      notes: currentNote,
+      notes: [{ note: currentNote }],
     };
 
     const headers = {
@@ -34,6 +35,7 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
         { headers },
       )
       .then(() => {
+        setCurrentNote('');
         refreshNotes();
       })
       .catch(() => {})
@@ -42,9 +44,9 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
       });
   };
   const columns = [
-    { key: 'created', label: t('common.date'), _style: { width: '20%' } },
+    { key: 'created', label: t('common.date'), _style: { width: '30%' } },
     { key: 'createdBy', label: t('common.created_by'), _style: { width: '20%' } },
-    { key: 'note', label: t('configuration.note'), _style: { width: '60%' } },
+    { key: 'note', label: t('configuration.note'), _style: { width: '50%' } },
   ];
 
   return (
@@ -53,7 +55,7 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
         <CCol md="3">
           <CLabel>{t('configuration.notes')} :</CLabel>
         </CCol>
-        <CCol xs="10" md="8">
+        <CCol xs="9" md="7">
           <CInput
             id="notes-input"
             name="text-input"
@@ -67,7 +69,6 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
             isLoadingLabel={t('common.adding_ellipsis')}
             isLoading={loading}
             action={saveNote}
-            block
             disabled={loading || currentNote === ''}
           />
         </CCol>
@@ -77,10 +78,22 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
         <CCol xs="12" md="9">
           <div className={['overflow-auto', styles.scrollableBox].join(' ')}>
             <CDataTable
+              striped
+              responsive
+              border
               loading={loading}
               fields={columns}
               className={styles.table}
-              items={!notes || []}
+              items={notes || []}
+              noItemsView={{ noItems: t('common.no_items') }}
+              sorterValue={{ column: 'created', desc: 'true' }}
+              scopedSlots={{
+                created: (item) => (
+                  <td>
+                    {item.created && item.created !== 0 ? prettyDate(item.created) : t('common.na')}
+                  </td>
+                ),
+              }}
             />
           </div>
         </CCol>
@@ -91,7 +104,7 @@ const DeviceNotes = ({ serialNumber, notes, refreshNotes }) => {
 
 DeviceNotes.propTypes = {
   serialNumber: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   refreshNotes: PropTypes.func.isRequired,
 };
 

@@ -133,11 +133,6 @@ const DeviceConfiguration = () => {
                 {prettyDate(device.createdTimestamp)}
               </CCol>
             </CRow>
-            <DeviceNotes
-              notes={device.notes}
-              refreshNotes={getDevice}
-              serialNumber={deviceSerialNumber}
-            />
             <CRow className={styles.spacedRow}>
               <CCol md="3" className={styles.topPadding}>
                 <CLabel>{t('configuration.device_password')} : </CLabel>
@@ -150,6 +145,11 @@ const DeviceConfiguration = () => {
                 />
               </CCol>
             </CRow>
+            <DeviceNotes
+              notes={device.notes}
+              refreshNotes={getDevice}
+              serialNumber={deviceSerialNumber}
+            />
             <CCollapse show={collapse}>
               <CRow className={styles.spacedRow}>
                 <CCol md="3">
