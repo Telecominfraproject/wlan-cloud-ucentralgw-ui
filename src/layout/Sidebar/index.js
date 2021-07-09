@@ -12,7 +12,6 @@ import {
 } from '@coreui/react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import logoBar from 'assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 import styles from './index.module.scss';
 
 const TheSidebar = ({ showSidebar, setShowSidebar }) => {
@@ -32,12 +31,12 @@ const TheSidebar = ({ showSidebar, setShowSidebar }) => {
       <CSidebarBrand className="d-md-down-none" to="/devices">
         <img
           className={[styles.sidebarImgFull, 'c-sidebar-brand-full'].join(' ')}
-          src={logoBar}
+          src="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
           alt="OpenWifi"
         />
         <img
           className={[styles.sidebarImgMinimized, 'c-sidebar-brand-minimized'].join(' ')}
-          src={logoBar}
+          src="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
           alt="OpenWifi"
         />
       </CSidebarBrand>

@@ -18,13 +18,14 @@
     "no-return-assign": ["off"],
     "react/jsx-props-no-spreading": ["off"],
     "react/destructuring-assignment": ["off"],
-    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+    "react/jsx-one-expression-per-line": "off"
   },
   "settings": {
     "import/resolver": {
       "node": {
         "paths": ["src"]
       }
-    },
-  },
+    }
+  }
 }

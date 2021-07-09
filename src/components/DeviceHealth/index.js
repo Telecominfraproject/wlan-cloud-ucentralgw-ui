@@ -217,11 +217,13 @@ const DeviceHealth = () => {
             </div>
             <CRow className={styles.spacedRow}>
               <CCol>
-                {t('common.from')}:
+                {t('common.from')}
+                :
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
               </CCol>
               <CCol>
-                {t('common.to')}:
+                {t('common.to')}
+                :
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>

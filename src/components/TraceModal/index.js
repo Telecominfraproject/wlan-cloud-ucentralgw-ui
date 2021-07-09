@@ -166,6 +166,7 @@ const TraceModal = ({ show, toggleModal }) => {
             <CCol xs="12" md="8">
               {usingDuration ? (
                 <CSelect
+                  custom
                   defaultValue={duration}
                   disabled={blockFields}
                   onChange={(e) => setDuration(e.target.value)}
@@ -177,6 +178,7 @@ const TraceModal = ({ show, toggleModal }) => {
                 </CSelect>
               ) : (
                 <CSelect
+                  custom
                   defaultValue={packets}
                   disabled={blockFields}
                   onChange={(e) => setPackets(e.target.value)}

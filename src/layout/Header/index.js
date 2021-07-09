@@ -17,6 +17,7 @@ import { logout } from 'utils/authHelper';
 import routes from 'routes';
 import LanguageSwitcher from 'components/LanguageSwitcher';
 import { useAuth } from 'contexts/AuthProvider';
+import { LANGUAGE_OPTIONS } from 'constants/index.js';
 
 const TheHeader = ({ showSidebar, setShowSidebar }) => {
   const { t, i18n } = useTranslation();
@@ -48,7 +49,7 @@ const TheHeader = ({ showSidebar, setShowSidebar }) => {
       <CHeaderNav className="d-md-down-none mr-auto" />
 
       <CHeaderNav className="px-3">
-        <LanguageSwitcher />
+        <LanguageSwitcher i18n={i18n} options={LANGUAGE_OPTIONS} />
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
