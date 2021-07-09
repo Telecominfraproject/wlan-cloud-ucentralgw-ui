@@ -19,7 +19,8 @@
     "react/jsx-props-no-spreading": ["off"],
     "react/destructuring-assignment": ["off"],
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off"
   },
   "settings": {
     "import/resolver": {
