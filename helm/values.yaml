@@ -71,5 +71,5 @@ affinity: {}
 
 # Application
 public_env_variables:
-  DEFAULT_GATEWAY_URL: https://ucentral.dpaas.arilia.com:16001
-  ALLOW_GATEWAY_CHANGE: false
+  DEFAULT_UCENTRALSEC_URL: https://ucentral.dpaas.arilia.com:16001
+  ALLOW_UCENTRALSEC_CHANGE: false
