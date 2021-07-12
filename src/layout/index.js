@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { logout } from 'utils/authHelper';
 import routes from 'routes';
 import { useAuth } from 'contexts/AuthProvider';
-import { LANGUAGE_OPTIONS } from 'constants/index.js';
-import Header from './Header';
+import { Header } from 'ucentral-libs';
 import Sidebar from './Sidebar';
 import TheContent from './Content';
 import TheFooter from './Footer';
@@ -32,7 +31,6 @@ const TheLayout = () => {
           logout={logout}
           authToken={currentToken}
           endpoints={endpoints}
-          options={LANGUAGE_OPTIONS}
         />
         <div className="c-body">
           <TheContent />

@@ -2,29 +2,27 @@
 /* eslint-disable prefer-template */
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { merge } = require('webpack-merge');
+const path = require('path');
 const paths = require('./paths');
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
-  // Set the mode to development or production
   mode: 'development',
 
-  // Control how source maps are generated
+  target: 'web',
+
   devtool: 'inline-source-map',
 
-  // Spin up a server for quick development
   devServer: {
     historyApiFallback: true,
     contentBase: paths.build,
-    open: false,
-    compress: true,
+    open: true,
+    compress: false,
     hot: true,
     port: 3000,
   },
-
   module: {
     rules: [
-      // ... other rules
       {
         test: /\.[js]sx?$/,
         exclude: /node_modules/,
@@ -32,20 +30,24 @@ module.exports = merge(common, {
           {
             loader: require.resolve('babel-loader'),
             options: {
-              // ... other options
-              plugins: [
-                // ... other plugins
-                require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
+              plugins: [require.resolve('react-refresh/babel')],
             },
           },
-          'eslint-loader',
         ],
       },
     ],
   },
-  plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin(),
-  ].filter(Boolean),
+  resolve: {
+    modules: [
+      'node_modules',
+      'src',
+      path.resolve(__dirname, '../', 'node_modules', 'ucentral-libs', 'src'),
+    ],
+    alias: {
+      react: path.resolve(__dirname, '../', 'node_modules', 'react'),
+      'react-router-dom': path.resolve('./node_modules/react-router-dom'),
+      'ucentral-libs': path.resolve(__dirname, '../', 'node_modules', 'ucentral-libs', 'src'),
+    },
+  },
+  plugins: [new ReactRefreshWebpackPlugin()],
 });

@@ -17,13 +17,11 @@ import {
   CAlert,
   CInvalidFeedback,
 } from '@coreui/react';
-
 import CIcon from '@coreui/icons-react';
 import { useAuth } from 'contexts/AuthProvider';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
-import LanguageSwitcher from 'components/LanguageSwitcher';
-import { LANGUAGE_OPTIONS } from 'constants/index.js';
+import { LanguageSwitcher } from 'ucentral-libs';
 import styles from './index.module.scss';
 
 const Login = () => {
@@ -231,7 +229,7 @@ const Login = () => {
                       </CCol>
                       <CCol xs="6">
                         <div className={styles.languageSwitcher}>
-                          <LanguageSwitcher i18n={i18n} options={LANGUAGE_OPTIONS} />
+                          <LanguageSwitcher i18n={i18n} />
                         </div>
                       </CCol>
                     </CRow>
