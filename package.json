@@ -22,7 +22,7 @@
     "react-scripts": "^4.0.3",
     "react-widgets": "^5.1.1",
     "sass": "^1.35.1",
-    "ucentral-libs": "^0.8.4",
+    "ucentral-libs": "^0.8.7",
     "uuid": "^8.3.2"
   },
   "main": "index.js",
