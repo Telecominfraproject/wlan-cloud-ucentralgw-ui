@@ -41,7 +41,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} />
         </div>
-        <Footer t={t} version="0.9.15" />
+        <Footer t={t} version="0.9.16" />
       </div>
     </div>
   );
