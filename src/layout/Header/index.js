@@ -15,7 +15,7 @@ import CIcon from '@coreui/icons-react';
 import { cilAccountLogout } from '@coreui/icons';
 import { logout } from 'utils/authHelper';
 import routes from 'routes';
-import LanguageSwitcher from 'components/LanguageSwitcher';
+import { LanguageSwitcher } from 'ucentral-libs';
 import { useAuth } from 'contexts/AuthProvider';
 
 const TheHeader = ({ showSidebar, setShowSidebar }) => {
@@ -48,7 +48,7 @@ const TheHeader = ({ showSidebar, setShowSidebar }) => {
       <CHeaderNav className="d-md-down-none mr-auto" />
 
       <CHeaderNav className="px-3">
-        <LanguageSwitcher />
+        <LanguageSwitcher i18n={i18n} />
       </CHeaderNav>
 
       <CHeaderNav className="px-3">

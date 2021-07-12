@@ -1,4 +1,4 @@
 /src/assets
-build
-node_modules
+/build
+/node_modules
 .github

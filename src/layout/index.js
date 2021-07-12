@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { logout } from 'utils/authHelper';
+import routes from 'routes';
+import { useAuth } from 'contexts/AuthProvider';
+import { Header } from 'ucentral-libs';
+import Sidebar from './Sidebar';
 import TheContent from './Content';
-import TheSidebar from './Sidebar';
 import TheFooter from './Footer';
-import TheHeader from './Header';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
+  const { endpoints, currentToken } = useAuth();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="c-app c-default-layout">
-      <TheSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <Sidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        t={t}
+        logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
+      />
       <div className="c-wrapper">
-        <TheHeader showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+        <Header
+          showSidebar={showSidebar}
+          setShowSidebar={setShowSidebar}
+          routes={routes}
+          t={t}
+          i18n={i18n}
+          logout={logout}
+          authToken={currentToken}
+          endpoints={endpoints}
+        />
         <div className="c-body">
           <TheContent />
         </div>

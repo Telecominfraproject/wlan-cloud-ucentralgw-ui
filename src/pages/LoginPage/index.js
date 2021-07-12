@@ -17,17 +17,15 @@ import {
   CAlert,
   CInvalidFeedback,
 } from '@coreui/react';
-
 import CIcon from '@coreui/icons-react';
 import { useAuth } from 'contexts/AuthProvider';
 import { cilUser, cilLockLocked, cilLink } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
-import logo from 'assets/OpenWiFi_LogoLockup_DarkGreyColour.svg';
-import LanguageSwitcher from 'components/LanguageSwitcher';
+import { LanguageSwitcher } from 'ucentral-libs';
 import styles from './index.module.scss';
 
 const Login = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { setCurrentToken, setEndpoints } = useAuth();
   const [userId, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -141,7 +139,7 @@ const Login = () => {
           <CCol md="8">
             <img
               className={[styles.logo, 'c-sidebar-brand-full'].join(' ')}
-              src={logo}
+              src="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
               alt="OpenWifi"
             />
             <CCardGroup>
@@ -231,7 +229,7 @@ const Login = () => {
                       </CCol>
                       <CCol xs="6">
                         <div className={styles.languageSwitcher}>
-                          <LanguageSwitcher />
+                          <LanguageSwitcher i18n={i18n} />
                         </div>
                       </CCol>
                     </CRow>

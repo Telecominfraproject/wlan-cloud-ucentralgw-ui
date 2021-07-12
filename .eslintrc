@@ -1,16 +1,11 @@
 {
-    "parser": "babel-eslint",
-    "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": false,
-    "codeFrame": false
-},
-"extends": ["airbnb", "prettier"],
-"env": {
-    "browser": true,
-    "jest": true
-},
-"rules": {
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "env": {
+      "browser": true,
+      "jest": true
+  },
+  "rules": {
     "max-len": ["error", {"code": 150}],
     "prefer-promise-reject-errors": ["off"],
     "react/jsx-filename-extension": ["off"],
@@ -18,13 +13,22 @@
     "no-return-assign": ["off"],
     "react/jsx-props-no-spreading": ["off"],
     "react/destructuring-assignment": ["off"],
-    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-curly-newline": "off"
   },
   "settings": {
     "import/resolver": {
       "node": {
         "paths": ["src"]
       }
-    },
+    }
   },
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module",
+      "allowImportExportEverywhere": false,
+      "codeFrame": false
+    }
 }

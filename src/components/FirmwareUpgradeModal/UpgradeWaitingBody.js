@@ -84,11 +84,11 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
       <div className="consoleBox">
         {labelsToShow.map((label) => (
           <p key={createUuid()}>
-            {new Date().toString()}: {label}
+            {new Date().toString()}:{label}
           </p>
         ))}
         <p>
-          {t('common.seconds_elapsed')}: {secondsElapsed}
+          {t('common.seconds_elapsed')}:{secondsElapsed}
         </p>
       </div>
     </CModalBody>
