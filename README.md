@@ -16,7 +16,7 @@ cd wlan-cloud-ucentralgw-ui
 npm install
 npm start
 ```
-Here are the instructions if you also want to work on the [uCentral UI Library](https://github.com/Telecominfraproject/wlan-cloud-ucentral-ui-libs).
+Here are the instructions if you want to run the solution on your machine for development purposes while also doing development on the [uCentral UI Library](https://github.com/Telecominfraproject/wlan-cloud-ucentral-ui-libs).
 ```
 git clone https://github.com/Telecominfraproject/wlan-cloud-ucentralgw-ui
 git clone https://github.com/Telecominfraproject/wlan-cloud-ucentral-ui-libs
@@ -26,7 +26,7 @@ npm start
 ```
 
 ### Production
-Here are the instructions to build the production veresion of the application. You need to run this in the root folder of the project and also have npm installed on your machine.
+Here are the instructions to build the production version of the application. You need to run this in the root folder of the project and also have npm installed on your machine.
 ```
 git clone https://github.com/Telecominfraproject/wlan-cloud-ucentralgw-ui
 cd wlan-cloud-ucentralgw-ui
