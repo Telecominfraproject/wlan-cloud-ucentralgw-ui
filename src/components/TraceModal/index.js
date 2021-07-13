@@ -17,9 +17,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import 'react-widgets/styles.css';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import getDeviceConnection from 'utils/deviceHelper';
@@ -30,6 +30,8 @@ import styles from './index.module.scss';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
+  const { currentToken, endpoints } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [blockFields, setBlockFields] = useState(false);
@@ -43,11 +45,9 @@ const TraceModal = ({ show, toggleModal }) => {
   const [waitingForTrace, setWaitingForTrace] = useState(false);
   const [commandUuid, setCommandUuid] = useState(null);
 
-  const selectedDeviceId = useSelector((state) => state.selectedDeviceId);
-
   const toggleWaitForTrace = () => {
     setWaitForTrace(!waitForTrace);
-  }
+  };
 
   useEffect(() => {
     setWaitForTrace(false);
@@ -65,10 +65,8 @@ const TraceModal = ({ show, toggleModal }) => {
     setHadFailure(false);
     setHadSuccess(false);
 
-    const token = getToken();
-
     const parameters = {
-      serialNumber: selectedDeviceId,
+      serialNumber: deviceSerialNumber,
       when: 0,
       network: chosenInterface,
     };
@@ -81,14 +79,18 @@ const TraceModal = ({ show, toggleModal }) => {
 
     const headers = {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${currentToken}`,
     };
 
     axiosInstance
-      .post(`/device/${encodeURIComponent(selectedDeviceId)}/trace`, parameters, { headers })
+      .post(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/trace`,
+        parameters,
+        { headers },
+      )
       .then((response) => {
         setHadSuccess(true);
-        if(waitForTrace) {
+        if (waitForTrace) {
           setCommandUuid(response.data.UUID);
           setWaitingForTrace(true);
         }
@@ -105,26 +107,31 @@ const TraceModal = ({ show, toggleModal }) => {
   };
 
   useEffect(() => {
-    if (selectedDeviceId !== null && show) {
+    if (deviceSerialNumber !== null && show) {
       const asyncGet = async () => {
-        const isConnected = await getDeviceConnection(selectedDeviceId);
+        const isConnected = await getDeviceConnection(
+          deviceSerialNumber,
+          currentToken,
+          endpoints.ucentralgw,
+        );
         setIsDeviceConnected(isConnected);
       };
       asyncGet();
     }
   }, [show]);
 
-
   const getBody = () => {
-    if(waitingForTrace){
+    if (waitingForTrace) {
       return (
-        <WaitingForTraceBody toggle={toggleModal} serialNumber={selectedDeviceId} commandUuid={commandUuid}/>
+        <WaitingForTraceBody
+          toggle={toggleModal}
+          serialNumber={deviceSerialNumber}
+          commandUuid={commandUuid}
+        />
       );
     }
-    if(hadSuccess){
-      return(
-        <SuccessfulActionModalBody toggleModal={toggleModal} />
-      );
+    if (hadSuccess) {
+      return <SuccessfulActionModalBody toggleModal={toggleModal} />;
     }
     return (
       <div>
@@ -158,34 +165,28 @@ const TraceModal = ({ show, toggleModal }) => {
             </CCol>
             <CCol xs="12" md="8">
               {usingDuration ? (
-                <CSelect defaultValue="duration" disabled={blockFields}>
-                  <option value="20" onClick={() => setDuration(20)}>
-                    20s
-                  </option>
-                  <option value="40" onClick={() => setDuration(40)}>
-                    40s
-                  </option>
-                  <option value="60" onClick={() => setDuration(60)}>
-                    60s
-                  </option>
-                  <option value="120" onClick={() => setDuration(120)}>
-                    120s
-                  </option>
+                <CSelect
+                  custom
+                  defaultValue={duration}
+                  disabled={blockFields}
+                  onChange={(e) => setDuration(e.target.value)}
+                >
+                  <option value="20">20s</option>
+                  <option value="40">40s</option>
+                  <option value="60">60s</option>
+                  <option value="120">120s</option>
                 </CSelect>
               ) : (
-                <CSelect defaultValue={packets} disabled={blockFields}>
-                  <option value="100" onClick={() => setPackets(100)}>
-                    100
-                  </option>
-                  <option value="250" onClick={() => setPackets(250)}>
-                    250
-                  </option>
-                  <option value="500" onClick={() => setPackets(500)}>
-                    500
-                  </option>
-                  <option value="1000" onClick={() => setPackets(1000)}>
-                    1000
-                  </option>
+                <CSelect
+                  custom
+                  defaultValue={packets}
+                  disabled={blockFields}
+                  onChange={(e) => setPackets(e.target.value)}
+                >
+                  <option value="100">100</option>
+                  <option value="250">250</option>
+                  <option value="500">500</option>
+                  <option value="1000">1000</option>
                 </CSelect>
               )}
             </CCol>
@@ -221,9 +222,7 @@ const TraceModal = ({ show, toggleModal }) => {
           </CRow>
           <CRow className={styles.spacedRow} hidden={!isDeviceConnected}>
             <CCol md="8">
-              <p className={styles.spacedText}>
-                {t('trace.wait_for_file')}
-              </p>
+              <p className={styles.spacedText}>{t('trace.wait_for_file')}</p>
             </CCol>
             <CCol>
               <CSwitch
@@ -257,7 +256,7 @@ const TraceModal = ({ show, toggleModal }) => {
         </CModalFooter>
       </div>
     );
-  }
+  };
 
   return (
     <CModal show={show} onClose={toggleModal}>

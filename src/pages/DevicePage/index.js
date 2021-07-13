@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
@@ -7,40 +6,35 @@ import DeviceConfiguration from 'components/DeviceConfiguration';
 import CommandHistory from 'components/CommandHistory';
 import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
-import DeviceActionCard from '../../components/DeviceActionCard';
+import DeviceActionCard from 'components/DeviceActionCard';
+import DeviceStatusCard from 'components/DeviceStatusCard';
+import { DeviceProvider } from 'contexts/DeviceProvider';
 
 const DevicePage = () => {
-  const dispatch = useDispatch();
-
   const { deviceId } = useParams();
-  const previouslySelectedDeviceId = useSelector((state) => state.selectedDeviceId);
-
-  useEffect(() => {
-    if (deviceId && deviceId !== previouslySelectedDeviceId)
-      dispatch({ type: 'set', selectedDeviceId: deviceId });
-  }, [deviceId]);
 
   return (
-    <>
-      <div className="App">
+    <div className="App">
+      <DeviceProvider serialNumber={deviceId}>
         <CRow>
           <CCol xs="12" sm="6">
-            <DeviceConfiguration selectedDeviceId={deviceId} />
+            <DeviceStatusCard />
+            <DeviceConfiguration />
           </CCol>
           <CCol xs="12" sm="6">
-            <DeviceLogs selectedDeviceId={deviceId} />
-            <DeviceHealth selectedDeviceId={deviceId} />
-            <DeviceActionCard selectedDeviceId={deviceId} />
+            <DeviceLogs />
+            <DeviceHealth />
+            <DeviceActionCard />
           </CCol>
         </CRow>
         <CRow>
           <CCol>
-            <DeviceStatisticsCard selectedDeviceId={deviceId} />
-            <CommandHistory selectedDeviceId={deviceId} />
+            <DeviceStatisticsCard />
+            <CommandHistory />
           </CCol>
         </CRow>
-      </div>
-    </>
+      </DeviceProvider>
+    </div>
   );
 };
 

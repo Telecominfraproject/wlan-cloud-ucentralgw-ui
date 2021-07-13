@@ -14,7 +14,9 @@
 	"blink": {
 		"blink": "Parpadeo",
 		"device_leds": "LED de dispositivo",
+		"execute_now": "¿Le gustaría establecer este patrón ahora?",
 		"pattern": "Elija el patrón que le gustaría usar:",
+		"set_leds": "Establecer LED",
 		"when_blink_leds": "¿Cuándo desea que los LED del dispositivo parpadeen?"
 	},
 	"commands": {
@@ -23,6 +25,8 @@
 		"title": "Historial de Comandos"
 	},
 	"common": {
+		"add": "Añadir",
+		"adding_ellipsis": "Añadiendo ...",
 		"are_you_sure": "¿Estás seguro?",
 		"cancel": "Cancelar",
 		"certificate": "Certificado",
@@ -36,7 +40,11 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar al portapapeles",
+		"created_by": "Creado por",
+		"custom_date": "Fecha personalizada",
 		"date": "Fecha",
+		"day": "día",
+		"days": "días",
 		"delete": "Borrar",
 		"details": "Detalles",
 		"device_list": "Listado de dispositivos",
@@ -52,6 +60,8 @@
 		"exit": "salida",
 		"firmware": "Firmware",
 		"from": "Desde",
+		"hour": "hora",
+		"hours": "horas",
 		"id": "Carné de identidad",
 		"ip_address": "Dirección IP",
 		"later_tonight": "Más tarde esta noche",
@@ -60,9 +70,12 @@
 		"logout": "Cerrar sesión",
 		"mac": "Dirección MAC",
 		"manufacturer": "Fabricante",
+		"minute": "minuto",
+		"minutes": "minutos",
 		"na": "N / A",
 		"need_date": "Necesitas una cita ...",
 		"no": "No",
+		"no_items": "No hay articulos",
 		"not_connected": "No conectado",
 		"off": "Apagado",
 		"on": "en",
@@ -73,6 +86,8 @@
 		"save": "Salvar",
 		"saving": "Ahorro...",
 		"schedule": "Programar",
+		"second": "segundo",
+		"seconds": "segundos",
 		"seconds_elapsed": "Segundos transcurridos",
 		"serial_number": "Número de serie",
 		"start": "comienzo",
@@ -92,6 +107,7 @@
 		"last_configuration_change": "Último cambio de configuración",
 		"last_configuration_download": "Descarga de la última configuración",
 		"location": "Ubicación",
+		"note": "Nota",
 		"notes": "Notas",
 		"owner": "Propietario",
 		"title": "Configuración",
@@ -140,14 +156,16 @@
 		"login": "Iniciar sesión",
 		"login_error": "Error de inicio de sesión, confirme que su nombre de usuario, contraseña y URL de puerta de enlace son válidos",
 		"password": "Contraseña",
-		"please_enter_gateway": "Ingrese una URL de puerta de enlace",
+		"please_enter_gateway": "Ingrese una URL de uCentralSec",
 		"please_enter_password": "Por favor, introduzca su contraseña",
 		"please_enter_username": "Por favor, ingrese su nombre de usuario",
 		"sign_in_to_account": "Iniciar sesión en su cuenta",
+		"url": "URL de uCentralSec",
 		"username": "Nombre de usuario"
 	},
 	"reboot": {
 		"directions": "¿Cuándo le gustaría reiniciar este dispositivo?",
+		"now": "¿Le gustaría reiniciar este dispositivo ahora?",
 		"title": "Reiniciar"
 	},
 	"scan": {
@@ -167,10 +185,23 @@
 		"show_latest": "Mostrar las últimas estadísticas JSON",
 		"title": "estadística"
 	},
+	"status": {
+		"connection_status": "Estado de conexión",
+		"error": "Los datos de estado no están disponibles",
+		"last_contact": "Último contacto",
+		"load_averages": "Carga (promedio de 1/5/15 minutos)",
+		"localtime": "Hora local",
+		"memory": "Memoria usada",
+		"percentage_free": "{{percentage}}% de {{total}} gratis",
+		"percentage_used": "{{percentage}}% de {{total}} utilizado",
+		"title": "#{{serialNumber}} Estado",
+		"uptime": "Tiempo de actividad",
+		"used_total_memory": "{{used}} usado / {{total}} total"
+	},
 	"trace": {
 		"choose_network": "Elija la red",
 		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
-		"download_trace": "Haga click aquí para descargar",
+		"download_trace": "Descargar archivo de seguimiento",
 		"packets": "Paquetes",
 		"title": "Rastro",
 		"trace": "Rastro",

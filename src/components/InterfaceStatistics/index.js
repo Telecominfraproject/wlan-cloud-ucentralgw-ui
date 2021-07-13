@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import {
   CDropdown,
   CDropdownToggle,
@@ -19,7 +18,7 @@ import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsModal from './LatestStatisticsModal';
 import styles from './index.module.scss';
 
-const DeviceStatisticsCard = ({ selectedDeviceId }) => {
+const DeviceStatisticsCard = () => {
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
 
@@ -37,7 +36,9 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
         <CCardHeader>
           <CRow>
             <CCol>
-            <div className={["text-value-lg", styles.cardTitle].join(" ")}>{t('statistics.title')}</div>
+              <div className={['text-value-lg', styles.cardTitle].join(' ')}>
+                {t('statistics.title')}
+              </div>
             </CCol>
             <CCol className={styles.cardOptions}>
               <CDropdown className="m-1 btn-group">
@@ -55,20 +56,12 @@ const DeviceStatisticsCard = ({ selectedDeviceId }) => {
           </CRow>
         </CCardHeader>
         <CCardBody className={styles.statsBody}>
-          <StatisticsChartList selectedDeviceId={selectedDeviceId} />
+          <StatisticsChartList />
         </CCardBody>
       </CCard>
-      <LatestStatisticsModal
-        show={showLatestModal}
-        toggle={toggleLatestModal}
-        serialNumber={selectedDeviceId}
-      />
+      <LatestStatisticsModal show={showLatestModal} toggle={toggleLatestModal} />
     </div>
   );
-};
-
-DeviceStatisticsCard.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceStatisticsCard;

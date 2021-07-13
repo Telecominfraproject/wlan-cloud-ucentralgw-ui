@@ -14,7 +14,9 @@
 	"blink": {
 		"blink": "Blink",
 		"device_leds": "Device LEDs",
-		"pattern": "Choose the pattern you would like to use: ",
+		"execute_now": "Would you like to set this pattern now?",
+		"pattern": "LEDs pattern: ",
+		"set_leds": "Set LEDs",
 		"when_blink_leds": "When would you like to make the device LEDs blink?"
 	},
 	"commands": {
@@ -23,6 +25,8 @@
 		"title": "Command History"
 	},
 	"common": {
+		"add": "Add",
+		"adding_ellipsis": "Adding...",
 		"are_you_sure": "Are you sure?",
 		"cancel": "Cancel",
 		"certificate": "Certificate",
@@ -36,7 +40,11 @@
 		"connected": "Connected",
 		"copied": "Copied!",
 		"copy_to_clipboard": "Copy to clipboard",
+		"created_by": "Created By",
+		"custom_date": "Custom Date",
 		"date": "Date",
+		"day": "day",
+		"days": "days",
 		"delete": "Delete",
 		"details": "Details",
 		"device_list": "List of Devices",
@@ -52,6 +60,8 @@
 		"exit": "Exit",
 		"firmware": "Firmware",
 		"from": "From",
+		"hour": "hour",
+		"hours": "hours",
 		"id": "Id",
 		"ip_address": "Ip Address",
 		"later_tonight": "Later tonight",
@@ -60,9 +70,12 @@
 		"logout": "Logout",
 		"mac": "MAC Address",
 		"manufacturer": "Manufacturer",
+		"minute": "minute",
+		"minutes": "minutes",
 		"na": "N/A",
 		"need_date": "You need a date...",
 		"no": "No",
+		"no_items": "No Items",
 		"not_connected": "Not Connected",
 		"off": "Off",
 		"on": "On",
@@ -73,6 +86,8 @@
 		"save": "Save",
 		"saving": "Saving... ",
 		"schedule": "Schedule",
+		"second": "second",
+		"seconds": "seconds",
 		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
 		"start": "Start",
@@ -92,6 +107,7 @@
 		"last_configuration_change": "Last Configuration Change",
 		"last_configuration_download": "Last Configuration Download",
 		"location": "Location",
+		"note": "Note",
 		"notes": "Notes",
 		"owner": "Owner",
 		"title": "Configuration",
@@ -140,14 +156,16 @@
 		"login": "Login",
 		"login_error": "Login error, confirm that your username, password and gateway url are valid",
 		"password": "Password",
-		"please_enter_gateway": "Please enter a gateway URL",
+		"please_enter_gateway": "Please enter a uCentralSec URL",
 		"please_enter_password": "Please enter your password",
 		"please_enter_username": "Please enter your username",
 		"sign_in_to_account": "Sign in to your account",
+		"url": "uCentralSec URL",
 		"username": "Username"
 	},
 	"reboot": {
 		"directions": "When would you like to reboot this device?",
+		"now": "Would you like to reboot this device now?",
 		"title": "Reboot"
 	},
 	"scan": {
@@ -167,10 +185,23 @@
 		"show_latest": "Show latest statistics JSON",
 		"title": "Statistics"
 	},
+	"status": {
+		"connection_status": "Connection Status",
+		"error": "Status data is unavailable",
+		"last_contact": "Last Contact",
+		"load_averages": "Load ( 1 / 5 / 15 minute average)",
+		"localtime": "Localtime",
+		"memory": "Memory Used",
+		"percentage_free": "{{percentage}}% of {{total}} free",
+		"percentage_used": "{{percentage}}% of {{total}} used",
+		"title": "#{{serialNumber}} Status",
+		"uptime": "Uptime",
+		"used_total_memory": "{{used}} used / {{total}} total "
+	},
 	"trace": {
 		"choose_network": "Choose network",
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
-		"download_trace": "Click here to download",
+		"download_trace": "Download Trace File",
 		"packets": "Packets",
 		"title": "Trace",
 		"trace": "Trace",

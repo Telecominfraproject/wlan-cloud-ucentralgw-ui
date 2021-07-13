@@ -14,17 +14,19 @@ import {
 import CIcon from '@coreui/icons-react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
-import PropTypes from 'prop-types';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { getToken } from 'utils/authHelper';
+import { useAuth } from 'contexts/AuthProvider';
+import { useDevice } from 'contexts/DeviceProvider';
 import eventBus from 'utils/eventBus';
 import LoadingButton from 'components/LoadingButton';
 import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
-const DeviceLogs = ({ selectedDeviceId }) => {
+const DeviceLogs = () => {
   const { t } = useTranslation();
+  const { currentToken, endpoints } = useAuth();
+  const { deviceSerialNumber } = useDevice();
   const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -65,7 +67,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     const options = {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${currentToken}`,
       },
       params: {
         limit: logLimit,
@@ -82,7 +84,12 @@ const DeviceLogs = ({ selectedDeviceId }) => {
     }
 
     axiosInstance
-      .get(`/device/${encodeURIComponent(selectedDeviceId)}/logs${extraParams}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
+          deviceSerialNumber,
+        )}/logs${extraParams}`,
+        options,
+      )
       .then((response) => {
         setLogs(response.data.values);
       })
@@ -125,7 +132,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   ];
 
   useEffect(() => {
-    if (selectedDeviceId) {
+    if (deviceSerialNumber) {
       setLogLimit(25);
       setLoadingMore(false);
       setShowLoadingMore(true);
@@ -133,7 +140,7 @@ const DeviceLogs = ({ selectedDeviceId }) => {
       setEnd('');
       getLogs();
     }
-  }, [selectedDeviceId]);
+  }, [deviceSerialNumber]);
 
   useEffect(() => {
     if (logLimit !== 25) {
@@ -150,12 +157,12 @@ const DeviceLogs = ({ selectedDeviceId }) => {
   }, [logs]);
 
   useEffect(() => {
-    if (selectedDeviceId && start !== '' && end !== '') {
+    if (deviceSerialNumber && start !== '' && end !== '') {
       getLogs();
-    } else if (selectedDeviceId && start === '' && end === '') {
+    } else if (deviceSerialNumber && start === '' && end === '') {
       getLogs();
     }
-  }, [start, end, selectedDeviceId]);
+  }, [start, end, deviceSerialNumber]);
 
   useEffect(() => {
     eventBus.on('deletedLogs', () => getLogs());
@@ -258,17 +265,13 @@ const DeviceLogs = ({ selectedDeviceId }) => {
         }
       />
       <DeleteLogModal
-        serialNumber={selectedDeviceId}
+        serialNumber={deviceSerialNumber}
         object="logs"
         show={showDeleteModal}
         toggle={toggleDeleteModal}
       />
     </div>
   );
-};
-
-DeviceLogs.propTypes = {
-  selectedDeviceId: PropTypes.string.isRequired,
 };
 
 export default DeviceLogs;

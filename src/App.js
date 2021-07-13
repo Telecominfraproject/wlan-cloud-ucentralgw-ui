@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { HashRouter, Switch } from 'react-router-dom';
 import 'scss/style.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import Router from 'router';
+import { AuthProvider } from 'contexts/AuthProvider';
+import { checkIfJson } from 'utils/helper';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -9,32 +11,22 @@ const loading = (
   </div>
 );
 
-const TheLayout = React.lazy(() => import('layout'));
-const Login = React.lazy(() => import('pages/LoginPage'));
-
 const App = () => {
-  const isLoggedIn = useSelector((state) => state.connected);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const token = sessionStorage.getItem('access_token');
-    if (token !== undefined && token !== null) {
-      dispatch({ type: 'set', connected: true });
-    }
-  }, [dispatch]);
+  const storageToken = sessionStorage.getItem('access_token');
+  const apiEndpoints = checkIfJson(sessionStorage.getItem('gateway_endpoints'))
+    ? JSON.parse(sessionStorage.getItem('gateway_endpoints'))
+    : {};
 
   return (
-    <HashRouter>
-      <React.Suspense fallback={loading}>
-        <Switch>
-          <Route
-            path="/"
-            name="Devices"
-            render={(props) => (isLoggedIn ? <TheLayout {...props} /> : <Login {...props} />)}
-          />
-        </Switch>
-      </React.Suspense>
-    </HashRouter>
+    <AuthProvider token={storageToken ?? ''} apiEndpoints={apiEndpoints}>
+      <HashRouter>
+        <React.Suspense fallback={loading}>
+          <Switch>
+            <Router />
+          </Switch>
+        </React.Suspense>
+      </HashRouter>
+    </AuthProvider>
   );
 };
 

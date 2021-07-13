@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   CCreateElement,
   CSidebar,
@@ -11,14 +10,12 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from '@coreui/react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import logoBar from 'assets/OpenWiFi_LogoLockup_WhiteColour.svg';
 import styles from './index.module.scss';
 
-const TheSidebar = () => {
+const TheSidebar = ({ showSidebar, setShowSidebar }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const show = useSelector((state) => state.sidebarShow);
 
   const navigation = [
     {
@@ -30,16 +27,16 @@ const TheSidebar = () => {
   ];
 
   return (
-    <CSidebar show={show} onShowChange={(val) => dispatch({ type: 'set', sidebarShow: val })}>
+    <CSidebar show={showSidebar} onShowChange={(val) => setShowSidebar(val)}>
       <CSidebarBrand className="d-md-down-none" to="/devices">
         <img
           className={[styles.sidebarImgFull, 'c-sidebar-brand-full'].join(' ')}
-          src={logoBar}
+          src="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
           alt="OpenWifi"
         />
         <img
           className={[styles.sidebarImgMinimized, 'c-sidebar-brand-minimized'].join(' ')}
-          src={logoBar}
+          src="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
           alt="OpenWifi"
         />
       </CSidebarBrand>
@@ -57,6 +54,11 @@ const TheSidebar = () => {
       <CSidebarMinimizer className="c-d-md-down-none" />
     </CSidebar>
   );
+};
+
+TheSidebar.propTypes = {
+  showSidebar: PropTypes.string.isRequired,
+  setShowSidebar: PropTypes.func.isRequired,
 };
 
 export default React.memo(TheSidebar);

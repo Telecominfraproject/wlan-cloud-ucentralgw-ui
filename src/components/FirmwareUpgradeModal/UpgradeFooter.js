@@ -3,7 +3,16 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CButton, CSpinner, CModalFooter } from '@coreui/react';
 
-const UpgradeFooter = ({ isNow, isShown, isLoading, action, color, variant, block, toggleParent }) => {
+const UpgradeFooter = ({
+  isNow,
+  isShown,
+  isLoading,
+  action,
+  color,
+  variant,
+  block,
+  toggleParent,
+}) => {
   const { t } = useTranslation();
   const [askingIfSure, setAskingIfSure] = useState(false);
 

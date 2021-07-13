@@ -14,7 +14,9 @@
 	"blink": {
 		"blink": "LEDs Blinken",
 		"device_leds": "LEDs",
+		"execute_now": "Möchten Sie dieses Muster jetzt einstellen?",
 		"pattern": "Wählen Sie das Muster, das Sie verwenden möchten:",
+		"set_leds": "LEDs einstellen",
 		"when_blink_leds": "Wann möchten Sie die LEDs blinken lassen?"
 	},
 	"commands": {
@@ -23,6 +25,8 @@
 		"title": "Gerätebefehle"
 	},
 	"common": {
+		"add": "Hinzufügen",
+		"adding_ellipsis": "Hinzufügen ...",
 		"are_you_sure": "Bist du sicher?",
 		"cancel": "Abbrechen",
 		"certificate": "Zertifikat",
@@ -36,7 +40,11 @@
 		"connected": "Verbindung wurde hergestellt",
 		"copied": "kopiert!",
 		"copy_to_clipboard": "In die Zwischenablage kopieren",
+		"created_by": "Erstellt von",
+		"custom_date": "Benutzerdefiniertes Datum",
 		"date": "Datum",
+		"day": "tag",
+		"days": "tage",
 		"delete": "Löschen",
 		"details": "Einzelheiten",
 		"device_list": "Liste der Geräte",
@@ -52,6 +60,8 @@
 		"exit": "Ausgang",
 		"firmware": "Firmware",
 		"from": "Von",
+		"hour": "stunde",
+		"hours": "std",
 		"id": "ID",
 		"ip_address": "IP Adresse",
 		"later_tonight": "Später am Abend",
@@ -60,9 +70,12 @@
 		"logout": "Ausloggen",
 		"mac": "MAC-Adresse",
 		"manufacturer": "Hersteller",
+		"minute": "Minute",
+		"minutes": "protokoll",
 		"na": "(unbekannt)",
 		"need_date": "Du brauchst ein Datum...",
 		"no": "Nein",
+		"no_items": "Keine Gegenstände",
 		"not_connected": "Nicht verbunden",
 		"off": "Aus",
 		"on": "An",
@@ -73,6 +86,8 @@
 		"save": "Sparen",
 		"saving": "Speichern ...",
 		"schedule": "Zeitplan",
+		"second": "zweite",
+		"seconds": "sekunden",
 		"seconds_elapsed": "Sekunden verstrichen",
 		"serial_number": "Seriennummer",
 		"start": "Start",
@@ -92,6 +107,7 @@
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
+		"note": "Hinweis",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
 		"title": "Gerätekonfiguration",
@@ -140,14 +156,16 @@
 		"login": "Anmeldung",
 		"login_error": "Anmeldefehler, bestätigen Sie, dass Ihr Benutzername, Ihr Passwort und Ihre Gateway-URL gültig sind",
 		"password": "Passwort",
-		"please_enter_gateway": "Bitte geben Sie eine Gateway-URL ein",
+		"please_enter_gateway": "Bitte geben Sie eine uCentralSec-URL ein",
 		"please_enter_password": "Bitte geben Sie Ihr Passwort ein",
 		"please_enter_username": "Bitte geben Sie Ihren Benutzernamen ein",
 		"sign_in_to_account": "Melden Sie sich bei Ihrem Konto an",
+		"url": "uCentralSec-URL",
 		"username": "Benutzername"
 	},
 	"reboot": {
 		"directions": "Wann möchten Sie dieses Gerät neu starten?",
+		"now": "Möchten Sie dieses Gerät jetzt neu starten?",
 		"title": "Gerät neustarten"
 	},
 	"scan": {
@@ -167,10 +185,23 @@
 		"show_latest": "Neueste Statistiken anzeigen JSON",
 		"title": "Statistiken"
 	},
+	"status": {
+		"connection_status": "Verbindungsstatus",
+		"error": "Statusdaten sind nicht verfügbar",
+		"last_contact": "Letzter Kontakt",
+		"load_averages": "Belastung (Durchschnitt 1 / 5 / 15 Minuten)",
+		"localtime": "Ortszeit",
+		"memory": "Verwendeter Speicher",
+		"percentage_free": "{{percentage}}% von {{total}} kostenlos",
+		"percentage_used": "{{percentage}}% von {{total}} verwendet",
+		"title": "#{{serialNumber}} Status",
+		"uptime": "Betriebszeit",
+		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
+	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",
 		"directions": "Starten Sie eine Tcpdump auf diesem Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",
-		"download_trace": "Klicke hier zum herunterladen",
+		"download_trace": "Trace-Datei herunterladen",
 		"packets": "Pakete",
 		"title": "Tcpdump",
 		"trace": "Spur",
