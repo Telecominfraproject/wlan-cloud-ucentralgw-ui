@@ -17,6 +17,18 @@ const TheLayout = () => {
       to: '/devices',
       icon: 'cilNotes',
     },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Users',
+      to: '/users',
+      icon: 'cilNotes',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Create User',
+      to: '/users/create',
+      icon: 'cilUser',
+    },
   ];
 
   return (

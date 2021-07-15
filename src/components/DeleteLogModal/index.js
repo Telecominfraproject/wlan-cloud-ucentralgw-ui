@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CModal, CModalHeader, CModalTitle, CModalBody, CCol, CRow } from '@coreui/react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import ConfirmFooter from 'ucentral-libs';
+import { ConfirmFooter } from 'ucentral-libs';
 import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { useDevice } from 'contexts/DeviceProvider';
@@ -83,6 +83,7 @@ const DeleteLogModal = ({ show, toggle, object }) => {
         </CRow>
       </CModalBody>
       <ConfirmFooter
+        t={t}
         isShown={show}
         isLoading={loading}
         action={deleteLog}
