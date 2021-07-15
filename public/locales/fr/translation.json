@@ -25,6 +25,7 @@
 		"title": "Historique des commandes"
 	},
 	"common": {
+		"access_policy": "Politique d'accès",
 		"add": "Ajouter",
 		"adding_ellipsis": "Ajouter...",
 		"are_you_sure": "Êtes-vous sûr?",
@@ -80,6 +81,7 @@
 		"off": "De",
 		"on": "sur",
 		"optional": "Optionnel",
+		"password_policy": "Politique de mot de passe",
 		"recorded": "Enregistré",
 		"refresh": "Rafraîchir",
 		"refresh_device": "Actualiser l'appareil",
@@ -247,7 +249,7 @@
 		"note": "Remarque",
 		"password": "Mot de passe",
 		"provide_email": "Veuillez fournir une adresse email valide",
-		"provide_password": "Veuillez fournir un mot de passe",
+		"provide_password": "Veuillez fournir un mot de passe valide",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
 		"user_role": "Rôle",
 		"users": "Utilisateurs",

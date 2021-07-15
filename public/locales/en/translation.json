@@ -25,6 +25,7 @@
 		"title": "Command History"
 	},
 	"common": {
+		"access_policy": "Access Policy",
 		"add": "Add",
 		"adding_ellipsis": "Adding...",
 		"are_you_sure": "Are you sure?",
@@ -80,6 +81,7 @@
 		"off": "Off",
 		"on": "On",
 		"optional": "Optional",
+		"password_policy": "Password Policy",
 		"recorded": "Recorded",
 		"refresh": "Refresh",
 		"refresh_device": "Refresh Device",
@@ -247,7 +249,7 @@
 		"note": "Note",
 		"password": "Password",
 		"provide_email": "Please provide a valid email address",
-		"provide_password": "Please provide a password",
+		"provide_password": "Please provide a valid password",
 		"show_hide_password": "Show/Hide Password",
 		"user_role": "Role",
 		"users": "Users",

@@ -25,6 +25,7 @@
 		"title": "Histórico de Comandos"
 	},
 	"common": {
+		"access_policy": "Política de Acesso",
 		"add": "Adicionar",
 		"adding_ellipsis": "Adicionando ...",
 		"are_you_sure": "Você tem certeza?",
@@ -80,6 +81,7 @@
 		"off": "Fora",
 		"on": "em",
 		"optional": "Opcional",
+		"password_policy": "Política de Senha",
 		"recorded": "Gravado",
 		"refresh": "REFRESH",
 		"refresh_device": "Atualizar dispositivo",
@@ -247,7 +249,7 @@
 		"note": "Nota",
 		"password": "Senha",
 		"provide_email": "Por favor, forneça um endereço de e-mail válido",
-		"provide_password": "Forneça uma senha",
+		"provide_password": "Forneça uma senha válida",
 		"show_hide_password": "Mostrar / ocultar senha",
 		"user_role": "Função",
 		"users": "Comercial",

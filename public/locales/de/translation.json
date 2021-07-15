@@ -25,6 +25,7 @@
 		"title": "Gerätebefehle"
 	},
 	"common": {
+		"access_policy": "Zugangsrichtlinien",
 		"add": "Hinzufügen",
 		"adding_ellipsis": "Hinzufügen ...",
 		"are_you_sure": "Bist du sicher?",
@@ -80,6 +81,7 @@
 		"off": "Aus",
 		"on": "An",
 		"optional": "Wahlweise",
+		"password_policy": "Kennwortrichtlinie",
 		"recorded": "Verzeichnet",
 		"refresh": "Aktualisierung",
 		"refresh_device": "Gerät aktualisieren",
@@ -247,7 +249,7 @@
 		"note": "Hinweis",
 		"password": "Passwort",
 		"provide_email": "Bitte geben Sie eine gültige E-Mail Adresse an",
-		"provide_password": "Bitte geben Sie ein Passwort ein",
+		"provide_password": "Bitte geben Sie ein gültiges Passwort ein",
 		"show_hide_password": "Passwort anzeigen/verbergen",
 		"user_role": "Rolle",
 		"users": "Benutzer",

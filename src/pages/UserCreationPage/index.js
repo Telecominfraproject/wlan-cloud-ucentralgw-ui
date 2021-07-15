@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CCard, CCardBody, CCardHeader, CToast, CToaster, CToastBody } from '@coreui/react';
 import { CreateUserForm, useFormFields } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
-import { validateEmail } from 'utils/helper';
+import { testRegex, validateEmail } from 'utils/helper';
 
 const initialState = {
   name: {
@@ -44,6 +44,11 @@ const UserCreationPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [policies, setPolicies] = useState({
+    passwordPolicy: '',
+    passwordPattern: '',
+    accessPolicy: '',
+  });
   const [formFields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialState);
   const [toast, setToast] = useState({
     show: false,
@@ -62,6 +67,9 @@ const UserCreationPage = () => {
 
     for (const [key, value] of Object.entries(formFields)) {
       if (!value.optional && value.value === '') {
+        validationSuccess = false;
+        updateField(key, { value: value.value, error: true });
+      } else if (key === 'currentPassword' && !testRegex(value.value, policies.passwordPattern)) {
         validationSuccess = false;
         updateField(key, { value: value.value, error: true });
       } else if (key === 'email' && !validateEmail(value.value)) {
@@ -107,6 +115,18 @@ const UserCreationPage = () => {
     }
   };
 
+  const getPasswordPolicy = () => {
+    axiosInstance
+      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
+      .then((response) => {
+        setPolicies(response.data);
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    if (policies.passwordPattern.length === 0) getPasswordPolicy();
+  }, []);
   return (
     <div>
       <CCard>
@@ -118,6 +138,7 @@ const UserCreationPage = () => {
             updateField={updateFieldWithId}
             createUser={createUser}
             loading={loading}
+            policies={policies}
           />
         </CCardBody>
       </CCard>

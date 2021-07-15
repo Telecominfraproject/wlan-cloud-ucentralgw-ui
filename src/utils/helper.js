@@ -112,6 +112,11 @@ export const secondsToDetailed = (
 };
 
 export const validateEmail = (email) => {
-  const re = /\S+@\S+\.\S+/;
-  return re.test(email);
+  const regex = /\S+@\S+\.\S+/;
+  return regex.test(email);
+};
+
+export const testRegex = (value, regexString) => {
+  const regex = new RegExp(regexString);
+  return regex.test(value);
 };
