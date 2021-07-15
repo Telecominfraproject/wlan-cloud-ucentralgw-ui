@@ -4,6 +4,7 @@ import { CCard, CCardBody, CCardHeader, CToast, CToaster, CToastBody } from '@co
 import { CreateUserForm, useFormFields } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
+import { validateEmail } from 'utils/helper';
 
 const initialState = {
   name: {
@@ -28,6 +29,11 @@ const initialState = {
     error: false,
   },
   notes: {
+    value: '',
+    error: false,
+    optional: true,
+  },
+  description: {
     value: '',
     error: false,
     optional: true,
@@ -58,8 +64,10 @@ const UserCreationPage = () => {
       if (!value.optional && value.value === '') {
         validationSuccess = false;
         updateField(key, { value: value.value, error: true });
-      }
-      if (key === 'notes') {
+      } else if (key === 'email' && !validateEmail(value.value)) {
+        validationSuccess = false;
+        updateField(key, { value: value.value, error: true });
+      } else if (key === 'notes') {
         parameters[key] = [{ note: value.value }];
       } else if (key === 'changePassword') {
         parameters[key] = value.value === 'on';
@@ -102,7 +110,7 @@ const UserCreationPage = () => {
   return (
     <div>
       <CCard>
-        <CCardHeader>Create User Form</CCardHeader>
+        <CCardHeader>{t('user.create')}</CCardHeader>
         <CCardBody>
           <CreateUserForm
             t={t}

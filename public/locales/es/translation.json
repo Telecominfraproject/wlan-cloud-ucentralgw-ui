@@ -79,6 +79,7 @@
 		"not_connected": "No conectado",
 		"off": "Apagado",
 		"on": "en",
+		"optional": "Opcional",
 		"recorded": "Grabado",
 		"refresh": "Refrescar",
 		"refresh_device": "Actualizar dispositivo",
@@ -233,18 +234,23 @@
 		"delete_success": "¡Usuario eliminado correctamente!",
 		"delete_title": "Borrar usuario",
 		"delete_warning": "Advertencia: una vez que elimina un usuario, no puede revertir",
+		"description": "Descripción",
 		"email_address": "Dirección de correo electrónico",
 		"force_password_change": "Forzar cambio de contraseña",
 		"id": "Id. De usuario",
 		"last_login": "Último acceso",
+		"login_id": "Ingresar identificación.",
+		"name": "Nombre",
 		"nickname": "Apodo",
 		"nickname_explanation": "Apodo (opcional)",
+		"not_validated": "No validado",
 		"note": "Nota",
 		"password": "Contraseña",
-		"provide_email": "Proporcione una dirección de correo electrónico.",
+		"provide_email": "Por favor ingrese su dirección de correo electrónico válida",
 		"provide_password": "Por favor proporcione una contraseña",
 		"show_hide_password": "Mostrar / Ocultar contraseña",
 		"user_role": "papel",
-		"users": "Usuarios"
+		"users": "Usuarios",
+		"validated": "Validado"
 	}
 }

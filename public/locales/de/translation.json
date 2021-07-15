@@ -79,6 +79,7 @@
 		"not_connected": "Nicht verbunden",
 		"off": "Aus",
 		"on": "An",
+		"optional": "Wahlweise",
 		"recorded": "Verzeichnet",
 		"refresh": "Aktualisierung",
 		"refresh_device": "Gerät aktualisieren",
@@ -233,18 +234,23 @@
 		"delete_success": "Benutzer erfolgreich gelöscht!",
 		"delete_title": "Benutzer löschen",
 		"delete_warning": "Warnung: Sobald Sie einen Benutzer gelöscht haben, können Sie ihn nicht wiederherstellen",
+		"description": "Beschreibung",
 		"email_address": "E-Mail-Addresse",
 		"force_password_change": "Kennwort ändern",
 		"id": "Benutzeridentifikation.",
 		"last_login": "Letzte Anmeldung",
+		"login_id": "Anmelde-ID.",
+		"name": "Name",
 		"nickname": "Spitzname",
 		"nickname_explanation": "Spitzname (optional)",
+		"not_validated": "Nicht validiert",
 		"note": "Hinweis",
 		"password": "Passwort",
-		"provide_email": "Bitte geben Sie eine E-Mail-Adresse an",
+		"provide_email": "Bitte geben Sie eine gültige E-Mail Adresse an",
 		"provide_password": "Bitte geben Sie ein Passwort ein",
 		"show_hide_password": "Passwort anzeigen/verbergen",
 		"user_role": "Rolle",
-		"users": "Benutzer"
+		"users": "Benutzer",
+		"validated": "Bestätigt"
 	}
 }

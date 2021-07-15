@@ -79,6 +79,7 @@
 		"not_connected": "Not Connected",
 		"off": "Off",
 		"on": "On",
+		"optional": "Optional",
 		"recorded": "Recorded",
 		"refresh": "Refresh",
 		"refresh_device": "Refresh Device",
@@ -233,18 +234,23 @@
 		"delete_success": "User successfully deleted!",
 		"delete_title": "Delete User",
 		"delete_warning": "Warning: Once you delete a user you cannot revert",
+		"description": "Description",
 		"email_address": "Email Address",
 		"force_password_change": "Force Password Change",
 		"id": "User Id.",
 		"last_login": "Last Login",
+		"login_id": "Login Id.",
+		"name": "Name",
 		"nickname": "Nickname",
 		"nickname_explanation": "Nickname (optional)",
+		"not_validated": "Not Validated",
 		"note": "Note",
 		"password": "Password",
-		"provide_email": "Please provide an email address",
+		"provide_email": "Please provide a valid email address",
 		"provide_password": "Please provide a password",
 		"show_hide_password": "Show/Hide Password",
 		"user_role": "Role",
-		"users": "Users"
+		"users": "Users",
+		"validated": "Validated"
 	}
 }

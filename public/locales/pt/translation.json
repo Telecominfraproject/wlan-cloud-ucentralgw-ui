@@ -79,6 +79,7 @@
 		"not_connected": "Não conectado",
 		"off": "Fora",
 		"on": "em",
+		"optional": "Opcional",
 		"recorded": "Gravado",
 		"refresh": "REFRESH",
 		"refresh_device": "Atualizar dispositivo",
@@ -233,18 +234,23 @@
 		"delete_success": "Usuário excluído com sucesso!",
 		"delete_title": "Deletar usuário",
 		"delete_warning": "Aviso: depois de excluir um usuário, você não pode reverter",
+		"description": "Descrição",
 		"email_address": "Endereço de e-mail",
 		"force_password_change": "Forçar mudança de senha",
 		"id": "ID do usuário.",
 		"last_login": "Último login",
+		"login_id": "Identificação de usuário.",
+		"name": "Nome",
 		"nickname": "Apelido",
 		"nickname_explanation": "Apelido (opcional)",
+		"not_validated": "Não validado",
 		"note": "Nota",
 		"password": "Senha",
-		"provide_email": "Forneça um endereço de e-mail",
+		"provide_email": "Por favor, forneça um endereço de e-mail válido",
 		"provide_password": "Forneça uma senha",
 		"show_hide_password": "Mostrar / ocultar senha",
 		"user_role": "Função",
-		"users": "Comercial"
+		"users": "Comercial",
+		"validated": "Validado"
 	}
 }

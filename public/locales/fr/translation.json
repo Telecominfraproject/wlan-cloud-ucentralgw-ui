@@ -79,6 +79,7 @@
 		"not_connected": "Pas connecté",
 		"off": "De",
 		"on": "sur",
+		"optional": "Optionnel",
 		"recorded": "Enregistré",
 		"refresh": "Rafraîchir",
 		"refresh_device": "Actualiser l'appareil",
@@ -233,18 +234,23 @@
 		"delete_success": "Utilisateur supprimé avec succès !",
 		"delete_title": "Supprimer l'utilisateur",
 		"delete_warning": "Avertissement : Une fois que vous avez supprimé un utilisateur, vous ne pouvez plus revenir en arrière",
+		"description": "La description",
 		"email_address": "Adresse électronique",
 		"force_password_change": "Forcer le changement de mot de passe",
 		"id": "Identifiant d'utilisateur.",
 		"last_login": "Dernière connexion",
+		"login_id": "Identifiant de connexion.",
+		"name": "Prénom",
 		"nickname": "Surnom",
 		"nickname_explanation": "Surnom (optionnel)",
+		"not_validated": "Pas valide",
 		"note": "Remarque",
 		"password": "Mot de passe",
-		"provide_email": "Veuillez fournir une adresse e-mail",
+		"provide_email": "Veuillez fournir une adresse email valide",
 		"provide_password": "Veuillez fournir un mot de passe",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
 		"user_role": "Rôle",
-		"users": "Utilisateurs"
+		"users": "Utilisateurs",
+		"validated": "Validé"
 	}
 }
