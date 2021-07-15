@@ -26,6 +26,7 @@ const TheLayout = () => {
         setShowSidebar={setShowSidebar}
         logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
         options={navigation}
+        redirectTo="/devices"
       />
       <div className="c-wrapper">
         <Header
@@ -39,7 +40,7 @@ const TheLayout = () => {
           endpoints={endpoints}
         />
         <div className="c-body">
-          <PageContainer t={t} routes={routes} />
+          <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
         <Footer t={t} version="0.9.16" />
       </div>

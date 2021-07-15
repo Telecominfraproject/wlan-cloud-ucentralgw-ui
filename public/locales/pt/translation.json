@@ -224,5 +224,26 @@
 		"upgrade": "Melhorar",
 		"wait_for_upgrade": "Você gostaria de esperar a conclusão da atualização?",
 		"waiting_for_device": "Esperando que o dispositivo se reconecte"
+	},
+	"user": {
+		"create": "Criar usuário",
+		"create_failure": "Erro ao criar usuário. Certifique-se de que este endereço de e-mail ainda não esteja vinculado a uma conta.",
+		"create_success": "Usuário criado com sucesso",
+		"delete_failure": "Erro ao tentar excluir usuário",
+		"delete_success": "Usuário excluído com sucesso!",
+		"delete_title": "Deletar usuário",
+		"delete_warning": "Aviso: depois de excluir um usuário, você não pode reverter",
+		"email_address": "Endereço de e-mail",
+		"force_password_change": "Forçar mudança de senha",
+		"id": "ID do usuário.",
+		"last_login": "Último login",
+		"nickname": "Apelido",
+		"nickname_explanation": "Apelido (opcional)",
+		"note": "Nota",
+		"password": "Senha",
+		"provide_email": "Forneça um endereço de e-mail",
+		"provide_password": "Forneça uma senha",
+		"show_hide_password": "Mostrar / ocultar senha",
+		"user_role": "Função"
 	}
 }

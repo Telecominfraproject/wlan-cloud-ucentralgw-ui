@@ -224,5 +224,26 @@
 		"upgrade": "Mejorar",
 		"wait_for_upgrade": "¿Le gustaría esperar a que finalice la actualización?",
 		"waiting_for_device": "Esperando que el dispositivo se vuelva a conectar"
+	},
+	"user": {
+		"create": "Crear usuario",
+		"create_failure": "Error al crear usuario. Asegúrese de que esta dirección de correo electrónico no esté vinculada a una cuenta.",
+		"create_success": "Usuario creado con éxito",
+		"delete_failure": "Error al intentar eliminar al usuario",
+		"delete_success": "¡Usuario eliminado correctamente!",
+		"delete_title": "Borrar usuario",
+		"delete_warning": "Advertencia: una vez que elimina un usuario, no puede revertir",
+		"email_address": "Dirección de correo electrónico",
+		"force_password_change": "Forzar cambio de contraseña",
+		"id": "Id. De usuario",
+		"last_login": "Último acceso",
+		"nickname": "Apodo",
+		"nickname_explanation": "Apodo (opcional)",
+		"note": "Nota",
+		"password": "Contraseña",
+		"provide_email": "Proporcione una dirección de correo electrónico.",
+		"provide_password": "Por favor proporcione una contraseña",
+		"show_hide_password": "Mostrar / Ocultar contraseña",
+		"user_role": "papel"
 	}
 }

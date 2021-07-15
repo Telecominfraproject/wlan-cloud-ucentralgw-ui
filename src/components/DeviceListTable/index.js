@@ -34,7 +34,7 @@ const DeviceList = () => {
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || 10);
+  const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || '10');
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
 

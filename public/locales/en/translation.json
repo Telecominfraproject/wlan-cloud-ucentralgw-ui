@@ -224,5 +224,26 @@
 		"upgrade": "Upgrade",
 		"wait_for_upgrade": "Would you like to wait for the upgrade to finish?",
 		"waiting_for_device": "Waiting for device to reconnect"
+	},
+	"user": {
+		"create": "Create User",
+		"create_failure": "Error while creating user. Please make sure this email address is not already linked to an account.",
+		"create_success": "User Created Successfully",
+		"delete_failure": "Error while trying to delete user",
+		"delete_success": "User successfully deleted!",
+		"delete_title": "Delete User",
+		"delete_warning": "Warning: Once you delete a user you cannot revert",
+		"email_address": "Email Address",
+		"force_password_change": "Force Password Change",
+		"id": "User Id.",
+		"last_login": "Last Login",
+		"nickname": "Nickname",
+		"nickname_explanation": "Nickname (optional)",
+		"note": "Note",
+		"password": "Password",
+		"provide_email": "Please provide an email address",
+		"provide_password": "Please provide a password",
+		"show_hide_password": "Show/Hide Password",
+		"user_role": "Role"
 	}
 }

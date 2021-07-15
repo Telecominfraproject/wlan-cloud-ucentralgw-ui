@@ -224,5 +224,26 @@
 		"upgrade": "Aktualisierung",
 		"wait_for_upgrade": "Möchten Sie warten, bis das Upgrade abgeschlossen ist?",
 		"waiting_for_device": "Warten, bis das Gerät wieder verbunden ist"
+	},
+	"user": {
+		"create": "Benutzer erstellen",
+		"create_failure": "Fehler beim Erstellen des Benutzers. Bitte stellen Sie sicher, dass diese E-Mail-Adresse nicht bereits mit einem Konto verknüpft ist.",
+		"create_success": "Benutzer erfolgreich erstellt",
+		"delete_failure": "Fehler beim Versuch, den Benutzer zu löschen",
+		"delete_success": "Benutzer erfolgreich gelöscht!",
+		"delete_title": "Benutzer löschen",
+		"delete_warning": "Warnung: Sobald Sie einen Benutzer gelöscht haben, können Sie ihn nicht wiederherstellen",
+		"email_address": "E-Mail-Addresse",
+		"force_password_change": "Kennwort ändern",
+		"id": "Benutzeridentifikation.",
+		"last_login": "Letzte Anmeldung",
+		"nickname": "Spitzname",
+		"nickname_explanation": "Spitzname (optional)",
+		"note": "Hinweis",
+		"password": "Passwort",
+		"provide_email": "Bitte geben Sie eine E-Mail-Adresse an",
+		"provide_password": "Bitte geben Sie ein Passwort ein",
+		"show_hide_password": "Passwort anzeigen/verbergen",
+		"user_role": "Rolle"
 	}
 }
