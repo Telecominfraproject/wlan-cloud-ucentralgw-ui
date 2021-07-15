@@ -54,7 +54,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="0.9.16" />
+        <Footer t={t} version="0.9.17" />
       </div>
     </div>
   );
