@@ -244,6 +244,7 @@
 		"provide_email": "Veuillez fournir une adresse e-mail",
 		"provide_password": "Veuillez fournir un mot de passe",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
-		"user_role": "Rôle"
+		"user_role": "Rôle",
+		"users": "Utilisateurs"
 	}
 }

@@ -13,19 +13,19 @@ const TheLayout = () => {
   const navigation = [
     {
       _tag: 'CSidebarNavItem',
-      name: t('common.device_list'),
+      name: t('common.devices'),
       to: '/devices',
-      icon: 'cilNotes',
+      icon: 'cilRouter',
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Users',
+      name: t('user.users'),
       to: '/users',
-      icon: 'cilNotes',
+      icon: 'cilPeople',
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Create User',
+      name: t('user.create'),
       to: '/users/create',
       icon: 'cilUser',
     },

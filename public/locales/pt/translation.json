@@ -244,6 +244,7 @@
 		"provide_email": "Forneça um endereço de e-mail",
 		"provide_password": "Forneça uma senha",
 		"show_hide_password": "Mostrar / ocultar senha",
-		"user_role": "Função"
+		"user_role": "Função",
+		"users": "Comercial"
 	}
 }

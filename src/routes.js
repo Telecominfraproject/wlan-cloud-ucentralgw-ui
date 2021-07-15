@@ -8,6 +8,6 @@ const UserCreationPage = React.lazy(() => import('pages/UserCreationPage'));
 export default [
   { path: '/devices', exact: true, name: 'common.devices', component: DeviceListPage },
   { path: '/devices/:deviceId', name: 'common.device_page', component: DevicePage },
-  { path: '/users', exact: true, name: 'Users', component: UserListPage },
-  { path: '/users/create', exact: true, name: 'Create User', component: UserCreationPage },
+  { path: '/users', exact: true, name: 'user.users', component: UserListPage },
+  { path: '/users/create', exact: true, name: 'user.create', component: UserCreationPage },
 ];
