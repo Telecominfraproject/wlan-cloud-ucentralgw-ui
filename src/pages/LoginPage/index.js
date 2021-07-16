@@ -37,6 +37,12 @@ const initialResponseState = {
 const Login = () => {
   const { t, i18n } = useTranslation();
   const { setCurrentToken, setEndpoints } = useAuth();
+  const [defaultConfig, setDefaultConfig] = useState({
+    value: '',
+    error: false,
+    hidden: true,
+    placeholder: 'login.url',
+  });
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState(initialResponseState);
   const [forgotResponse, setForgotResponse] = useState(initialResponseState);
@@ -46,7 +52,12 @@ const Login = () => {
   axiosInstance.defaults.timeout = 5000;
 
   const toggleForgotPassword = () => {
-    setFormFields(initialFormState);
+    setFormFields({
+      ...initialFormState,
+      ...{
+        ucentralsecurl: defaultConfig,
+      },
+    });
     setLoginResponse(initialResponseState);
     setForgotResponse(initialResponseState);
     setIsLogin(!isLogin);
@@ -98,15 +109,17 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((json) => {
+        const newUcentralSecConfig = {
+          value: json.DEFAULT_UCENTRALSEC_URL,
+          error: false,
+          hidden: !json.ALLOW_UCENTRALSEC_CHANGE,
+          placeholder: json.DEFAULT_UCENTRALSEC_URL,
+        };
+        setDefaultConfig(newUcentralSecConfig);
         setFormFields({
           ...fields,
           ...{
-            ucentralsecurl: {
-              value: json.DEFAULT_UCENTRALSEC_URL,
-              error: false,
-              hidden: !json.ALLOW_UCENTRALSEC_CHANGE,
-              placeholder: json.DEFAULT_UCENTRALSEC_URL,
-            },
+            ucentralsecurl: newUcentralSecConfig,
           },
         });
       })
