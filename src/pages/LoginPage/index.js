@@ -26,6 +26,16 @@ const initialFormState = {
     error: false,
     placeholder: 'login.username',
   },
+  newpassword: {
+    value: '',
+    error: false,
+    placeholder: 'login.new_password',
+  },
+  confirmpassword: {
+    value: '',
+    error: false,
+    placeholder: 'login.confirm_new_password',
+  },
 };
 
 const initialResponseState = {
@@ -46,7 +56,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState(initialResponseState);
   const [forgotResponse, setForgotResponse] = useState(initialResponseState);
+  const [changePasswordResponse, setChangeResponse] = useState(initialResponseState);
   const [isLogin, setIsLogin] = useState(true);
+  const [isPasswordChange, setIsChangePassword] = useState(false);
   const [fields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialFormState);
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = 5000;
@@ -63,6 +75,19 @@ const Login = () => {
     setIsLogin(!isLogin);
   };
 
+  const cancelPasswordChange = () => {
+    setFormFields({
+      ...initialFormState,
+      ...{
+        ucentralsecurl: defaultConfig,
+      },
+    });
+    setLoginResponse(initialResponseState);
+    setForgotResponse(initialResponseState);
+    setIsLogin(true);
+    setIsChangePassword(false);
+  };
+
   const signInValidation = () => {
     let valid = true;
     if (fields.ucentralsecurl.value === '') {
@@ -75,6 +100,10 @@ const Login = () => {
     }
     if (fields.username.value === '') {
       updateField('username', { error: true });
+      valid = false;
+    }
+    if (isPasswordChange && fields.newpassword.value !== fields.confirmpassword.value) {
+      updateField('confirmpassword', { error: true });
       valid = false;
     }
     return valid;
@@ -132,12 +161,22 @@ const Login = () => {
       setLoading(true);
       let token = '';
 
+      const parameters = {
+        userId: fields.username.value,
+        password: fields.password.value,
+      };
+
+      if (isPasswordChange) {
+        parameters.newPassword = fields.newpassword.value;
+      }
+
       axiosInstance
-        .post(`${fields.ucentralsecurl.value}/api/v1/oauth2`, {
-          userId: fields.username.value,
-          password: fields.password.value,
-        })
+        .post(`${fields.ucentralsecurl.value}/api/v1/oauth2`, parameters)
         .then((response) => {
+          if (response.data.userMustChangePassword) {
+            setIsChangePassword(true);
+            return null;
+          }
           sessionStorage.setItem('access_token', response.data.access_token);
           token = response.data.access_token;
           return axiosInstance.get(`${fields.ucentralsecurl.value}/api/v1/systemEndpoints`, {
@@ -148,22 +187,41 @@ const Login = () => {
           });
         })
         .then((response) => {
-          const endpoints = {
-            ucentralsec: fields.ucentralsecurl.value,
-          };
-          for (const endpoint of response.data.endpoints) {
-            endpoints[endpoint.type] = endpoint.uri;
+          if (response) {
+            const endpoints = {
+              ucentralsec: fields.ucentralsecurl.value,
+            };
+            for (const endpoint of response.data.endpoints) {
+              endpoints[endpoint.type] = endpoint.uri;
+            }
+            sessionStorage.setItem('gateway_endpoints', JSON.stringify(endpoints));
+            setEndpoints(endpoints);
+            setCurrentToken(token);
           }
-          sessionStorage.setItem('gateway_endpoints', JSON.stringify(endpoints));
-          setEndpoints(endpoints);
-          setCurrentToken(token);
         })
-        .catch(() => {
-          setLoginResponse({
-            text: t('login.login_error'),
-            error: true,
-            tried: true,
-          });
+        .catch((error) => {
+          if (!isPasswordChange) {
+            if (
+              error.response.status === 403 &&
+              error.response?.data?.ErrorDescription === 'Password change expected.'
+            ) {
+              setIsChangePassword(true);
+            }
+            setLoginResponse({
+              text: t('login.login_error'),
+              error: true,
+              tried: true,
+            });
+          } else {
+            setChangeResponse({
+              text:
+                fields.newpassword.value === fields.password.value
+                  ? t('login.previously_used')
+                  : t('login.change_password_error'),
+              error: true,
+              tried: true,
+            });
+          }
         })
         .finally(() => {
           setLoading(false);
@@ -220,8 +278,11 @@ const Login = () => {
       updateField={updateFieldWithId}
       toggleForgotPassword={toggleForgotPassword}
       isLogin={isLogin}
+      isPasswordChange={isPasswordChange}
       onKeyDown={onKeyDown}
       sendForgotPasswordEmail={sendForgotPasswordEmail}
+      changePasswordResponse={changePasswordResponse}
+      cancelPasswordChange={cancelPasswordChange}
     />
   );
 };

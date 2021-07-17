@@ -21,7 +21,7 @@ const initialState = {
     error: false,
   },
   changePassword: {
-    value: true,
+    value: 'on',
     error: false,
   },
   userRole: {
