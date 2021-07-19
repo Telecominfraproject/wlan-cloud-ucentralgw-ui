@@ -57,6 +57,11 @@ const Login = () => {
   const [loginResponse, setLoginResponse] = useState(initialResponseState);
   const [forgotResponse, setForgotResponse] = useState(initialResponseState);
   const [changePasswordResponse, setChangeResponse] = useState(initialResponseState);
+  const [policies, setPolicies] = useState({
+    passwordPolicy: '',
+    passwordPattern: '',
+    accessPolicy: '',
+  });
   const [isLogin, setIsLogin] = useState(true);
   const [isPasswordChange, setIsChangePassword] = useState(false);
   const [fields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialFormState);
@@ -130,6 +135,8 @@ const Login = () => {
   };
 
   const getDefaultConfig = async () => {
+    let uCentralSecUrl = '';
+
     fetch('./config.json', {
       headers: {
         'Content-Type': 'application/json',
@@ -144,6 +151,7 @@ const Login = () => {
           hidden: !json.ALLOW_UCENTRALSEC_CHANGE,
           placeholder: json.DEFAULT_UCENTRALSEC_URL,
         };
+        uCentralSecUrl = newUcentralSecConfig.value;
         setDefaultConfig(newUcentralSecConfig);
         setFormFields({
           ...fields,
@@ -151,6 +159,16 @@ const Login = () => {
             ucentralsecurl: newUcentralSecConfig,
           },
         });
+        return axiosInstance.post(
+          `${newUcentralSecConfig.value}/api/v1/oauth2?requirements=true`,
+          {},
+        );
+      })
+      .then((response) => {
+        const newPolicies = response.data;
+        newPolicies.accessPolicy = `${uCentralSecUrl}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${uCentralSecUrl}${newPolicies.passwordPolicy}`;
+        setPolicies(newPolicies);
       })
       .catch();
   };
@@ -283,6 +301,7 @@ const Login = () => {
       sendForgotPasswordEmail={sendForgotPasswordEmail}
       changePasswordResponse={changePasswordResponse}
       cancelPasswordChange={cancelPasswordChange}
+      policies={policies}
     />
   );
 };

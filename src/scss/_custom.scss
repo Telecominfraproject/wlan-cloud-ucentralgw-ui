@@ -8,6 +8,15 @@ pre.ignore {
 -webkit-appearance: none;
 }
 
-.centeredColumn {
-  text-align: center;
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  border-radius: 50em;
+  transition: margin .15s;
+  width: 2rem;
+  height: 2rem;
+  font-size: .8rem;
 }

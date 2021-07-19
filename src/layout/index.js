@@ -7,7 +7,7 @@ import { Header, Sidebar, Footer, PageContainer } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
-  const { endpoints, currentToken } = useAuth();
+  const { endpoints, currentToken, user } = useAuth();
   const { t, i18n } = useTranslation();
 
   const navigation = [
@@ -22,12 +22,6 @@ const TheLayout = () => {
       name: t('user.users'),
       to: '/users',
       icon: 'cilPeople',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('user.create'),
-      to: '/users/create',
-      icon: 'cilUser',
     },
   ];
 
@@ -50,11 +44,12 @@ const TheLayout = () => {
           logout={logout}
           authToken={currentToken}
           endpoints={endpoints}
+          user={user}
         />
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="0.9.17" />
+        <Footer t={t} version="0.9.18" />
       </div>
     </div>
   );
