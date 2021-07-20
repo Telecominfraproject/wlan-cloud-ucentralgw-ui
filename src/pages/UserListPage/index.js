@@ -5,6 +5,8 @@ import { UserListTable } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import { useAuth } from 'contexts/AuthProvider';
+import CreateUserModal from 'components/CreateUserModal';
+import EditUserModal from 'components/EditUserModal';
 
 const UserListPage = () => {
   const { t } = useTranslation();
@@ -12,6 +14,9 @@ const UserListPage = () => {
   const [page, setPage] = useState(0);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState([]);
+  const [userToEdit, setUserToEdit] = useState('');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [toast, setToast] = useState({
     show: false,
     success: true,
@@ -20,6 +25,15 @@ const UserListPage = () => {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [usersPerPage, setUsersPerPage] = useState(getItem('devicesPerPage') || '10');
+
+  const toggleCreateModal = () => {
+    setShowCreateModal(!showCreateModal);
+  };
+
+  const toggleEditModal = (userId) => {
+    if (userId) setUserToEdit(userId);
+    setShowEditModal(!showEditModal);
+  };
 
   const getUsers = () => {
     setLoading(true);
@@ -136,6 +150,9 @@ const UserListPage = () => {
         setPage={setPage}
         deleteUser={deleteUser}
         deleteLoading={deleteLoading}
+        toggleCreate={toggleCreateModal}
+        toggleEdit={toggleEditModal}
+        refreshUsers={getUsers}
       />
       <CToaster>
         <CToast
@@ -152,6 +169,13 @@ const UserListPage = () => {
           </div>
         </CToast>
       </CToaster>
+      <CreateUserModal show={showCreateModal} toggle={toggleCreateModal} getUsers={getUsers} />
+      <EditUserModal
+        show={showEditModal}
+        toggle={toggleEditModal}
+        userId={userToEdit}
+        getUsers={getUsers}
+      />
     </div>
   );
 };

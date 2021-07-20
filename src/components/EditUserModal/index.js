@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
-import { useUser, UserProfileCard } from 'ucentral-libs';
-import { CCol, CRow, CToaster, CToast, CToastBody } from '@coreui/react';
+import { useUser, EditUserModal as Modal } from 'ucentral-libs';
+import { CCol, CRow, CToaster, CToast, CToastBody, CToastHeader } from '@coreui/react';
 
 const initialState = {
   Id: {
@@ -42,11 +42,14 @@ const initialState = {
     error: false,
     editable: true,
   },
+  notes: {
+    value: [],
+    editable: false,
+  },
 };
 
-const UserPage = () => {
+const EditUserModal = ({ show, toggle, userId, getUsers }) => {
   const { t } = useTranslation();
-  const { userId } = useParams();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
@@ -55,6 +58,23 @@ const UserPage = () => {
     show: false,
     success: true,
   });
+  const [policies, setPolicies] = useState({
+    passwordPolicy: '',
+    passwordPattern: '',
+    accessPolicy: '',
+  });
+
+  const getPasswordPolicy = () => {
+    axiosInstance
+      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
+      .then((response) => {
+        const newPolicies = response.data;
+        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
+        setPolicies(response.data);
+      })
+      .catch(() => {});
+  };
 
   const getUser = () => {
     const options = {
@@ -93,16 +113,20 @@ const UserPage = () => {
     let newData = false;
 
     for (const key of Object.keys(user)) {
-      if (user[key].value !== initialUser[key].value) {
+      if (user[key].editable && user[key].value !== initialUser[key].value) {
         if (key === 'currentPassword' && user[key].length < 8) {
           updateWithKey('currentPassword', {
             error: true,
           });
           newData = false;
           break;
+        } else if (key === 'changePassword') {
+          parameters[key] = user[key].value === 'on';
+          newData = true;
+        } else {
+          parameters[key] = user[key].value;
+          newData = true;
         }
-        parameters[key] = user[key].value;
-        newData = true;
       }
     }
 
@@ -121,6 +145,7 @@ const UserPage = () => {
             success: true,
             show: true,
           });
+          getUsers();
         })
         .catch(() => {
           setToast({
@@ -135,23 +160,57 @@ const UserPage = () => {
     }
   };
 
+  const addNote = (currentNote) => {
+    setLoading(true);
+
+    const parameters = {
+      id: userId,
+      notes: [{ note: currentNote }],
+    };
+
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    axiosInstance
+      .put(`${endpoints.ucentralsec}/api/v1/user/${userId}`, parameters, options)
+      .then(() => {
+        getUser();
+      })
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
-    getUser();
-  }, []);
+    if (userId) {
+      getUser();
+    }
+    if (policies.passwordPattern.length === 0) {
+      getPasswordPolicy();
+    }
+  }, [userId]);
 
   return (
     <div>
       <CRow>
         <CCol>
-          <UserProfileCard
+          <Modal
             t={t}
             user={user}
             updateUserWithId={updateWithId}
             saveUser={updateUser}
             loading={loading}
+            policies={policies}
+            show={show}
+            toggle={toggle}
+            addNote={addNote}
           />
         </CCol>
-        <CCol />
       </CRow>
       <CToaster>
         <CToast
@@ -161,6 +220,9 @@ const UserPage = () => {
           className="text-white align-items-center"
           show={toast.show}
         >
+          <CToastHeader closeButton>
+            {toast.success ? t('user.update_success_title') : t('user.update_failure_title')}
+          </CToastHeader>
           <div className="d-flex">
             <CToastBody>
               {toast.success ? t('user.update_success') : t('user.update_failure')}
@@ -172,4 +234,11 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+EditUserModal.propTypes = {
+  userId: PropTypes.string.isRequired,
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+};
+
+export default React.memo(EditUserModal);

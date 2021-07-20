@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { CCard, CCardBody, CCardHeader, CToast, CToaster, CToastBody } from '@coreui/react';
+import { CToast, CToaster, CToastBody, CModal, CModalHeader, CModalBody } from '@coreui/react';
 import { CreateUserForm, useFormFields } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
@@ -40,7 +41,7 @@ const initialState = {
   },
 };
 
-const UserCreationPage = () => {
+const CreateUserModal = ({ show, toggle, getUsers }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -95,6 +96,7 @@ const UserCreationPage = () => {
           headers,
         })
         .then(() => {
+          getUsers();
           setFormFields(initialState);
           setToast({
             success: true,
@@ -119,6 +121,9 @@ const UserCreationPage = () => {
     axiosInstance
       .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
       .then((response) => {
+        const newPolicies = response.data;
+        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
         setPolicies(response.data);
       })
       .catch(() => {});
@@ -127,11 +132,12 @@ const UserCreationPage = () => {
   useEffect(() => {
     if (policies.passwordPattern.length === 0) getPasswordPolicy();
   }, []);
+
   return (
     <div>
-      <CCard>
-        <CCardHeader>{t('user.create')}</CCardHeader>
-        <CCardBody>
+      <CModal show={show} onClose={toggle} size="xl">
+        <CModalHeader>{t('user.create')}</CModalHeader>
+        <CModalBody>
           <CreateUserForm
             t={t}
             fields={formFields}
@@ -140,8 +146,8 @@ const UserCreationPage = () => {
             loading={loading}
             policies={policies}
           />
-        </CCardBody>
-      </CCard>
+        </CModalBody>
+      </CModal>
       <CToaster>
         <CToast
           autohide={5000}
@@ -161,4 +167,10 @@ const UserCreationPage = () => {
   );
 };
 
-export default UserCreationPage;
+CreateUserModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+};
+
+export default React.memo(CreateUserModal);
