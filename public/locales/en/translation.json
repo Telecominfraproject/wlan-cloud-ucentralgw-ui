@@ -249,6 +249,7 @@
 		"waiting_for_device": "Waiting for device to reconnect"
 	},
 	"user": {
+		"avatar_file": "Choose an avatar (max. 2mb)",
 		"create": "Create User",
 		"create_failure": "Error while creating user. Please make sure this email address is not already linked to an account.",
 		"create_success": "User Created Successfully",

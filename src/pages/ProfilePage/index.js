@@ -45,7 +45,7 @@ const initialState = {
 
 const ProfilePage = () => {
   const { t } = useTranslation();
-  const { currentToken, endpoints, user } = useAuth();
+  const { currentToken, endpoints, user, getAvatar } = useAuth();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
@@ -182,6 +182,39 @@ const ProfilePage = () => {
       });
   };
 
+  const uploadAvatar = (e) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    const imageFile = e.target.files[0];
+
+    const data = new FormData();
+    data.append('file', imageFile);
+
+    axiosInstance
+      .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
+      .then(() => {
+        setToast({
+          success: true,
+          show: true,
+        });
+        getAvatar();
+      })
+      .catch(() => {
+        setToast({
+          success: false,
+          show: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (user.Id) {
       getUser();
@@ -203,6 +236,7 @@ const ProfilePage = () => {
             loading={loading}
             policies={policies}
             addNote={addNote}
+            uploadAvatar={uploadAvatar}
           />
         </CCardBody>
       </CCard>
@@ -218,7 +252,7 @@ const ProfilePage = () => {
             {toast.success ? t('user.update_success_title') : t('user.update_failure_title')}
           </CToastHeader>
           <div className="d-flex">
-            <CToastBody close>
+            <CToastBody>
               {toast.success ? t('user.update_success') : t('user.update_failure')}
             </CToastBody>
           </div>

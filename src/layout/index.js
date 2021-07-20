@@ -7,7 +7,7 @@ import { Header, Sidebar, Footer, PageContainer } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
-  const { endpoints, currentToken, user } = useAuth();
+  const { endpoints, currentToken, user, avatar } = useAuth();
   const { t, i18n } = useTranslation();
 
   const navigation = [
@@ -45,6 +45,7 @@ const TheLayout = () => {
           authToken={currentToken}
           endpoints={endpoints}
           user={user}
+          avatar={avatar}
         />
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />

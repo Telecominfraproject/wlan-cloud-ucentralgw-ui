@@ -249,6 +249,7 @@
 		"waiting_for_device": "Esperando que o dispositivo se reconecte"
 	},
 	"user": {
+		"avatar_file": "Escolha um avatar (máx. 2 MB)",
 		"create": "Criar usuário",
 		"create_failure": "Erro ao criar usuário. Certifique-se de que este endereço de e-mail ainda não esteja vinculado a uma conta.",
 		"create_success": "Usuário criado com sucesso",

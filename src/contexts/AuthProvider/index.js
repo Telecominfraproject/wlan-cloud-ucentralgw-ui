@@ -7,9 +7,32 @@ const AuthContext = React.createContext();
 export const AuthProvider = ({ token, apiEndpoints, children }) => {
   const [currentToken, setCurrentToken] = useState(token);
   const [endpoints, setEndpoints] = useState(apiEndpoints);
+  const [avatar, setAvatar] = useState('');
   const [user, setUser] = useState({
     avatar: '',
   });
+
+  const getAvatar = (newUserId) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+      responseType: 'blob',
+    };
+
+    axiosInstance
+      .get(`${endpoints.ucentralsec}/api/v1/avatar/${newUserId ?? user.Id}`, options)
+      .then((response) => {
+        const reader = new window.FileReader();
+        reader.readAsDataURL(response.data);
+        reader.onload = () => {
+          const imageDataUrl = reader.result;
+          setAvatar(imageDataUrl);
+        };
+      })
+      .catch(() => {});
+  };
 
   const getUser = () => {
     const options = {
@@ -23,6 +46,9 @@ export const AuthProvider = ({ token, apiEndpoints, children }) => {
       .get(`${endpoints.ucentralsec}/api/v1/oauth2?me=true`, options)
       .then((response) => {
         setUser(response.data);
+        if (response.data.Id && response.data.Id.length > 0) {
+          getAvatar(response.data.Id);
+        }
       })
       .catch(() => {});
   };
@@ -35,7 +61,16 @@ export const AuthProvider = ({ token, apiEndpoints, children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentToken, setCurrentToken, endpoints, setEndpoints, user, setUser }}
+      value={{
+        currentToken,
+        setCurrentToken,
+        endpoints,
+        setEndpoints,
+        user,
+        setUser,
+        avatar,
+        getAvatar,
+      }}
     >
       {children}
     </AuthContext.Provider>

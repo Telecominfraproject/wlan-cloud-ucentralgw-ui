@@ -56,6 +56,10 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
     success: true,
   });
 
+  const toggleChange = () => {
+    updateField('changePassword', { value: !formFields.changePassword.value });
+  };
+
   const createUser = () => {
     setToast(false);
     setLoading(true);
@@ -133,6 +137,10 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
     if (policies.passwordPattern.length === 0) getPasswordPolicy();
   }, []);
 
+  useEffect(() => {
+    setFormFields(initialState);
+  }, [show]);
+
   return (
     <div>
       <CModal show={show} onClose={toggle} size="xl">
@@ -145,6 +153,7 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
             createUser={createUser}
             loading={loading}
             policies={policies}
+            toggleChange={toggleChange}
           />
         </CModalBody>
       </CModal>
