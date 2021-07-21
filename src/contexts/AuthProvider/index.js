@@ -18,18 +18,24 @@ export const AuthProvider = ({ token, apiEndpoints, children }) => {
         Accept: 'application/json',
         Authorization: `Bearer ${currentToken}`,
       },
-      responseType: 'blob',
+      responseType: 'arraybuffer',
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/avatar/${newUserId ?? user.Id}`, options)
+      .get(
+        `${endpoints.ucentralsec}/api/v1/avatar/${
+          newUserId ?? user.Id
+        }?timestamp=${new Date().getTime()}`,
+        options,
+      )
       .then((response) => {
-        const reader = new window.FileReader();
-        reader.readAsDataURL(response.data);
-        reader.onload = () => {
-          const imageDataUrl = reader.result;
-          setAvatar(imageDataUrl);
-        };
+        const base64 = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            '',
+          ),
+        );
+        setAvatar(`data:;base64,${base64}`);
       })
       .catch(() => {});
   };

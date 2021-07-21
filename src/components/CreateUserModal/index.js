@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { CToast, CToaster, CToastBody, CModal, CModalHeader, CModalBody } from '@coreui/react';
+import {
+  CToast,
+  CToaster,
+  CToastBody,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CToastHeader,
+} from '@coreui/react';
 import { CreateUserForm, useFormFields } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
@@ -106,6 +114,7 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
             success: true,
             show: true,
           });
+          toggle();
         })
         .catch(() => {
           setToast({
@@ -165,6 +174,9 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
           className="text-white align-items-center"
           show={toast.show}
         >
+          <CToastHeader closeButton>
+            {toast.success ? t('common.success') : t('common.error')}
+          </CToastHeader>
           <div className="d-flex">
             <CToastBody>
               {toast.success ? t('user.create_success') : t('user.create_failure')}

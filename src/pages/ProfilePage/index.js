@@ -45,10 +45,12 @@ const initialState = {
 
 const ProfilePage = () => {
   const { t } = useTranslation();
-  const { currentToken, endpoints, user, getAvatar } = useAuth();
+  const { currentToken, endpoints, user, getAvatar, avatar } = useAuth();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
+  const [newAvatar, setNewAvatar] = useState('');
+  const [newAvatarFile, setNewAvatarFile] = useState(null);
   const [toast, setToast] = useState({
     show: false,
     success: true,
@@ -182,7 +184,8 @@ const ProfilePage = () => {
       });
   };
 
-  const uploadAvatar = (e) => {
+  const uploadAvatar = () => {
+    setLoading(true);
     const options = {
       headers: {
         Accept: 'application/json',
@@ -190,10 +193,8 @@ const ProfilePage = () => {
       },
     };
 
-    const imageFile = e.target.files[0];
-
     const data = new FormData();
-    data.append('file', imageFile);
+    data.append('file', newAvatarFile);
 
     axiosInstance
       .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
@@ -215,8 +216,34 @@ const ProfilePage = () => {
       });
   };
 
+  const showPreview = (e) => {
+    const imageFile = e.target.files[0];
+    setNewAvatar(URL.createObjectURL(imageFile));
+    setNewAvatarFile(imageFile);
+  };
+
+  const deleteAvatar = () => {
+    setLoading(true);
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+    return axiosInstance
+      .delete(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, options)
+      .then(() => {
+        getAvatar();
+      })
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (user.Id) {
+      getAvatar();
       getUser();
     }
     if (policies.passwordPattern.length === 0) {
@@ -237,6 +264,10 @@ const ProfilePage = () => {
             policies={policies}
             addNote={addNote}
             uploadAvatar={uploadAvatar}
+            avatar={avatar}
+            newAvatar={newAvatar}
+            showPreview={showPreview}
+            deleteAvatar={deleteAvatar}
           />
         </CCardBody>
       </CCard>

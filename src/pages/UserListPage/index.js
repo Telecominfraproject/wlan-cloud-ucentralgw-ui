@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CToast, CToastBody, CToaster } from '@coreui/react';
+import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import { UserListTable } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
@@ -162,6 +162,7 @@ const UserListPage = () => {
           className="text-white align-items-center"
           show={toast.show}
         >
+          <CToastHeader closeButton>{t('common.success')}</CToastHeader>
           <div className="d-flex">
             <CToastBody>
               {toast.success ? t('user.delete_success') : t('user.delete_failure')}

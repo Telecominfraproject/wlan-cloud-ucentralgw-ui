@@ -146,6 +146,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
             show: true,
           });
           getUsers();
+          toggle();
         })
         .catch(() => {
           setToast({
@@ -157,6 +158,14 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
         .finally(() => {
           setLoading(false);
         });
+    } else {
+      setLoading(false);
+      setToast({
+        success: true,
+        show: true,
+      });
+      getUsers();
+      toggle();
     }
   };
 
