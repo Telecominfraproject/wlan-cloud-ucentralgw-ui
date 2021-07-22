@@ -104,6 +104,7 @@
 		"submit": "Submit",
 		"submitted": "Submitted",
 		"success": "Success",
+		"timestamp": "Timestamp",
 		"to": "To",
 		"unknown": "Unknown",
 		"uuid": "UUID",
@@ -287,5 +288,9 @@
 		"user_role": "Role",
 		"users": "Users",
 		"validated": "Validated"
+	},
+	"wifi_analysis": {
+		"mode": "Mode",
+		"title": "WiFi Analysis"
 	}
 }

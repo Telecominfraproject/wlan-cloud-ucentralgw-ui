@@ -104,6 +104,7 @@
 		"submit": "Absenden",
 		"submitted": "Eingereicht",
 		"success": "Erfolg",
+		"timestamp": "Zeitstempel",
 		"to": "zu",
 		"unknown": "unbekannte",
 		"uuid": "UUID",
@@ -287,5 +288,9 @@
 		"user_role": "Rolle",
 		"users": "Benutzer",
 		"validated": "Bestätigt"
+	},
+	"wifi_analysis": {
+		"mode": "Modus",
+		"title": "WLAN-Analyse"
 	}
 }

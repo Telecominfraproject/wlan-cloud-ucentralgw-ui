@@ -104,6 +104,7 @@
 		"submit": "Soumettre",
 		"submitted": "Soumis",
 		"success": "Succès",
+		"timestamp": "horodatage",
 		"to": "à",
 		"unknown": "Inconnu",
 		"uuid": "UUID",
@@ -287,5 +288,9 @@
 		"user_role": "Rôle",
 		"users": "Utilisateurs",
 		"validated": "Validé"
+	},
+	"wifi_analysis": {
+		"mode": "Mode",
+		"title": "Analyse Wi-Fi"
 	}
 }

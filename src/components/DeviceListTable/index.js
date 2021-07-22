@@ -11,11 +11,12 @@ import {
   CCol,
   CPopover,
   CSelect,
+  CContainer,
 } from '@coreui/react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
+import { cilSync, cilInfo, cilBadge, cilBan, cilNotes } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
@@ -179,14 +180,7 @@ const DeviceListDisplay = ({
     {
       key: 'show_details',
       label: '',
-      _style: { width: '3%' },
-      sorter: false,
-      filter: false,
-    },
-    {
-      key: 'refresh',
-      label: '',
-      _style: { width: '2%' },
+      _style: { width: '10%' },
       sorter: false,
       filter: false,
     },
@@ -371,33 +365,50 @@ const DeviceListDisplay = ({
                   </CPopover>
                 </td>
               ),
-              refresh: (item) => (
-                <td className="py-2">
-                  <CPopover content={t('common.refresh_device')}>
-                    <CButton
-                      onClick={() => refreshDevice(item.serialNumber)}
-                      color="primary"
-                      variant="outline"
-                      size="sm"
-                    >
-                      <CIcon name="cil-sync" content={cilSync} size="sm" />
-                    </CButton>
-                  </CPopover>
-                </td>
-              ),
               show_details: (item) => (
-                <td className="py-2">
-                  <CPopover content={t('configuration.details')}>
-                    <CLink
-                      className="c-subheader-nav-link"
-                      aria-current="page"
-                      to={() => `/devices/${item.serialNumber}`}
-                    >
-                      <CButton color="primary" variant="outline" shape="square" size="sm">
-                        <CIcon name="cil-info" content={cilInfo} size="sm" />
-                      </CButton>
-                    </CLink>
-                  </CPopover>
+                <td>
+                  <CContainer fluid>
+                    <CRow>
+                      <CCol>
+                        <CPopover content={t('common.refresh_device')}>
+                          <CButton
+                            onClick={() => refreshDevice(item.serialNumber)}
+                            color="primary"
+                            variant="outline"
+                            size="sm"
+                          >
+                            <CIcon name="cil-sync" content={cilSync} size="sm" />
+                          </CButton>
+                        </CPopover>
+                      </CCol>
+                      <CCol>
+                        <CPopover content={t('configuration.details')}>
+                          <CLink
+                            className="c-subheader-nav-link"
+                            aria-current="page"
+                            to={() => `/devices/${item.serialNumber}`}
+                          >
+                            <CButton color="primary" variant="outline" shape="square" size="sm">
+                              <CIcon name="cil-info" content={cilInfo} size="sm" />
+                            </CButton>
+                          </CLink>
+                        </CPopover>
+                      </CCol>
+                      <CCol>
+                        <CPopover content={t('wifi_analysis.title')}>
+                          <CLink
+                            className="c-subheader-nav-link"
+                            aria-current="page"
+                            to={() => `/devices/${item.serialNumber}/wifianalysis`}
+                          >
+                            <CButton color="primary" variant="outline" shape="square" size="sm">
+                              <CIcon name="cil-notes" content={cilNotes} size="sm" />
+                            </CButton>
+                          </CLink>
+                        </CPopover>
+                      </CCol>
+                    </CRow>
+                  </CContainer>
                 </td>
               ),
             }}
