@@ -104,7 +104,7 @@
 		"submit": "Soumettre",
 		"submitted": "Soumis",
 		"success": "Succès",
-		"timestamp": "horodatage",
+		"timestamp": "Temps",
 		"to": "à",
 		"unknown": "Inconnu",
 		"uuid": "UUID",
@@ -290,7 +290,9 @@
 		"validated": "Validé"
 	},
 	"wifi_analysis": {
+		"associations": "Les associations",
 		"mode": "Mode",
+		"radios": "Radios",
 		"title": "Analyse Wi-Fi"
 	}
 }
