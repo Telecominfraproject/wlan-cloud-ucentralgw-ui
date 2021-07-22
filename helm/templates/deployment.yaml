@@ -35,6 +35,8 @@ spec:
           imagePullPolicy: {{ .Values.images.ucentralgwui.pullPolicy }}
 
           env:
+            - name: KUBERNETES_DEPLOYED
+              value: "{{ now }}"
           {{- range $key, $value := .Values.public_env_variables }}
             - name: {{ $key }}
               value: {{ $value | quote }}
