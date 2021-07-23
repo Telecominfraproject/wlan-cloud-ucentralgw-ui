@@ -21,15 +21,15 @@ const WifiAnalysisPage = () => {
 
   const extractIp = (json, bssid) => {
     const ips = {
-      ipV4: '-',
-      ipV6: '-',
+      ipV4: [],
+      ipV6: [],
     };
     for (const obj of json.interfaces) {
       if ('clients' in obj) {
         for (const client of obj.clients) {
           if (client.mac === bssid) {
-            ips.ipV4 = client.ipv4_addresses ?? '-';
-            ips.ipV6 = client.ipv6_addresses ?? '-';
+            ips.ipV4 = ips.ipV4.concat(client.ipv4_addresses ?? []);
+            ips.ipV6 = ips.ipV6.concat(client.ipv6_addresses ?? []);
           }
         }
       }
@@ -47,51 +47,53 @@ const WifiAnalysisPage = () => {
       const radios = [];
       const timeStamp = prettyDate(stat.recorded);
 
-      for (let i = 0; i < stat.data.radios.length; i += 1) {
-        const radio = stat.data.radios[i];
-        radios.push({
-          timeStamp,
-          radio: i,
-          channel: radio.channel,
-          channelWidth: radio.channel_width,
-          noise: radio.noise ? (dbmNumber - radio.noise) * -1 : '-',
-          txPower: radio.tx_power,
-          activeMs: secondsToDetailed(
-            radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0,
-            t('common.day'),
-            t('common.days'),
-            t('common.hour'),
-            t('common.hours'),
-            t('common.minute'),
-            t('common.minutes'),
-            t('common.second'),
-            t('common.seconds'),
-          ),
-          busyMs: secondsToDetailed(
-            radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0,
-            t('common.day'),
-            t('common.days'),
-            t('common.hour'),
-            t('common.hours'),
-            t('common.minute'),
-            t('common.minutes'),
-            t('common.second'),
-            t('common.seconds'),
-          ),
-          receiveMs: secondsToDetailed(
-            radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0,
-            t('common.day'),
-            t('common.days'),
-            t('common.hour'),
-            t('common.hours'),
-            t('common.minute'),
-            t('common.minutes'),
-            t('common.second'),
-            t('common.seconds'),
-          ),
-        });
+      if (stat.data.radios !== undefined) {
+        for (let i = 0; i < stat.data.radios.length; i += 1) {
+          const radio = stat.data.radios[i];
+          radios.push({
+            timeStamp,
+            radio: i,
+            channel: radio.channel,
+            channelWidth: radio.channel_width,
+            noise: radio.noise ? (dbmNumber - radio.noise) * -1 : '-',
+            txPower: radio.tx_power,
+            activeMs: secondsToDetailed(
+              radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0,
+              t('common.day'),
+              t('common.days'),
+              t('common.hour'),
+              t('common.hours'),
+              t('common.minute'),
+              t('common.minutes'),
+              t('common.second'),
+              t('common.seconds'),
+            ),
+            busyMs: secondsToDetailed(
+              radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0,
+              t('common.day'),
+              t('common.days'),
+              t('common.hour'),
+              t('common.hours'),
+              t('common.minute'),
+              t('common.minutes'),
+              t('common.second'),
+              t('common.seconds'),
+            ),
+            receiveMs: secondsToDetailed(
+              radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0,
+              t('common.day'),
+              t('common.days'),
+              t('common.hour'),
+              t('common.hours'),
+              t('common.minute'),
+              t('common.minutes'),
+              t('common.second'),
+              t('common.seconds'),
+            ),
+          });
+        }
+        newParsedRadioStats.push(radios);
       }
-      newParsedRadioStats.push(radios);
 
       // Looping through the interfaces
       for (const deviceInterface of stat.data.interfaces) {
@@ -99,12 +101,12 @@ const WifiAnalysisPage = () => {
           for (const ssid of deviceInterface.ssids) {
             // Information common between all associations
             const radioArray = ssid.radio.$ref.split('/');
-            const radioIndex = radioArray[radioArray.length - 1];
+            const radioIndex = radioArray !== undefined ? radioArray[radioArray.length - 1] : '-';
             const radioInfo = {
-              radio: radioIndex,
-              channel: stat.data.radios[radioIndex].channel,
-              channelWidth: stat.data.radios[radioIndex].channel_width,
-              txPower: stat.data.radios[radioIndex].tx_power,
+              radio: {
+                found: stat.data.radios[radioIndex] !== undefined,
+                radio: radioIndex,
+              },
             };
 
             if ('associations' in ssid) {
@@ -135,14 +137,21 @@ const WifiAnalysisPage = () => {
       newParsedAssociationStats.push(associations);
     }
 
+    // Radio Stats
     const ascOrderedRadioStats = newParsedRadioStats.reverse();
     setParsedRadioStats(ascOrderedRadioStats);
     setSelectedRadioStats(ascOrderedRadioStats[ascOrderedRadioStats.length - 1]);
-    setRange(ascOrderedRadioStats.length - 1);
-    setTableTime(ascOrderedRadioStats[ascOrderedRadioStats.length - 1][0].timeStamp);
+
     const ascOrderedAssociationStats = newParsedAssociationStats.reverse();
     setParsedAssociationStats(ascOrderedAssociationStats);
     setSelectedAssociationStats(ascOrderedAssociationStats[ascOrderedAssociationStats.length - 1]);
+
+    setRange(ascOrderedRadioStats.length > 0 ? ascOrderedRadioStats.length - 1 : 0);
+    setTableTime(
+      ascOrderedRadioStats.length > 0
+        ? ascOrderedRadioStats[ascOrderedRadioStats.length - 1][0]?.timeStamp
+        : '',
+    );
     setLoading(false);
   };
 
@@ -165,8 +174,7 @@ const WifiAnalysisPage = () => {
       .then((response) => {
         parseAssociationStats(response.data);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         setLoading(false);
       });
   };
@@ -198,6 +206,7 @@ const WifiAnalysisPage = () => {
                 step="1"
                 onChange={(e) => updateSelectedStats(e.target.value)}
                 defaultValue={range}
+                disabled={!selectedRadioStats}
               />
               <h5>
                 {t('common.timestamp')}: {tableTime}
@@ -205,13 +214,13 @@ const WifiAnalysisPage = () => {
             </CCol>
           </CRow>
         </CCardHeader>
-        <CCardBody>
+        <CCardBody className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
           <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
-          <RadioAnalysisTable data={selectedRadioStats} loading={loading} range={range} />
+          <RadioAnalysisTable data={selectedRadioStats ?? []} loading={loading} range={range} />
           <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>
           <WifiAnalysisTable
             t={t}
-            data={selectedAssociationStats}
+            data={selectedAssociationStats ?? []}
             loading={loading}
             range={range}
           />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   CDropdown,
   CDropdownToggle,
@@ -19,11 +20,17 @@ import LatestStatisticsModal from './LatestStatisticsModal';
 import styles from './index.module.scss';
 
 const DeviceStatisticsCard = () => {
+  const history = useHistory();
+  const { deviceId } = useParams();
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
+  };
+
+  const goToAnalysis = () => {
+    history.push(`/devices/${deviceId}/wifianalysis`);
   };
 
   const refresh = () => {
@@ -46,6 +53,7 @@ const DeviceStatisticsCard = () => {
                   <CIcon name="cil-options" content={cilOptions} size="lg" color="primary" />
                 </CDropdownToggle>
                 <CDropdownMenu>
+                  <CDropdownItem onClick={goToAnalysis}>{t('wifi_analysis.title')}</CDropdownItem>
                   <CDropdownItem onClick={refresh}>{t('common.refresh')}</CDropdownItem>
                   <CDropdownItem onClick={toggleLatestModal}>
                     {t('statistics.show_latest')}
