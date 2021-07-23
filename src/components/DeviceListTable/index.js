@@ -173,14 +173,14 @@ const DeviceListDisplay = ({
     { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '5%' } },
     { key: 'UUID', label: t('common.config_id'), _style: { width: '5%' } },
     { key: 'firmware', label: t('common.firmware'), filter: false },
-    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '20%' } },
+    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '15%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '12%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '12%' } },
     { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '16%' } },
     {
       key: 'show_details',
       label: '',
-      _style: { width: '10%' },
+      _style: { width: '15%' },
       sorter: false,
       filter: false,
     },
@@ -394,7 +394,7 @@ const DeviceListDisplay = ({
                           </CLink>
                         </CPopover>
                       </CCol>
-                      <CCol>
+                      <CCol className="mr-4">
                         <CPopover content={t('wifi_analysis.title')}>
                           <CLink
                             className="c-subheader-nav-link"

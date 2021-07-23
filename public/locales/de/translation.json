@@ -60,6 +60,7 @@
 		"edit": "Bearbeiten",
 		"edit_user": "Bearbeiten",
 		"email_address": "E-Mail-Addresse",
+		"endpoint": "Endpunkt",
 		"error": "Fehler",
 		"execute_now": "Möchten Sie diesen Befehl jetzt ausführen?",
 		"executed": "Ausgeführt",
@@ -203,6 +204,9 @@
 		"scan": "Scan",
 		"scanning": "Scannen... ",
 		"waiting_directions": "Bitte warten Sie auf das Scanergebnis. Dies kann bis zu 25 Sekunden dauern. Sie können den Vorgang später beenden und die Ergebnisse aus der Befehlstabelle anzeigen."
+	},
+	"settings": {
+		"title": "die Einstellungen"
 	},
 	"statistics": {
 		"data": "Daten (KB)",

@@ -60,6 +60,7 @@
 		"edit": "Editar",
 		"edit_user": "Editar",
 		"email_address": "Dirección de correo electrónico",
+		"endpoint": "punto final",
 		"error": "Error",
 		"execute_now": "¿Le gustaría ejecutar este comando ahora?",
 		"executed": "ejecutado",
@@ -203,6 +204,9 @@
 		"scan": "Escanear",
 		"scanning": "Exploración... ",
 		"waiting_directions": "Espere el resultado del escaneo. Esto puede tardar hasta 25 segundos. Puede salir y ver los resultados de la tabla de comandos más adelante."
+	},
+	"settings": {
+		"title": "Ajustes"
 	},
 	"statistics": {
 		"data": "Datos (KB)",

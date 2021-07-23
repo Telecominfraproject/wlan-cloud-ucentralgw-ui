@@ -60,6 +60,7 @@
 		"edit": "modifier",
 		"edit_user": "Modifier",
 		"email_address": "Adresse électronique",
+		"endpoint": "Point final",
 		"error": "erreur",
 		"execute_now": "Souhaitez-vous exécuter cette commande maintenant ?",
 		"executed": "réalisé",
@@ -203,6 +204,9 @@
 		"scan": "Balayage",
 		"scanning": "Balayage... ",
 		"waiting_directions": "Veuillez attendre le résultat de l'analyse. Cela peut prendre jusqu'à 25 secondes. Vous pouvez quitter et consulter les résultats du tableau des commandes plus tard."
+	},
+	"settings": {
+		"title": "Réglages"
 	},
 	"statistics": {
 		"data": "Données (Ko)",

@@ -5,6 +5,7 @@ const DeviceListPage = React.lazy(() => import('pages/DeviceListPage'));
 const UserListPage = React.lazy(() => import('pages/UserListPage'));
 const ProfilePage = React.lazy(() => import('pages/ProfilePage'));
 const WifiAnalysisPage = React.lazy(() => import('pages/WifiAnalysisPage'));
+const SettingsPage = React.lazy(() => import('pages/SettingsPage'));
 
 export default [
   { path: '/devices', exact: true, name: 'common.devices', component: DeviceListPage },
@@ -16,4 +17,5 @@ export default [
   { path: '/devices/:deviceId', name: 'common.device_page', component: DevicePage },
   { path: '/users', exact: true, name: 'user.users', component: UserListPage },
   { path: '/myprofile', exact: true, name: 'user.my_profile', component: ProfilePage },
+  { path: '/settings', exact: true, name: 'settings.title', component: SettingsPage },
 ];

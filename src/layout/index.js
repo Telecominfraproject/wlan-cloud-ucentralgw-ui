@@ -23,6 +23,12 @@ const TheLayout = () => {
       to: '/users',
       icon: 'cilPeople',
     },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('settings.title'),
+      to: '/settings',
+      icon: 'cilSettings',
+    },
   ];
 
   return (

@@ -60,6 +60,7 @@
 		"edit": "Edit",
 		"edit_user": "Edit",
 		"email_address": "Email Address",
+		"endpoint": "Endpoint",
 		"error": "Error",
 		"execute_now": "Would you like to execute this command now?",
 		"executed": "Executed",
@@ -203,6 +204,9 @@
 		"scan": "Scan",
 		"scanning": "Scanning... ",
 		"waiting_directions": "Please wait for the scan result. This may take up to 25 seconds. You can exit and look at the results from the commands table later."
+	},
+	"settings": {
+		"title": "Settings"
 	},
 	"statistics": {
 		"data": "Data (KB)",
