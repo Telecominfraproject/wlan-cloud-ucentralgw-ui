@@ -55,6 +55,71 @@ const UserListPage = () => {
       });
   };
 
+  const getAvatarPromises = (userIds) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+      responseType: 'arraybuffer',
+    };
+
+    const promises = userIds.map(async (id) =>
+      axiosInstance.get(`${endpoints.ucentralsec}/api/v1/avatar/${id}`, options),
+    );
+
+    return promises;
+  };
+
+  const displayUsers = async () => {
+    setLoading(true);
+
+    const startIndex = page * usersPerPage;
+    const endIndex = parseInt(startIndex, 10) + parseInt(usersPerPage, 10);
+    const idsToGet = users
+      .slice(startIndex, endIndex)
+      .map((x) => encodeURIComponent(x))
+      .join(',');
+
+    const headers = {
+      Accept: 'application/json',
+      Authorization: `Bearer ${currentToken}`,
+    };
+
+    const avatarRequests = getAvatarPromises(users.slice(startIndex, endIndex));
+
+    const avatars = await Promise.all(avatarRequests).then((results) =>
+      results.map((response) => {
+        const base64 = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            '',
+          ),
+        );
+        return `data:;base64,${base64}`;
+      }),
+    );
+
+    axiosInstance
+      .get(`${endpoints.ucentralsec}/api/v1/users?select=${idsToGet}`, {
+        headers,
+      })
+      .then((response) => {
+        const newUsers = response.data.users.map((user, index) => {
+          const newUser = {
+            ...user,
+            avatar: avatars[index],
+          };
+          return newUser;
+        });
+        setUsersToDisplay(newUsers);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
   const deleteUser = (userId) => {
     setDeleteLoading(true);
 
@@ -82,34 +147,6 @@ const UserListPage = () => {
       })
       .finally(() => {
         setDeleteLoading(false);
-      });
-  };
-
-  const displayUsers = () => {
-    setLoading(true);
-
-    const startIndex = page * usersPerPage;
-    const endIndex = parseInt(startIndex, 10) + parseInt(usersPerPage, 10);
-    const idsToGet = users
-      .slice(startIndex, endIndex)
-      .map((x) => encodeURIComponent(x))
-      .join(',');
-
-    const headers = {
-      Accept: 'application/json',
-      Authorization: `Bearer ${currentToken}`,
-    };
-
-    axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/users?select=${idsToGet}`, {
-        headers,
-      })
-      .then((response) => {
-        setUsersToDisplay(response.data.users);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
       });
   };
 

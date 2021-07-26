@@ -48,6 +48,7 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
+          logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
           authToken={currentToken}
           endpoints={endpoints}
           user={user}
@@ -56,7 +57,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="0.9.24" />
+        <Footer t={t} version="0.9.25" />
       </div>
     </div>
   );
