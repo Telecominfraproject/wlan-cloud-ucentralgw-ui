@@ -19,6 +19,19 @@ const WifiAnalysisPage = () => {
   const [selectedRadioStats, setSelectedRadioStats] = useState([]);
   const [range, setRange] = useState(19);
 
+  const secondsToLabel = (seconds) =>
+    secondsToDetailed(
+      seconds,
+      t('common.day'),
+      t('common.days'),
+      t('common.hour'),
+      t('common.hours'),
+      t('common.minute'),
+      t('common.minutes'),
+      t('common.second'),
+      t('common.seconds'),
+    );
+
   const extractIp = (json, bssid) => {
     const ips = {
       ipV4: [],
@@ -57,39 +70,9 @@ const WifiAnalysisPage = () => {
             channelWidth: radio.channel_width,
             noise: radio.noise ? (dbmNumber - radio.noise) * -1 : '-',
             txPower: radio.tx_power,
-            activeMs: secondsToDetailed(
-              radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0,
-              t('common.day'),
-              t('common.days'),
-              t('common.hour'),
-              t('common.hours'),
-              t('common.minute'),
-              t('common.minutes'),
-              t('common.second'),
-              t('common.seconds'),
-            ),
-            busyMs: secondsToDetailed(
-              radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0,
-              t('common.day'),
-              t('common.days'),
-              t('common.hour'),
-              t('common.hours'),
-              t('common.minute'),
-              t('common.minutes'),
-              t('common.second'),
-              t('common.seconds'),
-            ),
-            receiveMs: secondsToDetailed(
-              radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0,
-              t('common.day'),
-              t('common.days'),
-              t('common.hour'),
-              t('common.hours'),
-              t('common.minute'),
-              t('common.minutes'),
-              t('common.second'),
-              t('common.seconds'),
-            ),
+            activeMs: secondsToLabel(radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0),
+            busyMs: secondsToLabel(radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0),
+            receiveMs: secondsToLabel(radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0),
           });
         }
         newParsedRadioStats.push(radios);
@@ -100,19 +83,32 @@ const WifiAnalysisPage = () => {
         if ('counters' in deviceInterface && 'ssids' in deviceInterface) {
           for (const ssid of deviceInterface.ssids) {
             // Information common between all associations
-            const radioArray = ssid.radio.$ref.split('/');
-            const radioIndex = radioArray !== undefined ? radioArray[radioArray.length - 1] : '-';
             const radioInfo = {
-              radio: {
-                found: stat.data.radios[radioIndex] !== undefined,
-                radio: radioIndex,
-              },
+              found: false,
             };
+
+            if (ssid.phy !== undefined) {
+              radioInfo.radio = `${stat.data.radios.findIndex(
+                (element) => element.phy === ssid.phy,
+              )}`;
+              radioInfo.found = radioInfo.radio !== undefined;
+            }
+
+            if (!radioInfo.found && ssid.radio !== undefined) {
+              const radioArray = ssid.radio.$ref.split('/');
+              const radioIndex = radioArray !== undefined ? radioArray[radioArray.length - 1] : '-';
+              radioInfo.found = stat.data.radios[radioIndex] !== undefined;
+              radioInfo.radio = radioIndex;
+            }
+
+            if (!radioInfo.found) {
+              radioInfo.radio = '-';
+            }
 
             if ('associations' in ssid) {
               for (const association of ssid.associations) {
                 const data = {
-                  ...radioInfo,
+                  radio: radioInfo,
                   ...extractIp(stat.data, association.bssid),
                   bssid: association.bssid,
                   ssid: ssid.ssid,

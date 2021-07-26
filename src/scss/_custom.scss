@@ -5,7 +5,7 @@ pre.ignore {
 .custom-select {
   appearance: none;
   -moz-appearance: none;
--webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
 .avatar {
@@ -20,3 +20,8 @@ pre.ignore {
   height: 3rem;
   font-size: .8rem;
 }
+
+.ignore-overflow {
+  overflow: unset !important;
+}
+
