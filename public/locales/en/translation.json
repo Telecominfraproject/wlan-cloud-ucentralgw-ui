@@ -161,6 +161,7 @@
 		"details_title": "Image #{{image}} Details",
 		"downloads": "Downloads",
 		"image": "Image",
+		"revision": "Revision",
 		"size": "Size",
 		"title": "Firmware"
 	},

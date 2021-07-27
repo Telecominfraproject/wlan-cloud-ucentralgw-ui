@@ -37,17 +37,19 @@ const SettingsPage = () => {
         setInfo({
           title,
           endpoint,
-          uptime: secondsToDetailed(
-            uptimeObj.value,
-            t('common.day'),
-            t('common.days'),
-            t('common.hour'),
-            t('common.hours'),
-            t('common.minute'),
-            t('common.minutes'),
-            t('common.second'),
-            t('common.seconds'),
-          ),
+          uptime: uptimeObj?.value
+            ? secondsToDetailed(
+                uptimeObj.value,
+                t('common.day'),
+                t('common.days'),
+                t('common.hour'),
+                t('common.hours'),
+                t('common.minute'),
+                t('common.minutes'),
+                t('common.second'),
+                t('common.seconds'),
+              )
+            : t('common.unknown'),
           version: newVersion.data.value,
           start: prettyDate(startObj.value),
         });

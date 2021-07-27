@@ -11,7 +11,7 @@ import EditUserModal from 'components/EditUserModal';
 const UserListPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState({ selected: 0 });
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState([]);
   const [userToEdit, setUserToEdit] = useState('');
@@ -65,7 +65,10 @@ const UserListPage = () => {
     };
 
     const promises = userIds.map(async (id) =>
-      axiosInstance.get(`${endpoints.ucentralsec}/api/v1/avatar/${id}`, options),
+      axiosInstance.get(
+        `${endpoints.ucentralsec}/api/v1/avatar/${id}?timestamp=${new Date().toString()}`,
+        options,
+      ),
     );
 
     return promises;

@@ -161,6 +161,7 @@
 		"details_title": "Detalles de la imagen n. °{{image}} ",
 		"downloads": "Descargas",
 		"image": "Imagen",
+		"revision": "Revisión",
 		"size": "Tamaño",
 		"title": "Firmware"
 	},
