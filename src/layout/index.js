@@ -25,6 +25,12 @@ const TheLayout = () => {
     },
     {
       _tag: 'CSidebarNavItem',
+      name: t('firmware.title'),
+      to: '/firmware',
+      icon: 'cilSave',
+    },
+    {
+      _tag: 'CSidebarNavItem',
       name: t('settings.title'),
       to: '/settings',
       icon: 'cilSettings',
@@ -57,7 +63,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="0.9.25" />
+        <Footer t={t} version="0.9.27" />
       </div>
     </div>
   );

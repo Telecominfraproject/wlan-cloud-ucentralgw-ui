@@ -42,6 +42,7 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar para área de transferência",
+		"created": "Criado",
 		"created_by": "Criado Por",
 		"current": "Atual",
 		"custom_date": "Data personalizada",
@@ -69,6 +70,7 @@
 		"forgot_password": "Esqueceu sua senha?",
 		"forgot_password_title": "Esqueceu a senha",
 		"from": "De",
+		"general_error": "Erro de API, consulte o seu administrador",
 		"hour": "hora",
 		"hours": "horas",
 		"id": "identidade",
@@ -154,6 +156,13 @@
 		"resetting": "Reiniciando ...",
 		"title": "Restauração de fábrica",
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
+	},
+	"firmware": {
+		"details_title": "Detalhes da imagem #{{image}} ",
+		"downloads": "Transferências",
+		"image": "Imagem",
+		"size": "Tamanho",
+		"title": "Firmware"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI para React",

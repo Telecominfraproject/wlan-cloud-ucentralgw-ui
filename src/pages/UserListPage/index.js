@@ -74,7 +74,7 @@ const UserListPage = () => {
   const displayUsers = async () => {
     setLoading(true);
 
-    const startIndex = page * usersPerPage;
+    const startIndex = page.selected * usersPerPage;
     const endIndex = parseInt(startIndex, 10) + parseInt(usersPerPage, 10);
     const idsToGet = users
       .slice(startIndex, endIndex)
@@ -141,7 +141,7 @@ const UserListPage = () => {
       })
       .catch(() => {
         setToast({
-          success: true,
+          success: false,
           show: true,
         });
       })
@@ -195,11 +195,13 @@ const UserListPage = () => {
         <CToast
           autohide={5000}
           fade
-          color="success"
+          color={toast.success ? 'success' : 'danger'}
           className="text-white align-items-center"
           show={toast.show}
         >
-          <CToastHeader closeButton>{t('common.success')}</CToastHeader>
+          <CToastHeader closeButton>
+            {toast.success ? t('common.success') : t('common.error')}
+          </CToastHeader>
           <div className="d-flex">
             <CToastBody>
               {toast.success ? t('user.delete_success') : t('user.delete_failure')}

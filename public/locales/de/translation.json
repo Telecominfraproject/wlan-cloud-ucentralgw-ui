@@ -42,6 +42,7 @@
 		"connected": "Verbindung wurde hergestellt",
 		"copied": "kopiert!",
 		"copy_to_clipboard": "In die Zwischenablage kopieren",
+		"created": "Erstellt",
 		"created_by": "Erstellt von",
 		"current": "Aktuell",
 		"custom_date": "Benutzerdefiniertes Datum",
@@ -69,6 +70,7 @@
 		"forgot_password": "Haben Sie Ihr Passwort vergessen?",
 		"forgot_password_title": "Passwort vergessen",
 		"from": "Von",
+		"general_error": "API-Fehler, wenden Sie sich bitte an Ihren Administrator",
 		"hour": "stunde",
 		"hours": "std",
 		"id": "ID",
@@ -154,6 +156,13 @@
 		"resetting": "Zurücksetzen...",
 		"title": "Gerät auf Werkseinstellungen zurücksetzen",
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
+	},
+	"firmware": {
+		"details_title": "Bild #{{image}} Details",
+		"downloads": "Downloads",
+		"image": "Bild",
+		"size": "Größe",
+		"title": "Firmware"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI für React",

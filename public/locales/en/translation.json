@@ -42,6 +42,7 @@
 		"connected": "Connected",
 		"copied": "Copied!",
 		"copy_to_clipboard": "Copy to clipboard",
+		"created": "Created",
 		"created_by": "Created By",
 		"current": "Current ",
 		"custom_date": "Custom Date",
@@ -69,6 +70,7 @@
 		"forgot_password": "Forgot your Password?",
 		"forgot_password_title": "Forgot Password",
 		"from": "From",
+		"general_error": "API Error, please consult your administrator",
 		"hour": "hour",
 		"hours": "hours",
 		"id": "Id",
@@ -154,6 +156,13 @@
 		"resetting": "Resetting... ",
 		"title": "Factory Reset",
 		"warning": "Warning: Once you submit this cannot be reverted"
+	},
+	"firmware": {
+		"details_title": "Image #{{image}} Details",
+		"downloads": "Downloads",
+		"image": "Image",
+		"size": "Size",
+		"title": "Firmware"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI for React",

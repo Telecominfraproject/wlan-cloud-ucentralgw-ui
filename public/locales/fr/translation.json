@@ -42,6 +42,7 @@
 		"connected": "Connecté",
 		"copied": "Copié!",
 		"copy_to_clipboard": "Copier dans le presse-papier",
+		"created": "Créé",
 		"created_by": "Créé par",
 		"current": "Actuel",
 		"custom_date": "Date personnalisée",
@@ -61,7 +62,7 @@
 		"edit_user": "Modifier",
 		"email_address": "Adresse électronique",
 		"endpoint": "Point final",
-		"error": "erreur",
+		"error": "Erreur",
 		"execute_now": "Souhaitez-vous exécuter cette commande maintenant ?",
 		"executed": "réalisé",
 		"exit": "Sortie",
@@ -69,6 +70,7 @@
 		"forgot_password": "Mot de passe oublié?",
 		"forgot_password_title": "Mot de passe oublié",
 		"from": "De",
+		"general_error": "Erreur API, veuillez consulter votre administrateur",
 		"hour": "heure",
 		"hours": "heures",
 		"id": "Id",
@@ -154,6 +156,13 @@
 		"resetting": "Réinitialisation…",
 		"title": "Retour aux paramètres d'usine",
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
+	},
+	"firmware": {
+		"details_title": "Image #{{image}} Détails",
+		"downloads": "Téléchargements",
+		"image": "Image",
+		"size": "Taille",
+		"title": "Micrologiciel"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI pour React",
