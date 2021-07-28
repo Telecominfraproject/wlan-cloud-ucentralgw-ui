@@ -47,7 +47,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true&limit=1000`, {
         headers,
       })
       .then((response) => {
