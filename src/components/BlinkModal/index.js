@@ -23,7 +23,7 @@ import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import LoadingButton from 'components/LoadingButton';
+import { LoadingButton } from 'ucentral-libs';
 
 import styles from './index.module.scss';
 

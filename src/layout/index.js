@@ -3,23 +3,48 @@ import { useTranslation } from 'react-i18next';
 import { logout } from 'utils/authHelper';
 import routes from 'routes';
 import { useAuth } from 'contexts/AuthProvider';
-import { Header } from 'ucentral-libs';
-import Sidebar from './Sidebar';
-import TheContent from './Content';
-import TheFooter from './Footer';
+import { Header, Sidebar, Footer, PageContainer } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
-  const { endpoints, currentToken } = useAuth();
+  const { endpoints, currentToken, user, avatar } = useAuth();
   const { t, i18n } = useTranslation();
+
+  const navigation = [
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('common.devices'),
+      to: '/devices',
+      icon: 'cilRouter',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('user.users'),
+      to: '/users',
+      icon: 'cilPeople',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('firmware.title'),
+      to: '/firmware',
+      icon: 'cilSave',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('settings.title'),
+      to: '/settings',
+      icon: 'cilSettings',
+    },
+  ];
 
   return (
     <div className="c-app c-default-layout">
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
-        t={t}
-        logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
+        logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
+        options={navigation}
+        redirectTo="/devices"
       />
       <div className="c-wrapper">
         <Header
@@ -29,13 +54,16 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
+          logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
           authToken={currentToken}
           endpoints={endpoints}
+          user={user}
+          avatar={avatar}
         />
         <div className="c-body">
-          <TheContent />
+          <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <TheFooter />
+        <Footer t={t} version="2.0.0" />
       </div>
     </div>
   );
