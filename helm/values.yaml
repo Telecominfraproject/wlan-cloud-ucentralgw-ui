@@ -7,7 +7,7 @@ fullnameOverride: ""
 images:
   ucentralgwui:
     repository: tip-tip-wlan-cloud-ucentral.jfrog.io/ucentralgw-ui
-    tag: main
+    tag: v2.0.0-RC1
     pullPolicy: Always
 
 services:
