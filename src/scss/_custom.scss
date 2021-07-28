@@ -5,5 +5,23 @@ pre.ignore {
 .custom-select {
   appearance: none;
   -moz-appearance: none;
--webkit-appearance: none;
+  -webkit-appearance: none;
 }
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  border-radius: 50em;
+  transition: margin .15s;
+  width: 3rem;
+  height: 3rem;
+  font-size: .8rem;
+}
+
+.ignore-overflow {
+  overflow: unset !important;
+}
+

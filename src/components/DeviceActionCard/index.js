@@ -4,7 +4,7 @@ import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/reac
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
 import { useDevice } from 'contexts/DeviceProvider';
-import LoadingButton from 'components/LoadingButton';
+import { LoadingButton } from 'ucentral-libs';
 import RebootModal from 'components/RebootModal';
 import FirmwareUpgradeModal from 'components/FirmwareUpgradeModal';
 import ConfigureModal from 'components/ConfigureModal';

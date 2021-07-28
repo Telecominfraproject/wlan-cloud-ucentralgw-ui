@@ -7,15 +7,33 @@ import { Header, Sidebar, Footer, PageContainer } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
-  const { endpoints, currentToken } = useAuth();
+  const { endpoints, currentToken, user, avatar } = useAuth();
   const { t, i18n } = useTranslation();
 
   const navigation = [
     {
       _tag: 'CSidebarNavItem',
-      name: t('common.device_list'),
+      name: t('common.devices'),
       to: '/devices',
-      icon: 'cilNotes',
+      icon: 'cilRouter',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('user.users'),
+      to: '/users',
+      icon: 'cilPeople',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('firmware.title'),
+      to: '/firmware',
+      icon: 'cilSave',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: t('settings.title'),
+      to: '/settings',
+      icon: 'cilSettings',
     },
   ];
 
@@ -26,6 +44,7 @@ const TheLayout = () => {
         setShowSidebar={setShowSidebar}
         logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
         options={navigation}
+        redirectTo="/devices"
       />
       <div className="c-wrapper">
         <Header
@@ -35,13 +54,16 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
+          logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
           authToken={currentToken}
           endpoints={endpoints}
+          user={user}
+          avatar={avatar}
         />
         <div className="c-body">
-          <PageContainer t={t} routes={routes} />
+          <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="0.9.16" />
+        <Footer t={t} version="2.0.0" />
       </div>
     </div>
   );

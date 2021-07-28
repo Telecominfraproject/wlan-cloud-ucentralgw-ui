@@ -15,7 +15,7 @@ import {
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { cilSync, cilInfo, cilBadge, cilBan } from '@coreui/icons';
+import { cilSync, cilInfo, cilBadge, cilBan, cilNotes } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
@@ -34,7 +34,7 @@ const DeviceList = () => {
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || 10);
+  const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || '10');
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -169,27 +169,16 @@ const DeviceListDisplay = ({
   const columns = [
     { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
     { key: 'verifiedCertificate', label: t('common.certificate'), _style: { width: '1%' } },
-    { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '5%' } },
-    { key: 'UUID', label: t('common.config_id'), _style: { width: '5%' } },
-    { key: 'firmware', label: t('common.firmware'), filter: false },
-    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '20%' } },
+    { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '6%' } },
+    { key: 'UUID', label: t('common.config_id'), _style: { width: '6%' } },
+    { key: 'firmware', label: t('common.firmware'), filter: false, _style: { width: '30%' } },
+    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '8%' } },
     { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '12%' } },
     { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '12%' } },
-    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '16%' } },
-    {
-      key: 'show_details',
-      label: '',
-      _style: { width: '3%' },
-      sorter: false,
-      filter: false,
-    },
-    {
-      key: 'refresh',
-      label: '',
-      _style: { width: '2%' },
-      sorter: false,
-      filter: false,
-    },
+    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '8%' } },
+    { key: 'wifi_analysis', label: t(''), _style: { width: '4%' } },
+    { key: 'show_details', label: t(''), _style: { width: '4%' } },
+    { key: 'refresh_device', label: t(''), _style: { width: '4%' } },
   ];
 
   const getDeviceIcon = (deviceType) => {
@@ -301,7 +290,7 @@ const DeviceListDisplay = ({
             loading={loading}
             scopedSlots={{
               serialNumber: (item) => (
-                <td className={styles.column}>
+                <td className="text-center">
                   <CLink
                     className="c-subheader-nav-link"
                     aria-current="page"
@@ -312,7 +301,7 @@ const DeviceListDisplay = ({
                 </td>
               ),
               deviceType: (item) => (
-                <td className={styles.column}>
+                <td className="text-center">
                   <CPopover
                     content={item.connected ? t('common.connected') : t('common.not_connected')}
                     placement="top"
@@ -324,7 +313,7 @@ const DeviceListDisplay = ({
                 </td>
               ),
               verifiedCertificate: (item) => (
-                <td className={styles.column}>
+                <td className="text-center">
                   <CPopover
                     content={item.verifiedCertificate ?? t('common.unknown')}
                     placement="top"
@@ -339,7 +328,7 @@ const DeviceListDisplay = ({
                     content={item.firmware ? item.firmware : t('common.na')}
                     placement="top"
                   >
-                    <p style={{ width: '225px' }} className="text-truncate">
+                    <p style={{ width: 'calc(20vw)' }} className="text-truncate">
                       {item.firmware}
                     </p>
                   </CPopover>
@@ -351,7 +340,7 @@ const DeviceListDisplay = ({
                     content={item.compatible ? item.compatible : t('common.na')}
                     placement="top"
                   >
-                    <p style={{ width: '150px' }} className="text-truncate">
+                    <p style={{ width: 'calc(8vw)' }} className="text-truncate">
                       {item.compatible}
                     </p>
                   </CPopover>
@@ -365,28 +354,14 @@ const DeviceListDisplay = ({
                     content={item.ipAddress ? item.ipAddress : t('common.na')}
                     placement="top"
                   >
-                    <p style={{ width: '150px' }} className="text-truncate">
+                    <p style={{ width: 'calc(8vw)' }} className="text-truncate">
                       {item.ipAddress}
                     </p>
                   </CPopover>
                 </td>
               ),
-              refresh: (item) => (
-                <td className="py-2">
-                  <CPopover content={t('common.refresh_device')}>
-                    <CButton
-                      onClick={() => refreshDevice(item.serialNumber)}
-                      color="primary"
-                      variant="outline"
-                      size="sm"
-                    >
-                      <CIcon name="cil-sync" content={cilSync} size="sm" />
-                    </CButton>
-                  </CPopover>
-                </td>
-              ),
-              show_details: (item) => (
-                <td className="py-2">
+              wifi_analysis: (item) => (
+                <td className="text-center">
                   <CPopover content={t('configuration.details')}>
                     <CLink
                       className="c-subheader-nav-link"
@@ -397,6 +372,35 @@ const DeviceListDisplay = ({
                         <CIcon name="cil-info" content={cilInfo} size="sm" />
                       </CButton>
                     </CLink>
+                  </CPopover>
+                </td>
+              ),
+              show_details: (item) => (
+                <td className="text-center">
+                  <CPopover content={t('wifi_analysis.title')}>
+                    <CLink
+                      className="c-subheader-nav-link"
+                      aria-current="page"
+                      to={() => `/devices/${item.serialNumber}/wifianalysis`}
+                    >
+                      <CButton color="primary" variant="outline" shape="square" size="sm">
+                        <CIcon name="cil-notes" content={cilNotes} size="sm" />
+                      </CButton>
+                    </CLink>
+                  </CPopover>
+                </td>
+              ),
+              refresh_device: (item) => (
+                <td className="text-center">
+                  <CPopover content={t('common.refresh_device')}>
+                    <CButton
+                      onClick={() => refreshDevice(item.serialNumber)}
+                      color="primary"
+                      variant="outline"
+                      size="sm"
+                    >
+                      <CIcon name="cil-sync" content={cilSync} size="sm" />
+                    </CButton>
                   </CPopover>
                 </td>
               ),

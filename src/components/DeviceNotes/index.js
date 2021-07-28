@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
 import { prettyDate } from 'utils/helper';
-import LoadingButton from 'components/LoadingButton';
+import { LoadingButton } from 'ucentral-libs';
 
 import styles from './index.module.scss';
 

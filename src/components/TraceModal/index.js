@@ -23,7 +23,7 @@ import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import getDeviceConnection from 'utils/deviceHelper';
-import LoadingButton from 'components/LoadingButton';
+import { LoadingButton } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import WaitingForTraceBody from './WaitingForTraceBody';
 import styles from './index.module.scss';

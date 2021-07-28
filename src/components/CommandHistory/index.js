@@ -20,7 +20,7 @@ import { useAuth } from 'contexts/AuthProvider';
 import { useDevice } from 'contexts/DeviceProvider';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
-import LoadingButton from 'components/LoadingButton';
+import { LoadingButton } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 import styles from './index.module.scss';
