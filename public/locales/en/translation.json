@@ -71,6 +71,7 @@
 		"forgot_password_title": "Forgot Password",
 		"from": "From",
 		"general_error": "API Error, please consult your administrator",
+		"hide": "Hide",
 		"hour": "hour",
 		"hours": "hours",
 		"id": "Id",
@@ -159,11 +160,15 @@
 	},
 	"firmware": {
 		"details_title": "Image #{{image}} Details",
+		"device_type": "Device Type",
 		"downloads": "Downloads",
 		"image": "Image",
+		"newer_firmware_available": "Newer Revisions Available",
 		"revision": "Revision",
 		"size": "Size",
-		"title": "Firmware"
+		"title": "Firmware",
+		"unknown_firmware_status": "Unknown Firmware Status",
+		"upgrade_to_latest": "Upgrade to Latest"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI for React",

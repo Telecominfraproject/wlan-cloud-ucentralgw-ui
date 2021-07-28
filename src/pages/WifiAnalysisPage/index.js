@@ -112,7 +112,7 @@ const WifiAnalysisPage = () => {
                   ...extractIp(stat.data, association.bssid),
                   bssid: association.bssid,
                   ssid: ssid.ssid,
-                  rssi: (dbmNumber - association.rssi) * -1,
+                  rssi: association.rssi ? (dbmNumber - association.rssi) * -1 : '-',
                   mode: ssid.mode,
                   rxBytes: cleanBytesString(association.rx_bytes, 0),
                   rxRate: association.rx_rate.bitrate,

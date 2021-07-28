@@ -148,7 +148,8 @@ const FirmwareListPage = () => {
         getFirmware();
         setUpdateDescriptionLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         setUpdateDescriptionLoading(false);
         setToast({
           success: false,

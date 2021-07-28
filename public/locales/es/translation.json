@@ -71,6 +71,7 @@
 		"forgot_password_title": "Se te olvidó tu contraseña",
 		"from": "Desde",
 		"general_error": "Error de API, consulte a su administrador",
+		"hide": "Esconder",
 		"hour": "hora",
 		"hours": "horas",
 		"id": "Carné de identidad",
@@ -159,11 +160,15 @@
 	},
 	"firmware": {
 		"details_title": "Detalles de la imagen n. °{{image}} ",
+		"device_type": "Tipo de dispositivo",
 		"downloads": "Descargas",
 		"image": "Imagen",
+		"newer_firmware_available": "Nuevas revisiones disponibles",
 		"revision": "Revisión",
 		"size": "Tamaño",
-		"title": "Firmware"
+		"title": "Firmware",
+		"unknown_firmware_status": "Estado de firmware desconocido",
+		"upgrade_to_latest": "Actualizar a la última"
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI para React",
