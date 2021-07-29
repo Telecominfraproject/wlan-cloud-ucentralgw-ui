@@ -50,8 +50,8 @@ const FirmwareListPage = () => {
       )
       .then((response) => {
         const sortedFirmware = response.data.firmwares.sort((a, b) => {
-          const firstDate = a.created;
-          const secondDate = b.created;
+          const firstDate = a.imageDate;
+          const secondDate = b.imageDate;
           if (firstDate < secondDate) return 1;
           return firstDate > secondDate ? -1 : 0;
         });
@@ -148,8 +148,7 @@ const FirmwareListPage = () => {
         getFirmware();
         setUpdateDescriptionLoading(false);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         setUpdateDescriptionLoading(false);
         setToast({
           success: false,

@@ -159,16 +159,25 @@
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"firmware": {
+		"choose_custom": "Choose Custom Firmware",
 		"details_title": "Image #{{image}} Details",
 		"device_type": "Device Type",
 		"downloads": "Downloads",
+		"error_fetching_latest": "Error while fetching latest firmware",
 		"image": "Image",
+		"image_date": "Image Date",
+		"installed_firmware": "Installed Firmware",
+		"latest_version_installed": "Latest Version Installed",
 		"newer_firmware_available": "Newer Revisions Available",
 		"revision": "Revision",
 		"size": "Size",
+		"status": "Firmware Status",
 		"title": "Firmware",
 		"unknown_firmware_status": "Unknown Firmware Status",
-		"upgrade_to_latest": "Upgrade to Latest"
+		"upgrade_command_submitted": "Upgrade Command Submitted Successfully",
+		"upgrade_to_latest": "Upgrade to Latest",
+		"upgrade_to_version": "Upgrade to this Revision",
+		"upgrading": "Upgrading..."
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI for React",

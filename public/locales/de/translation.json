@@ -159,16 +159,25 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
+		"choose_custom": "Wählen Sie benutzerdefinierte Firmware",
 		"details_title": "Bild #{{image}} Details",
 		"device_type": "Gerätetyp",
 		"downloads": "Downloads",
+		"error_fetching_latest": "Fehler beim Abrufen der neuesten Firmware",
 		"image": "Bild",
+		"image_date": "Bilddatum",
+		"installed_firmware": "Installierte Firmware",
+		"latest_version_installed": "Neueste Version installiert Version",
 		"newer_firmware_available": "Neuere Versionen verfügbar",
 		"revision": "Revision",
 		"size": "Größe",
+		"status": "Firmware-Status",
 		"title": "Firmware",
 		"unknown_firmware_status": "Unbekannter Firmware-Status",
-		"upgrade_to_latest": "Auf die neueste Version aktualisieren"
+		"upgrade_command_submitted": "Upgrade-Befehl erfolgreich gesendet",
+		"upgrade_to_latest": "Auf die neueste Version aktualisieren",
+		"upgrade_to_version": "Upgrade auf diese Revision",
+		"upgrading": "Upgrade durchführen..."
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI für React",

@@ -159,16 +159,25 @@
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
 	"firmware": {
+		"choose_custom": "Choisissez un micrologiciel personnalisé",
 		"details_title": "Image #{{image}} Détails",
 		"device_type": "Type d'appareil",
 		"downloads": "Téléchargements",
+		"error_fetching_latest": "Erreur lors de la récupération du dernier firmware",
 		"image": "Image",
+		"image_date": "Date de l'image",
+		"installed_firmware": "Micrologiciel installé",
+		"latest_version_installed": "Dernière version installée",
 		"newer_firmware_available": "Révisions plus récentes disponibles",
 		"revision": "Révision",
 		"size": "Taille",
+		"status": "État du micrologiciel",
 		"title": "Micrologiciel",
 		"unknown_firmware_status": "État du micrologiciel inconnu",
-		"upgrade_to_latest": "Mettre à niveau vers le plus récent"
+		"upgrade_command_submitted": "Commande de mise à niveau soumise avec succès",
+		"upgrade_to_latest": "Mettre à niveau vers le plus récent",
+		"upgrade_to_version": "Mettre à niveau vers cette révision",
+		"upgrading": "Mise à niveau..."
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI pour React",

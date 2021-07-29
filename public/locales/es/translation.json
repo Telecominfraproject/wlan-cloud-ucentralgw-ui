@@ -159,16 +159,25 @@
 		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
 	},
 	"firmware": {
+		"choose_custom": "Elija firmware personalizado",
 		"details_title": "Detalles de la imagen n. °{{image}} ",
 		"device_type": "Tipo de dispositivo",
 		"downloads": "Descargas",
+		"error_fetching_latest": "Error al obtener el firmware más reciente",
 		"image": "Imagen",
+		"image_date": "Fecha de la imagen",
+		"installed_firmware": "Firmware instalado",
+		"latest_version_installed": "Última versión instalada",
 		"newer_firmware_available": "Nuevas revisiones disponibles",
 		"revision": "Revisión",
 		"size": "Tamaño",
+		"status": "Estado del firmware",
 		"title": "Firmware",
 		"unknown_firmware_status": "Estado de firmware desconocido",
-		"upgrade_to_latest": "Actualizar a la última"
+		"upgrade_command_submitted": "El comando de actualización se envió correctamente",
+		"upgrade_to_latest": "Actualizar a la última",
+		"upgrade_to_version": "Actualizar a esta revisión",
+		"upgrading": "Actualizando ..."
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI para React",

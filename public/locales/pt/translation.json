@@ -159,16 +159,25 @@
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"firmware": {
+		"choose_custom": "Escolha o firmware personalizado",
 		"details_title": "Detalhes da imagem #{{image}} ",
 		"device_type": "Tipo de dispositivo",
 		"downloads": "Transferências",
+		"error_fetching_latest": "Erro ao buscar o firmware mais recente",
 		"image": "Imagem",
+		"image_date": "Data da Imagem",
+		"installed_firmware": "Firmware Instalado",
+		"latest_version_installed": "Última versão instalada",
 		"newer_firmware_available": "Novas revisões disponíveis",
 		"revision": "Revisão",
 		"size": "Tamanho",
+		"status": "Status do firmware",
 		"title": "Firmware",
 		"unknown_firmware_status": "Status de firmware desconhecido",
-		"upgrade_to_latest": "Atualize para o mais recente"
+		"upgrade_command_submitted": "Comando de atualização enviado com sucesso",
+		"upgrade_to_latest": "Atualize para o mais recente",
+		"upgrade_to_version": "Atualize para esta revisão",
+		"upgrading": "Atualizando ..."
 	},
 	"footer": {
 		"coreui_for_react": "CoreUI para React",

@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import {
-  CBadge,
-  CCardBody,
-  CDataTable,
-  CButton,
-  CLink,
-  CCard,
-  CCardHeader,
-  CRow,
-  CCol,
-  CPopover,
-  CSelect,
-} from '@coreui/react';
-import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import { cilSync, cilInfo, cilBadge, cilBan, cilNotes } from '@coreui/icons';
-import CIcon from '@coreui/icons-react';
+import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
-import { cleanBytesString } from 'utils/helper';
-import meshIcon from 'assets/icons/Mesh.png';
-import apIcon from 'assets/icons/AP.png';
-import internetSwitch from 'assets/icons/Switch.png';
-import iotIcon from 'assets/icons/IotIcon.png';
 import { getItem, setItem } from 'utils/localStorageHelper';
-import styles from './index.module.scss';
+import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
+import { DeviceListTable } from 'ucentral-libs';
 
 const DeviceList = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [actionDevice, setActionDevice] = useState({});
+  const [upgradeStatus, setUpgradeStatus] = useState({
+    loading: false,
+  });
+  const [toast, setToast] = useState({
+    show: false,
+    success: true,
+    text: '',
+  });
   const [loadedSerials, setLoadedSerials] = useState(false);
   const [serialNumbers, setSerialNumbers] = useState([]);
   const [page, setPage] = useState(0);
@@ -37,6 +27,29 @@ const DeviceList = () => {
   const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || '10');
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showFirmwareModal, setShowFirmwareModal] = useState(false);
+  const [firmwareDevice, setFirmwareDevice] = useState({
+    deviceType: '',
+    serialNumber: '',
+  });
+
+  const toggleFirmwareModal = (device) => {
+    setShowActionModal(false);
+    setShowFirmwareModal(!showFirmwareModal);
+    if (device !== undefined) setFirmwareDevice(device);
+  };
+
+  const toggleActionModal = (device) => {
+    if (!showActionModal) {
+      setToast({
+        show: false,
+        success: true,
+        text: '',
+      });
+    }
+    setShowActionModal(!showActionModal);
+    if (device !== undefined) setActionDevice(device);
+  };
 
   const getSerialNumbers = () => {
     setLoading(true);
@@ -47,7 +60,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true&limit=1000`, {
         headers,
       })
       .then((response) => {
@@ -62,9 +75,11 @@ const DeviceList = () => {
   const getDeviceInformation = () => {
     setLoading(true);
 
-    const headers = {
-      Accept: 'application/json',
-      Authorization: `Bearer ${currentToken}`,
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
     };
 
     const startIndex = page * devicesPerPage;
@@ -74,12 +89,36 @@ const DeviceList = () => {
       .map((x) => encodeURIComponent(x))
       .join(',');
 
+    let fullDevices;
+
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${serialsToGet}`, {
-        headers,
+      .get(
+        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${serialsToGet}`,
+        options,
+      )
+      .then((response) => {
+        fullDevices = response.data.devicesWithStatus;
+        return axiosInstance.get(
+          `${endpoints.ucentralfms}/api/v1/firmwareAge?select=${serialsToGet}`,
+          options,
+        );
       })
       .then((response) => {
-        setDevices(response.data.devicesWithStatus);
+        fullDevices = fullDevices.map((device, index) => {
+          const foundAgeDate = response.data.ages[index].age !== undefined;
+
+          if (foundAgeDate) {
+            return {
+              ...device,
+              firmwareInfo: {
+                age: response.data.ages[index].age,
+                latest: response.data.ages[index].latest,
+              },
+            };
+          }
+          return device;
+        });
+        setDevices(fullDevices);
         setLoading(false);
       })
       .catch(() => {
@@ -90,9 +129,11 @@ const DeviceList = () => {
   const refreshDevice = (serialNumber) => {
     setLoading(true);
 
-    const headers = {
-      Accept: 'application/json',
-      Authorization: `Bearer ${currentToken}`,
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
     };
 
     axiosInstance
@@ -100,9 +141,7 @@ const DeviceList = () => {
         `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
           serialNumber,
         )}`,
-        {
-          headers,
-        },
+        options,
       )
       .then((response) => {
         const device = response.data.devicesWithStatus[0];
@@ -126,9 +165,87 @@ const DeviceList = () => {
     setPage(selectedPage);
   };
 
+  const upgradeToLatest = (device) => {
+    setUpgradeStatus({
+      loading: true,
+    });
+
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    axiosInstance
+      .get(
+        `${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${device.compatible}&latestOnly=true`,
+        options,
+      )
+      .then((response) => {
+        if (response.data.uri) {
+          const parameters = {
+            serialNumber: device.serialNumber,
+            when: 0,
+            uri: response.data.uri,
+          };
+          return axiosInstance.post(
+            `${endpoints.ucentralgw}/api/v1/device/${device.serialNumber}/upgrade`,
+            parameters,
+            options,
+          );
+        }
+        setUpgradeStatus({
+          loading: false,
+          result: {
+            success: false,
+            error: t('firmware.error_fetching_latest'),
+          },
+        });
+        return null;
+      })
+      .then((response) => {
+        if (response) {
+          setUpgradeStatus({
+            loading: false,
+            result: {
+              success: response.data.errorCode === 0,
+              error: response.data.errorCode === 0 ? '' : t('firmware.error_fetching_latest'),
+            },
+          });
+        }
+      })
+      .catch(() => {
+        setUpgradeStatus({
+          loading: false,
+          result: {
+            success: false,
+            error: t('common.general_error'),
+          },
+        });
+      });
+  };
+
   useEffect(() => {
     getSerialNumbers();
   }, []);
+
+  useEffect(() => {
+    if (upgradeStatus.result !== undefined) {
+      setToast({
+        show: true,
+        success: upgradeStatus.result.success,
+        text: upgradeStatus.result.success
+          ? t('firmware.upgrade_command_submitted')
+          : upgradeStatus.result.error,
+      });
+      setUpgradeStatus({
+        loading: false,
+      });
+      setShowActionModal(false);
+      setShowFirmwareModal(false);
+    }
+  }, [upgradeStatus]);
 
   useEffect(() => {
     if (loadedSerials) getDeviceInformation();
@@ -142,301 +259,52 @@ const DeviceList = () => {
   }, [devicesPerPage, loadedSerials]);
 
   return (
-    <DeviceListDisplay
-      devices={devices}
-      loading={loading}
-      updateDevicesPerPage={updateDevicesPerPage}
-      devicesPerPage={devicesPerPage}
-      pageCount={pageCount}
-      updatePage={updatePageCount}
-      pageRangeDisplayed={5}
-      refreshDevice={refreshDevice}
-      t={t}
-    />
-  );
-};
-
-const DeviceListDisplay = ({
-  devices,
-  devicesPerPage,
-  loading,
-  updateDevicesPerPage,
-  pageCount,
-  updatePage,
-  refreshDevice,
-  t,
-}) => {
-  const columns = [
-    { key: 'deviceType', label: '', filter: false, sorter: false, _style: { width: '5%' } },
-    { key: 'verifiedCertificate', label: t('common.certificate'), _style: { width: '1%' } },
-    { key: 'serialNumber', label: t('common.serial_number'), _style: { width: '6%' } },
-    { key: 'UUID', label: t('common.config_id'), _style: { width: '6%' } },
-    { key: 'firmware', label: t('common.firmware'), filter: false, _style: { width: '30%' } },
-    { key: 'compatible', label: t('common.compatible'), filter: false, _style: { width: '8%' } },
-    { key: 'txBytes', label: 'Tx', filter: false, _style: { width: '12%' } },
-    { key: 'rxBytes', label: 'Rx', filter: false, _style: { width: '12%' } },
-    { key: 'ipAddress', label: t('common.ip_address'), _style: { width: '8%' } },
-    { key: 'wifi_analysis', label: t(''), _style: { width: '4%' } },
-    { key: 'show_details', label: t(''), _style: { width: '4%' } },
-    { key: 'refresh_device', label: t(''), _style: { width: '4%' } },
-  ];
-
-  const getDeviceIcon = (deviceType) => {
-    if (deviceType === 'AP_Default' || deviceType === 'AP') {
-      return <img src={apIcon} className={styles.icon} alt="AP" />;
-    }
-    if (deviceType === 'MESH') {
-      return <img src={meshIcon} className={styles.icon} alt="MESH" />;
-    }
-    if (deviceType === 'SWITCH') {
-      return <img src={internetSwitch} className={styles.icon} alt="SWITCH" />;
-    }
-    if (deviceType === 'IOT') {
-      return <img src={iotIcon} className={styles.icon} alt="SWITCH" />;
-    }
-    return null;
-  };
-
-  const getCertBadge = (cert) => {
-    if (cert === 'NO_CERTIFICATE') {
-      return (
-        <div className={styles.certificateWrapper}>
-          <CIcon className={styles.badge} name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
-          <CIcon
-            className={styles.badCertificate}
-            name="cil-ban"
-            content={cilBan}
-            size="3xl"
-            alt="AP"
-          />
-        </div>
-      );
-    }
-
-    let color = 'transparent';
-    switch (cert) {
-      case 'VALID_CERTIFICATE':
-        color = 'danger';
-        break;
-      case 'MISMATCH_SERIAL':
-        return (
-          <CBadge color={color} className={styles.mismatchBackground}>
-            <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
-          </CBadge>
-        );
-      case 'VERIFIED':
-        color = 'success';
-        break;
-      default:
-        return (
-          <div className={styles.certificateWrapper}>
-            <CIcon
-              className={styles.badge}
-              name="cil-badge"
-              content={cilBadge}
-              size="2xl"
-              alt="AP"
-            />
-            <CIcon
-              className={styles.badCertificate}
-              name="cil-ban"
-              content={cilBan}
-              size="3xl"
-              alt="AP"
-            />
+    <div>
+      <DeviceListTable
+        t={t}
+        devices={devices}
+        loading={loading}
+        updateDevicesPerPage={updateDevicesPerPage}
+        devicesPerPage={devicesPerPage}
+        pageCount={pageCount}
+        updatePage={updatePageCount}
+        pageRangeDisplayed={5}
+        refreshDevice={refreshDevice}
+        toggleFirmwareModal={toggleFirmwareModal}
+        upgradeToLatest={upgradeToLatest}
+        upgradeStatus={upgradeStatus}
+        toggleActionModal={toggleActionModal}
+        showActionModal={showActionModal}
+        actionDevice={actionDevice}
+      />
+      <DeviceFirmwareModal
+        t={t}
+        endpoints={endpoints}
+        currentToken={currentToken}
+        device={firmwareDevice}
+        show={showFirmwareModal}
+        toggleFirmwareModal={toggleFirmwareModal}
+        setUpgradeStatus={setUpgradeStatus}
+        upgradeStatus={upgradeStatus}
+      />
+      <CToaster>
+        <CToast
+          autohide={5000}
+          fade
+          color={toast.success ? 'success' : 'danger'}
+          className="text-white align-items-center"
+          show={toast.show}
+        >
+          <CToastHeader closeButton>
+            {toast.success ? t('common.success') : t('common.error')}
+          </CToastHeader>
+          <div className="d-flex">
+            <CToastBody>{toast.text}</CToastBody>
           </div>
-        );
-    }
-    return (
-      <CBadge color={color}>
-        <CIcon name="cil-badge" content={cilBadge} size="2xl" alt="AP" />
-      </CBadge>
-    );
-  };
-
-  const getStatusBadge = (status) => {
-    if (status) {
-      return 'success';
-    }
-    return 'danger';
-  };
-
-  return (
-    <>
-      <CCard>
-        <CCardHeader>
-          <CRow>
-            <CCol />
-            <CCol xs={1}>
-              <CSelect
-                custom
-                defaultValue={devicesPerPage}
-                onChange={(e) => updateDevicesPerPage(e.target.value)}
-                disabled={loading}
-              >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-              </CSelect>
-            </CCol>
-          </CRow>
-        </CCardHeader>
-        <CCardBody>
-          <CDataTable
-            items={devices ?? []}
-            fields={columns}
-            hover
-            border
-            loading={loading}
-            scopedSlots={{
-              serialNumber: (item) => (
-                <td className="text-center">
-                  <CLink
-                    className="c-subheader-nav-link"
-                    aria-current="page"
-                    to={() => `/devices/${item.serialNumber}`}
-                  >
-                    {item.serialNumber}
-                  </CLink>
-                </td>
-              ),
-              deviceType: (item) => (
-                <td className="text-center">
-                  <CPopover
-                    content={item.connected ? t('common.connected') : t('common.not_connected')}
-                    placement="top"
-                  >
-                    <CBadge color={getStatusBadge(item.connected)}>
-                      {getDeviceIcon(item.deviceType) ?? item.deviceType}
-                    </CBadge>
-                  </CPopover>
-                </td>
-              ),
-              verifiedCertificate: (item) => (
-                <td className="text-center">
-                  <CPopover
-                    content={item.verifiedCertificate ?? t('common.unknown')}
-                    placement="top"
-                  >
-                    {getCertBadge(item.verifiedCertificate)}
-                  </CPopover>
-                </td>
-              ),
-              firmware: (item) => (
-                <td>
-                  <CPopover
-                    content={item.firmware ? item.firmware : t('common.na')}
-                    placement="top"
-                  >
-                    <p style={{ width: 'calc(20vw)' }} className="text-truncate">
-                      {item.firmware}
-                    </p>
-                  </CPopover>
-                </td>
-              ),
-              compatible: (item) => (
-                <td>
-                  <CPopover
-                    content={item.compatible ? item.compatible : t('common.na')}
-                    placement="top"
-                  >
-                    <p style={{ width: 'calc(8vw)' }} className="text-truncate">
-                      {item.compatible}
-                    </p>
-                  </CPopover>
-                </td>
-              ),
-              txBytes: (item) => <td>{cleanBytesString(item.txBytes)}</td>,
-              rxBytes: (item) => <td>{cleanBytesString(item.rxBytes)}</td>,
-              ipAddress: (item) => (
-                <td>
-                  <CPopover
-                    content={item.ipAddress ? item.ipAddress : t('common.na')}
-                    placement="top"
-                  >
-                    <p style={{ width: 'calc(8vw)' }} className="text-truncate">
-                      {item.ipAddress}
-                    </p>
-                  </CPopover>
-                </td>
-              ),
-              wifi_analysis: (item) => (
-                <td className="text-center">
-                  <CPopover content={t('configuration.details')}>
-                    <CLink
-                      className="c-subheader-nav-link"
-                      aria-current="page"
-                      to={() => `/devices/${item.serialNumber}`}
-                    >
-                      <CButton color="primary" variant="outline" shape="square" size="sm">
-                        <CIcon name="cil-info" content={cilInfo} size="sm" />
-                      </CButton>
-                    </CLink>
-                  </CPopover>
-                </td>
-              ),
-              show_details: (item) => (
-                <td className="text-center">
-                  <CPopover content={t('wifi_analysis.title')}>
-                    <CLink
-                      className="c-subheader-nav-link"
-                      aria-current="page"
-                      to={() => `/devices/${item.serialNumber}/wifianalysis`}
-                    >
-                      <CButton color="primary" variant="outline" shape="square" size="sm">
-                        <CIcon name="cil-notes" content={cilNotes} size="sm" />
-                      </CButton>
-                    </CLink>
-                  </CPopover>
-                </td>
-              ),
-              refresh_device: (item) => (
-                <td className="text-center">
-                  <CPopover content={t('common.refresh_device')}>
-                    <CButton
-                      onClick={() => refreshDevice(item.serialNumber)}
-                      color="primary"
-                      variant="outline"
-                      size="sm"
-                    >
-                      <CIcon name="cil-sync" content={cilSync} size="sm" />
-                    </CButton>
-                  </CPopover>
-                </td>
-              ),
-            }}
-          />
-          <ReactPaginate
-            previousLabel="← Previous"
-            nextLabel="Next →"
-            pageCount={pageCount}
-            onPageChange={updatePage}
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            containerClassName="pagination"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            activeClassName="active"
-          />
-        </CCardBody>
-      </CCard>
-    </>
+        </CToast>
+      </CToaster>
+    </div>
   );
-};
-
-DeviceListDisplay.propTypes = {
-  devices: PropTypes.instanceOf(Array).isRequired,
-  updateDevicesPerPage: PropTypes.func.isRequired,
-  pageCount: PropTypes.number.isRequired,
-  updatePage: PropTypes.func.isRequired,
-  devicesPerPage: PropTypes.string.isRequired,
-  refreshDevice: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 
 export default DeviceList;
