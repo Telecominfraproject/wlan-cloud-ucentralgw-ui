@@ -29,16 +29,27 @@ const TheLayout = () => {
       ],
     },
     {
+      _tag: 'CSidebarNavDropdown',
+      name: t('firmware.title'),
+      icon: 'cilSave',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: t('common.dashboard'),
+          to: '/firmwaredashboard',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: t('common.list'),
+          to: '/firmware',
+        },
+      ],
+    },
+    {
       _tag: 'CSidebarNavItem',
       name: t('user.users'),
       to: '/users',
       icon: 'cilPeople',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('firmware.title'),
-      to: '/firmware',
-      icon: 'cilSave',
     },
     {
       _tag: 'CSidebarNavItem',

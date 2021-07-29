@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from 'contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
-import { DeviceDashboard as Dashboard } from 'ucentral-libs';
+import { FirmwareDashboard as Dashboard } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 
 const colors = [
@@ -287,7 +287,7 @@ const colors = [
   '#77ecca',
 ];
 
-const DeviceDashboard = () => {
+const FirmwareDashboard = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -296,31 +296,27 @@ const DeviceDashboard = () => {
       datasets: [],
       labels: [],
     },
-    healths: {
-      datasets: [],
-      labels: [],
-    },
-    upTimes: {
-      datasets: [],
-      labels: [],
-    },
     deviceType: {
       datasets: [],
       labels: [],
     },
-    vendors: {
+    firmwareDistribution: {
       datasets: [],
       labels: [],
     },
-    certificates: {
+    latest: {
       datasets: [],
       labels: [],
     },
-    commands: {
+    unknownFirmwares: {
       datasets: [],
       labels: [],
     },
-    memoryUsed: {
+    ouis: {
+      datasets: [],
+      labels: [],
+    },
+    endpoints: {
       datasets: [],
       labels: [],
     },
@@ -362,88 +358,12 @@ const DeviceDashboard = () => {
       labels: statusLabels,
     };
 
-    // Health pie chart
-    const healthDs = [];
-    const healthColors = [];
-    const healthLabels = [];
-    for (const point of parsedData.healths) {
-      healthDs.push(point.value);
-      healthLabels.push(point.tag);
-      let color = '';
-      switch (point.tag) {
-        case '100%':
-          color = '#41B883';
-          break;
-        case '>60%':
-          color = '#f9b115';
-          break;
-        case '<60%%>':
-          color = '#e55353';
-          break;
-        default:
-          color = '#39f';
-          break;
-      }
-      healthColors.push(color);
-    }
-    parsedData.healths = {
-      datasets: [
-        {
-          data: healthDs,
-          backgroundColor: healthColors,
-        },
-      ],
-      labels: healthLabels,
-    };
-
-    // Uptime bar chart
-    const uptimeDs = [];
-    const uptimeColors = [];
-    const uptimeLabels = [];
-    for (const point of parsedData.upTimes) {
-      uptimeDs.push(point.value);
-      uptimeLabels.push(point.tag);
-      uptimeColors.push('#39f');
-    }
-    parsedData.upTimes = {
-      datasets: [
-        {
-          label: 'Devices',
-          data: uptimeDs,
-          backgroundColor: uptimeColors,
-        },
-      ],
-      labels: uptimeLabels,
-    };
-
-    // Vendors bar chart
-    const vendorsTypeDs = [];
-    const vendorsColors = [];
-    const vendorsLabels = [];
-    const sortedVendors = parsedData.vendors.sort((a, b) => (a.value < b.value ? 1 : -1));
-    for (const point of sortedVendors) {
-      vendorsTypeDs.push(point.value);
-      vendorsLabels.push(point.tag === '' ? 'Unknown' : point.tag);
-      vendorsColors.push('#eb7474');
-    }
-    const otherVendors = vendorsTypeDs.slice(5).reduce((acc, vendor) => acc + vendor, 0);
-    parsedData.vendors = {
-      datasets: [
-        {
-          label: 'Devices',
-          data: vendorsTypeDs.slice(0, 5).concat([otherVendors]),
-          backgroundColor: vendorsColors,
-        },
-      ],
-      labels: vendorsLabels.slice(0, 5).concat(['Others']),
-    };
-
     // Device Type pie chart
     const deviceTypeDs = [];
     const deviceTypeColors = [];
     const deviceTypeLabels = [];
-    for (let i = 0; i < parsedData.deviceType.length; i += 1) {
-      const point = parsedData.deviceType[i];
+    for (let i = 0; i < parsedData.deviceTypes.length; i += 1) {
+      const point = parsedData.deviceTypes[i];
 
       deviceTypeDs.push(point.value);
       deviceTypeLabels.push(point.tag);
@@ -459,78 +379,121 @@ const DeviceDashboard = () => {
       labels: deviceTypeLabels,
     };
 
-    // Certificates pie chart
-    const certificatesDs = [];
-    const certificatesColors = [];
-    const certificatesLabels = [];
-    for (const point of parsedData.certificates) {
-      certificatesDs.push(point.value);
-      certificatesLabels.push(point.tag);
+    // Latest/unknown distribution
+    const unknownFirmware = parsedData.unknownFirmwares.reduce(
+      (acc, firmware) => acc + firmware.value,
+      0,
+    );
+    const usingLatestFirmware = parsedData.usingLatest.reduce(
+      (acc, firmware) => acc + firmware.value,
+      0,
+    );
+    parsedData.firmwareDistribution = {
+      datasets: [
+        {
+          label: t('common.devices'),
+          data: [unknownFirmware, usingLatestFirmware],
+          backgroundColor: ['#e55353', '#41B883'],
+        },
+      ],
+      labels: [t('common.unknown'), t('common.latest')],
+    };
+
+    // Latest firmware distribution
+    const latestDs = [];
+    const latestColors = [];
+    const latestLabels = [];
+    const usingLatest = parsedData.usingLatest.sort((a, b) => (a.value < b.value ? 1 : -1));
+    for (const point of usingLatest) {
+      latestDs.push(point.value);
+      latestLabels.push(point.tag === '' ? 'Unknown' : point.tag);
+      latestColors.push('#39f');
+    }
+    parsedData.latest = {
+      datasets: [
+        {
+          label: t('common.firmware'),
+          data: latestDs.slice(0, 5),
+          backgroundColor: latestColors,
+        },
+      ],
+      labels: latestLabels.slice(0, 5),
+    };
+
+    // Unknown firmware distribution
+    const unknownDs = [];
+    const unknownColors = [];
+    const unknownLabels = [];
+    const unknownFirmwares = parsedData.unknownFirmwares.sort((a, b) =>
+      a.value < b.value ? 1 : -1,
+    );
+    for (const point of unknownFirmwares) {
+      unknownDs.push(point.value);
+      unknownLabels.push(point.tag === '' ? 'Unknown' : point.tag);
+      unknownColors.push('#39f');
+    }
+    parsedData.unknownFirmwares = {
+      datasets: [
+        {
+          label: t('common.firmware'),
+          data: unknownDs.slice(0, 5),
+          backgroundColor: unknownColors,
+        },
+      ],
+      labels: unknownLabels.slice(0, 5),
+    };
+
+    // OUIs bar graph
+    const ouisDs = [];
+    const ouisColors = [];
+    const ouisLabels = [];
+    for (const point of parsedData.ouis) {
+      ouisDs.push(point.value);
+      ouisLabels.push(point.tag === '' ? 'Unknown' : point.tag);
+      ouisColors.push('#39f');
+    }
+    parsedData.ouis = {
+      datasets: [
+        {
+          label: 'OUIs',
+          data: ouisDs.slice(0, 5),
+          backgroundColor: ouisColors,
+        },
+      ],
+      labels: ouisLabels.slice(0, 5),
+    };
+
+    // Endpoints pie chart
+    const endpointsDs = [];
+    const endpointsColors = [];
+    const endpointsLabels = [];
+    for (const point of parsedData.endPoints) {
+      endpointsDs.push(point.value);
+      endpointsLabels.push(point.tag);
       let color = '';
       switch (point.tag) {
-        case 'verified':
+        case 'connected':
           color = '#41B883';
           break;
-        case 'serial mismatch':
-          color = '#f9b115';
+        case 'not connected':
+          color = '#39f';
           break;
-        case 'no certificate':
+        case 'disconnected':
           color = '#e55353';
           break;
         default:
-          color = '#39f';
           break;
       }
-      certificatesColors.push(color);
+      statusColors.push(color);
     }
-    parsedData.certificates = {
+    parsedData.endpoints = {
       datasets: [
         {
-          data: certificatesDs,
-          backgroundColor: certificatesColors,
+          data: endpointsDs,
+          backgroundColor: endpointsColors,
         },
       ],
-      labels: certificatesLabels,
-    };
-
-    // Commands bar chart
-    const commandsDs = [];
-    const commandsColors = [];
-    const commandsLabels = [];
-    for (const point of parsedData.commands) {
-      commandsDs.push(point.value);
-      commandsLabels.push(point.tag);
-      commandsColors.push('#39f');
-    }
-    parsedData.commands = {
-      datasets: [
-        {
-          label: t('common.commands_executed'),
-          data: commandsDs,
-          backgroundColor: commandsColors,
-        },
-      ],
-      labels: commandsLabels,
-    };
-
-    // Memory Used bar chart
-    const memoryDs = [];
-    const memoryColors = [];
-    const memoryLabels = [];
-    for (const point of parsedData.memoryUsed) {
-      memoryDs.push(point.value);
-      memoryLabels.push(point.tag);
-      memoryColors.push('#636f83');
-    }
-    parsedData.memoryUsed = {
-      datasets: [
-        {
-          label: 'Devices',
-          data: memoryDs,
-          backgroundColor: memoryColors,
-        },
-      ],
-      labels: memoryLabels,
+      labels: endpointsLabels,
     };
 
     setData(parsedData);
@@ -544,7 +507,7 @@ const DeviceDashboard = () => {
       Authorization: `Bearer ${currentToken}`,
     };
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/deviceDashboard`, {
+      .get(`${endpoints.ucentralfms}/api/v1/deviceReport`, {
         headers,
       })
       .then((response) => {
@@ -564,4 +527,4 @@ const DeviceDashboard = () => {
   return <Dashboard loading={loading} t={t} data={data} />;
 };
 
-export default DeviceDashboard;
+export default FirmwareDashboard;
