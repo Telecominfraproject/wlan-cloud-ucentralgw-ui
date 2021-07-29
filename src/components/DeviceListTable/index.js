@@ -14,8 +14,6 @@ import iotIcon from '../../assets/icons/IotIcon.png';
 const DeviceList = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
-  const [showActionModal, setShowActionModal] = useState(false);
-  const [actionDevice, setActionDevice] = useState({});
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
@@ -38,21 +36,8 @@ const DeviceList = () => {
   });
 
   const toggleFirmwareModal = (device) => {
-    setShowActionModal(false);
     setShowFirmwareModal(!showFirmwareModal);
     if (device !== undefined) setFirmwareDevice(device);
-  };
-
-  const toggleActionModal = (device) => {
-    if (!showActionModal) {
-      setToast({
-        show: false,
-        success: true,
-        text: '',
-      });
-    }
-    setShowActionModal(!showActionModal);
-    if (device !== undefined) setActionDevice(device);
   };
 
   const getSerialNumbers = () => {
@@ -246,7 +231,6 @@ const DeviceList = () => {
       setUpgradeStatus({
         loading: false,
       });
-      setShowActionModal(false);
       setShowFirmwareModal(false);
     }
   }, [upgradeStatus]);
@@ -277,16 +261,12 @@ const DeviceList = () => {
         toggleFirmwareModal={toggleFirmwareModal}
         upgradeToLatest={upgradeToLatest}
         upgradeStatus={upgradeStatus}
-        toggleActionModal={toggleActionModal}
-        showActionModal={showActionModal}
-        actionDevice={actionDevice}
         meshIcon={meshIcon}
         apIcon={apIcon}
         internetSwitch={internetSwitch}
         iotIcon={iotIcon}
       />
       <DeviceFirmwareModal
-        t={t}
         endpoints={endpoints}
         currentToken={currentToken}
         device={firmwareDevice}

@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { DeviceFirmwareModal as Modal } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
+import { useTranslation } from 'react-i18next';
 
 const DeviceFirmwareModal = ({
-  t,
   device,
   show,
   toggleFirmwareModal,
   setUpgradeStatus,
   upgradeStatus,
 }) => {
+  const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
   const [firmwareVersions, setFirmwareVersions] = useState([]);
@@ -102,7 +103,6 @@ const DeviceFirmwareModal = ({
 };
 
 DeviceFirmwareModal.propTypes = {
-  t: PropTypes.func.isRequired,
   device: PropTypes.instanceOf(Object).isRequired,
   show: PropTypes.bool.isRequired,
   toggleFirmwareModal: PropTypes.func.isRequired,

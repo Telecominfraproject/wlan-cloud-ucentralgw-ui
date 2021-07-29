@@ -9,7 +9,7 @@
 		"reboot": "Gerät neustarten",
 		"title": "Geräte Administrations",
 		"trace": "Tcpdump starten",
-		"wifi_scan": "WiFi Scan"
+		"wifi_scan": "Wi-Fi Scan"
 	},
 	"blink": {
 		"blink": "LEDs Blinken",
@@ -169,11 +169,13 @@
 		"installed_firmware": "Installierte Firmware",
 		"latest_version_installed": "Neueste Version installiert Version",
 		"newer_firmware_available": "Neuere Versionen verfügbar",
+		"reinstall_latest": "Neu installieren",
 		"revision": "Revision",
 		"size": "Größe",
 		"status": "Firmware-Status",
 		"title": "Firmware",
 		"unknown_firmware_status": "Unbekannter Firmware-Status",
+		"upgrade": "Aktualisierung",
 		"upgrade_command_submitted": "Upgrade-Befehl erfolgreich gesendet",
 		"upgrade_to_latest": "Auf die neueste Version aktualisieren",
 		"upgrade_to_version": "Upgrade auf diese Revision",

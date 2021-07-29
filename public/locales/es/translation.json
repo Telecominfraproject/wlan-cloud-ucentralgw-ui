@@ -9,7 +9,7 @@
 		"reboot": "Reiniciar",
 		"title": "Comandos",
 		"trace": "Rastro",
-		"wifi_scan": "Escaneo Wifi"
+		"wifi_scan": "Escaneo Wi-Fi "
 	},
 	"blink": {
 		"blink": "Parpadeo",
@@ -169,11 +169,13 @@
 		"installed_firmware": "Firmware instalado",
 		"latest_version_installed": "Última versión instalada",
 		"newer_firmware_available": "Nuevas revisiones disponibles",
+		"reinstall_latest": "Reinstalar más reciente",
 		"revision": "Revisión",
 		"size": "Tamaño",
 		"status": "Estado del firmware",
 		"title": "Firmware",
 		"unknown_firmware_status": "Estado de firmware desconocido",
+		"upgrade": "Mejorar",
 		"upgrade_command_submitted": "El comando de actualización se envió correctamente",
 		"upgrade_to_latest": "Actualizar a la última",
 		"upgrade_to_version": "Actualizar a esta revisión",
