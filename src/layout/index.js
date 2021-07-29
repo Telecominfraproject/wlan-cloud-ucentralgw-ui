@@ -12,10 +12,21 @@ const TheLayout = () => {
 
   const navigation = [
     {
-      _tag: 'CSidebarNavItem',
+      _tag: 'CSidebarNavDropdown',
       name: t('common.devices'),
-      to: '/devices',
       icon: 'cilRouter',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: t('common.dashboard'),
+          to: '/devicedashboard',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: t('common.devices'),
+          to: '/devices',
+        },
+      ],
     },
     {
       _tag: 'CSidebarNavItem',

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const DevicePage = React.lazy(() => import('pages/DevicePage'));
+const DeviceDashboard = React.lazy(() => import('pages/DeviceDashboard'));
 const DeviceListPage = React.lazy(() => import('pages/DeviceListPage'));
 const UserListPage = React.lazy(() => import('pages/UserListPage'));
 const ProfilePage = React.lazy(() => import('pages/ProfilePage'));
@@ -9,6 +10,7 @@ const SettingsPage = React.lazy(() => import('pages/SettingsPage'));
 const FirmwareListPage = React.lazy(() => import('pages/FirmwareListPage'));
 
 export default [
+  { path: '/devicedashboard', exact: true, name: 'common.devices', component: DeviceDashboard },
   { path: '/devices', exact: true, name: 'common.devices', component: DeviceListPage },
   {
     path: '/devices/:deviceId/wifianalysis',
