@@ -6,6 +6,10 @@ import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import { DeviceListTable } from 'ucentral-libs';
+import meshIcon from '../../assets/icons/Mesh.png';
+import apIcon from '../../assets/icons/AP.png';
+import internetSwitch from '../../assets/icons/Switch.png';
+import iotIcon from '../../assets/icons/IotIcon.png';
 
 const DeviceList = () => {
   const { t } = useTranslation();
@@ -276,6 +280,10 @@ const DeviceList = () => {
         toggleActionModal={toggleActionModal}
         showActionModal={showActionModal}
         actionDevice={actionDevice}
+        meshIcon={meshIcon}
+        apIcon={apIcon}
+        internetSwitch={internetSwitch}
+        iotIcon={iotIcon}
       />
       <DeviceFirmwareModal
         t={t}

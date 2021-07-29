@@ -224,7 +224,7 @@
 		"directions": "Inicie uma verificação de wi-fi deste dispositivo, o que deve levar aproximadamente 25 segundos.",
 		"re_scan": "Verificar novamente",
 		"result_directions": "Clique no botão '$ t (scan.re_scan)' se desejar fazer uma varredura com a mesma configuração da anterior.",
-		"results": "Resultados da verificação de wi-fi",
+		"results": "Resultados da verificação de Wi-Fi",
 		"scan": "Varredura",
 		"scanning": "Scanning... ",
 		"waiting_directions": "Por favor, aguarde o resultado da verificação. Isso pode levar até 25 segundos. Você pode sair e ver os resultados da tabela de comandos mais tarde."
@@ -235,7 +235,7 @@
 	"statistics": {
 		"data": "Dados (KB)",
 		"latest_statistics": "Estatísticas mais recentes",
-		"show_latest": "Mostrar estatísticas mais recentes JSON",
+		"show_latest": "Últimas estatísticas",
 		"title": "Estatisticas"
 	},
 	"status": {
@@ -321,6 +321,6 @@
 		"associations": "Associações",
 		"mode": "Modo",
 		"radios": "Rádios",
-		"title": "Análise WiFi"
+		"title": "Análise de Wi-Fi"
 	}
 }

@@ -235,7 +235,7 @@
 	"statistics": {
 		"data": "Données (Ko)",
 		"latest_statistics": "Dernières statistiques",
-		"show_latest": "Afficher les dernières statistiques JSON",
+		"show_latest": "Dernières statistiques",
 		"title": "statistiques"
 	},
 	"status": {
