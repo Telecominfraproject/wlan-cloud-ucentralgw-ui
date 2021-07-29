@@ -83,6 +83,7 @@
 		"id": "Id",
 		"ip_address": "Ip Address",
 		"later_tonight": "Later tonight",
+		"list": "List",
 		"loading_ellipsis": "Loading...",
 		"loading_more_ellipsis": "Loading more...",
 		"logout": "Logout",

@@ -23,7 +23,7 @@ const TheLayout = () => {
         },
         {
           _tag: 'CSidebarNavItem',
-          name: t('common.devices'),
+          name: t('common.list'),
           to: '/devices',
         },
       ],
