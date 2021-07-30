@@ -98,21 +98,23 @@ const FirmwareDashboard = () => {
     const deviceTypeDs = [];
     const deviceTypeColors = [];
     const deviceTypeLabels = [];
-    for (let i = 0; i < parsedData.deviceTypes.length; i += 1) {
-      const point = parsedData.deviceTypes[i];
+    const sortedTypes = parsedData.deviceTypes.sort((a, b) => (a.value < b.value ? 1 : -1));
+    for (let i = 0; i < sortedTypes.length; i += 1) {
+      const point = sortedTypes[i];
 
       deviceTypeDs.push(point.value);
       deviceTypeLabels.push(point.tag);
       deviceTypeColors.push(colors[i]);
     }
+    const otherTypes = deviceTypeDs.slice(5).reduce((acc, type) => acc + type, 0);
     parsedData.deviceType = {
       datasets: [
         {
-          data: deviceTypeDs,
+          data: deviceTypeDs.slice(0, 5).concat([otherTypes]),
           backgroundColor: deviceTypeColors,
         },
       ],
-      labels: deviceTypeLabels,
+      labels: deviceTypeLabels.slice(0, 5).concat(['Others']),
     };
 
     // Latest/unknown distribution
@@ -193,34 +195,66 @@ const FirmwareDashboard = () => {
     };
 
     // OUIs bar graph
-    const ouisDs = [];
-    const ouisColors = [];
-    let ouisLabels = [];
+    const ouiCompleteInfo = [];
+    const ouisLabels = [];
     const sortedOuis = parsedData.ouis.sort((a, b) => (a.value < b.value ? 1 : -1));
     for (const point of sortedOuis) {
-      ouisDs.push(point.value);
+      ouiCompleteInfo.push({
+        value: point.value,
+        tag: point.tag,
+      });
       ouisLabels.push(point.tag === '' ? 'Unknown' : point.tag);
-      ouisColors.push('#39f');
     }
     const ouiDetails = await getOuiInfo(ouisLabels);
+
+    // Merging 'Good' labels with ouiCompleteInfo
     if (ouiDetails !== null) {
-      ouisLabels = ouisLabels.map((label) => {
-        if (ouiDetails[label]?.value === undefined) {
-          return label;
-        }
-        return ouiDetails[label].value === '' ? 'Unknown' : ouiDetails[label].value;
-      });
+      for (let i = 0; i < ouiCompleteInfo.length; i += 1) {
+        ouiCompleteInfo[i].label =
+          ouiDetails[ouiCompleteInfo[i].tag].value !== undefined &&
+          ouiDetails[ouiCompleteInfo[i].tag].value !== ''
+            ? ouiDetails[ouiCompleteInfo[i].tag].value
+            : 'Unknown';
+      }
     }
+
+    // Merging OUIs that have the same label that we got from getOuiInfo
+    const finalOuis = {};
+    for (const oui of ouiCompleteInfo) {
+      if (finalOuis[oui.label] === undefined) {
+        finalOuis[oui.label] = {
+          label: oui.label,
+          value: oui.value,
+        };
+      } else {
+        finalOuis[oui.label] = {
+          label: oui.label,
+          value: finalOuis[oui.label].value + oui.value,
+        };
+      }
+    }
+
+    // Flattening finalOuis into an array so we can create the arrays necessary for the chart
+    const finalOuisArr = Object.entries(finalOuis);
+    const finalOuiDs = [];
+    const finalOuiLabels = [];
+    const finalOuiColors = [];
+    for (const oui of finalOuisArr) {
+      finalOuiDs.push(oui[1].value);
+      finalOuiLabels.push(oui[1].label);
+      finalOuiColors.push('#39f');
+    }
+    const totalOthers = finalOuiDs.slice(5).reduce((acc, oui) => acc + oui);
 
     parsedData.ouis = {
       datasets: [
         {
           label: 'OUIs',
-          data: ouisDs.slice(0, 5),
-          backgroundColor: ouisColors,
+          data: finalOuiDs.slice(0, 5).concat(totalOthers),
+          backgroundColor: finalOuiColors.concat('#39f'),
         },
       ],
-      labels: ouisLabels.slice(0, 5),
+      labels: finalOuiLabels.slice(0, 5).concat('Others'),
     };
 
     // Endpoints pie chart

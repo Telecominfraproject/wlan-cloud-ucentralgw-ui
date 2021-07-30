@@ -215,6 +215,39 @@ const DeviceList = () => {
       });
   };
 
+  const connectRtty = (serialNumber) => {
+    setToast({
+      show: false,
+      success: true,
+      text: '',
+    });
+
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    axiosInstance
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}/rtty`,
+        options,
+      )
+      .then((response) => {
+        const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+      })
+      .catch(() => {
+        setToast({
+          show: true,
+          success: false,
+          text: t('common.unable_to_connect'),
+        });
+      });
+  };
+
   useEffect(() => {
     getSerialNumbers();
   }, []);
@@ -265,6 +298,7 @@ const DeviceList = () => {
         apIcon={apIcon}
         internetSwitch={internetSwitch}
         iotIcon={iotIcon}
+        connectRtty={connectRtty}
       />
       <DeviceFirmwareModal
         endpoints={endpoints}

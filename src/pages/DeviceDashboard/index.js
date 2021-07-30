@@ -51,7 +51,7 @@ const DeviceDashboard = () => {
     const statusDs = [];
     const statusColors = [];
     const statusLabels = [];
-    const totalDevices = parsedData.status.reduce((acc, point) => acc + point.value, 0);
+    let totalDevices = parsedData.status.reduce((acc, point) => acc + point.value, 0);
     for (const point of parsedData.status) {
       statusDs.push(Math.round((point.value / totalDevices) * 100));
       statusLabels.push(point.tag);
@@ -81,26 +81,37 @@ const DeviceDashboard = () => {
       labels: statusLabels,
     };
 
+    // General Health
+    let devicesAt100 = 0;
+    let devicesUp90 = 0;
+    let devicesUp60 = 0;
+    let devicesDown60 = 0;
+
     // Health pie chart
     const healthDs = [];
     const healthColors = [];
     const healthLabels = [];
+    totalDevices = parsedData.healths.reduce((acc, point) => acc + point.value, 0);
     for (const point of parsedData.healths) {
-      healthDs.push(point.value);
+      healthDs.push(Math.round((point.value / totalDevices) * 100));
       healthLabels.push(point.tag);
       let color = '';
       switch (point.tag) {
         case '100%':
           color = '#41B883';
+          devicesAt100 += 1;
           break;
         case '>90%':
           color = '#ffff5c';
+          devicesUp90 += 1;
           break;
         case '>60%':
           color = '#f9b115';
+          devicesUp60 += 1;
           break;
         case '<60%':
           color = '#e55353';
+          devicesDown60 += 1;
           break;
         default:
           color = '#39f';
@@ -117,6 +128,11 @@ const DeviceDashboard = () => {
       ],
       labels: healthLabels,
     };
+    parsedData.overallHealth = Math.round(
+      ((devicesAt100 * 100 + devicesUp90 * 90 + devicesUp60 * 75 + devicesDown60 * 30) /
+        totalDevices) *
+        100,
+    );
 
     // Uptime bar chart
     const uptimeDs = [];
@@ -164,10 +180,11 @@ const DeviceDashboard = () => {
     const deviceTypeDs = [];
     const deviceTypeColors = [];
     const deviceTypeLabels = [];
+    totalDevices = parsedData.deviceType.reduce((acc, point) => acc + point.value, 0);
     for (let i = 0; i < parsedData.deviceType.length; i += 1) {
       const point = parsedData.deviceType[i];
 
-      deviceTypeDs.push(point.value);
+      deviceTypeDs.push(Math.round((point.value / totalDevices) * 100));
       deviceTypeLabels.push(point.tag);
       deviceTypeColors.push(colors[i]);
     }
