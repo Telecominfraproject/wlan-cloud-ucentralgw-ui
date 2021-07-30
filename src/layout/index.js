@@ -17,13 +17,15 @@ const TheLayout = () => {
       icon: 'cilRouter',
       _children: [
         {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
           _tag: 'CSidebarNavItem',
           name: t('common.dashboard'),
           to: '/devicedashboard',
         },
         {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
           _tag: 'CSidebarNavItem',
-          name: t('common.list'),
+          name: t('common.table'),
           to: '/devices',
         },
       ],
@@ -34,13 +36,15 @@ const TheLayout = () => {
       icon: 'cilSave',
       _children: [
         {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
           _tag: 'CSidebarNavItem',
           name: t('common.dashboard'),
           to: '/firmwaredashboard',
         },
         {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
           _tag: 'CSidebarNavItem',
-          name: t('common.list'),
+          name: t('common.table'),
           to: '/firmware',
         },
       ],
