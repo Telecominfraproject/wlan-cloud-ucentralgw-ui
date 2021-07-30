@@ -34,10 +34,7 @@ const FirmwareDashboard = () => {
       datasets: [],
       labels: [],
     },
-    endpoints: {
-      datasets: [],
-      labels: [],
-    },
+    endpoints: [],
   });
 
   const getOuiInfo = async (oui) => {
@@ -118,14 +115,16 @@ const FirmwareDashboard = () => {
     };
 
     // Latest/unknown distribution
-    const unknownFirmware = parsedData.unknownFirmwares.reduce(
-      (acc, firmware) => acc + firmware.value,
-      0,
-    );
-    const usingLatestFirmware = parsedData.usingLatest.reduce(
-      (acc, firmware) => acc + firmware.value,
-      0,
-    );
+    const unknownFirmware =
+      parsedData.unknownFirmwares.length > 0
+        ? parsedData.unknownFirmwares.reduce((acc, firmware) => acc + firmware.value, 0)
+        : 0;
+    const usingLatestFirmware =
+      parsedData.usingLatest.length > 0
+        ? parsedData.usingLatest.reduce((acc, firmware) => acc + firmware.value, 0)
+        : 0;
+    parsedData.numberOfDevices = unknownFirmware + usingLatestFirmware;
+    parsedData.usingLatestFirmware = usingLatestFirmware;
     parsedData.firmwareDistribution = {
       datasets: [
         {
@@ -257,39 +256,17 @@ const FirmwareDashboard = () => {
       labels: finalOuiLabels.slice(0, 5).concat('Others'),
     };
 
-    // Endpoints pie chart
+    // Endpoints table
     const endpointsDs = [];
-    const endpointsColors = [];
-    const endpointsLabels = [];
+    const endpointsTotal = parsedData.endPoints.reduce((acc, point) => acc + point.value, 0);
     for (const point of parsedData.endPoints) {
-      endpointsDs.push(point.value);
-      endpointsLabels.push(point.tag);
-      let color = '';
-      switch (point.tag) {
-        case 'connected':
-          color = '#41B883';
-          break;
-        case 'not connected':
-          color = '#39f';
-          break;
-        case 'disconnected':
-          color = '#e55353';
-          break;
-        default:
-          break;
-      }
-      statusColors.push(color);
+      endpointsDs.push({
+        endpoint: point.tag,
+        devices: point.value,
+        percent: `${Math.round((point.value / endpointsTotal) * 100)}%`,
+      });
     }
-
-    parsedData.endpoints = {
-      datasets: [
-        {
-          data: endpointsDs,
-          backgroundColor: endpointsColors,
-        },
-      ],
-      labels: endpointsLabels,
-    };
+    parsedData.endpoints = endpointsDs;
 
     setData(parsedData);
   };

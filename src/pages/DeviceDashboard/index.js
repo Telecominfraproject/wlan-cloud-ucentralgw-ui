@@ -180,22 +180,23 @@ const DeviceDashboard = () => {
     const deviceTypeDs = [];
     const deviceTypeColors = [];
     const deviceTypeLabels = [];
-    totalDevices = parsedData.deviceType.reduce((acc, point) => acc + point.value, 0);
-    for (let i = 0; i < parsedData.deviceType.length; i += 1) {
-      const point = parsedData.deviceType[i];
+    const sortedTypes = parsedData.deviceType.sort((a, b) => (a.value < b.value ? 1 : -1));
+    for (let i = 0; i < sortedTypes.length; i += 1) {
+      const point = sortedTypes[i];
 
-      deviceTypeDs.push(Math.round((point.value / totalDevices) * 100));
+      deviceTypeDs.push(point.value);
       deviceTypeLabels.push(point.tag);
       deviceTypeColors.push(colors[i]);
     }
+    const otherTypes = deviceTypeDs.slice(5).reduce((acc, type) => acc + type, 0);
     parsedData.deviceType = {
       datasets: [
         {
-          data: deviceTypeDs,
+          data: deviceTypeDs.slice(0, 5).concat([otherTypes]),
           backgroundColor: deviceTypeColors,
         },
       ],
-      labels: deviceTypeLabels,
+      labels: deviceTypeLabels.slice(0, 5).concat(['Others']),
     };
 
     // Certificates pie chart
