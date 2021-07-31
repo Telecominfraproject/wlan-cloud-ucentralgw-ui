@@ -17,6 +17,9 @@ const DeviceList = () => {
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
+  const [deleteStatus, setDeleteStatus] = useState({
+    loading: false,
+  });
   const [toast, setToast] = useState({
     show: false,
     success: true,
@@ -248,6 +251,47 @@ const DeviceList = () => {
       });
   };
 
+  const deleteDevice = (serialNumber) => {
+    setDeleteStatus({
+      loading: true,
+    });
+    setToast({
+      show: false,
+      success: true,
+      text: '',
+    });
+
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    axiosInstance
+      .delete(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
+      .then(() => {
+        setToast({
+          show: true,
+          success: true,
+          text: t('common.device_deleted'),
+        });
+        getSerialNumbers();
+      })
+      .catch(() => {
+        setToast({
+          show: true,
+          success: false,
+          text: t('common.unable_to_delete'),
+        });
+      })
+      .finally(() => {
+        setDeleteStatus({
+          loading: false,
+        });
+      });
+  };
+
   useEffect(() => {
     getSerialNumbers();
   }, []);
@@ -299,6 +343,8 @@ const DeviceList = () => {
         internetSwitch={internetSwitch}
         iotIcon={iotIcon}
         connectRtty={connectRtty}
+        deleteDevice={deleteDevice}
+        deleteStatus={deleteStatus}
       />
       <DeviceFirmwareModal
         endpoints={endpoints}

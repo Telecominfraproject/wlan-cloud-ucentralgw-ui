@@ -18,6 +18,10 @@ const DeviceDashboard = () => {
       datasets: [],
       labels: [],
     },
+    associations: {
+      datasets: [],
+      labels: [],
+    },
     upTimes: {
       datasets: [],
       labels: [],
@@ -99,19 +103,19 @@ const DeviceDashboard = () => {
       switch (point.tag) {
         case '100%':
           color = '#41B883';
-          devicesAt100 += 1;
+          devicesAt100 += point.value;
           break;
         case '>90%':
           color = '#ffff5c';
-          devicesUp90 += 1;
+          devicesUp90 += point.value;
           break;
         case '>60%':
           color = '#f9b115';
-          devicesUp60 += 1;
+          devicesUp60 += point.value;
           break;
         case '<60%':
           color = '#e55353';
-          devicesDown60 += 1;
+          devicesDown60 += point.value;
           break;
         default:
           color = '#39f';
@@ -129,10 +133,31 @@ const DeviceDashboard = () => {
       labels: healthLabels,
     };
     parsedData.overallHealth = Math.round(
-      ((devicesAt100 * 100 + devicesUp90 * 90 + devicesUp60 * 75 + devicesDown60 * 30) /
-        totalDevices) *
-        100,
+      (devicesAt100 * 100 + devicesUp90 * 95 + devicesUp60 * 75 + devicesDown60 * 35) /
+        totalDevices,
     );
+
+    // Associations pie chart
+    const associationsDs = [];
+    const associationsColors = [];
+    const associationsLabels = [];
+    const totalAssociations = parsedData.associations.reduce((acc, point) => acc + point.value, 0);
+    for (let i = 0; i < parsedData.associations.length; i += 1) {
+      const point = parsedData.associations[i];
+      associationsDs.push(Math.round((point.value / totalAssociations) * 100));
+      associationsLabels.push(point.tag);
+      healthColors.push(colors[i]);
+    }
+    parsedData.totalAssociations = totalAssociations;
+    parsedData.associations = {
+      datasets: [
+        {
+          data: associationsDs,
+          backgroundColor: associationsColors,
+        },
+      ],
+      labels: associationsLabels,
+    };
 
     // Uptime bar chart
     const uptimeDs = [];
