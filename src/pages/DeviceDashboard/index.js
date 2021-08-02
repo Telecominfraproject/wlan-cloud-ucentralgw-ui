@@ -132,10 +132,13 @@ const DeviceDashboard = () => {
       ],
       labels: healthLabels,
     };
-    parsedData.overallHealth = Math.round(
-      (devicesAt100 * 100 + devicesUp90 * 95 + devicesUp60 * 75 + devicesDown60 * 35) /
-        totalDevices,
-    );
+    parsedData.overallHealth =
+      totalDevices === 0
+        ? '-'
+        : `${Math.round(
+            (devicesAt100 * 100 + devicesUp90 * 95 + devicesUp60 * 75 + devicesDown60 * 35) /
+              totalDevices,
+          )}%`;
 
     // Associations pie chart
     const associationsDs = [];
@@ -146,7 +149,18 @@ const DeviceDashboard = () => {
       const point = parsedData.associations[i];
       associationsDs.push(Math.round((point.value / totalAssociations) * 100));
       associationsLabels.push(point.tag);
-      healthColors.push(colors[i]);
+
+      switch (parsedData.associations[i].tag) {
+        case '2G':
+          associationsColors.push('#41B883');
+          break;
+        case '5G':
+          associationsColors.push('#3399ff');
+          break;
+        default:
+          associationsColors.push('#636f83');
+          break;
+      }
     }
     parsedData.totalAssociations = totalAssociations;
     parsedData.associations = {
@@ -160,13 +174,29 @@ const DeviceDashboard = () => {
     };
 
     // Uptime bar chart
-    const uptimeDs = [];
-    const uptimeColors = [];
-    const uptimeLabels = [];
+    const uptimeDs = [0, 0, 0, 0];
+    const uptimeLabels = ['now', '>day', '>week', '>month'];
+    const uptimeColors = ['#321fdb', '#321fdb', '#321fdb', '#321fdb'];
+
     for (const point of parsedData.upTimes) {
-      uptimeDs.push(point.value);
-      uptimeLabels.push(point.tag);
-      uptimeColors.push('#39f');
+      switch (point.tag) {
+        case 'now':
+          uptimeDs[0] = point.value;
+          break;
+        case '>day':
+          uptimeDs[1] = point.value;
+          break;
+        case '>week':
+          uptimeDs[2] = point.value;
+          break;
+        case '>month':
+          uptimeDs[3] = point.value;
+          break;
+        default:
+          uptimeDs.push(point.value);
+          uptimeLabels.push(point.tag);
+          uptimeColors.push('#321fdb');
+      }
     }
     parsedData.upTimes = {
       datasets: [

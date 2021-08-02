@@ -35,6 +35,7 @@ const FirmwareDashboard = () => {
       labels: [],
     },
     endpoints: [],
+    latestSoftwareRate: '-',
   });
 
   const getOuiInfo = async (oui) => {
@@ -135,6 +136,19 @@ const FirmwareDashboard = () => {
       ],
       labels: [t('common.unknown'), t('common.latest')],
     };
+
+    if (
+      parsedData.numberOfDevices === undefined ||
+      Number.isNaN(parsedData.numberOfDevices) ||
+      parsedData === 0
+    ) {
+      parsedData.latestSoftwareRate = '-';
+    } else {
+      parsedData.latestSoftwareRate = `${(
+        (parsedData.usingLatestFirmware / parsedData.numberOfDevices) *
+        100
+      ).toFixed(1)}%`;
+    }
 
     // Latest firmware distribution
     const latestDs = [];
