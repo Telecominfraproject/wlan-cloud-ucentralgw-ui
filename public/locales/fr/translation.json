@@ -155,6 +155,7 @@
 		"owner": "Propriétaire",
 		"title": "Configuration",
 		"type": "Type d'appareil",
+		"uuid": "Identifiant de configuration",
 		"view_json": "Afficher le JSON brut"
 	},
 	"configure": {
@@ -187,14 +188,14 @@
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
 	"firmware": {
-		"choose_custom": "Choisissez un micrologiciel personnalisé",
+		"choose_custom": "Choisissez le micrologiciel",
 		"details_title": "Image #{{image}} Détails",
 		"device_type": "Type d'appareil",
 		"device_types": "Types d'appareils",
 		"downloads": "Téléchargements",
 		"error_fetching_latest": "Erreur lors de la récupération du dernier firmware",
 		"from_release": "De",
-		"history_title": "Historique du micrologiciel",
+		"history_title": "Historique de mise à niveau",
 		"image": "Image",
 		"image_date": "Date de l'image",
 		"installed_firmware": "Micrologiciel installé",

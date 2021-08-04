@@ -155,6 +155,7 @@
 		"owner": "Inhaber",
 		"title": "Gerätekonfiguration",
 		"type": "Gerätetyp",
+		"uuid": "Konfigurations-ID",
 		"view_json": "Rohe Konfiguration anzeigen"
 	},
 	"configure": {
@@ -187,14 +188,14 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
-		"choose_custom": "Wählen Sie benutzerdefinierte Firmware",
+		"choose_custom": "Wählen Sie die Firmware",
 		"details_title": "Bild #{{image}} Details",
 		"device_type": "Gerätetyp",
 		"device_types": "Gerätetypen",
 		"downloads": "Downloads",
 		"error_fetching_latest": "Fehler beim Abrufen der neuesten Firmware",
 		"from_release": "Von",
-		"history_title": "Firmware-Historie",
+		"history_title": "Upgrade-Verlauf",
 		"image": "Bild",
 		"image_date": "Bilddatum",
 		"installed_firmware": "Installierte Firmware",

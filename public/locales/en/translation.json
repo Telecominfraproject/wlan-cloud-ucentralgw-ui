@@ -155,6 +155,7 @@
 		"owner": "Owner",
 		"title": "Configuration",
 		"type": "Device Type",
+		"uuid": "Config ID",
 		"view_json": "View raw JSON"
 	},
 	"configure": {
@@ -187,14 +188,14 @@
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"firmware": {
-		"choose_custom": "Choose Custom Firmware",
+		"choose_custom": "Choose Firmware",
 		"details_title": "Image #{{image}} Details",
 		"device_type": "Device Type",
 		"device_types": "Device Types",
 		"downloads": "Downloads",
 		"error_fetching_latest": "Error while fetching latest firmware",
 		"from_release": "From",
-		"history_title": "Firmware History",
+		"history_title": "Upgrade History",
 		"image": "Image",
 		"image_date": "Image Date",
 		"installed_firmware": "Installed Firmware",

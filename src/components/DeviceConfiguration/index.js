@@ -19,7 +19,7 @@ import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
 import { useDevice } from 'contexts/DeviceProvider';
 import CopyToClipboardButton from 'components/CopyToClipboardButton';
-import DeviceNotes from 'components/DeviceNotes';
+import { NotesTable } from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 
@@ -27,6 +27,7 @@ const DeviceConfiguration = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const [loading, setLoading] = useState(false);
   const [collapse, setCollapse] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [device, setDevice] = useState(null);
@@ -59,6 +60,34 @@ const DeviceConfiguration = () => {
       .catch(() => {});
   };
 
+  const saveNote = (currentNote) => {
+    setLoading(true);
+
+    const parameters = {
+      serialNumber: deviceSerialNumber,
+      notes: [{ note: currentNote }],
+    };
+
+    const headers = {
+      Accept: 'application/json',
+      Authorization: `Bearer ${currentToken}`,
+    };
+
+    axiosInstance
+      .put(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
+        parameters,
+        { headers },
+      )
+      .then(() => {
+        getDevice();
+      })
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (deviceSerialNumber) getDevice();
   }, [deviceSerialNumber]);
@@ -86,7 +115,7 @@ const DeviceConfiguration = () => {
           <CCardBody>
             <CRow className={styles.spacedRow}>
               <CCol md="3">
-                <CLabel>{t('common.uuid')} : </CLabel>
+                <CLabel>{t('configuration.uuid')} : </CLabel>
               </CCol>
               <CCol xs="12" md="9">
                 {device.UUID}
@@ -145,10 +174,12 @@ const DeviceConfiguration = () => {
                 />
               </CCol>
             </CRow>
-            <DeviceNotes
+            <NotesTable
+              t={t}
               notes={device.notes}
-              refreshNotes={getDevice}
-              serialNumber={deviceSerialNumber}
+              loading={loading}
+              addNote={saveNote}
+              descriptionColumn={false}
             />
             <CCollapse show={collapse}>
               <CRow className={styles.spacedRow}>

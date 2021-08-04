@@ -155,6 +155,7 @@
 		"owner": "Propietario",
 		"title": "Configuración",
 		"type": "Tipo de dispositivo",
+		"uuid": "ID de configuración",
 		"view_json": "Ver JSON sin procesar"
 	},
 	"configure": {
@@ -187,14 +188,14 @@
 		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
 	},
 	"firmware": {
-		"choose_custom": "Elija firmware personalizado",
+		"choose_custom": "Elige firmware",
 		"details_title": "Detalles de la imagen n. °{{image}} ",
 		"device_type": "Tipo de dispositivo",
 		"device_types": "Tipos de dispositivos",
 		"downloads": "Descargas",
 		"error_fetching_latest": "Error al obtener el firmware más reciente",
 		"from_release": "Desde",
-		"history_title": "Historial de firmware",
+		"history_title": "Historial de actualizaciones",
 		"image": "Imagen",
 		"image_date": "Fecha de la imagen",
 		"installed_firmware": "Firmware instalado",

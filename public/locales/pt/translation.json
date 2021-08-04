@@ -155,6 +155,7 @@
 		"owner": "Proprietário",
 		"title": "Configuração",
 		"type": "Tipo de dispositivo",
+		"uuid": "ID de configuração",
 		"view_json": "Exibir JSON bruto"
 	},
 	"configure": {
@@ -187,14 +188,14 @@
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"firmware": {
-		"choose_custom": "Escolha o firmware personalizado",
+		"choose_custom": "Escolha o firmware",
 		"details_title": "Detalhes da imagem #{{image}} ",
 		"device_type": "Tipo de dispositivo",
 		"device_types": "Tipos de dispositivos",
 		"downloads": "Transferências",
 		"error_fetching_latest": "Erro ao buscar o firmware mais recente",
 		"from_release": "De",
-		"history_title": "Histórico de Firmware",
+		"history_title": "Histórico de atualização",
 		"image": "Imagem",
 		"image_date": "Data da Imagem",
 		"installed_firmware": "Firmware Instalado",
