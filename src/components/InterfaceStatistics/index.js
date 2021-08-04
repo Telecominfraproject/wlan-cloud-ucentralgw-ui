@@ -37,19 +37,19 @@ const DeviceStatisticsCard = () => {
                 {t('statistics.title')}
               </div>
             </CCol>
-            <CCol sm="3" className="pt-2 text-right">
+            <CCol sm="3" className="pt-2">
               <CRow>
-                <CCol sm="6">
+                <CCol sm="5" className="text-right">
                   <CButton color="secondary" onClick={goToAnalysis}>
                     {t('wifi_analysis.title')}
                   </CButton>
                 </CCol>
-                <CCol sm="5">
+                <CCol sm="5" className="text-center">
                   <CButton color="secondary" onClick={toggleLatestModal}>
                     {t('statistics.show_latest')}
                   </CButton>
                 </CCol>
-                <CCol sm="1">
+                <CCol sm="2" className="text-center">
                   <CPopover content={t('common.refresh')}>
                     <CButton color="secondary" onClick={refresh} size="sm">
                       <CIcon content={cilSync} />

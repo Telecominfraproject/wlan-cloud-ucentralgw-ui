@@ -12,22 +12,48 @@ const TheLayout = () => {
 
   const navigation = [
     {
-      _tag: 'CSidebarNavItem',
+      _tag: 'CSidebarNavDropdown',
       name: t('common.devices'),
-      to: '/devices',
       icon: 'cilRouter',
+      _children: [
+        {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
+          _tag: 'CSidebarNavItem',
+          name: t('common.dashboard'),
+          to: '/devicedashboard',
+        },
+        {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
+          _tag: 'CSidebarNavItem',
+          name: t('common.table'),
+          to: '/devices',
+        },
+      ],
+    },
+    {
+      _tag: 'CSidebarNavDropdown',
+      name: t('firmware.title'),
+      icon: 'cilSave',
+      _children: [
+        {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
+          _tag: 'CSidebarNavItem',
+          name: t('common.dashboard'),
+          to: '/firmwaredashboard',
+        },
+        {
+          addLinkClass: 'c-sidebar-nav-link ml-2',
+          _tag: 'CSidebarNavItem',
+          name: t('common.table'),
+          to: '/firmware',
+        },
+      ],
     },
     {
       _tag: 'CSidebarNavItem',
       name: t('user.users'),
       to: '/users',
       icon: 'cilPeople',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('firmware.title'),
-      to: '/firmware',
-      icon: 'cilSave',
     },
     {
       _tag: 'CSidebarNavItem',
@@ -63,7 +89,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="2.0.0" />
+        <Footer t={t} version="2.0.1" />
       </div>
     </div>
   );
