@@ -7,6 +7,7 @@ import { CRow, CCol } from '@coreui/react';
 import { prettyDate, secondsToDetailed } from 'utils/helper';
 
 const initialEndpoint = {
+  endpoint: '',
   uptime: '',
   version: '',
   start: '',
