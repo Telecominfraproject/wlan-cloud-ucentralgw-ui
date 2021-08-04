@@ -8,6 +8,7 @@ i18next
   .use(HttpApi)
   .use(LanguageDetector)
   .init({
+    load: 'languageOnly',
     supportedLngs: ['de', 'en', 'es', 'fr', 'pt'],
     fallbackLng: 'en',
     nonExplicitSupportedLngs: true,

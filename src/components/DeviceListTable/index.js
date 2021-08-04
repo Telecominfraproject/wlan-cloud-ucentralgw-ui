@@ -29,7 +29,7 @@ const DeviceList = () => {
     success: true,
     text: '',
   });
-  const [serialNumbers, setSerialNumbers] = useState([]);
+  const [deviceCount, setDeviceCount] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || '10');
   const [devices, setDevices] = useState([]);
@@ -40,16 +40,19 @@ const DeviceList = () => {
     serialNumber: '',
   });
 
+  const deviceIcons = {
+    meshIcon,
+    apIcon,
+    internetSwitch,
+    iotIcon,
+  };
+
   const toggleFirmwareModal = (device) => {
     setShowFirmwareModal(!showFirmwareModal);
     if (device !== undefined) setFirmwareDevice(device);
   };
 
-  const getDeviceInformation = (
-    selectedPage = page,
-    serialList = serialNumbers,
-    perPage = devicesPerPage,
-  ) => {
+  const getDeviceInformation = (selectedPage = page, devicePerPage = devicesPerPage) => {
     setLoading(true);
 
     const options = {
@@ -58,22 +61,22 @@ const DeviceList = () => {
         Authorization: `Bearer ${currentToken}`,
       },
     };
-    const startIndex = selectedPage * perPage;
-    const endIndex = parseInt(startIndex, 10) + parseInt(perPage, 10);
-    const serialsToGet = serialList
-      .slice(startIndex, endIndex)
-      .map((x) => encodeURIComponent(x))
-      .join(',');
 
     let fullDevices;
 
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${serialsToGet}`,
+        `${
+          endpoints.ucentralgw
+        }/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
+          devicePerPage * selectedPage + 1
+        }`,
         options,
       )
       .then((response) => {
         fullDevices = response.data.devicesWithStatus;
+        const serialsToGet = fullDevices.map((device) => device.serialNumber);
+
         return axiosInstance.get(
           `${endpoints.ucentralfms}/api/v1/firmwareAge?select=${serialsToGet}`,
           options,
@@ -82,7 +85,6 @@ const DeviceList = () => {
       .then((response) => {
         fullDevices = fullDevices.map((device, index) => {
           const foundAgeDate = response.data.ages[index].age !== undefined;
-
           if (foundAgeDate) {
             return {
               ...device,
@@ -102,7 +104,7 @@ const DeviceList = () => {
       });
   };
 
-  const getSerialNumbers = () => {
+  const getCount = () => {
     setLoading(true);
 
     const headers = {
@@ -111,22 +113,22 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?serialOnly=true&limit=1000`, {
+      .get(`${endpoints.ucentralgw}/api/v1/devices?countOnly=true`, {
         headers,
       })
       .then((response) => {
-        const count = Math.ceil(response.data.serialNumbers.length / devicesPerPage);
-        setPageCount(count);
+        const devicesCount = response.data.count;
+        const pagesCount = Math.ceil(devicesCount / devicesPerPage);
+        setPageCount(pagesCount);
+        setDeviceCount(devicesCount);
 
         let selectedPage = page;
 
-        if (page >= count) {
-          history.push(`/devices?page=${count - 1}`);
-          selectedPage = count - 1;
+        if (page >= pagesCount) {
+          history.push(`/devices?page=${pagesCount - 1}`);
+          selectedPage = pagesCount - 1;
         }
-
-        setSerialNumbers(response.data.serialNumbers);
-        getDeviceInformation(selectedPage, response.data.serialNumbers);
+        getDeviceInformation(selectedPage);
       })
       .catch(() => {
         setLoading(false);
@@ -167,7 +169,7 @@ const DeviceList = () => {
     setItem('devicesPerPage', value);
     setDevicesPerPage(value);
 
-    const newPageCount = Math.ceil(serialNumbers.length / value);
+    const newPageCount = Math.ceil(deviceCount / value);
     setPageCount(newPageCount);
 
     let selectedPage = page;
@@ -177,7 +179,7 @@ const DeviceList = () => {
       selectedPage = newPageCount - 1;
     }
 
-    getDeviceInformation(selectedPage, undefined, value);
+    getDeviceInformation(selectedPage, value);
   };
 
   const updatePageCount = ({ selected: selectedPage }) => {
@@ -304,7 +306,7 @@ const DeviceList = () => {
           success: true,
           text: t('common.device_deleted'),
         });
-        getSerialNumbers();
+        getCount();
       })
       .catch(() => {
         setToast({
@@ -324,7 +326,7 @@ const DeviceList = () => {
     if (page === undefined || page === null || Number.isNaN(page)) {
       history.push(`/devices?page=0`);
     }
-    getSerialNumbers();
+    getCount();
   }, []);
 
   useEffect(() => {
@@ -359,10 +361,7 @@ const DeviceList = () => {
         toggleFirmwareModal={toggleFirmwareModal}
         upgradeToLatest={upgradeToLatest}
         upgradeStatus={upgradeStatus}
-        meshIcon={meshIcon}
-        apIcon={apIcon}
-        internetSwitch={internetSwitch}
-        iotIcon={iotIcon}
+        deviceIcons={deviceIcons}
         connectRtty={connectRtty}
         deleteDevice={deleteDevice}
         deleteStatus={deleteStatus}
