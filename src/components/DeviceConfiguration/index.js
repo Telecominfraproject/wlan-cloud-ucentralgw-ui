@@ -18,8 +18,7 @@ import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth } from 'contexts/AuthProvider';
 import { useDevice } from 'contexts/DeviceProvider';
-import CopyToClipboardButton from 'components/CopyToClipboardButton';
-import { NotesTable } from 'ucentral-libs';
+import { CopyToClipboardButton, NotesTable } from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 
@@ -127,7 +126,7 @@ const DeviceConfiguration = () => {
               </CCol>
               <CCol xs="12" md="9">
                 {device.serialNumber}
-                <CopyToClipboardButton size="sm" content={device.serialNumber} />
+                <CopyToClipboardButton t={t} size="sm" content={device.serialNumber} />
               </CCol>
             </CRow>
             <CRow className={styles.spacedRow}>
@@ -169,6 +168,7 @@ const DeviceConfiguration = () => {
               <CCol xs="12" md="9">
                 {device.devicePassword === '' ? 'openwifi' : device.devicePassword}
                 <CopyToClipboardButton
+                  t={t}
                   size="sm"
                   content={device?.devicePassword === '' ? 'openwifi' : device.devicePassword}
                 />

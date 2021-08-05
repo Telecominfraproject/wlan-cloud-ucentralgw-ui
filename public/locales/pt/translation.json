@@ -353,6 +353,7 @@
 		"validated": "Validado"
 	},
 	"wifi_analysis": {
+		"association": "Associação",
 		"associations": "Associações",
 		"mode": "Modo",
 		"radios": "Rádios",
