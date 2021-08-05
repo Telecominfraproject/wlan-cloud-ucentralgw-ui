@@ -132,6 +132,7 @@
 		"table": "Table",
 		"timestamp": "Time",
 		"to": "To",
+		"type": "Type",
 		"unable_to_connect": "Unable to Connect to Device",
 		"unable_to_delete": "Unable to Delete",
 		"unknown": "Unknown",
@@ -154,6 +155,7 @@
 		"owner": "Owner",
 		"title": "Configuration",
 		"type": "Device Type",
+		"uuid": "Config ID",
 		"view_json": "View raw JSON"
 	},
 	"configure": {
@@ -186,26 +188,29 @@
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"firmware": {
-		"choose_custom": "Choose Custom Firmware",
+		"choose_custom": "Choose",
 		"details_title": "Image #{{image}} Details",
 		"device_type": "Device Type",
 		"device_types": "Device Types",
 		"downloads": "Downloads",
 		"error_fetching_latest": "Error while fetching latest firmware",
+		"from_release": "From",
+		"history_title": "History",
 		"image": "Image",
 		"image_date": "Image Date",
 		"installed_firmware": "Installed Firmware",
 		"latest_version_installed": "Latest Version Installed",
 		"newer_firmware_available": "Newer Revisions Available",
-		"reinstall_latest": "Reinstall Latest",
+		"reinstall_latest": "Reinstall ",
 		"revision": "Revision",
 		"size": "Size",
 		"status": "Firmware Status",
 		"title": "Firmware",
+		"to_release": "To",
 		"unknown_firmware_status": "Unknown Firmware Status",
 		"upgrade": "Upgrade",
 		"upgrade_command_submitted": "Upgrade Command Submitted Successfully",
-		"upgrade_to_latest": "Upgrade to Latest",
+		"upgrade_to_latest": "Latest",
 		"upgrade_to_version": "Upgrade to this Revision",
 		"upgrading": "Upgrading..."
 	},
@@ -348,6 +353,7 @@
 		"validated": "Validated"
 	},
 	"wifi_analysis": {
+		"association": "Association",
 		"associations": "Associations",
 		"mode": "Mode",
 		"radios": "Radios",

@@ -51,6 +51,7 @@ const ProfilePage = () => {
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [newAvatar, setNewAvatar] = useState('');
   const [newAvatarFile, setNewAvatarFile] = useState(null);
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [toast, setToast] = useState({
     show: false,
     success: true,
@@ -100,7 +101,37 @@ const ProfilePage = () => {
       .catch(() => {});
   };
 
+  const uploadAvatar = () => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    const data = new FormData();
+    data.append('file', newAvatarFile);
+
+    axiosInstance
+      .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
+      .then(() => {
+        setToast({
+          success: true,
+          show: true,
+        });
+        getAvatar();
+        setNewAvatar('');
+        setNewAvatarFile(null);
+        setFileInputKey(fileInputKey + 1);
+      })
+      .catch(() => {});
+  };
+
   const updateUser = () => {
+    setToast({
+      success: true,
+      show: false,
+    });
     setLoading(true);
 
     const parameters = {
@@ -124,6 +155,10 @@ const ProfilePage = () => {
           parameters[key] = userForm[key].value;
         }
       }
+    }
+
+    if (newAvatarFile !== null) {
+      uploadAvatar();
     }
 
     if (newData) {
@@ -184,38 +219,6 @@ const ProfilePage = () => {
       });
   };
 
-  const uploadAvatar = () => {
-    setLoading(true);
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    const data = new FormData();
-    data.append('file', newAvatarFile);
-
-    axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
-      .then(() => {
-        setToast({
-          success: true,
-          show: true,
-        });
-        getAvatar();
-      })
-      .catch(() => {
-        setToast({
-          success: false,
-          show: true,
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
   const showPreview = (e) => {
     const imageFile = e.target.files[0];
     setNewAvatar(URL.createObjectURL(imageFile));
@@ -263,11 +266,11 @@ const ProfilePage = () => {
             loading={loading}
             policies={policies}
             addNote={addNote}
-            uploadAvatar={uploadAvatar}
             avatar={avatar}
             newAvatar={newAvatar}
             showPreview={showPreview}
             deleteAvatar={deleteAvatar}
+            fileInputKey={fileInputKey}
           />
         </CCardBody>
       </CCard>

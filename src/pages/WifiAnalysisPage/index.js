@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { WifiAnalysisTable, RadioAnalysisTable } from 'ucentral-libs';
 import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
-import { cleanBytesString, prettyDate, secondsToDetailed } from 'utils/helper';
+import { cleanBytesString, prettyDate, compactSecondsToDetailed } from 'utils/helper';
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
 
 const WifiAnalysisPage = () => {
@@ -20,17 +20,7 @@ const WifiAnalysisPage = () => {
   const [range, setRange] = useState(19);
 
   const secondsToLabel = (seconds) =>
-    secondsToDetailed(
-      seconds,
-      t('common.day'),
-      t('common.days'),
-      t('common.hour'),
-      t('common.hours'),
-      t('common.minute'),
-      t('common.minutes'),
-      t('common.second'),
-      t('common.seconds'),
-    );
+    compactSecondsToDetailed(seconds, t('common.day'), t('common.days'), t('common.seconds'));
 
   const extractIp = (json, bssid) => {
     const ips = {

@@ -132,6 +132,7 @@
 		"table": "Tabelle",
 		"timestamp": "Zeit",
 		"to": "zu",
+		"type": "Art",
 		"unable_to_connect": "Keine Verbindung zum Gerät möglich",
 		"unable_to_delete": "Löschen nicht möglich",
 		"unknown": "unbekannte",
@@ -154,6 +155,7 @@
 		"owner": "Inhaber",
 		"title": "Gerätekonfiguration",
 		"type": "Gerätetyp",
+		"uuid": "Konfigurations-ID",
 		"view_json": "Rohe Konfiguration anzeigen"
 	},
 	"configure": {
@@ -186,12 +188,14 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
-		"choose_custom": "Wählen Sie benutzerdefinierte Firmware",
+		"choose_custom": "Wählen",
 		"details_title": "Bild #{{image}} Details",
 		"device_type": "Gerätetyp",
 		"device_types": "Gerätetypen",
 		"downloads": "Downloads",
 		"error_fetching_latest": "Fehler beim Abrufen der neuesten Firmware",
+		"from_release": "Von",
+		"history_title": "Geschichte",
 		"image": "Bild",
 		"image_date": "Bilddatum",
 		"installed_firmware": "Installierte Firmware",
@@ -202,10 +206,11 @@
 		"size": "Größe",
 		"status": "Firmware-Status",
 		"title": "Firmware",
+		"to_release": "Zu",
 		"unknown_firmware_status": "Unbekannter Firmware-Status",
 		"upgrade": "Aktualisierung",
 		"upgrade_command_submitted": "Upgrade-Befehl erfolgreich gesendet",
-		"upgrade_to_latest": "Auf die neueste Version aktualisieren",
+		"upgrade_to_latest": "Neueste",
 		"upgrade_to_version": "Upgrade auf diese Revision",
 		"upgrading": "Upgrade durchführen..."
 	},
@@ -348,6 +353,7 @@
 		"validated": "Bestätigt"
 	},
 	"wifi_analysis": {
+		"association": "Verband",
 		"associations": "Verbände",
 		"mode": "Modus",
 		"radios": "Radios",
