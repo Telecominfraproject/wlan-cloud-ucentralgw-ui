@@ -188,14 +188,14 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
-		"choose_custom": "Wählen Sie die Firmware",
+		"choose_custom": "Wählen",
 		"details_title": "Bild #{{image}} Details",
 		"device_type": "Gerätetyp",
 		"device_types": "Gerätetypen",
 		"downloads": "Downloads",
 		"error_fetching_latest": "Fehler beim Abrufen der neuesten Firmware",
 		"from_release": "Von",
-		"history_title": "Upgrade-Verlauf",
+		"history_title": "Geschichte",
 		"image": "Bild",
 		"image_date": "Bilddatum",
 		"installed_firmware": "Installierte Firmware",
@@ -210,7 +210,7 @@
 		"unknown_firmware_status": "Unbekannter Firmware-Status",
 		"upgrade": "Aktualisierung",
 		"upgrade_command_submitted": "Upgrade-Befehl erfolgreich gesendet",
-		"upgrade_to_latest": "Auf die neueste Version aktualisieren",
+		"upgrade_to_latest": "Neueste",
 		"upgrade_to_version": "Upgrade auf diese Revision",
 		"upgrading": "Upgrade durchführen..."
 	},

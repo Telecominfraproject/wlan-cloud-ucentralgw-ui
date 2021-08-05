@@ -25,3 +25,5 @@ pre.ignore {
   overflow: unset !important;
 }
 
+.tooltip { &::after { left: 25% !important; } }
+.tooltip { &::before { left: 25% !important; } }
