@@ -65,13 +65,13 @@ const SettingsPage = () => {
 
   return (
     <CRow>
-      <CCol sm="4">
+      <CCol md="4">
         <ApiStatusCard t={t} info={sec} />
       </CCol>
-      <CCol sm="4">
+      <CCol md="4">
         <ApiStatusCard t={t} info={gateway} />
       </CCol>
-      <CCol sm="4">
+      <CCol md="4">
         <ApiStatusCard t={t} info={fms} />
       </CCol>
     </CRow>
