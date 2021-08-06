@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from 'contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
-import { DeviceDashboard as Dashboard } from 'ucentral-libs';
+import { DeviceDashboard as Dashboard, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import colors from 'utils/colors';
 

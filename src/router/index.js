@@ -1,4 +1,4 @@
-import { useAuth } from 'contexts/AuthProvider';
+import { useAuth } from 'ucentral-libs';
 import { Route } from 'react-router-dom';
 import React from 'react';
 

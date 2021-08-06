@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { CDataTable, CRow, CCol, CLabel, CInput } from '@coreui/react';
 import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
 import { prettyDate } from 'utils/helper';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth } from 'ucentral-libs';
 
 import styles from './index.module.scss';
 

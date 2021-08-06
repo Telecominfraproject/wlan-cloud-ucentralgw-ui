@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CCard, CCardBody, CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
-import { useAuth } from 'contexts/AuthProvider';
-import { useUser, EditMyProfile } from 'ucentral-libs';
+import { useUser, EditMyProfile, useAuth } from 'ucentral-libs';
 
 const initialState = {
   Id: {

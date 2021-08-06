@@ -13,8 +13,7 @@ import {
   CSpinner,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
+import { useDevice, useAuth } from 'ucentral-libs';
 import { cilSync } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';

@@ -10,8 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
+import { useAuth, useDevice } from 'ucentral-libs';
 import styles from './index.module.scss';
 
 const LatestStatisticsModal = ({ show, toggle }) => {

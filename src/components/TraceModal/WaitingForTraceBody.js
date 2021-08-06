@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CModalBody, CButton, CSpinner, CModalFooter } from '@coreui/react';
-import { useAuth } from 'contexts/AuthProvider';
+import { useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 
 import styles from './index.module.scss';

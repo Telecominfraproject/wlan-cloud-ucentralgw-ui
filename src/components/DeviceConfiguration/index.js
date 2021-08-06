@@ -16,9 +16,7 @@ import CIcon from '@coreui/icons-react';
 import { cilWindowMaximize } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
-import { CopyToClipboardButton, NotesTable } from 'ucentral-libs';
+import { CopyToClipboardButton, NotesTable, useAuth, useDevice } from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 

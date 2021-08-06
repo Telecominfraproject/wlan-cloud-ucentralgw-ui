@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as axios from 'axios';
-import { LoginPage, useFormFields } from 'ucentral-libs';
-import { useAuth } from 'contexts/AuthProvider';
+import { LoginPage, useFormFields, useAuth } from 'ucentral-libs';
 
 const initialFormState = {
   username: {

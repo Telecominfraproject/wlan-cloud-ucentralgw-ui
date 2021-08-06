@@ -14,11 +14,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 import styles from './index.module.scss';

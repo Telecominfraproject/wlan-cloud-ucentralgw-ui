@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ApiStatusCard } from 'ucentral-libs';
-import { useAuth } from 'contexts/AuthProvider';
+import { ApiStatusCard, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { CRow, CCol } from '@coreui/react';
 import { prettyDate, secondsToDetailed } from 'utils/helper';

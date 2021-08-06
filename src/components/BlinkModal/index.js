@@ -18,12 +18,10 @@ import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 
 import styles from './index.module.scss';
 

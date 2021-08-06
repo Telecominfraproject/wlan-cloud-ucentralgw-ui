@@ -13,9 +13,7 @@ import {
   CToastHeader,
 } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import RebootModal from 'components/RebootModal';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import ConfigureModal from 'components/ConfigureModal';

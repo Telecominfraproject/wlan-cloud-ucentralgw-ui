@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
-import { UserListTable } from 'ucentral-libs';
+import { UserListTable, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
-import { useAuth } from 'contexts/AuthProvider';
 import CreateUserModal from 'components/CreateUserModal';
 import EditUserModal from 'components/EditUserModal';
 

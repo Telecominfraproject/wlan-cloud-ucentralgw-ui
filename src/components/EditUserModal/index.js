@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useUser, EditUserModal as Modal } from 'ucentral-libs';
+import { useUser, EditUserModal as Modal, useAuth } from 'ucentral-libs';
 import { CCol, CRow, CToaster, CToast, CToastBody, CToastHeader } from '@coreui/react';
 
 const initialState = {
