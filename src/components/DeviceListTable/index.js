@@ -6,6 +6,7 @@ import { useAuth } from 'contexts/AuthProvider';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
+import FirmwareHistoryModal from 'components/FirmwareHistoryModal';
 import { DeviceListTable } from 'ucentral-libs';
 import meshIcon from '../../assets/icons/Mesh.png';
 import apIcon from '../../assets/icons/AP.png';
@@ -34,6 +35,7 @@ const DeviceList = () => {
   const [devicesPerPage, setDevicesPerPage] = useState(getItem('devicesPerPage') || '10');
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showHistoryModal, setHistoryModal] = useState(false);
   const [showFirmwareModal, setShowFirmwareModal] = useState(false);
   const [firmwareDevice, setFirmwareDevice] = useState({
     deviceType: '',
@@ -49,6 +51,11 @@ const DeviceList = () => {
 
   const toggleFirmwareModal = (device) => {
     setShowFirmwareModal(!showFirmwareModal);
+    if (device !== undefined) setFirmwareDevice(device);
+  };
+
+  const toggleHistoryModal = (device) => {
+    setHistoryModal(!showHistoryModal);
     if (device !== undefined) setFirmwareDevice(device);
   };
 
@@ -359,6 +366,7 @@ const DeviceList = () => {
         pageRangeDisplayed={5}
         refreshDevice={refreshDevice}
         toggleFirmwareModal={toggleFirmwareModal}
+        toggleHistoryModal={toggleHistoryModal}
         upgradeToLatest={upgradeToLatest}
         upgradeStatus={upgradeStatus}
         deviceIcons={deviceIcons}
@@ -374,6 +382,11 @@ const DeviceList = () => {
         toggleFirmwareModal={toggleFirmwareModal}
         setUpgradeStatus={setUpgradeStatus}
         upgradeStatus={upgradeStatus}
+      />
+      <FirmwareHistoryModal
+        serialNumber={firmwareDevice.serialNumber}
+        show={showHistoryModal}
+        toggle={toggleHistoryModal}
       />
       <CToaster>
         <CToast

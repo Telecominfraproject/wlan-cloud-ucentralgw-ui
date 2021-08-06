@@ -132,6 +132,7 @@
 		"table": "Mesa",
 		"timestamp": "hora",
 		"to": "a",
+		"type": "Tipo",
 		"unable_to_connect": "No se puede conectar al dispositivo",
 		"unable_to_delete": "No se puede eliminar",
 		"unknown": "Desconocido",
@@ -154,6 +155,7 @@
 		"owner": "Propietario",
 		"title": "Configuración",
 		"type": "Tipo de dispositivo",
+		"uuid": "ID de configuración",
 		"view_json": "Ver JSON sin procesar"
 	},
 	"configure": {
@@ -186,26 +188,29 @@
 		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
 	},
 	"firmware": {
-		"choose_custom": "Elija firmware personalizado",
+		"choose_custom": "Escoger",
 		"details_title": "Detalles de la imagen n. °{{image}} ",
 		"device_type": "Tipo de dispositivo",
 		"device_types": "Tipos de dispositivos",
 		"downloads": "Descargas",
 		"error_fetching_latest": "Error al obtener el firmware más reciente",
+		"from_release": "Desde",
+		"history_title": "Historia",
 		"image": "Imagen",
 		"image_date": "Fecha de la imagen",
 		"installed_firmware": "Firmware instalado",
 		"latest_version_installed": "Última versión instalada",
 		"newer_firmware_available": "Nuevas revisiones disponibles",
-		"reinstall_latest": "Reinstalar más reciente",
+		"reinstall_latest": "Reinstalar",
 		"revision": "Revisión",
 		"size": "Tamaño",
 		"status": "Estado del firmware",
 		"title": "Firmware",
+		"to_release": "A",
 		"unknown_firmware_status": "Estado de firmware desconocido",
 		"upgrade": "Mejorar",
 		"upgrade_command_submitted": "El comando de actualización se envió correctamente",
-		"upgrade_to_latest": "Actualizar a la última",
+		"upgrade_to_latest": "último",
 		"upgrade_to_version": "Actualizar a esta revisión",
 		"upgrading": "Actualizando ..."
 	},
@@ -348,6 +353,7 @@
 		"validated": "Validado"
 	},
 	"wifi_analysis": {
+		"association": "Asociación",
 		"associations": "Asociaciones",
 		"mode": "Modo",
 		"radios": "Radios",

@@ -203,7 +203,7 @@ const DeviceActions = () => {
         currentToken={currentToken}
         device={device}
         show={showUpgradeModal}
-        toggleModal={toggleUpgradeModal}
+        toggleFirmwareModal={toggleUpgradeModal}
         setUpgradeStatus={setUpgradeStatus}
         upgradeStatus={upgradeStatus}
       />
