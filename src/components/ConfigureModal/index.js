@@ -17,13 +17,11 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
+import { useAuth, useDevice } from 'ucentral-libs';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -126,7 +124,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
   };
 
   return (
-    <CModal show={show} onClose={toggleModal}>
+    <CModal show={show} onClose={toggleModal} size="lg">
       <CModalHeader closeButton>
         <CModalTitle>{t('configure.title')}</CModalTitle>
       </CModalHeader>
@@ -136,7 +134,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <CRow>
-              <CCol md="10" className={styles.spacedColumn}>
+              <CCol md="10" className="mt-1">
                 <h6>{t('configure.enter_new')}</h6>
               </CCol>
               <CCol>
@@ -151,7 +149,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 </CButton>
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-4">
               <CCol>
                 <CForm>
                   <CTextarea
@@ -169,7 +167,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 </CForm>
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-4">
               <CCol>{t('configure.choose_file')}</CCol>
               <CCol>
                 <CInputFile

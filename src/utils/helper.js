@@ -11,23 +11,6 @@ export const cleanBytesString = (bytes, decimals = 2) => {
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 };
 
-export const convertDateToUtc = (date) => {
-  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-  return utcDate;
-};
-
-export const convertDateFromUtc = (utcDate) => {
-  const dateObj = new Date();
-  const date = new Date(utcDate.getTime() - dateObj.getTimezoneOffset() * 60000);
-  return date;
-};
-
-export const addDays = (date, days) => {
-  const newDate = new Date(date);
-  newDate.setDate(date.getDate() + days);
-  return newDate;
-};
-
 const prettyNumber = (number) => {
   if (number >= 10) {
     return number;
@@ -125,9 +108,9 @@ export const compactSecondsToDetailed = (seconds, dayLabel, daysLabel, secondsLa
 
   finalString =
     days === 1 ? `${finalString}${days} ${dayLabel}, ` : `${finalString}${days} ${daysLabel}, `;
-  finalString = hours < 10 ? `${finalString}0${hours}:` : `${finalString}${hours}:`;
-  finalString = minutes < 10 ? `${finalString}0${minutes}:` : `${finalString}${minutes}:`;
-  finalString = secondsLeft < 10 ? `${finalString}0${secondsLeft}` : `${finalString}${secondsLeft}`;
+  finalString = `${finalString}${prettyNumber(hours)}:`;
+  finalString = `${finalString}${prettyNumber(minutes)}:`;
+  finalString = `${finalString}${prettyNumber(secondsLeft)}`;
 
   return finalString;
 };

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { FirmwareList } from 'ucentral-libs';
+import { FirmwareList, useAuth } from 'ucentral-libs';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();

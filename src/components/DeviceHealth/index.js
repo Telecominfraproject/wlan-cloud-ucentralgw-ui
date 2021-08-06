@@ -16,11 +16,9 @@ import CIcon from '@coreui/icons-react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, dateToUnix } from 'utils/helper';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
@@ -198,10 +196,10 @@ const DeviceHealth = () => {
       color={barColor}
       inverse="true"
       footerSlot={
-        <div className={styles.footer}>
-          <CProgress className={styles.progressBar} color="white" value={sanityLevel ?? 0} />
+        <div className="p-4">
+          <CProgress className="mb-3" color="white" value={sanityLevel ?? 0} />
           <CCollapse show={collapse}>
-            <div className={styles.alignRight}>
+            <div className="text-right">
               <CPopover content={t('common.delete')}>
                 <CButton
                   color="light"
@@ -215,7 +213,7 @@ const DeviceHealth = () => {
                 </CButton>
               </CPopover>
             </div>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mb-3">
               <CCol>
                 {t('common.from')}
                 :
@@ -227,37 +225,36 @@ const DeviceHealth = () => {
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
               </CCol>
             </CRow>
-            <CCard>
+            <CCard className="p-0">
               <div className={[styles.scrollable, 'overflow-auto'].join(' ')}>
                 <CDataTable
+                  border
                   items={healthChecks ?? []}
                   fields={columns}
                   className={styles.dataTable}
                   loading={loading}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
-                    recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
-                    sanity: (item) => <td>{`${item.sanity}%`}</td>,
-                    show_details: (item, index) => {
-                      if (item.sanity === 100) {
-                        return <></>;
-                      }
-                      return (
-                        <td className="py-2">
-                          <CButton
-                            color="primary"
-                            variant={details.includes(index) ? '' : 'outline'}
-                            shape="square"
-                            size="sm"
-                            onClick={() => {
-                              toggleDetails(index);
-                            }}
-                          >
-                            <CIcon name="cilList" size="lg" />
-                          </CButton>
-                        </td>
-                      );
-                    },
+                    UUID: (item) => <td className="align-middle">{item.UUID}</td>,
+                    recorded: (item) => (
+                      <td className="align-middle">{prettyDate(item.recorded)}</td>
+                    ),
+                    sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
+                    show_details: (item, index) => (
+                      <td className="align-middle">
+                        <CButton
+                          color="primary"
+                          variant={details.includes(index) ? '' : 'outline'}
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleDetails(index);
+                          }}
+                        >
+                          <CIcon name="cilList" size="lg" />
+                        </CButton>
+                      </td>
+                    ),
                     details: (item, index) => (
                       <CCollapse show={details.includes(index)}>
                         <CCardBody>
@@ -268,8 +265,8 @@ const DeviceHealth = () => {
                     ),
                   }}
                 />
-                <CRow className={styles.loadMoreRow}>
-                  {showLoadingMore && (
+                {showLoadingMore && (
+                  <div className="mb-3">
                     <LoadingButton
                       label={t('common.view_more')}
                       isLoadingLabel={t('common.loading_more_ellipsis')}
@@ -277,8 +274,8 @@ const DeviceHealth = () => {
                       action={showMoreLogs}
                       variant="outline"
                     />
-                  )}
-                </CRow>
+                  </div>
+                )}
               </div>
             </CCard>
           </CCollapse>

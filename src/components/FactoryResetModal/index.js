@@ -15,11 +15,9 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
+import { useAuth, useDevice } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import styles from './index.module.scss';
 
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -95,9 +93,9 @@ const ConfigureModal = ({ show, toggleModal }) => {
         <div>
           <CModalBody>
             <CAlert color="danger">{t('factory_reset.warning')}</CAlert>
-            <CRow className={styles.spacedRow}>
-              <p className={styles.spacedForm}>{t('factory_reset.redirector')}</p>
-              <CForm className={styles.spacedForm}>
+            <CRow className="mt-3">
+              <p className="pl-4">{t('factory_reset.redirector')}</p>
+              <CForm className="pl-4">
                 <CSwitch
                   color="primary"
                   defaultChecked={keepRedirector}

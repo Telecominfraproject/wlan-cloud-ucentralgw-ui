@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { CModalBody } from '@coreui/react';
 import { v4 as createUuid } from 'uuid';
-import { useAuth } from 'contexts/AuthProvider';
+import { useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 
 const UpgradeWaitingBody = ({ serialNumber }) => {

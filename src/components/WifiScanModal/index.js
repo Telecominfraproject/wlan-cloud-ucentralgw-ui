@@ -14,11 +14,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 import styles from './index.module.scss';
@@ -133,12 +131,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
       <CModalBody>
         <div hidden={hideOptions || waiting}>
           <h6>{t('scan.directions')}</h6>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol md="3">
-              <p className={styles.spacedText}>Verbose:</p>
+              <p className="pl-2">Verbose:</p>
             </CCol>
             <CCol>
-              <CForm className={styles.spacedSwitch}>
+              <CForm className="pl-4">
                 <CSwitch
                   color="primary"
                   defaultChecked={choseVerbose}
@@ -149,12 +147,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
               </CForm>
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol md="3">
-              <p className={styles.spacedText}>{t('scan.active')}:</p>
+              <p className="pl-2">{t('scan.active')}:</p>
             </CCol>
             <CCol>
-              <CForm className={styles.spacedSwitch}>
+              <CForm className="pl-4">
                 <CSwitch
                   color="primary"
                   defaultChecked={activeScan}
@@ -179,7 +177,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           </CRow>
         </div>
         <div hidden={!hadSuccess && !hadFailure}>
-          <CRow className={styles.bottomSpace}>
+          <CRow className="mb-2">
             <CCol>
               <h6>{t('scan.result_directions')}</h6>
             </CCol>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useAuth } from 'contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
 import {
@@ -11,7 +10,7 @@ import {
   CModalFooter,
   CModalTitle,
 } from '@coreui/react';
-import { FirmwareHistoryTable } from 'ucentral-libs';
+import { FirmwareHistoryTable, useAuth } from 'ucentral-libs';
 
 const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
   const { t } = useTranslation();

@@ -13,8 +13,7 @@ import {
   CSpinner,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
+import { useDevice, useAuth } from 'ucentral-libs';
 import { cilSync } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
@@ -86,7 +85,7 @@ const DeviceStatusCard = () => {
               </div>
             </CCol>
             <CCol>
-              <div className={styles.alignRight}>
+              <div className="text-right">
                 <CPopover content={t('common.refresh')}>
                   <CButton color="secondary" onClick={getData} size="sm">
                     <CIcon content={cilSync} />
@@ -106,7 +105,7 @@ const DeviceStatusCard = () => {
               <div className={styles.overlayContainer} hidden={!loading}>
                 <CSpinner className={styles.spinner} />
               </div>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.connection_status')} :</CCol>
                 <CCol xs="10" md="7">
                   {status?.connected ? (
@@ -116,7 +115,7 @@ const DeviceStatusCard = () => {
                   )}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.uptime')} :</CCol>
                 <CCol xs="10" md="7">
                   {secondsToDetailed(
@@ -132,19 +131,19 @@ const DeviceStatusCard = () => {
                   )}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.last_contact')} :</CCol>
                 <CCol xs="10" md="7">
                   {prettyDate(status?.lastContact)}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.localtime')} :</CCol>
                 <CCol xs="10" md="7">
                   {prettyDate(lastStats?.unit?.localtime)}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.load_averages')} :</CCol>
                 <CCol xs="10" md="7">
                   {transformLoad(lastStats?.unit?.load[0])}
@@ -154,7 +153,7 @@ const DeviceStatusCard = () => {
                   {transformLoad(lastStats?.unit?.load[2])}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="my-2">
                 <CCol md="5">{t('status.memory')} :</CCol>
                 <CCol xs="9" md="6" style={{ paddingTop: '5px' }}>
                   <MemoryBar

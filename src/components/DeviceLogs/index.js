@@ -16,10 +16,8 @@ import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import eventBus from 'utils/eventBus';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import DeleteLogModal from 'components/DeleteLogModal';
 import styles from './index.module.scss';
 
@@ -179,9 +177,9 @@ const DeviceLogs = () => {
         color="gradient-info"
         header={t('device_logs.title')}
         footerSlot={
-          <div className={styles.footer}>
+          <div className="p-4">
             <CCollapse show={collapse}>
-              <div className={styles.alignRight}>
+              <div className="text-right">
                 <CPopover content={t('common.delete')}>
                   <CButton
                     color="light"
@@ -195,7 +193,7 @@ const DeviceLogs = () => {
                   </CButton>
                 </CPopover>
               </div>
-              <CRow className={styles.datepickerRow}>
+              <CRow className="mb-3">
                 <CCol>
                   {t('common.from')}
                   <DatePicker includeTime onChange={(date) => modifyStart(date)} />
@@ -240,8 +238,8 @@ const DeviceLogs = () => {
                       ),
                     }}
                   />
-                  <CRow className={styles.loadMoreRow}>
-                    {showLoadingMore && (
+                  {showLoadingMore && (
+                    <div className="mb-3">
                       <LoadingButton
                         label={t('common.view_more')}
                         isLoadingLabel={t('common.loading_more_ellipsis')}
@@ -249,8 +247,8 @@ const DeviceLogs = () => {
                         action={showMoreLogs}
                         variant="outline"
                       />
-                    )}
-                  </CRow>
+                    </div>
+                  )}
                 </div>
               </CCard>
             </CCollapse>

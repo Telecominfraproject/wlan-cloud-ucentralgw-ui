@@ -7,7 +7,6 @@ import CIcon from '@coreui/icons-react';
 import eventBus from 'utils/eventBus';
 import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsModal from './LatestStatisticsModal';
-import styles from './index.module.scss';
 
 const DeviceStatisticsCard = () => {
   const history = useHistory();
@@ -33,9 +32,7 @@ const DeviceStatisticsCard = () => {
         <CCardHeader>
           <CRow>
             <CCol>
-              <div className={['text-value-lg', styles.cardTitle].join(' ')}>
-                {t('statistics.title')}
-              </div>
+              <div className="text-value-lg pt-2">{t('statistics.title')}</div>
             </CCol>
             <CCol sm="3" className="pt-2">
               <CRow>
@@ -60,7 +57,7 @@ const DeviceStatisticsCard = () => {
             </CCol>
           </CRow>
         </CCardHeader>
-        <CCardBody className={styles.statsBody}>
+        <CCardBody className="p-5">
           <StatisticsChartList />
         </CCardBody>
       </CCard>

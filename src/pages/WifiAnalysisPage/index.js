@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { WifiAnalysisTable, RadioAnalysisTable } from 'ucentral-libs';
-import { useAuth } from 'contexts/AuthProvider';
+import { WifiAnalysisTable, RadioAnalysisTable, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { cleanBytesString, prettyDate, compactSecondsToDetailed } from 'utils/helper';
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
