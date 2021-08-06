@@ -98,19 +98,17 @@ const DeviceConfiguration = () => {
               <CCol>
                 <div className="text-value-lg">{t('configuration.title')}</div>
               </CCol>
-              <CCol>
-                <div className={styles.alignRight}>
-                  <CPopover content={t('configuration.view_json')}>
-                    <CButton color="secondary" onClick={toggleModal} size="sm">
-                      <CIcon content={cilWindowMaximize} />
-                    </CButton>
-                  </CPopover>
-                </div>
+              <CCol className="text-right">
+                <CPopover content={t('configuration.view_json')}>
+                  <CButton color="secondary" onClick={toggleModal} size="sm">
+                    <CIcon content={cilWindowMaximize} />
+                  </CButton>
+                </CPopover>
               </CCol>
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('configuration.uuid')} : </CLabel>
               </CCol>
@@ -118,7 +116,7 @@ const DeviceConfiguration = () => {
                 {device.UUID}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('common.serial_number')} : </CLabel>
               </CCol>
@@ -127,7 +125,7 @@ const DeviceConfiguration = () => {
                 <CopyToClipboardButton t={t} size="sm" content={device.serialNumber} />
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('configuration.type')} : </CLabel>
               </CCol>
@@ -135,7 +133,7 @@ const DeviceConfiguration = () => {
                 {device.deviceType}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
               </CCol>
@@ -143,7 +141,7 @@ const DeviceConfiguration = () => {
                 {prettyDate(device.lastConfigurationChange)}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('common.mac')} :</CLabel>
               </CCol>
@@ -151,7 +149,7 @@ const DeviceConfiguration = () => {
                 {device.macAddress}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
+            <CRow className="mt-2">
               <CCol md="3">
                 <CLabel>{t('configuration.created')} : </CLabel>
               </CCol>
@@ -159,8 +157,8 @@ const DeviceConfiguration = () => {
                 {prettyDate(device.createdTimestamp)}
               </CCol>
             </CRow>
-            <CRow className={styles.spacedRow}>
-              <CCol md="3" className={styles.topPadding}>
+            <CRow className="mt-2 mb-4">
+              <CCol md="3" className="pt-1">
                 <CLabel>{t('configuration.device_password')} : </CLabel>
               </CCol>
               <CCol xs="12" md="9">
@@ -180,7 +178,7 @@ const DeviceConfiguration = () => {
               descriptionColumn={false}
             />
             <CCollapse show={collapse}>
-              <CRow className={styles.spacedRow}>
+              <CRow className="mt-2">
                 <CCol md="3">
                   <CLabel>{t('configuration.last_configuration_download')} : </CLabel>
                 </CCol>
@@ -188,7 +186,7 @@ const DeviceConfiguration = () => {
                   {prettyDate(device.lastConfigurationDownload)}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="mt-2">
                 <CCol md="3">
                   <CLabel>{t('common.manufacturer')} :</CLabel>
                 </CCol>
@@ -196,7 +194,7 @@ const DeviceConfiguration = () => {
                   {device.manufacturer}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="mt-2">
                 <CCol md="3">
                   <CLabel>{t('configuration.owner')} :</CLabel>
                 </CCol>
@@ -204,7 +202,7 @@ const DeviceConfiguration = () => {
                   {device.owner}
                 </CCol>
               </CRow>
-              <CRow className={styles.spacedRow}>
+              <CRow className="mt-2">
                 <CCol md="3">
                   <CLabel>{t('configuration.location')} :</CLabel>
                 </CCol>

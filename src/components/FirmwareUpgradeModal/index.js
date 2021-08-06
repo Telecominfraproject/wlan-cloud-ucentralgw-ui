@@ -20,15 +20,13 @@ import 'react-widgets/styles.css';
 import { useDevice, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import getDeviceConnection from 'utils/deviceHelper';
 import ButtonFooter from './UpgradeFooter';
-import styles from './index.module.scss';
 import UpgradeWaitingBody from './UpgradeWaitingBody';
 
 const FirmwareUpgradeModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
-  const { deviceSerialNumber } = useDevice();
+  const { deviceSerialNumber, getDeviceConnection } = useDevice();
   const [isNow, setIsNow] = useState(true);
   const [waitForUpgrade, setWaitForUpgrade] = useState(false);
   const [date, setDate] = useState(new Date().toString());
@@ -155,8 +153,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('upgrade.directions')}</h6>
-        <CRow className={styles.spacedRow}>
-          <CCol md="4" className={styles.spacedColumn}>
+        <CRow className="mt-3">
+          <CCol md="4" className="mt-2">
             <p>{t('upgrade.firmware_uri')}</p>
           </CCol>
           <CCol md="8">
@@ -173,9 +171,9 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <CInvalidFeedback>{t('upgrade.need_uri')}</CInvalidFeedback>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow}>
+        <CRow className="mt-3">
           <CCol md="8">
-            <p className={styles.spacedText}>{t('common.execute_now')}</p>
+            <p>{t('common.execute_now')}</p>
           </CCol>
           <CCol>
             <CSwitch
@@ -188,8 +186,8 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             />
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow} hidden={isNow}>
-          <CCol md="4" className={styles.spacedColumn}>
+        <CRow className="mt-3" hidden={isNow}>
+          <CCol md="4" className="mt-2">
             <p>{t('upgrade.time')}</p>
           </CCol>
           <CCol xs="12" md="8">
@@ -204,12 +202,9 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <CInvalidFeedback>{t('common.need_date')}</CInvalidFeedback>
           </CCol>
         </CRow>
-        <CRow
-          className={styles.spacedRow}
-          hidden={true || !isNow || disabledWaiting || !deviceConnected}
-        >
+        <CRow className="mt-3" hidden={true || !isNow || disabledWaiting || !deviceConnected}>
           <CCol md="8">
-            <p className={styles.spacedText}>
+            <p>
               {t('upgrade.wait_for_upgrade')}
               <b hidden={!disabledWaiting}> {t('upgrade.offline_device')}</b>
             </p>

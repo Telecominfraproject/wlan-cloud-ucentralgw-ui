@@ -64,8 +64,8 @@ const DeleteLogModal = ({ show, toggle, object }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('delete_logs.explanation', { object })}</h6>
-        <CRow className={styles.spacedRow}>
-          <CCol md="4" className={styles.spacedDate}>
+        <CRow className="pt-3">
+          <CCol md="4" className="mt-2">
             <p>{t('common.date')}:</p>
           </CCol>
           <CCol xs="12" md="8">

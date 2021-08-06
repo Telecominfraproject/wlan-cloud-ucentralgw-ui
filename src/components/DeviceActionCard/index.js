@@ -22,8 +22,6 @@ import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
 
-import styles from './index.module.scss';
-
 const DeviceActions = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
@@ -153,7 +151,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow}>
+        <CRow className="mt-3">
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
@@ -165,7 +163,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow}>
+        <CRow className="mt-3">
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
@@ -177,7 +175,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className={styles.spacedRow}>
+        <CRow className="mt-3">
           <CCol>
             <LoadingButton
               isLoading={connectLoading}

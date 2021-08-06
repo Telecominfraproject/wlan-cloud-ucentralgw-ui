@@ -23,8 +23,6 @@ import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 
-import styles from './index.module.scss';
-
 const BlinkModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
@@ -141,9 +139,9 @@ const BlinkModal = ({ show, toggleModal }) => {
                 </CFormGroup>
               </CCol>
             </CFormGroup>
-            <CRow className={styles.spacedRow}>
+            <CRow className="pt-1">
               <CCol md="8">
-                <p className={styles.spacedText}>{t('blink.execute_now')}</p>
+                <p>{t('blink.execute_now')}</p>
               </CCol>
               <CCol>
                 <CSwitch
@@ -156,8 +154,8 @@ const BlinkModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CRow hidden={isNow} className={styles.spacedRow}>
-              <CCol md="4" className={styles.spacedDate}>
+            <CRow hidden={isNow} className="pt-3">
+              <CCol md="4" className="pt-2">
                 <p>{t('common.custom_date')}</p>
               </CCol>
               <CCol xs="12" md="8">

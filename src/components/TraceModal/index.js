@@ -20,16 +20,14 @@ import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import getDeviceConnection from 'utils/deviceHelper';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import WaitingForTraceBody from './WaitingForTraceBody';
-import styles from './index.module.scss';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
-  const { deviceSerialNumber } = useDevice();
+  const { deviceSerialNumber, getDeviceConnection } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [blockFields, setBlockFields] = useState(false);
@@ -135,7 +133,7 @@ const TraceModal = ({ show, toggleModal }) => {
       <div>
         <CModalBody>
           <h6>{t('trace.directions')}</h6>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol>
               <CButton
                 disabled={blockFields}
@@ -157,8 +155,8 @@ const TraceModal = ({ show, toggleModal }) => {
               </CButton>
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow}>
-            <CCol md="4" className={styles.spacedColumn}>
+          <CRow className="mt-3">
+            <CCol md="4" className="pt-2">
               {usingDuration ? 'Duration: ' : 'Packets: '}
             </CCol>
             <CCol xs="12" md="8">
@@ -189,7 +187,7 @@ const TraceModal = ({ show, toggleModal }) => {
               )}
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol md="7">{t('trace.choose_network')}:</CCol>
             <CCol>
               <CForm>
@@ -218,9 +216,9 @@ const TraceModal = ({ show, toggleModal }) => {
               </CForm>
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow} hidden={!isDeviceConnected}>
+          <CRow className="mt-3" hidden={!isDeviceConnected}>
             <CCol md="8">
-              <p className={styles.spacedText}>{t('trace.wait_for_file')}</p>
+              <p>{t('trace.wait_for_file')}</p>
             </CCol>
             <CCol>
               <CSwitch

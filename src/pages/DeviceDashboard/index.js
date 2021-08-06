@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DeviceDashboard as Dashboard, useAuth } from 'ucentral-libs';
+import { DeviceDashboard as Dashboard, useAuth, COLOR_LIST } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-import colors from 'utils/colors';
 
 const DeviceDashboard = () => {
   const { t } = useTranslation();
@@ -240,7 +239,7 @@ const DeviceDashboard = () => {
 
       deviceTypeDs.push(point.value);
       deviceTypeLabels.push(point.tag);
-      deviceTypeColors.push(colors[i]);
+      deviceTypeColors.push(COLOR_LIST[i]);
     }
     const otherTypes = deviceTypeDs.slice(5).reduce((acc, type) => acc + type, 0);
     parsedData.deviceType = {

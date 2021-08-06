@@ -289,8 +289,8 @@ const DeviceCommands = () => {
           <CCollapse show={collapse}>
             <CRow>
               <CCol />
-              <CCol>
-                <div className={styles.alignRight}>
+              <CCol className="text-right">
+                <div>
                   <CButton onClick={refreshCommands} size="sm">
                     <CIcon
                       name="cil-sync"
@@ -302,7 +302,7 @@ const DeviceCommands = () => {
                 </div>
               </CCol>
             </CRow>
-            <CRow className={styles.datepickerRow}>
+            <CRow className="mb-2">
               <CCol>
                 From:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />

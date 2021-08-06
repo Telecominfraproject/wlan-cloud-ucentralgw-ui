@@ -131,12 +131,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
       <CModalBody>
         <div hidden={hideOptions || waiting}>
           <h6>{t('scan.directions')}</h6>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol md="3">
-              <p className={styles.spacedText}>Verbose:</p>
+              <p className="pl-2">Verbose:</p>
             </CCol>
             <CCol>
-              <CForm className={styles.spacedSwitch}>
+              <CForm className="pl-4">
                 <CSwitch
                   color="primary"
                   defaultChecked={choseVerbose}
@@ -147,12 +147,12 @@ const WifiScanModal = ({ show, toggleModal }) => {
               </CForm>
             </CCol>
           </CRow>
-          <CRow className={styles.spacedRow}>
+          <CRow className="mt-3">
             <CCol md="3">
-              <p className={styles.spacedText}>{t('scan.active')}:</p>
+              <p className="pl-2">{t('scan.active')}:</p>
             </CCol>
             <CCol>
-              <CForm className={styles.spacedSwitch}>
+              <CForm className="pl-4">
                 <CSwitch
                   color="primary"
                   defaultChecked={activeScan}
@@ -177,7 +177,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
           </CRow>
         </div>
         <div hidden={!hadSuccess && !hadFailure}>
-          <CRow className={styles.bottomSpace}>
+          <CRow className="mb-2">
             <CCol>
               <h6>{t('scan.result_directions')}</h6>
             </CCol>
