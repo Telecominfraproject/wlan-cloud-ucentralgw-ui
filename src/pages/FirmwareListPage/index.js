@@ -13,19 +13,39 @@ const FirmwareListPage = () => {
   const [selectedDeviceType, setSelectedDeviceType] = useState('');
   const [deviceTypes, setDeviceTypes] = useState([]);
   const [firmware, setFirmware] = useState([]);
+  const [filteredFirmware, setFilteredFirmware] = useState([]);
   const [displayedFirmware, setDisplayedFirmware] = useState([]);
+  const [displayDev, setDisplayDev] = useState(false);
   const [addNoteLoading, setAddNoteLoading] = useState(false);
   const [updateDescriptionLoading, setUpdateDescriptionLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const displayFirmware = () => {
+  const displayFirmware = (currentPage, perPage, firmwareToDisplay) => {
     setLoading(true);
 
-    const startIndex = page.selected * firmwarePerPage;
-    const endIndex = parseInt(startIndex, 10) + parseInt(firmwarePerPage, 10);
+    const startIndex = currentPage.selected * perPage;
+    const endIndex = parseInt(startIndex, 10) + parseInt(perPage, 10);
 
-    setDisplayedFirmware(firmware.slice(startIndex, endIndex));
+    setDisplayedFirmware(firmwareToDisplay.slice(startIndex, endIndex));
     setLoading(false);
+  };
+
+  const filterFirmware = (newFirmware, displayDevDevices) => {
+    let firmwareToDisplay = newFirmware;
+    if (!displayDevDevices) {
+      firmwareToDisplay = firmwareToDisplay.filter((i) => !i.revision.includes('devel'));
+    }
+
+    const count = Math.ceil(firmwareToDisplay.length / firmwarePerPage);
+    setPageCount(count);
+    setPage({ selected: 0 });
+    setFilteredFirmware(firmwareToDisplay);
+    displayFirmware({ selected: 0 }, firmwarePerPage, firmwareToDisplay);
+  };
+
+  const toggleDevDisplay = () => {
+    setDisplayDev(!displayDev);
+    filterFirmware(firmware, !displayDev);
   };
 
   const getFirmware = (deviceType) => {
@@ -51,6 +71,7 @@ const FirmwareListPage = () => {
           return firstDate > secondDate ? -1 : 0;
         });
         setFirmware(sortedFirmware);
+        filterFirmware(sortedFirmware, displayDev);
       })
       .catch(() => {
         setLoading(false);
@@ -93,7 +114,22 @@ const FirmwareListPage = () => {
   };
 
   const updateFirmwarePerPage = (value) => {
+    const count = Math.ceil(filteredFirmware.length / value);
+    setPageCount(count);
+    setPage({ selected: 0 });
+
     setFirmwarePerPage(value);
+    displayFirmware({ selected: 0 }, value, filteredFirmware);
+  };
+
+  const updatePage = (value) => {
+    setPage(value);
+    displayFirmware(value, firmwarePerPage, filteredFirmware);
+  };
+
+  const updateSelectedType = (value) => {
+    setSelectedDeviceType(value);
+    getFirmware(value);
   };
 
   const addNote = (value, id) => {
@@ -161,31 +197,8 @@ const FirmwareListPage = () => {
   };
 
   useEffect(() => {
-    if (firmware.length > 0) {
-      displayFirmware();
-    } else {
-      setDisplayedFirmware([]);
-      setLoading(false);
-    }
-  }, [firmware, firmwarePerPage, page]);
-
-  useEffect(() => {
     if (selectedDeviceType === '' && !loading) getDeviceTypes();
   }, []);
-
-  useEffect(() => {
-    if (selectedDeviceType !== '') {
-      getFirmware();
-    }
-  }, [selectedDeviceType]);
-
-  useEffect(() => {
-    if (firmware !== []) {
-      const count = Math.ceil(firmware.length / firmwarePerPage);
-      setPageCount(count);
-      setPage({ selected: 0 });
-    }
-  }, [firmwarePerPage, firmware]);
 
   return (
     <FirmwareList
@@ -193,17 +206,19 @@ const FirmwareListPage = () => {
       loading={loading}
       page={page}
       pageCount={pageCount}
-      setPage={setPage}
+      setPage={updatePage}
       data={displayedFirmware}
       firmwarePerPage={firmwarePerPage}
       setFirmwarePerPage={updateFirmwarePerPage}
       selectedDeviceType={selectedDeviceType}
       deviceTypes={deviceTypes}
-      setSelectedDeviceType={setSelectedDeviceType}
+      setSelectedDeviceType={updateSelectedType}
       addNote={addNote}
       addNoteLoading={addNoteLoading}
       updateDescription={updateDescription}
       updateDescriptionLoading={updateDescriptionLoading}
+      displayDev={displayDev}
+      toggleDevDisplay={toggleDevDisplay}
     />
   );
 };

@@ -203,6 +203,7 @@
 		"newer_firmware_available": "Révisions plus récentes disponibles",
 		"reinstall_latest": "Réinstaller",
 		"revision": "Révision",
+		"show_dev": "Afficher les développeurs",
 		"size": "Taille",
 		"status": "État du micrologiciel",
 		"title": "Micrologiciel",

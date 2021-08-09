@@ -203,6 +203,7 @@
 		"newer_firmware_available": "Neuere Versionen verfügbar",
 		"reinstall_latest": "Neu installieren",
 		"revision": "Revision",
+		"show_dev": "Dev . anzeigen",
 		"size": "Größe",
 		"status": "Firmware-Status",
 		"title": "Firmware",
