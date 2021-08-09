@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { logout } from 'utils/authHelper';
 import routes from 'routes';
-import { useAuth } from 'contexts/AuthProvider';
-import { Header, Sidebar, Footer, PageContainer } from 'ucentral-libs';
+import { Header, Sidebar, Footer, PageContainer, useAuth } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
-  const { endpoints, currentToken, user, avatar } = useAuth();
+  const { endpoints, currentToken, user, avatar, logout } = useAuth();
   const { t, i18n } = useTranslation();
 
   const navigation = [
@@ -89,7 +87,7 @@ const TheLayout = () => {
         <div className="c-body">
           <PageContainer t={t} routes={routes} redirectTo="/devices" />
         </div>
-        <Footer t={t} version="2.0.6" />
+        <Footer t={t} version="2.0.9" />
       </div>
     </div>
   );

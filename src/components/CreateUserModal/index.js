@@ -10,9 +10,8 @@ import {
   CModalBody,
   CToastHeader,
 } from '@coreui/react';
-import { CreateUserForm, useFormFields } from 'ucentral-libs';
+import { CreateUserForm, useFormFields, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
 import { testRegex, validateEmail } from 'utils/helper';
 
 const initialState = {

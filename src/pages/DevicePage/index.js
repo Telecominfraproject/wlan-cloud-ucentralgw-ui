@@ -8,14 +8,15 @@ import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
 import DeviceStatusCard from 'components/DeviceStatusCard';
-import { DeviceProvider } from 'contexts/DeviceProvider';
+import axiosInstance from 'utils/axiosInstance';
+import { DeviceProvider } from 'ucentral-libs';
 
 const DevicePage = () => {
   const { deviceId } = useParams();
 
   return (
     <div className="App">
-      <DeviceProvider serialNumber={deviceId}>
+      <DeviceProvider axiosInstance={axiosInstance} serialNumber={deviceId}>
         <CRow>
           <CCol xs="12" sm="6">
             <DeviceStatusCard />

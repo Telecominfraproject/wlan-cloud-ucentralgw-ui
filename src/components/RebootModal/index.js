@@ -15,13 +15,10 @@ import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
 import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import styles from './index.module.scss';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -108,8 +105,8 @@ const ActionModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <CRow hidden={isNow} className={styles.spacedRow}>
-              <CCol md="4" className={styles.spacedDate}>
+            <CRow hidden={isNow} className="mt-2">
+              <CCol md="4" className="pt-2">
                 <p>{t('common.custom_date')}:</p>
               </CCol>
               <CCol xs="12" md="8">

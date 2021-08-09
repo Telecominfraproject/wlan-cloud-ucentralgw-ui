@@ -16,11 +16,9 @@ import DatePicker from 'react-widgets/DatePicker';
 import { cilCloudDownload, cilSync, cilCalendarCheck } from '@coreui/icons';
 import { prettyDate, dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
-import { useDevice } from 'contexts/DeviceProvider';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
-import { LoadingButton } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DeviceCommandsCollapse from './DeviceCommandsCollapse';
 import styles from './index.module.scss';
@@ -291,8 +289,8 @@ const DeviceCommands = () => {
           <CCollapse show={collapse}>
             <CRow>
               <CCol />
-              <CCol>
-                <div className={styles.alignRight}>
+              <CCol className="text-right">
+                <div>
                   <CButton onClick={refreshCommands} size="sm">
                     <CIcon
                       name="cil-sync"
@@ -304,7 +302,7 @@ const DeviceCommands = () => {
                 </div>
               </CCol>
             </CRow>
-            <CRow className={styles.datepickerRow}>
+            <CRow className="mb-2">
               <CCol>
                 From:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />

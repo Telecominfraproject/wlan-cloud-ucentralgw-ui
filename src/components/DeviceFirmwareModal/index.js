@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { DeviceFirmwareModal as Modal } from 'ucentral-libs';
+import { DeviceFirmwareModal as Modal, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth } from 'contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
 
 const DeviceFirmwareModal = ({

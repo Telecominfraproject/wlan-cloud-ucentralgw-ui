@@ -3,11 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { CModal, CModalHeader, CModalTitle, CModalBody, CCol, CRow } from '@coreui/react';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { ConfirmFooter } from 'ucentral-libs';
+import { ConfirmFooter, useAuth, useDevice } from 'ucentral-libs';
 import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { useDevice } from 'contexts/DeviceProvider';
-import { useAuth } from 'contexts/AuthProvider';
 import eventBus from 'utils/eventBus';
 import styles from './index.module.scss';
 
@@ -66,8 +64,8 @@ const DeleteLogModal = ({ show, toggle, object }) => {
       </CModalHeader>
       <CModalBody>
         <h6>{t('delete_logs.explanation', { object })}</h6>
-        <CRow className={styles.spacedRow}>
-          <CCol md="4" className={styles.spacedDate}>
+        <CRow className="pt-3">
+          <CCol md="4" className="mt-2">
             <p>{t('common.date')}:</p>
           </CCol>
           <CCol xs="12" md="8">
