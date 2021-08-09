@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import FirmwareHistoryModal from 'components/FirmwareHistoryModal';
-import { DeviceListTable, useAuth } from 'ucentral-libs';
+import { DeviceListTable, useAuth, useToast } from 'ucentral-libs';
 import meshIcon from '../../assets/icons/Mesh.png';
 import apIcon from '../../assets/icons/AP.png';
 import internetSwitch from '../../assets/icons/Switch.png';
@@ -14,6 +13,7 @@ import iotIcon from '../../assets/icons/IotIcon.png';
 
 const DeviceList = () => {
   const { t } = useTranslation();
+  const { addToast } = useToast();
   const history = useHistory();
   const { search } = useLocation();
   const page = new URLSearchParams(search).get('page');
@@ -23,11 +23,6 @@ const DeviceList = () => {
   });
   const [deleteStatus, setDeleteStatus] = useState({
     loading: false,
-  });
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-    text: '',
   });
   const [deviceCount, setDeviceCount] = useState(0);
   const [pageCount, setPageCount] = useState(0);
@@ -255,12 +250,6 @@ const DeviceList = () => {
   };
 
   const connectRtty = (serialNumber) => {
-    setToast({
-      show: false,
-      success: true,
-      text: '',
-    });
-
     const options = {
       headers: {
         Accept: 'application/json',
@@ -279,10 +268,11 @@ const DeviceList = () => {
         if (newWindow) newWindow.opener = null;
       })
       .catch(() => {
-        setToast({
-          show: true,
-          success: false,
-          text: t('common.unable_to_connect'),
+        addToast({
+          title: t('common.error'),
+          body: t('common.unable_to_connect'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -290,11 +280,6 @@ const DeviceList = () => {
   const deleteDevice = (serialNumber) => {
     setDeleteStatus({
       loading: true,
-    });
-    setToast({
-      show: false,
-      success: true,
-      text: '',
     });
 
     const options = {
@@ -307,18 +292,20 @@ const DeviceList = () => {
     axiosInstance
       .delete(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
       .then(() => {
-        setToast({
-          show: true,
-          success: true,
-          text: t('common.device_deleted'),
+        addToast({
+          title: t('common.success'),
+          body: t('common.device_deleted'),
+          color: 'success',
+          autohide: true,
         });
         getCount();
       })
       .catch(() => {
-        setToast({
-          show: true,
-          success: false,
-          text: t('common.unable_to_delete'),
+        addToast({
+          title: t('common.error'),
+          body: t('common.unable_to_delete'),
+          color: 'danger',
+          autohide: true,
         });
       })
       .finally(() => {
@@ -337,12 +324,13 @@ const DeviceList = () => {
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
-      setToast({
-        show: true,
-        success: upgradeStatus.result.success,
-        text: upgradeStatus.result.success
+      addToast({
+        title: upgradeStatus.result.success ? t('common.success') : t('common.error'),
+        body: upgradeStatus.result.success
           ? t('firmware.upgrade_command_submitted')
           : upgradeStatus.result.error,
+        color: upgradeStatus.result.success ? 'success' : 'danger',
+        autohide: true,
       });
       setUpgradeStatus({
         loading: false,
@@ -387,22 +375,6 @@ const DeviceList = () => {
         show={showHistoryModal}
         toggle={toggleHistoryModal}
       />
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>{toast.text}</CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
     </div>
   );
 };

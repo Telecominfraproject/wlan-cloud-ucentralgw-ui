@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { FirmwareList, useAuth } from 'ucentral-libs';
+import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const [page, setPage] = useState({ selected: 0 });
   const [pageCount, setPageCount] = useState(0);
   const [firmwarePerPage, setFirmwarePerPage] = useState('10');
@@ -17,10 +17,6 @@ const FirmwareListPage = () => {
   const [addNoteLoading, setAddNoteLoading] = useState(false);
   const [updateDescriptionLoading, setUpdateDescriptionLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
 
   const displayFirmware = () => {
     setLoading(true);
@@ -58,9 +54,11 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -85,9 +83,11 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -119,9 +119,11 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setAddNoteLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -149,9 +151,11 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setUpdateDescriptionLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -184,41 +188,23 @@ const FirmwareListPage = () => {
   }, [firmwarePerPage, firmware]);
 
   return (
-    <div>
-      <FirmwareList
-        t={t}
-        loading={loading}
-        page={page}
-        pageCount={pageCount}
-        setPage={setPage}
-        data={displayedFirmware}
-        firmwarePerPage={firmwarePerPage}
-        setFirmwarePerPage={updateFirmwarePerPage}
-        selectedDeviceType={selectedDeviceType}
-        deviceTypes={deviceTypes}
-        setSelectedDeviceType={setSelectedDeviceType}
-        addNote={addNote}
-        addNoteLoading={addNoteLoading}
-        updateDescription={updateDescription}
-        updateDescriptionLoading={updateDescriptionLoading}
-      />
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>{t('common.general_error')}</CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
-    </div>
+    <FirmwareList
+      t={t}
+      loading={loading}
+      page={page}
+      pageCount={pageCount}
+      setPage={setPage}
+      data={displayedFirmware}
+      firmwarePerPage={firmwarePerPage}
+      setFirmwarePerPage={updateFirmwarePerPage}
+      selectedDeviceType={selectedDeviceType}
+      deviceTypes={deviceTypes}
+      setSelectedDeviceType={setSelectedDeviceType}
+      addNote={addNote}
+      addNoteLoading={addNoteLoading}
+      updateDescription={updateDescription}
+      updateDescriptionLoading={updateDescriptionLoading}
+    />
   );
 };
 

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { useUser, EditUserModal as Modal, useAuth } from 'ucentral-libs';
-import { CCol, CRow, CToaster, CToast, CToastBody, CToastHeader } from '@coreui/react';
+import { useUser, EditUserModal as Modal, useAuth, useToast } from 'ucentral-libs';
 
 const initialState = {
   Id: {
@@ -50,13 +49,10 @@ const initialState = {
 const EditUserModal = ({ show, toggle, userId, getUsers }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
   const [user, updateWithId, updateWithKey, setUser] = useUser(initialState);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
   const [policies, setPolicies] = useState({
     passwordPolicy: '',
     passwordPattern: '',
@@ -140,17 +136,21 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
       axiosInstance
         .put(`${endpoints.ucentralsec}/api/v1/user/${userId}`, parameters, options)
         .then(() => {
-          setToast({
-            success: true,
-            show: true,
+          addToast({
+            title: t('user.update_success_title'),
+            body: t('user.update_success'),
+            color: 'success',
+            autohide: true,
           });
           getUsers();
           toggle();
         })
         .catch(() => {
-          setToast({
-            success: false,
-            show: true,
+          addToast({
+            title: t('user.update_failure_title'),
+            body: t('user.update_failure'),
+            color: 'danger',
+            autohide: true,
           });
           getUser();
         })
@@ -159,9 +159,11 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
         });
     } else {
       setLoading(false);
-      setToast({
-        success: true,
-        show: true,
+      addToast({
+        title: t('user.update_success_title'),
+        body: t('user.update_success'),
+        color: 'success',
+        autohide: true,
       });
       getUsers();
       toggle();
@@ -204,41 +206,17 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
   }, [userId]);
 
   return (
-    <div>
-      <CRow>
-        <CCol>
-          <Modal
-            t={t}
-            user={user}
-            updateUserWithId={updateWithId}
-            saveUser={updateUser}
-            loading={loading}
-            policies={policies}
-            show={show}
-            toggle={toggle}
-            addNote={addNote}
-          />
-        </CCol>
-      </CRow>
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('user.update_success_title') : t('user.update_failure_title')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>
-              {toast.success ? t('user.update_success') : t('user.update_failure')}
-            </CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
-    </div>
+    <Modal
+      t={t}
+      user={user}
+      updateUserWithId={updateWithId}
+      saveUser={updateUser}
+      loading={loading}
+      policies={policies}
+      show={show}
+      toggle={toggle}
+      addNote={addNote}
+    />
   );
 };
 
