@@ -56,6 +56,7 @@
 		"delete": "Delete",
 		"delete_device": "Delete Device",
 		"details": "Details",
+		"device": "Device #{{serialNumber}}",
 		"device_dashboard": "Device Dashboard",
 		"device_delete": "Delete Device #{{serialNumber}}",
 		"device_deleted": "Device Successfully Deleted",

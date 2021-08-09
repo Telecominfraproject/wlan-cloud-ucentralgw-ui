@@ -56,6 +56,7 @@
 		"delete": "Effacer",
 		"delete_device": "Supprimer le périphérique",
 		"details": "Détails",
+		"device": "N° d'appareil{{serialNumber}}",
 		"device_dashboard": "Tableau de bord de l'appareil",
 		"device_delete": "Supprimer l'appareil n°{{serialNumber}}",
 		"device_deleted": "Appareil supprimé avec succès",
