@@ -255,7 +255,7 @@ const FirmwareDashboard = () => {
       finalOuiLabels.push(oui[1].label);
       finalOuiColors.push('#39f');
     }
-    const totalOthers = finalOuiDs.slice(5).reduce((acc, oui) => acc + oui);
+    const totalOthers = finalOuiDs.slice(5).reduce((acc, oui) => acc + oui, 0);
 
     parsedData.ouis = {
       datasets: [
