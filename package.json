@@ -23,7 +23,7 @@
     "react-tooltip": "^4.2.21",
     "react-widgets": "^5.1.1",
     "sass": "^1.35.1",
-    "ucentral-libs": "^0.8.52",
+    "ucentral-libs": "^0.8.54",
     "uuid": "^8.3.2"
   },
   "main": "index.js",
@@ -60,6 +60,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^8.0.1",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^2.0.0",
@@ -86,6 +87,7 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.4",
     "webpack": "^5.40.0",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0"
