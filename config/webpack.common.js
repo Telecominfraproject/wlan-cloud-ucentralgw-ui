@@ -19,8 +19,6 @@ module.exports = {
     preferRelative: true,
   },
   plugins: [
-    new CleanWebpackPlugin(),
-
     new MiniCssExtractPlugin({
       filename: 'styles/[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css',
@@ -53,6 +51,7 @@ module.exports = {
       template: paths.public + '/index.html',
       filename: 'index.html',
     }),
+    new CleanWebpackPlugin(),
   ],
 
   module: {
