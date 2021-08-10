@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import routes from 'routes';
-import { Header, Sidebar, Footer, PageContainer, useAuth } from 'ucentral-libs';
+import { Header, Sidebar, Footer, PageContainer, ToastProvider, useAuth } from 'ucentral-libs';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
@@ -85,9 +85,11 @@ const TheLayout = () => {
           avatar={avatar}
         />
         <div className="c-body">
-          <PageContainer t={t} routes={routes} redirectTo="/devices" />
+          <ToastProvider>
+            <PageContainer t={t} routes={routes} redirectTo="/devices" />
+          </ToastProvider>
         </div>
-        <Footer t={t} version="2.0.9" />
+        <Footer t={t} version="2.0.12" />
       </div>
     </div>
   );

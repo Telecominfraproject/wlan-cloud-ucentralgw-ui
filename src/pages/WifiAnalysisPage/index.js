@@ -180,7 +180,10 @@ const WifiAnalysisPage = () => {
     <div>
       <CCard>
         <CCardHeader>
-          <CRow>
+          <h5 className="mb-0">{t('common.device', { serialNumber: deviceId })}</h5>
+        </CCardHeader>
+        <CCardBody className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
+          <CRow className="mb-4">
             <CCol className="text-center">
               <input
                 type="range"
@@ -198,8 +201,6 @@ const WifiAnalysisPage = () => {
               </h5>
             </CCol>
           </CRow>
-        </CCardHeader>
-        <CCardBody className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
           <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
           <RadioAnalysisTable data={selectedRadioStats ?? []} loading={loading} range={range} />
           <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>

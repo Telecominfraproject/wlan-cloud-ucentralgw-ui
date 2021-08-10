@@ -1,35 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { FirmwareList, useAuth } from 'ucentral-libs';
+import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const [page, setPage] = useState({ selected: 0 });
   const [pageCount, setPageCount] = useState(0);
   const [firmwarePerPage, setFirmwarePerPage] = useState('10');
   const [selectedDeviceType, setSelectedDeviceType] = useState('');
   const [deviceTypes, setDeviceTypes] = useState([]);
   const [firmware, setFirmware] = useState([]);
+  const [filteredFirmware, setFilteredFirmware] = useState([]);
   const [displayedFirmware, setDisplayedFirmware] = useState([]);
+  const [displayDev, setDisplayDev] = useState(false);
   const [addNoteLoading, setAddNoteLoading] = useState(false);
   const [updateDescriptionLoading, setUpdateDescriptionLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
 
-  const displayFirmware = () => {
+  const displayFirmware = (currentPage, perPage, firmwareToDisplay) => {
     setLoading(true);
 
-    const startIndex = page.selected * firmwarePerPage;
-    const endIndex = parseInt(startIndex, 10) + parseInt(firmwarePerPage, 10);
+    const startIndex = currentPage.selected * perPage;
+    const endIndex = parseInt(startIndex, 10) + parseInt(perPage, 10);
 
-    setDisplayedFirmware(firmware.slice(startIndex, endIndex));
+    setDisplayedFirmware(firmwareToDisplay.slice(startIndex, endIndex));
     setLoading(false);
+  };
+
+  const filterFirmware = (newFirmware, displayDevDevices) => {
+    let firmwareToDisplay = newFirmware;
+    if (!displayDevDevices) {
+      firmwareToDisplay = firmwareToDisplay.filter((i) => !i.revision.includes('devel'));
+    }
+
+    const count = Math.ceil(firmwareToDisplay.length / firmwarePerPage);
+    setPageCount(count);
+    setPage({ selected: 0 });
+    setFilteredFirmware(firmwareToDisplay);
+    displayFirmware({ selected: 0 }, firmwarePerPage, firmwareToDisplay);
+  };
+
+  const toggleDevDisplay = () => {
+    setDisplayDev(!displayDev);
+    filterFirmware(firmware, !displayDev);
   };
 
   const getFirmware = (deviceType) => {
@@ -55,12 +71,15 @@ const FirmwareListPage = () => {
           return firstDate > secondDate ? -1 : 0;
         });
         setFirmware(sortedFirmware);
+        filterFirmware(sortedFirmware, displayDev);
       })
       .catch(() => {
         setLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -85,15 +104,32 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
 
   const updateFirmwarePerPage = (value) => {
+    const count = Math.ceil(filteredFirmware.length / value);
+    setPageCount(count);
+    setPage({ selected: 0 });
+
     setFirmwarePerPage(value);
+    displayFirmware({ selected: 0 }, value, filteredFirmware);
+  };
+
+  const updatePage = (value) => {
+    setPage(value);
+    displayFirmware(value, firmwarePerPage, filteredFirmware);
+  };
+
+  const updateSelectedType = (value) => {
+    setSelectedDeviceType(value);
+    getFirmware(value);
   };
 
   const addNote = (value, id) => {
@@ -119,9 +155,11 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setAddNoteLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
@@ -149,76 +187,39 @@ const FirmwareListPage = () => {
       })
       .catch(() => {
         setUpdateDescriptionLoading(false);
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('common.general_error'),
+          color: 'danger',
+          autohide: true,
         });
       });
   };
 
   useEffect(() => {
-    if (firmware.length > 0) {
-      displayFirmware();
-    } else {
-      setDisplayedFirmware([]);
-      setLoading(false);
-    }
-  }, [firmware, firmwarePerPage, page]);
-
-  useEffect(() => {
     if (selectedDeviceType === '' && !loading) getDeviceTypes();
   }, []);
 
-  useEffect(() => {
-    if (selectedDeviceType !== '') {
-      getFirmware();
-    }
-  }, [selectedDeviceType]);
-
-  useEffect(() => {
-    if (firmware !== []) {
-      const count = Math.ceil(firmware.length / firmwarePerPage);
-      setPageCount(count);
-      setPage({ selected: 0 });
-    }
-  }, [firmwarePerPage, firmware]);
-
   return (
-    <div>
-      <FirmwareList
-        t={t}
-        loading={loading}
-        page={page}
-        pageCount={pageCount}
-        setPage={setPage}
-        data={displayedFirmware}
-        firmwarePerPage={firmwarePerPage}
-        setFirmwarePerPage={updateFirmwarePerPage}
-        selectedDeviceType={selectedDeviceType}
-        deviceTypes={deviceTypes}
-        setSelectedDeviceType={setSelectedDeviceType}
-        addNote={addNote}
-        addNoteLoading={addNoteLoading}
-        updateDescription={updateDescription}
-        updateDescriptionLoading={updateDescriptionLoading}
-      />
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>{t('common.general_error')}</CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
-    </div>
+    <FirmwareList
+      t={t}
+      loading={loading}
+      page={page}
+      pageCount={pageCount}
+      setPage={updatePage}
+      data={displayedFirmware}
+      firmwarePerPage={firmwarePerPage}
+      setFirmwarePerPage={updateFirmwarePerPage}
+      selectedDeviceType={selectedDeviceType}
+      deviceTypes={deviceTypes}
+      setSelectedDeviceType={updateSelectedType}
+      addNote={addNote}
+      addNoteLoading={addNoteLoading}
+      updateDescription={updateDescription}
+      updateDescriptionLoading={updateDescriptionLoading}
+      displayDev={displayDev}
+      toggleDevDisplay={toggleDevDisplay}
+    />
   );
 };
 

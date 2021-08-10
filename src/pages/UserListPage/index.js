@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
-import { UserListTable, useAuth } from 'ucentral-libs';
+import { UserListTable, useAuth, useToast } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import CreateUserModal from 'components/CreateUserModal';
@@ -10,16 +9,13 @@ import EditUserModal from 'components/EditUserModal';
 const UserListPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const [page, setPage] = useState({ selected: 0 });
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState([]);
   const [userToEdit, setUserToEdit] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
   const [pageCount, setPageCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -135,16 +131,20 @@ const UserListPage = () => {
         headers,
       })
       .then(() => {
-        setToast({
-          success: true,
-          show: true,
+        addToast({
+          title: t('common.success'),
+          body: t('user.delete_success'),
+          color: 'success',
+          autohide: true,
         });
         getUsers();
       })
       .catch(() => {
-        setToast({
-          success: false,
-          show: true,
+        addToast({
+          title: t('common.error'),
+          body: t('user.delete_failure'),
+          color: 'danger',
+          autohide: true,
         });
       })
       .finally(() => {
@@ -193,24 +193,6 @@ const UserListPage = () => {
         toggleEdit={toggleEditModal}
         refreshUsers={getUsers}
       />
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>
-              {toast.success ? t('user.delete_success') : t('user.delete_failure')}
-            </CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
       <CreateUserModal show={showCreateModal} toggle={toggleCreateModal} getUsers={getUsers} />
       <EditUserModal
         show={showEditModal}

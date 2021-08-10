@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import {
-  CToast,
-  CToaster,
-  CToastBody,
-  CModal,
-  CModalHeader,
-  CModalBody,
-  CToastHeader,
-} from '@coreui/react';
-import { CreateUserForm, useFormFields, useAuth } from 'ucentral-libs';
+import { CModal, CModalHeader, CModalBody } from '@coreui/react';
+import { CreateUserForm, useFormFields, useAuth, useToast } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex, validateEmail } from 'utils/helper';
 
@@ -51,6 +43,7 @@ const initialState = {
 const CreateUserModal = ({ show, toggle, getUsers }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [policies, setPolicies] = useState({
     passwordPolicy: '',
@@ -58,17 +51,12 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
     accessPolicy: '',
   });
   const [formFields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialState);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
 
   const toggleChange = () => {
     updateField('changePassword', { value: !formFields.changePassword.value });
   };
 
   const createUser = () => {
-    setToast(false);
     setLoading(true);
 
     const parameters = {
@@ -109,16 +97,20 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
         .then(() => {
           getUsers();
           setFormFields(initialState);
-          setToast({
-            success: true,
-            show: true,
+          addToast({
+            title: t('common.success'),
+            body: t('user.create_success'),
+            color: 'success',
+            autohide: true,
           });
           toggle();
         })
         .catch(() => {
-          setToast({
-            success: false,
-            show: true,
+          addToast({
+            title: t('common.error'),
+            body: t('user.create_failure'),
+            color: 'danger',
+            autohide: true,
           });
         })
         .finally(() => {
@@ -150,40 +142,20 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
   }, [show]);
 
   return (
-    <div>
-      <CModal show={show} onClose={toggle} size="xl">
-        <CModalHeader>{t('user.create')}</CModalHeader>
-        <CModalBody>
-          <CreateUserForm
-            t={t}
-            fields={formFields}
-            updateField={updateFieldWithId}
-            createUser={createUser}
-            loading={loading}
-            policies={policies}
-            toggleChange={toggleChange}
-          />
-        </CModalBody>
-      </CModal>
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>
-              {toast.success ? t('user.create_success') : t('user.create_failure')}
-            </CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
-    </div>
+    <CModal show={show} onClose={toggle} size="xl">
+      <CModalHeader>{t('user.create')}</CModalHeader>
+      <CModalBody>
+        <CreateUserForm
+          t={t}
+          fields={formFields}
+          updateField={updateFieldWithId}
+          createUser={createUser}
+          loading={loading}
+          policies={policies}
+          toggleChange={toggleChange}
+        />
+      </CModalBody>
+    </CModal>
   );
 };
 

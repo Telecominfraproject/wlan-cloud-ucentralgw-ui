@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
 import DeviceConfiguration from 'components/DeviceConfiguration';
+import DeviceStatusCard from 'components/DeviceStatusCard';
 import CommandHistory from 'components/CommandHistory';
 import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
-import DeviceStatusCard from 'components/DeviceStatusCard';
 import axiosInstance from 'utils/axiosInstance';
 import { DeviceProvider } from 'ucentral-libs';
 
@@ -18,11 +18,11 @@ const DevicePage = () => {
     <div className="App">
       <DeviceProvider axiosInstance={axiosInstance} serialNumber={deviceId}>
         <CRow>
-          <CCol xs="12" sm="6">
+          <CCol xs="12" lg="6">
             <DeviceStatusCard />
             <DeviceConfiguration />
           </CCol>
-          <CCol xs="12" sm="6">
+          <CCol xs="12" lg="6">
             <DeviceLogs />
             <DeviceHealth />
             <DeviceActionCard />
