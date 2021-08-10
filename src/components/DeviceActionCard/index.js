@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  CButton,
-  CCard,
-  CCardHeader,
-  CCardBody,
-  CRow,
-  CCol,
-  CToast,
-  CToastBody,
-  CToaster,
-  CToastHeader,
-} from '@coreui/react';
+import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
 import RebootModal from 'components/RebootModal';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import ConfigureModal from 'components/ConfigureModal';
@@ -25,14 +14,10 @@ import FactoryResetModal from 'components/FactoryResetModal';
 const DeviceActions = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const { deviceSerialNumber } = useDevice();
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
-  });
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-    text: '',
   });
   const [device, setDevice] = useState({});
   const [showRebootModal, setShowRebootModal] = useState(false);
@@ -115,12 +100,13 @@ const DeviceActions = () => {
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
-      setToast({
-        show: true,
-        success: upgradeStatus.result.success,
-        text: upgradeStatus.result.success
+      addToast({
+        title: upgradeStatus.result.success ? t('common.success') : t('common.error'),
+        body: upgradeStatus.result.success
           ? t('firmware.upgrade_command_submitted')
           : upgradeStatus.result.error,
+        color: upgradeStatus.result.success ? 'success' : 'danger',
+        autohide: true,
       });
       setUpgradeStatus({
         loading: false,
@@ -207,22 +193,6 @@ const DeviceActions = () => {
       <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
       <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('common.success') : t('common.error')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>{toast.text}</CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
     </CCard>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CCard, CCardBody, CToast, CToastBody, CToaster, CToastHeader } from '@coreui/react';
+import { CCard, CCardBody } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
-import { useUser, EditMyProfile, useAuth } from 'ucentral-libs';
+import { useUser, EditMyProfile, useAuth, useToast } from 'ucentral-libs';
 
 const initialState = {
   Id: {
@@ -45,16 +45,13 @@ const initialState = {
 const ProfilePage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints, user, getAvatar, avatar } = useAuth();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [newAvatar, setNewAvatar] = useState('');
   const [newAvatarFile, setNewAvatarFile] = useState(null);
   const [fileInputKey, setFileInputKey] = useState(0);
-  const [toast, setToast] = useState({
-    show: false,
-    success: true,
-  });
   const [policies, setPolicies] = useState({
     passwordPolicy: '',
     passwordPattern: '',
@@ -114,23 +111,28 @@ const ProfilePage = () => {
     axiosInstance
       .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
       .then(() => {
-        setToast({
-          success: true,
-          show: true,
+        addToast({
+          title: t('user.update_success_title'),
+          body: t('user.update_success'),
+          color: 'success',
+          autohide: true,
         });
         getAvatar();
         setNewAvatar('');
         setNewAvatarFile(null);
         setFileInputKey(fileInputKey + 1);
       })
-      .catch(() => {});
+      .catch(() => {
+        addToast({
+          title: t('user.update_failure_title'),
+          body: t('user.update_failure'),
+          color: 'danger',
+          autohide: true,
+        });
+      });
   };
 
   const updateUser = () => {
-    setToast({
-      success: true,
-      show: false,
-    });
     setLoading(true);
 
     const parameters = {
@@ -171,20 +173,23 @@ const ProfilePage = () => {
       axiosInstance
         .put(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, parameters, options)
         .then(() => {
-          setToast({
-            success: true,
-            show: true,
+          addToast({
+            title: t('user.update_success_title'),
+            body: t('user.update_success'),
+            color: 'success',
+            autohide: true,
           });
-          getUser();
         })
         .catch(() => {
-          setToast({
-            success: false,
-            show: true,
+          addToast({
+            title: t('user.update_failure_title'),
+            body: t('user.update_failure'),
+            color: 'danger',
+            autohide: true,
           });
-          getUser();
         })
         .finally(() => {
+          getUser();
           setLoading(false);
         });
     } else {
@@ -254,44 +259,24 @@ const ProfilePage = () => {
   }, [user.Id]);
 
   return (
-    <div>
-      <CCard>
-        <CCardBody>
-          <EditMyProfile
-            t={t}
-            user={userForm}
-            updateUserWithId={updateWithId}
-            saveUser={updateUser}
-            loading={loading}
-            policies={policies}
-            addNote={addNote}
-            avatar={avatar}
-            newAvatar={newAvatar}
-            showPreview={showPreview}
-            deleteAvatar={deleteAvatar}
-            fileInputKey={fileInputKey}
-          />
-        </CCardBody>
-      </CCard>
-      <CToaster>
-        <CToast
-          autohide={5000}
-          fade
-          color={toast.success ? 'success' : 'danger'}
-          className="text-white align-items-center"
-          show={toast.show}
-        >
-          <CToastHeader closeButton>
-            {toast.success ? t('user.update_success_title') : t('user.update_failure_title')}
-          </CToastHeader>
-          <div className="d-flex">
-            <CToastBody>
-              {toast.success ? t('user.update_success') : t('user.update_failure')}
-            </CToastBody>
-          </div>
-        </CToast>
-      </CToaster>
-    </div>
+    <CCard>
+      <CCardBody>
+        <EditMyProfile
+          t={t}
+          user={userForm}
+          updateUserWithId={updateWithId}
+          saveUser={updateUser}
+          loading={loading}
+          policies={policies}
+          addNote={addNote}
+          avatar={avatar}
+          newAvatar={newAvatar}
+          showPreview={showPreview}
+          deleteAvatar={deleteAvatar}
+          fileInputKey={fileInputKey}
+        />
+      </CCardBody>
+    </CCard>
   );
 };
 
