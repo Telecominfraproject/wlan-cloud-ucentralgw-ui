@@ -3,20 +3,36 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { WifiAnalysisTable, RadioAnalysisTable, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
+import RadioGraph from 'components/RadioGraph';
 import { cleanBytesString, prettyDate, compactSecondsToDetailed } from 'utils/helper';
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CRow,
+} from '@coreui/react';
 
 const WifiAnalysisPage = () => {
   const { t } = useTranslation();
   const { deviceId } = useParams();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [tableTime, setTableTime] = useState('');
   const [parsedAssociationStats, setParsedAssociationStats] = useState([]);
-  const [selectedAssociationStats, setSelectedAssociationStats] = useState([]);
+  const [selectedAssociationStats, setSelectedAssociationStats] = useState(null);
   const [parsedRadioStats, setParsedRadioStats] = useState([]);
-  const [selectedRadioStats, setSelectedRadioStats] = useState([]);
+  const [selectedRadioStats, setSelectedRadioStats] = useState(null);
   const [range, setRange] = useState(19);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const secondsToLabel = (seconds) =>
     compactSecondsToDetailed(seconds, t('common.day'), t('common.days'), t('common.seconds'));
@@ -77,10 +93,9 @@ const WifiAnalysisPage = () => {
             };
 
             if (ssid.phy !== undefined) {
-              radioInfo.radio = `${stat.data.radios.findIndex(
-                (element) => element.phy === ssid.phy,
-              )}`;
+              radioInfo.radio = stat.data.radios.findIndex((element) => element.phy === ssid.phy);
               radioInfo.found = radioInfo.radio !== undefined;
+              radioInfo.radioIndex = radioInfo.radio;
             }
 
             if (!radioInfo.found && ssid.radio !== undefined) {
@@ -88,6 +103,7 @@ const WifiAnalysisPage = () => {
               const radioIndex = radioArray !== undefined ? radioArray[radioArray.length - 1] : '-';
               radioInfo.found = stat.data.radios[radioIndex] !== undefined;
               radioInfo.radio = radioIndex;
+              radioInfo.radioIndex = radioIndex;
             }
 
             if (!radioInfo.found) {
@@ -180,7 +196,16 @@ const WifiAnalysisPage = () => {
     <div>
       <CCard>
         <CCardHeader>
-          <h5 className="mb-0">{t('common.device', { serialNumber: deviceId })}</h5>
+          <CRow>
+            <CCol>
+              <h5 className="mb-0">{t('common.device', { serialNumber: deviceId })}</h5>
+            </CCol>
+            <CCol className="text-right">
+              <CButton color="secondary" onClick={toggleModal}>
+                Show Graph
+              </CButton>
+            </CCol>
+          </CRow>
         </CCardHeader>
         <CCardBody className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
           <CRow className="mb-4">
@@ -212,6 +237,12 @@ const WifiAnalysisPage = () => {
           />
         </CCardBody>
       </CCard>
+      <CModal size="xl" show={showModal} onClose={toggleModal}>
+        <CModalHeader closeButton>Radio Graph</CModalHeader>
+        <CModalBody>
+          <RadioGraph radios={selectedRadioStats} associations={selectedAssociationStats} />
+        </CModalBody>
+      </CModal>
     </div>
   );
 };
