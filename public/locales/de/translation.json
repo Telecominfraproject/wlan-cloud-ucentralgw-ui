@@ -1,5 +1,6 @@
 {
 	"actions": {
+		"actions": "Aktionen",
 		"blink": "LEDs Blinken",
 		"configure": "Konfigurieren",
 		"connect": "Konsole öffnen",

@@ -1,5 +1,6 @@
 {
 	"actions": {
+		"actions": "Actions",
 		"blink": "Blink",
 		"configure": "Configure",
 		"connect": "Connect",
