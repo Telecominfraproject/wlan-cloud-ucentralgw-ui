@@ -276,6 +276,7 @@
 		"data": "Daten (KB)",
 		"latest_statistics": "Neueste Statistiken",
 		"lifetime_stats": "Lifetime-Statistik",
+		"no_interfaces": "Keine Statistiken zur Schnittstellenlebensdauer verfügbar",
 		"show_latest": "Letzte Statistik",
 		"title": "Statistiken"
 	},

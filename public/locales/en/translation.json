@@ -276,6 +276,7 @@
 		"data": "Data (KB)",
 		"latest_statistics": "Latest Statistics",
 		"lifetime_stats": "Lifetime Statistics",
+		"no_interfaces": "No interface lifetime statistics available",
 		"show_latest": "Last Statistics",
 		"title": "Statistics"
 	},

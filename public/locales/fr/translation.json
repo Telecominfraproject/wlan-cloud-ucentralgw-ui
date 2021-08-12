@@ -276,6 +276,7 @@
 		"data": "Données (Ko)",
 		"latest_statistics": "Dernières statistiques",
 		"lifetime_stats": "Statistiques à vie",
+		"no_interfaces": "Aucune statistique de durée de vie de l'interface disponible",
 		"show_latest": "Dernières statistiques",
 		"title": "statistiques"
 	},
