@@ -16,7 +16,13 @@ import CIcon from '@coreui/icons-react';
 import { cilWindowMaximize } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
-import { CopyToClipboardButton, NotesTable, useAuth, useDevice } from 'ucentral-libs';
+import {
+  CopyToClipboardButton,
+  HideTextButton,
+  NotesTable,
+  useAuth,
+  useDevice,
+} from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 import styles from './index.module.scss';
 
@@ -25,9 +31,14 @@ const DeviceConfiguration = () => {
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [collapse, setCollapse] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [device, setDevice] = useState(null);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const toggle = (e) => {
     setCollapse(!collapse);
@@ -85,6 +96,11 @@ const DeviceConfiguration = () => {
       });
   };
 
+  const getPassword = () => {
+    const password = device.devicePassword === '' ? 'openwifi' : device.devicePassword;
+    return showPassword ? password : '******';
+  };
+
   useEffect(() => {
     if (deviceSerialNumber) getDevice();
   }, [deviceSerialNumber]);
@@ -135,6 +151,14 @@ const DeviceConfiguration = () => {
             </CRow>
             <CRow className="mt-2">
               <CCol md="3">
+                <CLabel>{t('firmware.revision')} : </CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                {device.firmware}
+              </CCol>
+            </CRow>
+            <CRow className="mt-2">
+              <CCol md="3">
                 <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
               </CCol>
               <CCol xs="12" md="9">
@@ -149,20 +173,15 @@ const DeviceConfiguration = () => {
                 {device.macAddress}
               </CCol>
             </CRow>
-            <CRow className="mt-2">
-              <CCol md="3">
-                <CLabel>{t('configuration.created')} : </CLabel>
-              </CCol>
-              <CCol xs="12" md="9">
-                {prettyDate(device.createdTimestamp)}
-              </CCol>
-            </CRow>
             <CRow className="mt-2 mb-4">
-              <CCol md="3" className="pt-1">
-                <CLabel>{t('configuration.device_password')} : </CLabel>
+              <CCol md="3">
+                <CLabel className="align-middle">{t('configuration.device_password')} : </CLabel>
               </CCol>
-              <CCol xs="12" md="9">
-                {device.devicePassword === '' ? 'openwifi' : device.devicePassword}
+              <CCol xs="12" md="2">
+                {getPassword()}
+              </CCol>
+              <CCol md="7">
+                <HideTextButton t={t} toggle={toggleShowPassword} show={showPassword} />
                 <CopyToClipboardButton
                   t={t}
                   size="sm"
@@ -192,6 +211,14 @@ const DeviceConfiguration = () => {
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.manufacturer}
+                </CCol>
+              </CRow>
+              <CRow className="mt-2">
+                <CCol md="3">
+                  <CLabel>{t('configuration.created')} : </CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  {prettyDate(device.createdTimestamp)}
                 </CCol>
               </CRow>
               <CRow className="mt-2">

@@ -1,5 +1,6 @@
 {
 	"actions": {
+		"actions": "Ações",
 		"blink": "Piscar",
 		"configure": "Configurar",
 		"connect": "Conectar",
@@ -130,6 +131,7 @@
 		"submit": "Enviar",
 		"submitted": "Submetido",
 		"success": "Sucesso",
+		"system": "Sistema",
 		"table": "Mesa",
 		"timestamp": "tempo",
 		"to": "Para",
@@ -189,6 +191,7 @@
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"firmware": {
+		"average_age": "Idade Média do Firmware",
 		"choose_custom": "Escolher",
 		"details_title": "Detalhes da imagem #{{image}} ",
 		"device_type": "Tipo de dispositivo",
@@ -272,6 +275,8 @@
 	"statistics": {
 		"data": "Dados (KB)",
 		"latest_statistics": "Estatísticas mais recentes",
+		"lifetime_stats": "Estatísticas de vida",
+		"no_interfaces": "Nenhuma estatística de tempo de vida da interface disponível",
 		"show_latest": "Últimas estatísticas",
 		"title": "Estatisticas"
 	},
@@ -358,6 +363,7 @@
 		"association": "Associação",
 		"associations": "Associações",
 		"mode": "Modo",
+		"network_diagram": "Diagrama de rede",
 		"radios": "Rádios",
 		"title": "Análise de Wi-Fi"
 	}

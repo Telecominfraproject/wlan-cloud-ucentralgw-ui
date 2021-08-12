@@ -5,17 +5,23 @@ import { CCard, CCardHeader, CCardBody, CRow, CCol, CPopover, CButton } from '@c
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import eventBus from 'utils/eventBus';
+import LifetimeStatsmodal from 'components/LifetimeStatsModal';
 import StatisticsChartList from './StatisticsChartList';
-import LatestStatisticsModal from './LatestStatisticsModal';
+import LatestStatisticsmodal from './LatestStatisticsModal';
 
 const DeviceStatisticsCard = () => {
   const history = useHistory();
   const { deviceId } = useParams();
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
+  const [showLifetimeModal, setShowLifetimeModal] = useState(false);
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
+  };
+
+  const toggleLifetimeModal = () => {
+    setShowLifetimeModal(!showLifetimeModal);
   };
 
   const goToAnalysis = () => {
@@ -32,21 +38,27 @@ const DeviceStatisticsCard = () => {
         <CCardHeader>
           <CRow>
             <CCol>
-              <div className="text-value-lg pt-2">{t('statistics.title')}</div>
+              <div className="text-value-xxl pt-2">{t('statistics.title')}</div>
             </CCol>
-            <CCol sm="3" className="pt-2">
+            <CCol sm="6" xxl="6">
               <CRow>
-                <CCol sm="5" className="text-right">
+                <CCol sm="1" xxl="5" />
+                <CCol sm="4" xxl="2" className="text-right">
                   <CButton color="secondary" onClick={goToAnalysis}>
                     {t('wifi_analysis.title')}
                   </CButton>
                 </CCol>
-                <CCol sm="5" className="text-center">
+                <CCol sm="3" xxl="2" className="text-right">
                   <CButton color="secondary" onClick={toggleLatestModal}>
                     {t('statistics.show_latest')}
                   </CButton>
                 </CCol>
-                <CCol sm="2" className="text-center">
+                <CCol sm="3" xxl="2" className="text-right">
+                  <CButton color="secondary" onClick={toggleLifetimeModal}>
+                    Lifetime Statistics
+                  </CButton>
+                </CCol>
+                <CCol sm="1" xxl="1" className="text-center">
                   <CPopover content={t('common.refresh')}>
                     <CButton color="secondary" onClick={refresh} size="sm">
                       <CIcon content={cilSync} />
@@ -61,7 +73,8 @@ const DeviceStatisticsCard = () => {
           <StatisticsChartList />
         </CCardBody>
       </CCard>
-      <LatestStatisticsModal show={showLatestModal} toggle={toggleLatestModal} />
+      <LatestStatisticsmodal show={showLatestModal} toggle={toggleLatestModal} />
+      <LifetimeStatsmodal show={showLifetimeModal} toggle={toggleLifetimeModal} />
     </div>
   );
 };
