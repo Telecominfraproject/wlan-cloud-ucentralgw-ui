@@ -202,7 +202,7 @@ const WifiAnalysisPage = () => {
             </CCol>
             <CCol className="text-right">
               <CButton color="secondary" onClick={toggleModal}>
-                Show Graph
+                {t('wifi_analysis.network_diagram')}
               </CButton>
             </CCol>
           </CRow>
@@ -238,9 +238,13 @@ const WifiAnalysisPage = () => {
         </CCardBody>
       </CCard>
       <CModal size="xl" show={showModal} onClose={toggleModal}>
-        <CModalHeader closeButton>Radio Graph</CModalHeader>
+        <CModalHeader closeButton>{t('wifi_analysis.network_diagram')}</CModalHeader>
         <CModalBody>
-          <RadioGraph radios={selectedRadioStats} associations={selectedAssociationStats} />
+          {showModal ? (
+            <RadioGraph radios={selectedRadioStats} associations={selectedAssociationStats} />
+          ) : (
+            <div />
+          )}
         </CModalBody>
       </CModal>
     </div>

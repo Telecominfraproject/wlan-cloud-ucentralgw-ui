@@ -131,6 +131,7 @@
 		"submit": "Enviar",
 		"submitted": "Submetido",
 		"success": "Sucesso",
+		"system": "Sistema",
 		"table": "Mesa",
 		"timestamp": "tempo",
 		"to": "Para",
@@ -359,6 +360,7 @@
 		"association": "Associação",
 		"associations": "Associações",
 		"mode": "Modo",
+		"network_diagram": "Diagrama de rede",
 		"radios": "Rádios",
 		"title": "Análise de Wi-Fi"
 	}

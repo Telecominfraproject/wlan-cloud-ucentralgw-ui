@@ -131,6 +131,7 @@
 		"submit": "Absenden",
 		"submitted": "Eingereicht",
 		"success": "Erfolg",
+		"system": "System",
 		"table": "Tabelle",
 		"timestamp": "Zeit",
 		"to": "zu",
@@ -359,6 +360,7 @@
 		"association": "Verband",
 		"associations": "Verbände",
 		"mode": "Modus",
+		"network_diagram": "Netzwerkdiagramm",
 		"radios": "Radios",
 		"title": "WLAN-Analyse"
 	}

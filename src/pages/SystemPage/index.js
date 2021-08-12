@@ -12,7 +12,7 @@ const initialEndpoint = {
   start: '',
 };
 
-const SettingsPage = () => {
+const SystemPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [gateway, setGateway] = useState(initialEndpoint);
@@ -78,4 +78,4 @@ const SettingsPage = () => {
   );
 };
 
-export default SettingsPage;
+export default SystemPage;

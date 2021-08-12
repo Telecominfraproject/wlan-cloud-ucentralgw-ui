@@ -131,6 +131,7 @@
 		"submit": "Soumettre",
 		"submitted": "Soumis",
 		"success": "Succès",
+		"system": "Système",
 		"table": "Table",
 		"timestamp": "Temps",
 		"to": "à",
@@ -359,6 +360,7 @@
 		"association": "Association",
 		"associations": "Les associations",
 		"mode": "Mode",
+		"network_diagram": "Diagramme de réseau",
 		"radios": "Radios",
 		"title": "Analyse Wi-Fi"
 	}

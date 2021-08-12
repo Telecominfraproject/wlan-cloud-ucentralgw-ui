@@ -151,6 +151,14 @@ const DeviceConfiguration = () => {
             </CRow>
             <CRow className="mt-2">
               <CCol md="3">
+                <CLabel>{t('firmware.revision')} : </CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                {device.firmware}
+              </CCol>
+            </CRow>
+            <CRow className="mt-2">
+              <CCol md="3">
                 <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
               </CCol>
               <CCol xs="12" md="9">
@@ -163,14 +171,6 @@ const DeviceConfiguration = () => {
               </CCol>
               <CCol xs="12" md="9">
                 {device.macAddress}
-              </CCol>
-            </CRow>
-            <CRow className="mt-2">
-              <CCol md="3">
-                <CLabel>{t('configuration.created')} : </CLabel>
-              </CCol>
-              <CCol xs="12" md="9">
-                {prettyDate(device.createdTimestamp)}
               </CCol>
             </CRow>
             <CRow className="mt-2 mb-4">
@@ -211,6 +211,14 @@ const DeviceConfiguration = () => {
                 </CCol>
                 <CCol xs="12" md="9">
                   {device.manufacturer}
+                </CCol>
+              </CRow>
+              <CRow className="mt-2">
+                <CCol md="3">
+                  <CLabel>{t('configuration.created')} : </CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  {prettyDate(device.createdTimestamp)}
                 </CCol>
               </CRow>
               <CRow className="mt-2">
