@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { WifiAnalysisTable, RadioAnalysisTable, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-import RadioGraph from 'components/RadioGraph';
+import NetworkDiagram from 'components/NetworkDiagram';
 import { cleanBytesString, prettyDate, compactSecondsToDetailed } from 'utils/helper';
 import {
   CButton,
@@ -241,7 +241,7 @@ const WifiAnalysisPage = () => {
         <CModalHeader closeButton>{t('wifi_analysis.network_diagram')}</CModalHeader>
         <CModalBody>
           {showModal ? (
-            <RadioGraph radios={selectedRadioStats} associations={selectedAssociationStats} />
+            <NetworkDiagram radios={selectedRadioStats} associations={selectedAssociationStats} />
           ) : (
             <div />
           )}

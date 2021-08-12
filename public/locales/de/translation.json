@@ -191,6 +191,7 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
+		"average_age": "Durchschnittliches Firmware-Alter",
 		"choose_custom": "Wählen",
 		"details_title": "Bild #{{image}} Details",
 		"device_type": "Gerätetyp",
@@ -274,6 +275,7 @@
 	"statistics": {
 		"data": "Daten (KB)",
 		"latest_statistics": "Neueste Statistiken",
+		"lifetime_stats": "Lifetime-Statistik",
 		"show_latest": "Letzte Statistik",
 		"title": "Statistiken"
 	},

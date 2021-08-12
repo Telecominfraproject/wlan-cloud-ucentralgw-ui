@@ -114,15 +114,11 @@ const FirmwareDashboard = () => {
     };
 
     // Latest/unknown distribution
-    const unknownFirmware =
-      parsedData.unknownFirmwares.length > 0
-        ? parsedData.unknownFirmwares.reduce((acc, firmware) => acc + firmware.value, 0)
-        : 0;
     const usingLatestFirmware =
       parsedData.usingLatest.length > 0
         ? parsedData.usingLatest.reduce((acc, firmware) => acc + firmware.value, 0)
         : 0;
-    parsedData.numberOfDevices = unknownFirmware + usingLatestFirmware;
+    const unknownFirmware = parsedData.numberOfDevices - usingLatestFirmware;
     parsedData.usingLatestFirmware = usingLatestFirmware;
     parsedData.firmwareDistribution = {
       datasets: [
@@ -147,6 +143,17 @@ const FirmwareDashboard = () => {
         100
       ).toFixed(1)}%`;
     }
+
+    // Average firmware age calculation
+    const usingUnknownFirmwareFromArray =
+      parsedData.unknownFirmwares.length > 0
+        ? parsedData.unknownFirmwares.reduce((acc, firmware) => acc + firmware.value, 0)
+        : 0;
+    const devicesForAverage = parsedData.numberOfDevices - usingUnknownFirmwareFromArray;
+    parsedData.averageFirmwareAge =
+      parsedData.totalSecondsOld[0].value /
+      (devicesForAverage > 0 ? devicesForAverage : 1) /
+      (24 * 60 * 60);
 
     // Latest firmware distribution
     const latestDs = [];

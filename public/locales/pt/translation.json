@@ -191,6 +191,7 @@
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"firmware": {
+		"average_age": "Idade Média do Firmware",
 		"choose_custom": "Escolher",
 		"details_title": "Detalhes da imagem #{{image}} ",
 		"device_type": "Tipo de dispositivo",
@@ -274,6 +275,7 @@
 	"statistics": {
 		"data": "Dados (KB)",
 		"latest_statistics": "Estatísticas mais recentes",
+		"lifetime_stats": "Estatísticas de vida",
 		"show_latest": "Últimas estatísticas",
 		"title": "Estatisticas"
 	},

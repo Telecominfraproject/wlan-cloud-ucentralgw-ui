@@ -191,6 +191,7 @@
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"firmware": {
+		"average_age": "Average Firmware Age",
 		"choose_custom": "Choose",
 		"details_title": "Image #{{image}} Details",
 		"device_type": "Device Type",
@@ -274,6 +275,7 @@
 	"statistics": {
 		"data": "Data (KB)",
 		"latest_statistics": "Latest Statistics",
+		"lifetime_stats": "Lifetime Statistics",
 		"show_latest": "Last Statistics",
 		"title": "Statistics"
 	},

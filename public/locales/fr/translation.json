@@ -191,6 +191,7 @@
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
 	"firmware": {
+		"average_age": "Âge moyen du micrologiciel",
 		"choose_custom": "Choisir",
 		"details_title": "Image #{{image}} Détails",
 		"device_type": "Type d'appareil",
@@ -274,6 +275,7 @@
 	"statistics": {
 		"data": "Données (Ko)",
 		"latest_statistics": "Dernières statistiques",
+		"lifetime_stats": "Statistiques à vie",
 		"show_latest": "Dernières statistiques",
 		"title": "statistiques"
 	},

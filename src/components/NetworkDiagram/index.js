@@ -1,30 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { RadioGraph as Graph } from 'ucentral-libs';
+import { CRow, CCol } from '@coreui/react';
+import { NetworkDiagram as Graph } from 'ucentral-libs';
+import { useTranslation } from 'react-i18next';
 
 const associationStyle = {
   background: '#3399ff',
   color: 'white',
   border: '1px solid #777',
   width: 220,
-  padding: 20,
+  padding: 10,
 };
 
 const recognizedRadioStyle = {
   background: '#2eb85c',
   color: 'white',
   width: 220,
-  padding: 20,
+  padding: 15,
 };
 
 const unrecognizedRadioStyle = {
   background: '#e55353',
   color: 'white',
   width: 220,
-  padding: 20,
+  padding: 15,
 };
 
-const RadioGraph = ({ radios, associations }) => {
+const recognizedRadioNode = (radio) => (
+  <div className="align-middle">
+    <h6 className="align-middle mb-0">
+      Radio #{radio.radio} ({radio.channel < 16 ? '2G' : '5G'})
+    </h6>
+  </div>
+);
+
+const unrecognizedRadioNode = (t, radio) => (
+  <div className="align-middle">
+    <h6 className="align-middle mb-0">
+      Radio #{radio.radioIndex} ({t('common.unrecognized')})
+    </h6>
+  </div>
+);
+
+const associationNode = (associationInfo) => (
+  <div>
+    <CRow>
+      <CCol className="text-center">
+        <h6>{associationInfo.bssid}</h6>
+      </CCol>
+    </CRow>
+    <CRow>
+      <CCol className="text-left pl-4">Rx Rate : {associationInfo.rxRate}</CCol>
+    </CRow>
+    <CRow>
+      <CCol className="text-left pl-4">Tx Rate : {associationInfo.txRate}</CCol>
+    </CRow>
+  </div>
+);
+
+const NetworkDiagram = ({ radios, associations }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [elements, setElements] = useState([]);
 
@@ -44,7 +79,7 @@ const RadioGraph = ({ radios, associations }) => {
       if (radiosAdded[radio.radio] === undefined) {
         newElements.push({
           id: `r-${radio.radio}`,
-          data: { label: `Radio #${radio.radio}` },
+          data: { label: recognizedRadioNode(radio) },
           position: { x: 0, y: 200 * radio.radio },
           type: 'input',
           style: recognizedRadioStyle,
@@ -61,7 +96,7 @@ const RadioGraph = ({ radios, associations }) => {
       if (radiosAdded[assoc.radio.radioIndex] === undefined) {
         newElements.push({
           id: `r-${assoc.radio.radioIndex}`,
-          data: { label: `Radio #${assoc.radio.radioIndex} (Unrecognized)` },
+          data: { label: unrecognizedRadioNode(t, assoc.radio) },
           position: { x: 0, y: 200 * assoc.radio.radioIndex },
           type: 'input',
           style: unrecognizedRadioStyle,
@@ -72,10 +107,10 @@ const RadioGraph = ({ radios, associations }) => {
       // Adding the association
       newElements.push({
         id: `a-${assoc.bssid}`,
-        data: { label: <>BSSID: {assoc.bssid}</> },
+        data: { label: associationNode(assoc) },
         position: {
           x: getX(radiosAdded[assoc.radio.radioIndex]),
-          y: 100 + 240 * assoc.radio.radioIndex,
+          y: 80 + 240 * assoc.radio.radioIndex,
         },
         style: associationStyle,
         type: 'output',
@@ -104,14 +139,14 @@ const RadioGraph = ({ radios, associations }) => {
   return <Graph loading={loading} elements={elements} setElements={setElements} />;
 };
 
-RadioGraph.propTypes = {
+NetworkDiagram.propTypes = {
   radios: PropTypes.instanceOf(Array),
   associations: PropTypes.instanceOf(Array),
 };
 
-RadioGraph.defaultProps = {
+NetworkDiagram.defaultProps = {
   radios: null,
   associations: null,
 };
 
-export default RadioGraph;
+export default NetworkDiagram;
