@@ -14,9 +14,11 @@ const DeviceSearchBar = () => {
 
   const search = (value) => {
     if (socket.readyState === WebSocket.OPEN) {
-      if (value.length > 0 && value.match('^[A-Za-z0-9]+$')) {
+      if (value.length > 0 && value.match('^[a-fA-F0-9]+$')) {
         setWaitingSearch('');
-        socket.send(JSON.stringify({ command: 'serial_number_search', serial_prefix: value }));
+        socket.send(
+          JSON.stringify({ command: 'serial_number_search', serial_prefix: value.toLowerCase() }),
+        );
       } else {
         setResults([]);
       }
