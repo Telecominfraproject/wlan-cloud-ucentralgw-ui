@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { useAuth, DeviceSearchBar as SearchBar } from 'ucentral-libs';
 import { checkIfJson } from 'utils/helper';
 
 const DeviceSearchBar = () => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { currentToken, endpoints } = useAuth();
   const [socket, setSocket] = useState(null);
   const [results, setResults] = useState([]);
+  const [waitingSearch, setWaitingSearch] = useState('');
 
-  const search = (e) => {
+  const search = (value) => {
     if (socket.readyState === WebSocket.OPEN) {
-      if (e.target.value.length > 0) {
-        socket.send(
-          JSON.stringify({ command: 'serial_number_search', serial_prefix: e.target.value }),
-        );
+      if (value.length > 0 && value.match('^[A-Za-z0-9]+$')) {
+        setWaitingSearch('');
+        socket.send(JSON.stringify({ command: 'serial_number_search', serial_prefix: value }));
       } else {
         setResults([]);
       }
     } else if (socket.readyState !== WebSocket.CONNECTING) {
+      setWaitingSearch(value);
       setSocket(new WebSocket(`${endpoints.ucentralgw.replace('https', 'wss')}/api/v1/ws`));
+    } else {
+      setWaitingSearch(value);
     }
   };
 
@@ -43,6 +48,10 @@ const DeviceSearchBar = () => {
           }
         }
       };
+
+      if (waitingSearch.length > 0) {
+        search(waitingSearch);
+      }
     }
 
     return () => closeSocket();
@@ -54,7 +63,7 @@ const DeviceSearchBar = () => {
     }
   }, []);
 
-  return <SearchBar t={t} search={search} results={results} />;
+  return <SearchBar t={t} search={search} results={results} history={history} />;
 };
 
 export default DeviceSearchBar;
