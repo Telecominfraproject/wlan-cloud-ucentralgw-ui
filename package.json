@@ -24,7 +24,7 @@
     "react-tooltip": "^4.2.21",
     "react-widgets": "^5.1.1",
     "sass": "^1.35.1",
-    "ucentral-libs": "^0.8.63",
+    "ucentral-libs": "^0.8.64",
     "uuid": "^8.3.2"
   },
   "main": "index.js",
