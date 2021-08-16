@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth, useDevice } from 'ucentral-libs';
-import styles from './index.module.scss';
 
 const LatestStatisticsModal = ({ show, toggle }) => {
   const { t } = useTranslation();
@@ -47,7 +46,7 @@ const LatestStatisticsModal = ({ show, toggle }) => {
   return (
     <CModal size="lg" show={show} onClose={toggle}>
       <CModalHeader closeButton>
-        <CModalTitle className={styles.modalTitle}>{t('statistics.latest_statistics')}</CModalTitle>
+        <CModalTitle className="text-dark">{t('statistics.latest_statistics')}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <pre className="ignore">{JSON.stringify(latestStats, null, 4)}</pre>

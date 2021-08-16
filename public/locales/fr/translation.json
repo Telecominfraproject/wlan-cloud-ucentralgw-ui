@@ -302,6 +302,7 @@
 		"packets": "Paquets",
 		"title": "Trace",
 		"trace": "Trace",
+		"trace_not_successful": "Trace non réussie : la passerelle a signalé l'erreur suivante : {{error}}",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
 		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"

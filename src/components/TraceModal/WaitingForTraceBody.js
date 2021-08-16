@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { CModalBody, CButton, CSpinner, CModalFooter } from '@coreui/react';
+import { CAlert, CModalBody, CButton, CSpinner, CModalFooter } from '@coreui/react';
 import { useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-
-import styles from './index.module.scss';
 
 const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [waitingForFile, setWaitingForFile] = useState(true);
+  const [error, setError] = useState(null);
 
   const getTraceResult = () => {
     const options = {
@@ -26,6 +25,10 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
       .then((response) => {
         if (response.data.waitingForFile === 0) {
           setWaitingForFile(false);
+        }
+        if (response.data.errorCode !== 0) {
+          setWaitingForFile(false);
+          setError(response.data.errorText);
         }
       })
       .catch(() => {});
@@ -83,16 +86,19 @@ const WaitingForTraceBody = ({ serialNumber, commandUuid, toggle }) => {
       <CModalBody>
         <h6>{t('trace.waiting_seconds', { seconds: secondsElapsed })}</h6>
         <p>{t('trace.waiting_directions')}</p>
-        <div className={styles.centerDiv}>
+        <div className="d-flex align-middle justify-content-center">
           <CSpinner hidden={!waitingForFile} />
           <CButton
-            hidden={waitingForFile}
+            hidden={waitingForFile || error}
             onClick={downloadTrace}
-            disabled={waitingForFile}
+            disabled={waitingForFile || error}
             color="primary"
           >
             {t('trace.download_trace')}
           </CButton>
+          <CAlert hidden={waitingForFile || !error} className="my-3" color="danger">
+            {t('trace.trace_not_successful', { error })}
+          </CAlert>
         </div>
       </CModalBody>
       <CModalFooter>

@@ -302,6 +302,7 @@
 		"packets": "Paquetes",
 		"title": "Rastro",
 		"trace": "Rastro",
+		"trace_not_successful": "Seguimiento fallido: la puerta de enlace informó el siguiente error: {{error}}",
 		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
 		"waiting_directions": "Espere el archivo de datos de seguimiento. Esto puede tomar algo de tiempo. Puede salir de la espera y recuperar el archivo de seguimiento de la tabla de comandos más tarde.",
 		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"

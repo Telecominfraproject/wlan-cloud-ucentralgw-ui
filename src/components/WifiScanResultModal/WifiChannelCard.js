@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
-import styles from './index.module.scss';
 
 const WifiChannelCard = ({ channel }) => {
   const { t } = useTranslation();
@@ -12,13 +11,13 @@ const WifiChannelCard = ({ channel }) => {
   return (
     <CCard>
       <CCardHeader>
-        <CCardTitle className={styles.cardTitle}>
+        <CCardTitle className="text-dark">
           {t('scan.channel')} #{channel.channel}
         </CCardTitle>
       </CCardHeader>
       <CCardBody>
-        <div className={[styles.scrollable, 'overflow-auto'].join(' ')}>
-          <CDataTable items={channel.devices} fields={columns} className={styles.datatable} />
+        <div className="overflow-auto" style={{ height: '250px' }}>
+          <CDataTable items={channel.devices} fields={columns} className="text-white" />
         </div>
       </CCardBody>
     </CCard>

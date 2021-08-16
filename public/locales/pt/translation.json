@@ -302,6 +302,7 @@
 		"packets": "Pacotes",
 		"title": "Vestígio",
 		"trace": "Vestígio",
+		"trace_not_successful": "O rastreamento não foi bem-sucedido: o gateway relatou o seguinte erro: {{error}}",
 		"wait_for_file": "Você gostaria de esperar até que o arquivo de rastreamento esteja pronto?",
 		"waiting_directions": "Aguarde o arquivo de dados de rastreamento. Isto pode tomar algum tempo. Você pode sair da espera e recuperar o arquivo de rastreamento da tabela de comandos mais tarde.",
 		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"

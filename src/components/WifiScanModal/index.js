@@ -19,7 +19,6 @@ import eventBus from 'utils/eventBus';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
-import styles from './index.module.scss';
 
 const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
@@ -171,7 +170,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
             </CCol>
           </CRow>
           <CRow>
-            <CCol className={styles.centerDiv}>
+            <CCol className="d-flex align-middle justify-content-center">
               <CSpinner />
             </CCol>
           </CRow>
