@@ -295,6 +295,7 @@ const Login = () => {
       updateField={updateFieldWithId}
       toggleForgotPassword={toggleForgotPassword}
       isLogin={isLogin}
+      logo="assets/LindsayBB_Logo.png"
       isPasswordChange={isPasswordChange}
       onKeyDown={onKeyDown}
       sendForgotPasswordEmail={sendForgotPasswordEmail}
