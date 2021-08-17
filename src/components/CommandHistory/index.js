@@ -20,7 +20,7 @@ import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
-import DeviceCommandsCollapse from './DeviceCommandsCollapse';
+import DetailsModal from './DetailsModal';
 import styles from './index.module.scss';
 
 const DeviceCommands = () => {
@@ -34,11 +34,12 @@ const DeviceCommands = () => {
   // Delete modal related
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [uuidDelete, setUuidDelete] = useState('');
+  // Details modal related
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [detailsUuid, setDetailsUuid] = useState('');
+  const [modalDetails, setModalDetails] = useState({});
   // Main collapsible
   const [collapse, setCollapse] = useState(false);
-  // Two other open collapsible lists
-  const [details, setDetails] = useState([]);
-  const [responses, setResponses] = useState([]);
   // General states
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -61,6 +62,10 @@ const DeviceCommands = () => {
   const toggleConfirmModal = (uuid) => {
     setUuidDelete(uuid);
     setShowConfirmModal(!showConfirmModal);
+  };
+
+  const toggleDetailsModal = () => {
+    setShowDetailsModal(!showDetailsModal);
   };
 
   const showMoreCommands = () => {
@@ -169,7 +174,7 @@ const DeviceCommands = () => {
       });
   };
 
-  const toggleDetails = (item, index) => {
+  const toggleDetails = (item) => {
     if (item.command === 'wifiscan') {
       setChosenWifiScan(item.results.status.scan);
       setChosenWifiScanDate(item.completed);
@@ -177,50 +182,20 @@ const DeviceCommands = () => {
     } else if (item.command === 'trace' && item.waitingForFile === 0) {
       downloadTrace(item.UUID);
     } else {
-      const position = details.indexOf(index);
-      let newDetails = details.slice();
-
-      if (position !== -1) {
-        newDetails.splice(position, 1);
-      } else {
-        newDetails = [...details, index];
-      }
-      setDetails(newDetails);
+      setModalDetails(item.results ?? item);
+      setDetailsUuid(item.UUID);
+      toggleDetailsModal();
     }
   };
 
-  const toggleResponse = (item, index) => {
-    const position = responses.indexOf(index);
-    let newResponses = responses.slice();
-
-    if (position !== -1) {
-      newResponses.splice(position, 1);
-    } else {
-      newResponses = [...newResponses, index];
-    }
-    setResponses(newResponses);
+  const toggleResponse = (item) => {
+    setModalDetails(item);
+    setDetailsUuid(item.UUID);
+    toggleDetailsModal();
   };
 
   const refreshCommands = () => {
     getCommands();
-  };
-
-  const getDetails = (command, index) => {
-    if (!details.includes(index)) {
-      return <pre className="ignore" />;
-    }
-    if (command.results) {
-      const result = command.results;
-      if (result) return <pre className="ignore">{JSON.stringify(result, null, 4)}</pre>;
-    }
-    return <pre className="ignore">{JSON.stringify(command, null, 4)}</pre>;
-  };
-
-  const getResponse = (commandDetails, index) => {
-    if (!responses.includes(index)) {
-      return <pre className="ignore" />;
-    }
-    return <pre className="ignore">{JSON.stringify(commandDetails, null, 4)}</pre>;
   };
 
   const columns = [
@@ -348,15 +323,11 @@ const DeviceCommands = () => {
                             >
                               <CButton
                                 color="primary"
-                                variant={details.includes(index) ? '' : 'outline'}
-                                disabled={
-                                  item.completed === 0 ||
-                                  (item.command === 'trace' && item.waitingForFile !== 0)
-                                }
+                                variant="outline"
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
-                                  toggleDetails(item, index);
+                                  toggleDetails(item);
                                 }}
                               >
                                 {item.command === 'trace' ? (
@@ -371,11 +342,11 @@ const DeviceCommands = () => {
                             <CPopover content={t('common.details')}>
                               <CButton
                                 color="primary"
-                                variant={responses.includes(index) ? '' : 'outline'}
+                                variant="outline"
                                 shape="square"
                                 size="sm"
                                 onClick={() => {
-                                  toggleResponse(item, index);
+                                  toggleResponse(item);
                                 }}
                               >
                                 <CIcon name="cilList" size="lg" />
@@ -399,16 +370,6 @@ const DeviceCommands = () => {
                           </CCol>
                         </CRow>
                       </td>
-                    ),
-                    details: (item, index) => (
-                      <DeviceCommandsCollapse
-                        details={details}
-                        responses={responses}
-                        index={index}
-                        getDetails={getDetails}
-                        getResponse={getResponse}
-                        item={item}
-                      />
                     ),
                   }}
                 />
@@ -443,6 +404,13 @@ const DeviceCommands = () => {
         date={chosenWifiScanDate}
       />
       <ConfirmModal show={showConfirmModal} toggle={toggleConfirmModal} action={deleteCommand} />
+      <DetailsModal
+        t={t}
+        show={showDetailsModal}
+        toggle={toggleDetailsModal}
+        details={modalDetails}
+        commandUuid={detailsUuid}
+      />
     </CWidgetDropdown>
   );
 };
