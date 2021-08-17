@@ -108,6 +108,7 @@
 		"na": "N/A",
 		"need_date": "You need a date...",
 		"no": "No",
+		"no_devices_found": "No Devices Found",
 		"no_items": "No Items",
 		"not_connected": "Not Connected",
 		"of_connected": "% of devices",
@@ -123,6 +124,7 @@
 		"save": "Save",
 		"saving": "Saving... ",
 		"schedule": "Schedule",
+		"search": "Search Devices",
 		"second": "second",
 		"seconds": "seconds",
 		"seconds_elapsed": "Seconds elapsed",
@@ -300,6 +302,7 @@
 		"packets": "Packets",
 		"title": "Trace",
 		"trace": "Trace",
+		"trace_not_successful": "Trace not successful: gateway reported the following error : {{error}}",
 		"wait_for_file": "Would you like to wait until the trace file is ready?",
 		"waiting_directions": "Please wait for the trace data file. This may take some time. You can exit the wait and retrieve the trace file from the commands table later.",
 		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"

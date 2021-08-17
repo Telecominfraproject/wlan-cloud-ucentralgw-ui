@@ -292,12 +292,7 @@ const DeviceCommands = () => {
               <CCol className="text-right">
                 <div>
                   <CButton onClick={refreshCommands} size="sm">
-                    <CIcon
-                      name="cil-sync"
-                      content={cilSync}
-                      className={styles.whiteIcon}
-                      size="2xl"
-                    />
+                    <CIcon name="cil-sync" content={cilSync} className="text-white" size="2xl" />
                   </CButton>
                 </div>
               </CCol>
@@ -318,7 +313,7 @@ const DeviceCommands = () => {
                   loading={loading}
                   items={commands ?? []}
                   fields={columns}
-                  className={styles.whiteIcon}
+                  className="text-white"
                   sorterValue={{ column: 'created', desc: 'true' }}
                   scopedSlots={{
                     completed: (item) => (
@@ -434,7 +429,7 @@ const DeviceCommands = () => {
           <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              className={styles.whiteIcon}
+              className="text-white"
               size="lg"
             />
           </CButton>

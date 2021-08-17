@@ -24,7 +24,6 @@ import {
   useDevice,
 } from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
-import styles from './index.module.scss';
 
 const DeviceConfiguration = () => {
   const { t } = useTranslation();
@@ -241,7 +240,7 @@ const DeviceConfiguration = () => {
             <CCardFooter>
               <CButton show={collapse ? 'true' : 'false'} onClick={toggle} block>
                 <CIcon
-                  className={styles.blackIcon}
+                  className="text-dark"
                   name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
                   size="lg"
                 />

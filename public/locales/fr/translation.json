@@ -108,6 +108,7 @@
 		"na": "N / A",
 		"need_date": "Vous avez besoin d'un rendez-vous...",
 		"no": "Non",
+		"no_devices_found": "Aucun périphérique trouvé",
 		"no_items": "Pas d'objet",
 		"not_connected": "Pas connecté",
 		"of_connected": "% d'appareils",
@@ -123,6 +124,7 @@
 		"save": "Sauvegarder",
 		"saving": "Économie...",
 		"schedule": "Programme",
+		"search": "Rechercher des appareils",
 		"second": "seconde",
 		"seconds": "secondes",
 		"seconds_elapsed": "Secondes écoulées",
@@ -300,6 +302,7 @@
 		"packets": "Paquets",
 		"title": "Trace",
 		"trace": "Trace",
+		"trace_not_successful": "Trace non réussie : la passerelle a signalé l'erreur suivante : {{error}}",
 		"wait_for_file": "Souhaitez-vous attendre que le fichier de trace soit prêt ?",
 		"waiting_directions": "Veuillez attendre le fichier de données de trace. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer le fichier de trace de la table des commandes plus tard.",
 		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"

@@ -10,14 +10,13 @@ import {
 } from '@coreui/react';
 import PropTypes from 'prop-types';
 import { Translation } from 'react-i18next';
-import styles from './index.module.scss';
 
 const DeviceConfigurationModal = ({ show, toggle, configuration }) => (
   <Translation>
     {(t) => (
       <CModal size="lg" show={show} onClose={toggle}>
         <CModalHeader closeButton>
-          <CModalTitle className={styles.modalTitle}>{t('configuration.title')}</CModalTitle>
+          <CModalTitle className="text-dark">{t('configuration.title')}</CModalTitle>
         </CModalHeader>
         <CModalBody>
           <pre className="ignore">{JSON.stringify(configuration, null, 4)}</pre>

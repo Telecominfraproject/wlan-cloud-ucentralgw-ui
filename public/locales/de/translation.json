@@ -108,6 +108,7 @@
 		"na": "(unbekannt)",
 		"need_date": "Du brauchst ein Datum...",
 		"no": "Nein",
+		"no_devices_found": "Keine Geräte gefunden",
 		"no_items": "Keine Gegenstände",
 		"not_connected": "Nicht verbunden",
 		"of_connected": "% der Geräte",
@@ -123,6 +124,7 @@
 		"save": "Sparen",
 		"saving": "Speichern ...",
 		"schedule": "Zeitplan",
+		"search": "Geräte suchen",
 		"second": "zweite",
 		"seconds": "sekunden",
 		"seconds_elapsed": "Sekunden verstrichen",
@@ -300,6 +302,7 @@
 		"packets": "Pakete",
 		"title": "Tcpdump",
 		"trace": "Spur",
+		"trace_not_successful": "Trace nicht erfolgreich: Gateway hat folgenden Fehler gemeldet: {{error}}",
 		"wait_for_file": "Möchten Sie warten, bis die Trace-Datei fertig ist?",
 		"waiting_directions": "Bitte warten Sie auf die Trace-Datendatei. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
 		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
