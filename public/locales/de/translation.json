@@ -295,6 +295,9 @@
 		"uptime": "Betriebszeit",
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
 	},
+	"system": {
+		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
+	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",
 		"directions": "Starten Sie eine Tcpdump auf diesem Geräts für eine bestimmte Dauer oder eine Anzahl von Paketen",

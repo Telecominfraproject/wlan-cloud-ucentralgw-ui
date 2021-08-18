@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ApiStatusCard, useAuth } from 'ucentral-libs';
+import { ApiStatusCard, useAuth, useToast } from 'ucentral-libs';
+import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { CRow, CCol } from '@coreui/react';
 import { prettyDate, secondsToDetailed } from 'utils/helper';
 
-const initialEndpoint = {
-  endpoint: '',
-  uptime: '',
-  version: '',
-  start: '',
-};
-
 const SystemPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
-  const [gateway, setGateway] = useState(initialEndpoint);
-  const [fms, setFms] = useState(initialEndpoint);
-  const [sec, setSec] = useState(initialEndpoint);
+  const { addToast } = useToast();
+  const [endpointsInfo, setEndpointsInfo] = useState([]);
 
-  const getEndpointInfo = (endpoint, setInfo, title) => {
+  const getSystemInfo = async (key, endpoint) => {
+    const systemInfo = {
+      title: key,
+      endpoint,
+      uptime: t('common.unknown'),
+      version: t('common.unknown'),
+      start: t('common.unknown'),
+    };
+
     const options = {
       headers: {
         Accept: 'application/json',
@@ -30,12 +31,12 @@ const SystemPage = () => {
     const getUptime = axiosInstance.get(`${endpoint}/api/v1/system?command=times`, options);
     const getVersion = axiosInstance.get(`${endpoint}/api/v1/system?command=version`, options);
 
-    Promise.all([getUptime, getVersion])
+    return Promise.all([getUptime, getVersion])
       .then(([newUptime, newVersion]) => {
         const uptimeObj = newUptime.data.times.find((obj) => obj.tag === 'uptime');
         const startObj = newUptime.data.times.find((obj) => obj.tag === 'start');
-        setInfo({
-          title,
+        return {
+          title: key,
           endpoint,
           uptime: uptimeObj?.value
             ? secondsToDetailed(
@@ -52,28 +53,45 @@ const SystemPage = () => {
             : t('common.unknown'),
           version: newVersion.data.value,
           start: prettyDate(startObj.value),
-        });
+        };
       })
-      .catch(() => {});
+      .catch(() => {
+        throw new Error('Error while fetching');
+      })
+      .finally(() => systemInfo);
+  };
+
+  const getAllInfo = async () => {
+    const promises = [];
+
+    for (const [key, value] of Object.entries(endpoints)) {
+      promises.push(getSystemInfo(key, value));
+    }
+
+    try {
+      const results = await Promise.all(promises);
+      setEndpointsInfo(results);
+    } catch {
+      addToast({
+        title: t('common.error'),
+        body: t('system.error_fetching'),
+        color: 'danger',
+        autohide: true,
+      });
+    }
   };
 
   useEffect(() => {
-    getEndpointInfo(endpoints.ucentralgw, setGateway, 'uCentralGW');
-    getEndpointInfo(endpoints.ucentralsec, setSec, 'uCentralSec');
-    getEndpointInfo(endpoints.ucentralfms, setFms, 'uCentralFms');
+    getAllInfo();
   }, []);
 
   return (
     <CRow>
-      <CCol md="4">
-        <ApiStatusCard t={t} info={sec} />
-      </CCol>
-      <CCol md="4">
-        <ApiStatusCard t={t} info={gateway} />
-      </CCol>
-      <CCol md="4">
-        <ApiStatusCard t={t} info={fms} />
-      </CCol>
+      {endpointsInfo.map((info) => (
+        <CCol key={createUuid()} md="4">
+          <ApiStatusCard t={t} info={info} />
+        </CCol>
+      ))}
     </CRow>
   );
 };

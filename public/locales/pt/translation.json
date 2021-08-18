@@ -295,6 +295,9 @@
 		"uptime": "Tempo de atividade",
 		"used_total_memory": "{{used}} usado / {{total}} total"
 	},
+	"system": {
+		"error_fetching": "Erro ao buscar informações do sistema"
+	},
 	"trace": {
 		"choose_network": "Escolha a rede",
 		"directions": "Lançar um rastreamento remoto deste dispositivo para uma duração específica ou um número de pacotes",

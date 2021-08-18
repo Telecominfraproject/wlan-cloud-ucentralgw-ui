@@ -295,6 +295,9 @@
 		"uptime": "Uptime",
 		"used_total_memory": "{{used}} used / {{total}} total "
 	},
+	"system": {
+		"error_fetching": "Error while fetching system information"
+	},
 	"trace": {
 		"choose_network": "Choose network",
 		"directions": "Launch a remote trace of this device for either a specific duration or a number of packets",
