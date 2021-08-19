@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
+		"event_queue": "Ereigniswarteschlange",
 		"success": "Befehl wurde erfolgreich übermittelt",
-		"title": "Gerätebefehle"
+		"title": "Gerätebefehle",
+		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden"
 	},
 	"common": {
 		"access_policy": "Zugangsrichtlinien",

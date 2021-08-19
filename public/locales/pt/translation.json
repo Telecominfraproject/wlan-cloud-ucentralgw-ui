@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Erro ao enviar comando!",
+		"event_queue": "Fila de Eventos",
 		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
-		"title": "Histórico de Comandos"
+		"title": "Histórico de Comandos",
+		"unable_queue": "Incapaz de completar o pedido de fila de eventos"
 	},
 	"common": {
 		"access_policy": "Política de Acesso",

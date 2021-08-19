@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Erreur lors de la soumission de la commande !",
+		"event_queue": "File d'attente d'événements",
 		"success": "Commande soumise avec succès, vous pouvez consulter le journal des commandes pour le résultat",
-		"title": "Historique des commandes"
+		"title": "Historique des commandes",
+		"unable_queue": "Impossible de terminer la demande de file d'attente d'événements"
 	},
 	"common": {
 		"access_policy": "Politique d'accès",

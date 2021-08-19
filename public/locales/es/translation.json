@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "¡Error al enviar el comando!",
+		"event_queue": "Cola de eventos",
 		"success": "Comando enviado con éxito, puede consultar el registro de Comandos para ver el resultado",
-		"title": "Historial de Comandos"
+		"title": "Historial de Comandos",
+		"unable_queue": "No se pudo completar la solicitud de cola de eventos"
 	},
 	"common": {
 		"access_policy": "Política de acceso",
