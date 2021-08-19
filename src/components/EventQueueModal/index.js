@@ -29,7 +29,7 @@ const EventQueueModal = ({ show, toggle }) => {
 
     axiosInstance
       .post(
-        `${endpoints.ucentralgw}/api/v1/devisdfgce/${deviceSerialNumber}/eventqueue`,
+        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/eventqueue`,
         parameters,
         options,
       )
