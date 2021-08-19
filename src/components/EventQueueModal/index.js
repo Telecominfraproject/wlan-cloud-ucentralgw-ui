@@ -24,7 +24,7 @@ const EventQueueModal = ({ show, toggle }) => {
 
     const parameters = {
       serialNumber: deviceSerialNumber,
-      types: ['dhcp', 'rrm'],
+      types: ['dhcp', 'wifi'],
     };
 
     axiosInstance
