@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Erro ao enviar comando!",
+		"event_queue": "Fila de Eventos",
 		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
-		"title": "Histórico de Comandos"
+		"title": "Histórico de Comandos",
+		"unable_queue": "Incapaz de completar o pedido de fila de eventos"
 	},
 	"common": {
 		"access_policy": "Política de Acesso",
@@ -294,6 +296,9 @@
 		"title": "#{{serialNumber}} status",
 		"uptime": "Tempo de atividade",
 		"used_total_memory": "{{used}} usado / {{total}} total"
+	},
+	"system": {
+		"error_fetching": "Erro ao buscar informações do sistema"
 	},
 	"trace": {
 		"choose_network": "Escolha a rede",

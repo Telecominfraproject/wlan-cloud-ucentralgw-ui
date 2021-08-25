@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Error while submitting command!",
+		"event_queue": "Event Queue",
 		"success": "Command submitted successfully, you can look at the Commands log for the result",
-		"title": "Command History"
+		"title": "Command History",
+		"unable_queue": "Unable to complete event queue request"
 	},
 	"common": {
 		"access_policy": "Access Policy",
@@ -294,6 +296,9 @@
 		"title": "#{{serialNumber}} Status",
 		"uptime": "Uptime",
 		"used_total_memory": "{{used}} used / {{total}} total "
+	},
+	"system": {
+		"error_fetching": "Error while fetching system information"
 	},
 	"trace": {
 		"choose_network": "Choose network",

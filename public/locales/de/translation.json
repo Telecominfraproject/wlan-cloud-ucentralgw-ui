@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
+		"event_queue": "Ereigniswarteschlange",
 		"success": "Befehl wurde erfolgreich übermittelt",
-		"title": "Gerätebefehle"
+		"title": "Gerätebefehle",
+		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden"
 	},
 	"common": {
 		"access_policy": "Zugangsrichtlinien",
@@ -294,6 +296,9 @@
 		"title": "#{{serialNumber}} Status",
 		"uptime": "Betriebszeit",
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
+	},
+	"system": {
+		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
 	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",

@@ -47,6 +47,7 @@ module.exports = merge(common, {
       react: path.resolve(__dirname, '../', 'node_modules', 'react'),
       'react-router-dom': path.resolve('./node_modules/react-router-dom'),
       'ucentral-libs': path.resolve(__dirname, '../', 'node_modules', 'ucentral-libs', 'src'),
+      graphlib: path.resolve(__dirname, '../', 'node_modules', 'graphlib'),
     },
   },
   plugins: [new ReactRefreshWebpackPlugin()],
