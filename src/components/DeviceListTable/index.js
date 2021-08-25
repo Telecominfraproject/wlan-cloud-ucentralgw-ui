@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DeviceSearchBar from 'components/DeviceSearchBar';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
@@ -345,7 +344,6 @@ const DeviceList = () => {
       <DeviceListTable
         currentPage={page}
         t={t}
-        searchBar={<DeviceSearchBar />}
         devices={devices}
         loading={loading}
         updateDevicesPerPage={updateDevicesPerPage}
