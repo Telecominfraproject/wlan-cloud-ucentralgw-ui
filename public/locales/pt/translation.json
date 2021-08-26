@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "Erro ao enviar comando!",
+		"event_queue": "Fila de Eventos",
 		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
-		"title": "Histórico de Comandos"
+		"title": "Histórico de Comandos",
+		"unable_queue": "Incapaz de completar o pedido de fila de eventos"
 	},
 	"common": {
 		"access_policy": "Política de Acesso",
@@ -46,6 +48,7 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar para área de transferência",
+		"create": "Crio",
 		"created": "Criado",
 		"created_by": "Criado Por",
 		"current": "Atual",
@@ -120,8 +123,10 @@
 		"recorded": "Gravado",
 		"refresh": "REFRESH",
 		"refresh_device": "Atualizar dispositivo",
+		"required": "Requeridos",
 		"result": "Resultado",
 		"save": "Salve",
+		"saved": "Salvou!",
 		"saving": "Salvando ...",
 		"schedule": "Cronograma",
 		"search": "Dispositivos de pesquisa",
@@ -129,6 +134,7 @@
 		"seconds": "segundos",
 		"seconds_elapsed": "Segundos decorridos",
 		"serial_number": "Número de série",
+		"show_all": "mostre tudo",
 		"start": "Começar",
 		"submit": "Enviar",
 		"submitted": "Submetido",
@@ -185,6 +191,20 @@
 		"severity": "Gravidade",
 		"title": "Toras"
 	},
+	"entity": {
+		"add_child": "Adicionar Entidade Filha a {{entityName}}",
+		"add_failure": "Erro, o servidor retornou: {{error}}",
+		"add_root": "Adicionar Entidade Raiz",
+		"add_success": "Entidade criada com sucesso!",
+		"cannot_delete": "Você não pode excluir entidades que têm filhos. Exclua os filhos desta entidade para poder excluí-la.",
+		"delete_success": "Entidade excluída com sucesso",
+		"delete_warning": "Aviso: esta operação não pode ser revertida",
+		"edit_failure": "Atualização malsucedida: {{error}}",
+		"entities": "Entidades",
+		"entity": "Entidade",
+		"only_unassigned": "Apenas não atribuídos",
+		"valid_serial": "Precisa ser um número de série válido (12 caracteres HEX)"
+	},
 	"factory_reset": {
 		"redirector": "Manter redirecionador:",
 		"reset": "Restabelecer",
@@ -229,6 +249,27 @@
 	"health": {
 		"sanity": "Sanidade",
 		"title": "Saúde"
+	},
+	"inventory": {
+		"add_child_venue": "Adicionar Local Infantil a {{entityName}}",
+		"add_tag": "Adicionar etiqueta",
+		"add_tag_to": "Adicionar tag de estoque a {{name}}",
+		"assign_error": "Erro ao tentar atribuir tag",
+		"assign_to_entity": "Atribuir à Entidade",
+		"error_retrieving": "Ocorreu um erro ao recuperar as tags de inventário",
+		"error_unassign": "Erro durante operação de cancelamento de atribuição",
+		"subscriber": "Assinante",
+		"successful_assign": "Tag atribuída com sucesso",
+		"successful_tag_update": "Tag atualizada com sucesso",
+		"successful_unassign": "A operação de cancelamento da atribuição foi bem-sucedida",
+		"tag_created": "Tag de inventário criada com sucesso",
+		"tag_creation_error": "Erro ao tentar criar etiqueta de inventário",
+		"tag_update_error": "Erro ao atualizar tag",
+		"tags_assigned_to": "Tags de inventário atribuídas a {{name}}",
+		"unassign": "Cancelar atribuição",
+		"unassign_tag": "Cancelar a atribuição de tag da entidade",
+		"unassigned_tags": "Tags não atribuídas",
+		"venue": "Local"
 	},
 	"login": {
 		"change_password": "Mudar senha",
@@ -294,6 +335,9 @@
 		"title": "#{{serialNumber}} status",
 		"uptime": "Tempo de atividade",
 		"used_total_memory": "{{used}} usado / {{total}} total"
+	},
+	"system": {
+		"error_fetching": "Erro ao buscar informações do sistema"
 	},
 	"trace": {
 		"choose_network": "Escolha a rede",
