@@ -22,10 +22,8 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
-		"event_queue": "Ereigniswarteschlange",
 		"success": "Befehl wurde erfolgreich übermittelt",
-		"title": "Gerätebefehle",
-		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden"
+		"title": "Gerätebefehle"
 	},
 	"common": {
 		"access_policy": "Zugangsrichtlinien",
@@ -48,7 +46,6 @@
 		"connected": "Verbindung wurde hergestellt",
 		"copied": "kopiert!",
 		"copy_to_clipboard": "In die Zwischenablage kopieren",
-		"create": "Erstellen",
 		"created": "Erstellt",
 		"created_by": "Erstellt von",
 		"current": "Aktuell",
@@ -123,10 +120,8 @@
 		"recorded": "Verzeichnet",
 		"refresh": "Aktualisierung",
 		"refresh_device": "Gerät aktualisieren",
-		"required": "Erforderlich",
 		"result": "Ergebnis",
 		"save": "Sparen",
-		"saved": "Gerettet!",
 		"saving": "Speichern ...",
 		"schedule": "Zeitplan",
 		"search": "Geräte suchen",
@@ -134,7 +129,6 @@
 		"seconds": "sekunden",
 		"seconds_elapsed": "Sekunden verstrichen",
 		"serial_number": "Seriennummer",
-		"show_all": "Zeige alles",
 		"start": "Start",
 		"submit": "Absenden",
 		"submitted": "Eingereicht",
@@ -191,20 +185,6 @@
 		"severity": "Wichtigkeit",
 		"title": "Geräteprotokolle"
 	},
-	"entity": {
-		"add_child": "Untergeordnete Entität zu {{entityName}}hinzufügen",
-		"add_failure": "Fehler, der Server hat zurückgegeben: {{error}}",
-		"add_root": "Root-Entität hinzufügen",
-		"add_success": "Entität erfolgreich erstellt!",
-		"cannot_delete": "Entitäten mit untergeordneten Elementen können nicht gelöscht werden. Löschen Sie die untergeordneten Elemente dieser Entität, um sie löschen zu können.",
-		"delete_success": "Entität erfolgreich gelöscht",
-		"delete_warning": "Achtung: Dieser Vorgang kann nicht rückgängig gemacht werden",
-		"edit_failure": "Aktualisierung fehlgeschlagen : {{error}}",
-		"entities": "Entitäten",
-		"entity": "Entität",
-		"only_unassigned": "Nur nicht zugewiesen",
-		"valid_serial": "Muss eine gültige Seriennummer sein (12 HEX-Zeichen)"
-	},
 	"factory_reset": {
 		"redirector": "Gatewaykonfiguration beibehalten:",
 		"reset": "Zurücksetzen",
@@ -249,27 +229,6 @@
 	"health": {
 		"sanity": "Gesundheitzustand",
 		"title": "Gesundheitzustand"
-	},
-	"inventory": {
-		"add_child_venue": "Untergeordneten Veranstaltungsort zu {{entityName}}hinzufügen",
-		"add_tag": "Tag hinzufügen",
-		"add_tag_to": "Inventar-Tag zu {{name}}hinzufügen",
-		"assign_error": "Fehler beim Versuch, Tag zuzuweisen",
-		"assign_to_entity": "Zu Entität zuweisen",
-		"error_retrieving": "Beim Abrufen von Inventar-Tags ist ein Fehler aufgetreten",
-		"error_unassign": "Fehler beim Aufheben der Zuweisung",
-		"subscriber": "Teilnehmer",
-		"successful_assign": "Tag erfolgreich zugewiesen",
-		"successful_tag_update": "Tag erfolgreich aktualisiert",
-		"successful_unassign": "Vorgang zum Aufheben der Zuweisung war erfolgreich",
-		"tag_created": "Inventar-Tag erfolgreich erstellt",
-		"tag_creation_error": "Fehler beim Versuch, Inventar-Tag zu erstellen",
-		"tag_update_error": "Fehler beim Aktualisieren des Tags",
-		"tags_assigned_to": "Inventar-Tags {{name}}zugewiesen",
-		"unassign": "Zuordnung aufheben",
-		"unassign_tag": "Tag von Entität zuweisen",
-		"unassigned_tags": "Nicht zugewiesene Tags",
-		"venue": "Tagungsort"
 	},
 	"login": {
 		"change_password": "Ändere das Passwort",
@@ -335,9 +294,6 @@
 		"title": "#{{serialNumber}} Status",
 		"uptime": "Betriebszeit",
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
-	},
-	"system": {
-		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
 	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
+import DeviceSearchBar from 'components/DeviceSearchBar';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import FirmwareHistoryModal from 'components/FirmwareHistoryModal';
 import { DeviceListTable, useAuth, useToast } from 'ucentral-libs';
@@ -344,6 +345,7 @@ const DeviceList = () => {
       <DeviceListTable
         currentPage={page}
         t={t}
+        searchBar={<DeviceSearchBar />}
         devices={devices}
         loading={loading}
         updateDevicesPerPage={updateDevicesPerPage}
