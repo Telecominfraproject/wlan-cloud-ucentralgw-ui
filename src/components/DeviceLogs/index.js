@@ -19,7 +19,6 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import DeleteLogModal from 'components/DeleteLogModal';
-import styles from './index.module.scss';
 
 const DeviceLogs = () => {
   const { t } = useTranslation();
@@ -204,12 +203,12 @@ const DeviceLogs = () => {
                 </CCol>
               </CRow>
               <CCard>
-                <div className={[styles.scrollableCard, 'overflow-auto'].join(' ')}>
+                <div className="overflow-auto" style={{ height: '250px' }}>
                   <CDataTable
                     items={logs ?? []}
                     fields={columns}
                     loading={loading}
-                    className={styles.whiteIcon}
+                    className="text-white"
                     sorterValue={{ column: 'recorded', desc: 'true' }}
                     scopedSlots={{
                       recorded: (item) => <td>{prettyDate(item.recorded)}</td>,
@@ -255,7 +254,7 @@ const DeviceLogs = () => {
             <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
               <CIcon
                 name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-                className={styles.whiteIcon}
+                className="text-white"
                 size="lg"
               />
             </CButton>

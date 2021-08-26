@@ -11,7 +11,6 @@ import {
   CBadge,
 } from '@coreui/react';
 import PropTypes from 'prop-types';
-import styles from './index.module.scss';
 
 const ConfirmModal = ({ show, toggle, action }) => {
   const { t } = useTranslation();
@@ -63,7 +62,7 @@ const ConfirmModal = ({ show, toggle, action }) => {
   }, [show]);
 
   return (
-    <CModal className={styles.modal} show={show} onClose={toggle}>
+    <CModal className="text-dark" show={show} onClose={toggle}>
       <CModalHeader closeButton>
         <CModalTitle>{t('delete_command.title')}</CModalTitle>
       </CModalHeader>

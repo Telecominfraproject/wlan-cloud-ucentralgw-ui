@@ -20,7 +20,6 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import DeleteLogModal from 'components/DeleteLogModal';
-import styles from './index.module.scss';
 
 const DeviceHealth = () => {
   const { t } = useTranslation();
@@ -226,12 +225,12 @@ const DeviceHealth = () => {
               </CCol>
             </CRow>
             <CCard className="p-0">
-              <div className={[styles.scrollable, 'overflow-auto'].join(' ')}>
+              <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
                   border
                   items={healthChecks ?? []}
                   fields={columns}
-                  className={styles.dataTable}
+                  className="text-white"
                   loading={loading}
                   sorterValue={{ column: 'recorded', desc: 'true' }}
                   scopedSlots={{
@@ -282,7 +281,7 @@ const DeviceHealth = () => {
           <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
             <CIcon
               name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              className={styles.icon}
+              className="text-white"
               size="lg"
             />
           </CButton>

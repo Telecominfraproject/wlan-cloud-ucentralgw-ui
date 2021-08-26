@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { CRow, CCol } from '@coreui/react';
 import { NetworkDiagram as Graph } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
+import createLayoutedElements from './dagreAdapter';
 
 const associationStyle = {
   background: '#3399ff',
@@ -58,7 +59,7 @@ const associationNode = (associationInfo) => (
   </div>
 );
 
-const NetworkDiagram = ({ radios, associations }) => {
+const NetworkDiagram = ({ show, radios, associations }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [elements, setElements] = useState([]);
@@ -136,15 +137,24 @@ const NetworkDiagram = ({ radios, associations }) => {
     }
   }, [radios, associations]);
 
-  return <Graph loading={loading} elements={elements} setElements={setElements} />;
+  return (
+    <Graph
+      show={show}
+      loading={loading}
+      elements={createLayoutedElements(elements, 220, 80)}
+      setElements={setElements}
+    />
+  );
 };
 
 NetworkDiagram.propTypes = {
+  show: PropTypes.bool,
   radios: PropTypes.instanceOf(Array),
   associations: PropTypes.instanceOf(Array),
 };
 
 NetworkDiagram.defaultProps = {
+  show: true,
   radios: null,
   associations: null,
 };

@@ -22,8 +22,10 @@
 	},
 	"commands": {
 		"error": "¡Error al enviar el comando!",
+		"event_queue": "Cola de eventos",
 		"success": "Comando enviado con éxito, puede consultar el registro de Comandos para ver el resultado",
-		"title": "Historial de Comandos"
+		"title": "Historial de Comandos",
+		"unable_queue": "No se pudo completar la solicitud de cola de eventos"
 	},
 	"common": {
 		"access_policy": "Política de acceso",
@@ -46,6 +48,7 @@
 		"connected": "Conectado",
 		"copied": "Copiado!",
 		"copy_to_clipboard": "Copiar al portapapeles",
+		"create": "Crear",
 		"created": "creado",
 		"created_by": "Creado por",
 		"current": "Corriente",
@@ -108,6 +111,7 @@
 		"na": "N / A",
 		"need_date": "Necesitas una cita ...",
 		"no": "No",
+		"no_devices_found": "No se encontraron dispositivos",
 		"no_items": "No hay articulos",
 		"not_connected": "No conectado",
 		"of_connected": "% de dispositivos",
@@ -119,14 +123,18 @@
 		"recorded": "Grabado",
 		"refresh": "Refrescar",
 		"refresh_device": "Actualizar dispositivo",
+		"required": "Necesario",
 		"result": "Resultado",
 		"save": "Salvar",
+		"saved": "¡Salvado!",
 		"saving": "Ahorro...",
 		"schedule": "Programar",
+		"search": "Dispositivos de búsqueda",
 		"second": "segundo",
 		"seconds": "segundos",
 		"seconds_elapsed": "Segundos transcurridos",
 		"serial_number": "Número de serie",
+		"show_all": "Mostrar todo",
 		"start": "comienzo",
 		"submit": "Enviar",
 		"submitted": "Presentado",
@@ -183,6 +191,20 @@
 		"severity": "Gravedad",
 		"title": "Registros"
 	},
+	"entity": {
+		"add_child": "Agregar entidad secundaria a {{entityName}}",
+		"add_failure": "Error, el servidor devolvió: {{error}}",
+		"add_root": "Agregar entidad raíz",
+		"add_success": "¡Entidad creada con éxito!",
+		"cannot_delete": "No puede eliminar entidades que tienen hijos. Elimina los hijos de esta entidad para poder eliminarla.",
+		"delete_success": "Entidad eliminada correctamente",
+		"delete_warning": "Advertencia: esta operación no se puede revertir",
+		"edit_failure": "Actualización fallida: {{error}}",
+		"entities": "entidades",
+		"entity": "Entidad",
+		"only_unassigned": "Solo sin asignar",
+		"valid_serial": "Debe ser un número de serie válido (12 caracteres HEX)"
+	},
 	"factory_reset": {
 		"redirector": "Mantener el redirector:",
 		"reset": "Reiniciar",
@@ -227,6 +249,27 @@
 	"health": {
 		"sanity": "Cordura",
 		"title": "Salud"
+	},
+	"inventory": {
+		"add_child_venue": "Agregar lugar infantil a {{entityName}}",
+		"add_tag": "Añadir etiqueta",
+		"add_tag_to": "Agregar etiqueta de inventario a {{name}}",
+		"assign_error": "Error al intentar asignar la etiqueta",
+		"assign_to_entity": "Asignar a entidad",
+		"error_retrieving": "Se produjo un error al recuperar las etiquetas de inventario",
+		"error_unassign": "Error durante la operación de anulación de asignación",
+		"subscriber": "Abonado",
+		"successful_assign": "Etiqueta asignada correctamente",
+		"successful_tag_update": "Etiqueta actualizada correctamente",
+		"successful_unassign": "La operación de anulación de asignación se realizó correctamente",
+		"tag_created": "Etiqueta de inventario creada correctamente",
+		"tag_creation_error": "Error al intentar crear una etiqueta de inventario",
+		"tag_update_error": "Error al actualizar la etiqueta",
+		"tags_assigned_to": "Etiquetas de inventario asignadas a {{name}}",
+		"unassign": "Anular asignación",
+		"unassign_tag": "Anular asignación de etiqueta de entidad",
+		"unassigned_tags": "Etiquetas sin asignar",
+		"venue": "Lugar de encuentro"
 	},
 	"login": {
 		"change_password": "Cambia la contraseña",
@@ -293,6 +336,9 @@
 		"uptime": "Tiempo de actividad",
 		"used_total_memory": "{{used}} usado / {{total}} total"
 	},
+	"system": {
+		"error_fetching": "Error al obtener información del sistema"
+	},
 	"trace": {
 		"choose_network": "Elija la red",
 		"directions": "Lanzar un rastreo remoto de este dispositivo por una duración específica o por una cantidad de paquetes",
@@ -300,6 +346,7 @@
 		"packets": "Paquetes",
 		"title": "Rastro",
 		"trace": "Rastro",
+		"trace_not_successful": "Seguimiento fallido: la puerta de enlace informó el siguiente error: {{error}}",
 		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de seguimiento esté listo?",
 		"waiting_directions": "Espere el archivo de datos de seguimiento. Esto puede tomar algo de tiempo. Puede salir de la espera y recuperar el archivo de seguimiento de la tabla de comandos más tarde.",
 		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"

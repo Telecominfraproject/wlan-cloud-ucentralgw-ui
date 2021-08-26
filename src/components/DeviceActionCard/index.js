@@ -10,6 +10,7 @@ import TraceModal from 'components/TraceModal';
 import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
+import EventQueueModal from 'components/EventQueueModal';
 
 const DeviceActions = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const DeviceActions = () => {
   const [connectLoading, setConnectLoading] = useState(false);
   const [showConfigModal, setConfigModal] = useState(false);
   const [showFactoryModal, setShowFactoryModal] = useState(false);
+  const [showQueueModal, setShowQueueModal] = useState(false);
 
   const toggleRebootModal = () => {
     setShowRebootModal(!showRebootModal);
@@ -55,6 +57,10 @@ const DeviceActions = () => {
 
   const toggleFactoryResetModal = () => {
     setShowFactoryModal(!showFactoryModal);
+  };
+
+  const toggleQueueModal = () => {
+    setShowQueueModal(!showQueueModal);
   };
 
   const getRttysInfo = () => {
@@ -176,6 +182,14 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
+        <CRow className="mt-3">
+          <CCol>
+            <CButton block color="primary" onClick={toggleQueueModal}>
+              {t('commands.event_queue')}
+            </CButton>
+          </CCol>
+          <CCol />
+        </CRow>
       </CCardBody>
       <RebootModal show={showRebootModal} toggleModal={toggleRebootModal} />
       <BlinkModal show={showBlinkModal} toggleModal={toggleBlinkModal} />
@@ -193,6 +207,7 @@ const DeviceActions = () => {
       <WifiScanModal show={showScanModal} toggleModal={toggleScanModal} />
       <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
+      <EventQueueModal show={showQueueModal} toggle={toggleQueueModal} />
     </CCard>
   );
 };

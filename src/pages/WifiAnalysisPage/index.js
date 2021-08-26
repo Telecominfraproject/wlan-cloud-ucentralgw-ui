@@ -241,7 +241,11 @@ const WifiAnalysisPage = () => {
         <CModalHeader closeButton>{t('wifi_analysis.network_diagram')}</CModalHeader>
         <CModalBody>
           {showModal ? (
-            <NetworkDiagram radios={selectedRadioStats} associations={selectedAssociationStats} />
+            <NetworkDiagram
+              show={showModal}
+              radios={selectedRadioStats}
+              associations={selectedAssociationStats}
+            />
           ) : (
             <div />
           )}

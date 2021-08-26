@@ -12,7 +12,6 @@ import {
 import PropTypes from 'prop-types';
 import { prettyDate } from 'utils/helper';
 import WifiChannelTable from './WifiChannelTable';
-import styles from './index.module.scss';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const { t } = useTranslation();
@@ -50,7 +49,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   return (
     <CModal size="lg" show={show} onClose={toggle}>
       <CModalHeader closeButton>
-        <CModalTitle className={styles.modalTitle}>
+        <CModalTitle className="text-dark">
           {date !== '' ? prettyDate(date) : ''} {t('scan.results')}
         </CModalTitle>
       </CModalHeader>

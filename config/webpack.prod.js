@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const path = require('path');
 const paths = require('./paths');
 const common = require('./webpack.common');
 
@@ -69,6 +70,12 @@ module.exports = merge(common, {
           },
         },
       },
+    },
+  },
+  resolve: {
+    modules: [],
+    alias: {
+      graphlib: path.resolve(__dirname, '../', 'node_modules', 'graphlib'),
     },
   },
   performance: {

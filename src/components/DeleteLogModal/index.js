@@ -7,7 +7,6 @@ import { ConfirmFooter, useAuth, useDevice } from 'ucentral-libs';
 import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import styles from './index.module.scss';
 
 const DeleteLogModal = ({ show, toggle, object }) => {
   const { t } = useTranslation();
@@ -54,7 +53,7 @@ const DeleteLogModal = ({ show, toggle, object }) => {
   }, [show]);
 
   return (
-    <CModal className={styles.modal} show={show} onClose={toggle}>
+    <CModal className="text-dark" show={show} onClose={toggle}>
       <CModalHeader closeButton>
         <CModalTitle>
           {object === 'healthchecks'
