@@ -59,7 +59,7 @@ const associationNode = (associationInfo) => (
   </div>
 );
 
-const NetworkDiagram = ({ radios, associations }) => {
+const NetworkDiagram = ({ show, radios, associations }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [elements, setElements] = useState([]);
@@ -139,6 +139,7 @@ const NetworkDiagram = ({ radios, associations }) => {
 
   return (
     <Graph
+      show={show}
       loading={loading}
       elements={createLayoutedElements(elements, 220, 80)}
       setElements={setElements}
@@ -147,11 +148,13 @@ const NetworkDiagram = ({ radios, associations }) => {
 };
 
 NetworkDiagram.propTypes = {
+  show: PropTypes.bool,
   radios: PropTypes.instanceOf(Array),
   associations: PropTypes.instanceOf(Array),
 };
 
 NetworkDiagram.defaultProps = {
+  show: true,
   radios: null,
   associations: null,
 };
