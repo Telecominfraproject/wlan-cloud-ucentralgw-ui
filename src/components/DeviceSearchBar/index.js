@@ -24,7 +24,7 @@ const DeviceSearchBar = () => {
       }
     } else if (socket.readyState !== WebSocket.CONNECTING) {
       setWaitingSearch(value);
-      setSocket(new WebSocket(`${endpoints.ucentralgw.replace('https', 'wss')}/api/v1/ws`));
+      setSocket(new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`));
     } else {
       setWaitingSearch(value);
     }
@@ -61,7 +61,7 @@ const DeviceSearchBar = () => {
 
   useEffect(() => {
     if (socket === null) {
-      setSocket(new WebSocket(`${endpoints.ucentralgw.replace('https', 'wss')}/api/v1/ws`));
+      setSocket(new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`));
     }
   }, []);
 

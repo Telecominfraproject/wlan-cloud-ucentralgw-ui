@@ -83,7 +83,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/configure`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/configure`,
         parameters,
         { headers },
       )

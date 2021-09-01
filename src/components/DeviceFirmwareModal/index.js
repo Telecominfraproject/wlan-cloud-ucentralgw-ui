@@ -25,7 +25,7 @@ const DeviceFirmwareModal = ({
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${device.compatible}`, {
+      .get(`${endpoints.owfms}/api/v1/firmwares?deviceType=${device.compatible}`, {
         headers,
       })
       .then((response) => {
@@ -60,7 +60,7 @@ const DeviceFirmwareModal = ({
     };
 
     axiosInstance
-      .post(`${endpoints.ucentralgw}/api/v1/device/${device.serialNumber}/upgrade`, parameters, {
+      .post(`${endpoints.owgw}/api/v1/device/${device.serialNumber}/upgrade`, parameters, {
         headers,
       })
       .then((response) => {

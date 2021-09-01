@@ -57,12 +57,9 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .get(
-        `${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${deviceType ?? selectedDeviceType}`,
-        {
-          headers,
-        },
-      )
+      .get(`${endpoints.owfms}/api/v1/firmwares?deviceType=${deviceType ?? selectedDeviceType}`, {
+        headers,
+      })
       .then((response) => {
         const sortedFirmware = response.data.firmwares.sort((a, b) => {
           const firstDate = a.imageDate;
@@ -93,7 +90,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralfms}/api/v1/firmwares?deviceSet=true`, {
+      .get(`${endpoints.owfms}/api/v1/firmwares?deviceSet=true`, {
         headers,
       })
       .then((response) => {
@@ -148,7 +145,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralfms}/api/v1/firmware/${id}`, parameters, options)
+      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
       .then(() => {
         getFirmware();
         setAddNoteLoading(false);
@@ -180,7 +177,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralfms}/api/v1/firmware/${id}`, parameters, options)
+      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
       .then(() => {
         getFirmware();
         setUpdateDescriptionLoading(false);

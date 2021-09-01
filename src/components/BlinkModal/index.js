@@ -70,7 +70,7 @@ const BlinkModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/leds`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/leds`,
         parameters,
         { headers },
       )
