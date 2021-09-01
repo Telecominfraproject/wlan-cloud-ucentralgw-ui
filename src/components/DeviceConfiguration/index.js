@@ -57,10 +57,7 @@ const DeviceConfiguration = () => {
     };
 
     axiosInstance
-      .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
-        options,
-      )
+      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`, options)
       .then((response) => {
         setDevice(response.data);
       })
@@ -82,7 +79,7 @@ const DeviceConfiguration = () => {
 
     axiosInstance
       .put(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
         parameters,
         { headers },
       )

@@ -39,7 +39,7 @@ const UserListPage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/users?idOnly=true`, {
+      .get(`${endpoints.owsec}/api/v1/users?idOnly=true`, {
         headers,
       })
       .then((response) => {
@@ -61,7 +61,7 @@ const UserListPage = () => {
 
     const promises = userIds.map(async (id) =>
       axiosInstance.get(
-        `${endpoints.ucentralsec}/api/v1/avatar/${id}?timestamp=${new Date().toString()}`,
+        `${endpoints.owsec}/api/v1/avatar/${id}?timestamp=${new Date().toString()}`,
         options,
       ),
     );
@@ -99,7 +99,7 @@ const UserListPage = () => {
     );
 
     axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/users?select=${idsToGet}`, {
+      .get(`${endpoints.owsec}/api/v1/users?select=${idsToGet}`, {
         headers,
       })
       .then((response) => {
@@ -127,7 +127,7 @@ const UserListPage = () => {
     };
 
     axiosInstance
-      .delete(`${endpoints.ucentralsec}/api/v1/user/${userId}`, {
+      .delete(`${endpoints.owsec}/api/v1/user/${userId}`, {
         headers,
       })
       .then(() => {

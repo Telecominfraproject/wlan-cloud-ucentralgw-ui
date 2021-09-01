@@ -84,7 +84,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
         const isConnected = await getDeviceConnection(
           deviceSerialNumber,
           currentToken,
-          endpoints.ucentralgw,
+          endpoints.owgw,
         );
         setDisableWaiting(!isConnected);
         setDeviceConnected(isConnected);
@@ -110,7 +110,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
       };
       axiosInstance
         .post(
-          `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/upgrade`,
+          `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/upgrade`,
           parameters,
           { headers },
         )
@@ -160,7 +160,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
           <CCol md="8">
             <CInput
               disabled={blockFields}
-              className={('form-control', { 'is-invalid': !validFirmware })}
+              className={`form-control ${!validFirmware ? 'is-invalid' : ''}`}
               type="text"
               id="uri"
               name="uri-input"
@@ -194,7 +194,7 @@ const FirmwareUpgradeModal = ({ show, toggleModal }) => {
             <DatePicker
               selected={new Date(date)}
               value={new Date(date)}
-              className={('form-control', { 'is-invalid': !validDate })}
+              className={`form-control ${!validDate ? 'is-invalid' : ''}`}
               includeTime
               disabled={blockFields}
               onChange={(newDate) => setDate(newDate.toString())}

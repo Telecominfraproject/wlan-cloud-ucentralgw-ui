@@ -60,11 +60,11 @@ const ProfilePage = () => {
 
   const getPasswordPolicy = () => {
     axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
+      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
       .then((response) => {
         const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
+        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
         setPolicies(response.data);
       })
       .catch(() => {});
@@ -79,7 +79,7 @@ const ProfilePage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, options)
+      .get(`${endpoints.owsec}/api/v1/user/${user.Id}`, options)
       .then((response) => {
         const newUser = {};
 
@@ -109,7 +109,7 @@ const ProfilePage = () => {
     data.append('file', newAvatarFile);
 
     axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
+      .post(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, data, options)
       .then(() => {
         addToast({
           title: t('user.update_success_title'),
@@ -171,7 +171,7 @@ const ProfilePage = () => {
       };
 
       axiosInstance
-        .put(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, parameters, options)
+        .put(`${endpoints.owsec}/api/v1/user/${user.Id}`, parameters, options)
         .then(() => {
           addToast({
             title: t('user.update_success_title'),
@@ -213,7 +213,7 @@ const ProfilePage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, parameters, options)
+      .put(`${endpoints.owsec}/api/v1/user/${user.Id}`, parameters, options)
       .then(() => {
         getUser();
       })
@@ -238,7 +238,7 @@ const ProfilePage = () => {
       },
     };
     return axiosInstance
-      .delete(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, options)
+      .delete(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, options)
       .then(() => {
         getAvatar();
       })

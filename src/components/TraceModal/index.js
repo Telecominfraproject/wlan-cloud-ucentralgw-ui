@@ -80,7 +80,7 @@ const TraceModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/trace`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/trace`,
         parameters,
         { headers },
       )
@@ -108,7 +108,7 @@ const TraceModal = ({ show, toggleModal }) => {
         const isConnected = await getDeviceConnection(
           deviceSerialNumber,
           currentToken,
-          endpoints.ucentralgw,
+          endpoints.owgw,
         );
         setIsDeviceConnected(isConnected);
       };

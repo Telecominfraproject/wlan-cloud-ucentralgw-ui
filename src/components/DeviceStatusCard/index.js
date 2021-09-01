@@ -22,13 +22,13 @@ const DeviceStatusCard = () => {
     };
 
     const lastStatsRequest = axiosInstance.get(
-      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
+      `${endpoints.owgw}/api/v1/device/${encodeURIComponent(
         deviceSerialNumber,
       )}/statistics?lastOnly=true`,
       options,
     );
     const statusRequest = axiosInstance.get(
-      `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/status`,
+      `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/status`,
       options,
     );
 
