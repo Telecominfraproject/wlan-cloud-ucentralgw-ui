@@ -145,6 +145,8 @@ const DeviceList = () => {
       },
     };
 
+    let newDevice;
+
     axiosInstance
       .get(
         `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
@@ -152,11 +154,28 @@ const DeviceList = () => {
         )}`,
         options,
       )
+      .then(
+        ({
+          data: {
+            devicesWithStatus: [device],
+          },
+        }) => {
+          newDevice = device;
+
+          return axiosInstance.get(
+            `${endpoints.owfms}/api/v1/firmwareAge?select=${serialNumber}`,
+            options,
+          );
+        },
+      )
       .then((response) => {
-        const device = response.data.devicesWithStatus[0];
+        newDevice.firmwareInfo = {
+          age: response.data.ages[0].age,
+          latest: response.data.ages[0].latest,
+        };
         const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);
         const newList = devices;
-        newList[foundIndex] = device;
+        newList[foundIndex] = newDevice;
         setDevices(newList);
         setLoading(false);
       })
