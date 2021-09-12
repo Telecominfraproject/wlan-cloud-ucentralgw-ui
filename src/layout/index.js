@@ -89,7 +89,7 @@ const TheLayout = () => {
             <PageContainer t={t} routes={routes} redirectTo="/devices" />
           </ToastProvider>
         </div>
-        <Footer t={t} version="2.1.3" />
+        <Footer t={t} version="2.1.4" />
       </div>
     </div>
   );
