@@ -8,6 +8,7 @@
 		"factory_reset": "Auf Werkseinstellungen zurückgesetzt",
 		"firmware_upgrade": "Firmware Aktualisierung",
 		"reboot": "Gerät neustarten",
+		"telemetry": "Telemetrie",
 		"title": "Geräte Administrations",
 		"trace": "Tcpdump starten",
 		"wifi_scan": "Wi-Fi Scan"
@@ -141,6 +142,7 @@
 		"seconds_elapsed": "Sekunden verstrichen",
 		"serial_number": "Seriennummer",
 		"show_all": "Zeige alles",
+		"socket_connection_closed": "Verbindung geschlossen!",
 		"start": "Start",
 		"stop_editing": "Stoppen Sie die Bearbeitung",
 		"submit": "Absenden",
@@ -162,18 +164,37 @@
 		"yes": "Ja"
 	},
 	"configuration": {
+		"cannot_delete": "Diese Konfiguration kann nicht gelöscht werden, da sie von mindestens einer Entität, einem Veranstaltungsort oder einem Gerät verwendet wird",
+		"configurations": "Konfigurationen",
+		"create": "Konfiguration erstellen",
+		"create_config": "Neue Konfiguration erstellen",
 		"created": "Erstellt",
+		"creation_success": "Konfiguration erfolgreich erstellt!",
+		"delete_config": "Konfiguration löschen",
 		"details": "Gerätedetails",
 		"device_password": "Passwort",
+		"device_type": "Gerätetyp",
+		"device_types": "Gerätetypen",
+		"edit_configuration": "Konfiguration bearbeiten",
+		"error_delete": "Fehler beim Versuch zu löschen: {{error}}",
+		"error_fetching_config": "Fehler beim Abrufen der Konfiguration",
+		"error_trying_delete": "Fehler beim Versuch zu löschen: {{error}}",
 		"last_configuration_change": "Letzte Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
+		"need_device_type": "Jede Konfiguration muss mindestens einen Gerätetyp unterstützen",
 		"note": "Hinweis",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
+		"successful_delete": "Konfiguration gelöscht!",
+		"support_all": "Alle unterstützen",
+		"supported_device_types": "Unterstützte Gerätetypen",
 		"title": "Gerätekonfiguration",
 		"type": "Gerätetyp",
+		"used_by": "Benutzt von",
+		"used_by_details": "{{entities}} Entitäten, {{venues}} Veranstaltungsorte und {{devices}} Geräte",
 		"uuid": "Konfigurations-ID",
+		"view_in_use": "In Verwendung anzeigen",
 		"view_json": "Rohe Konfiguration anzeigen"
 	},
 	"configure": {
@@ -413,6 +434,11 @@
 	},
 	"system": {
 		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
+	},
+	"telemetry": {
+		"interval": "Intervall",
+		"last_update": "Letztes Update",
+		"types": "Typen"
 	},
 	"trace": {
 		"choose_network": "Netzwerk auswählen",

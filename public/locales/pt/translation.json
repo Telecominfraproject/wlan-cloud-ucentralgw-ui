@@ -8,6 +8,7 @@
 		"factory_reset": "Restauração de fábrica",
 		"firmware_upgrade": "Atualização de firmware",
 		"reboot": "Reiniciar",
+		"telemetry": "Telemetria",
 		"title": "Comandos",
 		"trace": "Vestígio",
 		"wifi_scan": "Wi-Fi Scan"
@@ -141,6 +142,7 @@
 		"seconds_elapsed": "Segundos decorridos",
 		"serial_number": "Número de série",
 		"show_all": "mostre tudo",
+		"socket_connection_closed": "Conexão fechada!",
 		"start": "Começar",
 		"stop_editing": "Pare de editar",
 		"submit": "Enviar",
@@ -162,18 +164,37 @@
 		"yes": "sim"
 	},
 	"configuration": {
+		"cannot_delete": "Esta configuração não pode ser excluída porque está sendo usada por pelo menos uma entidade, local ou dispositivo",
+		"configurations": "configurações",
+		"create": "Criar configuração",
+		"create_config": "Criar Nova Configuração",
 		"created": "Criado",
+		"creation_success": "Configuração criada com sucesso!",
+		"delete_config": "Excluir configuração",
 		"details": "Detalhes",
 		"device_password": "Senha",
+		"device_type": "Tipo de dispositivo",
+		"device_types": "Tipos de dispositivos",
+		"edit_configuration": "Editar configuração",
+		"error_delete": "Erro ao tentar excluir: {{error}}",
+		"error_fetching_config": "Erro ao buscar configuração",
+		"error_trying_delete": "Erro ao tentar excluir: {{error}}",
 		"last_configuration_change": "Última Mudança de Configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
+		"need_device_type": "Cada configuração deve suportar pelo menos um tipo de dispositivo",
 		"note": "Nota",
 		"notes": "notas",
 		"owner": "Proprietário",
+		"successful_delete": "Configuração excluída!",
+		"support_all": "Apoie todos",
+		"supported_device_types": "Tipos de dispositivos suportados",
 		"title": "Configuração",
 		"type": "Tipo de dispositivo",
+		"used_by": "Usado por",
+		"used_by_details": "{{entities}} Entidades, {{venues}} Locais e {{devices}} Dispositivos",
 		"uuid": "ID de configuração",
+		"view_in_use": "Visualização em uso",
 		"view_json": "Exibir JSON bruto"
 	},
 	"configure": {
@@ -413,6 +434,11 @@
 	},
 	"system": {
 		"error_fetching": "Erro ao buscar informações do sistema"
+	},
+	"telemetry": {
+		"interval": "intervalo",
+		"last_update": "Última atualização",
+		"types": "Tipos"
 	},
 	"trace": {
 		"choose_network": "Escolha a rede",
