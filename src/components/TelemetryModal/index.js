@@ -17,7 +17,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilX } from '@coreui/icons';
-import { useDevice, useAuth } from 'ucentral-libs';
+import { useDevice, useAuth, useToast } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { checkIfJson } from 'utils/helper';
 
@@ -30,6 +30,7 @@ const TelemetryModal = ({ show, toggle }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [socket, setSocket] = useState(null);
   const [lastMessage, setLastMessage] = useState({});
   const [types, setTypes] = useState([]);
@@ -74,8 +75,12 @@ const TelemetryModal = ({ show, toggle }) => {
         }
       })
       .catch(() => {
-        // setResponseBody('Error while submitting command!');
-        // setHadFailure(true);
+        addToast({
+          title: t('common.error'),
+          body: t('telemetry.connection_failed'),
+          color: 'danger',
+          autohide: true,
+        });
       })
       .finally(() => setLoading(false));
   };

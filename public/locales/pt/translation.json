@@ -436,6 +436,7 @@
 		"error_fetching": "Erro ao buscar informações do sistema"
 	},
 	"telemetry": {
+		"connection_failed": "Falha ao criar conexão. Tente novamente e verifique se o dispositivo está conectado",
 		"interval": "intervalo",
 		"last_update": "Última atualização",
 		"types": "Tipos"
