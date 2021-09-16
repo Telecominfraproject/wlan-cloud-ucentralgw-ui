@@ -436,7 +436,7 @@
 		"error_fetching": "Error while fetching system information"
 	},
 	"telemetry": {
-		"connection_failed": "Failed to create connection. Try again and verify that the device is connected",
+		"connection_failed": "Failed to create connection. Error: {{error}}",
 		"interval": "Interval",
 		"last_update": "Last Update",
 		"types": "Types"

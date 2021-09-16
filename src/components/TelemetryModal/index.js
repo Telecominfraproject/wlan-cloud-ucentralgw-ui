@@ -33,6 +33,7 @@ const TelemetryModal = ({ show, toggle }) => {
   const { addToast } = useToast();
   const [socket, setSocket] = useState(null);
   const [lastMessage, setLastMessage] = useState({});
+  const [receivedMessages, setReceivedMessages] = useState(0);
   const [types, setTypes] = useState([]);
   const [interval, setInterval] = useState(3);
   const [loading, setLoading] = useState(false);
@@ -71,13 +72,14 @@ const TelemetryModal = ({ show, toggle }) => {
       )
       .then((response) => {
         if (response.data.uri && response.data.uri !== '') {
+          setReceivedMessages(0);
           setSocket(new WebSocket(response.data.uri));
         }
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('telemetry.connection_failed'),
+          body: t('telemetry.connection_failed', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });
@@ -109,10 +111,14 @@ const TelemetryModal = ({ show, toggle }) => {
     }
   }, [show, socket]);
 
+  useEffect(() => {
+    if (lastMessage !== {}) setReceivedMessages(receivedMessages + 1);
+  }, [lastMessage]);
+
   return (
     <CModal className="text-dark" size="lg" show={show} onClose={toggle}>
-      <CModalHeader>
-        <CModalTitle>{t('actions.telemetry')}</CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('actions.telemetry')}</CModalTitle>
         <div className="text-right">
           <CPopover content={t('common.close')}>
             <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
@@ -180,6 +186,9 @@ const TelemetryModal = ({ show, toggle }) => {
               <CCol>
                 {t('telemetry.last_update')}: {lastUpdate}
               </CCol>
+            </CRow>
+            <CRow>
+              <CCol className="font-weight-bold">Received Messages: {receivedMessages}</CCol>
             </CRow>
             <CRow>
               <CCol>

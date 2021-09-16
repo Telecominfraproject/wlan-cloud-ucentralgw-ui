@@ -436,7 +436,7 @@
 		"error_fetching": "Erreur lors de la récupération des informations système"
 	},
 	"telemetry": {
-		"connection_failed": "Échec de la création de la connexion. Réessayez et vérifiez que l'appareil est connecté",
+		"connection_failed": "Échec de la création de la connexion. Erreur : {{error}}",
 		"interval": "Intervalle",
 		"last_update": "Dernière mise à jour",
 		"types": "Les types"

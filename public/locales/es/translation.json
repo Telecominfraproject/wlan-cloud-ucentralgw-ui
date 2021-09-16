@@ -436,7 +436,7 @@
 		"error_fetching": "Error al obtener información del sistema"
 	},
 	"telemetry": {
-		"connection_failed": "No se pudo crear la conexión. Vuelva a intentarlo y verifique que el dispositivo esté conectado",
+		"connection_failed": "No se pudo crear la conexión. Error: {{error}}",
 		"interval": "intervalo",
 		"last_update": "Última actualización",
 		"types": "Los tipos"

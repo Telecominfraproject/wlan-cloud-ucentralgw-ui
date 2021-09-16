@@ -436,7 +436,7 @@
 		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
 	},
 	"telemetry": {
-		"connection_failed": "Verbindung konnte nicht hergestellt werden. Versuchen Sie es erneut und überprüfen Sie, ob das Gerät verbunden ist",
+		"connection_failed": "Verbindung konnte nicht hergestellt werden. Fehler: {{error}}",
 		"interval": "Intervall",
 		"last_update": "Letztes Update",
 		"types": "Typen"
