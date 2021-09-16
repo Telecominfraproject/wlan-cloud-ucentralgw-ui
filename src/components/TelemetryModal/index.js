@@ -53,7 +53,7 @@ const TelemetryModal = ({ show, toggle }) => {
 
     const parameters = {
       serialNumber: deviceSerialNumber,
-      interval,
+      interval: parseInt(interval, 10),
       types: types.map((type) => type.value),
     };
 
