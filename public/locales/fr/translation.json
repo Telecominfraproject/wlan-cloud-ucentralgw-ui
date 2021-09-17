@@ -8,6 +8,7 @@
 		"factory_reset": "Retour aux paramètres d'usine",
 		"firmware_upgrade": "Mise à jour du firmware",
 		"reboot": "Redémarrer",
+		"telemetry": "Télémétrie",
 		"title": "Les commandes",
 		"trace": "Trace",
 		"wifi_scan": "Balayage Wi-Fi"
@@ -141,6 +142,7 @@
 		"seconds_elapsed": "Secondes écoulées",
 		"serial_number": "Numéro de série",
 		"show_all": "Montre tout",
+		"socket_connection_closed": "Connexion fermée !",
 		"start": "Début",
 		"stop_editing": "Arrêter la modification",
 		"submit": "Soumettre",
@@ -162,18 +164,38 @@
 		"yes": "Oui"
 	},
 	"configuration": {
+		"cannot_delete": "Cette configuration ne peut pas être supprimée car elle est utilisée par au moins une entité, un lieu ou un appareil",
+		"configurations": "Les configurations",
+		"create": "Créer une configuration",
+		"create_config": "Créer une nouvelle configuration",
+		"create_new_configuration": "Créer un nouvel élément de configuration",
 		"created": "Créé",
+		"creation_success": "Configuration créée avec succès !",
+		"delete_config": "Supprimer la configuration",
 		"details": "Détails",
 		"device_password": "Mot de passe",
+		"device_type": "Type d'appareil",
+		"device_types": "Types d'appareils",
+		"edit_configuration": "Modifier la configuration",
+		"error_delete": "Erreur lors de la tentative de suppression : {{error}}",
+		"error_fetching_config": "Erreur lors de la récupération de la configuration",
+		"error_trying_delete": "Erreur lors de la tentative de suppression : {{error}}",
 		"last_configuration_change": "Dernière modification de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
+		"need_device_type": "Chaque configuration doit prendre en charge au moins un type d'appareil",
 		"note": "Remarque",
 		"notes": "Remarques",
 		"owner": "Propriétaire",
+		"successful_delete": "Configuration supprimée !",
+		"support_all": "Soutenir tous",
+		"supported_device_types": "Types d'appareils pris en charge",
 		"title": "Configuration",
 		"type": "Type d'appareil",
+		"used_by": "Utilisé par",
+		"used_by_details": "{{entities}} Entités, {{venues}} Lieux et {{devices}} Appareils",
 		"uuid": "Identifiant de configuration",
+		"view_in_use": "Afficher en cours d'utilisation",
 		"view_json": "Afficher le JSON brut"
 	},
 	"configure": {
@@ -413,6 +435,12 @@
 	},
 	"system": {
 		"error_fetching": "Erreur lors de la récupération des informations système"
+	},
+	"telemetry": {
+		"connection_failed": "Échec de la création de la connexion. Erreur : {{error}}",
+		"interval": "Intervalle",
+		"last_update": "Dernière mise à jour",
+		"types": "Les types"
 	},
 	"trace": {
 		"choose_network": "Choisir le réseau",

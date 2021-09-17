@@ -8,6 +8,7 @@
 		"factory_reset": "Restablecimiento De Fábrica",
 		"firmware_upgrade": "Actualización de firmware",
 		"reboot": "Reiniciar",
+		"telemetry": "Telemetria",
 		"title": "Comandos",
 		"trace": "Rastro",
 		"wifi_scan": "Escaneo Wi-Fi "
@@ -141,6 +142,7 @@
 		"seconds_elapsed": "Segundos transcurridos",
 		"serial_number": "Número de serie",
 		"show_all": "Mostrar todo",
+		"socket_connection_closed": "¡Conexión cerrada!",
 		"start": "comienzo",
 		"stop_editing": "Dejar de editar",
 		"submit": "Enviar",
@@ -162,18 +164,38 @@
 		"yes": "Sí"
 	},
 	"configuration": {
+		"cannot_delete": "Esta configuración no se puede eliminar porque está siendo utilizada por al menos una entidad, lugar o dispositivo",
+		"configurations": "Configuraciones",
+		"create": "Crear Configuración",
+		"create_config": "Crear nueva configuración",
+		"create_new_configuration": "Crear nuevo elemento de configuración",
 		"created": "creado",
+		"creation_success": "¡Configuración creada con éxito!",
+		"delete_config": "Eliminar Configuración",
 		"details": "Detalles",
 		"device_password": "Contraseña",
+		"device_type": "Tipo de dispositivo",
+		"device_types": "Tipos de dispositivos",
+		"edit_configuration": "Editar configuración",
+		"error_delete": "Error al intentar eliminar: {{error}}",
+		"error_fetching_config": "Error al obtener la configuración",
+		"error_trying_delete": "Error al intentar eliminar: {{error}}",
 		"last_configuration_change": "Último cambio de configuración",
 		"last_configuration_download": "Descarga de la última configuración",
 		"location": "Ubicación",
+		"need_device_type": "Cada configuración debe admitir al menos un tipo de dispositivo",
 		"note": "Nota",
 		"notes": "Notas",
 		"owner": "Propietario",
+		"successful_delete": "Configuración eliminada!",
+		"support_all": "Apoyar a todos",
+		"supported_device_types": "Tipos de dispositivos compatibles",
 		"title": "Configuración",
 		"type": "Tipo de dispositivo",
+		"used_by": "Usado por",
+		"used_by_details": "{{entities}} Entidades, {{venues}} lugares y {{devices}} dispositivos",
 		"uuid": "ID de configuración",
+		"view_in_use": "Ver en uso",
 		"view_json": "Ver JSON sin procesar"
 	},
 	"configure": {
@@ -413,6 +435,12 @@
 	},
 	"system": {
 		"error_fetching": "Error al obtener información del sistema"
+	},
+	"telemetry": {
+		"connection_failed": "No se pudo crear la conexión. Error: {{error}}",
+		"interval": "intervalo",
+		"last_update": "Última actualización",
+		"types": "Los tipos"
 	},
 	"trace": {
 		"choose_network": "Elija la red",

@@ -8,6 +8,7 @@
 		"factory_reset": "Factory Reset",
 		"firmware_upgrade": "Firmware Upgrade",
 		"reboot": "Reboot",
+		"telemetry": "Telemetry",
 		"title": "Commands",
 		"trace": "Trace",
 		"wifi_scan": "Wi-Fi Scan"
@@ -141,6 +142,7 @@
 		"seconds_elapsed": "Seconds elapsed",
 		"serial_number": "Serial Number",
 		"show_all": "Show All",
+		"socket_connection_closed": "Connection closed!",
 		"start": "Start",
 		"stop_editing": "Stop Editing",
 		"submit": "Submit",
@@ -162,18 +164,38 @@
 		"yes": "Yes"
 	},
 	"configuration": {
+		"cannot_delete": "This configuration cannot be deleted because it is being used by at least one entity, venue or device",
+		"configurations": "Configurations",
+		"create": "Create Configuration",
+		"create_config": "Create New Configuration",
+		"create_new_configuration": "Create New Configuration Element",
 		"created": "Created",
+		"creation_success": "Configuration successfully created!",
+		"delete_config": "Delete Config",
 		"details": "Details",
 		"device_password": "Password",
+		"device_type": "Device Type",
+		"device_types": "Device Types",
+		"edit_configuration": "Edit Configuration",
+		"error_delete": "Error while trying to delete: {{error}}",
+		"error_fetching_config": "Error while fetching configuration",
+		"error_trying_delete": "Error while trying to delete: {{error}}",
 		"last_configuration_change": "Last Configuration Change",
 		"last_configuration_download": "Last Configuration Download",
 		"location": "Location",
+		"need_device_type": "Every configuration needs to support at least one device type",
 		"note": "Note",
 		"notes": "Notes",
 		"owner": "Owner",
+		"successful_delete": "Deleted Configuration!",
+		"support_all": "Support All",
+		"supported_device_types": "Supported Device Types",
 		"title": "Configuration",
 		"type": "Device Type",
+		"used_by": "Used By",
+		"used_by_details": "{{entities}} Entities, {{venues}} Venues and {{devices}} Devices",
 		"uuid": "Config ID",
+		"view_in_use": "View In Use",
 		"view_json": "View raw JSON"
 	},
 	"configure": {
@@ -413,6 +435,12 @@
 	},
 	"system": {
 		"error_fetching": "Error while fetching system information"
+	},
+	"telemetry": {
+		"connection_failed": "Failed to create connection. Error: {{error}}",
+		"interval": "Interval",
+		"last_update": "Last Update",
+		"types": "Types"
 	},
 	"trace": {
 		"choose_network": "Choose network",

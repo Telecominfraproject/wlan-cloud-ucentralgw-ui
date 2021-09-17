@@ -11,6 +11,7 @@ import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
 import EventQueueModal from 'components/EventQueueModal';
+import TelemetryModal from 'components/TelemetryModal';
 
 const DeviceActions = () => {
   const { t } = useTranslation();
@@ -30,38 +31,25 @@ const DeviceActions = () => {
   const [showConfigModal, setConfigModal] = useState(false);
   const [showFactoryModal, setShowFactoryModal] = useState(false);
   const [showQueueModal, setShowQueueModal] = useState(false);
+  const [showTelemetryModal, setShowTelemetryModal] = useState(false);
 
-  const toggleRebootModal = () => {
-    setShowRebootModal(!showRebootModal);
-  };
+  const toggleRebootModal = () => setShowRebootModal(!showRebootModal);
 
-  const toggleBlinkModal = () => {
-    setShowBlinkModal(!showBlinkModal);
-  };
+  const toggleBlinkModal = () => setShowBlinkModal(!showBlinkModal);
 
-  const toggleUpgradeModal = () => {
-    setShowUpgradeModal(!showUpgradeModal);
-  };
+  const toggleUpgradeModal = () => setShowUpgradeModal(!showUpgradeModal);
 
-  const toggleTraceModal = () => {
-    setShowTraceModal(!showTraceModal);
-  };
+  const toggleTraceModal = () => setShowTraceModal(!showTraceModal);
 
-  const toggleScanModal = () => {
-    setShowScanModal(!showScanModal);
-  };
+  const toggleScanModal = () => setShowScanModal(!showScanModal);
 
-  const toggleConfigModal = () => {
-    setConfigModal(!showConfigModal);
-  };
+  const toggleConfigModal = () => setConfigModal(!showConfigModal);
 
-  const toggleFactoryResetModal = () => {
-    setShowFactoryModal(!showFactoryModal);
-  };
+  const toggleFactoryResetModal = () => setShowFactoryModal(!showFactoryModal);
 
-  const toggleQueueModal = () => {
-    setShowQueueModal(!showQueueModal);
-  };
+  const toggleQueueModal = () => setShowQueueModal(!showQueueModal);
+
+  const toggleTelemetryModal = () => setShowTelemetryModal(!showTelemetryModal);
 
   const getRttysInfo = () => {
     setConnectLoading(true);
@@ -188,7 +176,11 @@ const DeviceActions = () => {
               {t('commands.event_queue')}
             </CButton>
           </CCol>
-          <CCol />
+          <CCol>
+            <CButton block color="primary" onClick={toggleTelemetryModal}>
+              {t('actions.telemetry')}
+            </CButton>
+          </CCol>
         </CRow>
       </CCardBody>
       <RebootModal show={showRebootModal} toggleModal={toggleRebootModal} />
@@ -208,6 +200,7 @@ const DeviceActions = () => {
       <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
       <EventQueueModal show={showQueueModal} toggle={toggleQueueModal} />
+      <TelemetryModal show={showTelemetryModal} toggle={toggleTelemetryModal} />
     </CCard>
   );
 };
