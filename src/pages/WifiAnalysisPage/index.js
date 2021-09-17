@@ -168,7 +168,10 @@ const WifiAnalysisPage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.owgw}/api/v1/device/${deviceId}/statistics?newest=true&limit=20`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${deviceId}/statistics?newest=true&limit=20`,
+        options,
+      )
       .then((response) => {
         parseAssociationStats(response.data);
       })

@@ -55,13 +55,9 @@ const SystemPage = () => {
           start: prettyDate(startObj.value),
         };
       })
-      .catch(() => ({
-        title: key,
-        endpoint,
-        uptime: t('common.unknown'),
-        version: t('common.unknown'),
-        start: t('common.unknown'),
-      }))
+      .catch(() => {
+        throw new Error('Error while fetching');
+      })
       .finally(() => systemInfo);
   };
 

@@ -98,7 +98,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`,
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`,
         parameters,
         { headers },
       )

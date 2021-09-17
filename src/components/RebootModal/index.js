@@ -64,7 +64,7 @@ const ActionModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/reboot`,
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/reboot`,
         parameters,
         { headers },
       )

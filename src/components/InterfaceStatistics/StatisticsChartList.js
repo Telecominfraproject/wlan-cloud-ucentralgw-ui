@@ -128,7 +128,7 @@ const StatisticsChartList = () => {
 
     axiosInstance
       .get(
-        `${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`,
+        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`,
         options,
       )
       .then((response) => {
