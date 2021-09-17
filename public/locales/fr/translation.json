@@ -168,6 +168,7 @@
 		"configurations": "Les configurations",
 		"create": "Créer une configuration",
 		"create_config": "Créer une nouvelle configuration",
+		"create_new_configuration": "Créer un nouvel élément de configuration",
 		"created": "Créé",
 		"creation_success": "Configuration créée avec succès !",
 		"delete_config": "Supprimer la configuration",

@@ -168,6 +168,7 @@
 		"configurations": "Configurations",
 		"create": "Create Configuration",
 		"create_config": "Create New Configuration",
+		"create_new_configuration": "Create New Configuration Element",
 		"created": "Created",
 		"creation_success": "Configuration successfully created!",
 		"delete_config": "Delete Config",

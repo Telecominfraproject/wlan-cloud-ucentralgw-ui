@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
@@ -48,37 +49,53 @@ const FirmwareListPage = () => {
     filterFirmware(firmware, !displayDev);
   };
 
-  const getFirmware = (deviceType) => {
-    setLoading(true);
-
+  const getPartialFirmware = async (deviceType, offset) => {
     const headers = {
       Accept: 'application/json',
       Authorization: `Bearer ${currentToken}`,
     };
 
-    axiosInstance
-      .get(`${endpoints.owfms}/api/v1/firmwares?deviceType=${deviceType ?? selectedDeviceType}`, {
-        headers,
-      })
-      .then((response) => {
-        const sortedFirmware = response.data.firmwares.sort((a, b) => {
-          const firstDate = a.imageDate;
-          const secondDate = b.imageDate;
-          if (firstDate < secondDate) return 1;
-          return firstDate > secondDate ? -1 : 0;
-        });
-        setFirmware(sortedFirmware);
-        filterFirmware(sortedFirmware, displayDev);
-      })
+    return axiosInstance
+      .get(
+        `${endpoints.owfms}/api/v1/firmwares?deviceType=${deviceType}&limit=500&offset=${offset}`,
+        {
+          headers,
+        },
+      )
+      .then((response) => response.data.firmwares)
       .catch(() => {
-        setLoading(false);
         addToast({
           title: t('common.error'),
           body: t('common.general_error'),
           color: 'danger',
           autohide: true,
         });
+        return [];
       });
+  };
+
+  const getFirmware = async (deviceType) => {
+    setLoading(true);
+
+    const allFirmwares = [];
+    let continueFirmware = true;
+    let i = 1;
+    while (continueFirmware) {
+      const newFirmwares = await getPartialFirmware(deviceType ?? selectedDeviceType, i);
+      if (newFirmwares === null || newFirmwares.length === 0) continueFirmware = false;
+      allFirmwares.push(...newFirmwares);
+      i += 500;
+    }
+    const sortedFirmware = allFirmwares.sort((a, b) => {
+      const firstDate = a.imageDate;
+      const secondDate = b.imageDate;
+      if (firstDate < secondDate) return 1;
+      return firstDate > secondDate ? -1 : 0;
+    });
+    setFirmware(sortedFirmware);
+    filterFirmware(sortedFirmware, displayDev);
+
+    setLoading(false);
   };
 
   const getDeviceTypes = () => {
