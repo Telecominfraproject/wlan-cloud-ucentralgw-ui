@@ -177,7 +177,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={toggleTelemetryModal}>
+            <CButton block color="primary" hidden onClick={toggleTelemetryModal}>
               {t('actions.telemetry')}
             </CButton>
           </CCol>
