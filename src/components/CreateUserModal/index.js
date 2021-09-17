@@ -91,7 +91,7 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
       };
 
       axiosInstance
-        .post(`${endpoints.ucentralsec}/api/v1/user/0`, parameters, {
+        .post(`${endpoints.owsec}/api/v1/user/0`, parameters, {
           headers,
         })
         .then(() => {
@@ -123,11 +123,11 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
 
   const getPasswordPolicy = () => {
     axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
+      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
       .then((response) => {
         const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
+        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
         setPolicies(response.data);
       })
       .catch(() => {});

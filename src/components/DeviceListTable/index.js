@@ -68,9 +68,7 @@ const DeviceList = () => {
 
     axiosInstance
       .get(
-        `${
-          endpoints.ucentralgw
-        }/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
+        `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
           devicePerPage * selectedPage + 1
         }`,
         options,
@@ -80,7 +78,7 @@ const DeviceList = () => {
         const serialsToGet = fullDevices.map((device) => device.serialNumber);
 
         return axiosInstance.get(
-          `${endpoints.ucentralfms}/api/v1/firmwareAge?select=${serialsToGet}`,
+          `${endpoints.owfms}/api/v1/firmwareAge?select=${serialsToGet}`,
           options,
         );
       })
@@ -115,7 +113,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?countOnly=true`, {
+      .get(`${endpoints.owgw}/api/v1/devices?countOnly=true`, {
         headers,
       })
       .then((response) => {
@@ -147,18 +145,37 @@ const DeviceList = () => {
       },
     };
 
+    let newDevice;
+
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
+        `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
           serialNumber,
         )}`,
         options,
       )
+      .then(
+        ({
+          data: {
+            devicesWithStatus: [device],
+          },
+        }) => {
+          newDevice = device;
+
+          return axiosInstance.get(
+            `${endpoints.owfms}/api/v1/firmwareAge?select=${serialNumber}`,
+            options,
+          );
+        },
+      )
       .then((response) => {
-        const device = response.data.devicesWithStatus[0];
+        newDevice.firmwareInfo = {
+          age: response.data.ages[0].age,
+          latest: response.data.ages[0].latest,
+        };
         const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);
         const newList = devices;
-        newList[foundIndex] = device;
+        newList[foundIndex] = newDevice;
         setDevices(newList);
         setLoading(false);
       })
@@ -203,7 +220,7 @@ const DeviceList = () => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${device.compatible}&latestOnly=true`,
+        `${endpoints.owfms}/api/v1/firmwares?deviceType=${device.compatible}&latestOnly=true`,
         options,
       )
       .then((response) => {
@@ -214,7 +231,7 @@ const DeviceList = () => {
             uri: response.data.uri,
           };
           return axiosInstance.post(
-            `${endpoints.ucentralgw}/api/v1/device/${device.serialNumber}/upgrade`,
+            `${endpoints.owgw}/api/v1/device/${device.serialNumber}/upgrade`,
             parameters,
             options,
           );
@@ -259,10 +276,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}/rtty`,
-        options,
-      )
+      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}/rtty`, options)
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
@@ -291,7 +305,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .delete(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
+      .delete(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
       .then(() => {
         addToast({
           title: t('common.success'),
