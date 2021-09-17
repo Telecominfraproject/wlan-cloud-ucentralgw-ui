@@ -29,7 +29,7 @@ const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.owfms}/api/v1/revisionHistory/${serialNumber}`, options)
+      .get(`${endpoints.ucentralfms}/api/v1/revisionHistory/${serialNumber}`, options)
       .then((response) => setData(response.data.history ?? []))
       .catch(() => {})
       .finally(() => setLoading(false));

@@ -28,7 +28,11 @@ const EventQueueModal = ({ show, toggle }) => {
     };
 
     axiosInstance
-      .post(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/eventqueue`, parameters, options)
+      .post(
+        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/eventqueue`,
+        parameters,
+        options,
+      )
       .then((response) => {
         setResult(response.data);
       })

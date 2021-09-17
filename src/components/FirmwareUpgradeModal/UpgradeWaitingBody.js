@@ -22,7 +22,10 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}/status`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}/status`,
+        options,
+      )
       .then((response) => response.data.connected)
       .catch(() => {});
   };
@@ -36,7 +39,7 @@ const UpgradeWaitingBody = ({ serialNumber }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
+      .get(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
       .then((response) => response.data.firmware)
       .catch(() => {});
   };

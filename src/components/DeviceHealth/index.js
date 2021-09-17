@@ -85,7 +85,7 @@ const DeviceHealth = () => {
 
     axiosInstance
       .get(
-        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(
+        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
           deviceSerialNumber,
         )}/healthchecks${extraParams}`,
         options,

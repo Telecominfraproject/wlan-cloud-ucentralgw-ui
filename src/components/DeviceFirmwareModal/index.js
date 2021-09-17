@@ -1,7 +1,6 @@
-/* eslint-disable no-await-in-loop */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { DeviceFirmwareModal as Modal, useAuth, useToast } from 'ucentral-libs';
+import { DeviceFirmwareModal as Modal, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
 
@@ -13,57 +12,35 @@ const DeviceFirmwareModal = ({
   upgradeStatus,
 }) => {
   const { t } = useTranslation();
-  const { addToast } = useToast();
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
   const [firmwareVersions, setFirmwareVersions] = useState([]);
 
-  const getPartialFirmware = async (offset) => {
+  const getFirmwareList = () => {
+    setLoading(true);
+
     const headers = {
       Accept: 'application/json',
       Authorization: `Bearer ${currentToken}`,
     };
 
-    return axiosInstance
-      .get(
-        `${endpoints.owfms}/api/v1/firmwares?deviceType=${device.compatible}&limit=500&offset=${offset}`,
-        {
-          headers,
-        },
-      )
-      .then((response) => response.data.firmwares)
-      .catch(() => {
-        addToast({
-          title: t('common.error'),
-          body: t('common.general_error'),
-          color: 'danger',
-          autohide: true,
+    axiosInstance
+      .get(`${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${device.compatible}`, {
+        headers,
+      })
+      .then((response) => {
+        const sortedFirmware = response.data.firmwares.sort((a, b) => {
+          const firstDate = a.imageDate;
+          const secondDate = b.imageDate;
+          if (firstDate < secondDate) return 1;
+          return firstDate > secondDate ? -1 : 0;
         });
-        return [];
+        setFirmwareVersions(sortedFirmware);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
-  };
-
-  const getFirmwareList = async () => {
-    setLoading(true);
-
-    const allFirmwares = [];
-    let continueFirmware = true;
-    let i = 1;
-    while (continueFirmware) {
-      const newFirmwares = await getPartialFirmware(i);
-      if (newFirmwares === null || newFirmwares.length === 0) continueFirmware = false;
-      allFirmwares.push(...newFirmwares);
-      i += 500;
-    }
-    const sortedFirmware = allFirmwares.sort((a, b) => {
-      const firstDate = a.imageDate;
-      const secondDate = b.imageDate;
-      if (firstDate < secondDate) return 1;
-      return firstDate > secondDate ? -1 : 0;
-    });
-    setFirmwareVersions(sortedFirmware);
-
-    setLoading(false);
   };
 
   const upgradeToVersion = (uri) => {
@@ -83,7 +60,7 @@ const DeviceFirmwareModal = ({
     };
 
     axiosInstance
-      .post(`${endpoints.owgw}/api/v1/device/${device.serialNumber}/upgrade`, parameters, {
+      .post(`${endpoints.ucentralgw}/api/v1/device/${device.serialNumber}/upgrade`, parameters, {
         headers,
       })
       .then((response) => {

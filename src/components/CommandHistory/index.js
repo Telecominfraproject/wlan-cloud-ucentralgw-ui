@@ -113,7 +113,7 @@ const DeviceCommands = () => {
 
     axiosInstance
       .get(
-        `${endpoints.owgw}/api/v1/commands?serialNumber=${encodeURIComponent(
+        `${endpoints.ucentralgw}/api/v1/commands?serialNumber=${encodeURIComponent(
           deviceSerialNumber,
         )}${extraParams}`,
         options,
@@ -138,7 +138,10 @@ const DeviceCommands = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.owgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`, options)
+      .get(
+        `${endpoints.ucentralgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`,
+        options,
+      )
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/octet-stream' });
         const link = document.createElement('a');
@@ -159,7 +162,7 @@ const DeviceCommands = () => {
       },
     };
     return axiosInstance
-      .delete(`${endpoints.owgw}/api/v1/command/${uuidDelete}`, options)
+      .delete(`${endpoints.ucentralgw}/api/v1/command/${uuidDelete}`, options)
       .then(() => {
         deleteCommandFromList(uuidDelete);
         setUuidDelete('');

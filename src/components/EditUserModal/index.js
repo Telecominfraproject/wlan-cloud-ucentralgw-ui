@@ -61,11 +61,11 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
 
   const getPasswordPolicy = () => {
     axiosInstance
-      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
+      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
       .then((response) => {
         const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
+        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
         setPolicies(response.data);
       })
       .catch(() => {});
@@ -80,7 +80,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.owsec}/api/v1/user/${userId}`, options)
+      .get(`${endpoints.ucentralsec}/api/v1/user/${userId}`, options)
       .then((response) => {
         const newUser = {};
 
@@ -134,7 +134,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
       };
 
       axiosInstance
-        .put(`${endpoints.owsec}/api/v1/user/${userId}`, parameters, options)
+        .put(`${endpoints.ucentralsec}/api/v1/user/${userId}`, parameters, options)
         .then(() => {
           addToast({
             title: t('user.update_success_title'),
@@ -186,7 +186,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
     };
 
     axiosInstance
-      .put(`${endpoints.owsec}/api/v1/user/${userId}`, parameters, options)
+      .put(`${endpoints.ucentralsec}/api/v1/user/${userId}`, parameters, options)
       .then(() => {
         getUser();
       })

@@ -34,7 +34,7 @@ const DeleteLogModal = ({ show, toggle, object }) => {
       },
     };
     return axiosInstance
-      .delete(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/${object}`, options)
+      .delete(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/${object}`, options)
       .then(() => {})
       .catch(() => {})
       .finally(() => {
