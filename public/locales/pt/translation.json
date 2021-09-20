@@ -424,7 +424,7 @@
 		"connection_status": "Status da conexão",
 		"error": "Dados de status indisponíveis",
 		"last_contact": "Último contato",
-		"load_averages": "Carga (1/5/15 minutos em média)",
+		"load_averages": "Carga (1/5/15 min.)",
 		"localtime": "Horário local",
 		"memory": "Memória Usada",
 		"percentage_free": "{{percentage}}% de {{total}} grátis",
@@ -434,7 +434,15 @@
 		"used_total_memory": "{{used}} usado / {{total}} total"
 	},
 	"system": {
-		"error_fetching": "Erro ao buscar informações do sistema"
+		"error_fetching": "Erro ao buscar informações do sistema",
+		"error_reloading": "Erro ao recarregar: {{error}}",
+		"hostname": "Nome de anfitrião",
+		"os": "Sistema Operacional",
+		"processors": "Processadores",
+		"reload": "Recarregar",
+		"reload_subsystems": "Recarregar subsistemas",
+		"subsystems": "Subsistemas",
+		"success_reload": "Comando de recarregamento enviado com sucesso!"
 	},
 	"telemetry": {
 		"connection_failed": "Falha ao criar conexão. Erro: {{error}}",

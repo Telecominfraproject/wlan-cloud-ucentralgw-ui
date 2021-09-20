@@ -424,7 +424,7 @@
 		"connection_status": "Estado de conexión",
 		"error": "Los datos de estado no están disponibles",
 		"last_contact": "Último contacto",
-		"load_averages": "Carga (promedio de 1/5/15 minutos)",
+		"load_averages": "Carga (1/5/15 min.)",
 		"localtime": "Hora local",
 		"memory": "Memoria usada",
 		"percentage_free": "{{percentage}}% de {{total}} gratis",
@@ -434,7 +434,15 @@
 		"used_total_memory": "{{used}} usado / {{total}} total"
 	},
 	"system": {
-		"error_fetching": "Error al obtener información del sistema"
+		"error_fetching": "Error al obtener información del sistema",
+		"error_reloading": "Error al recargar: {{error}}",
+		"hostname": "Nombre de host",
+		"os": "sistema operativo",
+		"processors": "Procesadores",
+		"reload": "Recargar",
+		"reload_subsystems": "Recargar subsistemas",
+		"subsystems": "Subsistemas",
+		"success_reload": "¡El comando de recarga se envió correctamente!"
 	},
 	"telemetry": {
 		"connection_failed": "No se pudo crear la conexión. Error: {{error}}",

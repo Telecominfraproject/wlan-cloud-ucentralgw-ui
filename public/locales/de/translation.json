@@ -424,7 +424,7 @@
 		"connection_status": "Verbindungsstatus",
 		"error": "Statusdaten sind nicht verfügbar",
 		"last_contact": "Letzter Kontakt",
-		"load_averages": "Belastung (Durchschnitt 1 / 5 / 15 Minuten)",
+		"load_averages": "Laden ( 1 / 5 / 15 Min.)",
 		"localtime": "Ortszeit",
 		"memory": "Verwendeter Speicher",
 		"percentage_free": "{{percentage}}% von {{total}} kostenlos",
@@ -434,7 +434,15 @@
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
 	},
 	"system": {
-		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
+		"error_fetching": "Fehler beim Abrufen von Systeminformationen",
+		"error_reloading": "Fehler beim Neuladen: {{error}}",
+		"hostname": "Hostname",
+		"os": "Betriebssystem",
+		"processors": "Prozessoren",
+		"reload": "Neu laden",
+		"reload_subsystems": "Subsysteme neu laden",
+		"subsystems": "Subsysteme",
+		"success_reload": "Reload-Befehl erfolgreich gesendet!"
 	},
 	"telemetry": {
 		"connection_failed": "Verbindung konnte nicht hergestellt werden. Fehler: {{error}}",

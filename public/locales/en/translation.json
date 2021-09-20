@@ -424,7 +424,7 @@
 		"connection_status": "Connection Status",
 		"error": "Status data is unavailable",
 		"last_contact": "Last Contact",
-		"load_averages": "Load ( 1 / 5 / 15 minute average)",
+		"load_averages": "Load ( 1 / 5 / 15 mins.)",
 		"localtime": "Localtime",
 		"memory": "Memory Used",
 		"percentage_free": "{{percentage}}% of {{total}} free",
@@ -434,7 +434,15 @@
 		"used_total_memory": "{{used}} used / {{total}} total "
 	},
 	"system": {
-		"error_fetching": "Error while fetching system information"
+		"error_fetching": "Error while fetching system information",
+		"error_reloading": "Error while reloading: {{error}}",
+		"hostname": "Host Name",
+		"os": "Operation System",
+		"processors": "Processors",
+		"reload": "Reload",
+		"reload_subsystems": "Reload Subsystems",
+		"subsystems": "Subsystems",
+		"success_reload": "Reload command successfully submitted!"
 	},
 	"telemetry": {
 		"connection_failed": "Failed to create connection. Error: {{error}}",
