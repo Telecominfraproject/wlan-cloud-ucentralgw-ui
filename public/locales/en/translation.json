@@ -181,7 +181,7 @@
 		"error_delete": "Error while trying to delete: {{error}}",
 		"error_fetching_config": "Error while fetching configuration",
 		"error_trying_delete": "Error while trying to delete: {{error}}",
-		"last_configuration_change": "Last Configuration Change",
+		"last_configuration_change": "Config Change",
 		"last_configuration_download": "Last Configuration Download",
 		"location": "Location",
 		"need_device_type": "Every configuration needs to support at least one device type",
@@ -429,10 +429,10 @@
 		"title": "Statistics"
 	},
 	"status": {
-		"connection_status": "Connection Status",
+		"connection_status": "Status",
 		"error": "Status data is unavailable",
 		"last_contact": "Last Contact",
-		"load_averages": "Load (1/5/15 mins.)",
+		"load_averages": "Load (1/5/15 m.)",
 		"localtime": "Localtime",
 		"memory": "Memory Used",
 		"percentage_free": "{{percentage}}% of {{total}} free",

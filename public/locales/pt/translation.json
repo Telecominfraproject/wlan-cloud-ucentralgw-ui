@@ -181,7 +181,7 @@
 		"error_delete": "Erro ao tentar excluir: {{error}}",
 		"error_fetching_config": "Erro ao buscar configuração",
 		"error_trying_delete": "Erro ao tentar excluir: {{error}}",
-		"last_configuration_change": "Última Mudança de Configuração",
+		"last_configuration_change": "Mudança de configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
 		"need_device_type": "Cada configuração deve suportar pelo menos um tipo de dispositivo",
@@ -429,10 +429,10 @@
 		"title": "Estatisticas"
 	},
 	"status": {
-		"connection_status": "Status da conexão",
+		"connection_status": "Status",
 		"error": "Dados de status indisponíveis",
 		"last_contact": "Último contato",
-		"load_averages": "Carga (1/5/15 min.)",
+		"load_averages": "Carga (1/5/15 m.)",
 		"localtime": "Horário local",
 		"memory": "Memória Usada",
 		"percentage_free": "{{percentage}}% de {{total}} grátis",

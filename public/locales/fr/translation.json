@@ -181,7 +181,7 @@
 		"error_delete": "Erreur lors de la tentative de suppression : {{error}}",
 		"error_fetching_config": "Erreur lors de la récupération de la configuration",
 		"error_trying_delete": "Erreur lors de la tentative de suppression : {{error}}",
-		"last_configuration_change": "Dernière modification de configuration",
+		"last_configuration_change": "Changement de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
 		"need_device_type": "Chaque configuration doit prendre en charge au moins un type d'appareil",
@@ -429,10 +429,10 @@
 		"title": "statistiques"
 	},
 	"status": {
-		"connection_status": "Statut de connexion",
+		"connection_status": "Statut",
 		"error": "Les données d'état ne sont pas disponibles",
 		"last_contact": "Dernier contact",
-		"load_averages": "Charge (1/5/15 min.)",
+		"load_averages": "Charge (1/5/15 m.)",
 		"localtime": "heure locale",
 		"memory": "Mémoire utilisée",
 		"percentage_free": "{{percentage}}% de {{total}} gratuit",
