@@ -22,18 +22,18 @@ const DevicePage = () => {
           </CCol>
         </CRow>
         <CRow>
-          <CCol>
+          <CCol lg="12" xl="6">
             <CommandHistory />
           </CCol>
-          <CCol>
+          <CCol lg="12" xl="6">
             <DeviceActionCard />
           </CCol>
         </CRow>
         <CRow>
-          <CCol>
+          <CCol lg="12" xl="6">
             <DeviceStatisticsCard />
           </CCol>
-          <CCol>
+          <CCol lg="12" xl="6">
             <DeviceHealth />
             <DeviceLogs />
           </CCol>

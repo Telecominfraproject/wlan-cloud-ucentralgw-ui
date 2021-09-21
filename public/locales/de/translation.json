@@ -432,7 +432,7 @@
 		"connection_status": "Verbindungsstatus",
 		"error": "Statusdaten sind nicht verfügbar",
 		"last_contact": "Letzter Kontakt",
-		"load_averages": "Laden ( 1 / 5 / 15 Min.)",
+		"load_averages": "Laden (1/5/15 Min.)",
 		"localtime": "Ortszeit",
 		"memory": "Verwendeter Speicher",
 		"percentage_free": "{{percentage}}% von {{total}} kostenlos",

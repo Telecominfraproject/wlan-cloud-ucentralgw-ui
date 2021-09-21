@@ -432,7 +432,7 @@
 		"connection_status": "Connection Status",
 		"error": "Status data is unavailable",
 		"last_contact": "Last Contact",
-		"load_averages": "Load ( 1 / 5 / 15 mins.)",
+		"load_averages": "Load (1/5/15 mins.)",
 		"localtime": "Localtime",
 		"memory": "Memory Used",
 		"percentage_free": "{{percentage}}% of {{total}} free",

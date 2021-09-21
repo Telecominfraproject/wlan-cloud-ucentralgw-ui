@@ -432,7 +432,7 @@
 		"connection_status": "Statut de connexion",
 		"error": "Les données d'état ne sont pas disponibles",
 		"last_contact": "Dernier contact",
-		"load_averages": "Charge ( 1 / 5 / 15 min.)",
+		"load_averages": "Charge (1/5/15 min.)",
 		"localtime": "heure locale",
 		"memory": "Mémoire utilisée",
 		"percentage_free": "{{percentage}}% de {{total}} gratuit",
