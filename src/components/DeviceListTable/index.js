@@ -99,7 +99,13 @@ const DeviceList = () => {
         setDevices(fullDevices);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -130,7 +136,13 @@ const DeviceList = () => {
         }
         getDeviceInformation(selectedPage);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -179,7 +191,13 @@ const DeviceList = () => {
         setDevices(newList);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -282,10 +300,10 @@ const DeviceList = () => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('common.unable_to_connect'),
+          body: t('connect.error_trying_to_connect', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });

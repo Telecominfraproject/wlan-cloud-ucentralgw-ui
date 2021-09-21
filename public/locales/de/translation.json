@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
+		"error_delete_log": "Fehler beim Versuch zu löschen: {{error}}",
 		"event_queue": "Ereigniswarteschlange",
 		"success": "Befehl wurde erfolgreich übermittelt",
 		"title": "Gerätebefehle",
-		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden"
+		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden: {{error}}"
 	},
 	"common": {
 		"access_policy": "Zugangsrichtlinien",
@@ -205,6 +206,9 @@
 		"title": "Gerät konfigurieren",
 		"valid_json": "Sie müssen ein gültiges JSON eingeben"
 	},
+	"connect": {
+		"error_trying_to_connect": "Fehler beim Versuch, eine Verbindung zum Gerät herzustellen: {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Möchten Sie diesen Befehl wirklich löschen? Diese Aktion ist nicht umkehrbar.",
 		"title": "Befehl löschen"
@@ -214,6 +218,10 @@
 		"device_logs_title": "Geräteprotokolle löschen",
 		"explanation": "Dadurch werden alle {{object}} vor dem von Ihnen gewählten Datum gelöscht. Seien Sie vorsichtig, diese Aktion ist nicht umkehrbar.",
 		"healthchecks_title": "Healthchecks löschen"
+	},
+	"device": {
+		"error_fetching_device": "Fehler beim Abrufen der Geräteinformationen: {{error}}",
+		"error_fetching_devices": "Fehler beim Abrufen von Geräten: {{error}}"
 	},
 	"device_logs": {
 		"log": "Protokoll",
@@ -486,7 +494,7 @@
 		"create_success": "Benutzer erfolgreich erstellt",
 		"creating": "Benutzer erstellen ...",
 		"delete_avatar": "Avatar löschen",
-		"delete_failure": "Fehler beim Versuch, den Benutzer zu löschen",
+		"delete_failure": "Fehler beim Versuch, den Benutzer zu löschen: {{error}}",
 		"delete_success": "Benutzer erfolgreich gelöscht!",
 		"delete_title": "Benutzer löschen",
 		"delete_warning": "Warnung: Sobald Sie einen Benutzer gelöscht haben, können Sie ihn nicht wiederherstellen",
@@ -494,6 +502,7 @@
 		"description": "Beschreibung",
 		"edit": "Benutzer bearbeiten",
 		"email_address": "E-Mail-Addresse",
+		"error_fetching_users": "Fehler beim Abrufen der Nutzer: {{error}}",
 		"force_password_change": "Passwortänderung bei der Anmeldung erzwingen",
 		"id": "Benutzeridentifikation.",
 		"last_login": "Letzte Anmeldung",
@@ -509,7 +518,7 @@
 		"provide_password": "Bitte geben Sie ein gültiges Passwort ein",
 		"save_avatar": "Avatar speichern",
 		"show_hide_password": "Passwort anzeigen/verbergen",
-		"update_failure": "Stellen Sie sicher, dass alle Ihre Daten gültig sind. Wenn Sie das Kennwort ändern, stellen Sie sicher, dass es sich nicht um ein altes handelt.",
+		"update_failure": "Fehler beim Aktualisieren: {{error}}",
 		"update_failure_title": "Update fehlgeschlagen",
 		"update_success": "Benutzer erfolgreich aktualisiert",
 		"update_success_title": "Erfolg",

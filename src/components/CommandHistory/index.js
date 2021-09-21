@@ -5,11 +5,11 @@ import {
   CWidgetDropdown,
   CRow,
   CCol,
-  CCollapse,
   CButton,
   CDataTable,
   CCard,
   CPopover,
+  CButtonToolbar,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -21,7 +21,6 @@ import ConfirmModal from 'components/ConfirmModal';
 import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DetailsModal from './DetailsModal';
-import styles from './index.module.scss';
 
 const DeviceCommands = () => {
   const { t } = useTranslation();
@@ -38,8 +37,6 @@ const DeviceCommands = () => {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [detailsUuid, setDetailsUuid] = useState('');
   const [modalDetails, setModalDetails] = useState({});
-  // Main collapsible
-  const [collapse, setCollapse] = useState(false);
   // General states
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -49,11 +46,6 @@ const DeviceCommands = () => {
   // Load more button related
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
-
-  const toggle = (e) => {
-    setCollapse(!collapse);
-    e.preventDefault();
-  };
 
   const toggleScanModal = () => {
     setShowScanModal(!showScanModal);
@@ -196,17 +188,15 @@ const DeviceCommands = () => {
   };
 
   const columns = [
-    { key: 'UUID', label: t('common.id'), _style: { width: '28%' } },
-    { key: 'command', label: t('common.command'), _style: { width: '10%' } },
-    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '16%' } },
-    { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '16%' } },
-    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '16%' } },
+    { key: 'command', label: t('common.command'), _style: { width: '15%' } },
+    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '20%' } },
+    { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '20%' } },
     {
       key: 'show_buttons',
       label: '',
       sorter: false,
       filter: false,
-      _style: { width: '14%' },
+      _style: { width: '1%' },
     },
   ];
 
@@ -252,23 +242,13 @@ const DeviceCommands = () => {
   }, [commands]);
 
   return (
-    <CWidgetDropdown
-      inverse="true"
-      color="gradient-primary"
-      header={t('commands.title')}
-      footerSlot={
-        <div className={styles.footer}>
-          <CCollapse show={collapse}>
-            <CRow>
-              <CCol />
-              <CCol className="text-right">
-                <div>
-                  <CButton onClick={refreshCommands} size="sm">
-                    <CIcon name="cil-sync" content={cilSync} className="text-white" size="2xl" />
-                  </CButton>
-                </div>
-              </CCol>
-            </CRow>
+    <div>
+      <CWidgetDropdown
+        inverse="true"
+        color="gradient-primary"
+        header={t('commands.title')}
+        footerSlot={
+          <div className="pb-1 px-3">
             <CRow className="mb-2">
               <CCol>
                 From:
@@ -280,8 +260,9 @@ const DeviceCommands = () => {
               </CCol>
             </CRow>
             <CCard>
-              <div className={['overflow-auto', styles.scrollableBox].join(' ')}>
+              <div className="overflow-auto" style={{ height: '200px' }}>
                 <CDataTable
+                  border
                   loading={loading}
                   items={commands ?? []}
                   fields={columns}
@@ -302,98 +283,100 @@ const DeviceCommands = () => {
                           : 'Pending'}
                       </td>
                     ),
-                    executed: (item) => (
-                      <td>
-                        {item.executed && item.executed !== ''
-                          ? prettyDate(item.executed)
-                          : 'Pending'}
-                      </td>
-                    ),
                     show_buttons: (item, index) => (
                       <td>
-                        <CRow>
-                          <CCol>
-                            <CPopover
-                              content={
-                                item.command === 'trace' ? t('common.download') : t('common.result')
-                              }
+                        <CButtonToolbar
+                          role="group"
+                          className="justify-content-flex-end"
+                          style={{ width: '170px' }}
+                        >
+                          <CPopover
+                            content={
+                              item.command === 'trace' ? t('common.download') : t('common.result')
+                            }
+                          >
+                            <CButton
+                              color="primary"
+                              variant="outline"
+                              shape="square"
+                              size="sm"
+                              className="mx-2"
+                              onClick={() => {
+                                toggleDetails(item);
+                              }}
                             >
-                              <CButton
-                                color="primary"
-                                variant="outline"
-                                shape="square"
-                                size="sm"
-                                onClick={() => {
-                                  toggleDetails(item);
-                                }}
-                              >
-                                {item.command === 'trace' ? (
-                                  <CIcon content={cilCloudDownload} size="lg" />
-                                ) : (
-                                  <CIcon content={cilCalendarCheck} size="lg" />
-                                )}
-                              </CButton>
-                            </CPopover>
-                          </CCol>
-                          <CCol>
-                            <CPopover content={t('common.details')}>
-                              <CButton
-                                color="primary"
-                                variant="outline"
-                                shape="square"
-                                size="sm"
-                                onClick={() => {
-                                  toggleResponse(item);
-                                }}
-                              >
-                                <CIcon name="cilList" size="lg" />
-                              </CButton>
-                            </CPopover>
-                          </CCol>
-                          <CCol>
-                            <CPopover content={t('common.delete')}>
-                              <CButton
-                                color="primary"
-                                variant="outline"
-                                shape="square"
-                                size="sm"
-                                onClick={() => {
-                                  toggleConfirmModal(item.UUID, index);
-                                }}
-                              >
-                                <CIcon name="cilTrash" size="lg" />
-                              </CButton>
-                            </CPopover>
-                          </CCol>
-                        </CRow>
+                              {item.command === 'trace' ? (
+                                <CIcon
+                                  name="cil-cloud-download"
+                                  content={cilCloudDownload}
+                                  size="lg"
+                                />
+                              ) : (
+                                <CIcon
+                                  name="cil-calendar-check"
+                                  content={cilCalendarCheck}
+                                  size="lg"
+                                />
+                              )}
+                            </CButton>
+                          </CPopover>
+                          <CPopover content={t('common.details')}>
+                            <CButton
+                              color="primary"
+                              variant="outline"
+                              shape="square"
+                              size="sm"
+                              className="mx-2"
+                              onClick={() => {
+                                toggleResponse(item);
+                              }}
+                            >
+                              <CIcon name="cilList" size="lg" />
+                            </CButton>
+                          </CPopover>
+                          <CPopover content={t('common.delete')}>
+                            <CButton
+                              color="primary"
+                              variant="outline"
+                              shape="square"
+                              size="sm"
+                              className="mx-2"
+                              onClick={() => {
+                                toggleConfirmModal(item.UUID, index);
+                              }}
+                            >
+                              <CIcon name="cilTrash" size="lg" />
+                            </CButton>
+                          </CPopover>
+                        </CButtonToolbar>
                       </td>
                     ),
                   }}
                 />
-                <CRow className={styles.loadMoreSpacing}>
-                  {showLoadingMore && (
+
+                {showLoadingMore && (
+                  <div className="mb-3">
                     <LoadingButton
-                      label="View More"
-                      isLoadingLabel="Loading More..."
+                      label={t('common.view_more')}
+                      isLoadingLabel={t('common.loading_more_ellipsis')}
                       isLoading={loadingMore}
                       action={showMoreCommands}
                       variant="outline"
                     />
-                  )}
-                </CRow>
+                  </div>
+                )}
               </div>
             </CCard>
-          </CCollapse>
-          <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
-            <CIcon
-              name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              className="text-white"
-              size="lg"
-            />
+          </div>
+        }
+      >
+        <div className="text-right float-right">
+          <CButton onClick={refreshCommands} size="sm">
+            <CIcon name="cil-sync" content={cilSync} className="text-white" size="2xl" />
           </CButton>
         </div>
-      }
-    >
+      </CWidgetDropdown>
+
       <WifiScanResultModalWidget
         show={showScanModal}
         toggle={toggleScanModal}
@@ -408,7 +391,7 @@ const DeviceCommands = () => {
         details={modalDetails}
         commandUuid={detailsUuid}
       />
-    </CWidgetDropdown>
+    </div>
   );
 };
 

@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Error while submitting command!",
+		"error_delete_log": "Error while trying to delete: {{error}}",
 		"event_queue": "Event Queue",
 		"success": "Command submitted successfully, you can look at the Commands log for the result",
 		"title": "Command History",
-		"unable_queue": "Unable to complete event queue request"
+		"unable_queue": "Unable to complete event queue request: {{error}}"
 	},
 	"common": {
 		"access_policy": "Access Policy",
@@ -205,6 +206,9 @@
 		"title": "Configure",
 		"valid_json": "You need to enter valid JSON"
 	},
+	"connect": {
+		"error_trying_to_connect": "Error while trying to connect to device: {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Are you sure you want to delete this command? This action is not reversible.",
 		"title": "Delete Command"
@@ -214,6 +218,10 @@
 		"device_logs_title": "Delete Device Logs",
 		"explanation": "This will delete all of the {{object}} before the date you choose. Be careful, this action is not reversible.",
 		"healthchecks_title": "Delete Healthchecks"
+	},
+	"device": {
+		"error_fetching_device": "Error fetching device information: {{error}}",
+		"error_fetching_devices": "Error while fetching devices: {{error}}"
 	},
 	"device_logs": {
 		"log": "Log",
@@ -486,7 +494,7 @@
 		"create_success": "User Created Successfully",
 		"creating": "Creating User...",
 		"delete_avatar": "Delete Avatar",
-		"delete_failure": "Error while trying to delete user",
+		"delete_failure": "Error while trying to delete user: {{error}}",
 		"delete_success": "User successfully deleted!",
 		"delete_title": "Delete User",
 		"delete_warning": "Warning: Once you delete a user you cannot revert",
@@ -494,6 +502,7 @@
 		"description": "Description",
 		"edit": "Edit User",
 		"email_address": "Email Address",
+		"error_fetching_users": "Error fetching users: {{error}}",
 		"force_password_change": "Force Password Change on Login",
 		"id": "User Id.",
 		"last_login": "Last Login",
@@ -509,7 +518,7 @@
 		"provide_password": "Please provide a valid password",
 		"save_avatar": "Save Avatar",
 		"show_hide_password": "Show/Hide Password",
-		"update_failure": "Make sure all of your data is valid. If you are modifying the password, make sure it is not an old one.",
+		"update_failure": "Error while trying to update: {{error}}",
 		"update_failure_title": "Update Failed",
 		"update_success": "User Updated Successfully",
 		"update_success_title": "Success",

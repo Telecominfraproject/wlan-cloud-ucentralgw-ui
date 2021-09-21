@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CCard, CCardBody } from '@coreui/react';
+import { CCard, CCardBody, CCardHeader, CButton, CPopover } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilSave } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
 import { useUser, EditMyProfile, useAuth, useToast } from 'ucentral-libs';
@@ -122,10 +124,10 @@ const ProfilePage = () => {
         setNewAvatarFile(null);
         setFileInputKey(fileInputKey + 1);
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('user.update_failure_title'),
-          body: t('user.update_failure'),
+          body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });
@@ -180,10 +182,10 @@ const ProfilePage = () => {
             autohide: true,
           });
         })
-        .catch(() => {
+        .catch((e) => {
           addToast({
             title: t('user.update_failure_title'),
-            body: t('user.update_failure'),
+            body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
             color: 'danger',
             autohide: true,
           });
@@ -260,12 +262,20 @@ const ProfilePage = () => {
 
   return (
     <CCard>
+      <CCardHeader>
+        <div className="text-right">
+          <CPopover content={t('common.save')}>
+            <CButton onClick={updateUser} color="primary" variant="outline" disabled={loading}>
+              <CIcon content={cilSave} />
+            </CButton>
+          </CPopover>
+        </div>
+      </CCardHeader>
       <CCardBody>
         <EditMyProfile
           t={t}
           user={userForm}
           updateUserWithId={updateWithId}
-          saveUser={updateUser}
           loading={loading}
           policies={policies}
           addNote={addNote}

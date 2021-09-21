@@ -9,7 +9,10 @@ import {
   CModalFooter,
   CSpinner,
   CBadge,
+  CPopover,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 import PropTypes from 'prop-types';
 
 const ConfirmModal = ({ show, toggle, action }) => {
@@ -63,8 +66,15 @@ const ConfirmModal = ({ show, toggle, action }) => {
 
   return (
     <CModal className="text-dark" show={show} onClose={toggle}>
-      <CModalHeader closeButton>
-        <CModalTitle>{t('delete_command.title')}</CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('delete_command.title')}</CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
       </CModalHeader>
       <CModalBody>
         <h6>{t('delete_command.explanation')}</h6>
@@ -72,9 +82,6 @@ const ConfirmModal = ({ show, toggle, action }) => {
       <CModalFooter>
         <CButton disabled={loading} color="primary" onClick={() => doAction()}>
           {getButtonContent()}
-        </CButton>
-        <CButton color="secondary" onClick={toggle}>
-          {t('common.cancel')}
         </CButton>
       </CModalFooter>
     </CModal>

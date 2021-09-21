@@ -46,7 +46,7 @@ const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
   return (
     <CModal size="xl" show={show} onClose={toggle} scrollable>
       <CModalHeader closeButton>
-        <CModalTitle>
+        <CModalTitle className="pl-1 pt-1">
           #{serialNumber} {t('firmware.history_title')}
         </CModalTitle>
       </CModalHeader>

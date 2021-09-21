@@ -14,8 +14,12 @@ import {
   CModal,
   CModalHeader,
   CModalBody,
+  CModalTitle,
   CRow,
+  CPopover,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 
 const WifiAnalysisPage = () => {
   const { t } = useTranslation();
@@ -198,7 +202,7 @@ const WifiAnalysisPage = () => {
               <h5 className="mb-0">{t('common.device', { serialNumber: deviceId })}</h5>
             </CCol>
             <CCol className="text-right">
-              <CButton color="secondary" onClick={toggleModal}>
+              <CButton color="primary" variant="outline" onClick={toggleModal}>
                 {t('wifi_analysis.network_diagram')}
               </CButton>
             </CCol>
@@ -235,7 +239,16 @@ const WifiAnalysisPage = () => {
         </CCardBody>
       </CCard>
       <CModal size="xl" show={showModal} onClose={toggleModal}>
-        <CModalHeader closeButton>{t('wifi_analysis.network_diagram')}</CModalHeader>
+        <CModalHeader className="p-1">
+          <CModalTitle className="pl-1 pt-1">{t('wifi_analysis.network_diagram')}</CModalTitle>
+          <div className="text-right">
+            <CPopover content={t('common.close')}>
+              <CButton color="primary" variant="outline" className="ml-2" onClick={toggleModal}>
+                <CIcon content={cilX} />
+              </CButton>
+            </CPopover>
+          </div>
+        </CModalHeader>
         <CModalBody>
           {showModal ? (
             <NetworkDiagram

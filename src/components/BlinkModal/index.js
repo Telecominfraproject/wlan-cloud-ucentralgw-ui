@@ -11,7 +11,10 @@ import {
   CFormGroup,
   CInputRadio,
   CLabel,
+  CPopover,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
@@ -88,8 +91,15 @@ const BlinkModal = ({ show, toggleModal }) => {
 
   return (
     <CModal show={show} onClose={toggleModal}>
-      <CModalHeader closeButton>
-        <CModalTitle>{t('blink.device_leds')}</CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('blink.device_leds')}</CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggleModal}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
       </CModalHeader>
       {result === 'success' ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />

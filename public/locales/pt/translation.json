@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Erro ao enviar comando!",
+		"error_delete_log": "Erro ao tentar excluir: {{error}}",
 		"event_queue": "Fila de Eventos",
 		"success": "Comando enviado com sucesso, você pode consultar o log de Comandos para ver o resultado",
 		"title": "Histórico de Comandos",
-		"unable_queue": "Incapaz de completar o pedido de fila de eventos"
+		"unable_queue": "Incapaz de completar o pedido de fila de eventos: {{error}}"
 	},
 	"common": {
 		"access_policy": "Política de Acesso",
@@ -205,6 +206,9 @@
 		"title": "Configurar",
 		"valid_json": "Você precisa inserir um JSON válido"
 	},
+	"connect": {
+		"error_trying_to_connect": "Erro ao tentar conectar ao dispositivo: {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Tem certeza de que deseja excluir este comando? esta ação não é reversível.",
 		"title": "Apagar Comando"
@@ -214,6 +218,10 @@
 		"device_logs_title": "Excluir registros do dispositivo",
 		"explanation": "Isso excluirá todos os {{object}} antes da data que você escolheu. Cuidado, esta ação não é reversível.",
 		"healthchecks_title": "Excluir verificações de saúde"
+	},
+	"device": {
+		"error_fetching_device": "Erro ao buscar informações do dispositivo: {{error}}",
+		"error_fetching_devices": "Erro ao buscar dispositivos: {{error}}"
 	},
 	"device_logs": {
 		"log": "Registro",
@@ -486,7 +494,7 @@
 		"create_success": "Usuário criado com sucesso",
 		"creating": "Criando usuário ...",
 		"delete_avatar": "Apagar Avatar",
-		"delete_failure": "Erro ao tentar excluir usuário",
+		"delete_failure": "Erro ao tentar excluir usuário: {{error}}",
 		"delete_success": "Usuário excluído com sucesso!",
 		"delete_title": "Deletar usuário",
 		"delete_warning": "Aviso: depois de excluir um usuário, você não pode reverter",
@@ -494,6 +502,7 @@
 		"description": "Descrição",
 		"edit": "Editar usuário",
 		"email_address": "Endereço de e-mail",
+		"error_fetching_users": "Erro ao buscar usuários: {{error}}",
 		"force_password_change": "Forçar mudança de senha no login",
 		"id": "ID do usuário.",
 		"last_login": "Último login",
@@ -509,7 +518,7 @@
 		"provide_password": "Forneça uma senha válida",
 		"save_avatar": "Salvar Avatar",
 		"show_hide_password": "Mostrar / ocultar senha",
-		"update_failure": "Certifique-se de que todos os seus dados são válidos. Se você estiver modificando a senha, certifique-se de que não seja uma senha antiga.",
+		"update_failure": "Erro ao tentar atualizar: {{error}}",
 		"update_failure_title": "Atualização falhou",
 		"update_success": "Usuário atualizado com sucesso",
 		"update_success_title": "Sucesso",

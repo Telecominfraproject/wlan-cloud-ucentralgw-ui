@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Erreur lors de la soumission de la commande !",
+		"error_delete_log": "Erreur lors de la tentative de suppression : {{error}}",
 		"event_queue": "File d'attente d'événements",
 		"success": "Commande soumise avec succès, vous pouvez consulter le journal des commandes pour le résultat",
 		"title": "Historique des commandes",
-		"unable_queue": "Impossible de terminer la demande de file d'attente d'événements"
+		"unable_queue": "Impossible de terminer la demande de file d'attente d'événements: {{error}}"
 	},
 	"common": {
 		"access_policy": "Politique d'accès",
@@ -205,6 +206,9 @@
 		"title": "Configurer",
 		"valid_json": "Vous devez entrer un JSON valide"
 	},
+	"connect": {
+		"error_trying_to_connect": "Erreur lors de la tentative de connexion à l'appareil : {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Êtes-vous sûr de vouloir supprimer cette commande ? Cette action n'est pas réversible.",
 		"title": "Supprimer la commande"
@@ -214,6 +218,10 @@
 		"device_logs_title": "Supprimer les journaux de l'appareil",
 		"explanation": "Cela supprimera tous les {{object}} avant la date que vous choisissez. Attention, cette action n'est pas réversible.",
 		"healthchecks_title": "Supprimer les vérifications d'état"
+	},
+	"device": {
+		"error_fetching_device": "Erreur lors de la récupération des informations sur l'appareil : {{error}}",
+		"error_fetching_devices": "Erreur lors de la récupération des appareils : {{error}}"
 	},
 	"device_logs": {
 		"log": "Bûche",
@@ -486,7 +494,7 @@
 		"create_success": "L'utilisateur a été créé avec succès",
 		"creating": "Création de l'utilisateur...",
 		"delete_avatar": "Supprimer l'avatar",
-		"delete_failure": "Erreur lors de la tentative de suppression de l'utilisateur",
+		"delete_failure": "Erreur lors de la tentative de suppression de l'utilisateur: {{error}}",
 		"delete_success": "Utilisateur supprimé avec succès !",
 		"delete_title": "Supprimer l'utilisateur",
 		"delete_warning": "Avertissement : Une fois que vous avez supprimé un utilisateur, vous ne pouvez plus revenir en arrière",
@@ -494,6 +502,7 @@
 		"description": "La description",
 		"edit": "Modifier l'utilisateur",
 		"email_address": "Adresse électronique",
+		"error_fetching_users": "Erreur lors de la récupération des utilisateurs : {{error}}",
 		"force_password_change": "Forcer le changement de mot de passe lors de la connexion",
 		"id": "Identifiant d'utilisateur.",
 		"last_login": "Dernière connexion",
@@ -509,7 +518,7 @@
 		"provide_password": "Veuillez fournir un mot de passe valide",
 		"save_avatar": "Enregistrer l'avatar",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
-		"update_failure": "Assurez-vous que toutes vos données sont valides. Si vous modifiez le mot de passe, assurez-vous qu'il ne s'agit pas d'un ancien.",
+		"update_failure": "Erreur lors de la tentative de mise à jour : {{error}}",
 		"update_failure_title": "mise à jour a échoué",
 		"update_success": "L'utilisateur a bien été mis à jour",
 		"update_success_title": "Succès",
