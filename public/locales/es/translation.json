@@ -165,7 +165,9 @@
 		"yes": "Sí"
 	},
 	"configuration": {
+		"add_new_block": "Agregar nuevo bloque de configuración",
 		"cannot_delete": "Esta configuración no se puede eliminar porque está siendo utilizada por al menos una entidad, lugar o dispositivo",
+		"choose_section": "Qué sección le gustaría que contenga este bloque?",
 		"configurations": "Configuraciones",
 		"create": "Crear Configuración",
 		"create_config": "Crear nueva configuración",
@@ -181,6 +183,7 @@
 		"error_delete": "Error al intentar eliminar: {{error}}",
 		"error_fetching_config": "Error al obtener la configuración",
 		"error_trying_delete": "Error al intentar eliminar: {{error}}",
+		"error_update": "Error: {{error}}",
 		"last_configuration_change": "CAMBIO DE CONFIGURACIÓN",
 		"last_configuration_download": "Descarga de la última configuración",
 		"location": "Ubicación",
@@ -188,6 +191,8 @@
 		"note": "Nota",
 		"notes": "Notas",
 		"owner": "Propietario",
+		"success_block_delete": "Bloque de configuración eliminado con éxito",
+		"success_update": "¡Configuración actualizada con éxito!",
 		"successful_delete": "Configuración eliminada!",
 		"support_all": "Apoyar a todos",
 		"supported_device_types": "Tipos de dispositivos compatibles",

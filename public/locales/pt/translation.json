@@ -165,7 +165,9 @@
 		"yes": "sim"
 	},
 	"configuration": {
+		"add_new_block": "Adicionar novo bloco de configuração",
 		"cannot_delete": "Esta configuração não pode ser excluída porque está sendo usada por pelo menos uma entidade, local ou dispositivo",
+		"choose_section": "Qual seção você gostaria que este bloco contivesse?",
 		"configurations": "configurações",
 		"create": "Criar configuração",
 		"create_config": "Criar Nova Configuração",
@@ -181,6 +183,7 @@
 		"error_delete": "Erro ao tentar excluir: {{error}}",
 		"error_fetching_config": "Erro ao buscar configuração",
 		"error_trying_delete": "Erro ao tentar excluir: {{error}}",
+		"error_update": "Erro: {{error}}",
 		"last_configuration_change": "Mudança de configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
@@ -188,6 +191,8 @@
 		"note": "Nota",
 		"notes": "notas",
 		"owner": "Proprietário",
+		"success_block_delete": "Bloco de configuração excluído com sucesso",
+		"success_update": "Configuração atualizada com sucesso!",
 		"successful_delete": "Configuração excluída!",
 		"support_all": "Apoie todos",
 		"supported_device_types": "Tipos de dispositivos suportados",

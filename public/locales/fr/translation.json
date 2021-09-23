@@ -165,7 +165,9 @@
 		"yes": "Oui"
 	},
 	"configuration": {
+		"add_new_block": "Ajouter un nouveau bloc de configuration",
 		"cannot_delete": "Cette configuration ne peut pas être supprimée car elle est utilisée par au moins une entité, un lieu ou un appareil",
+		"choose_section": "Quelle section souhaitez-vous que ce bloc contienne?",
 		"configurations": "Les configurations",
 		"create": "Créer une configuration",
 		"create_config": "Créer une nouvelle configuration",
@@ -181,6 +183,7 @@
 		"error_delete": "Erreur lors de la tentative de suppression : {{error}}",
 		"error_fetching_config": "Erreur lors de la récupération de la configuration",
 		"error_trying_delete": "Erreur lors de la tentative de suppression : {{error}}",
+		"error_update": "Erreur: {{error}}",
 		"last_configuration_change": "Changement de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
@@ -188,6 +191,8 @@
 		"note": "Remarque",
 		"notes": "Remarques",
 		"owner": "Propriétaire",
+		"success_block_delete": "Bloc de configuration supprimé avec succès",
+		"success_update": "Configuration mise à jour avec succès !",
 		"successful_delete": "Configuration supprimée !",
 		"support_all": "Soutenir tous",
 		"supported_device_types": "Types d'appareils pris en charge",

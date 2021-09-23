@@ -165,7 +165,9 @@
 		"yes": "Ja"
 	},
 	"configuration": {
+		"add_new_block": "Neuen Konfigurationsblock hinzufügen",
 		"cannot_delete": "Diese Konfiguration kann nicht gelöscht werden, da sie von mindestens einer Entität, einem Veranstaltungsort oder einem Gerät verwendet wird",
+		"choose_section": "Welchen Abschnitt soll dieser Block enthalten?",
 		"configurations": "Konfigurationen",
 		"create": "Konfiguration erstellen",
 		"create_config": "Neue Konfiguration erstellen",
@@ -181,6 +183,7 @@
 		"error_delete": "Fehler beim Versuch zu löschen: {{error}}",
 		"error_fetching_config": "Fehler beim Abrufen der Konfiguration",
 		"error_trying_delete": "Fehler beim Versuch zu löschen: {{error}}",
+		"error_update": "Fehler: {{error}}",
 		"last_configuration_change": "Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
@@ -188,6 +191,8 @@
 		"note": "Hinweis",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
+		"success_block_delete": "Konfigurationsblock erfolgreich gelöscht",
+		"success_update": "Konfiguration erfolgreich aktualisiert!",
 		"successful_delete": "Konfiguration gelöscht!",
 		"support_all": "Alle unterstützen",
 		"supported_device_types": "Unterstützte Gerätetypen",
