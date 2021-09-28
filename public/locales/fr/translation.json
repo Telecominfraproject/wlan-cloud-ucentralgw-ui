@@ -468,7 +468,7 @@
 		"os": "le système d'exploitation",
 		"processors": "Processeurs",
 		"reload": "Recharger",
-		"reload_subsystems": "Recharger les sous-systèmes",
+		"reload_subsystems": "Recharger",
 		"subsystems": "Sous-systèmes",
 		"success_reload": "Recharger la commande soumise avec succès !"
 	},

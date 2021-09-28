@@ -1,30 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ApiStatusCard, useAuth, useToast } from 'ucentral-libs';
-import { v4 as createUuid } from 'uuid';
+import PropTypes from 'prop-types';
+import { CModal, CModalHeader, CModalTitle, CModalBody, CButton, CPopover } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX, cilSave } from '@coreui/icons';
+import { useFormFields, useAuth, useToast, useEntity, EditInventoryTagForm } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
-import { CRow, CCol } from '@coreui/react';
-import { prettyDate, secondsToDetailed } from 'utils/helper';
+import { useTranslation } from 'react-i18next';
 
-const SystemPage = () => {
+const initialForm = {
+  entity: {
+    value: '',
+    error: false,
+    hidden: false,
+    ignore: true,
+  },
+  serialNumber: {
+    value: '',
+    error: false,
+    required: true,
+    regex: '^[a-fA-F0-9]+$',
+    length: 12,
+    ignore: true,
+  },
+  name: {
+    value: '',
+    error: false,
+    required: true,
+  },
+  description: {
+    value: '',
+    error: false,
+  },
+  deviceType: {
+    value: '',
+    error: false,
+    required: true,
+  },
+  rrm: {
+    value: 'inherit',
+    error: false,
+    required: true,
+  },
+  deviceConfiguration: {
+    value: '',
+    uuid: '',
+    error: false,
+    ignore: true,
+  },
+  venue: {
+    value: '',
+    error: false,
+  },
+  notes: {
+    value: [],
+    error: false,
+    ignore: true,
+  },
+};
+
+const EditTagModal = ({ show, toggle, tagSerialNumber, refreshTable }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { deviceTypes } = useEntity();
   const { addToast } = useToast();
-  const [endpointsInfo, setEndpointsInfo] = useState([]);
+  const [fields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialForm);
+  const [loading, setLoading] = useState(false);
+  const [tag, setTag] = useState({});
 
-  const getSystemInfo = async (key, endpoint) => {
-    const systemInfo = {
-      title: key,
-      endpoint,
-      hostname: t('common.unknown'),
-      os: t('common.unknown'),
-      processors: t('common.unknown'),
-      uptime: t('common.unknown'),
-      version: t('common.unknown'),
-      start: t('common.unknown'),
-      subsystems: [],
-    };
+  const validation = () => {
+    let success = true;
 
+    for (const [key, field] of Object.entries(fields)) {
+      if (field.required && field.value === '') {
+        updateField(key, { error: true });
+        success = false;
+        break;
+      }
+    }
+
+    return success;
+  };
+
+  const getTag = () => {
+    setLoading(true);
     const options = {
       headers: {
         Accept: 'application/json',
@@ -32,42 +90,91 @@ const SystemPage = () => {
       },
     };
 
-    const getInfo = axiosInstance.get(`${endpoint}/api/v1/system?command=info`, options);
-    const getSubsystems = axiosInstance.post(
-      `${endpoint}/api/v1/system`,
-      { command: 'getsubsystemnames' },
-      options,
-    );
+    axiosInstance
+      .get(`${endpoints.owprov}/api/v1/inventory/${tagSerialNumber}`, options)
+      .then((response) => {
+        const newFields = fields;
+        for (const [key] of Object.entries(newFields)) {
+          if (response.data[key] !== undefined) {
+            if (key === 'deviceConfiguration')
+              newFields.deviceConfiguration = { value: '', uuid: response.data[key] };
+            else if (key === 'rrm')
+              newFields[key].value = response.data[key] === '' ? 'inherit' : response.data[key];
+            else newFields[key].value = response.data[key];
+          }
+        }
+        setTag(response.data);
+        setFormFields({ ...newFields });
 
-    return Promise.all([getInfo, getSubsystems])
-      .then(([newInfo, newSubs]) => {
-        systemInfo.uptime = secondsToDetailed(
-          newInfo.data.uptime,
-          t('common.day'),
-          t('common.days'),
-          t('common.hour'),
-          t('common.hours'),
-          t('common.minute'),
-          t('common.minutes'),
-          t('common.second'),
-          t('common.seconds'),
-        );
-        systemInfo.hostname = newInfo.data.hostname;
-        systemInfo.os = newInfo.data.os;
-        systemInfo.processors = newInfo.data.processors;
-        systemInfo.version = newInfo.data.version;
-        systemInfo.start = prettyDate(newInfo.data.start);
-        systemInfo.subsystems = newSubs.data.list.sort((a, b) => {
-          if (a < b) return -1;
-          if (a > b) return 1;
-          return 0;
-        });
-        return systemInfo;
+        if (response.data.deviceConfiguration !== '') {
+          return axiosInstance.get(
+            `${endpoints.owprov}/api/v1/configurations/${response.data.deviceConfiguration}`,
+            options,
+          );
+        }
+        return null;
       })
-      .catch(() => systemInfo);
+      .then((response) => {
+        if (response)
+          updateField('deviceConfiguration', { value: response.data.name, uuid: response.data.id });
+      })
+      .catch(() => {
+        throw new Error('Error while fetching entity for edit');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  const reload = (subsystems, endpoint) => {
+  const editTag = () => {
+    if (validation()) {
+      setLoading(true);
+      const options = {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${currentToken}`,
+        },
+      };
+
+      const parameters = {};
+
+      for (const [key, field] of Object.entries(fields)) {
+        if (!field.ignore) {
+          if (tag[key] !== field.value) {
+            parameters[key] = field.value;
+          }
+        }
+      }
+
+      axiosInstance
+        .put(`${endpoints.owprov}/api/v1/inventory/${tagSerialNumber}`, parameters, options)
+        .then(() => {
+          getTag();
+          if (refreshTable !== null) refreshTable();
+          addToast({
+            title: t('common.success'),
+            body: t('inventory.successful_tag_update'),
+            color: 'success',
+            autohide: true,
+          });
+        })
+        .catch(() => {
+          addToast({
+            title: t('common.error'),
+            body: t('inventory.tag_update_error'),
+            color: 'danger',
+            autohide: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
+
+  const addNote = (newNote) => {
+    setLoading(true);
+
     const options = {
       headers: {
         Accept: 'application/json',
@@ -76,83 +183,79 @@ const SystemPage = () => {
     };
 
     const parameters = {
-      command: 'reload',
-      subsystems,
+      notes: [{ note: newNote }],
     };
 
     axiosInstance
-      .post(`${endpoint}/api/v1/system?command=info`, parameters, options)
+      .put(`${endpoints.owprov}/api/v1/inventory/${tagSerialNumber}`, parameters, options)
       .then(() => {
-        addToast({
-          title: t('common.success'),
-          body: t('system.success_reload'),
-          color: 'success',
-          autohide: true,
-        });
+        getTag();
       })
-      .catch((e) => {
+      .catch(() => {
         addToast({
           title: t('common.error'),
-          body: t('system.error_reloading', { error: e.response?.data?.ErrorDescription }),
+          body: t('inventory.tag_update_error'),
           color: 'danger',
           autohide: true,
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  };
-
-  const getAllInfo = async () => {
-    const promises = [];
-
-    for (const [key, value] of Object.entries(endpoints)) {
-      promises.push(getSystemInfo(key, value));
-    }
-
-    try {
-      const results = await Promise.all(promises);
-      setEndpointsInfo(results);
-    } catch {
-      addToast({
-        title: t('common.error'),
-        body: t('system.error_fetching'),
-        color: 'danger',
-        autohide: true,
-      });
-    }
-  };
-
-  const getColumn = (index) => {
-    const rows = [];
-
-    for (let i = index; i < endpointsInfo.length; i += 3) {
-      rows.push(endpointsInfo[i]);
-    }
-
-    return rows;
+    setLoading(false);
   };
 
   useEffect(() => {
-    getAllInfo();
-  }, []);
+    if (show) {
+      getTag();
+      setFormFields(initialForm);
+    }
+  }, [show]);
 
   return (
-    <CRow>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(0).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(1).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(2).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
-    </CRow>
+    <CModal className="text-dark" size="lg" show={show} onClose={toggle}>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">
+          {t('common.edit')} {tag.name}
+        </CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.save')}>
+            <CButton color="primary" variant="outline" className="mx-2" onClick={editTag}>
+              <CIcon content={cilSave} />
+            </CButton>
+          </CPopover>
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
+      </CModalHeader>
+      <CModalBody className="px-5">
+        <EditInventoryTagForm
+          t={t}
+          disable={loading}
+          fields={fields}
+          updateField={updateFieldWithId}
+          updateFieldDirectly={updateField}
+          addNote={addNote}
+          deviceTypes={deviceTypes}
+        />
+      </CModalBody>
+    </CModal>
   );
 };
 
-export default SystemPage;
+EditTagModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  refreshTable: PropTypes.func,
+  tagSerialNumber: PropTypes.string,
+};
+
+EditTagModal.defaultProps = {
+  tagSerialNumber: null,
+  refreshTable: null,
+};
+
+export default EditTagModal;

@@ -468,7 +468,7 @@
 		"os": "sistema operativo",
 		"processors": "Procesadores",
 		"reload": "Recargar",
-		"reload_subsystems": "Recargar subsistemas",
+		"reload_subsystems": "Recargar",
 		"subsystems": "Subsistemas",
 		"success_reload": "¡El comando de recarga se envió correctamente!"
 	},
