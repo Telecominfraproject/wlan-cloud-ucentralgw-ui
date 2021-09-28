@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { CCard, CCardHeader, CCardBody, CRow, CCol, CPopover, CButton } from '@coreui/react';
+import { CCard, CCardHeader, CCardBody, CPopover, CButton } from '@coreui/react';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import eventBus from 'utils/eventBus';
@@ -36,38 +36,31 @@ const DeviceStatisticsCard = () => {
     <div>
       <CCard>
         <CCardHeader>
-          <CRow>
-            <CCol>
-              <div className="text-value-xxl pt-2">{t('statistics.title')}</div>
-            </CCol>
-            <CCol sm="6" xxl="6">
-              <CRow>
-                <CCol sm="1" xxl="5" />
-                <CCol sm="4" xxl="2" className="text-right">
-                  <CButton color="secondary" onClick={goToAnalysis}>
-                    {t('wifi_analysis.title')}
-                  </CButton>
-                </CCol>
-                <CCol sm="3" xxl="2" className="text-right">
-                  <CButton color="secondary" onClick={toggleLatestModal}>
-                    {t('statistics.show_latest')}
-                  </CButton>
-                </CCol>
-                <CCol sm="3" xxl="2" className="text-right">
-                  <CButton color="secondary" onClick={toggleLifetimeModal}>
-                    Lifetime Statistics
-                  </CButton>
-                </CCol>
-                <CCol sm="1" xxl="1" className="text-center">
-                  <CPopover content={t('common.refresh')}>
-                    <CButton color="secondary" onClick={refresh} size="sm">
-                      <CIcon content={cilSync} />
-                    </CButton>
-                  </CPopover>
-                </CCol>
-              </CRow>
-            </CCol>
-          </CRow>
+          <div className="d-flex flex-row-reverse align-items-center">
+            <div className="pl-2">
+              <CPopover content={t('common.refresh')}>
+                <CButton color="primary" variant="outline" onClick={refresh}>
+                  <CIcon content={cilSync} />
+                </CButton>
+              </CPopover>
+            </div>
+            <div className="pl-2">
+              <CButton color="primary" variant="outline" onClick={toggleLifetimeModal}>
+                Lifetime Statistics
+              </CButton>
+            </div>
+            <div className="pl-2">
+              <CButton color="primary" variant="outline" onClick={toggleLatestModal}>
+                {t('statistics.show_latest')}
+              </CButton>
+            </div>
+            <div>
+              <CButton color="primary" variant="outline" onClick={goToAnalysis}>
+                {t('wifi_analysis.title')}
+              </CButton>
+            </div>
+            <div className="text-value-lg mr-auto">{t('statistics.title')}</div>
+          </div>
         </CCardHeader>
         <CCardBody className="p-5">
           <StatisticsChartList />

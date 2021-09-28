@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  CButton,
-  CModal,
-  CModalHeader,
-  CModalBody,
-  CModalTitle,
-  CModalFooter,
-} from '@coreui/react';
+import { CButton, CModal, CModalHeader, CModalBody, CModalTitle, CPopover } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 
 const DetailsModal = ({ t, show, toggle, details, commandUuid }) => (
   <CModal size="lg" show={show} onClose={toggle}>
-    <CModalHeader closeButton>
+    <CModalHeader className="p-1">
       <CModalTitle className="text-dark">{commandUuid}</CModalTitle>
+      <div className="text-right">
+        <CPopover content={t('common.close')}>
+          <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+            <CIcon content={cilX} />
+          </CButton>
+        </CPopover>
+      </div>
     </CModalHeader>
     <CModalBody>
       <pre className="ignore">{JSON.stringify(details, null, 4)}</pre>
     </CModalBody>
-    <CModalFooter>
-      <CButton color="secondary" onClick={toggle}>
-        {t('common.close')}
-      </CButton>
-    </CModalFooter>
   </CModal>
 );
 

@@ -57,7 +57,7 @@ const FirmwareListPage = () => {
 
     return axiosInstance
       .get(
-        `${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${deviceType}&limit=500&offset=${offset}`,
+        `${endpoints.owfms}/api/v1/firmwares?deviceType=${deviceType}&limit=500&offset=${offset}`,
         {
           headers,
         },
@@ -107,7 +107,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralfms}/api/v1/firmwares?deviceSet=true`, {
+      .get(`${endpoints.owfms}/api/v1/firmwares?deviceSet=true`, {
         headers,
       })
       .then((response) => {
@@ -162,7 +162,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralfms}/api/v1/firmware/${id}`, parameters, options)
+      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
       .then(() => {
         getFirmware();
         setAddNoteLoading(false);
@@ -194,7 +194,7 @@ const FirmwareListPage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralfms}/api/v1/firmware/${id}`, parameters, options)
+      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
       .then(() => {
         getFirmware();
         setUpdateDescriptionLoading(false);

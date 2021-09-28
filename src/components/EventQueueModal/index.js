@@ -28,18 +28,14 @@ const EventQueueModal = ({ show, toggle }) => {
     };
 
     axiosInstance
-      .post(
-        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/eventqueue`,
-        parameters,
-        options,
-      )
+      .post(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/eventqueue`, parameters, options)
       .then((response) => {
         setResult(response.data);
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('commands.unable_queue'),
+          body: t('commands.unable_queue', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });

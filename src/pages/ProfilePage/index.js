@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CCard, CCardBody } from '@coreui/react';
+import { CCard, CCardBody, CCardHeader, CButton, CPopover } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilSave } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
 import { useUser, EditMyProfile, useAuth, useToast } from 'ucentral-libs';
@@ -60,11 +62,11 @@ const ProfilePage = () => {
 
   const getPasswordPolicy = () => {
     axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/oauth2?requirements=true`, {})
+      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
       .then((response) => {
         const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.ucentralsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.ucentralsec}${newPolicies.passwordPolicy}`;
+        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
         setPolicies(response.data);
       })
       .catch(() => {});
@@ -79,7 +81,7 @@ const ProfilePage = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, options)
+      .get(`${endpoints.owsec}/api/v1/user/${user.Id}`, options)
       .then((response) => {
         const newUser = {};
 
@@ -109,7 +111,7 @@ const ProfilePage = () => {
     data.append('file', newAvatarFile);
 
     axiosInstance
-      .post(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, data, options)
+      .post(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, data, options)
       .then(() => {
         addToast({
           title: t('user.update_success_title'),
@@ -122,10 +124,10 @@ const ProfilePage = () => {
         setNewAvatarFile(null);
         setFileInputKey(fileInputKey + 1);
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('user.update_failure_title'),
-          body: t('user.update_failure'),
+          body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });
@@ -171,7 +173,7 @@ const ProfilePage = () => {
       };
 
       axiosInstance
-        .put(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, parameters, options)
+        .put(`${endpoints.owsec}/api/v1/user/${user.Id}`, parameters, options)
         .then(() => {
           addToast({
             title: t('user.update_success_title'),
@@ -180,10 +182,10 @@ const ProfilePage = () => {
             autohide: true,
           });
         })
-        .catch(() => {
+        .catch((e) => {
           addToast({
             title: t('user.update_failure_title'),
-            body: t('user.update_failure'),
+            body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
             color: 'danger',
             autohide: true,
           });
@@ -213,7 +215,7 @@ const ProfilePage = () => {
     };
 
     axiosInstance
-      .put(`${endpoints.ucentralsec}/api/v1/user/${user.Id}`, parameters, options)
+      .put(`${endpoints.owsec}/api/v1/user/${user.Id}`, parameters, options)
       .then(() => {
         getUser();
       })
@@ -238,7 +240,7 @@ const ProfilePage = () => {
       },
     };
     return axiosInstance
-      .delete(`${endpoints.ucentralsec}/api/v1/avatar/${user.Id}`, options)
+      .delete(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, options)
       .then(() => {
         getAvatar();
       })
@@ -260,12 +262,20 @@ const ProfilePage = () => {
 
   return (
     <CCard>
+      <CCardHeader>
+        <div className="text-right">
+          <CPopover content={t('common.save')}>
+            <CButton onClick={updateUser} color="primary" variant="outline" disabled={loading}>
+              <CIcon content={cilSave} />
+            </CButton>
+          </CPopover>
+        </div>
+      </CCardHeader>
       <CCardBody>
         <EditMyProfile
           t={t}
           user={userForm}
           updateUserWithId={updateWithId}
-          saveUser={updateUser}
           loading={loading}
           policies={policies}
           addNote={addNote}

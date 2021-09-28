@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CModal, CModalHeader, CModalTitle, CModalBody, CCol, CRow } from '@coreui/react';
+import {
+  CModal,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CCol,
+  CRow,
+  CPopover,
+  CButton,
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { ConfirmFooter, useAuth, useDevice } from 'ucentral-libs';
+import { ConfirmFooter, useAuth, useDevice, useToast } from 'ucentral-libs';
 import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
@@ -11,6 +22,7 @@ import eventBus from 'utils/eventBus';
 const DeleteLogModal = ({ show, toggle, object }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const { deviceSerialNumber } = useDevice();
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState(new Date().toString());
@@ -34,9 +46,16 @@ const DeleteLogModal = ({ show, toggle, object }) => {
       },
     };
     return axiosInstance
-      .delete(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/${object}`, options)
+      .delete(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/${object}`, options)
       .then(() => {})
-      .catch(() => {})
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('commands.error_delete_log', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
+      })
       .finally(() => {
         if (object === 'healthchecks')
           eventBus.dispatch('deletedHealth', { message: 'Healthcheck was deleted' });
@@ -54,12 +73,19 @@ const DeleteLogModal = ({ show, toggle, object }) => {
 
   return (
     <CModal className="text-dark" show={show} onClose={toggle}>
-      <CModalHeader closeButton>
-        <CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">
           {object === 'healthchecks'
             ? t('delete_logs.healthchecks_title')
             : t('delete_logs.device_logs_title')}
         </CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
       </CModalHeader>
       <CModalBody>
         <h6>{t('delete_logs.explanation', { object })}</h6>
