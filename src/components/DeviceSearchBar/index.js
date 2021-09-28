@@ -60,7 +60,7 @@ const DeviceSearchBar = () => {
   }, [socket]);
 
   useEffect(() => {
-    if (socket === null) {
+    if (socket === null && endpoints?.owgw) {
       setSocket(new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`));
     }
   }, []);

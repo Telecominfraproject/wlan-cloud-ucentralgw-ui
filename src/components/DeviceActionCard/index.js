@@ -70,7 +70,14 @@ const DeviceActions = () => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
-      .catch(() => {})
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('connect.error_trying_to_connect', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
+      })
       .finally(() => {
         setConnectLoading(false);
       });
@@ -131,7 +138,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
@@ -143,7 +150,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
@@ -155,7 +162,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <LoadingButton
               isLoading={connectLoading}
@@ -170,14 +177,14 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleQueueModal}>
               {t('commands.event_queue')}
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" hidden onClick={toggleTelemetryModal}>
+            <CButton block color="primary" onClick={toggleTelemetryModal}>
               {t('actions.telemetry')}
             </CButton>
           </CCol>

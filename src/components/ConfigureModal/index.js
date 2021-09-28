@@ -12,7 +12,10 @@ import {
   CTextarea,
   CInvalidFeedback,
   CInputFile,
+  CPopover,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -125,8 +128,15 @@ const ConfigureModal = ({ show, toggleModal }) => {
 
   return (
     <CModal show={show} onClose={toggleModal} size="lg">
-      <CModalHeader closeButton>
-        <CModalTitle>{t('configure.title')}</CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('configure.title')}</CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggleModal}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
       </CModalHeader>
       {hadSuccess ? (
         <SuccessfulActionModalBody toggleModal={toggleModal} />

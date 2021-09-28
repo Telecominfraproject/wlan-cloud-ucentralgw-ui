@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { CModal, CModalHeader, CModalBody } from '@coreui/react';
+import { CModal, CModalHeader, CModalBody, CModalTitle, CPopover, CButton } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilSave, cilX } from '@coreui/icons';
 import { CreateUserForm, useFormFields, useAuth, useToast } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex, validateEmail } from 'utils/helper';
@@ -143,14 +145,26 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
 
   return (
     <CModal show={show} onClose={toggle} size="xl">
-      <CModalHeader>{t('user.create')}</CModalHeader>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('user.create')}</CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('user.create')}>
+            <CButton color="primary" variant="outline" onClick={createUser} disabled={loading}>
+              <CIcon content={cilSave} />
+            </CButton>
+          </CPopover>
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
+      </CModalHeader>
       <CModalBody>
         <CreateUserForm
           t={t}
           fields={formFields}
           updateField={updateFieldWithId}
-          createUser={createUser}
-          loading={loading}
           policies={policies}
           toggleChange={toggleChange}
         />

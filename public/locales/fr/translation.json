@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Erreur lors de la soumission de la commande !",
+		"error_delete_log": "Erreur lors de la tentative de suppression : {{error}}",
 		"event_queue": "File d'attente d'événements",
 		"success": "Commande soumise avec succès, vous pouvez consulter le journal des commandes pour le résultat",
 		"title": "Historique des commandes",
-		"unable_queue": "Impossible de terminer la demande de file d'attente d'événements"
+		"unable_queue": "Impossible de terminer la demande de file d'attente d'événements: {{error}}"
 	},
 	"common": {
 		"access_policy": "Politique d'accès",
@@ -119,6 +120,7 @@
 		"no": "Non",
 		"no_devices_found": "Aucun périphérique trouvé",
 		"no_items": "Pas d'objet",
+		"none": "Aucun",
 		"not_connected": "Pas connecté",
 		"of_connected": "% d'appareils",
 		"off": "De",
@@ -153,6 +155,8 @@
 		"timestamp": "Temps",
 		"to": "à",
 		"type": "Type",
+		"type_for_options": "Tapez la valeur que vous devez créer...",
+		"type_for_options_format": "Saisissez une valeur au format valide ({{format}})...",
 		"unable_to_connect": "Impossible de se connecter à l'appareil",
 		"unable_to_delete": "Impossible de supprimer",
 		"unknown": "Inconnu",
@@ -164,13 +168,19 @@
 		"yes": "Oui"
 	},
 	"configuration": {
+		"add_configuration": "Ajouter une configuration",
+		"add_new_block": "Ajouter un nouveau bloc de configuration",
 		"cannot_delete": "Cette configuration ne peut pas être supprimée car elle est utilisée par au moins une entité, un lieu ou un appareil",
+		"choose_section": "Quelle section souhaitez-vous que ce bloc contienne?",
+		"configuration_browser": "Navigateur de configuration",
 		"configurations": "Les configurations",
 		"create": "Créer une configuration",
 		"create_config": "Créer une nouvelle configuration",
 		"create_new_configuration": "Créer un nouvel élément de configuration",
 		"created": "Créé",
 		"creation_success": "Configuration créée avec succès !",
+		"currently_associated": "Configuration associée actuelle : {{config}}",
+		"currently_selected_config": "Configuration actuellement sélectionnée : {{config}}",
 		"delete_config": "Supprimer la configuration",
 		"details": "Détails",
 		"device_password": "Mot de passe",
@@ -180,13 +190,20 @@
 		"error_delete": "Erreur lors de la tentative de suppression : {{error}}",
 		"error_fetching_config": "Erreur lors de la récupération de la configuration",
 		"error_trying_delete": "Erreur lors de la tentative de suppression : {{error}}",
-		"last_configuration_change": "Dernière modification de configuration",
+		"error_update": "Erreur: {{error}}",
+		"explanation": "Explication",
+		"last_configuration_change": "Changement de configuration",
 		"last_configuration_download": "Téléchargement de la dernière configuration",
 		"location": "Emplacement",
 		"need_device_type": "Chaque configuration doit prendre en charge au moins un type d'appareil",
+		"no_associated_config": "Aucune configuration associée",
+		"no_associated_configuration": "Aucune configuration associée",
 		"note": "Remarque",
 		"notes": "Remarques",
 		"owner": "Propriétaire",
+		"select_configuration": "Sélectionnez cette configuration",
+		"success_block_delete": "Bloc de configuration supprimé avec succès",
+		"success_update": "Configuration mise à jour avec succès !",
 		"successful_delete": "Configuration supprimée !",
 		"support_all": "Soutenir tous",
 		"supported_device_types": "Types d'appareils pris en charge",
@@ -205,6 +222,9 @@
 		"title": "Configurer",
 		"valid_json": "Vous devez entrer un JSON valide"
 	},
+	"connect": {
+		"error_trying_to_connect": "Erreur lors de la tentative de connexion à l'appareil : {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Êtes-vous sûr de vouloir supprimer cette commande ? Cette action n'est pas réversible.",
 		"title": "Supprimer la commande"
@@ -214,6 +234,10 @@
 		"device_logs_title": "Supprimer les journaux de l'appareil",
 		"explanation": "Cela supprimera tous les {{object}} avant la date que vous choisissez. Attention, cette action n'est pas réversible.",
 		"healthchecks_title": "Supprimer les vérifications d'état"
+	},
+	"device": {
+		"error_fetching_device": "Erreur lors de la récupération des informations sur l'appareil : {{error}}",
+		"error_fetching_devices": "Erreur lors de la récupération des appareils : {{error}}"
 	},
 	"device_logs": {
 		"log": "Bûche",
@@ -227,6 +251,8 @@
 		"add_success": "Entité créée avec succès !",
 		"assigned_inventory": "Inventaire assigné",
 		"cannot_delete": "Vous ne pouvez pas supprimer des entités qui ont des enfants. Supprimez les enfants de cette entité pour pouvoir la supprimer.",
+		"currently_selected_entity": "Entité actuellement sélectionnée : {{config}}",
+		"currently_selected_venue": "Lieu actuellement sélectionné : {{config}}",
 		"delete_success": "Entité supprimée avec succès",
 		"delete_warning": "Attention : cette opération ne peut pas être annulée",
 		"edit_failure": "Échec de la mise à jour : {{error}}",
@@ -289,7 +315,7 @@
 		"add_child": "Ajouter un lieu enfant",
 		"add_child_venue": "Ajouter un lieu enfant à {{entityName}}",
 		"add_tag": "Créer un tag",
-		"add_tag_to": "Ajouter une balise d'inventaire à {{name}}",
+		"add_tag_to": "Ajouter un nouvel appareil à {{name}}",
 		"add_venue": "Ajouter un lieu",
 		"assign_entity_instructions": "Vous pouvez soit trouver l'entité à laquelle vous souhaitez que cette balise soit attribuée en utilisant le menu ci-dessous, soit coller manuellement l'UUID de l'entité dans le champ ci-dessus.",
 		"assign_error": "Erreur lors de la tentative d'attribution de balise",
@@ -360,6 +386,7 @@
 		"tags_assigned_to": "Balises d'inventaire attribuées à {{name}}",
 		"test_import": "Valider les données d'importation",
 		"test_results": "Résultats de test",
+		"title": "Inventaire",
 		"type_invalid": "Erreur : Type de périphérique non valide",
 		"unassign": "Annuler l'attribution",
 		"unassign_tag": "Désaffecter la balise de l'entité",
@@ -421,10 +448,10 @@
 		"title": "statistiques"
 	},
 	"status": {
-		"connection_status": "Statut de connexion",
+		"connection_status": "Statut",
 		"error": "Les données d'état ne sont pas disponibles",
 		"last_contact": "Dernier contact",
-		"load_averages": "Charge (moyenne 1 / 5 / 15 minutes)",
+		"load_averages": "Charge (1/5/15 m.)",
 		"localtime": "heure locale",
 		"memory": "Mémoire utilisée",
 		"percentage_free": "{{percentage}}% de {{total}} gratuit",
@@ -434,7 +461,15 @@
 		"used_total_memory": "{{used}} utilisé / {{total}} total"
 	},
 	"system": {
-		"error_fetching": "Erreur lors de la récupération des informations système"
+		"error_fetching": "Erreur lors de la récupération des informations système",
+		"error_reloading": "Erreur lors du rechargement : {{error}}",
+		"hostname": "nom d'hôte",
+		"os": "le système d'exploitation",
+		"processors": "Processeurs",
+		"reload": "Recharger",
+		"reload_subsystems": "Recharger les sous-systèmes",
+		"subsystems": "Sous-systèmes",
+		"success_reload": "Recharger la commande soumise avec succès !"
 	},
 	"telemetry": {
 		"connection_failed": "Échec de la création de la connexion. Erreur : {{error}}",
@@ -478,7 +513,7 @@
 		"create_success": "L'utilisateur a été créé avec succès",
 		"creating": "Création de l'utilisateur...",
 		"delete_avatar": "Supprimer l'avatar",
-		"delete_failure": "Erreur lors de la tentative de suppression de l'utilisateur",
+		"delete_failure": "Erreur lors de la tentative de suppression de l'utilisateur: {{error}}",
 		"delete_success": "Utilisateur supprimé avec succès !",
 		"delete_title": "Supprimer l'utilisateur",
 		"delete_warning": "Avertissement : Une fois que vous avez supprimé un utilisateur, vous ne pouvez plus revenir en arrière",
@@ -486,6 +521,7 @@
 		"description": "La description",
 		"edit": "Modifier l'utilisateur",
 		"email_address": "Adresse électronique",
+		"error_fetching_users": "Erreur lors de la récupération des utilisateurs : {{error}}",
 		"force_password_change": "Forcer le changement de mot de passe lors de la connexion",
 		"id": "Identifiant d'utilisateur.",
 		"last_login": "Dernière connexion",
@@ -501,7 +537,7 @@
 		"provide_password": "Veuillez fournir un mot de passe valide",
 		"save_avatar": "Enregistrer l'avatar",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
-		"update_failure": "Assurez-vous que toutes vos données sont valides. Si vous modifiez le mot de passe, assurez-vous qu'il ne s'agit pas d'un ancien.",
+		"update_failure": "Erreur lors de la tentative de mise à jour : {{error}}",
 		"update_failure_title": "mise à jour a échoué",
 		"update_success": "L'utilisateur a bien été mis à jour",
 		"update_success_title": "Succès",

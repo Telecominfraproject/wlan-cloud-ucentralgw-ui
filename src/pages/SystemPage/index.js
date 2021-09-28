@@ -16,9 +16,13 @@ const SystemPage = () => {
     const systemInfo = {
       title: key,
       endpoint,
+      hostname: t('common.unknown'),
+      os: t('common.unknown'),
+      processors: t('common.unknown'),
       uptime: t('common.unknown'),
       version: t('common.unknown'),
       start: t('common.unknown'),
+      subsystems: [],
     };
 
     const options = {
@@ -28,41 +32,72 @@ const SystemPage = () => {
       },
     };
 
-    const getUptime = axiosInstance.get(`${endpoint}/api/v1/system?command=times`, options);
-    const getVersion = axiosInstance.get(`${endpoint}/api/v1/system?command=version`, options);
+    const getInfo = axiosInstance.get(`${endpoint}/api/v1/system?command=info`, options);
+    const getSubsystems = axiosInstance.post(
+      `${endpoint}/api/v1/system`,
+      { command: 'getsubsystemnames' },
+      options,
+    );
 
-    return Promise.all([getUptime, getVersion])
-      .then(([newUptime, newVersion]) => {
-        const uptimeObj = newUptime.data.times.find((obj) => obj.tag === 'uptime');
-        const startObj = newUptime.data.times.find((obj) => obj.tag === 'start');
-        return {
-          title: key,
-          endpoint,
-          uptime: uptimeObj?.value
-            ? secondsToDetailed(
-                uptimeObj.value,
-                t('common.day'),
-                t('common.days'),
-                t('common.hour'),
-                t('common.hours'),
-                t('common.minute'),
-                t('common.minutes'),
-                t('common.second'),
-                t('common.seconds'),
-              )
-            : t('common.unknown'),
-          version: newVersion.data.value,
-          start: prettyDate(startObj.value),
-        };
+    return Promise.all([getInfo, getSubsystems])
+      .then(([newInfo, newSubs]) => {
+        systemInfo.uptime = secondsToDetailed(
+          newInfo.data.uptime,
+          t('common.day'),
+          t('common.days'),
+          t('common.hour'),
+          t('common.hours'),
+          t('common.minute'),
+          t('common.minutes'),
+          t('common.second'),
+          t('common.seconds'),
+        );
+        systemInfo.hostname = newInfo.data.hostname;
+        systemInfo.os = newInfo.data.os;
+        systemInfo.processors = newInfo.data.processors;
+        systemInfo.version = newInfo.data.version;
+        systemInfo.start = prettyDate(newInfo.data.start);
+        systemInfo.subsystems = newSubs.data.list.sort((a, b) => {
+          if (a < b) return -1;
+          if (a > b) return 1;
+          return 0;
+        });
+        return systemInfo;
       })
-      .catch(() => ({
-        title: key,
-        endpoint,
-        uptime: t('common.unknown'),
-        version: t('common.unknown'),
-        start: t('common.unknown'),
-      }))
-      .finally(() => systemInfo);
+      .catch(() => systemInfo);
+  };
+
+  const reload = (subsystems, endpoint) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    const parameters = {
+      command: 'reload',
+      subsystems,
+    };
+
+    axiosInstance
+      .post(`${endpoint}/api/v1/system?command=info`, parameters, options)
+      .then(() => {
+        addToast({
+          title: t('common.success'),
+          body: t('system.success_reload'),
+          color: 'success',
+          autohide: true,
+        });
+      })
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('system.error_reloading', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
+      });
   };
 
   const getAllInfo = async () => {
@@ -85,17 +120,37 @@ const SystemPage = () => {
     }
   };
 
+  const getColumn = (index) => {
+    const rows = [];
+
+    for (let i = index; i < endpointsInfo.length; i += 3) {
+      rows.push(endpointsInfo[i]);
+    }
+
+    return rows;
+  };
+
   useEffect(() => {
     getAllInfo();
   }, []);
 
   return (
     <CRow>
-      {endpointsInfo.map((info) => (
-        <CCol key={createUuid()} md="4">
-          <ApiStatusCard t={t} info={info} />
-        </CCol>
-      ))}
+      <CCol md="12" lg="6" xxl="4">
+        {getColumn(0).map((info) => (
+          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
+        ))}
+      </CCol>
+      <CCol md="12" lg="6" xxl="4">
+        {getColumn(1).map((info) => (
+          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
+        ))}
+      </CCol>
+      <CCol md="12" lg="6" xxl="4">
+        {getColumn(2).map((info) => (
+          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
+        ))}
+      </CCol>
     </CRow>
   );
 };

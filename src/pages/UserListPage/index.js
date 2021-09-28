@@ -45,7 +45,13 @@ const UserListPage = () => {
       .then((response) => {
         setUsers(response.data.users);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_fetching_users', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -113,7 +119,13 @@ const UserListPage = () => {
         setUsersToDisplay(newUsers);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_fetching_users', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -139,10 +151,10 @@ const UserListPage = () => {
         });
         getUsers();
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('user.delete_failure'),
+          body: t('user.delete_failure', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });
@@ -186,6 +198,7 @@ const UserListPage = () => {
         usersPerPage={usersPerPage}
         setUsersPerPage={updateUsersPerPage}
         pageCount={pageCount}
+        currentPage={page.selected}
         setPage={setPage}
         deleteUser={deleteUser}
         deleteLoading={deleteLoading}

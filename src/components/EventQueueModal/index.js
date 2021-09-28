@@ -32,10 +32,10 @@ const EventQueueModal = ({ show, toggle }) => {
       .then((response) => {
         setResult(response.data);
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('commands.unable_queue'),
+          body: t('commands.unable_queue', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });

@@ -145,10 +145,10 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
           getUsers();
           toggle();
         })
-        .catch(() => {
+        .catch((e) => {
           addToast({
             title: t('user.update_failure_title'),
-            body: t('user.update_failure'),
+            body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
             color: 'danger',
             autohide: true,
           });

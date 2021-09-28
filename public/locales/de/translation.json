@@ -23,10 +23,11 @@
 	},
 	"commands": {
 		"error": "Fehler beim Senden des Befehls!",
+		"error_delete_log": "Fehler beim Versuch zu löschen: {{error}}",
 		"event_queue": "Ereigniswarteschlange",
 		"success": "Befehl wurde erfolgreich übermittelt",
 		"title": "Gerätebefehle",
-		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden"
+		"unable_queue": "Anfrage für Ereigniswarteschlange kann nicht abgeschlossen werden: {{error}}"
 	},
 	"common": {
 		"access_policy": "Zugangsrichtlinien",
@@ -119,6 +120,7 @@
 		"no": "Nein",
 		"no_devices_found": "Keine Geräte gefunden",
 		"no_items": "Keine Gegenstände",
+		"none": "Keiner",
 		"not_connected": "Nicht verbunden",
 		"of_connected": "% der Geräte",
 		"off": "Aus",
@@ -153,6 +155,8 @@
 		"timestamp": "Zeit",
 		"to": "zu",
 		"type": "Art",
+		"type_for_options": "Geben Sie den Wert ein, den Sie erstellen müssen...",
+		"type_for_options_format": "Geben Sie einen Wert im gültigen Format ein ({{format}})...",
 		"unable_to_connect": "Keine Verbindung zum Gerät möglich",
 		"unable_to_delete": "Löschen nicht möglich",
 		"unknown": "unbekannte",
@@ -164,13 +168,19 @@
 		"yes": "Ja"
 	},
 	"configuration": {
+		"add_configuration": "Konfiguration hinzufügen",
+		"add_new_block": "Neuen Konfigurationsblock hinzufügen",
 		"cannot_delete": "Diese Konfiguration kann nicht gelöscht werden, da sie von mindestens einer Entität, einem Veranstaltungsort oder einem Gerät verwendet wird",
+		"choose_section": "Welchen Abschnitt soll dieser Block enthalten?",
+		"configuration_browser": "Konfigurationsbrowser",
 		"configurations": "Konfigurationen",
 		"create": "Konfiguration erstellen",
 		"create_config": "Neue Konfiguration erstellen",
 		"create_new_configuration": "Neues Konfigurationselement erstellen",
 		"created": "Erstellt",
 		"creation_success": "Konfiguration erfolgreich erstellt!",
+		"currently_associated": "Aktuell zugeordnete Konfiguration: {{config}}",
+		"currently_selected_config": "Derzeit ausgewählte Konfiguration: {{config}}",
 		"delete_config": "Konfiguration löschen",
 		"details": "Gerätedetails",
 		"device_password": "Passwort",
@@ -180,13 +190,20 @@
 		"error_delete": "Fehler beim Versuch zu löschen: {{error}}",
 		"error_fetching_config": "Fehler beim Abrufen der Konfiguration",
 		"error_trying_delete": "Fehler beim Versuch zu löschen: {{error}}",
-		"last_configuration_change": "Letzte Konfigurationsänderung",
+		"error_update": "Fehler: {{error}}",
+		"explanation": "Erläuterung",
+		"last_configuration_change": "Konfigurationsänderung",
 		"last_configuration_download": "Letzter Konfigurations-Download",
 		"location": "Ort",
 		"need_device_type": "Jede Konfiguration muss mindestens einen Gerätetyp unterstützen",
+		"no_associated_config": "Keine zugehörige Konfiguration",
+		"no_associated_configuration": "Keine zugeordneten Konfigurationen",
 		"note": "Hinweis",
 		"notes": "Anmerkungen",
 		"owner": "Inhaber",
+		"select_configuration": "Wählen Sie diese Konfiguration",
+		"success_block_delete": "Konfigurationsblock erfolgreich gelöscht",
+		"success_update": "Konfiguration erfolgreich aktualisiert!",
 		"successful_delete": "Konfiguration gelöscht!",
 		"support_all": "Alle unterstützen",
 		"supported_device_types": "Unterstützte Gerätetypen",
@@ -205,6 +222,9 @@
 		"title": "Gerät konfigurieren",
 		"valid_json": "Sie müssen ein gültiges JSON eingeben"
 	},
+	"connect": {
+		"error_trying_to_connect": "Fehler beim Versuch, eine Verbindung zum Gerät herzustellen: {{error}}"
+	},
 	"delete_command": {
 		"explanation": "Möchten Sie diesen Befehl wirklich löschen? Diese Aktion ist nicht umkehrbar.",
 		"title": "Befehl löschen"
@@ -214,6 +234,10 @@
 		"device_logs_title": "Geräteprotokolle löschen",
 		"explanation": "Dadurch werden alle {{object}} vor dem von Ihnen gewählten Datum gelöscht. Seien Sie vorsichtig, diese Aktion ist nicht umkehrbar.",
 		"healthchecks_title": "Healthchecks löschen"
+	},
+	"device": {
+		"error_fetching_device": "Fehler beim Abrufen der Geräteinformationen: {{error}}",
+		"error_fetching_devices": "Fehler beim Abrufen von Geräten: {{error}}"
 	},
 	"device_logs": {
 		"log": "Protokoll",
@@ -227,6 +251,8 @@
 		"add_success": "Entität erfolgreich erstellt!",
 		"assigned_inventory": "Zugewiesenes Inventar",
 		"cannot_delete": "Entitäten mit untergeordneten Elementen können nicht gelöscht werden. Löschen Sie die untergeordneten Elemente dieser Entität, um sie löschen zu können.",
+		"currently_selected_entity": "Derzeit ausgewähltes Unternehmen: {{config}}",
+		"currently_selected_venue": "Aktuell ausgewählter Veranstaltungsort: {{config}}",
 		"delete_success": "Entität erfolgreich gelöscht",
 		"delete_warning": "Achtung: Dieser Vorgang kann nicht rückgängig gemacht werden",
 		"edit_failure": "Aktualisierung fehlgeschlagen : {{error}}",
@@ -289,7 +315,7 @@
 		"add_child": "Untergeordneten Veranstaltungsort hinzufügen",
 		"add_child_venue": "Untergeordneten Veranstaltungsort zu {{entityName}}hinzufügen",
 		"add_tag": "Tag erstellen",
-		"add_tag_to": "Inventar-Tag zu {{name}}hinzufügen",
+		"add_tag_to": "Neues Gerät zu {{name}}hinzufügen",
 		"add_venue": "Veranstaltungsort hinzufügen",
 		"assign_entity_instructions": "Sie können die Entität, der dieses Tag zugewiesen werden soll, entweder über das Menü unten finden oder die UUID der Entität manuell in das Feld oben einfügen.",
 		"assign_error": "Fehler beim Versuch, Tag zuzuweisen",
@@ -360,6 +386,7 @@
 		"tags_assigned_to": "Inventar-Tags {{name}}zugewiesen",
 		"test_import": "Importdaten validieren",
 		"test_results": "Testergebnisse",
+		"title": "Inventar",
 		"type_invalid": "Fehler: Ungültiger Gerätetyp",
 		"unassign": "Zuordnung aufheben",
 		"unassign_tag": "Tag von Entität zuweisen",
@@ -421,10 +448,10 @@
 		"title": "Statistiken"
 	},
 	"status": {
-		"connection_status": "Verbindungsstatus",
+		"connection_status": "Status",
 		"error": "Statusdaten sind nicht verfügbar",
 		"last_contact": "Letzter Kontakt",
-		"load_averages": "Belastung (Durchschnitt 1 / 5 / 15 Minuten)",
+		"load_averages": "Belastung (1/5/15 m.)",
 		"localtime": "Ortszeit",
 		"memory": "Verwendeter Speicher",
 		"percentage_free": "{{percentage}}% von {{total}} kostenlos",
@@ -434,7 +461,15 @@
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
 	},
 	"system": {
-		"error_fetching": "Fehler beim Abrufen von Systeminformationen"
+		"error_fetching": "Fehler beim Abrufen von Systeminformationen",
+		"error_reloading": "Fehler beim Neuladen: {{error}}",
+		"hostname": "Hostname",
+		"os": "Betriebssystem",
+		"processors": "Prozessoren",
+		"reload": "Neu laden",
+		"reload_subsystems": "Subsysteme neu laden",
+		"subsystems": "Subsysteme",
+		"success_reload": "Reload-Befehl erfolgreich gesendet!"
 	},
 	"telemetry": {
 		"connection_failed": "Verbindung konnte nicht hergestellt werden. Fehler: {{error}}",
@@ -478,7 +513,7 @@
 		"create_success": "Benutzer erfolgreich erstellt",
 		"creating": "Benutzer erstellen ...",
 		"delete_avatar": "Avatar löschen",
-		"delete_failure": "Fehler beim Versuch, den Benutzer zu löschen",
+		"delete_failure": "Fehler beim Versuch, den Benutzer zu löschen: {{error}}",
 		"delete_success": "Benutzer erfolgreich gelöscht!",
 		"delete_title": "Benutzer löschen",
 		"delete_warning": "Warnung: Sobald Sie einen Benutzer gelöscht haben, können Sie ihn nicht wiederherstellen",
@@ -486,6 +521,7 @@
 		"description": "Beschreibung",
 		"edit": "Benutzer bearbeiten",
 		"email_address": "E-Mail-Addresse",
+		"error_fetching_users": "Fehler beim Abrufen der Nutzer: {{error}}",
 		"force_password_change": "Passwortänderung bei der Anmeldung erzwingen",
 		"id": "Benutzeridentifikation.",
 		"last_login": "Letzte Anmeldung",
@@ -501,7 +537,7 @@
 		"provide_password": "Bitte geben Sie ein gültiges Passwort ein",
 		"save_avatar": "Avatar speichern",
 		"show_hide_password": "Passwort anzeigen/verbergen",
-		"update_failure": "Stellen Sie sicher, dass alle Ihre Daten gültig sind. Wenn Sie das Kennwort ändern, stellen Sie sicher, dass es sich nicht um ein altes handelt.",
+		"update_failure": "Fehler beim Aktualisieren: {{error}}",
 		"update_failure_title": "Update fehlgeschlagen",
 		"update_success": "Benutzer erfolgreich aktualisiert",
 		"update_success_title": "Erfolg",
