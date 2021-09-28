@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 const path = require('path');
 const paths = require('./paths');
 
@@ -19,6 +20,9 @@ module.exports = {
     preferRelative: true,
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.VERSION': JSON.stringify(process.env.npm_package_version),
+    }),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css',

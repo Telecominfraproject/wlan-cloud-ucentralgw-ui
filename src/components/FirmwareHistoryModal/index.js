@@ -29,7 +29,7 @@ const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralfms}/api/v1/revisionHistory/${serialNumber}`, options)
+      .get(`${endpoints.owfms}/api/v1/revisionHistory/${serialNumber}`, options)
       .then((response) => setData(response.data.history ?? []))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -46,7 +46,7 @@ const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
   return (
     <CModal size="xl" show={show} onClose={toggle} scrollable>
       <CModalHeader closeButton>
-        <CModalTitle>
+        <CModalTitle className="pl-1 pt-1">
           #{serialNumber} {t('firmware.history_title')}
         </CModalTitle>
       </CModalHeader>

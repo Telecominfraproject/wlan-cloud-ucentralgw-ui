@@ -43,7 +43,7 @@ const FirmwareDashboard = () => {
     };
 
     return axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/ouis?macList=${oui.join(',')}`, {
+      .get(`${endpoints.owgw}/api/v1/ouis?macList=${oui.join(',')}`, {
         headers,
       })
       .then((response) => {
@@ -298,7 +298,7 @@ const FirmwareDashboard = () => {
       Authorization: `Bearer ${currentToken}`,
     };
     axiosInstance
-      .get(`${endpoints.ucentralfms}/api/v1/deviceReport`, {
+      .get(`${endpoints.owfms}/api/v1/deviceReport`, {
         headers,
       })
       .then((response) => {

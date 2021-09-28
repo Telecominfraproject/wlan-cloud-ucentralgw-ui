@@ -206,7 +206,7 @@ const Login = () => {
         .then((response) => {
           if (response) {
             const endpoints = {
-              ucentralsec: fields.ucentralsecurl.value,
+              owsec: fields.ucentralsecurl.value,
             };
             for (const endpoint of response.data.endpoints) {
               endpoints[endpoint.type] = endpoint.uri;
@@ -296,7 +296,6 @@ const Login = () => {
       updateField={updateFieldWithId}
       toggleForgotPassword={toggleForgotPassword}
       isLogin={isLogin}
-      logo="assets/LindsayBB_Logo.png"
       isPasswordChange={isPasswordChange}
       onKeyDown={onKeyDown}
       sendForgotPasswordEmail={sendForgotPasswordEmail}

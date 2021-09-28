@@ -66,7 +66,7 @@ const TheLayout = () => {
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
-        logo="assets/LindsayBB_Logo.png"
+        logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
         options={navigation}
         redirectTo="/devices"
       />
@@ -78,7 +78,7 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
-          logo="assets/LindsayBB_Logo.png"
+          logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
           authToken={currentToken}
           endpoints={endpoints}
           user={user}
@@ -89,7 +89,7 @@ const TheLayout = () => {
             <PageContainer t={t} routes={routes} redirectTo="/devices" />
           </ToastProvider>
         </div>
-        <Footer t={t} version="2.0.32" />
+        <Footer t={t} version={process.env.VERSION} />
       </div>
     </div>
   );

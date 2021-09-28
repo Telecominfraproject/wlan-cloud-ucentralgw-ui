@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CRow, CCol } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
-import DeviceConfiguration from 'components/DeviceConfiguration';
 import DeviceStatusCard from 'components/DeviceStatusCard';
 import CommandHistory from 'components/CommandHistory';
 import DeviceLogs from 'components/DeviceLogs';
@@ -18,20 +17,25 @@ const DevicePage = () => {
     <div className="App">
       <DeviceProvider axiosInstance={axiosInstance} serialNumber={deviceId}>
         <CRow>
-          <CCol xs="12" lg="6">
+          <CCol>
             <DeviceStatusCard />
-            <DeviceConfiguration />
           </CCol>
-          <CCol xs="12" lg="6">
-            <DeviceLogs />
-            <DeviceHealth />
+        </CRow>
+        <CRow>
+          <CCol lg="12" xl="6">
+            <CommandHistory />
+          </CCol>
+          <CCol lg="12" xl="6">
             <DeviceActionCard />
           </CCol>
         </CRow>
         <CRow>
-          <CCol>
+          <CCol lg="12" xl="6">
             <DeviceStatisticsCard />
-            <CommandHistory />
+          </CCol>
+          <CCol lg="12" xl="6">
+            <DeviceHealth />
+            <DeviceLogs />
           </CCol>
         </CRow>
       </DeviceProvider>
