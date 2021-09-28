@@ -22,6 +22,7 @@ const SystemPage = () => {
       uptime: t('common.unknown'),
       version: t('common.unknown'),
       start: t('common.unknown'),
+      certificates: [],
       subsystems: [],
     };
 
@@ -41,7 +42,9 @@ const SystemPage = () => {
 
     return Promise.all([getInfo, getSubsystems])
       .then(([newInfo, newSubs]) => {
-        systemInfo.uptime = secondsToDetailed(
+        let newSystem = { ...systemInfo };
+        newSystem = { ...newSystem, ...newInfo.data, ...newSubs.data };
+        newSystem.uptime = secondsToDetailed(
           newInfo.data.uptime,
           t('common.day'),
           t('common.days'),
@@ -52,17 +55,14 @@ const SystemPage = () => {
           t('common.second'),
           t('common.seconds'),
         );
-        systemInfo.hostname = newInfo.data.hostname;
-        systemInfo.os = newInfo.data.os;
-        systemInfo.processors = newInfo.data.processors;
-        systemInfo.version = newInfo.data.version;
-        systemInfo.start = prettyDate(newInfo.data.start);
-        systemInfo.subsystems = newSubs.data.list.sort((a, b) => {
+        newSystem.start = prettyDate(newInfo.data.start);
+        newSystem.subsystems = newSubs.data.list.sort((a, b) => {
           if (a < b) return -1;
           if (a > b) return 1;
           return 0;
         });
-        return systemInfo;
+
+        return newSystem;
       })
       .catch(() => systemInfo);
   };

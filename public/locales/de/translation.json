@@ -468,7 +468,7 @@
 		"os": "Betriebssystem",
 		"processors": "Prozessoren",
 		"reload": "Neu laden",
-		"reload_subsystems": "Subsysteme neu laden",
+		"reload_subsystems": "Subsysteme",
 		"subsystems": "Subsysteme",
 		"success_reload": "Reload-Befehl erfolgreich gesendet!"
 	},
