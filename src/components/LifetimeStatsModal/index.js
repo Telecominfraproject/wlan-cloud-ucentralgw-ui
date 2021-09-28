@@ -23,7 +23,7 @@ const LifetimeStatsModal = ({ show, toggle }) => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}/statistics?lifetime=true`,
+        `${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/statistics?lifetime=true`,
         options,
       )
       .then((response) => {

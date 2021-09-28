@@ -13,6 +13,7 @@ import {
   CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { cilTrash } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { prettyDate, dateToUnix } from 'utils/helper';
@@ -25,7 +26,6 @@ const DeviceHealth = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
-  const [collapse, setCollapse] = useState(false);
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [healthChecks, setHealthChecks] = useState([]);
@@ -40,11 +40,6 @@ const DeviceHealth = () => {
 
   const toggleDeleteModal = () => {
     setShowDeleteModal(!showDeleteModal);
-  };
-
-  const toggle = (e) => {
-    setCollapse(!collapse);
-    e.preventDefault();
   };
 
   const modifyStart = (value) => {
@@ -85,7 +80,7 @@ const DeviceHealth = () => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(
           deviceSerialNumber,
         )}/healthchecks${extraParams}`,
         options,
@@ -195,96 +190,71 @@ const DeviceHealth = () => {
       color={barColor}
       inverse="true"
       footerSlot={
-        <div className="p-4">
+        <div className="pb-1 px-3">
           <CProgress className="mb-3" color="white" value={sanityLevel ?? 0} />
-          <CCollapse show={collapse}>
-            <div className="text-right">
-              <CPopover content={t('common.delete')}>
-                <CButton
-                  color="light"
-                  shape="square"
-                  size="sm"
-                  onClick={() => {
-                    toggleDeleteModal();
-                  }}
-                >
-                  <CIcon name="cilTrash" size="lg" />
-                </CButton>
-              </CPopover>
+          <CRow className="mb-3">
+            <CCol>
+              {t('common.from')}
+              :
+              <DatePicker includeTime onChange={(date) => modifyStart(date)} />
+            </CCol>
+            <CCol>
+              {t('common.to')}
+              :
+              <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
+            </CCol>
+          </CRow>
+          <CCard className="p-0">
+            <div className="overflow-auto" style={{ height: '200px' }}>
+              <CDataTable
+                border
+                items={healthChecks ?? []}
+                fields={columns}
+                className="text-white"
+                loading={loading}
+                sorterValue={{ column: 'recorded', desc: 'true' }}
+                scopedSlots={{
+                  UUID: (item) => <td className="align-middle">{item.UUID}</td>,
+                  recorded: (item) => <td className="align-middle">{prettyDate(item.recorded)}</td>,
+                  sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
+                  show_details: (item, index) => (
+                    <td className="align-middle">
+                      <CButton
+                        color="primary"
+                        variant={details.includes(index) ? '' : 'outline'}
+                        shape="square"
+                        size="sm"
+                        onClick={() => {
+                          toggleDetails(index);
+                        }}
+                      >
+                        <CIcon name="cilList" size="lg" />
+                      </CButton>
+                    </td>
+                  ),
+                  details: (item, index) => (
+                    <CCollapse show={details.includes(index)}>
+                      <CCardBody>
+                        <h5>{t('common.details')}</h5>
+                        <div>{getDetails(index, item.values)}</div>
+                      </CCardBody>
+                    </CCollapse>
+                  ),
+                }}
+              />
+              {showLoadingMore && (
+                <div className="mb-3">
+                  <LoadingButton
+                    label={t('common.view_more')}
+                    isLoadingLabel={t('common.loading_more_ellipsis')}
+                    isLoading={loadingMore}
+                    action={showMoreLogs}
+                    variant="outline"
+                  />
+                </div>
+              )}
             </div>
-            <CRow className="mb-3">
-              <CCol>
-                {t('common.from')}
-                :
-                <DatePicker includeTime onChange={(date) => modifyStart(date)} />
-              </CCol>
-              <CCol>
-                {t('common.to')}
-                :
-                <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
-              </CCol>
-            </CRow>
-            <CCard className="p-0">
-              <div className="overflow-auto" style={{ height: '250px' }}>
-                <CDataTable
-                  border
-                  items={healthChecks ?? []}
-                  fields={columns}
-                  className="text-white"
-                  loading={loading}
-                  sorterValue={{ column: 'recorded', desc: 'true' }}
-                  scopedSlots={{
-                    UUID: (item) => <td className="align-middle">{item.UUID}</td>,
-                    recorded: (item) => (
-                      <td className="align-middle">{prettyDate(item.recorded)}</td>
-                    ),
-                    sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
-                    show_details: (item, index) => (
-                      <td className="align-middle">
-                        <CButton
-                          color="primary"
-                          variant={details.includes(index) ? '' : 'outline'}
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleDetails(index);
-                          }}
-                        >
-                          <CIcon name="cilList" size="lg" />
-                        </CButton>
-                      </td>
-                    ),
-                    details: (item, index) => (
-                      <CCollapse show={details.includes(index)}>
-                        <CCardBody>
-                          <h5>{t('common.details')}</h5>
-                          <div>{getDetails(index, item.values)}</div>
-                        </CCardBody>
-                      </CCollapse>
-                    ),
-                  }}
-                />
-                {showLoadingMore && (
-                  <div className="mb-3">
-                    <LoadingButton
-                      label={t('common.view_more')}
-                      isLoadingLabel={t('common.loading_more_ellipsis')}
-                      isLoading={loadingMore}
-                      action={showMoreLogs}
-                      variant="outline"
-                    />
-                  </div>
-                )}
-              </div>
-            </CCard>
-          </CCollapse>
-          <CButton show={collapse ? 'true' : 'false'} color="transparent" onClick={toggle} block>
-            <CIcon
-              name={collapse ? 'cilChevronTop' : 'cilChevronBottom'}
-              className="text-white"
-              size="lg"
-            />
-          </CButton>
+          </CCard>
           <DeleteLogModal
             serialNumber={deviceSerialNumber}
             object="healthchecks"
@@ -293,7 +263,15 @@ const DeviceHealth = () => {
           />
         </div>
       }
-    />
+    >
+      <div className="text-right float-right">
+        <CPopover content={t('common.delete')}>
+          <CButton onClick={toggleDeleteModal} size="sm">
+            <CIcon name="cil-trash" content={cilTrash} className="text-white" size="2xl" />
+          </CButton>
+        </CPopover>
+      </div>
+    </CWidgetDropdown>
   );
 };
 

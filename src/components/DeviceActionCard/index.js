@@ -11,6 +11,7 @@ import WifiScanModal from 'components/WifiScanModal';
 import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
 import EventQueueModal from 'components/EventQueueModal';
+import TelemetryModal from 'components/TelemetryModal';
 
 const DeviceActions = () => {
   const { t } = useTranslation();
@@ -30,38 +31,25 @@ const DeviceActions = () => {
   const [showConfigModal, setConfigModal] = useState(false);
   const [showFactoryModal, setShowFactoryModal] = useState(false);
   const [showQueueModal, setShowQueueModal] = useState(false);
+  const [showTelemetryModal, setShowTelemetryModal] = useState(false);
 
-  const toggleRebootModal = () => {
-    setShowRebootModal(!showRebootModal);
-  };
+  const toggleRebootModal = () => setShowRebootModal(!showRebootModal);
 
-  const toggleBlinkModal = () => {
-    setShowBlinkModal(!showBlinkModal);
-  };
+  const toggleBlinkModal = () => setShowBlinkModal(!showBlinkModal);
 
-  const toggleUpgradeModal = () => {
-    setShowUpgradeModal(!showUpgradeModal);
-  };
+  const toggleUpgradeModal = () => setShowUpgradeModal(!showUpgradeModal);
 
-  const toggleTraceModal = () => {
-    setShowTraceModal(!showTraceModal);
-  };
+  const toggleTraceModal = () => setShowTraceModal(!showTraceModal);
 
-  const toggleScanModal = () => {
-    setShowScanModal(!showScanModal);
-  };
+  const toggleScanModal = () => setShowScanModal(!showScanModal);
 
-  const toggleConfigModal = () => {
-    setConfigModal(!showConfigModal);
-  };
+  const toggleConfigModal = () => setConfigModal(!showConfigModal);
 
-  const toggleFactoryResetModal = () => {
-    setShowFactoryModal(!showFactoryModal);
-  };
+  const toggleFactoryResetModal = () => setShowFactoryModal(!showFactoryModal);
 
-  const toggleQueueModal = () => {
-    setShowQueueModal(!showQueueModal);
-  };
+  const toggleQueueModal = () => setShowQueueModal(!showQueueModal);
+
+  const toggleTelemetryModal = () => setShowTelemetryModal(!showTelemetryModal);
 
   const getRttysInfo = () => {
     setConnectLoading(true);
@@ -74,7 +62,7 @@ const DeviceActions = () => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/rtty`,
         options,
       )
       .then((response) => {
@@ -82,7 +70,14 @@ const DeviceActions = () => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
-      .catch(() => {})
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('connect.error_trying_to_connect', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
+      })
       .finally(() => {
         setConnectLoading(false);
       });
@@ -97,7 +92,7 @@ const DeviceActions = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/device/${deviceSerialNumber}`, options)
+      .get(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}`, options)
       .then((response) => {
         setDevice(response.data);
       })
@@ -143,7 +138,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
@@ -155,7 +150,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
@@ -167,7 +162,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <LoadingButton
               isLoading={connectLoading}
@@ -182,13 +177,17 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-3">
+        <CRow className="mt-4">
           <CCol>
             <CButton block color="primary" onClick={toggleQueueModal}>
               {t('commands.event_queue')}
             </CButton>
           </CCol>
-          <CCol />
+          <CCol>
+            <CButton block color="primary" onClick={toggleTelemetryModal}>
+              {t('actions.telemetry')}
+            </CButton>
+          </CCol>
         </CRow>
       </CCardBody>
       <RebootModal show={showRebootModal} toggleModal={toggleRebootModal} />
@@ -208,6 +207,7 @@ const DeviceActions = () => {
       <ConfigureModal show={showConfigModal} toggleModal={toggleConfigModal} />
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
       <EventQueueModal show={showQueueModal} toggle={toggleQueueModal} />
+      <TelemetryModal show={showTelemetryModal} toggle={toggleTelemetryModal} />
     </CCard>
   );
 };

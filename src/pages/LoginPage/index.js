@@ -206,7 +206,7 @@ const Login = () => {
         .then((response) => {
           if (response) {
             const endpoints = {
-              ucentralsec: fields.ucentralsecurl.value,
+              owsec: fields.ucentralsecurl.value,
             };
             for (const endpoint of response.data.endpoints) {
               endpoints[endpoint.type] = endpoint.uri;

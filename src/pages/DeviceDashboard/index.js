@@ -338,7 +338,7 @@ const DeviceDashboard = () => {
       Authorization: `Bearer ${currentToken}`,
     };
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/deviceDashboard`, {
+      .get(`${endpoints.owgw}/api/v1/deviceDashboard`, {
         headers,
       })
       .then((response) => {

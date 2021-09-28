@@ -22,6 +22,7 @@ import {
   NotesTable,
   useAuth,
   useDevice,
+  useToast,
 } from 'ucentral-libs';
 import DeviceConfigurationModal from './DeviceConfigurationModal';
 
@@ -29,6 +30,7 @@ const DeviceConfiguration = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [collapse, setCollapse] = useState(false);
@@ -57,14 +59,18 @@ const DeviceConfiguration = () => {
     };
 
     axiosInstance
-      .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
-        options,
-      )
+      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`, options)
       .then((response) => {
         setDevice(response.data);
       })
-      .catch(() => {});
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_device', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
+      });
   };
 
   const saveNote = (currentNote) => {
@@ -82,7 +88,7 @@ const DeviceConfiguration = () => {
 
     axiosInstance
       .put(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}`,
         parameters,
         { headers },
       )
@@ -156,46 +162,46 @@ const DeviceConfiguration = () => {
                 {device.firmware}
               </CCol>
             </CRow>
-            <CRow className="mt-2">
-              <CCol md="3">
-                <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
-              </CCol>
-              <CCol xs="12" md="9">
-                {prettyDate(device.lastConfigurationChange)}
-              </CCol>
-            </CRow>
-            <CRow className="mt-2">
-              <CCol md="3">
-                <CLabel>{t('common.mac')} :</CLabel>
-              </CCol>
-              <CCol xs="12" md="9">
-                {device.macAddress}
-              </CCol>
-            </CRow>
-            <CRow className="mt-2 mb-4">
-              <CCol md="3">
-                <CLabel className="align-middle">{t('configuration.device_password')} : </CLabel>
-              </CCol>
-              <CCol xs="12" md="2">
-                {getPassword()}
-              </CCol>
-              <CCol md="7">
-                <HideTextButton t={t} toggle={toggleShowPassword} show={showPassword} />
-                <CopyToClipboardButton
-                  t={t}
-                  size="sm"
-                  content={device?.devicePassword === '' ? 'openwifi' : device.devicePassword}
-                />
-              </CCol>
-            </CRow>
-            <NotesTable
-              t={t}
-              notes={device.notes}
-              loading={loading}
-              addNote={saveNote}
-              descriptionColumn={false}
-            />
             <CCollapse show={collapse}>
+              <CRow className="mt-2">
+                <CCol md="3">
+                  <CLabel>{t('configuration.last_configuration_change')} : </CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  {prettyDate(device.lastConfigurationChange)}
+                </CCol>
+              </CRow>
+              <CRow className="mt-2">
+                <CCol md="3">
+                  <CLabel>{t('common.mac')} :</CLabel>
+                </CCol>
+                <CCol xs="12" md="9">
+                  {device.macAddress}
+                </CCol>
+              </CRow>
+              <CRow className="mt-2 mb-4">
+                <CCol md="3">
+                  <CLabel className="align-middle">{t('configuration.device_password')} : </CLabel>
+                </CCol>
+                <CCol xs="12" md="2">
+                  {getPassword()}
+                </CCol>
+                <CCol md="7">
+                  <HideTextButton t={t} toggle={toggleShowPassword} show={showPassword} />
+                  <CopyToClipboardButton
+                    t={t}
+                    size="sm"
+                    content={device?.devicePassword === '' ? 'openwifi' : device.devicePassword}
+                  />
+                </CCol>
+              </CRow>
+              <NotesTable
+                t={t}
+                notes={device.notes}
+                loading={loading}
+                addNote={saveNote}
+                descriptionColumn={false}
+              />
               <CRow className="mt-2">
                 <CCol md="3">
                   <CLabel>{t('configuration.last_configuration_download')} : </CLabel>

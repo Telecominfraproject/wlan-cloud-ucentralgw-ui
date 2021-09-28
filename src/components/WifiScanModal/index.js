@@ -10,7 +10,10 @@ import {
   CSwitch,
   CCol,
   CSpinner,
+  CPopover,
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilX } from '@coreui/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -98,7 +101,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
     axiosInstance
       .post(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`,
+        `${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceSerialNumber)}/wifiscan`,
         parameters,
         { headers },
       )
@@ -124,8 +127,15 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
   return (
     <CModal size="lg" show={show} onClose={toggleModal}>
-      <CModalHeader closeButton>
-        <CModalTitle>{t('actions.wifi_scan')}</CModalTitle>
+      <CModalHeader className="p-1">
+        <CModalTitle className="pl-1 pt-1">{t('actions.wifi_scan')}</CModalTitle>
+        <div className="text-right">
+          <CPopover content={t('common.close')}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggleModal}>
+              <CIcon content={cilX} />
+            </CButton>
+          </CPopover>
+        </div>
       </CModalHeader>
       <CModalBody>
         <div hidden={hideOptions || waiting}>

@@ -68,9 +68,7 @@ const DeviceList = () => {
 
     axiosInstance
       .get(
-        `${
-          endpoints.ucentralgw
-        }/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
+        `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
           devicePerPage * selectedPage + 1
         }`,
         options,
@@ -80,7 +78,7 @@ const DeviceList = () => {
         const serialsToGet = fullDevices.map((device) => device.serialNumber);
 
         return axiosInstance.get(
-          `${endpoints.ucentralfms}/api/v1/firmwareAge?select=${serialsToGet}`,
+          `${endpoints.owfms}/api/v1/firmwareAge?select=${serialsToGet}`,
           options,
         );
       })
@@ -101,7 +99,13 @@ const DeviceList = () => {
         setDevices(fullDevices);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -115,7 +119,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(`${endpoints.ucentralgw}/api/v1/devices?countOnly=true`, {
+      .get(`${endpoints.owgw}/api/v1/devices?countOnly=true`, {
         headers,
       })
       .then((response) => {
@@ -132,7 +136,13 @@ const DeviceList = () => {
         }
         getDeviceInformation(selectedPage);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -147,22 +157,47 @@ const DeviceList = () => {
       },
     };
 
+    let newDevice;
+
     axiosInstance
       .get(
-        `${endpoints.ucentralgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
+        `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&select=${encodeURIComponent(
           serialNumber,
         )}`,
         options,
       )
+      .then(
+        ({
+          data: {
+            devicesWithStatus: [device],
+          },
+        }) => {
+          newDevice = device;
+
+          return axiosInstance.get(
+            `${endpoints.owfms}/api/v1/firmwareAge?select=${serialNumber}`,
+            options,
+          );
+        },
+      )
       .then((response) => {
-        const device = response.data.devicesWithStatus[0];
+        newDevice.firmwareInfo = {
+          age: response.data.ages[0].age,
+          latest: response.data.ages[0].latest,
+        };
         const foundIndex = devices.findIndex((obj) => obj.serialNumber === serialNumber);
         const newList = devices;
-        newList[foundIndex] = device;
+        newList[foundIndex] = newDevice;
         setDevices(newList);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('device.error_fetching_devices', { error: e.response?.data?.ErrorDescription }),
+          color: 'danger',
+          autohide: true,
+        });
         setLoading(false);
       });
   };
@@ -203,7 +238,7 @@ const DeviceList = () => {
 
     axiosInstance
       .get(
-        `${endpoints.ucentralfms}/api/v1/firmwares?deviceType=${device.compatible}&latestOnly=true`,
+        `${endpoints.owfms}/api/v1/firmwares?deviceType=${device.compatible}&latestOnly=true`,
         options,
       )
       .then((response) => {
@@ -214,7 +249,7 @@ const DeviceList = () => {
             uri: response.data.uri,
           };
           return axiosInstance.post(
-            `${endpoints.ucentralgw}/api/v1/device/${device.serialNumber}/upgrade`,
+            `${endpoints.owgw}/api/v1/device/${device.serialNumber}/upgrade`,
             parameters,
             options,
           );
@@ -259,19 +294,16 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .get(
-        `${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}/rtty`,
-        options,
-      )
+      .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}/rtty`, options)
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('common.unable_to_connect'),
+          body: t('connect.error_trying_to_connect', { error: e.response?.data?.ErrorDescription }),
           color: 'danger',
           autohide: true,
         });
@@ -291,7 +323,7 @@ const DeviceList = () => {
     };
 
     axiosInstance
-      .delete(`${endpoints.ucentralgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
+      .delete(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(serialNumber)}`, options)
       .then(() => {
         addToast({
           title: t('common.success'),
