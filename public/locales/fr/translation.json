@@ -170,6 +170,7 @@
 	"configuration": {
 		"add_configuration": "Ajouter une configuration",
 		"add_new_block": "Ajouter un nouveau bloc de configuration",
+		"add_or_link": "Lier ou ajouter",
 		"cannot_delete": "Cette configuration ne peut pas être supprimée car elle est utilisée par au moins une entité, un lieu ou un appareil",
 		"choose_section": "Quelle section souhaitez-vous que ce bloc contienne?",
 		"configuration_browser": "Navigateur de configuration",

@@ -170,6 +170,7 @@
 	"configuration": {
 		"add_configuration": "Add Configuration",
 		"add_new_block": "Add new Configuration Block",
+		"add_or_link": "Link or Add",
 		"cannot_delete": "This configuration cannot be deleted because it is being used by at least one entity, venue or device",
 		"choose_section": "Which section you would like this block to contain?",
 		"configuration_browser": "Configuration Browser",
