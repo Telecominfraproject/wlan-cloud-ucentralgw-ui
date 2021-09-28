@@ -170,6 +170,7 @@
 	"configuration": {
 		"add_configuration": "Konfiguration hinzufügen",
 		"add_new_block": "Neuen Konfigurationsblock hinzufügen",
+		"add_or_link": "Verlinken oder hinzufügen",
 		"cannot_delete": "Diese Konfiguration kann nicht gelöscht werden, da sie von mindestens einer Entität, einem Veranstaltungsort oder einem Gerät verwendet wird",
 		"choose_section": "Welchen Abschnitt soll dieser Block enthalten?",
 		"configuration_browser": "Konfigurationsbrowser",

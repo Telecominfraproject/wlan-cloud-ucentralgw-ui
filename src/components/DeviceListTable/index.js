@@ -77,25 +77,30 @@ const DeviceList = () => {
         fullDevices = response.data.devicesWithStatus;
         const serialsToGet = fullDevices.map((device) => device.serialNumber);
 
+        if (serialsToGet.length === 0) {
+          return null;
+        }
         return axiosInstance.get(
           `${endpoints.owfms}/api/v1/firmwareAge?select=${serialsToGet}`,
           options,
         );
       })
       .then((response) => {
-        fullDevices = fullDevices.map((device, index) => {
-          const foundAgeDate = response.data.ages[index].age !== undefined;
-          if (foundAgeDate) {
-            return {
-              ...device,
-              firmwareInfo: {
-                age: response.data.ages[index].age,
-                latest: response.data.ages[index].latest,
-              },
-            };
-          }
-          return device;
-        });
+        if (response !== null) {
+          fullDevices = fullDevices.map((device, index) => {
+            const foundAgeDate = response.data.ages[index].age !== undefined;
+            if (foundAgeDate) {
+              return {
+                ...device,
+                firmwareInfo: {
+                  age: response.data.ages[index].age,
+                  latest: response.data.ages[index].latest,
+                },
+              };
+            }
+            return device;
+          });
+        }
         setDevices(fullDevices);
         setLoading(false);
       })
