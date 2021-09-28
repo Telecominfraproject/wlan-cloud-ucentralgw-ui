@@ -16,4 +16,4 @@ jobs:
     steps:
       - run: |
           export PR_BRANCH_TAG=$(echo ${GITHUB_HEAD_REF#refs/heads/} | tr '/' '-')
-          curl -uucentral:${{ secrets.DOCKER_REGISTRY_PASSWORD }} -X DELETE "https://tip.jfrog.io/artifactory/tip-wlan-cloud-ucentral/ucentralgw-ui/$PR_BRANCH_TAG"
+          curl -uucentral:${{ secrets.DOCKER_REGISTRY_PASSWORD }} -X DELETE "https://tip.jfrog.io/artifactory/tip-wlan-cloud-ucentral/owgw-ui/$PR_BRANCH_TAG"
