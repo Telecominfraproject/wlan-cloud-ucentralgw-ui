@@ -24,12 +24,13 @@ import 'react-widgets/styles.css';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
 
 const BlinkModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [isNow, setIsNow] = useState(false);
   const [waiting, setWaiting] = useState(false);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
@@ -78,7 +79,13 @@ const BlinkModal = ({ show, toggleModal }) => {
         { headers },
       )
       .then(() => {
-        setResult('success');
+        addToast({
+          title: t('common.success'),
+          body: t('commands.command_success'),
+          color: 'success',
+          autohide: true,
+        });
+        toggleModal();
       })
       .catch(() => {
         setResult('error');

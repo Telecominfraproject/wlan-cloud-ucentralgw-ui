@@ -20,13 +20,14 @@ import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [waiting, setWaiting] = useState(false);
   const [result, setResult] = useState(null);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
@@ -72,7 +73,13 @@ const ActionModal = ({ show, toggleModal }) => {
         { headers },
       )
       .then(() => {
-        setResult('success');
+        addToast({
+          title: t('common.success'),
+          body: t('commands.command_success'),
+          color: 'success',
+          autohide: true,
+        });
+        toggleModal();
       })
       .catch(() => {
         setResult('error');

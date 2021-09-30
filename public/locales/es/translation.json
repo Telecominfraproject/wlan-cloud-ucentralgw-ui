@@ -22,6 +22,7 @@
 		"when_blink_leds": "¿Cuándo desea que los LED del dispositivo parpadeen?"
 	},
 	"commands": {
+		"command_success": "Comando enviado con éxito",
 		"error": "¡Error al enviar el comando!",
 		"error_delete_log": "Error al intentar eliminar: {{error}}",
 		"event_queue": "Cola de eventos",
