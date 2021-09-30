@@ -22,6 +22,7 @@
 		"when_blink_leds": "Wann möchten Sie die LEDs blinken lassen?"
 	},
 	"commands": {
+		"command_success": "Befehl erfolgreich übermittelt",
 		"error": "Fehler beim Senden des Befehls!",
 		"error_delete_log": "Fehler beim Versuch zu löschen: {{error}}",
 		"event_queue": "Ereigniswarteschlange",

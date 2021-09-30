@@ -22,6 +22,7 @@
 		"when_blink_leds": "Quando você gostaria de fazer os LEDs do dispositivo piscarem?"
 	},
 	"commands": {
+		"command_success": "Comando enviado com sucesso",
 		"error": "Erro ao enviar comando!",
 		"error_delete_log": "Erro ao tentar excluir: {{error}}",
 		"event_queue": "Fila de Eventos",
