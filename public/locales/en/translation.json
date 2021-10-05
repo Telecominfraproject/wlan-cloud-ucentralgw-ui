@@ -22,6 +22,7 @@
 		"when_blink_leds": "When would you like to make the device LEDs blink?"
 	},
 	"commands": {
+		"command_success": "Command Submitted Successfully",
 		"error": "Error while submitting command!",
 		"error_delete_log": "Error while trying to delete: {{error}}",
 		"event_queue": "Event Queue",
@@ -468,7 +469,7 @@
 		"os": "Operation System",
 		"processors": "Processors",
 		"reload": "Reload",
-		"reload_subsystems": "Reload Subsystems",
+		"reload_subsystems": "Reload",
 		"subsystems": "Subsystems",
 		"success_reload": "Reload command successfully submitted!"
 	},

@@ -22,6 +22,7 @@
 		"when_blink_leds": "Quando você gostaria de fazer os LEDs do dispositivo piscarem?"
 	},
 	"commands": {
+		"command_success": "Comando enviado com sucesso",
 		"error": "Erro ao enviar comando!",
 		"error_delete_log": "Erro ao tentar excluir: {{error}}",
 		"event_queue": "Fila de Eventos",
@@ -468,7 +469,7 @@
 		"os": "Sistema Operacional",
 		"processors": "Processadores",
 		"reload": "Recarregar",
-		"reload_subsystems": "Recarregar subsistemas",
+		"reload_subsystems": "Recarregar",
 		"subsystems": "Subsistemas",
 		"success_reload": "Comando de recarregamento enviado com sucesso!"
 	},

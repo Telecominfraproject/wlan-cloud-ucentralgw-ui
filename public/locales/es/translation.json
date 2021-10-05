@@ -22,6 +22,7 @@
 		"when_blink_leds": "¿Cuándo desea que los LED del dispositivo parpadeen?"
 	},
 	"commands": {
+		"command_success": "Comando enviado con éxito",
 		"error": "¡Error al enviar el comando!",
 		"error_delete_log": "Error al intentar eliminar: {{error}}",
 		"event_queue": "Cola de eventos",
@@ -468,7 +469,7 @@
 		"os": "sistema operativo",
 		"processors": "Procesadores",
 		"reload": "Recargar",
-		"reload_subsystems": "Recargar subsistemas",
+		"reload_subsystems": "Recargar",
 		"subsystems": "Subsistemas",
 		"success_reload": "¡El comando de recarga se envió correctamente!"
 	},

@@ -4,7 +4,7 @@ import { ApiStatusCard, useAuth, useToast } from 'ucentral-libs';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { CRow, CCol } from '@coreui/react';
-import { prettyDate, secondsToDetailed } from 'utils/helper';
+import { secondsToDetailed } from 'utils/helper';
 
 const SystemPage = () => {
   const { t } = useTranslation();
@@ -22,6 +22,7 @@ const SystemPage = () => {
       uptime: t('common.unknown'),
       version: t('common.unknown'),
       start: t('common.unknown'),
+      certificates: [],
       subsystems: [],
     };
 
@@ -41,7 +42,9 @@ const SystemPage = () => {
 
     return Promise.all([getInfo, getSubsystems])
       .then(([newInfo, newSubs]) => {
-        systemInfo.uptime = secondsToDetailed(
+        let newSystem = { ...systemInfo };
+        newSystem = { ...newSystem, ...newInfo.data, ...newSubs.data };
+        newSystem.uptime = secondsToDetailed(
           newInfo.data.uptime,
           t('common.day'),
           t('common.days'),
@@ -52,17 +55,14 @@ const SystemPage = () => {
           t('common.second'),
           t('common.seconds'),
         );
-        systemInfo.hostname = newInfo.data.hostname;
-        systemInfo.os = newInfo.data.os;
-        systemInfo.processors = newInfo.data.processors;
-        systemInfo.version = newInfo.data.version;
-        systemInfo.start = prettyDate(newInfo.data.start);
-        systemInfo.subsystems = newSubs.data.list.sort((a, b) => {
+        newSystem.start = newInfo.data.start;
+        newSystem.subsystems = newSubs.data.list.sort((a, b) => {
           if (a < b) return -1;
           if (a > b) return 1;
           return 0;
         });
-        return systemInfo;
+
+        return newSystem;
       })
       .catch(() => systemInfo);
   };
@@ -120,37 +120,17 @@ const SystemPage = () => {
     }
   };
 
-  const getColumn = (index) => {
-    const rows = [];
-
-    for (let i = index; i < endpointsInfo.length; i += 3) {
-      rows.push(endpointsInfo[i]);
-    }
-
-    return rows;
-  };
-
   useEffect(() => {
     getAllInfo();
   }, []);
 
   return (
     <CRow>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(0).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(1).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
-      <CCol md="12" lg="6" xxl="4">
-        {getColumn(2).map((info) => (
-          <ApiStatusCard key={createUuid()} t={t} info={info} reload={reload} />
-        ))}
-      </CCol>
+      {endpointsInfo.map((info) => (
+        <CCol sm="12" lg="6" xxl="4" key={createUuid()}>
+          <ApiStatusCard t={t} info={info} reload={reload} />
+        </CCol>
+      ))}
     </CRow>
   );
 };

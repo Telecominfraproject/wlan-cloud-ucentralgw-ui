@@ -22,6 +22,7 @@
 		"when_blink_leds": "Quand souhaitez-vous faire clignoter les LED de l'appareil ?"
 	},
 	"commands": {
+		"command_success": "Commande soumise avec succès",
 		"error": "Erreur lors de la soumission de la commande !",
 		"error_delete_log": "Erreur lors de la tentative de suppression : {{error}}",
 		"event_queue": "File d'attente d'événements",
@@ -468,7 +469,7 @@
 		"os": "le système d'exploitation",
 		"processors": "Processeurs",
 		"reload": "Recharger",
-		"reload_subsystems": "Recharger les sous-systèmes",
+		"reload_subsystems": "Recharger",
 		"subsystems": "Sous-systèmes",
 		"success_reload": "Recharger la commande soumise avec succès !"
 	},
