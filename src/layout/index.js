@@ -66,7 +66,7 @@ const TheLayout = () => {
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
-        logo="assets/Viasat_logo_dark.png"
+        logo="assets/JoinDigital_Logo.png"
         options={navigation}
         redirectTo="/devices"
       />
@@ -78,7 +78,7 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
-          logo="assets/Viasat_logo_dark.png"
+          logo="assets/JoinDigital_Logo.png"
           authToken={currentToken}
           endpoints={endpoints}
           user={user}
