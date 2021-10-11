@@ -150,10 +150,15 @@ const FirmwareDashboard = () => {
         ? parsedData.unknownFirmwares.reduce((acc, firmware) => acc + firmware.value, 0)
         : 0;
     const devicesForAverage = parsedData.numberOfDevices - usingUnknownFirmwareFromArray;
-    parsedData.averageFirmwareAge =
-      parsedData.totalSecondsOld[0].value /
-      (devicesForAverage > 0 ? devicesForAverage : 1) /
-      (24 * 60 * 60);
+
+    if (parsedData.totalSecondsOld.length > 0) {
+      parsedData.averageFirmwareAge =
+        parsedData.totalSecondsOld[0].value /
+        (devicesForAverage > 0 ? devicesForAverage : 1) /
+        (24 * 60 * 60);
+    } else {
+      parsedData.averageFirmwareAge = 0;
+    }
 
     // Latest firmware distribution
     const latestDs = [];
