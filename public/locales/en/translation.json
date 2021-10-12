@@ -508,6 +508,7 @@
 		"waiting_for_device": "Waiting for device to reconnect"
 	},
 	"user": {
+		"add_phone_number": "Add Phone Number",
 		"avatar": "Your Avatar",
 		"avatar_file": "Your Avatar (max. of 2 MB)",
 		"create": "Create User",
@@ -535,6 +536,7 @@
 		"not_validated": "Not Validated",
 		"note": "Note",
 		"password": "Password",
+		"phone_number": "Phone Number",
 		"provide_email": "Please provide a valid email address",
 		"provide_password": "Please provide a valid password",
 		"save_avatar": "Save Avatar",
