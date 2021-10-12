@@ -66,7 +66,7 @@ const TheLayout = () => {
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
-        logo="assets/JoinDigital_Logo.png"
+        logo="assets/LindsayBB_Logo.png"
         options={navigation}
         redirectTo="/devices"
       />
@@ -79,6 +79,7 @@ const TheLayout = () => {
           i18n={i18n}
           logout={logout}
           logo="assets/JoinDigital_Logo.png"
+          logo="assets/LindsayBB_Logo.png"
           authToken={currentToken}
           endpoints={endpoints}
           user={user}
