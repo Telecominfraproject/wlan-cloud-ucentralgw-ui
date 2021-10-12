@@ -1,4 +1,4 @@
-FROM node:16-alpine3.11 AS build
+FROM node:14-alpine3.11 AS build
 
 COPY package.json package-lock.json /
 

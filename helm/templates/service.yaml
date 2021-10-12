@@ -4,14 +4,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ucentralgwui.fullname" $root }}-{{ $service }}
+  name: {{ include "owgwui.fullname" $root }}-{{ $service }}
   {{- with $serviceValue.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-    app.kubernetes.io/name: {{ include "ucentralgwui.name" $root }}
-    helm.sh/chart: {{ include "ucentralgwui.chart" $root }}
+    app.kubernetes.io/name: {{ include "owgwui.name" $root }}
+    helm.sh/chart: {{ include "owgwui.chart" $root }}
     app.kubernetes.io/instance: {{ $root.Release.Name }}
     app.kubernetes.io/managed-by: {{ $root.Release.Service }}
 
@@ -39,7 +39,7 @@ spec:
       {{- end }}
   {{- end }}
   selector:
-    app.kubernetes.io/name: {{ include "ucentralgwui.name" $root }}
+    app.kubernetes.io/name: {{ include "owgwui.name" $root }}
     app.kubernetes.io/instance: {{ $root.Release.Name }}
     {{- with $serviceValue.labels }}
     {{- toYaml . | nindent 4 }}

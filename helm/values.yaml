@@ -5,13 +5,13 @@ nameOverride: ""
 fullnameOverride: ""
 
 images:
-  ucentralgwui:
-    repository: tip-tip-wlan-cloud-ucentral.jfrog.io/ucentralgw-ui
+  owgwui:
+    repository: tip-tip-wlan-cloud-ucentral.jfrog.io/owgw-ui
     tag: main
     pullPolicy: Always
 
 services:
-  ucentralgwui:
+  owgwui:
     type: ClusterIP
     ports:
       http:
@@ -20,7 +20,7 @@ services:
         protocol: TCP
 
 checks:
-  ucentralgwui:
+  owgwui:
     liveness:
       httpGet:
         path: /
@@ -37,7 +37,7 @@ ingresses:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     # tls:
-    # - secretName: '{{ include "ucentralgwui.fullname" . }}-default-tls' # template may be used
+    # - secretName: '{{ include "owgwui.fullname" . }}-default-tls' # template may be used
     #   cert: |
     #     CERT_HERE_IN_PEM
     #   key: |
@@ -48,7 +48,7 @@ ingresses:
     - chart-example.local
     paths:
     - path: /
-      serviceName: ucentralgwui
+      serviceName: owgwui
       servicePort: http
 
 resources: {}
@@ -71,5 +71,5 @@ affinity: {}
 
 # Application
 public_env_variables:
-  DEFAULT_GATEWAY_URL: https://ucentral.dpaas.arilia.com:16001
-  ALLOW_GATEWAY_CHANGE: false
+  DEFAULT_UCENTRALSEC_URL: https://ucentral.dpaas.arilia.com:16001
+  ALLOW_UCENTRALSEC_CHANGE: false
