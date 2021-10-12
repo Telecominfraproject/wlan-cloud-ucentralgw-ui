@@ -524,6 +524,7 @@
 		"description": "Descripción",
 		"edit": "editar usuario",
 		"email_address": "Dirección de correo electrónico",
+		"enter_new_phone": "Ingrese su nuevo número de teléfono:",
 		"error_fetching_users": "Error al obtener usuarios: {{error}}",
 		"force_password_change": "Forzar cambio de contraseña al iniciar sesión",
 		"id": "Id. De usuario",

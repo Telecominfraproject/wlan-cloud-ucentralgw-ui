@@ -524,6 +524,7 @@
 		"description": "Description",
 		"edit": "Edit User",
 		"email_address": "Email Address",
+		"enter_new_phone": "Enter your new phone number: ",
 		"error_fetching_users": "Error fetching users: {{error}}",
 		"force_password_change": "Force Password Change on Login",
 		"id": "User Id.",
