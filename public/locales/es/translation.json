@@ -508,6 +508,7 @@
 		"waiting_for_device": "Esperando que el dispositivo se vuelva a conectar"
 	},
 	"user": {
+		"add_phone_number": "Agregar el número de teléfono",
 		"avatar": "Tu avatar",
 		"avatar_file": "Tu avatar (máx. De 2 MB)",
 		"create": "Crear usuario",
@@ -535,6 +536,7 @@
 		"not_validated": "No validado",
 		"note": "Nota",
 		"password": "Contraseña",
+		"phone_number": "Número de teléfono",
 		"provide_email": "Por favor ingrese su dirección de correo electrónico válida",
 		"provide_password": "Proporcione una contraseña válida",
 		"save_avatar": "Guardar avatar",
