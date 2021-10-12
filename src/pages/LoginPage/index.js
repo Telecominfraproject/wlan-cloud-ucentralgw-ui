@@ -287,7 +287,7 @@ const Login = () => {
     <LoginPage
       t={t}
       i18n={i18n}
-      logo="assets/LindsayBB_Logo.png"
+      logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
       signIn={SignIn}
       loading={loading}
       loginResponse={loginResponse}
