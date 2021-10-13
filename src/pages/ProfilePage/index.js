@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CCard, CCardBody, CCardHeader, CButton, CPopover } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
 import { cilSave } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
 import { useUser, EditMyProfile, useAuth, useToast } from 'ucentral-libs';
@@ -42,6 +42,14 @@ const initialState = {
     value: [],
     editable: false,
   },
+  userTypeProprietaryInfo: {
+    value: {},
+    error: false,
+  },
+  mfaMethod: {
+    value: '',
+    error: false,
+  },
 };
 
 const ProfilePage = () => {
@@ -49,7 +57,6 @@ const ProfilePage = () => {
   const { currentToken, endpoints, user, getAvatar, avatar } = useAuth();
   const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [initialUser, setInitialUser] = useState({});
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [newAvatar, setNewAvatar] = useState('');
   const [newAvatarFile, setNewAvatarFile] = useState(null);
@@ -93,10 +100,24 @@ const ProfilePage = () => {
             };
           }
         }
-        setInitialUser({ ...initialState, ...newUser });
+
+        newUser.mfaMethod = {
+          value: response.data.userTypeProprietaryInfo.mfa.enabled
+            ? response.data.userTypeProprietaryInfo.mfa.method
+            : '',
+          error: false,
+        };
+
         setUser({ ...initialState, ...newUser });
       })
-      .catch(() => {});
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_fetching_users', { error: e }),
+          color: 'danger',
+          autohide: true,
+        });
+      });
   };
 
   const uploadAvatar = () => {
@@ -124,10 +145,10 @@ const ProfilePage = () => {
         setNewAvatarFile(null);
         setFileInputKey(fileInputKey + 1);
       })
-      .catch((e) => {
+      .catch(() => {
         addToast({
           title: t('user.update_failure_title'),
-          body: t('user.update_failure', { error: e.response?.data?.ErrorDescription }),
+          body: t('user.update_failure'),
           color: 'danger',
           autohide: true,
         });
@@ -137,34 +158,38 @@ const ProfilePage = () => {
   const updateUser = () => {
     setLoading(true);
 
-    const parameters = {
-      id: user.Id,
-    };
-
-    let newData = true;
-
-    for (const key of Object.keys(userForm)) {
-      if (userForm[key].editable && userForm[key].value !== initialUser[key].value) {
-        if (
-          key === 'currentPassword' &&
-          !testRegex(userForm[key].value, policies.passwordPattern)
-        ) {
-          updateWithKey('currentPassword', {
-            error: true,
-          });
-          newData = false;
-          break;
-        } else {
-          parameters[key] = userForm[key].value;
-        }
-      }
-    }
-
     if (newAvatarFile !== null) {
       uploadAvatar();
     }
 
-    if (newData) {
+    if (
+      userForm.currentPassword.value !== '' &&
+      !testRegex(userForm.currentPassword.value, policies.passwordPattern)
+    ) {
+      updateWithKey('currentPassword', {
+        error: true,
+      });
+      setLoading(false);
+    } else {
+      const newNotes = [];
+
+      for (let i = 0; i < userForm.notes.value.length; i += 1) {
+        if (userForm.notes.value[i].new) newNotes.push({ note: userForm.notes.value[i].note });
+      }
+
+      const propInfo = { ...userForm.userTypeProprietaryInfo.value };
+      propInfo.mfa.method = userForm.mfaMethod.value === '' ? undefined : userForm.mfaMethod.value;
+      propInfo.mfa.enabled = userForm.mfaMethod.value !== '';
+
+      const parameters = {
+        id: user.Id,
+        description: userForm.description.value,
+        name: userForm.name.value,
+        userRole: userForm.userRole.value,
+        notes: newNotes,
+        userTypeProprietaryInfo: propInfo,
+      };
+
       const options = {
         headers: {
           Accept: 'application/json',
@@ -194,35 +219,18 @@ const ProfilePage = () => {
           getUser();
           setLoading(false);
         });
-    } else {
-      setLoading(false);
     }
   };
 
   const addNote = (currentNote) => {
-    setLoading(true);
-
-    const parameters = {
-      id: user.Id,
-      notes: [{ note: currentNote }],
-    };
-
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    axiosInstance
-      .put(`${endpoints.owsec}/api/v1/user/${user.Id}`, parameters, options)
-      .then(() => {
-        getUser();
-      })
-      .catch(() => {})
-      .finally(() => {
-        setLoading(false);
-      });
+    const newNotes = [...userForm.notes.value];
+    newNotes.unshift({
+      note: currentNote,
+      new: true,
+      created: new Date().getTime() / 1000,
+      createdBy: '',
+    });
+    updateWithKey('notes', { value: newNotes });
   };
 
   const showPreview = (e) => {
@@ -239,6 +247,7 @@ const ProfilePage = () => {
         Authorization: `Bearer ${currentToken}`,
       },
     };
+
     return axiosInstance
       .delete(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, options)
       .then(() => {
@@ -247,6 +256,54 @@ const ProfilePage = () => {
       .catch(() => {})
       .finally(() => {
         setLoading(false);
+      });
+  };
+
+  const sendPhoneNumberTest = async (phoneNumber) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    return axiosInstance
+      .post(`${endpoints.owsec}/api/v1/sms?validateNumber=true`, { to: phoneNumber }, options)
+      .then(() => true)
+      .catch(() => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_sending_code'),
+          color: 'danger',
+          autohide: true,
+        });
+        return false;
+      });
+  };
+
+  const testVerificationCode = async (phoneNumber, code) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    return axiosInstance
+      .post(
+        `${endpoints.owsec}/api/v1/sms?completeValidation=true&validationCode=${code}`,
+        { to: phoneNumber },
+        options,
+      )
+      .then(() => true)
+      .catch(() => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.wrong_validation_code'),
+          color: 'danger',
+          autohide: true,
+        });
+        return false;
       });
   };
 
@@ -262,11 +319,12 @@ const ProfilePage = () => {
 
   return (
     <CCard>
-      <CCardHeader>
-        <div className="text-right">
+      <CCardHeader className="p-1">
+        <div className="text-value-lg float-left">{t('user.my_profile')}</div>
+        <div className="text-right float-right">
           <CPopover content={t('common.save')}>
-            <CButton onClick={updateUser} color="primary" variant="outline" disabled={loading}>
-              <CIcon content={cilSave} />
+            <CButton color="primary" variant="outline" onClick={updateUser} className="mx-1">
+              <CIcon name="cil-save" content={cilSave} />
             </CButton>
           </CPopover>
         </div>
@@ -276,6 +334,7 @@ const ProfilePage = () => {
           t={t}
           user={userForm}
           updateUserWithId={updateWithId}
+          updateWithKey={updateWithKey}
           loading={loading}
           policies={policies}
           addNote={addNote}
@@ -284,6 +343,8 @@ const ProfilePage = () => {
           showPreview={showPreview}
           deleteAvatar={deleteAvatar}
           fileInputKey={fileInputKey}
+          sendPhoneNumberTest={sendPhoneNumberTest}
+          testVerificationCode={testVerificationCode}
         />
       </CCardBody>
     </CCard>
