@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as axios from 'axios';
-import { LoginPage, useFormFields, useAuth } from 'ucentral-libs';
+import { LoginPage, useFormFields, useAuth, useToast } from 'ucentral-libs';
+import { setItem } from 'utils/localStorageHelper';
 
 const initialFormState = {
   username: {
@@ -46,6 +47,7 @@ const initialResponseState = {
 const Login = () => {
   const { t, i18n } = useTranslation();
   const { setCurrentToken, setEndpoints } = useAuth();
+  const { addToast } = useToast();
   const [defaultConfig, setDefaultConfig] = useState({
     value: '',
     error: false,
@@ -61,8 +63,7 @@ const Login = () => {
     passwordPattern: '',
     accessPolicy: '',
   });
-  const [isLogin, setIsLogin] = useState(true);
-  const [isPasswordChange, setIsChangePassword] = useState(false);
+  const [formType, setFormType] = useState('login');
   const [fields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialFormState);
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = 5000;
@@ -76,7 +77,8 @@ const Login = () => {
     });
     setLoginResponse(initialResponseState);
     setForgotResponse(initialResponseState);
-    setIsLogin(!isLogin);
+    if (formType === 'login') setFormType('forgot-password');
+    else setFormType('login');
   };
 
   const cancelPasswordChange = () => {
@@ -88,8 +90,7 @@ const Login = () => {
     });
     setLoginResponse(initialResponseState);
     setForgotResponse(initialResponseState);
-    setIsLogin(true);
-    setIsChangePassword(false);
+    setFormType('login');
   };
 
   const signInValidation = () => {
@@ -106,7 +107,10 @@ const Login = () => {
       updateField('username', { error: true });
       valid = false;
     }
-    if (isPasswordChange && fields.newpassword.value !== fields.confirmpassword.value) {
+    if (
+      formType === 'change-password' &&
+      fields.newpassword.value !== fields.confirmpassword.value
+    ) {
       updateField('confirmpassword', { error: true });
       valid = false;
     }
@@ -172,6 +176,20 @@ const Login = () => {
       .catch();
   };
 
+  const getGatewayUIUrl = (token, gwUrl) => {
+    axiosInstance
+      .get(`${gwUrl}/api/v1/system?command=info`, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.UI) setItem('owgw-ui', response.data.UI);
+      })
+      .catch(() => {});
+  };
+
   const SignIn = () => {
     setLoginResponse(initialResponseState);
     if (signInValidation()) {
@@ -183,18 +201,23 @@ const Login = () => {
         password: fields.password.value,
       };
 
-      if (isPasswordChange) {
+      if (formType === 'change-password') {
         parameters.newPassword = fields.newpassword.value;
       }
 
       axiosInstance
         .post(`${fields.ucentralsecurl.value}/api/v1/oauth2`, parameters)
         .then((response) => {
-          if (response.data.userMustChangePassword) {
-            setIsChangePassword(true);
+          // If there's MFA to do
+          if (response.data.method && response.data.created) {
+            setFormType(`validation-${response.data.method}-${response.data.uuid}`);
             return null;
           }
-          sessionStorage.setItem('access_token', response.data.access_token);
+          if (response.data.userMustChangePassword) {
+            setFormType('change-password');
+            return null;
+          }
+          setItem('access_token', response.data.access_token);
           token = response.data.access_token;
           return axiosInstance.get(`${fields.ucentralsecurl.value}/api/v1/systemEndpoints`, {
             headers: {
@@ -211,18 +234,19 @@ const Login = () => {
             for (const endpoint of response.data.endpoints) {
               endpoints[endpoint.type] = endpoint.uri;
             }
-            sessionStorage.setItem('gateway_endpoints', JSON.stringify(endpoints));
+            if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
+            setItem('gateway_endpoints', JSON.stringify(endpoints));
             setEndpoints(endpoints);
             setCurrentToken(token);
           }
         })
         .catch((error) => {
-          if (!isPasswordChange) {
+          if (formType !== 'change-password') {
             if (
               error.response.status === 403 &&
               error.response?.data?.ErrorDescription === 'Password change expected.'
             ) {
-              setIsChangePassword(true);
+              setFormType('change-password');
             }
             setLoginResponse({
               text: t('login.login_error'),
@@ -279,6 +303,95 @@ const Login = () => {
     }
   };
 
+  const validateCode = (code) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+      },
+    };
+
+    const parameters = {
+      uuid: formType.split('-').slice(2).join('-'),
+      answer: code,
+    };
+
+    let token = '';
+
+    return axiosInstance
+      .post(
+        `${fields.ucentralsecurl.value}/api/v1/oauth2?completeMFAChallenge=true`,
+        parameters,
+        options,
+      )
+      .then((response) => {
+        if (response.data.userMustChangePassword) {
+          setFormType('change-password');
+          return null;
+        }
+        setItem('access_token', response.data.access_token);
+        token = response.data.access_token;
+        return axiosInstance.get(`${fields.ucentralsecurl.value}/api/v1/systemEndpoints`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
+      })
+      .then((response) => {
+        if (response) {
+          const endpoints = {
+            owsec: fields.ucentralsecurl.value,
+          };
+          for (const endpoint of response.data.endpoints) {
+            endpoints[endpoint.type] = endpoint.uri;
+          }
+          if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
+          setItem('gateway_endpoints', JSON.stringify(endpoints));
+          setEndpoints(endpoints);
+          setCurrentToken(token);
+        }
+      })
+      .catch(() => false)
+      .finally(() => {
+        setLoading(false);
+        return true;
+      });
+  };
+
+  const resendValidationCode = () => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+      },
+    };
+
+    const parameters = {
+      uuid: formType.split('-').slice(2).join('-'),
+    };
+
+    return axiosInstance
+      .post(`${fields.ucentralsecurl.value}/api/v1/oauth2?resendMFACode=true`, parameters, options)
+      .then(() => {
+        addToast({
+          title: t('common.success'),
+          body: t('user.new_code_sent'),
+          color: 'success',
+          autohide: true,
+        });
+        return true;
+      })
+      .catch((e) => {
+        addToast({
+          title: t('common.error'),
+          body: t('login.authentication_expired'),
+          color: 'danger',
+          autohide: true,
+        });
+        if (e.response?.data?.ErrorCode === 403) setFormType('login');
+        return false;
+      });
+  };
+
   useEffect(() => {
     getDefaultConfig();
   }, []);
@@ -287,21 +400,22 @@ const Login = () => {
     <LoginPage
       t={t}
       i18n={i18n}
-      logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
       signIn={SignIn}
       loading={loading}
+      logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
       loginResponse={loginResponse}
       forgotResponse={forgotResponse}
       fields={fields}
       updateField={updateFieldWithId}
       toggleForgotPassword={toggleForgotPassword}
-      isLogin={isLogin}
-      isPasswordChange={isPasswordChange}
+      formType={formType}
       onKeyDown={onKeyDown}
       sendForgotPasswordEmail={sendForgotPasswordEmail}
       changePasswordResponse={changePasswordResponse}
       cancelPasswordChange={cancelPasswordChange}
       policies={policies}
+      validateCode={validateCode}
+      resendValidationCode={resendValidationCode}
     />
   );
 };
