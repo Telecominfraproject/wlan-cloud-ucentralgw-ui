@@ -234,7 +234,7 @@ const Login = () => {
             for (const endpoint of response.data.endpoints) {
               endpoints[endpoint.type] = endpoint.uri;
             }
-            getGatewayUIUrl(token, endpoints.owgw);
+            if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
             setItem('gateway_endpoints', JSON.stringify(endpoints));
             setEndpoints(endpoints);
             setCurrentToken(token);
@@ -345,6 +345,7 @@ const Login = () => {
           for (const endpoint of response.data.endpoints) {
             endpoints[endpoint.type] = endpoint.uri;
           }
+          if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
           setItem('gateway_endpoints', JSON.stringify(endpoints));
           setEndpoints(endpoints);
           setCurrentToken(token);
