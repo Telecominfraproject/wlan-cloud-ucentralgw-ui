@@ -20,6 +20,8 @@ axiosInstance.interceptors.response.use(
       case 401:
         break;
       case 403:
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('gateway_endpoints');
         sessionStorage.clear();
         window.location.href = '/';
         break;

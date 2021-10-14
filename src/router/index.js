@@ -1,4 +1,4 @@
-import { useAuth } from 'ucentral-libs';
+import { useAuth, ToastProvider } from 'ucentral-libs';
 import { Route } from 'react-router-dom';
 import React from 'react';
 
@@ -16,7 +16,9 @@ const Routes = () => {
         currentToken !== '' && Object.keys(endpoints).length !== 0 ? (
           <TheLayout {...props} />
         ) : (
-          <Login {...props} />
+          <ToastProvider>
+            <Login {...props} />
+          </ToastProvider>
         )
       }
     />
