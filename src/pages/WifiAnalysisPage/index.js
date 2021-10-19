@@ -22,6 +22,7 @@ import CIcon from '@coreui/icons-react';
 import { cilX } from '@coreui/icons';
 
 const parseDbm = (value) => {
+  if (!value) return '-';
   if (value > -150 && value < 100) return value;
   return (4294967295 - value) * -1;
 };
@@ -82,7 +83,7 @@ const WifiAnalysisPage = () => {
             channel: radio.channel,
             channelWidth: radio.channel_width,
             noise: radio.noise ? parseDbm(radio.noise) : '-',
-            txPower: radio.tx_power,
+            txPower: radio.tx_power ?? '-',
             activeMs: secondsToLabel(radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0),
             busyMs: secondsToLabel(radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0),
             receiveMs: secondsToLabel(radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0),
@@ -132,9 +133,9 @@ const WifiAnalysisPage = () => {
                   rxMcs: association.rx_rate.mcs ?? '-',
                   rxNss: association.rx_rate.nss ?? '-',
                   txBytes: cleanBytesString(association.tx_bytes, 0),
-                  txMcs: association.tx_rate.mcs,
-                  txNss: association.tx_rate.nss,
-                  txRate: association.tx_rate.bitrate,
+                  txMcs: association.tx_rate.mcs ?? '-',
+                  txNss: association.tx_rate.nss ?? '-',
+                  txRate: association.tx_rate.bitrate ?? '-',
                   timeStamp,
                 };
                 associations.push(data);
