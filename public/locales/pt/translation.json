@@ -239,6 +239,32 @@
 	"connect": {
 		"error_trying_to_connect": "Erro ao tentar conectar ao dispositivo: {{error}}"
 	},
+	"contact": {
+		"access_pin": "PIN de acesso",
+		"create_contact": "Criar Contato",
+		"error_assign": "Erro ao tentar atribuir contato: {{error}}",
+		"error_creation": "Erro ao tentar criar contato: {{error}}",
+		"error_delete": "Erro ao tentar excluir",
+		"error_fetching_list": "Erro ao buscar contatos",
+		"error_fetching_single": "Erro ao buscar contato: {{error}}",
+		"error_unassign": "Erro ao tentar cancelar a atribuição do contato: {{error}}",
+		"first_name": "Primeiro nome",
+		"initials": "Iniciais",
+		"last_name": "Último nome",
+		"primary_email": "e-mail primário",
+		"salutation": "Saudação",
+		"secondary_email": "Email secundário",
+		"successful_assign": "Contato atribuído com sucesso!",
+		"successful_creation": "Contato criado!",
+		"successful_delete": "Contato excluído com sucesso!",
+		"successful_unassign": "Contato não atribuído com sucesso",
+		"successful_update": "Contato atualizado com sucesso",
+		"title": "Contatos",
+		"type": "Tipo",
+		"update_error": "Erro ao atualizar contato: {{error}}",
+		"user_title": "Título",
+		"visual": "Nome para Correspondência"
+	},
 	"delete_command": {
 		"explanation": "Tem certeza de que deseja excluir este comando? esta ação não é reversível.",
 		"title": "Apagar Comando"
@@ -279,9 +305,12 @@
 		"error_saving": "Erro ao salvar entidade",
 		"ip_detection": "Detecção de IP",
 		"ip_formats": "Você pode adicionar endereços IPv4 ou IPv6 nos seguintes formatos:",
+		"need_select_entity": "Você precisa selecionar uma entidade da tabela abaixo",
 		"no_ips": "Nenhum IP selecionado",
 		"not_assigned": "Não atribuído",
 		"only_unassigned": "Apenas não atribuídos",
+		"select_entity": "Selecione esta Entidade",
+		"selected_entity": "Entidade Selecionada",
 		"update_failure_error": "Erro ao tentar atualizar a entidade: {{error}}",
 		"valid_serial": "Precisa ser um número de série válido (12 caracteres HEX)",
 		"venues": "Locais"

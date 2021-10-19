@@ -239,6 +239,32 @@
 	"connect": {
 		"error_trying_to_connect": "Error al intentar conectarse al dispositivo: {{error}}"
 	},
+	"contact": {
+		"access_pin": "PIN de acceso",
+		"create_contact": "Crear contacto",
+		"error_assign": "Error al intentar asignar el contacto: {{error}}",
+		"error_creation": "Error al intentar crear contacto: {{error}}",
+		"error_delete": "Error al intentar eliminar",
+		"error_fetching_list": "Error al obtener los contactos",
+		"error_fetching_single": "Error al obtener el contacto: {{error}}",
+		"error_unassign": "Error al intentar anular la asignación del contacto: {{error}}",
+		"first_name": "Nombre de pila",
+		"initials": "Iniciales",
+		"last_name": "Apellido",
+		"primary_email": "Correo electrónico principal",
+		"salutation": "saludo",
+		"secondary_email": "Email secundario",
+		"successful_assign": "¡Contacto asignado correctamente!",
+		"successful_creation": "Contacto Creado!",
+		"successful_delete": "¡Contacto eliminado con éxito!",
+		"successful_unassign": "Contacto no asignado correctamente",
+		"successful_update": "Contacto actualizado con éxito",
+		"title": "Contactos",
+		"type": "Tipo",
+		"update_error": "Error al actualizar el contacto: {{error}}",
+		"user_title": "Título",
+		"visual": "Nombre de correspondencia"
+	},
 	"delete_command": {
 		"explanation": "¿Está seguro de que desea eliminar este comando? Esta acción no es reversible.",
 		"title": "Eliminar comando"
@@ -279,9 +305,12 @@
 		"error_saving": "Error al guardar la entidad",
 		"ip_detection": "Detección de IP",
 		"ip_formats": "Puede agregar direcciones IPv4 o IPv6 en los siguientes formatos:",
+		"need_select_entity": "Debe seleccionar una entidad de la siguiente tabla",
 		"no_ips": "No se seleccionaron direcciones IP",
 		"not_assigned": "No asignado",
 		"only_unassigned": "Solo sin asignar",
+		"select_entity": "Seleccione esta entidad",
+		"selected_entity": "Entidad seleccionada",
 		"update_failure_error": "Error al intentar actualizar la entidad: {{error}}",
 		"valid_serial": "Debe ser un número de serie válido (12 caracteres HEX)",
 		"venues": "Sedes"
