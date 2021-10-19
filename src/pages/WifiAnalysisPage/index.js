@@ -133,9 +133,9 @@ const WifiAnalysisPage = () => {
                   rxMcs: association.rx_rate.mcs ?? '-',
                   rxNss: association.rx_rate.nss ?? '-',
                   txBytes: cleanBytesString(association.tx_bytes, 0),
-                  txMcs: association.tx_rate.mcs,
-                  txNss: association.tx_rate.nss,
-                  txRate: association.tx_rate.bitrate,
+                  txMcs: association.tx_rate.mcs ?? '-',
+                  txNss: association.tx_rate.nss ?? '-',
+                  txRate: association.tx_rate.bitrate ?? '-',
                   timeStamp,
                 };
                 associations.push(data);
