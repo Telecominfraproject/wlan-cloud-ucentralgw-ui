@@ -239,6 +239,32 @@
 	"connect": {
 		"error_trying_to_connect": "Error while trying to connect to device: {{error}}"
 	},
+	"contact": {
+		"access_pin": "Access PIN",
+		"create_contact": "Create Contact",
+		"error_assign": "Error while trying to assign contact: {{error}}",
+		"error_creation": "Error while trying to create contact: {{error}}",
+		"error_delete": "Error trying to delete",
+		"error_fetching_list": "Error fetching contacts",
+		"error_fetching_single": "Error fetching contact: {{error}}",
+		"error_unassign": "Error while trying to unassign contact: {{error}}",
+		"first_name": "First Name",
+		"initials": "Initials",
+		"last_name": "Last Name",
+		"primary_email": "Primary Email",
+		"salutation": "Salutation",
+		"secondary_email": "Secondary Email",
+		"successful_assign": "Successfully assigned contact!",
+		"successful_creation": "Contact Created!",
+		"successful_delete": "Successfully Deleted Contact!",
+		"successful_unassign": "Successfully Unassigned Contact",
+		"successful_update": "Successfully Updated Contact",
+		"title": "Contacts",
+		"type": "Type",
+		"update_error": "Error updating contact: {{error}}",
+		"user_title": "Title",
+		"visual": "Correspondence Name"
+	},
 	"delete_command": {
 		"explanation": "Are you sure you want to delete this command? This action is not reversible.",
 		"title": "Delete Command"
@@ -279,9 +305,12 @@
 		"error_saving": "Error while saving entity",
 		"ip_detection": "IP Detection",
 		"ip_formats": "You can add IPv4 or IPv6 addresses in the following formats:",
+		"need_select_entity": "You need to select an entity from the table below",
 		"no_ips": "No IPs selected",
 		"not_assigned": "Not Assigned",
 		"only_unassigned": "Only Unassigned",
+		"select_entity": "Select this Entity",
+		"selected_entity": "Selected Entity",
 		"update_failure_error": "Error while trying to update entity: {{error}}",
 		"valid_serial": "Needs to be a valid serial number (12 HEX characters)",
 		"venues": "Venues"

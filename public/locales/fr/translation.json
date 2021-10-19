@@ -239,6 +239,32 @@
 	"connect": {
 		"error_trying_to_connect": "Erreur lors de la tentative de connexion à l'appareil : {{error}}"
 	},
+	"contact": {
+		"access_pin": "NIP d'accès",
+		"create_contact": "Créer un contact",
+		"error_assign": "Erreur lors de la tentative d'attribution du contact : {{error}}",
+		"error_creation": "Erreur lors de la tentative de création du contact : {{error}}",
+		"error_delete": "Erreur lors de la tentative de suppression",
+		"error_fetching_list": "Erreur lors de la récupération des contacts",
+		"error_fetching_single": "Erreur lors de la récupération du contact : {{error}}",
+		"error_unassign": "Erreur lors de la tentative de désattribution du contact : {{error}}",
+		"first_name": "Prénom",
+		"initials": "Initiales",
+		"last_name": "Nom de famille",
+		"primary_email": "Email primaire",
+		"salutation": "salutation",
+		"secondary_email": "Email secondaire",
+		"successful_assign": "Contact attribué avec succès !",
+		"successful_creation": "Contact créé!",
+		"successful_delete": "Contact supprimé avec succès !",
+		"successful_unassign": "Contact non attribué avec succès",
+		"successful_update": "Contact mis à jour avec succès",
+		"title": "Contacts",
+		"type": "Type",
+		"update_error": "Erreur lors de la mise à jour du contact : {{error}}",
+		"user_title": "Titre",
+		"visual": "Nom de la correspondance"
+	},
 	"delete_command": {
 		"explanation": "Êtes-vous sûr de vouloir supprimer cette commande ? Cette action n'est pas réversible.",
 		"title": "Supprimer la commande"
@@ -279,9 +305,12 @@
 		"error_saving": "Erreur lors de l'enregistrement de l'entité",
 		"ip_detection": "Détection IP",
 		"ip_formats": "Vous pouvez ajouter des adresses IPv4 ou IPv6 aux formats suivants :",
+		"need_select_entity": "Vous devez sélectionner une entité dans le tableau ci-dessous",
 		"no_ips": "Aucune adresse IP sélectionnée",
 		"not_assigned": "Non attribué",
 		"only_unassigned": "Uniquement non attribué",
+		"select_entity": "Sélectionnez cette entité",
+		"selected_entity": "Entité sélectionnée",
 		"update_failure_error": "Erreur lors de la tentative de mise à jour de l'entité : {{error}}",
 		"valid_serial": "Doit être un numéro de série valide (12 caractères HEX)",
 		"venues": "Les lieux"

@@ -239,6 +239,32 @@
 	"connect": {
 		"error_trying_to_connect": "Fehler beim Versuch, eine Verbindung zum Gerät herzustellen: {{error}}"
 	},
+	"contact": {
+		"access_pin": "Zugangs-PIN",
+		"create_contact": "Kontakt erstellen",
+		"error_assign": "Fehler beim Versuch, Kontakt zuzuweisen: {{error}}",
+		"error_creation": "Fehler beim Versuch, einen Kontakt zu erstellen: {{error}}",
+		"error_delete": "Fehler beim Löschen",
+		"error_fetching_list": "Fehler beim Abrufen der Kontakte",
+		"error_fetching_single": "Fehler beim Abrufen des Kontakts: {{error}}",
+		"error_unassign": "Fehler beim Versuch, die Zuweisung des Kontakts aufzuheben: {{error}}",
+		"first_name": "Vorname",
+		"initials": "Initialen",
+		"last_name": "Nachname",
+		"primary_email": "Erste Email",
+		"salutation": "Anrede",
+		"secondary_email": "Alternative Email",
+		"successful_assign": "Kontakt erfolgreich zugewiesen!",
+		"successful_creation": "Kontakt Erstellt!",
+		"successful_delete": "Kontakt erfolgreich gelöscht!",
+		"successful_unassign": "Erfolgreich nicht zugewiesener Kontakt",
+		"successful_update": "Kontakt erfolgreich aktualisiert",
+		"title": "Kontakte",
+		"type": "Art",
+		"update_error": "Fehler beim Aktualisieren des Kontakts: {{error}}",
+		"user_title": "Titel",
+		"visual": "Korrespondenzname"
+	},
 	"delete_command": {
 		"explanation": "Möchten Sie diesen Befehl wirklich löschen? Diese Aktion ist nicht umkehrbar.",
 		"title": "Befehl löschen"
@@ -279,9 +305,12 @@
 		"error_saving": "Fehler beim Speichern der Entität",
 		"ip_detection": "IP-Erkennung",
 		"ip_formats": "Sie können IPv4- oder IPv6-Adressen in den folgenden Formaten hinzufügen:",
+		"need_select_entity": "sSie müssen eine Entität aus der folgenden Tabelle auswählen",
 		"no_ips": "Keine IPs ausgewählt",
 		"not_assigned": "Nicht zugeordnet",
 		"only_unassigned": "Nur nicht zugewiesen",
+		"select_entity": "Wählen Sie diese Entität aus",
+		"selected_entity": "Ausgewählte Einheit",
 		"update_failure_error": "Fehler beim Versuch, die Entität zu aktualisieren: {{error}}",
 		"valid_serial": "Muss eine gültige Seriennummer sein (12 HEX-Zeichen)",
 		"venues": "Veranstaltungsorte"
