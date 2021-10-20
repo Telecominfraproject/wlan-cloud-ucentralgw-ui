@@ -24,6 +24,7 @@ import { checkIfJson } from 'utils/helper';
 const typeOptions = [
   { value: 'wifi-frames', label: 'wifi-frames' },
   { value: 'dhcp-snooping', label: 'dhcp-snooping' },
+  { value: 'state', label: 'state' },
 ];
 
 const TelemetryModal = ({ show, toggle }) => {

@@ -241,6 +241,7 @@
 	},
 	"contact": {
 		"access_pin": "PIN de acceso",
+		"add_contact": "Agregar contacto",
 		"create_contact": "Crear contacto",
 		"error_assign": "Error al intentar asignar el contacto: {{error}}",
 		"error_creation": "Error al intentar crear contacto: {{error}}",
@@ -251,6 +252,7 @@
 		"first_name": "Nombre de pila",
 		"initials": "Iniciales",
 		"last_name": "Apellido",
+		"no_associated_contact": "Sin contacto asociado",
 		"primary_email": "Correo electrónico principal",
 		"salutation": "saludo",
 		"secondary_email": "Email secundario",
@@ -445,6 +447,9 @@
 		"unassigned_tags": "Etiquetas sin asignar",
 		"validating_import_file": "Validando archivo y datos de importación ...",
 		"venue": "Lugar de encuentro"
+	},
+	"location": {
+		"title": "Ubicaciones"
 	},
 	"login": {
 		"account_verification": "Verificación de la cuenta",
