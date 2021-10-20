@@ -241,6 +241,7 @@
 	},
 	"contact": {
 		"access_pin": "Access PIN",
+		"add_contact": "Add Contact",
 		"create_contact": "Create Contact",
 		"error_assign": "Error while trying to assign contact: {{error}}",
 		"error_creation": "Error while trying to create contact: {{error}}",
@@ -251,6 +252,7 @@
 		"first_name": "First Name",
 		"initials": "Initials",
 		"last_name": "Last Name",
+		"no_associated_contact": "No Associated Contact",
 		"primary_email": "Primary Email",
 		"salutation": "Salutation",
 		"secondary_email": "Secondary Email",
@@ -445,6 +447,9 @@
 		"unassigned_tags": "Unassigned tags",
 		"validating_import_file": "Validating import file and data...",
 		"venue": "Venue"
+	},
+	"location": {
+		"title": "Locations"
 	},
 	"login": {
 		"account_verification": "Account Verification",
