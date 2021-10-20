@@ -241,6 +241,7 @@
 	},
 	"contact": {
 		"access_pin": "Zugangs-PIN",
+		"add_contact": "Kontakt hinzufügen",
 		"create_contact": "Kontakt erstellen",
 		"error_assign": "Fehler beim Versuch, Kontakt zuzuweisen: {{error}}",
 		"error_creation": "Fehler beim Versuch, einen Kontakt zu erstellen: {{error}}",
@@ -251,6 +252,7 @@
 		"first_name": "Vorname",
 		"initials": "Initialen",
 		"last_name": "Nachname",
+		"no_associated_contact": "Kein zugehöriger Kontakt",
 		"primary_email": "Erste Email",
 		"salutation": "Anrede",
 		"secondary_email": "Alternative Email",
@@ -445,6 +447,9 @@
 		"unassigned_tags": "Nicht zugewiesene Tags",
 		"validating_import_file": "Importdatei und -daten werden validiert...",
 		"venue": "Tagungsort"
+	},
+	"location": {
+		"title": "Standorte"
 	},
 	"login": {
 		"account_verification": "Bestätigung des Kontos",

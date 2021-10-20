@@ -241,6 +241,7 @@
 	},
 	"contact": {
 		"access_pin": "NIP d'accès",
+		"add_contact": "Ajouter le contact",
 		"create_contact": "Créer un contact",
 		"error_assign": "Erreur lors de la tentative d'attribution du contact : {{error}}",
 		"error_creation": "Erreur lors de la tentative de création du contact : {{error}}",
@@ -251,6 +252,7 @@
 		"first_name": "Prénom",
 		"initials": "Initiales",
 		"last_name": "Nom de famille",
+		"no_associated_contact": "Aucun contact associé",
 		"primary_email": "Email primaire",
 		"salutation": "salutation",
 		"secondary_email": "Email secondaire",
@@ -445,6 +447,9 @@
 		"unassigned_tags": "Balises non attribuées",
 		"validating_import_file": "Validation du fichier d'importation et des données...",
 		"venue": "Lieu"
+	},
+	"location": {
+		"title": "Emplacements"
 	},
 	"login": {
 		"account_verification": "Vérification de compte",
