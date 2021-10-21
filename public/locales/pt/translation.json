@@ -250,6 +250,7 @@
 		"error_fetching_single": "Erro ao buscar contato: {{error}}",
 		"error_unassign": "Erro ao tentar cancelar a atribuição do contato: {{error}}",
 		"first_name": "Primeiro nome",
+		"identifier": "Identificador",
 		"initials": "Iniciais",
 		"last_name": "Último nome",
 		"no_associated_contact": "Nenhum contato associado",
@@ -449,7 +450,17 @@
 		"venue": "Local"
 	},
 	"location": {
-		"title": "Localizações"
+		"building_name": "nome do edifício",
+		"city": "Cidade",
+		"country": "País",
+		"error_fetching_single": "Erro ao tentar buscar localização: {{error}}",
+		"geocode": "GeoCode",
+		"postal": "código postal",
+		"state": "Estado",
+		"street_address": "Endereço",
+		"successful_update": "Local atualizado com sucesso!",
+		"title": "Localizações",
+		"update_error": "Erro ao atualizar local: {{error}}"
 	},
 	"login": {
 		"account_verification": "Verificação de conta",

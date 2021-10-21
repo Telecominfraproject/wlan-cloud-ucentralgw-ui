@@ -250,6 +250,7 @@
 		"error_fetching_single": "Error fetching contact: {{error}}",
 		"error_unassign": "Error while trying to unassign contact: {{error}}",
 		"first_name": "First Name",
+		"identifier": "Identifier",
 		"initials": "Initials",
 		"last_name": "Last Name",
 		"no_associated_contact": "No Associated Contact",
@@ -449,7 +450,17 @@
 		"venue": "Venue"
 	},
 	"location": {
-		"title": "Locations"
+		"building_name": "Building Name",
+		"city": "City",
+		"country": "Country",
+		"error_fetching_single": "Error while trying to fetch location: {{error}}",
+		"geocode": "GeoCode",
+		"postal": "Postal Code",
+		"state": "State",
+		"street_address": "Street Address",
+		"successful_update": "Successfully updated location!",
+		"title": "Locations",
+		"update_error": "Error updating location: {{error}}"
 	},
 	"login": {
 		"account_verification": "Account Verification",

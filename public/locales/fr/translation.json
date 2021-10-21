@@ -250,6 +250,7 @@
 		"error_fetching_single": "Erreur lors de la récupération du contact : {{error}}",
 		"error_unassign": "Erreur lors de la tentative de désattribution du contact : {{error}}",
 		"first_name": "Prénom",
+		"identifier": "Identifiant",
 		"initials": "Initiales",
 		"last_name": "Nom de famille",
 		"no_associated_contact": "Aucun contact associé",
@@ -449,7 +450,17 @@
 		"venue": "Lieu"
 	},
 	"location": {
-		"title": "Emplacements"
+		"building_name": "Nom du bâtiment",
+		"city": "Ville",
+		"country": "Pays",
+		"error_fetching_single": "Erreur lors de la tentative de récupération de l'emplacement : {{error}}",
+		"geocode": "Géocode",
+		"postal": "Code postal",
+		"state": "Etat",
+		"street_address": "Adresse de rue",
+		"successful_update": "Emplacement mis à jour avec succès !",
+		"title": "Emplacements",
+		"update_error": "Erreur lors de la mise à jour de l'emplacement : {{error}}"
 	},
 	"login": {
 		"account_verification": "Vérification de compte",

@@ -250,6 +250,7 @@
 		"error_fetching_single": "Error al obtener el contacto: {{error}}",
 		"error_unassign": "Error al intentar anular la asignación del contacto: {{error}}",
 		"first_name": "Nombre de pila",
+		"identifier": "Identificador",
 		"initials": "Iniciales",
 		"last_name": "Apellido",
 		"no_associated_contact": "Sin contacto asociado",
@@ -449,7 +450,17 @@
 		"venue": "Lugar de encuentro"
 	},
 	"location": {
-		"title": "Ubicaciones"
+		"building_name": "Nombre del edificio",
+		"city": "ciudad",
+		"country": "País",
+		"error_fetching_single": "Error al intentar obtener la ubicación: {{error}}",
+		"geocode": "Geocode",
+		"postal": "código postal",
+		"state": "Estado",
+		"street_address": "Dirección",
+		"successful_update": "¡Ubicación actualizada con éxito!",
+		"title": "Ubicaciones",
+		"update_error": "Error al actualizar la ubicación: {{error}}"
 	},
 	"login": {
 		"account_verification": "Verificación de la cuenta",

@@ -250,6 +250,7 @@
 		"error_fetching_single": "Fehler beim Abrufen des Kontakts: {{error}}",
 		"error_unassign": "Fehler beim Versuch, die Zuweisung des Kontakts aufzuheben: {{error}}",
 		"first_name": "Vorname",
+		"identifier": "Identifikator",
 		"initials": "Initialen",
 		"last_name": "Nachname",
 		"no_associated_contact": "Kein zugehöriger Kontakt",
@@ -449,7 +450,17 @@
 		"venue": "Tagungsort"
 	},
 	"location": {
-		"title": "Standorte"
+		"building_name": "Gebäudename",
+		"city": "Stadt",
+		"country": "Land",
+		"error_fetching_single": "Fehler beim Versuch, den Standort abzurufen: {{error}}",
+		"geocode": "GeoCode",
+		"postal": "Postleitzahl",
+		"state": "Zustand",
+		"street_address": "Adresse",
+		"successful_update": "Standort erfolgreich aktualisiert!",
+		"title": "Standorte",
+		"update_error": "Fehler beim Aktualisieren des Standorts: {{error}}"
 	},
 	"login": {
 		"account_verification": "Bestätigung des Kontos",
