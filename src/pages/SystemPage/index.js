@@ -21,7 +21,6 @@ const SystemPage = () => {
       processors: t('common.unknown'),
       uptime: t('common.unknown'),
       version: t('common.unknown'),
-      start: t('common.unknown'),
       certificates: [],
       subsystems: [],
     };

@@ -184,6 +184,7 @@ const DeviceHealth = () => {
 
   return (
     <CWidgetDropdown
+      className="m-0"
       header={t('health.title')}
       text={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
       value={sanityLevel ?? 100}

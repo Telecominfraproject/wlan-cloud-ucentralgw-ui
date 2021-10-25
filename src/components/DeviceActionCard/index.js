@@ -122,7 +122,7 @@ const DeviceActions = () => {
 
   return (
     <CCard>
-      <CCardHeader>
+      <CCardHeader className="p-1">
         <div className="text-value-lg">{t('actions.title')}</div>
       </CCardHeader>
       <CCardBody>
@@ -138,7 +138,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4">
+        <CRow className="my-1">
           <CCol>
             <CButton block color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
@@ -150,7 +150,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4">
+        <CRow className="my-1">
           <CCol>
             <CButton block color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
@@ -162,7 +162,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4">
+        <CRow className="my-1">
           <CCol>
             <LoadingButton
               isLoading={connectLoading}
@@ -177,7 +177,7 @@ const DeviceActions = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4">
+        <CRow className="my-1">
           <CCol>
             <CButton block color="primary" onClick={toggleQueueModal}>
               {t('commands.event_queue')}

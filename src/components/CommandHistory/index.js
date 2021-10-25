@@ -244,6 +244,7 @@ const DeviceCommands = () => {
   return (
     <div>
       <CWidgetDropdown
+        className="m-0"
         inverse="true"
         color="gradient-primary"
         header={t('commands.title')}

@@ -167,6 +167,7 @@ const DeviceLogs = () => {
   return (
     <div>
       <CWidgetDropdown
+        className="m-0"
         inverse="true"
         color="gradient-info"
         header={t('device_logs.title')}
