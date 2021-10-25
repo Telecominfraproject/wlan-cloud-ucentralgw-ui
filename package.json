@@ -1,6 +1,6 @@
 {
   "name": "ucentral-client",
-  "version": "2.2.14",
+  "version": "2.2.15",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.1",
@@ -26,8 +26,7 @@
     "react-tooltip": "^4.2.21",
     "react-widgets": "^5.1.1",
     "sass": "^1.35.1",
-    "ucentral-libs": "^0.9.83",
-    "uuid": "^8.3.2"
+    "ucentral-libs": "^0.9.84"
   },
   "main": "index.js",
   "scripts": {
