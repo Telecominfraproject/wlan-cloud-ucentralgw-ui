@@ -13,10 +13,17 @@ const initialState = {
     error: false,
     editable: false,
   },
-  currentPassword: {
+  newPassword: {
     value: '',
     error: false,
     editable: true,
+    ignore: true,
+  },
+  confirmNewPassword: {
+    value: '',
+    error: false,
+    editable: true,
+    ignore: true,
   },
   email: {
     value: '',
@@ -163,10 +170,11 @@ const ProfilePage = () => {
     }
 
     if (
-      userForm.currentPassword.value !== '' &&
-      !testRegex(userForm.currentPassword.value, policies.passwordPattern)
+      userForm.newPassword.value !== '' &&
+      (!testRegex(userForm.newPassword.value, policies.passwordPattern) ||
+        userForm.newPassword.value !== userForm.confirmNewPassword.value)
     ) {
-      updateWithKey('currentPassword', {
+      updateWithKey('newPassword', {
         error: true,
       });
       setLoading(false);
@@ -188,6 +196,7 @@ const ProfilePage = () => {
         userRole: userForm.userRole.value,
         notes: newNotes,
         userTypeProprietaryInfo: propInfo,
+        currentPassword: userForm.newPassword.value !== '' ? userForm.newPassword.value : undefined,
       };
 
       const options = {

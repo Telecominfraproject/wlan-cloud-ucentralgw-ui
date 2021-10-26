@@ -128,7 +128,7 @@ const DevicePage = () => {
                     active={index === 1}
                     onClick={() => setIndex(1)}
                   >
-                    {t('configuration.title')}
+                    {t('common.details')}
                   </CNavLink>
                   <CNavLink
                     className="font-weight-bold"
