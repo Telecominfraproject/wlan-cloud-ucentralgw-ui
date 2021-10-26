@@ -9,6 +9,8 @@ import DeviceActionCard from 'components/DeviceActionCard';
 import axiosInstance from 'utils/axiosInstance';
 import { DeviceProvider, DeviceStatusCard, DeviceDetails, useAuth, useToast } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
+import ConfigurationDisplay from 'components/ConfigurationDisplay';
+import WifiAnalysis from 'components/WifiAnalysis';
 
 const DevicePage = () => {
   const { t } = useTranslation();
@@ -30,10 +32,27 @@ const DevicePage = () => {
       },
     };
 
+    let deviceInfo = null;
+
     axiosInstance
       .get(`${endpoints.owgw}/api/v1/device/${encodeURIComponent(deviceId)}`, options)
       .then((response) => {
-        setDeviceConfig(response.data);
+        deviceInfo = response.data;
+
+        if (response.data.venue !== '' || (response.data.owner !== '' && endpoints.owprov)) {
+          return axiosInstance.get(
+            `${endpoints.owprov}/api/v1/inventory/${encodeURIComponent(
+              deviceId,
+            )}?withExtendedInfo=true`,
+            options,
+          );
+        }
+
+        setDeviceConfig(deviceInfo);
+        return null;
+      })
+      .then((response) => {
+        if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
       .catch((e) => {
         addToast({
@@ -133,6 +152,22 @@ const DevicePage = () => {
                   <CNavLink
                     className="font-weight-bold"
                     href="#"
+                    active={index === 5}
+                    onClick={() => setIndex(5)}
+                  >
+                    {t('configuration.title')}
+                  </CNavLink>
+                  <CNavLink
+                    className="font-weight-bold"
+                    href="#"
+                    active={index === 6}
+                    onClick={() => setIndex(6)}
+                  >
+                    {t('wifi_analysis.title')}
+                  </CNavLink>
+                  <CNavLink
+                    className="font-weight-bold"
+                    href="#"
                     active={index === 2}
                     onClick={() => setIndex(2)}
                   >
@@ -157,27 +192,31 @@ const DevicePage = () => {
                 </CNav>
                 <CTabContent>
                   <CTabPane active={index === 0}>
-                    <DeviceStatisticsCard />
+                    {index === 0 ? <DeviceStatisticsCard /> : null}
                   </CTabPane>
                   <CTabPane active={index === 1}>
-                    <DeviceDetails
-                      t={t}
-                      loading={loading}
-                      getData={refresh}
-                      deviceConfig={deviceConfig}
-                      status={status}
-                      lastStats={lastStats}
-                    />
+                    {index === 1 ? (
+                      <DeviceDetails
+                        t={t}
+                        loading={loading}
+                        getData={refresh}
+                        deviceConfig={deviceConfig}
+                        status={status}
+                        lastStats={lastStats}
+                      />
+                    ) : null}
                   </CTabPane>
+                  <CTabPane active={index === 5}>
+                    {index === 5 ? (
+                      <ConfigurationDisplay deviceConfig={deviceConfig} getData={refresh} />
+                    ) : null}
+                  </CTabPane>
+                  <CTabPane active={index === 6}>{index === 6 ? <WifiAnalysis /> : null}</CTabPane>
                   <CTabPane active={index === 2}>
-                    <CommandHistory />
+                    {index === 2 ? <CommandHistory /> : null}
                   </CTabPane>
-                  <CTabPane active={index === 3}>
-                    <DeviceHealth />
-                  </CTabPane>
-                  <CTabPane active={index === 4}>
-                    <DeviceLogs />
-                  </CTabPane>
+                  <CTabPane active={index === 3}>{index === 3 ? <DeviceHealth /> : null}</CTabPane>
+                  <CTabPane active={index === 4}>{index === 4 ? <DeviceLogs /> : null}</CTabPane>
                 </CTabContent>
               </CCardBody>
             </CCard>

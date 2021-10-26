@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
 import { CCard, CCardHeader, CCardBody, CPopover, CButton } from '@coreui/react';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
@@ -10,8 +9,6 @@ import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsmodal from './LatestStatisticsModal';
 
 const DeviceStatisticsCard = () => {
-  const history = useHistory();
-  const { deviceId } = useParams();
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
   const [showLifetimeModal, setShowLifetimeModal] = useState(false);
@@ -22,10 +19,6 @@ const DeviceStatisticsCard = () => {
 
   const toggleLifetimeModal = () => {
     setShowLifetimeModal(!showLifetimeModal);
-  };
-
-  const goToAnalysis = () => {
-    history.push(`/devices/${deviceId}/wifianalysis`);
   };
 
   const refresh = () => {
@@ -52,11 +45,6 @@ const DeviceStatisticsCard = () => {
             <div className="pl-2">
               <CButton size="sm" color="primary" variant="outline" onClick={toggleLatestModal}>
                 {t('statistics.show_latest')}
-              </CButton>
-            </div>
-            <div>
-              <CButton size="sm" color="primary" variant="outline" onClick={goToAnalysis}>
-                {t('wifi_analysis.title')}
               </CButton>
             </div>
           </div>

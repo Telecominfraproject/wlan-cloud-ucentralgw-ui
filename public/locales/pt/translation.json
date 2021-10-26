@@ -209,7 +209,7 @@
 		"error_update": "Erro: {{error}}",
 		"explanation": "Explicação",
 		"key_pem_explanation": "Selecione o arquivo .pem",
-		"last_configuration_change": "Última Mudança de Configuração",
+		"last_configuration_change": "Mudança de configuração",
 		"last_configuration_download": "Último download da configuração",
 		"location": "Localização",
 		"need_device_type": "Cada configuração deve suportar pelo menos um tipo de dispositivo",
