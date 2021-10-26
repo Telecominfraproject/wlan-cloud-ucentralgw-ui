@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CCard, CCardBody, CCardHeader, CButton, CPopover } from '@coreui/react';
-import { cilSave } from '@coreui/icons';
+import { CCard, CCardBody, CCardHeader, CButton, CPopover, CButtonToolbar } from '@coreui/react';
+import { cilPencil, cilSave, cilSync, cilX } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import axiosInstance from 'utils/axiosInstance';
 import { testRegex } from 'utils/helper';
@@ -40,11 +40,6 @@ const initialState = {
     error: false,
     editable: true,
   },
-  userRole: {
-    value: '',
-    error: false,
-    editable: true,
-  },
   notes: {
     value: [],
     editable: false,
@@ -63,6 +58,7 @@ const ProfilePage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints, user, getAvatar, avatar } = useAuth();
   const { addToast } = useToast();
+  const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [newAvatar, setNewAvatar] = useState('');
@@ -193,7 +189,6 @@ const ProfilePage = () => {
         id: user.Id,
         description: userForm.description.value,
         name: userForm.name.value,
-        userRole: userForm.userRole.value,
         notes: newNotes,
         userTypeProprietaryInfo: propInfo,
         currentPassword: userForm.newPassword.value !== '' ? userForm.newPassword.value : undefined,
@@ -215,6 +210,8 @@ const ProfilePage = () => {
             color: 'success',
             autohide: true,
           });
+          // eslint-disable-next-line no-use-before-define
+          toggleEditing();
         })
         .catch((e) => {
           addToast({
@@ -316,6 +313,11 @@ const ProfilePage = () => {
       });
   };
 
+  const toggleEditing = () => {
+    if (editing) getUser();
+    setEditing(!editing);
+  };
+
   useEffect(() => {
     if (user.Id) {
       getAvatar();
@@ -331,11 +333,52 @@ const ProfilePage = () => {
       <CCardHeader className="p-1">
         <div className="text-value-lg float-left">{t('user.my_profile')}</div>
         <div className="text-right float-right">
-          <CPopover content={t('common.save')}>
-            <CButton color="primary" variant="outline" onClick={updateUser} className="mx-1">
-              <CIcon name="cil-save" content={cilSave} />
-            </CButton>
-          </CPopover>
+          <CButtonToolbar role="group" className="justify-content-end">
+            <CPopover content={t('common.save')}>
+              <CButton
+                disabled={!editing}
+                color="primary"
+                variant="outline"
+                onClick={updateUser}
+                className="mx-1"
+              >
+                <CIcon name="cil-save" content={cilSave} />
+              </CButton>
+            </CPopover>
+            <CPopover content={t('common.edit')}>
+              <CButton
+                disabled={editing}
+                color="primary"
+                variant="outline"
+                onClick={toggleEditing}
+                className="mx-1"
+              >
+                <CIcon name="cil-pencil" content={cilPencil} />
+              </CButton>
+            </CPopover>
+            <CPopover content={t('common.stop_editing')}>
+              <CButton
+                disabled={!editing}
+                color="primary"
+                variant="outline"
+                onClick={toggleEditing}
+                className="mx-1"
+              >
+                <CIcon name="cil-x" content={cilX} />
+              </CButton>
+            </CPopover>
+            <CPopover content={t('common.refresh')}>
+              <CButton
+                disabled={editing}
+                color="primary"
+                variant="outline"
+                onClick={getUser}
+                className="mx-1"
+              >
+                <CIcon content={cilSync} />
+              </CButton>
+            </CPopover>
+          </CButtonToolbar>
         </div>
       </CCardHeader>
       <CCardBody>
@@ -354,6 +397,7 @@ const ProfilePage = () => {
           fileInputKey={fileInputKey}
           sendPhoneNumberTest={sendPhoneNumberTest}
           testVerificationCode={testVerificationCode}
+          editing={editing}
         />
       </CCardBody>
     </CCard>
