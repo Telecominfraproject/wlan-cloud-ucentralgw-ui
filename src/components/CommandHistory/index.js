@@ -188,9 +188,11 @@ const DeviceCommands = () => {
   };
 
   const columns = [
-    { key: 'command', label: t('common.command'), _style: { width: '15%' } },
-    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '20%' } },
     { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '20%' } },
+    { key: 'command', label: t('common.command'), _style: { width: '15%' } },
+    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '20%' } },
+    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '20%' } },
+    { key: 'errorCode', label: t('common.code'), filter: false, _style: { width: '5%' } },
     {
       key: 'show_buttons',
       label: '',
@@ -244,6 +246,7 @@ const DeviceCommands = () => {
   return (
     <div>
       <CWidgetDropdown
+        className="m-0"
         inverse="true"
         color="gradient-primary"
         header={t('commands.title')}
@@ -270,21 +273,29 @@ const DeviceCommands = () => {
                   sorterValue={{ column: 'created', desc: 'true' }}
                   scopedSlots={{
                     completed: (item) => (
-                      <td>
+                      <td className="align-middle">
                         {item.completed && item.completed !== 0
                           ? prettyDate(item.completed)
                           : 'Pending'}
                       </td>
                     ),
+                    executed: (item) => (
+                      <td className="align-middle">
+                        {item.executed && item.executed !== 0
+                          ? prettyDate(item.executed)
+                          : 'Pending'}
+                      </td>
+                    ),
                     submitted: (item) => (
-                      <td>
+                      <td className="align-middle">
                         {item.submitted && item.submitted !== ''
                           ? prettyDate(item.submitted)
                           : 'Pending'}
                       </td>
                     ),
+                    errorCode: (item) => <td className="align-middle">{item.errorCode}</td>,
                     show_buttons: (item, index) => (
-                      <td>
+                      <td className="align-middle">
                         <CButtonToolbar
                           role="group"
                           className="justify-content-flex-end"

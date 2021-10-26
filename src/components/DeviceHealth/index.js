@@ -2,11 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   CWidgetDropdown,
-  CCollapse,
   CButton,
   CDataTable,
   CCard,
-  CCardBody,
   CRow,
   CCol,
   CProgress,
@@ -26,7 +24,6 @@ const DeviceHealth = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
-  const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [healthChecks, setHealthChecks] = useState([]);
   const [start, setStart] = useState('');
@@ -95,35 +92,11 @@ const DeviceHealth = () => {
       });
   };
 
-  const toggleDetails = (index) => {
-    const position = details.indexOf(index);
-    let newDetails = details.slice();
-
-    if (position !== -1) {
-      newDetails.splice(position, 1);
-    } else {
-      newDetails = [...details, index];
-    }
-    setDetails(newDetails);
-  };
-
-  const getDetails = (index, healthCheckDetails) => {
-    if (details.includes(index))
-      return <pre className="ignore">{JSON.stringify(healthCheckDetails, null, 4)}</pre>;
-    return <pre className="ignore" />;
-  };
-
   const columns = [
-    { key: 'UUID', label: t('common.config_id') },
-    { key: 'recorded', label: t('common.recorded') },
-    { key: 'sanity', label: t('health.sanity') },
-    {
-      key: 'show_details',
-      label: '',
-      _style: { width: '1%' },
-      sorter: false,
-      filter: false,
-    },
+    { key: 'recorded', label: t('common.recorded'), _style: { width: '15%' } },
+    { key: 'UUID', label: t('common.config_id'), _style: { width: '10%' } },
+    { key: 'sanity', label: t('health.sanity'), _style: { width: '5%' } },
+    { key: 'checkDetails', label: t('common.details'), _style: { width: '65%' } },
   ];
 
   useEffect(() => {
@@ -184,6 +157,7 @@ const DeviceHealth = () => {
 
   return (
     <CWidgetDropdown
+      className="m-0"
       header={t('health.title')}
       text={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
       value={sanityLevel ?? 100}
@@ -217,28 +191,10 @@ const DeviceHealth = () => {
                   UUID: (item) => <td className="align-middle">{item.UUID}</td>,
                   recorded: (item) => <td className="align-middle">{prettyDate(item.recorded)}</td>,
                   sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
-                  show_details: (item, index) => (
-                    <td className="align-middle">
-                      <CButton
-                        color="primary"
-                        variant={details.includes(index) ? '' : 'outline'}
-                        shape="square"
-                        size="sm"
-                        onClick={() => {
-                          toggleDetails(index);
-                        }}
-                      >
-                        <CIcon name="cilList" size="lg" />
-                      </CButton>
+                  checkDetails: (item) => (
+                    <td>
+                      <pre className="my-0">{JSON.stringify(item.values)}</pre>
                     </td>
-                  ),
-                  details: (item, index) => (
-                    <CCollapse show={details.includes(index)}>
-                      <CCardBody>
-                        <h5>{t('common.details')}</h5>
-                        <div>{getDetails(index, item.values)}</div>
-                      </CCardBody>
-                    </CCollapse>
                   ),
                 }}
               />

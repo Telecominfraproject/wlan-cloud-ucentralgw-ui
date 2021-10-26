@@ -10,42 +10,16 @@ const TheLayout = () => {
 
   const navigation = [
     {
-      _tag: 'CSidebarNavDropdown',
+      _tag: 'CSidebarNavItem',
       name: t('common.devices'),
       icon: 'cilRouter',
-      _children: [
-        {
-          addLinkClass: 'c-sidebar-nav-link ml-2',
-          _tag: 'CSidebarNavItem',
-          name: t('common.dashboard'),
-          to: '/devicedashboard',
-        },
-        {
-          addLinkClass: 'c-sidebar-nav-link ml-2',
-          _tag: 'CSidebarNavItem',
-          name: t('common.table'),
-          to: '/devices',
-        },
-      ],
+      to: '/devices',
     },
     {
-      _tag: 'CSidebarNavDropdown',
+      _tag: 'CSidebarNavItem',
       name: t('firmware.title'),
       icon: 'cilSave',
-      _children: [
-        {
-          addLinkClass: 'c-sidebar-nav-link ml-2',
-          _tag: 'CSidebarNavItem',
-          name: t('common.dashboard'),
-          to: '/firmwaredashboard',
-        },
-        {
-          addLinkClass: 'c-sidebar-nav-link ml-2',
-          _tag: 'CSidebarNavItem',
-          name: t('common.table'),
-          to: '/firmware',
-        },
-      ],
+      to: '/firmware',
     },
     {
       _tag: 'CSidebarNavItem',
