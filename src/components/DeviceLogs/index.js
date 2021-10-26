@@ -111,9 +111,10 @@ const DeviceLogs = () => {
   };
 
   const columns = [
+    { key: 'recorded', label: t('common.recorded'), _style: { width: '15%' } },
+    { key: 'UUID', label: t('common.config_id'), _style: { width: '10%' } },
+    { key: 'severity', label: t('device_logs.severity'), _style: { width: '5%' } },
     { key: 'log', label: t('device_logs.log') },
-    { key: 'severity', label: t('device_logs.severity') },
-    { key: 'recorded', label: t('common.recorded') },
     {
       key: 'show_details',
       label: '',
@@ -167,6 +168,7 @@ const DeviceLogs = () => {
   return (
     <div>
       <CWidgetDropdown
+        className="m-0"
         inverse="true"
         color="gradient-info"
         header={t('device_logs.title')}
@@ -185,6 +187,7 @@ const DeviceLogs = () => {
             <CCard>
               <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
+                  border
                   items={logs ?? []}
                   fields={columns}
                   loading={loading}

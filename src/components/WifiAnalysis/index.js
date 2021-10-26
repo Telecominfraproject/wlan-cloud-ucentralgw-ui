@@ -27,7 +27,7 @@ const parseDbm = (value) => {
   return (4294967295 - value) * -1;
 };
 
-const WifiAnalysisPage = () => {
+const WifiAnalysis = () => {
   const { t } = useTranslation();
   const { deviceId } = useParams();
   const { currentToken, endpoints } = useAuth();
@@ -213,7 +213,7 @@ const WifiAnalysisPage = () => {
             </CCol>
           </CRow>
         </CCardHeader>
-        <CCardBody className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
+        <CCardBody>
           <CRow className="mb-4">
             <CCol className="text-center">
               <input
@@ -232,15 +232,17 @@ const WifiAnalysisPage = () => {
               </h5>
             </CCol>
           </CRow>
-          <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
-          <RadioAnalysisTable data={selectedRadioStats ?? []} loading={loading} range={range} />
-          <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>
-          <WifiAnalysisTable
-            t={t}
-            data={selectedAssociationStats ?? []}
-            loading={loading}
-            range={range}
-          />
+          <div className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
+            <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
+            <RadioAnalysisTable data={selectedRadioStats ?? []} loading={loading} range={range} />
+            <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>
+            <WifiAnalysisTable
+              t={t}
+              data={selectedAssociationStats ?? []}
+              loading={loading}
+              range={range}
+            />
+          </div>
         </CCardBody>
       </CCard>
       <CModal size="xl" show={showModal} onClose={toggleModal}>
@@ -270,4 +272,4 @@ const WifiAnalysisPage = () => {
   );
 };
 
-export default WifiAnalysisPage;
+export default WifiAnalysis;

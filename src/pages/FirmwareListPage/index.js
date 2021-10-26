@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
+import { CCard, CCardBody, CNav, CNavLink, CTabPane, CTabContent } from '@coreui/react';
 import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
+import FirmwareDashboard from 'components/FirmwareDashboard';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { addToast } = useToast();
+  const [index, setIndex] = useState(0);
   const [page, setPage] = useState({ selected: 0 });
   const [pageCount, setPageCount] = useState(0);
   const [firmwarePerPage, setFirmwarePerPage] = useState('10');
@@ -215,25 +218,54 @@ const FirmwareListPage = () => {
   }, []);
 
   return (
-    <FirmwareList
-      t={t}
-      loading={loading}
-      page={page}
-      pageCount={pageCount}
-      setPage={updatePage}
-      data={displayedFirmware}
-      firmwarePerPage={firmwarePerPage}
-      setFirmwarePerPage={updateFirmwarePerPage}
-      selectedDeviceType={selectedDeviceType}
-      deviceTypes={deviceTypes}
-      setSelectedDeviceType={updateSelectedType}
-      addNote={addNote}
-      addNoteLoading={addNoteLoading}
-      updateDescription={updateDescription}
-      updateDescriptionLoading={updateDescriptionLoading}
-      displayDev={displayDev}
-      toggleDevDisplay={toggleDevDisplay}
-    />
+    <CCard>
+      <CCardBody className="p-0">
+        <CNav variant="tabs">
+          <CNavLink
+            className="font-weight-bold"
+            href="#"
+            active={index === 0}
+            onClick={() => setIndex(0)}
+          >
+            {t('common.table')}
+          </CNavLink>
+          <CNavLink
+            className="font-weight-bold"
+            href="#"
+            active={index === 1}
+            onClick={() => setIndex(1)}
+          >
+            {t('common.dashboard')}
+          </CNavLink>
+        </CNav>
+        <CTabContent>
+          <CTabPane active={index === 0}>
+            <FirmwareList
+              t={t}
+              loading={loading}
+              page={page}
+              pageCount={pageCount}
+              setPage={updatePage}
+              data={displayedFirmware}
+              firmwarePerPage={firmwarePerPage}
+              setFirmwarePerPage={updateFirmwarePerPage}
+              selectedDeviceType={selectedDeviceType}
+              deviceTypes={deviceTypes}
+              setSelectedDeviceType={updateSelectedType}
+              addNote={addNote}
+              addNoteLoading={addNoteLoading}
+              updateDescription={updateDescription}
+              updateDescriptionLoading={updateDescriptionLoading}
+              displayDev={displayDev}
+              toggleDevDisplay={toggleDevDisplay}
+            />
+          </CTabPane>
+          <CTabPane active={index === 1}>
+            <FirmwareDashboard />
+          </CTabPane>
+        </CTabContent>
+      </CCardBody>
+    </CCard>
   );
 };
 

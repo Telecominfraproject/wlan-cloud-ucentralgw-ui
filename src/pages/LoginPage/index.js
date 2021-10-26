@@ -190,6 +190,20 @@ const Login = () => {
       .catch(() => {});
   };
 
+  const getProvUIUrl = (token, provUrl) => {
+    axiosInstance
+      .get(`${provUrl}/api/v1/system?command=info`, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.UI) setItem('owprov-ui', response.data.UI);
+      })
+      .catch(() => {});
+  };
+
   const SignIn = () => {
     setLoginResponse(initialResponseState);
     if (signInValidation()) {
@@ -235,6 +249,7 @@ const Login = () => {
               endpoints[endpoint.type] = endpoint.uri;
             }
             if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
+            if (endpoints.owprov) getProvUIUrl(token, endpoints.owprov);
             setItem('gateway_endpoints', JSON.stringify(endpoints));
             setEndpoints(endpoints);
             setCurrentToken(token);
@@ -346,6 +361,7 @@ const Login = () => {
             endpoints[endpoint.type] = endpoint.uri;
           }
           if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
+          if (endpoints.owprov) getProvUIUrl(token, endpoints.owprov);
           setItem('gateway_endpoints', JSON.stringify(endpoints));
           setEndpoints(endpoints);
           setCurrentToken(token);
