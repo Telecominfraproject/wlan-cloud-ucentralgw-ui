@@ -181,6 +181,7 @@ const DeviceHealth = () => {
           <CCard className="p-0">
             <div className="overflow-auto" style={{ height: '200px' }}>
               <CDataTable
+                addTableClasses="ignore-overflow table-sm"
                 border
                 items={healthChecks ?? []}
                 fields={columns}

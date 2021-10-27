@@ -187,6 +187,7 @@ const DeviceLogs = () => {
             <CCard>
               <div className="overflow-auto" style={{ height: '250px' }}>
                 <CDataTable
+                  addTableClasses="ignore-overflow table-sm"
                   border
                   items={logs ?? []}
                   fields={columns}
@@ -206,7 +207,7 @@ const DeviceLogs = () => {
                             toggleDetails(index);
                           }}
                         >
-                          <CIcon name="cilList" size="lg" />
+                          <CIcon name="cilList" size="md" />
                         </CButton>
                       </td>
                     ),

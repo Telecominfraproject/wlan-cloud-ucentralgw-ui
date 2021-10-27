@@ -265,6 +265,7 @@ const DeviceCommands = () => {
             <CCard>
               <div className="overflow-auto" style={{ height: '200px' }}>
                 <CDataTable
+                  addTableClasses="ignore-overflow table-sm"
                   border
                   loading={loading}
                   items={commands ?? []}
@@ -299,7 +300,7 @@ const DeviceCommands = () => {
                         <CButtonToolbar
                           role="group"
                           className="justify-content-flex-end"
-                          style={{ width: '170px' }}
+                          style={{ width: '150px' }}
                         >
                           <CPopover
                             content={
@@ -320,13 +321,13 @@ const DeviceCommands = () => {
                                 <CIcon
                                   name="cil-cloud-download"
                                   content={cilCloudDownload}
-                                  size="lg"
+                                  size="md"
                                 />
                               ) : (
                                 <CIcon
                                   name="cil-calendar-check"
                                   content={cilCalendarCheck}
-                                  size="lg"
+                                  size="md"
                                 />
                               )}
                             </CButton>
@@ -342,7 +343,7 @@ const DeviceCommands = () => {
                                 toggleResponse(item);
                               }}
                             >
-                              <CIcon name="cilList" size="lg" />
+                              <CIcon name="cilList" size="md" />
                             </CButton>
                           </CPopover>
                           <CPopover content={t('common.delete')}>
@@ -356,7 +357,7 @@ const DeviceCommands = () => {
                                 toggleConfirmModal(item.UUID, index);
                               }}
                             >
-                              <CIcon name="cilTrash" size="lg" />
+                              <CIcon name="cilTrash" size="mdå" />
                             </CButton>
                           </CPopover>
                         </CButtonToolbar>
