@@ -227,7 +227,7 @@ const FirmwareListPage = () => {
             active={index === 0}
             onClick={() => setIndex(0)}
           >
-            {t('common.table')}
+            {t('common.dashboard')}
           </CNavLink>
           <CNavLink
             className="font-weight-bold"
@@ -235,11 +235,14 @@ const FirmwareListPage = () => {
             active={index === 1}
             onClick={() => setIndex(1)}
           >
-            {t('common.dashboard')}
+            {t('common.firmware')}
           </CNavLink>
         </CNav>
         <CTabContent>
           <CTabPane active={index === 0}>
+            <FirmwareDashboard />
+          </CTabPane>
+          <CTabPane active={index === 1}>
             <FirmwareList
               t={t}
               loading={loading}
@@ -259,9 +262,6 @@ const FirmwareListPage = () => {
               displayDev={displayDev}
               toggleDevDisplay={toggleDevDisplay}
             />
-          </CTabPane>
-          <CTabPane active={index === 1}>
-            <FirmwareDashboard />
           </CTabPane>
         </CTabContent>
       </CCardBody>

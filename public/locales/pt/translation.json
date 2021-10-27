@@ -89,6 +89,7 @@
 		"endpoints": "Pontos finais",
 		"error": "Erro",
 		"error_adding_note": "Erro ao adicionar nota",
+		"error_code": "Erro de código",
 		"execute_now": "Você gostaria de executar este comando agora?",
 		"executed": "Executado",
 		"exit": "Saída",

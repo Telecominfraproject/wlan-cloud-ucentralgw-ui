@@ -89,6 +89,7 @@
 		"endpoints": "Endpunkte",
 		"error": "Fehler",
 		"error_adding_note": "Fehler beim Hinzufügen einer Notiz",
+		"error_code": "Fehlercode",
 		"execute_now": "Möchten Sie diesen Befehl jetzt ausführen?",
 		"executed": "Ausgeführt",
 		"exit": "Ausgang",

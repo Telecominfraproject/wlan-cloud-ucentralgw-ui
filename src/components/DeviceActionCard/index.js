@@ -122,7 +122,7 @@ const DeviceActions = () => {
 
   return (
     <CCard>
-      <CCardHeader className="p-1">
+      <CCardHeader className="dark-header">
         <div className="text-value-lg">{t('actions.title')}</div>
       </CCardHeader>
       <CCardBody>

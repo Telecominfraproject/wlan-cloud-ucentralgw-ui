@@ -20,11 +20,11 @@ const ConfigurationDisplay = ({ getData, deviceConfig }) => {
   const { t } = useTranslation();
   return (
     <CCard className="m-0">
-      <CCardHeader className="p-1">
+      <CCardHeader className="dark-header">
         <div className="d-flex flex-row-reverse align-items-center">
           <div className="text-right">
             <CPopover content={t('common.refresh')}>
-              <CButton size="sm" color="primary" variant="outline" onClick={getData}>
+              <CButton size="sm" color="info" onClick={getData}>
                 <CIcon content={cilSync} />
               </CButton>
             </CPopover>

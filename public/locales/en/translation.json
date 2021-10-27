@@ -89,6 +89,7 @@
 		"endpoints": "Endpoints",
 		"error": "Error",
 		"error_adding_note": "Error while adding note",
+		"error_code": "Error Code",
 		"execute_now": "Would you like to execute this command now?",
 		"executed": "Executed",
 		"exit": "Exit",

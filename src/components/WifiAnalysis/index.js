@@ -201,13 +201,10 @@ const WifiAnalysis = () => {
   return (
     <div>
       <CCard>
-        <CCardHeader>
+        <CCardHeader className="dark-header">
           <CRow>
-            <CCol>
-              <h5 className="mb-0">{t('common.device', { serialNumber: deviceId })}</h5>
-            </CCol>
             <CCol className="text-right">
-              <CButton color="primary" variant="outline" onClick={toggleModal}>
+              <CButton color="info" size="sm" onClick={toggleModal}>
                 {t('wifi_analysis.network_diagram')}
               </CButton>
             </CCol>

@@ -18,7 +18,7 @@ const DeviceListPage = () => {
             active={index === 0}
             onClick={() => setIndex(0)}
           >
-            {t('common.table')}
+            {t('common.dashboard')}
           </CNavLink>
           <CNavLink
             className="font-weight-bold"
@@ -26,15 +26,15 @@ const DeviceListPage = () => {
             active={index === 1}
             onClick={() => setIndex(1)}
           >
-            {t('common.dashboard')}
+            {t('common.devices')}
           </CNavLink>
         </CNav>
         <CTabContent>
           <CTabPane active={index === 0}>
-            <DeviceList />
+            <DeviceDashboard />
           </CTabPane>
           <CTabPane active={index === 1}>
-            <DeviceDashboard />
+            <DeviceList />
           </CTabPane>
         </CTabContent>
       </CCardBody>

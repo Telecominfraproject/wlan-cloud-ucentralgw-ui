@@ -190,9 +190,9 @@ const DeviceCommands = () => {
   const columns = [
     { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '20%' } },
     { key: 'command', label: t('common.command'), _style: { width: '15%' } },
-    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '20%' } },
-    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '20%' } },
-    { key: 'errorCode', label: t('common.code'), filter: false, _style: { width: '5%' } },
+    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '16%' } },
+    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '16%' } },
+    { key: 'errorCode', label: t('common.error_code'), filter: false, _style: { width: '8%' } },
     {
       key: 'show_buttons',
       label: '',

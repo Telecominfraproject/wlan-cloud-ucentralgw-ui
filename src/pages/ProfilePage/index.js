@@ -63,6 +63,7 @@ const ProfilePage = () => {
   const [userForm, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [newAvatar, setNewAvatar] = useState('');
   const [newAvatarFile, setNewAvatarFile] = useState(null);
+  const [avatarDeleted, setAvatarDeleted] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(0);
   const [policies, setPolicies] = useState({
     passwordPolicy: '',
@@ -161,8 +162,22 @@ const ProfilePage = () => {
   const updateUser = () => {
     setLoading(true);
 
-    if (newAvatarFile !== null) {
+    if (newAvatar !== '' && newAvatarFile !== null) {
       uploadAvatar();
+    } else if (avatarDeleted) {
+      const options = {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${currentToken}`,
+        },
+      };
+
+      axiosInstance
+        .delete(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, options)
+        .then(() => {
+          getAvatar();
+        })
+        .catch(() => {});
     }
 
     if (
@@ -240,29 +255,15 @@ const ProfilePage = () => {
   };
 
   const showPreview = (e) => {
+    setAvatarDeleted(false);
     const imageFile = e.target.files[0];
     setNewAvatar(URL.createObjectURL(imageFile));
     setNewAvatarFile(imageFile);
   };
 
   const deleteAvatar = () => {
-    setLoading(true);
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    return axiosInstance
-      .delete(`${endpoints.owsec}/api/v1/avatar/${user.Id}`, options)
-      .then(() => {
-        getAvatar();
-      })
-      .catch(() => {})
-      .finally(() => {
-        setLoading(false);
-      });
+    setNewAvatar('');
+    setAvatarDeleted(true);
   };
 
   const sendPhoneNumberTest = async (phoneNumber) => {
@@ -314,7 +315,12 @@ const ProfilePage = () => {
   };
 
   const toggleEditing = () => {
-    if (editing) getUser();
+    if (editing) {
+      setAvatarDeleted(false);
+      setNewAvatar('');
+      getUser();
+      getAvatar();
+    }
     setEditing(!editing);
   };
 
@@ -329,52 +335,30 @@ const ProfilePage = () => {
   }, [user.Id]);
 
   return (
-    <CCard>
-      <CCardHeader className="p-1">
-        <div className="text-value-lg float-left">{t('user.my_profile')}</div>
+    <CCard className="my-0 py-0">
+      <CCardHeader className="dark-header">
+        <div style={{ fontWeight: '600' }} className=" text-value-lg float-left">
+          {t('user.my_profile')}
+        </div>
         <div className="text-right float-right">
           <CButtonToolbar role="group" className="justify-content-end">
             <CPopover content={t('common.save')}>
-              <CButton
-                disabled={!editing}
-                color="primary"
-                variant="outline"
-                onClick={updateUser}
-                className="mx-1"
-              >
+              <CButton disabled={!editing} color="info" onClick={updateUser} className="mx-1">
                 <CIcon name="cil-save" content={cilSave} />
               </CButton>
             </CPopover>
             <CPopover content={t('common.edit')}>
-              <CButton
-                disabled={editing}
-                color="primary"
-                variant="outline"
-                onClick={toggleEditing}
-                className="mx-1"
-              >
+              <CButton disabled={editing} color="dark" onClick={toggleEditing} className="mx-1">
                 <CIcon name="cil-pencil" content={cilPencil} />
               </CButton>
             </CPopover>
             <CPopover content={t('common.stop_editing')}>
-              <CButton
-                disabled={!editing}
-                color="primary"
-                variant="outline"
-                onClick={toggleEditing}
-                className="mx-1"
-              >
+              <CButton disabled={!editing} color="dark" onClick={toggleEditing} className="mx-1">
                 <CIcon name="cil-x" content={cilX} />
               </CButton>
             </CPopover>
             <CPopover content={t('common.refresh')}>
-              <CButton
-                disabled={editing}
-                color="primary"
-                variant="outline"
-                onClick={getUser}
-                className="mx-1"
-              >
+              <CButton disabled={editing} color="info" onClick={getUser} className="mx-1">
                 <CIcon content={cilSync} />
               </CButton>
             </CPopover>
@@ -398,6 +382,7 @@ const ProfilePage = () => {
           sendPhoneNumberTest={sendPhoneNumberTest}
           testVerificationCode={testVerificationCode}
           editing={editing}
+          avatarDeleted={avatarDeleted}
         />
       </CCardBody>
     </CCard>
