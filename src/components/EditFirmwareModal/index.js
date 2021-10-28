@@ -100,6 +100,11 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
     setEditing(!editing);
   };
 
+  const toggleModal = () => {
+    toggleEditing();
+    toggle();
+  };
+
   const updateFirmware = () => {
     setLoading(true);
 
@@ -189,19 +194,8 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
               <CIcon name="cil-pencil" content={cilPencil} />
             </CButton>
           </CPopover>
-          <CPopover content={t('common.stop_editing')}>
-            <CButton
-              disabled={!editing}
-              color="primary"
-              variant="outline"
-              onClick={toggleEditing}
-              className="ml-2"
-            >
-              <CIcon name="cil-x" content={cilX} />
-            </CButton>
-          </CPopover>
           <CPopover content={t('common.close')}>
-            <CButton color="primary" variant="outline" className="ml-2" onClick={toggle}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={toggleModal}>
               <CIcon content={cilX} />
             </CButton>
           </CPopover>

@@ -34,6 +34,8 @@
 		"access_policy": "Access Policy",
 		"add": "Add",
 		"add_items": "Add Items",
+		"add_note": "Add Note",
+		"add_note_explanation": "Write your new note below and click the '+' button where you are done",
 		"adding_ellipsis": "Adding...",
 		"are_you_sure": "Are you sure?",
 		"back_to_login": "Back to Login",
