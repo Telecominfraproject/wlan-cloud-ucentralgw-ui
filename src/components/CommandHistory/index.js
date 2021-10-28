@@ -14,11 +14,11 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilCloudDownload, cilSync, cilCalendarCheck } from '@coreui/icons';
-import { prettyDate, dateToUnix } from 'utils/helper';
+import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, FormattedDate } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DetailsModal from './DetailsModal';
 
@@ -190,9 +190,9 @@ const DeviceCommands = () => {
   const columns = [
     { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '20%' } },
     { key: 'command', label: t('common.command'), _style: { width: '15%' } },
-    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '20%' } },
-    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '20%' } },
-    { key: 'errorCode', label: t('common.code'), filter: false, _style: { width: '5%' } },
+    { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '16%' } },
+    { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '16%' } },
+    { key: 'errorCode', label: t('common.error_code'), filter: false, _style: { width: '8%' } },
     {
       key: 'show_buttons',
       label: '',
@@ -265,6 +265,7 @@ const DeviceCommands = () => {
             <CCard>
               <div className="overflow-auto" style={{ height: '200px' }}>
                 <CDataTable
+                  addTableClasses="ignore-overflow table-sm"
                   border
                   loading={loading}
                   items={commands ?? []}
@@ -272,25 +273,32 @@ const DeviceCommands = () => {
                   className="text-white"
                   sorterValue={{ column: 'created', desc: 'true' }}
                   scopedSlots={{
+                    command: (item) => <td className="align-middle">{item.command}</td>,
                     completed: (item) => (
                       <td className="align-middle">
-                        {item.completed && item.completed !== 0
-                          ? prettyDate(item.completed)
-                          : 'Pending'}
+                        {item.completed && item.completed !== 0 ? (
+                          <FormattedDate date={item.completed} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     executed: (item) => (
                       <td className="align-middle">
-                        {item.executed && item.executed !== 0
-                          ? prettyDate(item.executed)
-                          : 'Pending'}
+                        {item.executed && item.executed !== 0 ? (
+                          <FormattedDate date={item.executed} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     submitted: (item) => (
                       <td className="align-middle">
-                        {item.submitted && item.submitted !== ''
-                          ? prettyDate(item.submitted)
-                          : 'Pending'}
+                        {item.submitted && item.submitted !== '' ? (
+                          <FormattedDate date={item.submitted} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     errorCode: (item) => <td className="align-middle">{item.errorCode}</td>,
@@ -299,7 +307,7 @@ const DeviceCommands = () => {
                         <CButtonToolbar
                           role="group"
                           className="justify-content-flex-end"
-                          style={{ width: '170px' }}
+                          style={{ width: '160px' }}
                         >
                           <CPopover
                             content={
@@ -320,13 +328,13 @@ const DeviceCommands = () => {
                                 <CIcon
                                   name="cil-cloud-download"
                                   content={cilCloudDownload}
-                                  size="lg"
+                                  size="md"
                                 />
                               ) : (
                                 <CIcon
                                   name="cil-calendar-check"
                                   content={cilCalendarCheck}
-                                  size="lg"
+                                  size="md"
                                 />
                               )}
                             </CButton>
@@ -342,7 +350,7 @@ const DeviceCommands = () => {
                                 toggleResponse(item);
                               }}
                             >
-                              <CIcon name="cilList" size="lg" />
+                              <CIcon name="cilList" size="md" />
                             </CButton>
                           </CPopover>
                           <CPopover content={t('common.delete')}>
@@ -356,7 +364,7 @@ const DeviceCommands = () => {
                                 toggleConfirmModal(item.UUID, index);
                               }}
                             >
-                              <CIcon name="cilTrash" size="lg" />
+                              <CIcon name="cilTrash" size="mdå" />
                             </CButton>
                           </CPopover>
                         </CButtonToolbar>

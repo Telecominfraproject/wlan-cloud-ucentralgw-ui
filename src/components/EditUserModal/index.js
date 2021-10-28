@@ -52,6 +52,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
   const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [initialUser, setInitialUser] = useState({});
+  const [editing, setEditing] = useState(false);
   const [user, updateWithId, updateWithKey, setUser] = useUser(initialState);
   const [policies, setPolicies] = useState({
     passwordPolicy: '',
@@ -96,6 +97,13 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
         setUser({ ...initialState, ...newUser });
       })
       .catch(() => {});
+  };
+
+  const toggleEditing = () => {
+    if (editing) {
+      getUser();
+    }
+    setEditing(!editing);
   };
 
   const updateUser = () => {
@@ -197,6 +205,12 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
     }
   }, [userId]);
 
+  useEffect(() => {
+    if (show) {
+      setEditing(false);
+    }
+  }, [show]);
+
   return (
     <Modal
       t={t}
@@ -207,6 +221,8 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
       policies={policies}
       show={show}
       toggle={toggle}
+      editing={editing}
+      toggleEditing={toggleEditing}
       addNote={addNote}
     />
   );

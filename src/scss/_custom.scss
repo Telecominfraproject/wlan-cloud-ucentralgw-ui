@@ -30,3 +30,16 @@ pre.ignore {
 
 .tooltipRight { &::after { left:  75% !important; } }
 .tooltipRight { &::before { left: 75% !important; } }
+
+.dark-header {
+  padding: .25rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  color: #ebedef !important;
+  background-color: #2f3d54 !important;
+}
+
+.avatar-lg {
+  height: 10rem;
+  width: 10rem;
+}
