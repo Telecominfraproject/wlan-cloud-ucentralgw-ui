@@ -14,11 +14,11 @@ import {
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilCloudDownload, cilSync, cilCalendarCheck } from '@coreui/icons';
-import { prettyDate, dateToUnix } from 'utils/helper';
+import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import ConfirmModal from 'components/ConfirmModal';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, FormattedDate } from 'ucentral-libs';
 import WifiScanResultModalWidget from 'components/WifiScanResultModal';
 import DetailsModal from './DetailsModal';
 
@@ -273,25 +273,32 @@ const DeviceCommands = () => {
                   className="text-white"
                   sorterValue={{ column: 'created', desc: 'true' }}
                   scopedSlots={{
+                    command: (item) => <td className="align-middle">{item.command}</td>,
                     completed: (item) => (
                       <td className="align-middle">
-                        {item.completed && item.completed !== 0
-                          ? prettyDate(item.completed)
-                          : 'Pending'}
+                        {item.completed && item.completed !== 0 ? (
+                          <FormattedDate date={item.completed} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     executed: (item) => (
                       <td className="align-middle">
-                        {item.executed && item.executed !== 0
-                          ? prettyDate(item.executed)
-                          : 'Pending'}
+                        {item.executed && item.executed !== 0 ? (
+                          <FormattedDate date={item.executed} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     submitted: (item) => (
                       <td className="align-middle">
-                        {item.submitted && item.submitted !== ''
-                          ? prettyDate(item.submitted)
-                          : 'Pending'}
+                        {item.submitted && item.submitted !== '' ? (
+                          <FormattedDate date={item.submitted} />
+                        ) : (
+                          'Pending'
+                        )}
                       </td>
                     ),
                     errorCode: (item) => <td className="align-middle">{item.errorCode}</td>,
@@ -300,7 +307,7 @@ const DeviceCommands = () => {
                         <CButtonToolbar
                           role="group"
                           className="justify-content-flex-end"
-                          style={{ width: '150px' }}
+                          style={{ width: '160px' }}
                         >
                           <CPopover
                             content={

@@ -14,10 +14,10 @@ import CIcon from '@coreui/icons-react';
 import { cilTrash } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
-import { prettyDate, dateToUnix } from 'utils/helper';
+import { dateToUnix } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, FormattedDate } from 'ucentral-libs';
 import DeleteLogModal from 'components/DeleteLogModal';
 
 const DeviceHealth = () => {
@@ -190,7 +190,11 @@ const DeviceHealth = () => {
                 sorterValue={{ column: 'recorded', desc: 'true' }}
                 scopedSlots={{
                   UUID: (item) => <td className="align-middle">{item.UUID}</td>,
-                  recorded: (item) => <td className="align-middle">{prettyDate(item.recorded)}</td>,
+                  recorded: (item) => (
+                    <td className="align-middle">
+                      <FormattedDate date={item.recorded} />
+                    </td>
+                  ),
                   sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
                   checkDetails: (item) => (
                     <td>
