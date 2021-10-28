@@ -5,6 +5,7 @@ import axiosInstance from 'utils/axiosInstance';
 import { CCard, CCardBody, CNav, CNavLink, CTabPane, CTabContent } from '@coreui/react';
 import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
 import FirmwareDashboard from 'components/FirmwareDashboard';
+import EditFirmwareModal from 'components/EditFirmwareModal';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();
@@ -20,9 +21,14 @@ const FirmwareListPage = () => {
   const [filteredFirmware, setFilteredFirmware] = useState([]);
   const [displayedFirmware, setDisplayedFirmware] = useState([]);
   const [displayDev, setDisplayDev] = useState(false);
-  const [addNoteLoading, setAddNoteLoading] = useState(false);
-  const [updateDescriptionLoading, setUpdateDescriptionLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [firmwareToEdit, setFirmwareToEdit] = useState('');
+
+  const toggleEditModal = (id) => {
+    if (id) setFirmwareToEdit(id);
+    setShowEditModal(!showEditModal);
+  };
 
   const displayFirmware = (currentPage, perPage, firmwareToDisplay) => {
     setLoading(true);
@@ -149,70 +155,6 @@ const FirmwareListPage = () => {
     getFirmware(value);
   };
 
-  const addNote = (value, id) => {
-    setAddNoteLoading(true);
-
-    const parameters = {
-      id,
-      notes: [{ note: value }],
-    };
-
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    axiosInstance
-      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
-      .then(() => {
-        getFirmware();
-        setAddNoteLoading(false);
-      })
-      .catch(() => {
-        setAddNoteLoading(false);
-        addToast({
-          title: t('common.error'),
-          body: t('common.general_error'),
-          color: 'danger',
-          autohide: true,
-        });
-      });
-  };
-
-  const updateDescription = (value, id) => {
-    setUpdateDescriptionLoading(true);
-
-    const parameters = {
-      id,
-      description: value,
-    };
-
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    axiosInstance
-      .put(`${endpoints.owfms}/api/v1/firmware/${id}`, parameters, options)
-      .then(() => {
-        getFirmware();
-        setUpdateDescriptionLoading(false);
-      })
-      .catch(() => {
-        setUpdateDescriptionLoading(false);
-        addToast({
-          title: t('common.error'),
-          body: t('common.general_error'),
-          color: 'danger',
-          autohide: true,
-        });
-      });
-  };
-
   useEffect(() => {
     if (selectedDeviceType === '' && !loading) getDeviceTypes();
   }, []);
@@ -227,7 +169,7 @@ const FirmwareListPage = () => {
             active={index === 0}
             onClick={() => setIndex(0)}
           >
-            {t('common.table')}
+            {t('common.dashboard')}
           </CNavLink>
           <CNavLink
             className="font-weight-bold"
@@ -235,11 +177,14 @@ const FirmwareListPage = () => {
             active={index === 1}
             onClick={() => setIndex(1)}
           >
-            {t('common.dashboard')}
+            {t('common.firmware')}
           </CNavLink>
         </CNav>
         <CTabContent>
           <CTabPane active={index === 0}>
+            <FirmwareDashboard />
+          </CTabPane>
+          <CTabPane active={index === 1}>
             <FirmwareList
               t={t}
               loading={loading}
@@ -248,20 +193,20 @@ const FirmwareListPage = () => {
               setPage={updatePage}
               data={displayedFirmware}
               firmwarePerPage={firmwarePerPage}
+              toggleEditModal={toggleEditModal}
               setFirmwarePerPage={updateFirmwarePerPage}
               selectedDeviceType={selectedDeviceType}
               deviceTypes={deviceTypes}
               setSelectedDeviceType={updateSelectedType}
-              addNote={addNote}
-              addNoteLoading={addNoteLoading}
-              updateDescription={updateDescription}
-              updateDescriptionLoading={updateDescriptionLoading}
               displayDev={displayDev}
               toggleDevDisplay={toggleDevDisplay}
             />
-          </CTabPane>
-          <CTabPane active={index === 1}>
-            <FirmwareDashboard />
+            <EditFirmwareModal
+              firmwareId={firmwareToEdit}
+              show={showEditModal}
+              toggle={toggleEditModal}
+              refreshTable={getFirmware}
+            />
           </CTabPane>
         </CTabContent>
       </CCardBody>

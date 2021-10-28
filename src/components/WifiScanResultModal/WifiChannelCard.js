@@ -24,6 +24,7 @@ const WifiChannelCard = ({ channel }) => {
       <CCardBody>
         <div className="overflow-auto" style={{ height: '250px' }}>
           <CDataTable
+            addTableClasses="ignore-overflow table-sm"
             items={channel.devices}
             fields={columns}
             className="text-white"
