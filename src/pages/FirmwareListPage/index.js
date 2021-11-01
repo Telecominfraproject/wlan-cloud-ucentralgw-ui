@@ -2,7 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { CCard, CCardBody, CNav, CNavLink, CTabPane, CTabContent } from '@coreui/react';
+import {
+  CCard,
+  CCardBody,
+  CNav,
+  CNavLink,
+  CTabPane,
+  CTabContent,
+  CCardHeader,
+} from '@coreui/react';
 import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
 import FirmwareDashboard from 'components/FirmwareDashboard';
 import EditFirmwareModal from 'components/EditFirmwareModal';
@@ -161,6 +169,9 @@ const FirmwareListPage = () => {
 
   return (
     <CCard>
+      <CCardHeader className="dark-header">
+        <div className="text-value-lg mr-auto">{t('common.firmware')}</div>
+      </CCardHeader>
       <CCardBody className="p-0">
         <CNav variant="tabs">
           <CNavLink
@@ -177,7 +188,7 @@ const FirmwareListPage = () => {
             active={index === 1}
             onClick={() => setIndex(1)}
           >
-            {t('common.firmware')}
+            {t('common.table')}
           </CNavLink>
         </CNav>
         <CTabContent>

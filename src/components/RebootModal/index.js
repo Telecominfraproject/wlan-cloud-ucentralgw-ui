@@ -31,7 +31,7 @@ const ActionModal = ({ show, toggleModal }) => {
   const [waiting, setWaiting] = useState(false);
   const [result, setResult] = useState(null);
   const [chosenDate, setChosenDate] = useState(new Date().toString());
-  const [isNow, setIsNow] = useState(false);
+  const [isNow, setIsNow] = useState(true);
 
   const toggleNow = () => {
     setIsNow(!isNow);
@@ -48,6 +48,7 @@ const ActionModal = ({ show, toggleModal }) => {
       setResult(null);
       setWaiting(false);
       setChosenDate(new Date().toString());
+      setIsNow(true);
     }
   }, [show]);
 

@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { CButton, CModal, CModalBody, CModalHeader, CModalTitle, CPopover } from '@coreui/react';
+import {
+  CButton,
+  CModal,
+  CModalBody,
+  CModalHeader,
+  CModalTitle,
+  CPopover,
+  CNav,
+  CNavLink,
+  CTabPane,
+  CTabContent,
+} from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilPencil, cilSave, cilX } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
-import { useFormFields, useAuth, useToast, FirmwareDetailsForm } from 'ucentral-libs';
+import {
+  useFormFields,
+  useAuth,
+  useToast,
+  FirmwareDetailsForm,
+  DetailedNotesTable,
+} from 'ucentral-libs';
 
 const initialState = {
   created: {
@@ -29,11 +46,6 @@ const initialState = {
     editable: true,
   },
   size: {
-    value: '',
-    error: false,
-    editable: true,
-  },
-  owner: {
     value: '',
     error: false,
     editable: true,
@@ -65,6 +77,7 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
   const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [index, setIndex] = useState(0);
   const [firmware, updateWithId, updateWithKey, setFirmware] = useFormFields(initialState);
 
   const getFirmware = () => {
@@ -168,6 +181,7 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
     if (show) {
       getFirmware();
       setEditing(false);
+      setIndex(0);
     }
   }, [show]);
 
@@ -201,14 +215,48 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
           </CPopover>
         </div>
       </CModalHeader>
-      <CModalBody>
-        <FirmwareDetailsForm
-          t={t}
-          fields={firmware}
-          addNote={addNote}
-          updateFieldsWithId={updateWithId}
-          editing={editing}
-        />
+      <CModalBody className="px-3 pt-0">
+        <CNav variant="tabs" className="mb-0 p-0">
+          <CNavLink
+            className="font-weight-bold"
+            href="#"
+            active={index === 0}
+            onClick={() => setIndex(0)}
+          >
+            {t('common.main')}
+          </CNavLink>
+          <CNavLink
+            className="font-weight-bold"
+            href="#"
+            active={index === 1}
+            onClick={() => setIndex(1)}
+          >
+            {t('configuration.notes')}
+          </CNavLink>
+        </CNav>
+        <CTabContent>
+          <CTabPane active={index === 0} className="pt-2">
+            {index === 0 ? (
+              <FirmwareDetailsForm
+                t={t}
+                fields={firmware}
+                updateFieldsWithId={updateWithId}
+                editing={editing}
+              />
+            ) : null}
+          </CTabPane>
+          <CTabPane active={index === 1}>
+            {index === 1 ? (
+              <DetailedNotesTable
+                t={t}
+                notes={firmware.notes.value}
+                addNote={addNote}
+                loading={loading}
+                editable={editing}
+              />
+            ) : null}
+          </CTabPane>
+        </CTabContent>
       </CModalBody>
     </CModal>
   );

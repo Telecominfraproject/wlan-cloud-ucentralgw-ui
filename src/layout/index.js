@@ -57,6 +57,7 @@ const TheLayout = () => {
           endpoints={endpoints}
           user={user}
           avatar={avatar}
+          hideBreadcrumb
         />
         <div className="c-body">
           <ToastProvider>
