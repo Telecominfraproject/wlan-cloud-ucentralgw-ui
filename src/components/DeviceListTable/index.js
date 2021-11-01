@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceSearchBar from 'components/DeviceSearchBar';
@@ -16,8 +16,7 @@ const DeviceList = () => {
   const { t } = useTranslation();
   const { addToast } = useToast();
   const history = useHistory();
-  const { search } = useLocation();
-  const page = new URLSearchParams(search).get('page');
+  const [page, setPage] = useState(parseInt(sessionStorage.getItem('deviceTable') ?? 0, 10));
   const { currentToken, endpoints } = useAuth();
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
@@ -225,7 +224,8 @@ const DeviceList = () => {
   };
 
   const updatePageCount = ({ selected: selectedPage }) => {
-    history.push(`/devices?page=${selectedPage}`);
+    sessionStorage.setItem('deviceTable', selectedPage);
+    setPage(selectedPage);
     getDeviceInformation(selectedPage);
   };
 
@@ -354,9 +354,6 @@ const DeviceList = () => {
   };
 
   useEffect(() => {
-    if (page === undefined || page === null || Number.isNaN(page)) {
-      history.push(`/devices?page=0`);
-    }
     getCount();
   }, []);
 
