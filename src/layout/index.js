@@ -40,7 +40,7 @@ const TheLayout = () => {
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
-        logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
+        logo="assets/Arilia_Small.png"
         options={navigation}
         redirectTo="/devices"
       />
@@ -52,7 +52,7 @@ const TheLayout = () => {
           t={t}
           i18n={i18n}
           logout={logout}
-          logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
+          logo="assets/Arilia_Small.png"
           authToken={currentToken}
           endpoints={endpoints}
           user={user}

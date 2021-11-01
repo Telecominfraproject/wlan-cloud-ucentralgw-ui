@@ -418,7 +418,7 @@ const Login = () => {
       i18n={i18n}
       signIn={SignIn}
       loading={loading}
-      logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
+      logo="assets/Arilia_Large.jpg"
       loginResponse={loginResponse}
       forgotResponse={forgotResponse}
       fields={fields}
