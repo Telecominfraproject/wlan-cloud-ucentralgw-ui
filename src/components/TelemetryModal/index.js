@@ -193,7 +193,7 @@ const TelemetryModal = ({ show, toggle }) => {
             </CRow>
             <CRow>
               <CCol>
-                <pre>{JSON.stringify(lastMessage, null, '\t')}</pre>
+                <pre>{JSON.stringify(lastMessage, null, 2)}</pre>
               </CCol>
             </CRow>
             <CRow>
