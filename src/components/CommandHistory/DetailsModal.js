@@ -17,7 +17,7 @@ const DetailsModal = ({ t, show, toggle, details, commandUuid }) => (
       </div>
     </CModalHeader>
     <CModalBody>
-      <pre className="ignore">{JSON.stringify(details, null, 4)}</pre>
+      <pre className="ignore">{JSON.stringify(details, null, 2)}</pre>
     </CModalBody>
   </CModal>
 );

@@ -134,7 +134,7 @@ const FirmwareDashboard = () => {
     if (
       parsedData.numberOfDevices === undefined ||
       Number.isNaN(parsedData.numberOfDevices) ||
-      parsedData === 0
+      parsedData.numberOfDevices === 0
     ) {
       parsedData.latestSoftwareRate = '-';
     } else {

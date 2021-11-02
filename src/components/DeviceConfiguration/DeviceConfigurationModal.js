@@ -19,7 +19,7 @@ const DeviceConfigurationModal = ({ show, toggle, configuration }) => (
           <CModalTitle className="text-dark">{t('configuration.title')}</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <pre className="ignore">{JSON.stringify(configuration, null, 4)}</pre>
+          <pre className="ignore">{JSON.stringify(configuration, null, 2)}</pre>
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={toggle}>

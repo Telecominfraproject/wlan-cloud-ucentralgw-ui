@@ -106,7 +106,7 @@ const DeviceLogs = () => {
 
   const getDetails = (index, logDetails) => {
     if (details.includes(index))
-      return <pre className="ignore">{JSON.stringify(logDetails, null, 4)}</pre>;
+      return <pre className="ignore">{JSON.stringify(logDetails, null, 2)}</pre>;
     return <pre className="ignore" />;
   };
 
