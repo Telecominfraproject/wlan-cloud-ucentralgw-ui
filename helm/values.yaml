@@ -69,6 +69,8 @@ tolerations: []
 
 affinity: {}
 
+podAnnotations: {}
+
 # Application
 public_env_variables:
   DEFAULT_UCENTRALSEC_URL: https://ucentral.dpaas.arilia.com:16001
