@@ -52,6 +52,7 @@
 		"commands_executed": "commandes exécutées",
 		"compatible": "Compatible",
 		"completed": "Terminé",
+		"concurrent_devices": "Périphériques simultanés",
 		"config_id": "Config. Identifiant",
 		"confirm": "Confirmer",
 		"confirm_stop_editing": "Voulez-vous vraiment arrêter la modification ? Cela annulera toutes les modifications non enregistrées que vous avez apportées.",
@@ -297,8 +298,12 @@
 		"healthchecks_title": "Supprimer les vérifications d'état"
 	},
 	"device": {
+		"certificate_explanation": "Certificats des appareils connectés",
 		"error_fetching_device": "Erreur lors de la récupération des informations sur l'appareil : {{error}}",
-		"error_fetching_devices": "Erreur lors de la récupération des appareils : {{error}}"
+		"error_fetching_devices": "Erreur lors de la récupération des appareils : {{error}}",
+		"health_explanation": "Santé des appareils connectés",
+		"memory_explanation": "Mémoire utilisée par les appareils connectés",
+		"uptimes_explanation": "Heure à laquelle les appareils connectés ont été activés et connectés"
 	},
 	"device_logs": {
 		"log": "Bûche",
@@ -324,6 +329,7 @@
 		"entity": "Entité",
 		"error_fetch_entity": "Erreur lors de la récupération des informations sur l'entité",
 		"error_fetching": "Erreur lors de la récupération des entités",
+		"error_fetching_map": "Erreur lors de la récupération de la carte : {{error}}",
 		"error_saving": "Erreur lors de l'enregistrement de l'entité",
 		"higher_priority": "Faire une priorité plus élevée",
 		"ip_detection": "Détection IP",
@@ -335,6 +341,7 @@
 		"only_unassigned": "Uniquement non attribué",
 		"select_entity": "Sélectionnez cette entité",
 		"selected_entity": "Entité sélectionnée",
+		"selected_map": "Carte sélectionnée",
 		"update_failure_error": "Erreur lors de la tentative de mise à jour de l'entité : {{error}}",
 		"valid_serial": "Doit être un numéro de série valide (12 caractères HEX)",
 		"venues": "Les lieux"
@@ -347,6 +354,7 @@
 		"warning": "Avertissement : Une fois que vous avez soumis, cela ne peut pas être annulé"
 	},
 	"firmware": {
+		"age_explanation": "Nombre moyen de jours pour tous les appareils à partir desquels nous pouvons obtenir cette valeur",
 		"average_age": "Âge moyen du micrologiciel",
 		"choose_custom": "Choisir",
 		"details_title": "Image #{{image}} Détails",
@@ -359,6 +367,7 @@
 		"image": "Image",
 		"image_date": "Date de l'image",
 		"installed_firmware": "Micrologiciel installé",
+		"latest_explanation": "Appareils exécutant un firmware reconnu dans sa dernière version",
 		"latest_version_installed": "Dernière version installée",
 		"newer_firmware_available": "Révisions plus récentes disponibles",
 		"reinstall_latest": "Réinstaller",

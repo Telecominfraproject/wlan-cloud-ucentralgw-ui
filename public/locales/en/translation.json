@@ -52,6 +52,7 @@
 		"commands_executed": "Commands Executed",
 		"compatible": "Compatible",
 		"completed": "Completed",
+		"concurrent_devices": "Concurrent Devices",
 		"config_id": "Config. Id",
 		"confirm": "Confirm",
 		"confirm_stop_editing": "Are you sure you want to stop editing? This will cancel any unsaved changes you have made.",
@@ -297,8 +298,12 @@
 		"healthchecks_title": "Delete Healthchecks"
 	},
 	"device": {
+		"certificate_explanation": "Certificates of connected devices",
 		"error_fetching_device": "Error fetching device information: {{error}}",
-		"error_fetching_devices": "Error while fetching devices: {{error}}"
+		"error_fetching_devices": "Error while fetching devices: {{error}}",
+		"health_explanation": "Health of connected devices",
+		"memory_explanation": "Memory used by connected devices",
+		"uptimes_explanation": "Time connected devices have been up and connected"
 	},
 	"device_logs": {
 		"log": "Log",
@@ -324,6 +329,7 @@
 		"entity": "Entity",
 		"error_fetch_entity": "Error while fetching entity information",
 		"error_fetching": "Error while fetching entities",
+		"error_fetching_map": "Error fetching map: {{error}}",
 		"error_saving": "Error while saving entity",
 		"higher_priority": "Make Higher Priority",
 		"ip_detection": "IP Detection",
@@ -335,6 +341,7 @@
 		"only_unassigned": "Only Unassigned",
 		"select_entity": "Select this Entity",
 		"selected_entity": "Selected Entity",
+		"selected_map": "Selected Map",
 		"update_failure_error": "Error while trying to update entity: {{error}}",
 		"valid_serial": "Needs to be a valid serial number (12 HEX characters)",
 		"venues": "Venues"
@@ -347,6 +354,7 @@
 		"warning": "Warning: Once you submit this cannot be reverted"
 	},
 	"firmware": {
+		"age_explanation": "Average number of days for all devices from which we can obtain that value",
 		"average_age": "Average Firmware Age",
 		"choose_custom": "Choose",
 		"details_title": "Image #{{image}} Details",
@@ -359,6 +367,7 @@
 		"image": "Image",
 		"image_date": "Image Date",
 		"installed_firmware": "Installed Firmware",
+		"latest_explanation": "Devices running recognized firmware at its latest version",
 		"latest_version_installed": "Latest Version Installed",
 		"newer_firmware_available": "Newer Revisions Available",
 		"reinstall_latest": "Reinstall ",
