@@ -256,24 +256,44 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          if (formType !== 'change-password') {
-            if (
-              error.response.status === 403 &&
-              error.response?.data?.ErrorDescription === 'Password change expected.'
-            ) {
-              setFormType('change-password');
+          if (formType === 'change-password') {
+            if (error.response?.data?.ErrorCode === 3) {
+              setChangeResponse({
+                text: t('login.previously_used'),
+                error: true,
+                tried: true,
+              });
+            } else if (error.response?.data?.ErrorCode === 5) {
+              setChangeResponse({
+                text: t('common.invalid_password'),
+                error: true,
+                tried: true,
+              });
+            } else {
+              setChangeResponse({
+                text: t('login.change_password_error'),
+                error: true,
+                tried: true,
+              });
             }
+          } else if (error.response.status === 403) {
+            if (error.response?.data?.ErrorCode === 1) setFormType('change-password');
+            else if (error.response?.data?.ErrorCode === 2) {
+              setLoginResponse({
+                text: t('common.invalid_credentials'),
+                error: true,
+                tried: true,
+              });
+            } else {
+              setLoginResponse({
+                text: t('login.login_error'),
+                error: true,
+                tried: true,
+              });
+            }
+          } else {
             setLoginResponse({
               text: t('login.login_error'),
-              error: true,
-              tried: true,
-            });
-          } else {
-            setChangeResponse({
-              text:
-                fields.newpassword.value === fields.password.value
-                  ? t('login.previously_used')
-                  : t('login.change_password_error'),
               error: true,
               tried: true,
             });
