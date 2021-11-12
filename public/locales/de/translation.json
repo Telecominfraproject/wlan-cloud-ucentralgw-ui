@@ -52,6 +52,7 @@
 		"commands_executed": "Ausgeführte Befehle",
 		"compatible": "kompatibel",
 		"completed": "Abgeschlossen",
+		"concurrent_devices": "Gleichzeitige Geräte",
 		"config_id": "Konfigurations ID",
 		"confirm": "Bestätigen",
 		"confirm_stop_editing": "Möchten Sie die Bearbeitung wirklich beenden? Dadurch werden alle nicht gespeicherten Änderungen, die Sie vorgenommen haben, verworfen.",
@@ -108,7 +109,9 @@
 		"hour": "stunde",
 		"hours": "std",
 		"id": "ID",
+		"invalid_credentials": "Ungültiger Benutzername und / oder Passwort",
 		"invalid_file": "Die ausgewählte Datei war ungültig, bitte lesen Sie die Anweisungen und passen Sie Ihre Datei entsprechend an",
+		"invalid_password": "Dieses Passwort entspricht nicht den grundlegenden Passwortregeln. Bitte besuchen Sie unsere Seite Passwortrichtlinien, um mehr zu erfahren",
 		"invalid_pem": "Ihre PEM-Datei ist ungültig. Es sollte mit '-----BEGIN CERTIFICATE-----' ODER '-----BEGIN PRIVATE KEY-----' beginnen und mit '-----END CERTIFICATE--- enden. --' ODER '-----END PRIVATSCHLÜSSEL-----'",
 		"ip_address": "IP Adresse",
 		"ips": "IPs",
@@ -297,8 +300,12 @@
 		"healthchecks_title": "Healthchecks löschen"
 	},
 	"device": {
+		"certificate_explanation": "Zertifikate der angeschlossenen Geräte",
 		"error_fetching_device": "Fehler beim Abrufen der Geräteinformationen: {{error}}",
-		"error_fetching_devices": "Fehler beim Abrufen von Geräten: {{error}}"
+		"error_fetching_devices": "Fehler beim Abrufen von Geräten: {{error}}",
+		"health_explanation": "Zustand der angeschlossenen Geräte",
+		"memory_explanation": "Von angeschlossenen Geräten belegter Speicher",
+		"uptimes_explanation": "Zeit, zu der verbundene Geräte aktiv und verbunden waren"
 	},
 	"device_logs": {
 		"log": "Protokoll",
@@ -324,6 +331,7 @@
 		"entity": "Entität",
 		"error_fetch_entity": "Fehler beim Abrufen von Entitätsinformationen",
 		"error_fetching": "Fehler beim Abrufen von Entitäten",
+		"error_fetching_map": "Fehler beim Abrufen der Karte: {{error}}",
 		"error_saving": "Fehler beim Speichern der Entität",
 		"higher_priority": "Stellen Sie eine höhere Priorität ein",
 		"ip_detection": "IP-Erkennung",
@@ -335,6 +343,7 @@
 		"only_unassigned": "Nur nicht zugewiesen",
 		"select_entity": "Wählen Sie diese Entität aus",
 		"selected_entity": "Ausgewählte Einheit",
+		"selected_map": "Ausgewählte Karte",
 		"update_failure_error": "Fehler beim Versuch, die Entität zu aktualisieren: {{error}}",
 		"valid_serial": "Muss eine gültige Seriennummer sein (12 HEX-Zeichen)",
 		"venues": "Veranstaltungsorte"
@@ -347,6 +356,7 @@
 		"warning": "Achtung: Nach dem Absenden kann dies nicht rückgängig gemacht werden"
 	},
 	"firmware": {
+		"age_explanation": "Durchschnittliche Anzahl der Tage für alle Geräte, von denen wir diesen Wert erhalten können",
 		"average_age": "Durchschnittliches Firmware-Alter",
 		"choose_custom": "Wählen",
 		"details_title": "Bild #{{image}} Details",
@@ -359,6 +369,7 @@
 		"image": "Bild",
 		"image_date": "Bilddatum",
 		"installed_firmware": "Installierte Firmware",
+		"latest_explanation": "Geräte, auf denen erkannte Firmware in der neuesten Version ausgeführt wird",
 		"latest_version_installed": "Neueste Version installiert Version",
 		"newer_firmware_available": "Neuere Versionen verfügbar",
 		"reinstall_latest": "Neu installieren",

@@ -52,6 +52,7 @@
 		"commands_executed": "Comandos Executados",
 		"compatible": "Compatível",
 		"completed": "Concluído",
+		"concurrent_devices": "Dispositivos Simultâneos",
 		"config_id": "Config. Identidade",
 		"confirm": "confirme",
 		"confirm_stop_editing": "Tem certeza que deseja parar de editar? Isso cancelará todas as alterações não salvas que você fez.",
@@ -108,7 +109,9 @@
 		"hour": "hora",
 		"hours": "horas",
 		"id": "identidade",
+		"invalid_credentials": "Nome de usuário e / ou senha inválidos",
 		"invalid_file": "O arquivo escolhido era inválido, por favor, leia as instruções e ajuste seu arquivo de acordo",
+		"invalid_password": "Esta senha não está de acordo com as regras básicas de senha. Visite nossa página de Política de Senha para saber mais",
 		"invalid_pem": "Seu arquivo .pem é inválido. Deve começar com '----- BEGIN CERTIFICATE -----' OU '----- BEGIN PRIVATE KEY -----' e deve terminar com '----- END CERTIFICATE --- - 'OU' ----- END PRIVATE KEY ----- '",
 		"ip_address": "Endereço de IP",
 		"ips": "IPs",
@@ -297,8 +300,12 @@
 		"healthchecks_title": "Excluir verificações de saúde"
 	},
 	"device": {
+		"certificate_explanation": "Certificados de dispositivos conectados",
 		"error_fetching_device": "Erro ao buscar informações do dispositivo: {{error}}",
-		"error_fetching_devices": "Erro ao buscar dispositivos: {{error}}"
+		"error_fetching_devices": "Erro ao buscar dispositivos: {{error}}",
+		"health_explanation": "Saúde de dispositivos conectados",
+		"memory_explanation": "Memória usada por dispositivos conectados",
+		"uptimes_explanation": "Há tempo em que os dispositivos conectados estão ativados e conectados"
 	},
 	"device_logs": {
 		"log": "Registro",
@@ -324,6 +331,7 @@
 		"entity": "Entidade",
 		"error_fetch_entity": "Erro ao buscar informações da entidade",
 		"error_fetching": "Erro ao buscar entidades",
+		"error_fetching_map": "Erro ao buscar mapa: {{error}}",
 		"error_saving": "Erro ao salvar entidade",
 		"higher_priority": "Dê maior prioridade",
 		"ip_detection": "Detecção de IP",
@@ -335,6 +343,7 @@
 		"only_unassigned": "Apenas não atribuídos",
 		"select_entity": "Selecione esta Entidade",
 		"selected_entity": "Entidade Selecionada",
+		"selected_map": "Mapa Selecionado",
 		"update_failure_error": "Erro ao tentar atualizar a entidade: {{error}}",
 		"valid_serial": "Precisa ser um número de série válido (12 caracteres HEX)",
 		"venues": "Locais"
@@ -347,6 +356,7 @@
 		"warning": "Aviso: depois de enviar, isso não pode ser revertido"
 	},
 	"firmware": {
+		"age_explanation": "Número médio de dias para todos os dispositivos dos quais podemos obter esse valor",
 		"average_age": "Idade Média do Firmware",
 		"choose_custom": "Escolher",
 		"details_title": "Detalhes da imagem #{{image}} ",
@@ -359,6 +369,7 @@
 		"image": "Imagem",
 		"image_date": "Data da Imagem",
 		"installed_firmware": "Firmware Instalado",
+		"latest_explanation": "Dispositivos executando firmware reconhecido em sua versão mais recente",
 		"latest_version_installed": "Última versão instalada",
 		"newer_firmware_available": "Novas revisões disponíveis",
 		"reinstall_latest": "Reinstalar",

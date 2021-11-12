@@ -52,6 +52,7 @@
 		"commands_executed": "Comandos ejecutados",
 		"compatible": "Compatible",
 		"completed": "terminado",
+		"concurrent_devices": "Dispositivos concurrentes",
 		"config_id": "Config. Identificación",
 		"confirm": "Confirmar",
 		"confirm_stop_editing": "¿Estás seguro de que quieres dejar de editar? Esto cancelará cualquier cambio no guardado que haya realizado.",
@@ -108,7 +109,9 @@
 		"hour": "hora",
 		"hours": "horas",
 		"id": "Carné de identidad",
+		"invalid_credentials": "Nombre de usuario y / o contraseña inválido",
 		"invalid_file": "El archivo elegido no es válido, lea las instrucciones y ajuste su archivo en consecuencia",
+		"invalid_password": "Esta contraseña no confirma las reglas básicas de contraseña. Visite nuestra página de Política de contraseñas para obtener más información.",
 		"invalid_pem": "Su archivo .pem no es válido. Debe comenzar con '----- BEGIN CERTIFICATE -----' O '----- BEGIN PRIVATE KEY -----' y debe terminar con '----- END CERTIFICATE --- - 'O' ----- FIN DE CLAVE PRIVADA ----- '",
 		"ip_address": "Dirección IP",
 		"ips": "IPs",
@@ -297,8 +300,12 @@
 		"healthchecks_title": "Eliminar comprobaciones de estado"
 	},
 	"device": {
+		"certificate_explanation": "Certificados de dispositivos conectados",
 		"error_fetching_device": "Error al obtener la información del dispositivo: {{error}}",
-		"error_fetching_devices": "Error al recuperar dispositivos: {{error}}"
+		"error_fetching_devices": "Error al recuperar dispositivos: {{error}}",
+		"health_explanation": "Salud de los dispositivos conectados",
+		"memory_explanation": "Memoria utilizada por dispositivos conectados",
+		"uptimes_explanation": "Tiempo que los dispositivos conectados han estado en funcionamiento y conectados"
 	},
 	"device_logs": {
 		"log": "Iniciar sesión",
@@ -324,6 +331,7 @@
 		"entity": "Entidad",
 		"error_fetch_entity": "Error al obtener la información de la entidad",
 		"error_fetching": "Error al recuperar entidades",
+		"error_fetching_map": "Error al obtener el mapa: {{error}}",
 		"error_saving": "Error al guardar la entidad",
 		"higher_priority": "Dar mayor prioridad",
 		"ip_detection": "Detección de IP",
@@ -335,6 +343,7 @@
 		"only_unassigned": "Solo sin asignar",
 		"select_entity": "Seleccione esta entidad",
 		"selected_entity": "Entidad seleccionada",
+		"selected_map": "Mapa seleccionado",
 		"update_failure_error": "Error al intentar actualizar la entidad: {{error}}",
 		"valid_serial": "Debe ser un número de serie válido (12 caracteres HEX)",
 		"venues": "Sedes"
@@ -347,6 +356,7 @@
 		"warning": "Advertencia: una vez que envíe, esto no se podrá revertir"
 	},
 	"firmware": {
+		"age_explanation": "Número medio de días para todos los dispositivos de los que podemos obtener ese valor",
 		"average_age": "Edad promedio del firmware",
 		"choose_custom": "Escoger",
 		"details_title": "Detalles de la imagen n. °{{image}} ",
@@ -359,6 +369,7 @@
 		"image": "Imagen",
 		"image_date": "Fecha de la imagen",
 		"installed_firmware": "Firmware instalado",
+		"latest_explanation": "Dispositivos que ejecutan firmware reconocido en su última versión",
 		"latest_version_installed": "Última versión instalada",
 		"newer_firmware_available": "Nuevas revisiones disponibles",
 		"reinstall_latest": "Reinstalar",

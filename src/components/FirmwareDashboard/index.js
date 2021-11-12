@@ -151,13 +151,17 @@ const FirmwareDashboard = () => {
         : 0;
     const devicesForAverage = parsedData.numberOfDevices - usingUnknownFirmwareFromArray;
 
-    if (parsedData.totalSecondsOld.length > 0) {
-      parsedData.averageFirmwareAge =
+    if (devicesForAverage !== 0 && parsedData.totalSecondsOld.length > 0) {
+      parsedData.averageFirmwareAge = Math.round(
         parsedData.totalSecondsOld[0].value /
-        (devicesForAverage > 0 ? devicesForAverage : 1) /
-        (24 * 60 * 60);
+          (devicesForAverage > 0 ? devicesForAverage : 1) /
+          (24 * 60 * 60),
+      );
+      parsedData.averageFirmwareAge = `${parsedData.averageFirmwareAge} ${
+        Math.round(parsedData.averageFirmwareAge) > 0 ? t('common.days') : t('common.day')
+      }`;
     } else {
-      parsedData.averageFirmwareAge = 0;
+      parsedData.averageFirmwareAge = '-';
     }
 
     // Latest firmware distribution
