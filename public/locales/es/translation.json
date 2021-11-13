@@ -700,6 +700,7 @@
 		"email_address": "Dirección de correo electrónico",
 		"enter_new_phone": "Ingrese su nuevo número de teléfono:",
 		"error_fetching_users": "Error al obtener usuarios: {{error}}",
+		"error_retrieving": "Error al recuperar usuario",
 		"error_sending_code": "Error al intentar enviar el código de validación. Confirma que tu número de teléfono es válido.",
 		"force_password_change": "Forzar cambio de contraseña al iniciar sesión",
 		"id": "Id. De usuario",
