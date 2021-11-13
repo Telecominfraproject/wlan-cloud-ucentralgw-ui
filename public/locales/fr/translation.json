@@ -700,6 +700,7 @@
 		"email_address": "Adresse électronique",
 		"enter_new_phone": "Saisissez votre nouveau numéro de téléphone :",
 		"error_fetching_users": "Erreur lors de la récupération des utilisateurs : {{error}}",
+		"error_retrieving": "Erreur lors de la récupération de l'utilisateur",
 		"error_sending_code": "Erreur lors de la tentative d'envoi du code de validation. Veuillez confirmer que votre numéro de téléphone est valide.",
 		"force_password_change": "Forcer le changement de mot de passe lors de la connexion",
 		"id": "Identifiant d'utilisateur.",

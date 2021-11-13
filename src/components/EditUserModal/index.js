@@ -96,7 +96,15 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
         setInitialUser({ ...initialState, ...newUser });
         setUser({ ...initialState, ...newUser });
       })
-      .catch(() => {});
+      .catch(() => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_retrieving'),
+          color: 'danger',
+          autohide: true,
+        });
+        toggle();
+      });
   };
 
   const toggleEditing = () => {

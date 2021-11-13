@@ -700,6 +700,7 @@
 		"email_address": "E-Mail-Addresse",
 		"enter_new_phone": "Geben Sie Ihre neue Telefonnummer ein:",
 		"error_fetching_users": "Fehler beim Abrufen der Nutzer: {{error}}",
+		"error_retrieving": "Fehler beim Abrufen des Benutzers",
 		"error_sending_code": "Fehler beim Versuch, den Validierungscode zu senden. Bitte bestätigen Sie, dass Ihre Telefonnummer gültig ist.",
 		"force_password_change": "Passwortänderung bei der Anmeldung erzwingen",
 		"id": "Benutzeridentifikation.",

@@ -700,6 +700,7 @@
 		"email_address": "Email Address",
 		"enter_new_phone": "Enter your new phone number: ",
 		"error_fetching_users": "Error fetching users: {{error}}",
+		"error_retrieving": "Error retrieving user",
 		"error_sending_code": "Error while trying to send validation code. Please confirm that your phone number is valid.",
 		"force_password_change": "Force Password Change on Login",
 		"id": "User Id.",
