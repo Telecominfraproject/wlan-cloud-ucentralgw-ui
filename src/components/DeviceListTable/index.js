@@ -232,6 +232,7 @@ const DeviceList = () => {
   const upgradeToLatest = (device) => {
     setUpgradeStatus({
       loading: true,
+      serialNumber: device.serialNumber,
     });
 
     const options = {

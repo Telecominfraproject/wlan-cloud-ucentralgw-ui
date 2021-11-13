@@ -13,7 +13,7 @@ const initialState = {
   changePassword: {
     value: false,
     error: false,
-    editable: false,
+    editable: true,
   },
   currentPassword: {
     value: '',
@@ -96,7 +96,15 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
         setInitialUser({ ...initialState, ...newUser });
         setUser({ ...initialState, ...newUser });
       })
-      .catch(() => {});
+      .catch(() => {
+        addToast({
+          title: t('common.error'),
+          body: t('user.error_retrieving'),
+          color: 'danger',
+          autohide: true,
+        });
+        toggle();
+      });
   };
 
   const toggleEditing = () => {
@@ -134,13 +142,14 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
     }
 
     const newNotes = [];
+
     for (let i = 0; i < user.notes.value.length; i += 1) {
       if (user.notes.value[i].new) newNotes.push({ note: user.notes.value[i].note });
     }
 
     parameters.notes = newNotes;
 
-    if (newData) {
+    if (newData || newNotes.length > 0) {
       const options = {
         headers: {
           Accept: 'application/json',
@@ -207,6 +216,7 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
 
   useEffect(() => {
     if (show) {
+      getUser();
       setEditing(false);
     }
   }, [show]);

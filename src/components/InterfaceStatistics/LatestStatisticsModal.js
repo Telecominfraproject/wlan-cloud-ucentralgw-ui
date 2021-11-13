@@ -51,7 +51,7 @@ const LatestStatisticsModal = ({ show, toggle }) => {
         </div>
       </CModalHeader>
       <CModalBody>
-        <pre className="ignore">{JSON.stringify(latestStats, null, 4)}</pre>
+        <pre className="ignore">{JSON.stringify(latestStats, null, 2)}</pre>
       </CModalBody>
     </CModal>
   );
