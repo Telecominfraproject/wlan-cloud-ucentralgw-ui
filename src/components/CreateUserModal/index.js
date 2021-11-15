@@ -27,7 +27,7 @@ const initialState = {
     error: false,
   },
   userRole: {
-    value: 'admin',
+    value: 'accounting',
     error: false,
   },
   notes: {
@@ -102,10 +102,10 @@ const CreateUserModal = ({ show, toggle, getUsers, policies }) => {
           });
           toggle();
         })
-        .catch(() => {
+        .catch((e) => {
           addToast({
             title: t('common.error'),
-            body: t('user.create_failure'),
+            body: t('user.create_failure', { error: e.response?.data?.ErrorDescription }),
             color: 'danger',
             autohide: true,
           });

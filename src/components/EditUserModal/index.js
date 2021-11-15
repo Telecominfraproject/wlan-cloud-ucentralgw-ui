@@ -36,7 +36,7 @@ const initialState = {
     editable: true,
   },
   userRole: {
-    value: '',
+    value: 'accounting',
     error: false,
     editable: true,
   },
