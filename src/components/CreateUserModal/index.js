@@ -42,16 +42,11 @@ const initialState = {
   },
 };
 
-const CreateUserModal = ({ show, toggle, getUsers }) => {
+const CreateUserModal = ({ show, toggle, getUsers, policies }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { addToast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [policies, setPolicies] = useState({
-    passwordPolicy: '',
-    passwordPattern: '',
-    accessPolicy: '',
-  });
   const [formFields, updateFieldWithId, updateField, setFormFields] = useFormFields(initialState);
 
   const toggleChange = () => {
@@ -122,23 +117,6 @@ const CreateUserModal = ({ show, toggle, getUsers }) => {
       setLoading(false);
     }
   };
-
-  const getPasswordPolicy = () => {
-    axiosInstance
-      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
-      .then((response) => {
-        const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
-        setPolicies(response.data);
-      })
-      .catch(() => {});
-  };
-
-  useEffect(() => {
-    if (policies.passwordPattern.length === 0) getPasswordPolicy();
-  }, []);
-
   useEffect(() => {
     setFormFields(initialState);
   }, [show]);
@@ -177,6 +155,7 @@ CreateUserModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
+  policies: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default React.memo(CreateUserModal);
