@@ -686,7 +686,7 @@
 		"check_phone": "Por favor revise su teléfono para su código de validación",
 		"confirm_new_password": "confirmar nueva contraseña",
 		"create": "Crear usuario",
-		"create_failure": "Error al crear usuario. Asegúrese de que esta dirección de correo electrónico no esté vinculada a una cuenta.",
+		"create_failure": "Error al crear el usuario: {{error}}",
 		"create_success": "Usuario creado con éxito",
 		"creating": "Creando usuario ...",
 		"delete_avatar": "Eliminar avatar",
