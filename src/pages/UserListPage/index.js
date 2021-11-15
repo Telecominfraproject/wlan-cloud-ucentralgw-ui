@@ -20,6 +20,23 @@ const UserListPage = () => {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [usersPerPage, setUsersPerPage] = useState(getItem('devicesPerPage') || '10');
+  const [policies, setPolicies] = useState({
+    passwordPolicy: '',
+    passwordPattern: '',
+    accessPolicy: '',
+  });
+
+  const getPasswordPolicy = () => {
+    axiosInstance
+      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
+      .then((response) => {
+        const newPolicies = response.data;
+        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
+        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
+        setPolicies(response.data);
+      })
+      .catch(() => {});
+  };
 
   const toggleCreateModal = () => {
     setShowCreateModal(!showCreateModal);
@@ -180,6 +197,7 @@ const UserListPage = () => {
 
   useEffect(() => {
     getUsers();
+    getPasswordPolicy();
   }, []);
 
   useEffect(() => {
@@ -193,7 +211,7 @@ const UserListPage = () => {
     <div>
       <UserListTable
         t={t}
-        users={usersToDisplay}
+        users={usersToDisplay.sort((a, b) => a.email > b.email)}
         loading={loading}
         usersPerPage={usersPerPage}
         setUsersPerPage={updateUsersPerPage}
@@ -206,12 +224,18 @@ const UserListPage = () => {
         toggleEdit={toggleEditModal}
         refreshUsers={getUsers}
       />
-      <CreateUserModal show={showCreateModal} toggle={toggleCreateModal} getUsers={getUsers} />
+      <CreateUserModal
+        show={showCreateModal}
+        toggle={toggleCreateModal}
+        getUsers={getUsers}
+        policies={policies}
+      />
       <EditUserModal
         show={showEditModal}
         toggle={toggleEditModal}
         userId={userToEdit}
         getUsers={getUsers}
+        policies={policies}
       />
     </div>
   );
