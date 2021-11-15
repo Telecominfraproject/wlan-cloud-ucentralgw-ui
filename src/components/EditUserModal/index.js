@@ -36,7 +36,7 @@ const initialState = {
     editable: true,
   },
   userRole: {
-    value: '',
+    value: 'accounting',
     error: false,
     editable: true,
   },
@@ -46,7 +46,7 @@ const initialState = {
   },
 };
 
-const EditUserModal = ({ show, toggle, userId, getUsers }) => {
+const EditUserModal = ({ show, toggle, userId, getUsers, policies }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { addToast } = useToast();
@@ -54,23 +54,6 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
   const [initialUser, setInitialUser] = useState({});
   const [editing, setEditing] = useState(false);
   const [user, updateWithId, updateWithKey, setUser] = useUser(initialState);
-  const [policies, setPolicies] = useState({
-    passwordPolicy: '',
-    passwordPattern: '',
-    accessPolicy: '',
-  });
-
-  const getPasswordPolicy = () => {
-    axiosInstance
-      .post(`${endpoints.owsec}/api/v1/oauth2?requirements=true`, {})
-      .then((response) => {
-        const newPolicies = response.data;
-        newPolicies.accessPolicy = `${endpoints.owsec}${newPolicies.accessPolicy}`;
-        newPolicies.passwordPolicy = `${endpoints.owsec}${newPolicies.passwordPolicy}`;
-        setPolicies(response.data);
-      })
-      .catch(() => {});
-  };
 
   const getUser = () => {
     const options = {
@@ -209,9 +192,6 @@ const EditUserModal = ({ show, toggle, userId, getUsers }) => {
     if (userId) {
       getUser();
     }
-    if (policies.passwordPattern.length === 0) {
-      getPasswordPolicy();
-    }
   }, [userId]);
 
   useEffect(() => {
@@ -243,6 +223,7 @@ EditUserModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
+  policies: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default React.memo(EditUserModal);

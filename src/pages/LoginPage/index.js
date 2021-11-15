@@ -133,7 +133,7 @@ const Login = () => {
 
   const onKeyDown = (event, action) => {
     if (event.code === 'Enter') {
-      action();
+      action(event);
     }
   };
 
@@ -305,6 +305,107 @@ const Login = () => {
     }
   };
 
+  const submitForm = (event) => {
+    event.preventDefault();
+    setLoginResponse(initialResponseState);
+
+    setLoading(true);
+    let token = '';
+
+    const parameters = {
+      userId: event.target?.username?.value,
+      password: event.target?.password?.value,
+    };
+
+    if (formType === 'change-password') {
+      parameters.newPassword = fields.newpassword.value;
+    }
+
+    axiosInstance
+      .post(`${fields.ucentralsecurl.value}/api/v1/oauth2`, parameters)
+      .then((response) => {
+        // If there's MFA to do
+        if (response.data.method && response.data.created) {
+          setFormType(`validation-${response.data.method}-${response.data.uuid}`);
+          return null;
+        }
+        if (response.data.userMustChangePassword) {
+          setFormType('change-password');
+          return null;
+        }
+        setItem('access_token', response.data.access_token);
+        token = response.data.access_token;
+        return axiosInstance.get(`${fields.ucentralsecurl.value}/api/v1/systemEndpoints`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
+      })
+      .then((response) => {
+        if (response) {
+          const endpoints = {
+            owsec: fields.ucentralsecurl.value,
+          };
+          for (const endpoint of response.data.endpoints) {
+            endpoints[endpoint.type] = endpoint.uri;
+          }
+          if (endpoints.owgw) getGatewayUIUrl(token, endpoints.owgw);
+          if (endpoints.owprov) getProvUIUrl(token, endpoints.owprov);
+          setItem('gateway_endpoints', JSON.stringify(endpoints));
+          setEndpoints(endpoints);
+          setCurrentToken(token);
+        }
+      })
+      .catch((error) => {
+        if (formType === 'change-password') {
+          if (error.response?.data?.ErrorCode === 3) {
+            setChangeResponse({
+              text: t('login.previously_used'),
+              error: true,
+              tried: true,
+            });
+          } else if (error.response?.data?.ErrorCode === 5) {
+            setChangeResponse({
+              text: t('common.invalid_password'),
+              error: true,
+              tried: true,
+            });
+          } else {
+            setChangeResponse({
+              text: t('login.change_password_error'),
+              error: true,
+              tried: true,
+            });
+          }
+        } else if (error.response.status === 403) {
+          if (error.response?.data?.ErrorCode === 1) setFormType('change-password');
+          else if (error.response?.data?.ErrorCode === 2) {
+            setLoginResponse({
+              text: t('common.invalid_credentials'),
+              error: true,
+              tried: true,
+            });
+          } else {
+            setLoginResponse({
+              text: t('login.login_error'),
+              error: true,
+              tried: true,
+            });
+          }
+        } else {
+          setLoginResponse({
+            text: t('login.login_error'),
+            error: true,
+            tried: true,
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const sendForgotPasswordEmail = () => {
     setForgotResponse(initialResponseState);
 
@@ -446,6 +547,7 @@ const Login = () => {
       toggleForgotPassword={toggleForgotPassword}
       formType={formType}
       onKeyDown={onKeyDown}
+      submitForm={submitForm}
       sendForgotPasswordEmail={sendForgotPasswordEmail}
       changePasswordResponse={changePasswordResponse}
       cancelPasswordChange={cancelPasswordChange}
