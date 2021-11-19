@@ -52,7 +52,6 @@ const DeviceListPage = () => {
             {t('common.all')}
           </CNavLink>
           <CNavLink
-            hidden
             className="font-weight-bold"
             href="#"
             active={index === 2}

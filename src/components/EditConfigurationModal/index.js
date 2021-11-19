@@ -6,6 +6,7 @@ import { cilX, cilSave } from '@coreui/icons';
 import { useToast, useFormFields, useAuth, EditDefaultConfigurationForm } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
+import { checkIfJson } from 'utils/helper';
 
 const initialForm = {
   name: {
@@ -107,6 +108,11 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
         success = false;
         break;
       }
+    }
+
+    if (!checkIfJson(fields.configuration.value)) {
+      updateField('configuration', { error: true });
+      success = false;
     }
 
     return success;

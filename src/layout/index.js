@@ -21,12 +21,12 @@ const TheLayout = () => {
       icon: 'cilSave',
       to: '/firmware',
     },
-    /* {
+    {
       _tag: 'CSidebarNavItem',
       name: t('configuration.configurations'),
       icon: 'cilBarcode',
       to: '/defaultconfigurations',
-    }, */
+    },
     {
       _tag: 'CSidebarNavItem',
       name: t('user.users'),

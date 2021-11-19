@@ -6,6 +6,7 @@ import { cilX, cilSave } from '@coreui/icons';
 import { useToast, useFormFields, useAuth, AddDefaultConfigurationForm } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
+import { checkIfJson } from 'utils/helper';
 
 const initialForm = {
   name: {
@@ -74,6 +75,11 @@ const AddConfigurationModal = ({ show, toggle, refresh }) => {
       }
     }
 
+    if (!checkIfJson(fields.configuration.value)) {
+      updateField('configuration', { error: true });
+      success = false;
+    }
+
     return success;
   };
 
@@ -91,10 +97,15 @@ const AddConfigurationModal = ({ show, toggle, refresh }) => {
         name: fields.name.value,
         description: fields.description.value,
         modelIds: fields.deviceTypes.value,
+        configuration: fields.configuration.value,
       };
 
       axiosInstance
-        .post(`${endpoints.owgw}/api/v1/default_configurations/1`, parameters, options)
+        .post(
+          `${endpoints.owgw}/api/v1/default_configuration/${fields.name.value}`,
+          parameters,
+          options,
+        )
         .then(() => {
           if (refresh !== null) refresh();
           toggle();
@@ -132,7 +143,7 @@ const AddConfigurationModal = ({ show, toggle, refresh }) => {
         <CModalTitle className="pl-1 pt-1">{t('configuration.create')}</CModalTitle>
         <div className="text-right">
           <CPopover content={t('common.add')}>
-            <CButton color="primary" variant="outline" className="mx-2" onClick={addConfiguration}>
+            <CButton color="primary" variant="outline" className="ml-2" onClick={addConfiguration}>
               <CIcon content={cilSave} />
             </CButton>
           </CPopover>
