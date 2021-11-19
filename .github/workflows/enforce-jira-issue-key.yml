@@ -3,6 +3,8 @@ name: Ensure Jira issue is linked
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
+    branches:
+      - 'release/*'
 
 jobs:
   check_for_issue_key:
