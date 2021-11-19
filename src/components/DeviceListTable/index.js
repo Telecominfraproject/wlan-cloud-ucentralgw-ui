@@ -68,7 +68,7 @@ const DeviceList = () => {
     axiosInstance
       .get(
         `${endpoints.owgw}/api/v1/devices?deviceWithStatus=true&limit=${devicePerPage}&offset=${
-          devicePerPage * selectedPage
+          devicePerPage * selectedPage + 1
         }`,
         options,
       )
