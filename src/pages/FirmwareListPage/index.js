@@ -96,7 +96,7 @@ const FirmwareListPage = () => {
 
     const allFirmwares = [];
     let continueFirmware = true;
-    let i = 1;
+    let i = 0;
     while (continueFirmware) {
       const newFirmwares = await getPartialFirmware(deviceType ?? selectedDeviceType, i);
       if (newFirmwares === null || newFirmwares.length === 0) continueFirmware = false;
