@@ -12,13 +12,13 @@ import {
   CCol,
   CLabel,
   CTextarea,
-  CAlert,
+  CInput,
+  CInvalidFeedback,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { useAuth, useToast } from 'ucentral-libs';
 import { cilPlus, cilX } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
-import DeviceSearchBar from 'components/DeviceSearchBar';
 
 const AddToBlacklistModal = ({ show, toggle, serialNumber, refresh }) => {
   const { t } = useTranslation();
@@ -27,8 +27,6 @@ const AddToBlacklistModal = ({ show, toggle, serialNumber, refresh }) => {
   const { endpoints, currentToken } = useAuth();
   const [chosenSerialNumber, setChosenSerialNumber] = useState('');
   const [reason, setReason] = useState('');
-
-  const chooseSerial = (serial) => setChosenSerialNumber(serial);
 
   const addToBlacklist = () => {
     setLoading(true);
@@ -86,7 +84,12 @@ const AddToBlacklistModal = ({ show, toggle, serialNumber, refresh }) => {
               variant="outline"
               className="ml-2"
               onClick={addToBlacklist}
-              disabled={chosenSerialNumber === '' || reason === '' || loading}
+              disabled={
+                chosenSerialNumber.length !== 12 ||
+                !chosenSerialNumber.match('^[a-fA-F0-9]+$') ||
+                reason === '' ||
+                loading
+              }
             >
               <CIcon content={cilPlus} />
             </CButton>
@@ -99,21 +102,24 @@ const AddToBlacklistModal = ({ show, toggle, serialNumber, refresh }) => {
         </div>
       </CModalHeader>
       <CModalBody>
-        {serialNumber === '' ? (
-          <div style={{ width: '300px' }}>
-            <DeviceSearchBar action={chooseSerial} />
-          </div>
-        ) : null}
-        <CRow className="mt-3">
+        <CRow>
           <CLabel col sm="3">
             {t('common.serial_number')}
           </CLabel>
-          <CCol sm="9" className={chosenSerialNumber === '' ? '' : 'pt-2'}>
-            {chosenSerialNumber === '' ? (
-              <CAlert color="danger">You need to select a serial number!</CAlert>
-            ) : (
-              chosenSerialNumber
-            )}
+          <CCol sm="9" className="pt-1">
+            <CInput
+              id="description"
+              type="text"
+              required
+              value={chosenSerialNumber}
+              onChange={(e) => setChosenSerialNumber(e.target.value)}
+              invalid={
+                chosenSerialNumber.length !== 12 && chosenSerialNumber.match('^[a-fA-F0-9]+$')
+              }
+              disabled={loading}
+              maxLength="50"
+            />
+            <CInvalidFeedback>{t('entity.valid_serial')}</CInvalidFeedback>
           </CCol>
         </CRow>
         <CRow>

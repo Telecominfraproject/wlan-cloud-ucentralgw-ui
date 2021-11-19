@@ -40,7 +40,7 @@ const BlacklistTable = () => {
     axiosInstance
       .get(
         `${endpoints.owgw}/api/v1/blacklist?limit=${devicePerPage}&offset=${
-          devicePerPage * selectedPage - 1
+          devicePerPage * selectedPage
         }`,
         options,
       )

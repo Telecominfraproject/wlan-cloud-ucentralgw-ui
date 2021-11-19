@@ -23,7 +23,7 @@ const TheLayout = () => {
     },
     {
       _tag: 'CSidebarNavItem',
-      name: t('configuration.configurations'),
+      name: t('configuration.default_configs'),
       icon: 'cilBarcode',
       to: '/defaultconfigurations',
     },

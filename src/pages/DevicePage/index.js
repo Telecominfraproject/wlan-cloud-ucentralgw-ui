@@ -11,6 +11,7 @@ import { DeviceProvider, DeviceStatusCard, DeviceDetails, useAuth, useToast } fr
 import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
+import CapabilitiesDisplay from 'components/CapabilitiesDisplay';
 import NotesTab from './NotesTab';
 
 const DevicePage = () => {
@@ -161,6 +162,14 @@ const DevicePage = () => {
                   <CNavLink
                     className="font-weight-bold"
                     href="#"
+                    active={index === 8}
+                    onClick={() => setIndex(8)}
+                  >
+                    {t('device.capabilities')}
+                  </CNavLink>
+                  <CNavLink
+                    className="font-weight-bold"
+                    href="#"
                     active={index === 7}
                     onClick={() => setIndex(7)}
                   >
@@ -219,6 +228,9 @@ const DevicePage = () => {
                     {index === 5 ? (
                       <ConfigurationDisplay deviceConfig={deviceConfig} getData={refresh} />
                     ) : null}
+                  </CTabPane>
+                  <CTabPane active={index === 8}>
+                    {index === 8 ? <CapabilitiesDisplay serialNumber={deviceId} /> : null}
                   </CTabPane>
                   <CTabPane active={index === 6}>{index === 6 ? <WifiAnalysis /> : null}</CTabPane>
                   <CTabPane active={index === 7}>

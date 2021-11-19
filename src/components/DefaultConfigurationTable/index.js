@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
 import { DefaultConfigurationTable as Table, useAuth, useToast, useToggle } from 'ucentral-libs';
-import EditBlacklistModal from 'components/EditBlacklistModal';
 import AddConfigurationModal from 'components/AddConfigurationModal';
+import EditConfigurationModal from 'components/EditConfigurationModal';
 
 const DefaultConfigurationTable = () => {
   const { t } = useTranslation();
@@ -20,12 +20,12 @@ const DefaultConfigurationTable = () => {
   );
   const [configurations, setConfigurations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editSerial, setEditSerial] = useState('');
+  const [editId, setEditId] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, toggleAddModal] = useToggle(false);
 
   const toggleEditModal = (serialNumber) => {
-    if (serialNumber) setEditSerial(serialNumber);
+    if (serialNumber) setEditId(serialNumber);
     setShowEditModal(!showEditModal);
   };
 
@@ -45,7 +45,7 @@ const DefaultConfigurationTable = () => {
     axiosInstance
       .get(
         `${endpoints.owgw}/api/v1/default_configurations?limit=${configurationPerPage}&offset=${
-          configurationPerPage * selectedPage - 1
+          configurationPerPage * selectedPage
         }`,
         options,
       )
@@ -128,7 +128,7 @@ const DefaultConfigurationTable = () => {
     getConfigurationInformation(selectedPage);
   };
 
-  const deleteConfig = (id) => {
+  const deleteConfig = (name) => {
     setLoading(true);
 
     const headers = {
@@ -137,11 +137,11 @@ const DefaultConfigurationTable = () => {
     };
 
     axiosInstance
-      .delete(`${endpoints.owgw}/api/v1/default_configurations/${id}`, { headers })
+      .delete(`${endpoints.owgw}/api/v1/default_configuration/${name}`, { headers })
       .then(() => {
         addToast({
           title: t('common.success'),
-          body: t('configuration.success_removed_blacklist'),
+          body: t('configuration.successful_delete'),
           color: 'success',
           autohide: true,
         });
@@ -185,11 +185,11 @@ const DefaultConfigurationTable = () => {
       {showAddModal ? (
         <AddConfigurationModal show={showAddModal} toggle={toggleAddModal} refresh={getCount} />
       ) : null}
-      <EditBlacklistModal
+      <EditConfigurationModal
         show={showEditModal}
         toggle={toggleEditModal}
         refresh={getCount}
-        serialNumber={editSerial}
+        configId={editId}
       />
     </div>
   );

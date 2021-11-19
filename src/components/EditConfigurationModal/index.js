@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { CModal, CModalHeader, CModalTitle, CModalBody, CButton, CPopover } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilX, cilSave } from '@coreui/icons';
+import { cilX, cilSave, cilPencil } from '@coreui/icons';
 import { useToast, useFormFields, useAuth, EditDefaultConfigurationForm } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
@@ -48,7 +48,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
     };
 
     axiosInstance
-      .get(`${endpoints.owgw}/api/v1/default_configurations/${configId}`, options)
+      .get(`${endpoints.owgw}/api/v1/default_configuration/${configId}`, options)
       .then((response) => {
         const newConfig = {};
 
@@ -60,12 +60,15 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
             };
           }
         }
+        newConfig.configuration.value = JSON.stringify(response.data.configuration, null, 2);
         setFormFields(newConfig);
       })
-      .catch(() => {
+      .catch((e) => {
         addToast({
           title: t('common.error'),
-          body: t('user.error_retrieving'),
+          body: t('configuration.error_fetching_config', {
+            error: e.response?.data?.ErrorDescription,
+          }),
           color: 'danger',
           autohide: true,
         });
@@ -131,12 +134,12 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
       const parameters = {
         name: fields.name.value,
         description: fields.description.value,
-        modelIds: fields.deviceTypes.value,
+        modelIds: fields.modelIds.value,
         configuration: fields.configuration.value,
       };
 
       axiosInstance
-        .put(`${endpoints.owgw}/api/v1/default_configurations/${configId}`, parameters, options)
+        .put(`${endpoints.owgw}/api/v1/default_configuration/${configId}`, parameters, options)
         .then(() => {
           if (refresh !== null) refresh();
           toggle();
@@ -150,7 +153,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
         .catch((e) => {
           addToast({
             title: t('common.error'),
-            body: t('configuration.success_update', { error: e.response?.data?.ErrorDescription }),
+            body: t('configuration.error_update', { error: e.response?.data?.ErrorDescription }),
             color: 'danger',
             autohide: true,
           });
@@ -168,6 +171,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
 
   useEffect(() => {
     if (show) {
+      setEditing(false);
       getConfig();
       getDeviceTypes();
     }
@@ -197,18 +201,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
               onClick={toggleEditing}
               disabled={editing}
             >
-              <CIcon content={cilSave} />
-            </CButton>
-          </CPopover>
-          <CPopover content={t('common.stop_editing')}>
-            <CButton
-              color="primary"
-              variant="outline"
-              className="ml-2"
-              onClick={toggleEditing}
-              disabled={!editing}
-            >
-              <CIcon content={cilSave} />
+              <CIcon content={cilPencil} />
             </CButton>
           </CPopover>
           <CPopover content={t('common.close')}>
@@ -223,6 +216,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
           t={t}
           disable={loading}
           fields={fields}
+          editing={editing}
           updateField={updateFieldWithId}
           updateFieldWithKey={updateField}
           deviceTypes={deviceTypes}
