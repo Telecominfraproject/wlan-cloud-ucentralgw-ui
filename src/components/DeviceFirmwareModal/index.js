@@ -48,7 +48,7 @@ const DeviceFirmwareModal = ({
 
     const allFirmwares = [];
     let continueFirmware = true;
-    let i = 1;
+    let i = 0;
     while (continueFirmware) {
       const newFirmwares = await getPartialFirmware(i);
       if (newFirmwares === null || newFirmwares.length === 0) continueFirmware = false;
