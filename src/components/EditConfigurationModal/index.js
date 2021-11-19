@@ -180,7 +180,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
   return (
     <CModal className="text-dark" size="lg" show={show} onClose={toggle}>
       <CModalHeader className="p-1">
-        <CModalTitle className="pl-1 pt-1">{t('configuration.create')}</CModalTitle>
+        <CModalTitle className="pl-1 pt-1">{t('configuration.edit_configuration')}</CModalTitle>
         <div className="text-right">
           <CPopover content={t('common.save')}>
             <CButton
