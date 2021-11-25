@@ -16,6 +16,7 @@ const Login = () => {
       setEndpoints={setEndpoints}
       addToast={addToast}
       axios={axios}
+      logo="assets/OpenWiFi_LogoLockup_DarkGreyColour.svg"
     />
   );
 };
