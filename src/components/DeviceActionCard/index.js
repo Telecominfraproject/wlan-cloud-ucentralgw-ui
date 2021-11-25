@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast, useToggle } from 'ucentral-libs';
 import RebootModal from 'components/RebootModal';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import ConfigureModal from 'components/ConfigureModal';
@@ -22,34 +22,16 @@ const DeviceActions = () => {
     loading: false,
   });
   const [device, setDevice] = useState({});
-  const [showRebootModal, setShowRebootModal] = useState(false);
-  const [showBlinkModal, setShowBlinkModal] = useState(false);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [showTraceModal, setShowTraceModal] = useState(false);
-  const [showScanModal, setShowScanModal] = useState(false);
-  const [connectLoading, setConnectLoading] = useState(false);
-  const [showConfigModal, setConfigModal] = useState(false);
-  const [showFactoryModal, setShowFactoryModal] = useState(false);
-  const [showQueueModal, setShowQueueModal] = useState(false);
-  const [showTelemetryModal, setShowTelemetryModal] = useState(false);
-
-  const toggleRebootModal = () => setShowRebootModal(!showRebootModal);
-
-  const toggleBlinkModal = () => setShowBlinkModal(!showBlinkModal);
-
-  const toggleUpgradeModal = () => setShowUpgradeModal(!showUpgradeModal);
-
-  const toggleTraceModal = () => setShowTraceModal(!showTraceModal);
-
-  const toggleScanModal = () => setShowScanModal(!showScanModal);
-
-  const toggleConfigModal = () => setConfigModal(!showConfigModal);
-
-  const toggleFactoryResetModal = () => setShowFactoryModal(!showFactoryModal);
-
-  const toggleQueueModal = () => setShowQueueModal(!showQueueModal);
-
-  const toggleTelemetryModal = () => setShowTelemetryModal(!showTelemetryModal);
+  const [connectLoading, setConnectLoading] = useToggle(false);
+  const [showRebootModal, toggleRebootModal] = useToggle(false);
+  const [showBlinkModal, toggleBlinkModal] = useToggle(false);
+  const [showUpgradeModal, toggleUpgradeModal, setShowUpgradeModal] = useToggle(false);
+  const [showTraceModal, toggleTraceModal] = useToggle(false);
+  const [showScanModal, toggleScanModal] = useToggle(false);
+  const [showConfigModal, toggleConfigModal] = useToggle(false);
+  const [showFactoryModal, toggleFactoryResetModal] = useToggle(false);
+  const [showQueueModal, toggleQueueModal] = useToggle(false);
+  const [showTelemetryModal, toggleTelemetryModal] = useToggle(false);
 
   const getRttysInfo = () => {
     setConnectLoading(true);

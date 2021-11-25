@@ -214,7 +214,7 @@ const DeviceLogs = () => {
                             toggleDetails(index);
                           }}
                         >
-                          <CIcon name="cilList" size="md" />
+                          <CIcon name="cilList" />
                         </CButton>
                       </td>
                     ),

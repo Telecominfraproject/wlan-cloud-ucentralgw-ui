@@ -26,6 +26,11 @@ const DevicePage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const updateNav = (target) => {
+    sessionStorage.setItem('devicePageIndex', target);
+    setIndex(target);
+  };
+
   const getDevice = () => {
     const options = {
       headers: {
@@ -103,6 +108,12 @@ const DevicePage = () => {
   };
 
   useEffect(() => {
+    const target = sessionStorage.getItem('devicePageIndex');
+
+    if (target !== null) setIndex(parseInt(target, 10));
+  }, []);
+
+  useEffect(() => {
     setError(false);
     if (deviceId) {
       getDevice();
@@ -139,7 +150,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 0}
-                    onClick={() => setIndex(0)}
+                    onClick={() => updateNav(0)}
                   >
                     {t('statistics.title')}
                   </CNavLink>
@@ -147,7 +158,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 1}
-                    onClick={() => setIndex(1)}
+                    onClick={() => updateNav(1)}
                   >
                     {t('common.details')}
                   </CNavLink>
@@ -155,7 +166,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 5}
-                    onClick={() => setIndex(5)}
+                    onClick={() => updateNav(5)}
                   >
                     {t('configuration.title')}
                   </CNavLink>
@@ -163,7 +174,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 8}
-                    onClick={() => setIndex(8)}
+                    onClick={() => updateNav(8)}
                   >
                     {t('device.capabilities')}
                   </CNavLink>
@@ -171,7 +182,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 7}
-                    onClick={() => setIndex(7)}
+                    onClick={() => updateNav(7)}
                   >
                     {t('configuration.notes')}
                   </CNavLink>
@@ -179,7 +190,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 6}
-                    onClick={() => setIndex(6)}
+                    onClick={() => updateNav(6)}
                   >
                     {t('wifi_analysis.title')}
                   </CNavLink>
@@ -187,7 +198,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 2}
-                    onClick={() => setIndex(2)}
+                    onClick={() => updateNav(2)}
                   >
                     {t('commands.title')}
                   </CNavLink>
@@ -195,7 +206,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 3}
-                    onClick={() => setIndex(3)}
+                    onClick={() => updateNav(3)}
                   >
                     {t('health.title')}
                   </CNavLink>
@@ -203,7 +214,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 4}
-                    onClick={() => setIndex(4)}
+                    onClick={() => updateNav(4)}
                   >
                     {t('device_logs.title')}
                   </CNavLink>
