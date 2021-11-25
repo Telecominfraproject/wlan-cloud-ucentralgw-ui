@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
-import { BlacklistTable as Table, useAuth, useToast, useToggle } from 'ucentral-libs';
+import { useAuth, useToast, useToggle } from 'ucentral-libs';
 import AddToBlacklistModal from 'components/AddToBlacklistModal';
 import EditBlacklistModal from 'components/EditBlacklistModal';
+import Table from './Table';
 
 const BlacklistTable = () => {
   const { t } = useTranslation();

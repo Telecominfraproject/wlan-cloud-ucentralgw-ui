@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { WifiAnalysisTable, RadioAnalysisTable, useAuth } from 'ucentral-libs';
+import { useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import NetworkDiagram from 'components/NetworkDiagram';
 import { cleanBytesString, prettyDate, compactSecondsToDetailed } from 'utils/helper';
@@ -20,6 +20,8 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilX } from '@coreui/icons';
+import RadioAnalysisTable from './RadioAnalysis';
+import WifiAnalysisTable from './WifiAnalysis';
 
 const parseDbm = (value) => {
   if (!value) return '-';

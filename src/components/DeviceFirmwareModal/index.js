@@ -1,9 +1,10 @@
 /* eslint-disable no-await-in-loop */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { DeviceFirmwareModal as Modal, useAuth, useToast, useToggle } from 'ucentral-libs';
+import { useAuth, useToast, useToggle } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
+import Modal from './Modal';
 
 const DeviceFirmwareModal = ({
   device,

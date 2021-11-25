@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { CModal, CModalHeader, CModalTitle, CModalBody, CButton, CPopover } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilX, cilSave, cilPencil } from '@coreui/icons';
-import { useToast, useFormFields, useAuth, EditDefaultConfigurationForm } from 'ucentral-libs';
+import { useToast, useFormFields, useAuth } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
 import { checkIfJson } from 'utils/helper';
+import Form from './Form';
 
 const initialForm = {
   name: {
@@ -212,7 +213,7 @@ const EditConfigurationModal = ({ show, toggle, refresh, configId }) => {
         </div>
       </CModalHeader>
       <CModalBody className="px-5">
-        <EditDefaultConfigurationForm
+        <Form
           t={t}
           disable={loading}
           fields={fields}

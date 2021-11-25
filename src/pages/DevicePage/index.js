@@ -7,12 +7,14 @@ import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
 import axiosInstance from 'utils/axiosInstance';
-import { DeviceProvider, DeviceStatusCard, DeviceDetails, useAuth, useToast } from 'ucentral-libs';
+import { DeviceProvider, useAuth, useToast } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
 import CapabilitiesDisplay from 'components/CapabilitiesDisplay';
 import NotesTab from './NotesTab';
+import DeviceDetails from './Details';
+import DeviceStatusCard from './DeviceStatusCard';
 
 const DevicePage = () => {
   const { t } = useTranslation();
@@ -55,13 +57,14 @@ const DevicePage = () => {
           );
         }
 
-        setDeviceConfig(deviceInfo);
+        setDeviceConfig({ ...deviceInfo });
         return null;
       })
       .then((response) => {
         if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
       .catch((e) => {
+        setDeviceConfig(null);
         addToast({
           title: t('common.error'),
           body: t('device.error_fetching_device', { error: e.response?.data?.ErrorDescription }),
@@ -91,10 +94,13 @@ const DevicePage = () => {
 
     Promise.all([lastStatsRequest, statusRequest])
       .then(([newStats, newStatus]) => {
-        setLastStats(newStats.data);
-        setStatus(newStatus.data);
+        setLastStats({ ...newStats.data });
+        setStatus({ ...newStatus.data });
+        setError(false);
       })
       .catch(() => {
+        setLastStats(null);
+        setStatus(null);
         setError(true);
       })
       .finally(() => {
@@ -138,7 +144,7 @@ const DevicePage = () => {
             />
           </CCol>
           <CCol lg="12" xl="6">
-            <DeviceActionCard />
+            <DeviceActionCard device={deviceConfig} />
           </CCol>
         </CRow>
         <CRow>

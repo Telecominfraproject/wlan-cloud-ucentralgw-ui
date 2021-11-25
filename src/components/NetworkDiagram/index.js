@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { CRow, CCol } from '@coreui/react';
-import { NetworkDiagram as Graph } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import createLayoutedElements from './dagreAdapter';
+import Graph from './Graph';
 
 const associationStyle = {
   background: '#3399ff',

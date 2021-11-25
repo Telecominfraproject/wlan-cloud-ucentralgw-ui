@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import axiosInstance from 'utils/axiosInstance';
 import { getItem, setItem } from 'utils/localStorageHelper';
-import { DefaultConfigurationTable as Table, useAuth, useToast, useToggle } from 'ucentral-libs';
+import { useAuth, useToast, useToggle } from 'ucentral-libs';
 import AddConfigurationModal from 'components/AddConfigurationModal';
 import EditConfigurationModal from 'components/EditConfigurationModal';
+import Table from './Table';
 
 const DefaultConfigurationTable = () => {
   const { t } = useTranslation();
