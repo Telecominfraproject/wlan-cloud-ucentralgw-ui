@@ -769,6 +769,7 @@
 		"send_code_again": "Send Code Again",
 		"show_hide_password": "Show/Hide Password",
 		"successful_validation": "Phone Number Validated! Click the save button to link it to your profile",
+		"table_title": "Admin Users",
 		"update_failure": "Error while trying to update: {{error}}",
 		"update_failure_title": "Update Failed",
 		"update_success": "User Updated Successfully",

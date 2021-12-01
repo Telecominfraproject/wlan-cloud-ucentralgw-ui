@@ -769,6 +769,7 @@
 		"send_code_again": "Envie o Código Novamente",
 		"show_hide_password": "Mostrar / ocultar senha",
 		"successful_validation": "Número de telefone validado! Clique no botão Salvar para vinculá-lo ao seu perfil",
+		"table_title": "Usuários administrativos",
 		"update_failure": "Erro ao tentar atualizar: {{error}}",
 		"update_failure_title": "Atualização falhou",
 		"update_success": "Usuário atualizado com sucesso",

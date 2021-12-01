@@ -769,6 +769,7 @@
 		"send_code_again": "Envoyer code à nouveau",
 		"show_hide_password": "Afficher/Masquer le mot de passe",
 		"successful_validation": "Numéro de téléphone validé ! Cliquez sur le bouton Enregistrer pour le lier à votre profil",
+		"table_title": "Utilisateurs administrateurs",
 		"update_failure": "Erreur lors de la tentative de mise à jour : {{error}}",
 		"update_failure_title": "mise à jour a échoué",
 		"update_success": "L'utilisateur a bien été mis à jour",

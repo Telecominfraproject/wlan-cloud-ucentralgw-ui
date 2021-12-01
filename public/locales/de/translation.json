@@ -769,6 +769,7 @@
 		"send_code_again": "Code nochmal senden",
 		"show_hide_password": "Passwort anzeigen/verbergen",
 		"successful_validation": "Telefonnummer bestätigt! Klicken Sie auf die Schaltfläche Speichern, um es mit Ihrem Profil zu verknüpfen",
+		"table_title": "Admin-Benutzer",
 		"update_failure": "Fehler beim Aktualisieren: {{error}}",
 		"update_failure_title": "Update fehlgeschlagen",
 		"update_success": "Benutzer erfolgreich aktualisiert",
