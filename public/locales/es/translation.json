@@ -272,6 +272,7 @@
 	"contact": {
 		"access_pin": "PIN de acceso",
 		"add_contact": "Agregar contacto",
+		"contact": "Contacto",
 		"create_contact": "Crear contacto",
 		"currently_selected_contact": "Contacto seleccionado actualmente: {{contact}}",
 		"delete": "¿Borrar contacto?",
@@ -347,7 +348,9 @@
 		"currently_selected_venue": "Lugar seleccionado actualmente: {{config}}",
 		"delete_success": "Entidad eliminada correctamente",
 		"delete_warning": "Advertencia: esta operación no se puede revertir",
+		"duplicate_from_node": "Duplicar con un nodo raíz específico",
 		"duplicate_map": "Mapa duplicado",
+		"duplicate_with_node": "Duplicar {{mapName}} con {{rootName}} como nodo raíz",
 		"edit_failure": "Actualización fallida: {{error}}",
 		"enter_here": "Ingrese las IP que desea agregar aquí",
 		"entire_tree": "Mapa de red",
@@ -663,6 +666,19 @@
 		"title": "#{{serialNumber}} Estado",
 		"uptime": "Tiempo de actividad",
 		"used_total_memory": "{{used}} usado / {{total}} total"
+	},
+	"subscriber": {
+		"create": "Crear suscriptor",
+		"edit": "Editar suscriptor",
+		"error_create": "Error al crear el suscriptor: {{error}}",
+		"error_delete": "Error al eliminar el suscriptor: {{error}}",
+		"error_fetching": "Error al obtener suscriptores: {{error}}",
+		"error_fetching_single": "Error al obtener el suscriptor: {{error}}",
+		"error_update": "Error al actualizar el suscriptor: {{error}}",
+		"subscribers": "Suscriptores",
+		"success_create": "¡Suscriptor creado correctamente!",
+		"success_delete": "¡Suscriptor eliminado correctamente!",
+		"success_update": "Suscriptor actualizado con éxito!"
 	},
 	"system": {
 		"error_fetching": "Error al obtener información del sistema",

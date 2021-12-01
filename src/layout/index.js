@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import routes from 'routes';
+import { CSidebarNavItem } from '@coreui/react';
+import { cilBarcode, cilRouter, cilSave, cilSettings, cilPeople } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 import { Header, Sidebar, Footer, PageContainer, ToastProvider, useAuth } from 'ucentral-libs';
 
 const TheLayout = () => {
@@ -8,46 +11,52 @@ const TheLayout = () => {
   const { endpoints, currentToken, user, avatar, logout } = useAuth();
   const { t, i18n } = useTranslation();
 
-  const navigation = [
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('common.devices'),
-      icon: 'cilRouter',
-      to: '/devices',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('firmware.title'),
-      icon: 'cilSave',
-      to: '/firmware',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('configuration.default_configs'),
-      icon: 'cilBarcode',
-      to: '/defaultconfigurations',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('user.users'),
-      to: '/users',
-      icon: 'cilPeople',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: t('common.system'),
-      to: '/system',
-      icon: 'cilSettings',
-    },
-  ];
-
   return (
     <div className="c-app c-default-layout">
       <Sidebar
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
         logo="assets/OpenWiFi_LogoLockup_WhiteColour.svg"
-        options={navigation}
+        options={
+          <>
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name={t('common.devices')}
+              to="/devices"
+              icon={<CIcon content={cilRouter} size="xl" className="mr-3" />}
+            />
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name={t('firmware.title')}
+              to="/firmware"
+              icon={<CIcon content={cilSave} size="xl" className="mr-3" />}
+            />
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name={t('configuration.default_configs')}
+              to="/defaultconfigurations"
+              icon={<CIcon content={cilBarcode} size="xl" className="mr-3" />}
+            />
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name="Configurations"
+              to="/configuration"
+              icon={<CIcon content={cilBarcode} size="xl" className="mr-3" />}
+            />
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name={t('user.users')}
+              to="/users"
+              icon={<CIcon content={cilPeople} size="xl" className="mr-3" />}
+            />
+            <CSidebarNavItem
+              className="font-weight-bold"
+              name={t('common.system')}
+              to="/system"
+              icon={<CIcon content={cilSettings} size="xl" className="mr-3" />}
+            />
+          </>
+        }
         redirectTo="/devices"
       />
       <div className="c-wrapper">

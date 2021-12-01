@@ -272,6 +272,7 @@
 	"contact": {
 		"access_pin": "PIN de acesso",
 		"add_contact": "Adicionar contato",
+		"contact": "Contato",
 		"create_contact": "Criar Contato",
 		"currently_selected_contact": "Contato atualmente selecionado: {{contact}}",
 		"delete": "Excluir contato?",
@@ -347,7 +348,9 @@
 		"currently_selected_venue": "Local selecionado atualmente: {{config}}",
 		"delete_success": "Entidade excluída com sucesso",
 		"delete_warning": "Aviso: esta operação não pode ser revertida",
+		"duplicate_from_node": "Duplicar com nó raiz específico",
 		"duplicate_map": "Mapa duplicado",
+		"duplicate_with_node": "Duplicar {{mapName}} com {{rootName}} como nó raiz",
 		"edit_failure": "Atualização malsucedida: {{error}}",
 		"enter_here": "Digite o (s) IP (s) que deseja adicionar aqui",
 		"entire_tree": "Mapa de Rede",
@@ -663,6 +666,19 @@
 		"title": "#{{serialNumber}} status",
 		"uptime": "Tempo de atividade",
 		"used_total_memory": "{{used}} usado / {{total}} total"
+	},
+	"subscriber": {
+		"create": "Criar assinante",
+		"edit": "Editar Assinante",
+		"error_create": "Erro ao criar assinante: {{error}}",
+		"error_delete": "Erro ao excluir assinante: {{error}}",
+		"error_fetching": "Erro ao buscar assinantes: {{error}}",
+		"error_fetching_single": "Erro ao buscar assinante: {{error}}",
+		"error_update": "Erro ao atualizar assinante: {{error}}",
+		"subscribers": "Inscritos",
+		"success_create": "Assinante criado com sucesso!",
+		"success_delete": "Assinante excluído com sucesso!",
+		"success_update": "Assinante atualizado com sucesso!"
 	},
 	"system": {
 		"error_fetching": "Erro ao buscar informações do sistema",

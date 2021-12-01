@@ -272,6 +272,7 @@
 	"contact": {
 		"access_pin": "Zugangs-PIN",
 		"add_contact": "Kontakt hinzufügen",
+		"contact": "Kontakt",
 		"create_contact": "Kontakt erstellen",
 		"currently_selected_contact": "Aktuell ausgewählter Kontakt: {{contact}}",
 		"delete": "Kontakt löschen?",
@@ -347,7 +348,9 @@
 		"currently_selected_venue": "Aktuell ausgewählter Veranstaltungsort: {{config}}",
 		"delete_success": "Entität erfolgreich gelöscht",
 		"delete_warning": "Achtung: Dieser Vorgang kann nicht rückgängig gemacht werden",
+		"duplicate_from_node": "Mit einem bestimmten Root-Knoten duplizieren",
 		"duplicate_map": "Karte duplizieren",
+		"duplicate_with_node": "Dupliziere {{mapName}} mit {{rootName}} als Root-Knoten",
 		"edit_failure": "Aktualisierung fehlgeschlagen : {{error}}",
 		"enter_here": "Geben Sie hier die IP(s) ein, die Sie hinzufügen möchten",
 		"entire_tree": "Netzwerkkarte",
@@ -663,6 +666,19 @@
 		"title": "#{{serialNumber}} Status",
 		"uptime": "Betriebszeit",
 		"used_total_memory": "{{used}} verwendet / {{total}} insgesamt"
+	},
+	"subscriber": {
+		"create": "Abonnenten erstellen",
+		"edit": "Abonnent bearbeiten",
+		"error_create": "Fehler beim Erstellen des Abonnenten: {{error}}",
+		"error_delete": "Fehler beim Löschen des Abonnenten: {{error}}",
+		"error_fetching": "Fehler beim Abrufen von Abonnenten: {{error}}",
+		"error_fetching_single": "Fehler beim Abrufen des Abonnenten: {{error}}",
+		"error_update": "Fehler beim Aktualisieren des Abonnenten: {{error}}",
+		"subscribers": "Abonnenten",
+		"success_create": "Abonnent erfolgreich erstellt!",
+		"success_delete": "Abonnent erfolgreich gelöscht!",
+		"success_update": "Abonnent erfolgreich aktualisiert!"
 	},
 	"system": {
 		"error_fetching": "Fehler beim Abrufen von Systeminformationen",
