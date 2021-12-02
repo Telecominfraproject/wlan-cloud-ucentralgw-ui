@@ -63,7 +63,19 @@ const DeviceStatusCard = ({
             <CSpinner className={styles.spinner} />
           </div>
           <CRow>
-            <CCol sm="8">
+            <CCol sm="5" lg="5" xl="4" style={{ maxHeight: '180px' }}>
+              <img
+                src={`assets/devices/${deviceConfig?.compatible}.png`}
+                alt="Image not found"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'assets/NotFound.png';
+                }}
+                height="100%"
+                width="auto"
+              />
+            </CCol>
+            <CCol sm="7" lg="7" xl="8" className="border-left">
               <CRow>
                 <CCol className="mb-1" md="4" xl="4">
                   {t('status.connection_status')}:
@@ -137,35 +149,25 @@ const DeviceStatusCard = ({
                     </div>
                   )}
                 </CCol>
+                <CCol className="mb-1" md="4" xl="4">
+                  {t('status.memory')}:
+                </CCol>
+                <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
+                  {error ? (
+                    errorField(t)
+                  ) : (
+                    <MemoryBar
+                      t={t}
+                      usedBytes={
+                        lastStats?.unit?.memory?.total && lastStats?.unit?.memory?.free
+                          ? lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free
+                          : 0
+                      }
+                      totalBytes={lastStats?.unit?.memory?.total ?? 0}
+                    />
+                  )}
+                </CCol>
               </CRow>
-            </CCol>
-            <CCol sm="4" style={{ maxHeight: '180px' }}>
-              <img
-                src={`assets/devices/${deviceConfig?.compatible}.png`}
-                alt="Image not available"
-                height="100%"
-                width="100%"
-              />
-            </CCol>
-          </CRow>
-          <CRow>
-            <CCol className="mb-1" md="4" xl="4">
-              {t('status.memory')}:
-            </CCol>
-            <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
-              {error ? (
-                errorField(t)
-              ) : (
-                <MemoryBar
-                  t={t}
-                  usedBytes={
-                    lastStats?.unit?.memory?.total && lastStats?.unit?.memory?.free
-                      ? lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free
-                      : 0
-                  }
-                  totalBytes={lastStats?.unit?.memory?.total ?? 0}
-                />
-              )}
             </CCol>
           </CRow>
         </div>
