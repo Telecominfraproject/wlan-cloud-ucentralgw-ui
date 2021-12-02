@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -62,84 +63,96 @@ const DeviceStatusCard = ({
             <CSpinner className={styles.spinner} />
           </div>
           <CRow>
-            <CCol className="mb-1" md="3" xl="3">
-              {t('status.connection_status')}:
-            </CCol>
-            <CCol className="mb-1" md="9" xl="9">
-              {status?.connected ? (
-                <CBadge color="success">{t('common.connected')}</CBadge>
-              ) : (
-                <CBadge color="danger">{t('common.not_connected')}</CBadge>
-              )}
-            </CCol>
-            <CCol className="my-1" md="3" xl="3">
-              {t('status.uptime')}:
-            </CCol>
-            <CCol className="my-1" md="9" xl="9">
-              {error
-                ? errorField(t)
-                : compactSecondsToDetailed(
-                    lastStats?.unit?.uptime,
-                    t('common.day'),
-                    t('common.days'),
-                    t('common.seconds'),
+            <CCol sm="8">
+              <CRow>
+                <CCol className="mb-1" md="4" xl="4">
+                  {t('status.connection_status')}:
+                </CCol>
+                <CCol className="mb-1" md="8" xl="8">
+                  {status?.connected ? (
+                    <CBadge color="success">{t('common.connected')}</CBadge>
+                  ) : (
+                    <CBadge color="danger">{t('common.not_connected')}</CBadge>
                   )}
+                </CCol>
+                <CCol className="my-1" md="4" xl="4">
+                  {t('status.uptime')}:
+                </CCol>
+                <CCol className="my-1" md="8" xl="8">
+                  {error
+                    ? errorField(t)
+                    : compactSecondsToDetailed(
+                        lastStats?.unit?.uptime,
+                        t('common.day'),
+                        t('common.days'),
+                        t('common.seconds'),
+                      )}
+                </CCol>
+                <CCol className="my-1" md="4" xl="4">
+                  {t('status.last_contact')}:
+                </CCol>
+                <CCol className="my-1" md="8" xl="8">
+                  {error ? errorField(t) : prettyDate(status?.lastContact)}
+                </CCol>
+                <CCol className="my-1" md="4" xl="4">
+                  {t('status.localtime')}:
+                </CCol>
+                <CCol className="my-1" md="8" xl="8">
+                  {error ? errorField(t) : prettyDate(lastStats?.unit?.localtime)}
+                </CCol>
+                <CCol className="mt-1" md="4" xl="4">
+                  <CLabel>{t('firmware.revision')}: </CLabel>
+                </CCol>
+                <CCol className="mt-1" md="8" xl="8">
+                  <CPopover content={deviceConfig?.firmware}>
+                    <CLabel>
+                      {deviceConfig?.firmware?.split(' / ').length > 1
+                        ? deviceConfig.firmware.split(' / ')[1]
+                        : deviceConfig?.firmware}
+                    </CLabel>
+                  </CPopover>
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol className="mb-1" md="4" xl="4">
+                  {t('status.load_averages')}:
+                </CCol>
+                <CCol className="mb-1" md="8" xl="8">
+                  {error ? (
+                    errorField(t)
+                  ) : (
+                    <div>
+                      {lastStats?.unit?.load[0] !== undefined
+                        ? (lastStats?.unit?.load[0] * 100).toFixed(2)
+                        : '-'}
+                      %{' / '}
+                      {lastStats?.unit?.load[1] !== undefined
+                        ? (lastStats?.unit?.load[1] * 100).toFixed(2)
+                        : '-'}
+                      %{' / '}
+                      {lastStats?.unit?.load[2] !== undefined
+                        ? (lastStats?.unit?.load[2] * 100).toFixed(2)
+                        : '-'}
+                      %
+                    </div>
+                  )}
+                </CCol>
+              </CRow>
             </CCol>
-            <CCol className="my-1" md="3" xl="3">
-              {t('status.last_contact')}:
-            </CCol>
-            <CCol className="my-1" md="9" xl="9">
-              {error ? errorField(t) : prettyDate(status?.lastContact)}
-            </CCol>
-            <CCol className="my-1" md="3" xl="3">
-              {t('status.localtime')}:
-            </CCol>
-            <CCol className="my-1" md="9" xl="9">
-              {error ? errorField(t) : prettyDate(lastStats?.unit?.localtime)}
-            </CCol>
-            <CCol className="mt-1" md="3" xl="3">
-              <CLabel>{t('firmware.revision')}: </CLabel>
-            </CCol>
-            <CCol className="mt-1" md="9" xl="9">
-              <CPopover content={deviceConfig?.firmware}>
-                <CLabel>
-                  {deviceConfig?.firmware?.split(' / ').length > 1
-                    ? deviceConfig.firmware.split(' / ')[1]
-                    : deviceConfig?.firmware}
-                </CLabel>
-              </CPopover>
+            <CCol sm="4" style={{ maxHeight: '180px' }}>
+              <img
+                src={`assets/devices/${deviceConfig?.compatible}.png`}
+                alt="Image not available"
+                height="100%"
+                width="100%"
+              />
             </CCol>
           </CRow>
           <CRow>
-            <CCol className="mb-1" md="3" xl="3">
-              {t('status.load_averages')}:
-            </CCol>
-            <CCol className="mb-1" md="9" xl="9">
-              {error ? (
-                errorField(t)
-              ) : (
-                <div>
-                  {lastStats?.unit?.load[0] !== undefined
-                    ? (lastStats?.unit?.load[0] * 100).toFixed(2)
-                    : '-'}
-                  %{' / '}
-                  {lastStats?.unit?.load[1] !== undefined
-                    ? (lastStats?.unit?.load[1] * 100).toFixed(2)
-                    : '-'}
-                  %{' / '}
-                  {lastStats?.unit?.load[2] !== undefined
-                    ? (lastStats?.unit?.load[2] * 100).toFixed(2)
-                    : '-'}
-                  %
-                </div>
-              )}
-            </CCol>
-          </CRow>
-          <CRow>
-            <CCol className="mb-1" md="3" xl="3">
+            <CCol className="mb-1" md="4" xl="4">
               {t('status.memory')}:
             </CCol>
-            <CCol className="mb-1" md="9" xl="9" style={{ paddingTop: '5px' }}>
+            <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
               {error ? (
                 errorField(t)
               ) : (
