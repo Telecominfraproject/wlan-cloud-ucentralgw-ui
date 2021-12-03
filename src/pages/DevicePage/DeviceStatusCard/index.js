@@ -63,19 +63,20 @@ const DeviceStatusCard = ({
             <CSpinner className={styles.spinner} />
           </div>
           <CRow>
-            <CCol sm="5" lg="5" xl="4" style={{ maxHeight: '180px' }}>
+            <CCol md="5" lg="5" xl="4" className="text-center bg-light">
               <img
+                style={{ maxHeight: '250px', maxWidth: '100%' }}
                 src={`assets/devices/${deviceConfig?.compatible}.png`}
                 alt="Image not found"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = 'assets/NotFound.png';
                 }}
-                height="100%"
+                height="auto"
                 width="auto"
               />
             </CCol>
-            <CCol sm="7" lg="7" xl="8" className="border-left">
+            <CCol md="7" lg="7" xl="8" className="border-left">
               <CRow>
                 <CCol className="mb-1" md="4" xl="4">
                   {t('status.connection_status')}:
