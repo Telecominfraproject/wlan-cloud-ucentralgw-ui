@@ -154,6 +154,7 @@
 		"optional": "Optional",
 		"overall_health": "Overall Health",
 		"password_policy": "Password Policy",
+		"preferences": "Preferences",
 		"preview": "Preview",
 		"program": "Program",
 		"reason": "Reason",
@@ -574,6 +575,9 @@
 		"username": "Username",
 		"verification_code": "Enter your verification here",
 		"wrong_code": "The verification code that was entered is not valid. "
+	},
+	"preferences": {
+		"provisioning": "Provisioning"
 	},
 	"reboot": {
 		"directions": "When would you like to reboot this device?",

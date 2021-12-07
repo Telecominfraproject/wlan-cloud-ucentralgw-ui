@@ -154,6 +154,7 @@
 		"optional": "Optionnel",
 		"overall_health": "Santé globale",
 		"password_policy": "Politique de mot de passe",
+		"preferences": "Préférences",
 		"preview": "Aperçu",
 		"program": "Programme",
 		"reason": "raison",
@@ -574,6 +575,9 @@
 		"username": "Nom d'utilisateur",
 		"verification_code": "Entrez votre vérification ici",
 		"wrong_code": "Le code de vérification saisi n'est pas valide."
+	},
+	"preferences": {
+		"provisioning": "Provisioning"
 	},
 	"reboot": {
 		"directions": "Quand souhaitez-vous redémarrer cet appareil ?",

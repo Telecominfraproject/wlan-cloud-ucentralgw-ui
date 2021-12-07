@@ -154,6 +154,7 @@
 		"optional": "Opcional",
 		"overall_health": "Saúde geral",
 		"password_policy": "Política de Senha",
+		"preferences": "Preferências",
 		"preview": "Visualizar",
 		"program": "Programa",
 		"reason": "RAZÃO",
@@ -574,6 +575,9 @@
 		"username": "Nome de usuário",
 		"verification_code": "Insira sua verificação aqui",
 		"wrong_code": "O código de verificação inserido não é válido."
+	},
+	"preferences": {
+		"provisioning": "Provisioning"
 	},
 	"reboot": {
 		"directions": "Quando você gostaria de reinicializar este dispositivo?",

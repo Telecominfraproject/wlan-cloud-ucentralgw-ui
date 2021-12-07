@@ -154,6 +154,7 @@
 		"optional": "Wahlweise",
 		"overall_health": "Allgemeine Gesundheit",
 		"password_policy": "Kennwortrichtlinie",
+		"preferences": "Einstellungen",
 		"preview": "Vorschau",
 		"program": "Programm",
 		"reason": "Grund",
@@ -574,6 +575,9 @@
 		"username": "Benutzername",
 		"verification_code": "Geben Sie hier Ihre Bestätigung ein",
 		"wrong_code": "Der eingegebene Bestätigungscode ist ungültig."
+	},
+	"preferences": {
+		"provisioning": "Bereitstellung"
 	},
 	"reboot": {
 		"directions": "Wann möchten Sie dieses Gerät neu starten?",
