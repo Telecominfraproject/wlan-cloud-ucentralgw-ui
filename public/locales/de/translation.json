@@ -71,6 +71,7 @@
 		"date": "Datum",
 		"day": "tag",
 		"days": "tage",
+		"default_map": "Standardkarte",
 		"delete": "Löschen",
 		"delete_device": "Gerät löschen",
 		"details": "Einzelheiten",

@@ -39,12 +39,6 @@ const TheLayout = () => {
             />
             <CSidebarNavItem
               className="font-weight-bold"
-              name="Configurations"
-              to="/configuration"
-              icon={<CIcon content={cilBarcode} size="xl" className="mr-3" />}
-            />
-            <CSidebarNavItem
-              className="font-weight-bold"
               name={t('user.users')}
               to="/users"
               icon={<CIcon content={cilPeople} size="xl" className="mr-3" />}

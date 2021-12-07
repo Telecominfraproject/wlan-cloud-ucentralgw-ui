@@ -71,6 +71,7 @@
 		"date": "Date",
 		"day": "day",
 		"days": "days",
+		"default_map": "Default Map",
 		"delete": "Delete",
 		"delete_device": "Delete Device",
 		"details": "Details",
