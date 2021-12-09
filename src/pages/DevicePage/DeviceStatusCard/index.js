@@ -63,9 +63,15 @@ const DeviceStatusCard = ({
             <CSpinner className={styles.spinner} />
           </div>
           <CRow>
-            <CCol md="5" lg="5" xl="4" className="text-center bg-light">
+            <CCol md="5" lg="5" xl="4" className="text-center align-middle bg-light">
               <img
-                style={{ maxHeight: '250px', maxWidth: '100%' }}
+                style={{
+                  maxHeight: '250px',
+                  maxWidth: '100%',
+                  position: 'relative',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                }}
                 src={`assets/devices/${deviceConfig?.compatible}.png`}
                 alt="Image not found"
                 onError={(e) => {
