@@ -1,5 +1,6 @@
 # System
 replicaCount: 1
+revisionHistoryLimit: 2
 
 nameOverride: ""
 fullnameOverride: ""
