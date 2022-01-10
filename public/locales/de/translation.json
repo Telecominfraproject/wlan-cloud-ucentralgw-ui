@@ -17,6 +17,7 @@
 		"blink": "LEDs Blinken",
 		"device_leds": "LEDs",
 		"execute_now": "Möchten Sie dieses Muster jetzt einstellen?",
+		"explanation": "Welches Muster möchten Sie auf diesem Gerät für 30 Sekunden einstellen?",
 		"pattern": "Wählen Sie das Muster, das Sie verwenden möchten:",
 		"set_leds": "LEDs einstellen",
 		"when_blink_leds": "Wann möchten Sie die LEDs blinken lassen?"

@@ -17,6 +17,7 @@
 		"blink": "Blink",
 		"device_leds": "Device LEDs",
 		"execute_now": "Would you like to set this pattern now?",
+		"explanation": "What pattern would you like to set on this device for 30 seconds?",
 		"pattern": "LEDs pattern: ",
 		"set_leds": "Set LEDs",
 		"when_blink_leds": "When would you like to make the device LEDs blink?"

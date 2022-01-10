@@ -17,6 +17,7 @@
 		"blink": "Cligner",
 		"device_leds": "LED de l'appareil",
 		"execute_now": "Souhaitez-vous définir ce modèle maintenant ?",
+		"explanation": "Quel modèle souhaitez-vous définir sur cet appareil pendant 30 secondes ?",
 		"pattern": "Choisissez le modèle que vous souhaitez utiliser :",
 		"set_leds": "Définir les LED",
 		"when_blink_leds": "Quand souhaitez-vous faire clignoter les LED de l'appareil ?"

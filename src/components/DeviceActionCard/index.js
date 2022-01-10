@@ -22,7 +22,7 @@ const DeviceActions = ({ device }) => {
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
-  const [connectLoading, setConnectLoading] = useToggle(false);
+  const [connectLoading, setConnectLoading] = useState(false);
   const [showRebootModal, toggleRebootModal] = useToggle(false);
   const [showBlinkModal, toggleBlinkModal] = useToggle(false);
   const [showUpgradeModal, toggleUpgradeModal, setShowUpgradeModal] = useToggle(false);
