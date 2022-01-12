@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { CButton, CCard, CCardHeader, CCardBody, CRow, CCol } from '@coreui/react';
 import axiosInstance from 'utils/axiosInstance';
-import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast, useToggle } from 'ucentral-libs';
 import RebootModal from 'components/RebootModal';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import ConfigureModal from 'components/ConfigureModal';
@@ -13,7 +14,7 @@ import FactoryResetModal from 'components/FactoryResetModal';
 import EventQueueModal from 'components/EventQueueModal';
 import TelemetryModal from 'components/TelemetryModal';
 
-const DeviceActions = () => {
+const DeviceActions = ({ device }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { addToast } = useToast();
@@ -21,35 +22,16 @@ const DeviceActions = () => {
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
-  const [device, setDevice] = useState({});
-  const [showRebootModal, setShowRebootModal] = useState(false);
-  const [showBlinkModal, setShowBlinkModal] = useState(false);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [showTraceModal, setShowTraceModal] = useState(false);
-  const [showScanModal, setShowScanModal] = useState(false);
   const [connectLoading, setConnectLoading] = useState(false);
-  const [showConfigModal, setConfigModal] = useState(false);
-  const [showFactoryModal, setShowFactoryModal] = useState(false);
-  const [showQueueModal, setShowQueueModal] = useState(false);
-  const [showTelemetryModal, setShowTelemetryModal] = useState(false);
-
-  const toggleRebootModal = () => setShowRebootModal(!showRebootModal);
-
-  const toggleBlinkModal = () => setShowBlinkModal(!showBlinkModal);
-
-  const toggleUpgradeModal = () => setShowUpgradeModal(!showUpgradeModal);
-
-  const toggleTraceModal = () => setShowTraceModal(!showTraceModal);
-
-  const toggleScanModal = () => setShowScanModal(!showScanModal);
-
-  const toggleConfigModal = () => setConfigModal(!showConfigModal);
-
-  const toggleFactoryResetModal = () => setShowFactoryModal(!showFactoryModal);
-
-  const toggleQueueModal = () => setShowQueueModal(!showQueueModal);
-
-  const toggleTelemetryModal = () => setShowTelemetryModal(!showTelemetryModal);
+  const [showRebootModal, toggleRebootModal] = useToggle(false);
+  const [showBlinkModal, toggleBlinkModal] = useToggle(false);
+  const [showUpgradeModal, toggleUpgradeModal, setShowUpgradeModal] = useToggle(false);
+  const [showTraceModal, toggleTraceModal] = useToggle(false);
+  const [showScanModal, toggleScanModal] = useToggle(false);
+  const [showConfigModal, toggleConfigModal] = useToggle(false);
+  const [showFactoryModal, toggleFactoryResetModal] = useToggle(false);
+  const [showQueueModal, toggleQueueModal] = useToggle(false);
+  const [showTelemetryModal, toggleTelemetryModal] = useToggle(false);
 
   const getRttysInfo = () => {
     setConnectLoading(true);
@@ -67,6 +49,7 @@ const DeviceActions = () => {
       )
       .then((response) => {
         const url = `https://${response.data.server}:${response.data.viewport}/connect/${response.data.connectionId}`;
+
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
       })
@@ -81,22 +64,6 @@ const DeviceActions = () => {
       .finally(() => {
         setConnectLoading(false);
       });
-  };
-
-  const getDeviceInformation = () => {
-    const options = {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${currentToken}`,
-      },
-    };
-
-    axiosInstance
-      .get(`${endpoints.owgw}/api/v1/device/${deviceSerialNumber}`, options)
-      .then((response) => {
-        setDevice(response.data);
-      })
-      .catch(() => {});
   };
 
   useEffect(() => {
@@ -116,10 +83,6 @@ const DeviceActions = () => {
     }
   }, [upgradeStatus]);
 
-  useEffect(() => {
-    getDeviceInformation();
-  }, [deviceSerialNumber]);
-
   return (
     <CCard>
       <CCardHeader className="dark-header">
@@ -128,36 +91,41 @@ const DeviceActions = () => {
       <CCardBody>
         <CRow>
           <CCol>
-            <CButton block onClick={toggleRebootModal} color="primary">
+            <CButton block disabled={device === null} onClick={toggleRebootModal} color="primary">
               {t('actions.reboot')}
             </CButton>
           </CCol>
           <CCol>
-            <CButton block onClick={toggleBlinkModal} color="primary">
+            <CButton block disabled={device === null} onClick={toggleBlinkModal} color="primary">
               {t('actions.blink')}
             </CButton>
           </CCol>
         </CRow>
         <CRow className="my-1">
           <CCol>
-            <CButton block color="primary" onClick={toggleUpgradeModal}>
+            <CButton block disabled={device === null} color="primary" onClick={toggleUpgradeModal}>
               {t('actions.firmware_upgrade')}
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={toggleTraceModal}>
+            <CButton block disabled={device === null} color="primary" onClick={toggleTraceModal}>
               {t('actions.trace')}
             </CButton>
           </CCol>
         </CRow>
         <CRow className="my-1">
           <CCol>
-            <CButton block color="primary" onClick={toggleScanModal}>
+            <CButton block disabled={device === null} color="primary" onClick={toggleScanModal}>
               {t('actions.wifi_scan')}
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={toggleFactoryResetModal}>
+            <CButton
+              block
+              disabled={device === null}
+              color="primary"
+              onClick={toggleFactoryResetModal}
+            >
               {t('actions.factory_reset')}
             </CButton>
           </CCol>
@@ -165,6 +133,7 @@ const DeviceActions = () => {
         <CRow className="my-1">
           <CCol>
             <LoadingButton
+              disabled={device === null}
               isLoading={connectLoading}
               label={t('actions.connect')}
               isLoadingLabel={t('actions.connecting')}
@@ -172,19 +141,24 @@ const DeviceActions = () => {
             />
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={toggleConfigModal}>
+            <CButton block disabled={device === null} color="primary" onClick={toggleConfigModal}>
               {t('actions.configure')}
             </CButton>
           </CCol>
         </CRow>
         <CRow className="my-1">
           <CCol>
-            <CButton block color="primary" onClick={toggleQueueModal}>
+            <CButton block disabled={device === null} color="primary" onClick={toggleQueueModal}>
               {t('commands.event_queue')}
             </CButton>
           </CCol>
           <CCol>
-            <CButton block color="primary" onClick={toggleTelemetryModal}>
+            <CButton
+              block
+              disabled={device === null}
+              color="primary"
+              onClick={toggleTelemetryModal}
+            >
               {t('actions.telemetry')}
             </CButton>
           </CCol>
@@ -210,6 +184,14 @@ const DeviceActions = () => {
       <TelemetryModal show={showTelemetryModal} toggle={toggleTelemetryModal} />
     </CCard>
   );
+};
+
+DeviceActions.propTypes = {
+  device: PropTypes.instanceOf(Object),
+};
+
+DeviceActions.defaultProps = {
+  device: null,
 };
 
 export default DeviceActions;

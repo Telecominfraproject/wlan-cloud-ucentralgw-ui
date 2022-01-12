@@ -325,17 +325,9 @@ const DeviceCommands = () => {
                               }}
                             >
                               {item.command === 'trace' ? (
-                                <CIcon
-                                  name="cil-cloud-download"
-                                  content={cilCloudDownload}
-                                  size="md"
-                                />
+                                <CIcon name="cil-cloud-download" content={cilCloudDownload} />
                               ) : (
-                                <CIcon
-                                  name="cil-calendar-check"
-                                  content={cilCalendarCheck}
-                                  size="md"
-                                />
+                                <CIcon name="cil-calendar-check" content={cilCalendarCheck} />
                               )}
                             </CButton>
                           </CPopover>
@@ -350,7 +342,7 @@ const DeviceCommands = () => {
                                 toggleResponse(item);
                               }}
                             >
-                              <CIcon name="cilList" size="md" />
+                              <CIcon name="cilList" />
                             </CButton>
                           </CPopover>
                           <CPopover content={t('common.delete')}>
@@ -364,7 +356,7 @@ const DeviceCommands = () => {
                                 toggleConfirmModal(item.UUID, index);
                               }}
                             >
-                              <CIcon name="cilTrash" size="mdå" />
+                              <CIcon name="cilTrash" />
                             </CButton>
                           </CPopover>
                         </CButtonToolbar>

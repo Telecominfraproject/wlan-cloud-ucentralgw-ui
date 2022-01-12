@@ -16,13 +16,8 @@ import {
 import CIcon from '@coreui/icons-react';
 import { cilPencil, cilSave, cilX } from '@coreui/icons';
 import axiosInstance from 'utils/axiosInstance';
-import {
-  useFormFields,
-  useAuth,
-  useToast,
-  FirmwareDetailsForm,
-  DetailedNotesTable,
-} from 'ucentral-libs';
+import { useFormFields, useAuth, useToast, DetailedNotesTable } from 'ucentral-libs';
+import Form from './Form';
 
 const initialState = {
   created: {
@@ -237,12 +232,7 @@ const EditFirmwareModal = ({ show, toggle, firmwareId, refreshTable }) => {
         <CTabContent>
           <CTabPane active={index === 0} className="pt-2">
             {index === 0 ? (
-              <FirmwareDetailsForm
-                t={t}
-                fields={firmware}
-                updateFieldsWithId={updateWithId}
-                editing={editing}
-              />
+              <Form t={t} fields={firmware} updateFieldsWithId={updateWithId} editing={editing} />
             ) : null}
           </CTabPane>
           <CTabPane active={index === 1}>

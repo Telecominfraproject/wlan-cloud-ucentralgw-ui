@@ -7,10 +7,14 @@ import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
 import axiosInstance from 'utils/axiosInstance';
-import { DeviceProvider, DeviceStatusCard, DeviceDetails, useAuth, useToast } from 'ucentral-libs';
+import { DeviceProvider, useAuth, useToast } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
+import CapabilitiesDisplay from 'components/CapabilitiesDisplay';
+import NotesTab from './NotesTab';
+import DeviceDetails from './Details';
+import DeviceStatusCard from './DeviceStatusCard';
 
 const DevicePage = () => {
   const { t } = useTranslation();
@@ -23,6 +27,11 @@ const DevicePage = () => {
   const [deviceConfig, setDeviceConfig] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const updateNav = (target) => {
+    sessionStorage.setItem('devicePageIndex', target);
+    setIndex(target);
+  };
 
   const getDevice = () => {
     const options = {
@@ -48,13 +57,14 @@ const DevicePage = () => {
           );
         }
 
-        setDeviceConfig(deviceInfo);
+        setDeviceConfig({ ...deviceInfo });
         return null;
       })
       .then((response) => {
         if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
       .catch((e) => {
+        setDeviceConfig(null);
         addToast({
           title: t('common.error'),
           body: t('device.error_fetching_device', { error: e.response?.data?.ErrorDescription }),
@@ -84,10 +94,13 @@ const DevicePage = () => {
 
     Promise.all([lastStatsRequest, statusRequest])
       .then(([newStats, newStatus]) => {
-        setLastStats(newStats.data);
-        setStatus(newStatus.data);
+        setLastStats({ ...newStats.data });
+        setStatus({ ...newStatus.data });
+        setError(false);
       })
       .catch(() => {
+        setLastStats(null);
+        setStatus(null);
         setError(true);
       })
       .finally(() => {
@@ -99,6 +112,12 @@ const DevicePage = () => {
     getData();
     getDevice();
   };
+
+  useEffect(() => {
+    const target = sessionStorage.getItem('devicePageIndex');
+
+    if (target !== null) setIndex(parseInt(target, 10));
+  }, []);
 
   useEffect(() => {
     setError(false);
@@ -125,7 +144,7 @@ const DevicePage = () => {
             />
           </CCol>
           <CCol lg="12" xl="6">
-            <DeviceActionCard />
+            <DeviceActionCard device={deviceConfig} />
           </CCol>
         </CRow>
         <CRow>
@@ -137,7 +156,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 0}
-                    onClick={() => setIndex(0)}
+                    onClick={() => updateNav(0)}
                   >
                     {t('statistics.title')}
                   </CNavLink>
@@ -145,7 +164,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 1}
-                    onClick={() => setIndex(1)}
+                    onClick={() => updateNav(1)}
                   >
                     {t('common.details')}
                   </CNavLink>
@@ -153,15 +172,31 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 5}
-                    onClick={() => setIndex(5)}
+                    onClick={() => updateNav(5)}
                   >
                     {t('configuration.title')}
                   </CNavLink>
                   <CNavLink
                     className="font-weight-bold"
                     href="#"
+                    active={index === 8}
+                    onClick={() => updateNav(8)}
+                  >
+                    {t('device.capabilities')}
+                  </CNavLink>
+                  <CNavLink
+                    className="font-weight-bold"
+                    href="#"
+                    active={index === 7}
+                    onClick={() => updateNav(7)}
+                  >
+                    {t('configuration.notes')}
+                  </CNavLink>
+                  <CNavLink
+                    className="font-weight-bold"
+                    href="#"
                     active={index === 6}
-                    onClick={() => setIndex(6)}
+                    onClick={() => updateNav(6)}
                   >
                     {t('wifi_analysis.title')}
                   </CNavLink>
@@ -169,7 +204,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 2}
-                    onClick={() => setIndex(2)}
+                    onClick={() => updateNav(2)}
                   >
                     {t('commands.title')}
                   </CNavLink>
@@ -177,7 +212,7 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 3}
-                    onClick={() => setIndex(3)}
+                    onClick={() => updateNav(3)}
                   >
                     {t('health.title')}
                   </CNavLink>
@@ -185,39 +220,53 @@ const DevicePage = () => {
                     className="font-weight-bold"
                     href="#"
                     active={index === 4}
-                    onClick={() => setIndex(4)}
+                    onClick={() => updateNav(4)}
                   >
                     {t('device_logs.title')}
                   </CNavLink>
                 </CNav>
-                <CTabContent>
-                  <CTabPane active={index === 0}>
-                    {index === 0 ? <DeviceStatisticsCard /> : null}
-                  </CTabPane>
-                  <CTabPane active={index === 1}>
-                    {index === 1 ? (
-                      <DeviceDetails
-                        t={t}
-                        loading={loading}
-                        getData={refresh}
-                        deviceConfig={deviceConfig}
-                        status={status}
-                        lastStats={lastStats}
-                      />
-                    ) : null}
-                  </CTabPane>
-                  <CTabPane active={index === 5}>
-                    {index === 5 ? (
-                      <ConfigurationDisplay deviceConfig={deviceConfig} getData={refresh} />
-                    ) : null}
-                  </CTabPane>
-                  <CTabPane active={index === 6}>{index === 6 ? <WifiAnalysis /> : null}</CTabPane>
-                  <CTabPane active={index === 2}>
-                    {index === 2 ? <CommandHistory /> : null}
-                  </CTabPane>
-                  <CTabPane active={index === 3}>{index === 3 ? <DeviceHealth /> : null}</CTabPane>
-                  <CTabPane active={index === 4}>{index === 4 ? <DeviceLogs /> : null}</CTabPane>
-                </CTabContent>
+                {deviceConfig ? (
+                  <CTabContent>
+                    <CTabPane active={index === 0}>
+                      {index === 0 ? <DeviceStatisticsCard /> : null}
+                    </CTabPane>
+                    <CTabPane active={index === 1}>
+                      {index === 1 ? (
+                        <DeviceDetails
+                          t={t}
+                          loading={loading}
+                          getData={refresh}
+                          deviceConfig={deviceConfig}
+                          status={status}
+                          lastStats={lastStats}
+                        />
+                      ) : null}
+                    </CTabPane>
+                    <CTabPane active={index === 5}>
+                      {index === 5 ? (
+                        <ConfigurationDisplay deviceConfig={deviceConfig} getData={refresh} />
+                      ) : null}
+                    </CTabPane>
+                    <CTabPane active={index === 8}>
+                      {index === 8 ? <CapabilitiesDisplay serialNumber={deviceId} /> : null}
+                    </CTabPane>
+                    <CTabPane active={index === 6}>
+                      {index === 6 ? <WifiAnalysis /> : null}
+                    </CTabPane>
+                    <CTabPane active={index === 7}>
+                      {index === 7 ? (
+                        <NotesTab deviceConfig={deviceConfig} refresh={refresh} />
+                      ) : null}
+                    </CTabPane>
+                    <CTabPane active={index === 2}>
+                      {index === 2 ? <CommandHistory /> : null}
+                    </CTabPane>
+                    <CTabPane active={index === 3}>
+                      {index === 3 ? <DeviceHealth /> : null}
+                    </CTabPane>
+                    <CTabPane active={index === 4}>{index === 4 ? <DeviceLogs /> : null}</CTabPane>
+                  </CTabContent>
+                ) : null}
               </CCardBody>
             </CCard>
           </CCol>

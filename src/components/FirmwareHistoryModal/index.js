@@ -10,7 +10,8 @@ import {
   CModalFooter,
   CModalTitle,
 } from '@coreui/react';
-import { FirmwareHistoryTable, useAuth } from 'ucentral-libs';
+import { useAuth } from 'ucentral-libs';
+import Modal from './Modal';
 
 const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
   const { t } = useTranslation();
@@ -51,7 +52,7 @@ const FirmwareHistoryModal = ({ serialNumber, show, toggle }) => {
         </CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <FirmwareHistoryTable t={t} loading={loading} data={data} />
+        <Modal t={t} loading={loading} data={data} />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={toggle}>
