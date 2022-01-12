@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DeviceDashboard as Dashboard, useAuth, COLOR_LIST } from 'ucentral-libs';
+import { useAuth, COLOR_LIST } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
+import Dashboard from './Dashboard';
 
 const DeviceDashboard = () => {
   const { t } = useTranslation();

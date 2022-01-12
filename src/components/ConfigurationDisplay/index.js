@@ -41,10 +41,12 @@ const ConfigurationDisplay = ({ getData, deviceConfig }) => {
           />
         </h5>
         <CRow>
-          <CCol md="2" xl="2" xxl="1">
-            <CLabel>{t('configuration.last_configuration_change')}: </CLabel>
+          <CCol>
+            <CLabel>
+              {t('configuration.last_configuration_change')}:{' '}
+              {prettyDate(deviceConfig?.lastConfigurationChange)}
+            </CLabel>
           </CCol>
-          <CCol>{prettyDate(deviceConfig?.lastConfigurationChange)}</CCol>
         </CRow>
         <pre className="ignore">{JSON.stringify(deviceConfig?.configuration ?? {}, null, 4)}</pre>
       </CCardBody>

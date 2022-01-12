@@ -1,9 +1,10 @@
 /* eslint-disable no-await-in-loop */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { DeviceFirmwareModal as Modal, useAuth, useToast } from 'ucentral-libs';
+import { useAuth, useToast, useToggle } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
+import Modal from './Modal';
 
 const DeviceFirmwareModal = ({
   device,
@@ -17,6 +18,7 @@ const DeviceFirmwareModal = ({
   const { currentToken, endpoints } = useAuth();
   const [loading, setLoading] = useState(false);
   const [firmwareVersions, setFirmwareVersions] = useState([]);
+  const [keepRedirector, toggleKeepRedirector, setKeepRedirector] = useToggle(true);
 
   const getPartialFirmware = async (offset) => {
     const headers = {
@@ -78,6 +80,7 @@ const DeviceFirmwareModal = ({
 
     const parameters = {
       serialNumber: device.serialNumber,
+      keepRedirector,
       when: 0,
       uri,
     };
@@ -108,6 +111,7 @@ const DeviceFirmwareModal = ({
 
   useEffect(() => {
     if (show && device.compatible) getFirmwareList();
+    if (show) setKeepRedirector(true);
   }, [device, show]);
 
   return (
@@ -120,6 +124,8 @@ const DeviceFirmwareModal = ({
       upgradeToVersion={upgradeToVersion}
       loading={loading}
       upgradeStatus={upgradeStatus}
+      keepRedirector={keepRedirector}
+      toggleRedirector={toggleKeepRedirector}
     />
   );
 };

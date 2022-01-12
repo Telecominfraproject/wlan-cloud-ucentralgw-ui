@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DeviceList from 'components/DeviceListTable';
 import DeviceDashboard from 'components/DeviceDashboard';
+import BlacklistTable from 'components/BlacklistTable';
 import {
   CCard,
   CCardBody,
@@ -48,16 +49,21 @@ const DeviceListPage = () => {
             active={index === 1}
             onClick={() => updateNav(1)}
           >
-            {t('common.table')}
+            {t('common.all')}
+          </CNavLink>
+          <CNavLink
+            className="font-weight-bold"
+            href="#"
+            active={index === 2}
+            onClick={() => updateNav(2)}
+          >
+            {t('common.blacklist')}
           </CNavLink>
         </CNav>
         <CTabContent>
-          <CTabPane active={index === 0}>
-            <DeviceDashboard />
-          </CTabPane>
-          <CTabPane active={index === 1}>
-            <DeviceList />
-          </CTabPane>
+          <CTabPane active={index === 0}>{index === 0 ? <DeviceDashboard /> : null}</CTabPane>
+          <CTabPane active={index === 1}>{index === 1 ? <DeviceList /> : null}</CTabPane>
+          <CTabPane active={index === 2}>{index === 2 ? <BlacklistTable /> : null}</CTabPane>
         </CTabContent>
       </CCardBody>
     </CCard>
