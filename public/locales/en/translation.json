@@ -671,6 +671,7 @@
 		"percentage_free": "{{percentage}}% of {{total}} free",
 		"percentage_used": "{{percentage}}% of {{total}} used",
 		"title": "#{{serialNumber}} Status",
+		"total_memory": "Total Memory",
 		"uptime": "Uptime",
 		"used_total_memory": "{{used}} used / {{total}} total "
 	},
