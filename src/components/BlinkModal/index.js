@@ -5,21 +5,18 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
-  CSwitch,
   CCol,
-  CRow,
   CFormGroup,
   CInputRadio,
   CLabel,
   CPopover,
+  CRow,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilX } from '@coreui/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import DatePicker from 'react-widgets/DatePicker';
 import PropTypes from 'prop-types';
-import { dateToUnix } from 'utils/helper';
 import 'react-widgets/styles.css';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
@@ -31,38 +28,24 @@ const BlinkModal = ({ show, toggleModal }) => {
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const { addToast } = useToast();
-  const [isNow, setIsNow] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [chosenDate, setChosenDate] = useState(new Date().toString());
-  const [chosenPattern, setPattern] = useState('on');
+  const [chosenPattern, setPattern] = useState('blink');
   const [result, setResult] = useState(null);
-
-  const toggleNow = () => {
-    setIsNow(!isNow);
-  };
-
-  const setDate = (date) => {
-    if (date) {
-      setChosenDate(date.toString());
-    }
-  };
 
   useEffect(() => {
     if (show) {
       setWaiting(false);
-      setChosenDate(new Date().toString());
-      setPattern('on');
+      setPattern('blink');
       setResult(null);
     }
   }, [show]);
 
   const doAction = () => {
     setWaiting(true);
-    const utcDate = new Date(chosenDate);
 
     const parameters = {
       serialNumber: deviceSerialNumber,
-      when: isNow ? 0 : dateToUnix(utcDate),
+      when: 0,
       pattern: chosenPattern,
       duration: 30,
     };
@@ -113,11 +96,26 @@ const BlinkModal = ({ show, toggleModal }) => {
       ) : (
         <div>
           <CModalBody>
-            <CFormGroup row>
+            <CRow className="mb-3">
+              <CCol>{t('blink.explanation')}</CCol>
+            </CRow>
+            <CFormGroup row className="mb-0">
               <CCol md="3">
                 <CLabel>{t('blink.pattern')}</CLabel>
               </CCol>
               <CCol>
+                <CFormGroup variant="custom-radio" onClick={() => setPattern('blink')} inline>
+                  <CInputRadio
+                    custom
+                    defaultChecked={chosenPattern === 'blink'}
+                    id="radio3"
+                    name="radios"
+                    value="option3"
+                  />
+                  <CLabel variant="custom-checkbox" htmlFor="radio3">
+                    {t('blink.blink')}
+                  </CLabel>
+                </CFormGroup>
                 <CFormGroup variant="custom-radio" onClick={() => setPattern('on')} inline>
                   <CInputRadio
                     custom
@@ -142,55 +140,12 @@ const BlinkModal = ({ show, toggleModal }) => {
                     {t('common.off')}
                   </CLabel>
                 </CFormGroup>
-                <CFormGroup variant="custom-radio" onClick={() => setPattern('blink')} inline>
-                  <CInputRadio
-                    custom
-                    defaultChecked={chosenPattern === 'blink'}
-                    id="radio3"
-                    name="radios"
-                    value="option3"
-                  />
-                  <CLabel variant="custom-checkbox" htmlFor="radio3">
-                    {t('blink.blink')}
-                  </CLabel>
-                </CFormGroup>
               </CCol>
             </CFormGroup>
-            <CRow className="pt-1">
-              <CCol md="8">
-                <p>{t('blink.execute_now')}</p>
-              </CCol>
-              <CCol>
-                <CSwitch
-                  disabled={waiting}
-                  color="primary"
-                  defaultChecked={isNow}
-                  onClick={toggleNow}
-                  labelOn={t('common.yes')}
-                  labelOff={t('common.no')}
-                />
-              </CCol>
-            </CRow>
-            <CRow hidden={isNow} className="pt-3">
-              <CCol md="4" className="pt-2">
-                <p>{t('common.custom_date')}</p>
-              </CCol>
-              <CCol xs="12" md="8">
-                <DatePicker
-                  selected={new Date(chosenDate)}
-                  includeTime
-                  value={new Date(chosenDate)}
-                  placeholder="Select custom date"
-                  disabled={waiting}
-                  onChange={(date) => setDate(date)}
-                  min={new Date()}
-                />
-              </CCol>
-            </CRow>
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label={isNow ? t('blink.set_leds') : t('common.schedule')}
+              label={t('blink.set_leds')}
               isLoadingLabel={t('common.loading_ellipsis')}
               isLoading={waiting}
               action={doAction}

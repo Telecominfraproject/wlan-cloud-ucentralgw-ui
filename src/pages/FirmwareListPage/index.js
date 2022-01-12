@@ -11,9 +11,10 @@ import {
   CTabContent,
   CCardHeader,
 } from '@coreui/react';
-import { FirmwareList, useAuth, useToast } from 'ucentral-libs';
+import { useAuth, useToast } from 'ucentral-libs';
 import FirmwareDashboard from 'components/FirmwareDashboard';
 import EditFirmwareModal from 'components/EditFirmwareModal';
+import Table from './Table';
 
 const FirmwareListPage = () => {
   const { t } = useTranslation();
@@ -96,7 +97,7 @@ const FirmwareListPage = () => {
 
     const allFirmwares = [];
     let continueFirmware = true;
-    let i = 1;
+    let i = 0;
     while (continueFirmware) {
       const newFirmwares = await getPartialFirmware(deviceType ?? selectedDeviceType, i);
       if (newFirmwares === null || newFirmwares.length === 0) continueFirmware = false;
@@ -196,7 +197,7 @@ const FirmwareListPage = () => {
             <FirmwareDashboard />
           </CTabPane>
           <CTabPane active={index === 1}>
-            <FirmwareList
+            <Table
               t={t}
               loading={loading}
               page={page}

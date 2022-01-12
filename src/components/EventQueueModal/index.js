@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { EventQueueModal as Modal, useAuth, useDevice, useToast } from 'ucentral-libs';
+import { useAuth, useDevice, useToast } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
+import Modal from './Modal';
 
 const EventQueueModal = ({ show, toggle }) => {
   const { t } = useTranslation();

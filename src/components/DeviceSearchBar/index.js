@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useAuth, DeviceSearchBar as SearchBar } from 'ucentral-libs';
 import { checkIfJson } from 'utils/helper';
 
-const DeviceSearchBar = () => {
+const DeviceSearchBar = ({ action }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { currentToken, endpoints } = useAuth();
@@ -65,7 +66,15 @@ const DeviceSearchBar = () => {
     }
   }, []);
 
-  return <SearchBar t={t} search={search} results={results} history={history} />;
+  return <SearchBar t={t} search={search} results={results} history={history} action={action} />;
+};
+
+DeviceSearchBar.propTypes = {
+  action: PropTypes.func,
+};
+
+DeviceSearchBar.defaultProps = {
+  action: null,
 };
 
 export default DeviceSearchBar;
