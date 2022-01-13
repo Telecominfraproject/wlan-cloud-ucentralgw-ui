@@ -47,6 +47,7 @@
 		"cancel": "Cancelar",
 		"certificate": "Certificado",
 		"certificates": "Certificados",
+		"claim": "Reclamación",
 		"clear": "Claro",
 		"close": "Cerrar",
 		"code": "Código",
@@ -162,6 +163,7 @@
 		"recorded": "Grabado",
 		"refresh": "Refrescar",
 		"refresh_device": "Actualizar dispositivo",
+		"remove_claim": "Quitar reclamo",
 		"required": "Necesario",
 		"result": "Resultado",
 		"save": "Salvar",
@@ -657,9 +659,11 @@
 		"data": "Datos (KB)",
 		"latest_statistics": "Últimas estadísticas",
 		"lifetime_stats": "Estadísticas de por vida",
+		"memory": "Memoria",
 		"no_interfaces": "No hay estadísticas de vida útil de la interfaz disponibles",
 		"show_latest": "Últimas estadísticas",
-		"title": "estadística"
+		"title": "estadística",
+		"used": "Memoria usada %"
 	},
 	"status": {
 		"connection_status": "Estado",
@@ -676,13 +680,17 @@
 		"used_total_memory": "{{used}} usado / {{total}} total"
 	},
 	"subscriber": {
+		"add_device_subscriber_explanation": "Para reclamar otros dispositivos, puede usar nuestra barra de búsqueda o reclamar directamente desde la tabla. Si un dispositivo ya fue reclamado por un usuario, deberá ir a sus detalles y anular la asignación antes de reclamarlo.",
 		"create": "Crear suscriptor",
+		"devices_one": "{{count}} dispositivo",
+		"devices_other": "{{count}} dispositivos",
 		"edit": "Editar suscriptor",
 		"error_create": "Error al crear el suscriptor: {{error}}",
 		"error_delete": "Error al eliminar el suscriptor: {{error}}",
 		"error_fetching": "Error al obtener suscriptores: {{error}}",
 		"error_fetching_single": "Error al obtener el suscriptor: {{error}}",
 		"error_update": "Error al actualizar el suscriptor: {{error}}",
+		"is_already_claimed": "ya es reclamado por",
 		"subscribers": "Suscriptores",
 		"success_create": "¡Suscriptor creado correctamente!",
 		"success_delete": "¡Suscriptor eliminado correctamente!",

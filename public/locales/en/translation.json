@@ -47,6 +47,7 @@
 		"cancel": "Cancel",
 		"certificate": "Certificate",
 		"certificates": "Certificates",
+		"claim": "Claim",
 		"clear": "Clear",
 		"close": "Close",
 		"code": "Code",
@@ -162,6 +163,7 @@
 		"recorded": "Recorded",
 		"refresh": "Refresh",
 		"refresh_device": "Refresh Device",
+		"remove_claim": "Remove Claim",
 		"required": "Required",
 		"result": "Result",
 		"save": "Save",
@@ -657,9 +659,11 @@
 		"data": "Data (KB)",
 		"latest_statistics": "Latest Statistics",
 		"lifetime_stats": "Lifetime Statistics",
+		"memory": "Memory",
 		"no_interfaces": "No interface lifetime statistics available",
 		"show_latest": "Last Statistics",
-		"title": "Statistics"
+		"title": "Statistics",
+		"used": "Used Memory %"
 	},
 	"status": {
 		"connection_status": "Status",
@@ -676,13 +680,17 @@
 		"used_total_memory": "{{used}} used / {{total}} total "
 	},
 	"subscriber": {
+		"add_device_subscriber_explanation": "To claim devices, you can use our search bar or claim directly from the table. If a device was already claimed by a user, you will need to go to to their details and unassign it before claiming it.",
 		"create": "Create Subscriber",
+		"devices_one": "{{count}} Device",
+		"devices_other": "{{count}} Devices",
 		"edit": "Edit Subscriber",
 		"error_create": "Error creating subscriber: {{error}}",
 		"error_delete": "Error deleting subscriber: {{error}}",
 		"error_fetching": "Error fetching subscribers: {{error}}",
 		"error_fetching_single": "Error fetching subscriber: {{error}}",
 		"error_update": "Error updating subscriber: {{error}}",
+		"is_already_claimed": "is already claimed by ",
 		"subscribers": "Subscribers",
 		"success_create": "Subscriber successfully created!",
 		"success_delete": "Subscriber successfully deleted!",

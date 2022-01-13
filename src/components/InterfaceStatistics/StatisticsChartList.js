@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
@@ -7,12 +8,14 @@ import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
 import eventBus from 'utils/eventBus';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = () => {
+const StatisticsChartList = ({ setOptions, section }) => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
+    memory: [],
     settings: {},
   });
 
@@ -22,6 +25,24 @@ const StatisticsChartList = () => {
       if (b.recorded > a.recorded) return -1;
       return 0;
     });
+
+    // Looping through data to build our memory graph data
+    const memoryUsed = {
+      titleName: t('statistics.memory'),
+      name: '% Used',
+      backgroundColor: 'rgb(228,102,81,0.9)',
+      data: [],
+      fill: true,
+    };
+
+    for (const log of sortedData) {
+      memoryUsed.data.push(
+        Math.floor(
+          ((log.data.unit.memory.total - log.data.unit.memory.free) / log.data.unit.memory.total) *
+            100,
+        ),
+      );
+    }
 
     // This dictionary will have a key that is the interface name and a value of it's index in the final array
     const interfaceTypes = {};
@@ -69,7 +90,7 @@ const StatisticsChartList = () => {
       }
     }
 
-    const options = {
+    const interfaceOptions = {
       chart: {
         id: 'chart',
         group: 'txrx',
@@ -105,24 +126,96 @@ const StatisticsChartList = () => {
       },
     };
 
+    const memoryOptions = {
+      chart: {
+        id: 'chart',
+      },
+      stroke: {
+        curve: 'smooth',
+      },
+      xaxis: {
+        title: {
+          text: 'Time',
+          style: {
+            fontSize: '15px',
+          },
+        },
+        categories,
+        tickAmount: 20,
+      },
+      yaxis: {
+        min: 0,
+        max: 100,
+        tickAmount: 5, // set tickAmount to split x-axis
+        ticks: { min: 0, max: 100, stepSize: 20 },
+        title: {
+          text: t('statistics.used'),
+          style: {
+            fontSize: '15px',
+          },
+        },
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'right',
+        float: true,
+      },
+    };
+
     const newOptions = {
       interfaceList,
-      settings: options,
+      memory: [[memoryUsed]],
+      interfaceOptions,
+      memoryOptions,
     };
 
     if (statOptions !== newOptions) {
-      setStatOptions(newOptions);
+      const sectionOptions = newOptions.interfaceList.map((opt) => ({
+        value: opt[0].titleName,
+        label: opt[0].titleName,
+      }));
+      setOptions([...sectionOptions, { value: 'memory', label: t('statistics.memory') }]);
+      setStatOptions({ ...newOptions });
     }
   };
 
+  const getInterface = useCallback(() => {
+    if (statOptions.interfaceList.length === 0) return <p>N/A</p>;
+
+    const interfaceToShow = statOptions.interfaceList.find(
+      (inter) => inter[0].titleName === section,
+    );
+
+    if (interfaceToShow) {
+      const options = {
+        data: interfaceToShow,
+        options: {
+          ...statOptions.interfaceOptions,
+          title: {
+            text: capitalizeFirstLetter(interfaceToShow[0].titleName),
+            align: 'left',
+            style: {
+              fontSize: '25px',
+            },
+          },
+        },
+      };
+      return (
+        <div key={createUuid()}>
+          <DeviceStatisticsChart chart={options} />
+        </div>
+      );
+    }
+    return <p>N/A</p>;
+  }, [statOptions, section]);
+
   const getStatistics = () => {
+    setLoading(true);
+
     const options = {
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${currentToken}`,
-      },
-      params: {
-        serialNumber: '24f5a207a130',
       },
     };
 
@@ -134,7 +227,8 @@ const StatisticsChartList = () => {
       .then((response) => {
         transformIntoDataset(response.data.data);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -153,28 +247,36 @@ const StatisticsChartList = () => {
 
   return (
     <div>
-      {statOptions.interfaceList.map((data) => {
-        const options = {
-          data,
-          options: {
-            ...statOptions.settings,
-            title: {
-              text: capitalizeFirstLetter(data[0].titleName),
-              align: 'left',
-              style: {
-                fontSize: '25px',
+      {section !== 'memory' && !loading && getInterface()}
+      {section === 'memory' &&
+        !loading &&
+        statOptions.memory.map((data) => {
+          const options = {
+            data,
+            options: {
+              ...statOptions.memoryOptions,
+              title: {
+                text: capitalizeFirstLetter(data[0].titleName),
+                align: 'left',
+                style: {
+                  fontSize: '25px',
+                },
               },
             },
-          },
-        };
-        return (
-          <div key={createUuid()}>
-            <DeviceStatisticsChart chart={options} />
-          </div>
-        );
-      })}
+          };
+          return (
+            <div key={createUuid()}>
+              <DeviceStatisticsChart chart={options} section={section} />
+            </div>
+          );
+        })}
     </div>
   );
+};
+
+StatisticsChartList.propTypes = {
+  setOptions: PropTypes.func.isRequired,
+  section: PropTypes.string.isRequired,
 };
 
 export default React.memo(StatisticsChartList);

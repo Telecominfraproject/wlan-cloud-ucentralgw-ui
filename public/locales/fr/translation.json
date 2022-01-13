@@ -47,6 +47,7 @@
 		"cancel": "annuler",
 		"certificate": "Certificat",
 		"certificates": "Certificats",
+		"claim": "Prétendre",
 		"clear": "Clair",
 		"close": "Fermer",
 		"code": "Code",
@@ -162,6 +163,7 @@
 		"recorded": "Enregistré",
 		"refresh": "Rafraîchir",
 		"refresh_device": "Actualiser l'appareil",
+		"remove_claim": "Supprimer la réclamation",
 		"required": "Champs obligatoires",
 		"result": "Résultat",
 		"save": "Sauvegarder",
@@ -657,9 +659,11 @@
 		"data": "Données (Ko)",
 		"latest_statistics": "Dernières statistiques",
 		"lifetime_stats": "Statistiques à vie",
+		"memory": "mémoire",
 		"no_interfaces": "Aucune statistique de durée de vie de l'interface disponible",
 		"show_latest": "Dernières statistiques",
-		"title": "statistiques"
+		"title": "statistiques",
+		"used": "Mémoire utilisée %"
 	},
 	"status": {
 		"connection_status": "Statut",
@@ -676,13 +680,17 @@
 		"used_total_memory": "{{used}} utilisé / {{total}} total"
 	},
 	"subscriber": {
+		"add_device_subscriber_explanation": "Pour réclamer d'autres appareils, vous pouvez utiliser notre barre de recherche ou réclamer directement à partir du tableau. Si un appareil a déjà été réclamé par un utilisateur, vous devrez accéder à ses détails et le désaffecter avant de le réclamer.",
 		"create": "Créer un abonné",
+		"devices_one": "{{count}} Appareil",
+		"devices_other": "{{count}} appareils",
 		"edit": "Modifier l'abonné",
 		"error_create": "Erreur lors de la création de l'abonné : {{error}}",
 		"error_delete": "Erreur lors de la suppression de l'abonné : {{error}}",
 		"error_fetching": "Erreur lors de la récupération des abonnés : {{error}}",
 		"error_fetching_single": "Erreur lors de la récupération de l'abonné : {{error}}",
 		"error_update": "Erreur lors de la mise à jour de l'abonné : {{error}}",
+		"is_already_claimed": "est déjà réclamé par",
 		"subscribers": "Les abonnés",
 		"success_create": "Abonné créé avec succès !",
 		"success_delete": "Abonné supprimé avec succès !",
