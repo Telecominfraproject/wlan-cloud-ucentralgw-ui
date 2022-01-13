@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
-import { CCard, CCardHeader, CCardBody, CPopover, CButton, CSelect } from '@coreui/react';
+import {
+  CCard,
+  CCardHeader,
+  CCardBody,
+  CPopover,
+  CButton,
+  CSelect,
+  CFormText,
+} from '@coreui/react';
+import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import eventBus from 'utils/eventBus';
@@ -15,6 +24,10 @@ const DeviceStatisticsCard = () => {
   const [showLifetimeModal, setShowLifetimeModal] = useState(false);
   const [options, setOptions] = useState([]);
   const [section, setSection] = useState('memory');
+  const [start, setStart] = useState('');
+  const [startError, setStartError] = useState(false);
+  const [end, setEnd] = useState('');
+  const [endError, setEndError] = useState(false);
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
@@ -22,6 +35,28 @@ const DeviceStatisticsCard = () => {
 
   const toggleLifetimeModal = () => {
     setShowLifetimeModal(!showLifetimeModal);
+  };
+
+  const modifyStart = (value) => {
+    try {
+      new Date(value).toISOString();
+      setStartError(false);
+      setStart(value);
+    } catch (e) {
+      setStart('');
+      setStartError(true);
+    }
+  };
+
+  const modifyEnd = (value) => {
+    try {
+      new Date(value).toISOString();
+      setEndError(false);
+      setEnd(value);
+    } catch (e) {
+      setEnd('');
+      setEndError(true);
+    }
   };
 
   const refresh = () => {
@@ -64,10 +99,24 @@ const DeviceStatisticsCard = () => {
                 ))}
               </CSelect>
             </div>
+            <div className="pl-2">
+              <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
+              <CFormText color="danger" hidden={!endError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            To:
+            <div className="pl-2">
+              <DatePicker includeTime onChange={(date) => modifyStart(date)} />
+              <CFormText color="danger" hidden={!startError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            From:
           </div>
         </CCardHeader>
         <CCardBody className="p-1">
-          <StatisticsChartList setOptions={setOptions} section={section} />
+          <StatisticsChartList setOptions={setOptions} section={section} start={start} end={end} />
         </CCardBody>
       </CCard>
       <LatestStatisticsmodal show={showLatestModal} toggle={toggleLatestModal} />

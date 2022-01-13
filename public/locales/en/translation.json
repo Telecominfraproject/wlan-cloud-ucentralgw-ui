@@ -118,6 +118,7 @@
 		"hours": "hours",
 		"id": "Id",
 		"invalid_credentials": "Invalid username and/or password",
+		"invalid_date_explanation": "Invalid Date, please use the calendar accessible with the button on the right ",
 		"invalid_file": "The chosen file was invalid, please read the instructions and adjust your file accordingly",
 		"invalid_password": "This password does not confirm to basic password rules. Please visit our Password Policy page to learn more",
 		"invalid_pem": "Your .pem file is invalid. It should start with '-----BEGIN CERTIFICATE-----' OR '-----BEGIN PRIVATE KEY-----' and it should end with '-----END CERTIFICATE-----' OR '-----END PRIVATE KEY-----'",

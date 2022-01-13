@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth, useDevice } from 'ucentral-libs';
-import { unixToTime, capitalizeFirstLetter } from 'utils/helper';
+import { capitalizeFirstLetter, dateToUnix, prettyDate } from 'utils/helper';
 import eventBus from 'utils/eventBus';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ setOptions, section }) => {
+const StatisticsChartList = ({ setOptions, section, start, end }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { currentToken, endpoints } = useAuth();
@@ -52,7 +52,7 @@ const StatisticsChartList = ({ setOptions, section }) => {
 
     // Just building the array for all the interfaces
     for (const log of sortedData) {
-      categories.push(unixToTime(log.recorded));
+      categories.push(prettyDate(log.recorded));
       for (const logInterface of log.data.interfaces) {
         if (interfaceTypes[logInterface.name] === undefined) {
           interfaceTypes[logInterface.name] = i;
@@ -93,7 +93,6 @@ const StatisticsChartList = ({ setOptions, section }) => {
     const interfaceOptions = {
       chart: {
         id: 'chart',
-        group: 'txrx',
       },
       stroke: {
         curve: 'smooth',
@@ -141,7 +140,6 @@ const StatisticsChartList = ({ setOptions, section }) => {
           },
         },
         categories,
-        tickAmount: 20,
       },
       yaxis: {
         min: 0,
@@ -174,7 +172,7 @@ const StatisticsChartList = ({ setOptions, section }) => {
         value: opt[0].titleName,
         label: opt[0].titleName,
       }));
-      setOptions([...sectionOptions, { value: 'memory', label: t('statistics.memory') }]);
+      setOptions([{ value: 'memory', label: t('statistics.memory') }, ...sectionOptions]);
       setStatOptions({ ...newOptions });
     }
   };
@@ -217,11 +215,22 @@ const StatisticsChartList = ({ setOptions, section }) => {
         Accept: 'application/json',
         Authorization: `Bearer ${currentToken}`,
       },
+      params: {},
     };
+
+    let extraParams = '';
+    if (start !== '' && end !== '') {
+      const utcStart = new Date(start).toISOString();
+      const utcEnd = new Date(end).toISOString();
+      options.params.startDate = dateToUnix(utcStart);
+      options.params.endDate = dateToUnix(utcEnd);
+    } else {
+      extraParams = '?newest=true&limit=50';
+    }
 
     axiosInstance
       .get(
-        `${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/statistics?newest=true&limit=50`,
+        `${endpoints.owgw}/api/v1/device/${deviceSerialNumber}/statistics${extraParams}`,
         options,
       )
       .then((response) => {
@@ -232,10 +241,10 @@ const StatisticsChartList = ({ setOptions, section }) => {
   };
 
   useEffect(() => {
-    if (deviceSerialNumber) {
+    if (deviceSerialNumber && ((start !== '' && end !== '') || (start === '' && end === ''))) {
       getStatistics();
     }
-  }, [deviceSerialNumber]);
+  }, [deviceSerialNumber, start, end]);
 
   useEffect(() => {
     eventBus.on('refreshInterfaceStatistics', () => getStatistics());
@@ -277,6 +286,8 @@ const StatisticsChartList = ({ setOptions, section }) => {
 StatisticsChartList.propTypes = {
   setOptions: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  end: PropTypes.string.isRequired,
 };
 
 export default React.memo(StatisticsChartList);

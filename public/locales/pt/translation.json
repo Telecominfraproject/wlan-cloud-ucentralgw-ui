@@ -118,6 +118,7 @@
 		"hours": "horas",
 		"id": "identidade",
 		"invalid_credentials": "Nome de usuário e / ou senha inválidos",
+		"invalid_date_explanation": "Data inválida, use o calendário acessível com o botão à direita",
 		"invalid_file": "O arquivo escolhido era inválido, por favor, leia as instruções e ajuste seu arquivo de acordo",
 		"invalid_password": "Esta senha não está de acordo com as regras básicas de senha. Visite nossa página de Política de Senha para saber mais",
 		"invalid_pem": "Seu arquivo .pem é inválido. Deve começar com '----- BEGIN CERTIFICATE -----' OU '----- BEGIN PRIVATE KEY -----' e deve terminar com '----- END CERTIFICATE --- - 'OU' ----- END PRIVATE KEY ----- '",
