@@ -658,6 +658,7 @@
 	},
 	"statistics": {
 		"data": "Datos (KB)",
+		"data_mb": "Datos (MB)",
 		"latest_statistics": "Últimas estadísticas",
 		"lifetime_stats": "Estadísticas de por vida",
 		"memory": "Memoria",

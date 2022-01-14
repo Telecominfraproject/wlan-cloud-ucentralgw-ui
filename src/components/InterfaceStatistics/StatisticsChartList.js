@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { CSpinner } from '@coreui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth, useDevice } from 'ucentral-libs';
 import { capitalizeFirstLetter, dateToUnix, prettyDate } from 'utils/helper';
-import eventBus from 'utils/eventBus';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ setOptions, section, start, end }) => {
+const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd, refreshId }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { currentToken, endpoints } = useAuth();
@@ -20,28 +20,56 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
   });
 
   const transformIntoDataset = (data) => {
-    const sortedData = data.sort((a, b) => {
+    let sortedData = data.sort((a, b) => {
       if (a.recorded > b.recorded) return 1;
       if (b.recorded > a.recorded) return -1;
       return 0;
     });
+    const dataLength = sortedData.length;
+
+    console.log(dataLength);
+
+    if (dataLength > 1000 && dataLength < 3000) {
+      sortedData = sortedData.filter((dat, index) => index % 4 === 0);
+    } else if (dataLength >= 3000 && dataLength < 5000) {
+      sortedData = sortedData.filter((dat, index) => index % 6 === 0);
+    } else if (dataLength >= 5000 && dataLength < 7000) {
+      sortedData = sortedData.filter((dat, index) => index % 8 === 0);
+    }
+
+    console.log(sortedData.length);
 
     // Looping through data to build our memory graph data
-    const memoryUsed = {
-      titleName: t('statistics.memory'),
-      name: '% Used',
-      backgroundColor: 'rgb(228,102,81,0.9)',
-      data: [],
-      fill: true,
-    };
+    const memoryUsed = [
+      {
+        titleName: t('statistics.memory'),
+        name: 'Used',
+        backgroundColor: 'rgb(228,102,81,0.9)',
+        data: [],
+        fill: true,
+      },
+      {
+        titleName: t('statistics.memory'),
+        name: 'Buffered',
+        backgroundColor: 'rgb(228,102,81,0.9)',
+        data: [],
+        fill: true,
+      },
+      {
+        titleName: t('statistics.memory'),
+        name: 'Cached',
+        backgroundColor: 'rgb(228,102,81,0.9)',
+        data: [],
+        fill: true,
+      },
+    ];
 
     for (const log of sortedData) {
-      memoryUsed.data.push(
-        Math.floor(
-          ((log.data.unit.memory.total - log.data.unit.memory.free) / log.data.unit.memory.total) *
-            100,
-        ),
+      memoryUsed[0].data.push(
+        Math.floor((log.data.unit.memory.total - log.data.unit.memory.free) / 1024 / 1024),
       );
+      memoryUsed[1].data.push(Math.floor(log.data.unit.memory.buffered / 1024 / 1024));
+      memoryUsed[2].data.push(Math.floor(log.data.unit.memory.cached / 1024 / 1024));
     }
 
     // This dictionary will have a key that is the interface name and a value of it's index in the final array
@@ -142,12 +170,9 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
         categories,
       },
       yaxis: {
-        min: 0,
-        max: 100,
-        tickAmount: 5, // set tickAmount to split x-axis
-        ticks: { min: 0, max: 100, stepSize: 20 },
+        tickAmount: 5,
         title: {
-          text: t('statistics.used'),
+          text: t('statistics.data_mb'),
           style: {
             fontSize: '15px',
           },
@@ -162,9 +187,11 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
 
     const newOptions = {
       interfaceList,
-      memory: [[memoryUsed]],
+      memory: [memoryUsed],
       interfaceOptions,
       memoryOptions,
+      start: new Date(sortedData[0].recorded * 1000).toISOString(),
+      end: new Date(sortedData[sortedData.length - 1].recorded * 1000).toISOString(),
     };
 
     if (statOptions !== newOptions) {
@@ -172,8 +199,12 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
         value: opt[0].titleName,
         label: opt[0].titleName,
       }));
-      setOptions([{ value: 'memory', label: t('statistics.memory') }, ...sectionOptions]);
+      setOptions([...sectionOptions, { value: 'memory', label: t('statistics.memory') }]);
       setStatOptions({ ...newOptions });
+      if (sortedData.length > 0) {
+        setStart(new Date(sortedData[0].recorded * 1000));
+        setEnd(new Date(sortedData[sortedData.length - 1].recorded * 1000));
+      }
     }
   };
 
@@ -219,11 +250,12 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
     };
 
     let extraParams = '';
-    if (start !== '' && end !== '') {
+    if (start !== null && end !== null) {
       const utcStart = new Date(start).toISOString();
       const utcEnd = new Date(end).toISOString();
       options.params.startDate = dateToUnix(utcStart);
       options.params.endDate = dateToUnix(utcEnd);
+      options.params.limit = 10000;
     } else {
       extraParams = '?newest=true&limit=50';
     }
@@ -241,19 +273,18 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
   };
 
   useEffect(() => {
-    if (deviceSerialNumber && ((start !== '' && end !== '') || (start === '' && end === ''))) {
+    if (deviceSerialNumber) {
       getStatistics();
     }
-  }, [deviceSerialNumber, start, end]);
+  }, [deviceSerialNumber, refreshId]);
 
-  useEffect(() => {
-    eventBus.on('refreshInterfaceStatistics', () => getStatistics());
-
-    return () => {
-      eventBus.remove('refreshInterfaceStatistics');
-    };
-  }, []);
-
+  if (loading) {
+    return (
+      <div className="text-center">
+        <CSpinner size="xl" />
+      </div>
+    );
+  }
   return (
     <div>
       {section !== 'memory' && !loading && getInterface()}
@@ -286,8 +317,15 @@ const StatisticsChartList = ({ setOptions, section, start, end }) => {
 StatisticsChartList.propTypes = {
   setOptions: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
-  start: PropTypes.string.isRequired,
-  end: PropTypes.string.isRequired,
+  start: PropTypes.instanceOf(Date),
+  end: PropTypes.instanceOf(Date),
+  setStart: PropTypes.func.isRequired,
+  setEnd: PropTypes.func.isRequired,
+  refreshId: PropTypes.string.isRequired,
+};
+StatisticsChartList.defaultProps = {
+  start: null,
+  end: null,
 };
 
 export default React.memo(StatisticsChartList);

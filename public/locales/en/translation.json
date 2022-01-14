@@ -658,6 +658,7 @@
 	},
 	"statistics": {
 		"data": "Data (KB)",
+		"data_mb": "Data (MB)",
 		"latest_statistics": "Latest Statistics",
 		"lifetime_stats": "Lifetime Statistics",
 		"memory": "Memory",

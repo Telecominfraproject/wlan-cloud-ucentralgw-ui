@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import {
@@ -13,7 +13,6 @@ import {
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import eventBus from 'utils/eventBus';
 import LifetimeStatsmodal from 'components/LifetimeStatsModal';
 import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsmodal from './LatestStatisticsModal';
@@ -23,11 +22,12 @@ const DeviceStatisticsCard = () => {
   const [showLatestModal, setShowLatestModal] = useState(false);
   const [showLifetimeModal, setShowLifetimeModal] = useState(false);
   const [options, setOptions] = useState([]);
-  const [section, setSection] = useState('memory');
-  const [start, setStart] = useState('');
+  const [section, setSection] = useState('');
+  const [start, setStart] = useState(null);
   const [startError, setStartError] = useState(false);
-  const [end, setEnd] = useState('');
+  const [end, setEnd] = useState(null);
   const [endError, setEndError] = useState(false);
+  const [refreshId, setRefreshId] = useState('1');
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
@@ -60,8 +60,12 @@ const DeviceStatisticsCard = () => {
   };
 
   const refresh = () => {
-    eventBus.dispatch('refreshInterfaceStatistics', { message: 'Refresh interface statistics' });
+    setRefreshId(createUuid());
   };
+
+  useEffect(() => {
+    if (section === '' && options.length > 0) setSection(options[0].value);
+  }, [options]);
 
   return (
     <div>
@@ -70,12 +74,34 @@ const DeviceStatisticsCard = () => {
           <div className="d-flex flex-row-reverse align-items-center">
             <div className="pl-2">
               <CPopover content={t('common.refresh')}>
-                <CButton size="sm" color="info" onClick={refresh}>
+                <CButton size="sm" color="info" onClick={refresh} disabled={startError || endError}>
                   <CIcon content={cilSync} />
                 </CButton>
               </CPopover>
             </div>
             <div className="pl-2">
+              <DatePicker
+                includeTime
+                onChange={(date) => modifyEnd(date)}
+                value={end ? new Date(end) : undefined}
+              />
+              <CFormText color="danger" hidden={!endError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            To:
+            <div className="pl-2">
+              <DatePicker
+                includeTime
+                onChange={(date) => modifyStart(date)}
+                value={start ? new Date(start) : undefined}
+              />
+              <CFormText color="danger" hidden={!startError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            From:
+            <div className="px-2">
               <CButton size="sm" color="info" onClick={toggleLifetimeModal}>
                 Lifetime Statistics
               </CButton>
@@ -99,24 +125,18 @@ const DeviceStatisticsCard = () => {
                 ))}
               </CSelect>
             </div>
-            <div className="pl-2">
-              <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
-              <CFormText color="danger" hidden={!endError}>
-                {t('common.invalid_date_explanation')}
-              </CFormText>
-            </div>
-            To:
-            <div className="pl-2">
-              <DatePicker includeTime onChange={(date) => modifyStart(date)} />
-              <CFormText color="danger" hidden={!startError}>
-                {t('common.invalid_date_explanation')}
-              </CFormText>
-            </div>
-            From:
           </div>
         </CCardHeader>
         <CCardBody className="p-1">
-          <StatisticsChartList setOptions={setOptions} section={section} start={start} end={end} />
+          <StatisticsChartList
+            setOptions={setOptions}
+            section={section}
+            start={start}
+            end={end}
+            setStart={setStart}
+            setEnd={setEnd}
+            refreshId={refreshId}
+          />
         </CCardBody>
       </CCard>
       <LatestStatisticsmodal show={showLatestModal} toggle={toggleLatestModal} />
