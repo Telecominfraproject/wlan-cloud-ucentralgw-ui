@@ -5,10 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
 import { useAuth, useDevice } from 'ucentral-libs';
-import { capitalizeFirstLetter, dateToUnix, prettyDate } from 'utils/helper';
+import {
+  capitalizeFirstLetter,
+  datesSameDay,
+  dateToUnix,
+  prettyDate,
+  unixToTime,
+} from 'utils/helper';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd, refreshId }) => {
+const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { currentToken, endpoints } = useAuth();
@@ -25,19 +31,17 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
       if (b.recorded > a.recorded) return -1;
       return 0;
     });
+
     const dataLength = sortedData.length;
-
-    console.log(dataLength);
-
     if (dataLength > 1000 && dataLength < 3000) {
       sortedData = sortedData.filter((dat, index) => index % 4 === 0);
     } else if (dataLength >= 3000 && dataLength < 5000) {
-      sortedData = sortedData.filter((dat, index) => index % 6 === 0);
-    } else if (dataLength >= 5000 && dataLength < 7000) {
       sortedData = sortedData.filter((dat, index) => index % 8 === 0);
+    } else if (dataLength >= 5000 && dataLength < 7000) {
+      sortedData = sortedData.filter((dat, index) => index % 12 === 0);
+    } else if (dataLength > 7000) {
+      sortedData = sortedData.filter((dat, index) => index % 20 === 0);
     }
-
-    console.log(sortedData.length);
 
     // Looping through data to build our memory graph data
     const memoryUsed = [
@@ -77,10 +81,14 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
     const interfaceList = [];
     const categories = [];
     let i = 0;
+    const areSameDay = datesSameDay(
+      new Date(sortedData[0].recorded * 1000),
+      new Date(sortedData[sortedData.length - 1].recorded * 1000),
+    );
 
     // Just building the array for all the interfaces
     for (const log of sortedData) {
-      categories.push(prettyDate(log.recorded));
+      categories.push(areSameDay ? unixToTime(log.recorded) : prettyDate(log.recorded));
       for (const logInterface of log.data.interfaces) {
         if (interfaceTypes[logInterface.name] === undefined) {
           interfaceTypes[logInterface.name] = i;
@@ -133,7 +141,7 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
           },
         },
         categories,
-        tickAmount: 20,
+        tickAmount: areSameDay ? 15 : 10,
       },
       yaxis: {
         labels: {
@@ -161,6 +169,7 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
         curve: 'smooth',
       },
       xaxis: {
+        tickAmount: areSameDay ? 15 : 10,
         title: {
           text: 'Time',
           style: {
@@ -250,9 +259,9 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
     };
 
     let extraParams = '';
-    if (start !== null && end !== null) {
-      const utcStart = new Date(start).toISOString();
-      const utcEnd = new Date(end).toISOString();
+    if (time.start !== null && time.end !== null) {
+      const utcStart = new Date(time.start).toISOString();
+      const utcEnd = new Date(time.end).toISOString();
       options.params.startDate = dateToUnix(utcStart);
       options.params.endDate = dateToUnix(utcEnd);
       options.params.limit = 10000;
@@ -276,7 +285,7 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
     if (deviceSerialNumber) {
       getStatistics();
     }
-  }, [deviceSerialNumber, refreshId]);
+  }, [deviceSerialNumber, time.refreshId]);
 
   if (loading) {
     return (
@@ -317,15 +326,9 @@ const StatisticsChartList = ({ setOptions, section, start, end, setStart, setEnd
 StatisticsChartList.propTypes = {
   setOptions: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
-  start: PropTypes.instanceOf(Date),
-  end: PropTypes.instanceOf(Date),
+  time: PropTypes.instanceOf(Object).isRequired,
   setStart: PropTypes.func.isRequired,
   setEnd: PropTypes.func.isRequired,
-  refreshId: PropTypes.string.isRequired,
-};
-StatisticsChartList.defaultProps = {
-  start: null,
-  end: null,
 };
 
 export default React.memo(StatisticsChartList);

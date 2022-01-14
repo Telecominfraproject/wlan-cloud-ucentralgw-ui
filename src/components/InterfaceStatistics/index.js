@@ -27,7 +27,7 @@ const DeviceStatisticsCard = () => {
   const [startError, setStartError] = useState(false);
   const [end, setEnd] = useState(null);
   const [endError, setEndError] = useState(false);
-  const [refreshId, setRefreshId] = useState('1');
+  const [time, setTime] = useState({ refreshId: '0', start: null, end: null });
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
@@ -60,7 +60,7 @@ const DeviceStatisticsCard = () => {
   };
 
   const refresh = () => {
-    setRefreshId(createUuid());
+    setTime({ refreshId: createUuid(), start, end });
   };
 
   useEffect(() => {
@@ -131,11 +131,9 @@ const DeviceStatisticsCard = () => {
           <StatisticsChartList
             setOptions={setOptions}
             section={section}
-            start={start}
-            end={end}
+            time={time}
             setStart={setStart}
             setEnd={setEnd}
-            refreshId={refreshId}
           />
         </CCardBody>
       </CCard>
