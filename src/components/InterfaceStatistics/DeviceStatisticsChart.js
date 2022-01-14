@@ -12,4 +12,4 @@ DeviceStatisticsChart.propTypes = {
   chart: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default DeviceStatisticsChart;
+export default React.memo(DeviceStatisticsChart);

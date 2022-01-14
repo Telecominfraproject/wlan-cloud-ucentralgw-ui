@@ -10,6 +10,7 @@ import {
   CCard,
   CPopover,
   CButtonToolbar,
+  CFormText,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import DatePicker from 'react-widgets/DatePicker';
@@ -41,7 +42,9 @@ const DeviceCommands = () => {
   const [commands, setCommands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState('');
+  const [startError, setStartError] = useState(false);
   const [end, setEnd] = useState('');
+  const [endError, setEndError] = useState(false);
   const [commandLimit, setCommandLimit] = useState(25);
   // Load more button related
   const [loadingMore, setLoadingMore] = useState(false);
@@ -65,11 +68,25 @@ const DeviceCommands = () => {
   };
 
   const modifyStart = (value) => {
-    setStart(value);
+    try {
+      new Date(value).toISOString();
+      setStartError(false);
+      setStart(value);
+    } catch (e) {
+      setStart('');
+      setStartError(true);
+    }
   };
 
   const modifyEnd = (value) => {
-    setEnd(value);
+    try {
+      new Date(value).toISOString();
+      setEndError(false);
+      setEnd(value);
+    } catch (e) {
+      setEnd('');
+      setEndError(true);
+    }
   };
 
   const deleteCommandFromList = (commandUuid) => {
@@ -256,10 +273,16 @@ const DeviceCommands = () => {
               <CCol>
                 From:
                 <DatePicker includeTime onChange={(date) => modifyStart(date)} />
+                <CFormText color="danger" hidden={!startError}>
+                  {t('common.invalid_date_explanation')}
+                </CFormText>
               </CCol>
               <CCol>
                 To:
                 <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
+                <CFormText color="danger" hidden={!endError}>
+                  {t('common.invalid_date_explanation')}
+                </CFormText>
               </CCol>
             </CRow>
             <CCard>
