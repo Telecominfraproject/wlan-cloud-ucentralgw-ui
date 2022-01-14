@@ -2,13 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  CAlert,
   CCard,
   CCardHeader,
   CRow,
   CCol,
   CCardBody,
   CBadge,
-  CAlert,
   CPopover,
   CButton,
   CSpinner,
@@ -16,8 +16,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilSync } from '@coreui/icons';
-import { prettyDate, compactSecondsToDetailed } from 'utils/helper';
-import MemoryBar from './MemoryBar';
+import { prettyDate, compactSecondsToDetailed, cleanBytesString } from 'utils/helper';
 
 import styles from './index.module.scss';
 
@@ -26,6 +25,20 @@ const errorField = (t) => (
     {t('status.error')}
   </CAlert>
 );
+
+const getMemoryColor = (memTotal, memFree) => {
+  let memoryUsed = 0;
+  if (memTotal > 0) memoryUsed = Math.floor(((memTotal - memFree) / memTotal) * 100);
+
+  if (memoryUsed < 60) return 'success';
+  if (memoryUsed <= 85) return 'warning';
+  return 'danger';
+};
+
+const getMemoryPercentage = (memTotal, memFree) => {
+  if (memTotal <= 0) return `0%`;
+  return `${Math.floor(((memTotal - memFree) / memTotal) * 100)}%`;
+};
 
 const DeviceStatusCard = ({
   t,
@@ -157,21 +170,31 @@ const DeviceStatusCard = ({
                   )}
                 </CCol>
                 <CCol className="mb-1" md="4" xl="4">
+                  {t('status.total_memory')}:
+                </CCol>
+                <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
+                  {error ? errorField(t) : cleanBytesString(lastStats?.unit?.memory?.total)}
+                </CCol>
+                <CCol className="mb-1" md="4" xl="4">
                   {t('status.memory')}:
                 </CCol>
                 <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
                   {error ? (
                     errorField(t)
                   ) : (
-                    <MemoryBar
-                      t={t}
-                      usedBytes={
-                        lastStats?.unit?.memory?.total && lastStats?.unit?.memory?.free
-                          ? lastStats?.unit?.memory?.total - lastStats?.unit?.memory?.free
-                          : 0
-                      }
-                      totalBytes={lastStats?.unit?.memory?.total ?? 0}
-                    />
+                    <CAlert
+                      style={{ width: '40px' }}
+                      className="p-0 text-center"
+                      color={getMemoryColor(
+                        lastStats?.unit?.memory?.total ?? 0,
+                        lastStats?.unit?.memory?.free ?? 0,
+                      )}
+                    >
+                      {getMemoryPercentage(
+                        lastStats?.unit?.memory?.total ?? 0,
+                        lastStats?.unit?.memory?.free ?? 0,
+                      )}
+                    </CAlert>
                   )}
                 </CCol>
               </CRow>

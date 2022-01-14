@@ -124,3 +124,5 @@ export const testRegex = (value, regexString) => {
   const regex = new RegExp(regexString);
   return regex.test(value);
 };
+
+export const datesSameDay = (first, second) => first.getDate() === second.getDate();
