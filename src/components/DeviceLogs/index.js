@@ -1,18 +1,17 @@
 /* eslint-disable-rule prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import {
-  CWidgetDropdown,
-  CRow,
-  CCol,
+  CCardHeader,
+  CCardBody,
   CCollapse,
   CButton,
   CDataTable,
   CCard,
-  CCardBody,
   CPopover,
+  CFormText,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilTrash } from '@coreui/icons';
+import { cilSync, cilTrash } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { dateToUnix } from 'utils/helper';
@@ -29,7 +28,9 @@ const DeviceLogs = () => {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
   const [start, setStart] = useState('');
+  const [startError, setStartError] = useState(false);
   const [end, setEnd] = useState('');
+  const [endError, setEndError] = useState(false);
   const [logLimit, setLogLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
@@ -40,11 +41,25 @@ const DeviceLogs = () => {
   };
 
   const modifyStart = (value) => {
-    setStart(value);
+    try {
+      new Date(value).toISOString();
+      setStartError(false);
+      setStart(value);
+    } catch (e) {
+      setStart('');
+      setStartError(true);
+    }
   };
 
   const modifyEnd = (value) => {
-    setEnd(value);
+    try {
+      new Date(value).toISOString();
+      setEndError(false);
+      setEnd(value);
+    } catch (e) {
+      setEnd('');
+      setEndError(true);
+    }
   };
 
   const showMoreLogs = () => {
@@ -167,91 +182,105 @@ const DeviceLogs = () => {
 
   return (
     <div>
-      <CWidgetDropdown
-        className="m-0"
-        inverse="true"
-        color="gradient-info"
-        header={t('device_logs.title')}
-        footerSlot={
-          <div className="pb-1 px-3">
-            <CRow className="mb-3">
-              <CCol>
-                {t('common.from')}
-                <DatePicker includeTime onChange={(date) => modifyStart(date)} />
-              </CCol>
-              <CCol>
-                {t('common.to')}
-                <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
-              </CCol>
-            </CRow>
-            <CCard>
-              <div className="overflow-auto" style={{ height: '250px' }}>
-                <CDataTable
-                  addTableClasses="ignore-overflow table-sm"
-                  border
-                  items={logs ?? []}
-                  fields={columns}
-                  loading={loading}
-                  className="text-white"
-                  sorterValue={{ column: 'recorded', desc: 'true' }}
-                  scopedSlots={{
-                    recorded: (item) => (
-                      <td className="align-middle">
-                        <FormattedDate date={item.recorded} />
-                      </td>
-                    ),
-                    UUID: (item) => <td className="align-middle">{item.UUID}</td>,
-                    severity: (item) => <td className="align-middle">{item.severity}</td>,
-                    log: (item) => <td className="align-middle">{item.log}</td>,
-                    show_details: (item, index) => (
-                      <td className="align-middle">
-                        <CButton
-                          color="primary"
-                          variant={details.includes(index) ? '' : 'outline'}
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleDetails(index);
-                          }}
-                        >
-                          <CIcon name="cilList" />
-                        </CButton>
-                      </td>
-                    ),
-                    details: (item, index) => (
-                      <CCollapse show={details.includes(index)}>
-                        <CCardBody>
-                          <h5>{t('common.details')}</h5>
-                          <div>{getDetails(index, item)}</div>
-                        </CCardBody>
-                      </CCollapse>
-                    ),
-                  }}
-                />
-                {showLoadingMore && (
-                  <div className="mb-3">
-                    <LoadingButton
-                      label={t('common.view_more')}
-                      isLoadingLabel={t('common.loading_more_ellipsis')}
-                      isLoading={loadingMore}
-                      action={showMoreLogs}
-                      variant="outline"
-                    />
-                  </div>
-                )}
-              </div>
-            </CCard>
+      <CCard className="m-0">
+        <CCardHeader className="dark-header">
+          <div className="d-flex flex-row-reverse align-items-center">
+            <div className="pl-2">
+              <CPopover content={t('common.refresh')}>
+                <CButton size="sm" color="info" onClick={getLogs} disabled={startError || endError}>
+                  <CIcon content={cilSync} />
+                </CButton>
+              </CPopover>
+            </div>
+            <div className="pl-2">
+              <DatePicker
+                includeTime
+                onChange={(date) => modifyEnd(date)}
+                value={end ? new Date(end) : undefined}
+              />
+              <CFormText color="danger" hidden={!endError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            To:
+            <div className="pl-2">
+              <DatePicker
+                includeTime
+                onChange={(date) => modifyStart(date)}
+                value={start ? new Date(start) : undefined}
+              />
+              <CFormText color="danger" hidden={!startError}>
+                {t('common.invalid_date_explanation')}
+              </CFormText>
+            </div>
+            From:
+            <div className="px-2">
+              <CPopover content={t('common.delete')}>
+                <CButton onClick={toggleDeleteModal} size="sm" color="danger">
+                  <CIcon name="cil-trash" content={cilTrash} />
+                </CButton>
+              </CPopover>
+            </div>
           </div>
-        }
-      >
-        <div className="text-right float-right">
-          <CPopover content={t('common.delete')}>
-            <CButton onClick={toggleDeleteModal} size="sm">
-              <CIcon name="cil-trash" content={cilTrash} className="text-white" size="2xl" />
-            </CButton>
-          </CPopover>
-        </div>
-      </CWidgetDropdown>
+        </CCardHeader>
+        <CCardBody className="p-1">
+          <div className="overflow-auto" style={{ height: 'calc(100vh - 620px)' }}>
+            <CDataTable
+              addTableClasses="ignore-overflow table-sm"
+              border
+              items={logs ?? []}
+              fields={columns}
+              loading={loading}
+              className="text-white"
+              sorterValue={{ column: 'recorded', desc: 'true' }}
+              scopedSlots={{
+                recorded: (item) => (
+                  <td className="align-middle">
+                    <FormattedDate date={item.recorded} />
+                  </td>
+                ),
+                UUID: (item) => <td className="align-middle">{item.UUID}</td>,
+                severity: (item) => <td className="align-middle">{item.severity}</td>,
+                log: (item) => <td className="align-middle">{item.log}</td>,
+                show_details: (item, index) => (
+                  <td className="align-middle">
+                    <CButton
+                      color="primary"
+                      variant={details.includes(index) ? '' : 'outline'}
+                      shape="square"
+                      size="sm"
+                      onClick={() => {
+                        toggleDetails(index);
+                      }}
+                    >
+                      <CIcon name="cilList" />
+                    </CButton>
+                  </td>
+                ),
+                details: (item, index) => (
+                  <CCollapse show={details.includes(index)}>
+                    <CCardBody>
+                      <h5>{t('common.details')}</h5>
+                      <div>{getDetails(index, item)}</div>
+                    </CCardBody>
+                  </CCollapse>
+                ),
+              }}
+            />
+            {showLoadingMore && (
+              <div className="mb-3">
+                <LoadingButton
+                  label={t('common.view_more')}
+                  isLoadingLabel={t('common.loading_more_ellipsis')}
+                  isLoading={loadingMore}
+                  action={showMoreLogs}
+                  variant="outline"
+                />
+              </div>
+            )}
+          </div>
+        </CCardBody>
+      </CCard>
       <DeleteLogModal
         serialNumber={deviceSerialNumber}
         object="logs"

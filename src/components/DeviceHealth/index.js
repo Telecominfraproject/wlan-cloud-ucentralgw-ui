@@ -1,17 +1,17 @@
 /* eslint-disable-rule prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import {
-  CWidgetDropdown,
+  CCardBody,
   CButton,
   CDataTable,
-  CCard,
-  CRow,
-  CCol,
-  CProgress,
+  CCardHeader,
   CPopover,
+  CCard,
+  CFormText,
+  CBadge,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilTrash } from '@coreui/icons';
+import { cilSync, cilTrash } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { dateToUnix } from 'utils/helper';
@@ -27,7 +27,9 @@ const DeviceHealth = () => {
   const [loading, setLoading] = useState(false);
   const [healthChecks, setHealthChecks] = useState([]);
   const [start, setStart] = useState('');
+  const [startError, setStartError] = useState(false);
   const [end, setEnd] = useState('');
+  const [endError, setEndError] = useState(false);
   const [logLimit, setLogLimit] = useState(25);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showLoadingMore, setShowLoadingMore] = useState(true);
@@ -40,13 +42,26 @@ const DeviceHealth = () => {
   };
 
   const modifyStart = (value) => {
-    setStart(value);
+    try {
+      new Date(value).toISOString();
+      setStartError(false);
+      setStart(value);
+    } catch (e) {
+      setStart('');
+      setStartError(true);
+    }
   };
 
   const modifyEnd = (value) => {
-    setEnd(value);
+    try {
+      new Date(value).toISOString();
+      setEndError(false);
+      setEnd(value);
+    } catch (e) {
+      setEnd('');
+      setEndError(true);
+    }
   };
-
   const showMoreLogs = () => {
     setLogLimit(logLimit + 50);
   };
@@ -128,14 +143,14 @@ const DeviceHealth = () => {
       const tempSanityLevel = sortedHealthchecks[healthChecks.length - 1].sanity;
       setSanityLevel(tempSanityLevel);
       if (tempSanityLevel === 100) {
-        setBarColor('gradient-success');
+        setBarColor('success');
       } else if (tempSanityLevel >= 90) {
-        setBarColor('gradient-warning');
+        setBarColor('warning');
       } else {
-        setBarColor('gradient-danger');
+        setBarColor('danger');
       }
     } else {
-      setBarColor('gradient-dark');
+      setBarColor('dark');
     }
   }, [healthChecks]);
 
@@ -156,83 +171,104 @@ const DeviceHealth = () => {
   }, []);
 
   return (
-    <CWidgetDropdown
-      className="m-0"
-      header={t('health.title')}
-      text={sanityLevel ? `${sanityLevel}%` : t('common.unknown')}
-      value={sanityLevel ?? 100}
-      color={barColor}
-      inverse="true"
-      footerSlot={
-        <div className="pb-1 px-3">
-          <CProgress className="mb-3" color="white" value={sanityLevel ?? 0} />
-          <CRow className="mb-3">
-            <CCol>
-              {t('common.from')}
-              :
-              <DatePicker includeTime onChange={(date) => modifyStart(date)} />
-            </CCol>
-            <CCol>
-              {t('common.to')}
-              :
-              <DatePicker includeTime onChange={(date) => modifyEnd(date)} />
-            </CCol>
-          </CRow>
-          <CCard className="p-0">
-            <div className="overflow-auto" style={{ height: '200px' }}>
-              <CDataTable
-                addTableClasses="ignore-overflow table-sm"
-                border
-                items={healthChecks ?? []}
-                fields={columns}
-                className="text-white"
-                loading={loading}
-                sorterValue={{ column: 'recorded', desc: 'true' }}
-                scopedSlots={{
-                  UUID: (item) => <td className="align-middle">{item.UUID}</td>,
-                  recorded: (item) => (
-                    <td className="align-middle">
-                      <FormattedDate date={item.recorded} />
-                    </td>
-                  ),
-                  sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
-                  checkDetails: (item) => (
-                    <td>
-                      <pre className="my-0">{JSON.stringify(item.values)}</pre>
-                    </td>
-                  ),
-                }}
+    <CCard className="m-0">
+      <CCardHeader className="dark-header">
+        <div className="float-left align-middle pt-1">
+          <h4>
+            <CBadge color={barColor} className="my-0">
+              {sanityLevel ? `${sanityLevel}%` : `${t('common.unknown')} Sanity Level`}
+            </CBadge>
+          </h4>
+        </div>
+        <div className="d-flex flex-row-reverse align-items-center">
+          <div className="pl-2">
+            <CPopover content={t('common.refresh')}>
+              <CButton
+                size="sm"
+                color="info"
+                onClick={getDeviceHealth}
+                disabled={startError || endError}
+              >
+                <CIcon content={cilSync} />
+              </CButton>
+            </CPopover>
+          </div>
+          <div className="pl-2">
+            <DatePicker
+              includeTime
+              onChange={(date) => modifyEnd(date)}
+              value={end ? new Date(end) : undefined}
+            />
+            <CFormText color="danger" hidden={!endError}>
+              {t('common.invalid_date_explanation')}
+            </CFormText>
+          </div>
+          To:
+          <div className="pl-2">
+            <DatePicker
+              includeTime
+              onChange={(date) => modifyStart(date)}
+              value={start ? new Date(start) : undefined}
+            />
+            <CFormText color="danger" hidden={!startError}>
+              {t('common.invalid_date_explanation')}
+            </CFormText>
+          </div>
+          From:
+          <div className="px-2">
+            <CPopover content={t('common.delete')}>
+              <CButton onClick={toggleDeleteModal} size="sm" color="danger">
+                <CIcon name="cil-trash" content={cilTrash} />
+              </CButton>
+            </CPopover>
+          </div>
+        </div>
+      </CCardHeader>
+      <CCardBody className="p-1">
+        <div className="overflow-auto" style={{ height: 'calc(100vh - 620px)' }}>
+          <CDataTable
+            addTableClasses="ignore-overflow table-sm"
+            border
+            items={healthChecks ?? []}
+            fields={columns}
+            className="text-white"
+            loading={loading}
+            sorterValue={{ column: 'recorded', desc: 'true' }}
+            scopedSlots={{
+              UUID: (item) => <td className="align-middle">{item.UUID}</td>,
+              recorded: (item) => (
+                <td className="align-middle">
+                  <FormattedDate date={item.recorded} />
+                </td>
+              ),
+              sanity: (item) => <td className="align-middle">{`${item.sanity}%`}</td>,
+              checkDetails: (item) => (
+                <td>
+                  <pre className="my-0">{JSON.stringify(item.values)}</pre>
+                </td>
+              ),
+            }}
+          />
+          {showLoadingMore && (
+            <div className="mb-3">
+              <LoadingButton
+                label={t('common.view_more')}
+                isLoadingLabel={t('common.loading_more_ellipsis')}
+                isLoading={loadingMore}
+                action={showMoreLogs}
+                variant="outline"
               />
-              {showLoadingMore && (
-                <div className="mb-3">
-                  <LoadingButton
-                    label={t('common.view_more')}
-                    isLoadingLabel={t('common.loading_more_ellipsis')}
-                    isLoading={loadingMore}
-                    action={showMoreLogs}
-                    variant="outline"
-                  />
-                </div>
-              )}
             </div>
-          </CCard>
+          )}
           <DeleteLogModal
             serialNumber={deviceSerialNumber}
-            object="healthchecks"
+            object="logs"
             show={showDeleteModal}
             toggle={toggleDeleteModal}
           />
         </div>
-      }
-    >
-      <div className="text-right float-right">
-        <CPopover content={t('common.delete')}>
-          <CButton onClick={toggleDeleteModal} size="sm">
-            <CIcon name="cil-trash" content={cilTrash} className="text-white" size="2xl" />
-          </CButton>
-        </CPopover>
-      </div>
-    </CWidgetDropdown>
+      </CCardBody>
+    </CCard>
   );
 };
 

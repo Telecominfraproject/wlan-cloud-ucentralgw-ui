@@ -22,10 +22,11 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
     setShow(!show);
   };
   const columns = [
-    { key: 'radio', label: '#', _style: { width: '5%' } },
-    { key: 'bssid', label: 'BSSID', _style: { width: '14%' } },
-    { key: 'mode', label: t('wifi_analysis.mode'), _style: { width: '9%' }, sorter: false },
-    { key: 'ssid', label: 'SSID', _style: { width: '17%' } },
+    { key: 'radio', label: '#', _style: { width: '1%' } },
+    { key: 'bssid', label: 'BSSID', _style: { width: '1%' } },
+    { key: 'vendor', label: t('wifi_analysis.vendor'), _style: { width: '15%' }, sorter: false },
+    { key: 'mode', label: t('wifi_analysis.mode'), _style: { width: '1%' }, sorter: false },
+    { key: 'ssid', label: 'SSID', _style: { width: '15%' } },
     { key: 'rssi', label: 'RSSI', _style: { width: '5%' }, sorter: false },
     { key: 'rxRate', label: 'Rx Rate', _style: { width: '7%' }, sorter: false },
     { key: 'rxBytes', label: 'Rx', _style: { width: '7%' }, sorter: false },
@@ -33,26 +34,39 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
     { key: 'rxNss', label: 'Rx NSS', _style: { width: '6%' }, sorter: false },
     { key: 'txRate', label: 'Tx Rate', _style: { width: '7%' }, sorter: false },
     { key: 'txBytes', label: 'Tx', _style: { width: '7%' }, sorter: false },
-    { key: 'ips', label: 'IP', _style: { width: '6%' }, sorter: false },
+    { key: 'ips', label: 'IP', _style: { width: '1%' }, sorter: false },
   ];
 
   const centerIfEmpty = (value) => (
-    <td className={!value || value === '' || value === '-' ? 'text-center' : ''}>{value}</td>
+    <td
+      className={
+        !value || value === '' || value === '-'
+          ? 'text-center align-middle'
+          : 'text-right align-middle'
+      }
+    >
+      {value}
+    </td>
   );
 
   const displayIp = (ssid, v4, v6) => {
     const count = v4.length + v6.length;
 
     return (
-      <td className="ignore-overflow text-center">
+      <td className="ignore-overflow text-center align-middle">
         {count > 0 ? (
           <CPopover content="View">
-            <CButton color="primary" size="sm" onClick={() => toggle(ssid, v4, v6)}>
+            <CButton
+              color="primary"
+              size="sm"
+              onClick={() => toggle(ssid, v4, v6)}
+              className="py-1"
+            >
               {count}
             </CButton>
           </CPopover>
         ) : (
-          <p>{count}</p>
+          count
         )}
       </td>
     );
@@ -70,8 +84,23 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
         sorter
         sorterValue={{ column: 'radio', asc: true }}
         scopedSlots={{
-          radio: (item) => <td className="text-center">{item.radio.radio}</td>,
+          bssid: (item) => (
+            <td
+              className="text-center align-middle"
+              style={{ fontFamily: 'monospace', fontSize: '0.96rem' }}
+            >
+              {item.bssid}
+            </td>
+          ),
+          radio: (item) => <td className="text-center align-middle">{item.radio.radio}</td>,
+          ssid: (item) => <td className="align-middle">{item.ssid}</td>,
+          mode: (item) => <td className="align-middle">{item.mode}</td>,
+          vendor: (item) => <td className="align-middle">{item.vendor}</td>,
           rxMcs: (item) => centerIfEmpty(item.rxMcs),
+          rxRate: (item) => centerIfEmpty(item.rxRate),
+          rxBytes: (item) => centerIfEmpty(item.rxBytes),
+          txRate: (item) => centerIfEmpty(item.txRate),
+          txBytes: (item) => centerIfEmpty(item.txBytes),
           rxNss: (item) => centerIfEmpty(item.rxNss),
           rssi: (item) => centerIfEmpty(item.rssi),
           ips: (item) => displayIp(item.ssid, item.ipV4, item.ipV6),
