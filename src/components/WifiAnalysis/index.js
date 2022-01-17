@@ -19,7 +19,7 @@ import {
   CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilX } from '@coreui/icons';
+import { cilSync, cilX } from '@coreui/icons';
 import RadioAnalysisTable from './RadioAnalysis';
 import WifiAnalysisTable from './WifiAnalysis';
 
@@ -67,9 +67,33 @@ const WifiAnalysis = () => {
     return ips;
   };
 
-  const parseAssociationStats = (json) => {
+  const getVendors = async (bssids) => {
+    setLoading(true);
+    setRange(19);
+
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
+
+    return axiosInstance
+      .get(`${endpoints.owgw}/api/v1/ouis?macList=${bssids.join(',')}`, options)
+      .then((response) => {
+        const newObj = bssids;
+        for (const tag of response.data.tagList) {
+          newObj[tag.tag] = tag.value === '' ? '-' : tag.value;
+        }
+        return newObj;
+      })
+      .catch(() => ({}));
+  };
+
+  const parseAssociationStats = async (json) => {
     const newParsedAssociationStats = [];
     const newParsedRadioStats = [];
+    const bssidObj = {};
 
     for (const stat of json.data) {
       const associations = [];
@@ -123,6 +147,8 @@ const WifiAnalysis = () => {
 
             if ('associations' in ssid) {
               for (const association of ssid.associations) {
+                bssidObj[association.bssid] = 0;
+
                 const data = {
                   radio: radioInfo,
                   ...extractIp(stat.data, association.bssid),
@@ -147,6 +173,16 @@ const WifiAnalysis = () => {
         }
       }
       newParsedAssociationStats.push(associations);
+    }
+
+    // Adding Vendor info to associations
+    const vendors = await getVendors(Object.keys(bssidObj));
+
+    for (let i = 0; i < newParsedAssociationStats.length; i += 1) {
+      for (let y = 0; y < newParsedAssociationStats[i].length; y += 1) {
+        newParsedAssociationStats[i][y].vendor =
+          vendors[newParsedAssociationStats[i][y].bssid] ?? '-';
+      }
     }
 
     // Radio Stats
@@ -203,14 +239,19 @@ const WifiAnalysis = () => {
   return (
     <div>
       <CCard>
-        <CCardHeader className="dark-header">
-          <CRow>
-            <CCol className="text-right">
-              <CButton color="info" size="sm" onClick={toggleModal}>
-                {t('wifi_analysis.network_diagram')}
+        <CCardHeader className="dark-header d-flex flex-row-reverse align-items-center">
+          <div className="pl-2">
+            <CPopover content={t('common.refresh')}>
+              <CButton size="sm" color="info" onClick={getLatestAssociationStats}>
+                <CIcon content={cilSync} />
               </CButton>
-            </CCol>
-          </CRow>
+            </CPopover>
+          </div>
+          <div>
+            <CButton color="info" size="sm" onClick={toggleModal}>
+              {t('wifi_analysis.network_diagram')}
+            </CButton>
+          </div>
         </CCardHeader>
         <CCardBody>
           <CRow className="mb-4">
