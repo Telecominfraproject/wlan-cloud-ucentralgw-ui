@@ -804,6 +804,7 @@
 		"mode": "Mode",
 		"network_diagram": "Diagramme de réseau",
 		"radios": "Radios",
-		"title": "Analyse Wi-Fi"
+		"title": "Analyse Wi-Fi",
+		"vendor": "vendeur"
 	}
 }

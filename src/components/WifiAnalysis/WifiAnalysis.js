@@ -22,10 +22,11 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
     setShow(!show);
   };
   const columns = [
-    { key: 'radio', label: '#', _style: { width: '5%' } },
-    { key: 'bssid', label: 'BSSID', _style: { width: '14%' } },
-    { key: 'mode', label: t('wifi_analysis.mode'), _style: { width: '9%' }, sorter: false },
-    { key: 'ssid', label: 'SSID', _style: { width: '17%' } },
+    { key: 'radio', label: '#', _style: { width: '1%' } },
+    { key: 'bssid', label: 'BSSID', _style: { width: '1%' } },
+    { key: 'vendor', label: t('wifi_analysis.vendor'), _style: { width: '15%' }, sorter: false },
+    { key: 'mode', label: t('wifi_analysis.mode'), _style: { width: '1%' }, sorter: false },
+    { key: 'ssid', label: 'SSID', _style: { width: '15%' } },
     { key: 'rssi', label: 'RSSI', _style: { width: '5%' }, sorter: false },
     { key: 'rxRate', label: 'Rx Rate', _style: { width: '7%' }, sorter: false },
     { key: 'rxBytes', label: 'Rx', _style: { width: '7%' }, sorter: false },
@@ -70,6 +71,7 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
         sorter
         sorterValue={{ column: 'radio', asc: true }}
         scopedSlots={{
+          bssid: (item) => <td className="text-center text-monospace">{item.bssid}</td>,
           radio: (item) => <td className="text-center">{item.radio.radio}</td>,
           rxMcs: (item) => centerIfEmpty(item.rxMcs),
           rxNss: (item) => centerIfEmpty(item.rxNss),

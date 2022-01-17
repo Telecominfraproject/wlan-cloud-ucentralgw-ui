@@ -12,7 +12,7 @@ import {
   CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilTrash } from '@coreui/icons';
+import { cilSync, cilTrash } from '@coreui/icons';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-widgets/DatePicker';
 import { dateToUnix } from 'utils/helper';
@@ -248,6 +248,11 @@ const DeviceLogs = () => {
           <CPopover content={t('common.delete')}>
             <CButton onClick={toggleDeleteModal} size="sm">
               <CIcon name="cil-trash" content={cilTrash} className="text-white" size="2xl" />
+            </CButton>
+          </CPopover>
+          <CPopover content={t('common.refresh')}>
+            <CButton onClick={getLogs} size="sm">
+              <CIcon name="cil-sync" content={cilSync} className="text-white" size="2xl" />
             </CButton>
           </CPopover>
         </div>

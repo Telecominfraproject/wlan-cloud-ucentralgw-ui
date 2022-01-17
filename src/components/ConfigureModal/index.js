@@ -20,7 +20,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
-import { useAuth, useDevice } from 'ucentral-libs';
+import { useAuth, useDevice, useToast } from 'ucentral-libs';
 import { checkIfJson } from 'utils/helper';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
@@ -29,6 +29,7 @@ import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
@@ -91,7 +92,13 @@ const ConfigureModal = ({ show, toggleModal }) => {
         { headers },
       )
       .then(() => {
-        setHadSuccess(true);
+        addToast({
+          title: t('common.success'),
+          body: t('commands.command_success'),
+          color: 'success',
+          autohide: true,
+        });
+        toggleModal();
       })
       .catch(() => {
         setResponseBody('Error while submitting command!');
