@@ -83,7 +83,7 @@ const WifiAnalysis = () => {
       .then((response) => {
         const newObj = bssids;
         for (const tag of response.data.tagList) {
-          newObj[tag.tag] = tag.value;
+          newObj[tag.tag] = tag.value === '' ? '-' : tag.value;
         }
         return newObj;
       })
