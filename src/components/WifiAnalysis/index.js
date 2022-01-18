@@ -120,7 +120,7 @@ const WifiAnalysis = () => {
 
       // Looping through the interfaces
       for (const deviceInterface of stat.data.interfaces) {
-        if ('counters' in deviceInterface && 'ssids' in deviceInterface) {
+        if ('ssids' in deviceInterface) {
           for (const ssid of deviceInterface.ssids) {
             // Information common between all associations
             const radioInfo = {
