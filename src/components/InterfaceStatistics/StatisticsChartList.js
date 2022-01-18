@@ -127,8 +127,8 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
                   totalTx += assoc.deltas?.tx_bytes ?? 0;
                   totalRx += assoc.deltas?.rx_bytes ?? 0;
                 } else {
-                  totalTx += assoc.counters?.tx_bytes ?? 0;
-                  totalRx += assoc.counters?.rx_bytes ?? 0;
+                  totalTx += assoc.tx_bytes ?? 0;
+                  totalRx += assoc.rx_bytes ?? 0;
                 }
               }
             }
