@@ -117,35 +117,31 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
     for (const log of sortedData) {
       // Looping through the interfaces of the log
       for (const inter of log.data.interfaces) {
-        if (inter.counters) {
-          interfaceList[interfaceTypes[inter.name]][0].data.push(
-            inter.counters?.tx_bytes ? Math.floor(inter.counters.tx_bytes / 1024) : 0,
-          );
-          interfaceList[interfaceTypes[inter.name]][1].data.push(
-            inter.counters?.rx_bytes ? Math.floor(inter.counters.rx_bytes / 1024) : 0,
-          );
-        } else if (
-          inter.ssids.length > 0 &&
-          inter.ssids[0].associations.length > 0 &&
-          inter.ssids[0].associations[0].deltas
-        ) {
+        if (inter.ssids?.length > 0) {
           let totalTx = 0;
           let totalRx = 0;
-
           for (const ssid of inter.ssids) {
-            for (const assoc of ssid.associations) {
-              totalTx += assoc.deltas?.tx_bytes ?? 0;
-              totalRx += assoc.deltas?.rx_bytes ?? 0;
+            if (ssid.associations) {
+              for (const assoc of ssid.associations) {
+                if (assoc.deltas) {
+                  totalTx += assoc.deltas?.tx_bytes ?? 0;
+                  totalRx += assoc.deltas?.rx_bytes ?? 0;
+                } else {
+                  totalTx += assoc.counters?.tx_bytes ?? 0;
+                  totalRx += assoc.counters?.rx_bytes ?? 0;
+                }
+              }
             }
           }
-          totalTx = Math.floor(totalTx / 1024);
-          totalRx = Math.floor(totalRx / 1024);
-
-          interfaceList[interfaceTypes[inter.name]][0].data.push(totalTx);
-          interfaceList[interfaceTypes[inter.name]][1].data.push(totalRx);
+          interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
+          interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
         } else {
-          interfaceList[interfaceTypes[inter.name]][0].data.push(0);
-          interfaceList[interfaceTypes[inter.name]][1].data.push(0);
+          interfaceList[interfaceTypes[inter.name]][0].data.push(
+            inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
+          );
+          interfaceList[interfaceTypes[inter.name]][1].data.push(
+            inter.counters ? Math.floor(inter.counters.rx_bytes) : 0,
+          );
         }
       }
     }
