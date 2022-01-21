@@ -13,14 +13,12 @@ import {
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import LifetimeStatsmodal from 'components/LifetimeStatsModal';
 import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsmodal from './LatestStatisticsModal';
 
 const DeviceStatisticsCard = () => {
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
-  const [showLifetimeModal, setShowLifetimeModal] = useState(false);
   const [options, setOptions] = useState([]);
   const [section, setSection] = useState('');
   const [start, setStart] = useState(null);
@@ -31,10 +29,6 @@ const DeviceStatisticsCard = () => {
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
-  };
-
-  const toggleLifetimeModal = () => {
-    setShowLifetimeModal(!showLifetimeModal);
   };
 
   const modifyStart = (value) => {
@@ -102,16 +96,6 @@ const DeviceStatisticsCard = () => {
             </div>
             From:
             <div className="px-2">
-              <CButton size="sm" color="info" onClick={toggleLifetimeModal}>
-                Lifetime Statistics
-              </CButton>
-            </div>
-            <div className="pl-2">
-              <CButton size="sm" color="info" onClick={toggleLatestModal}>
-                {t('statistics.show_latest')}
-              </CButton>
-            </div>
-            <div className="pl-2">
               <CSelect
                 custom
                 value={section}
@@ -124,6 +108,11 @@ const DeviceStatisticsCard = () => {
                   </option>
                 ))}
               </CSelect>
+            </div>
+            <div className="pl-2">
+              <CButton size="sm" color="info" onClick={toggleLatestModal}>
+                {t('statistics.show_latest')}
+              </CButton>
             </div>
           </div>
         </CCardHeader>
@@ -138,7 +127,6 @@ const DeviceStatisticsCard = () => {
         </CCardBody>
       </CCard>
       <LatestStatisticsmodal show={showLatestModal} toggle={toggleLatestModal} />
-      <LifetimeStatsmodal show={showLifetimeModal} toggle={toggleLifetimeModal} />
     </div>
   );
 };
