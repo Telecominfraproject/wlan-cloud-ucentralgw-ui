@@ -20,6 +20,13 @@ axiosInstance.interceptors.response.use(
       case 401:
         break;
       case 403:
+        if (error.response.data?.ErrorCode === 13) {
+          let retries = localStorage.getItem('sec_retries')
+            ? +localStorage.getItem('sec_retries')
+            : 0;
+          retries += 1;
+          localStorage.setItem('sec_retries', retries);
+        }
         if (error.response.data?.ErrorCode === 9) {
           localStorage.removeItem('access_token');
           localStorage.removeItem('gateway_endpoints');
