@@ -1,4 +1,5 @@
 import {
+  CAlert,
   CButton,
   CModal,
   CModalHeader,
@@ -29,14 +30,15 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
   const [waiting, setWaiting] = useState(false);
-  const [choseVerbose, setVerbose] = useState(true);
+  const [dfs, setDfs] = useState(true);
   const [activeScan, setActiveScan] = useState(false);
   const [hideOptions, setHideOptions] = useState(false);
   const [channelList, setChannelList] = useState([]);
 
-  const toggleVerbose = () => {
-    setVerbose(!choseVerbose);
+  const toggleDfs = () => {
+    setDfs(!dfs);
   };
 
   const toggleActiveScan = () => {
@@ -48,9 +50,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setHadFailure(false);
     setWaiting(false);
     setChannelList([]);
-    setVerbose(true);
+    setDfs(true);
     setActiveScan(false);
     setHideOptions(false);
+    setErrorCode(0);
   }, [show]);
 
   const parseThroughList = (scanList) => {
@@ -91,7 +94,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
     const parameters = {
       serialNumber: deviceSerialNumber,
-      verbose: choseVerbose,
+      override_dfs: dfs,
       activeScan,
     };
     const headers = {
@@ -110,6 +113,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
 
         if (scanList) {
           setChannelList(parseThroughList(scanList));
+          setErrorCode(response.data.errorCode ?? 0);
           setHideOptions(true);
           setHadSuccess(true);
         } else {
@@ -142,14 +146,14 @@ const WifiScanModal = ({ show, toggleModal }) => {
           <h6>{t('scan.directions')}</h6>
           <CRow className="mt-3">
             <CCol md="3">
-              <p className="pl-2">Verbose:</p>
+              <p className="pl-2">{t('wifi_analysis.override_dfs')}:</p>
             </CCol>
             <CCol>
               <CForm className="pl-4">
                 <CSwitch
                   color="primary"
-                  defaultChecked={choseVerbose}
-                  onClick={toggleVerbose}
+                  defaultChecked={dfs}
+                  onClick={toggleDfs}
                   labelOn={t('common.on')}
                   labelOff={t('common.off')}
                 />
@@ -191,6 +195,13 @@ const WifiScanModal = ({ show, toggleModal }) => {
               <h6>{t('scan.result_directions')}</h6>
             </CCol>
           </CRow>
+          {errorCode === 1 && (
+            <CRow className="mb-2">
+              <CCol>
+                <CAlert color="warning">{t('wifi_analysis.scan_warning')}</CAlert>
+              </CCol>
+            </CRow>
+          )}
           <WifiChannelTable channels={channelList} />
         </div>
       </CModalBody>

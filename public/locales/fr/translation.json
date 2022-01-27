@@ -804,7 +804,9 @@
 		"associations": "Les associations",
 		"mode": "Mode",
 		"network_diagram": "Diagramme de réseau",
+		"override_dfs": "Remplacer DFS",
 		"radios": "Radios",
+		"scan_warning": "Votre radio 5G est sur un canal radar, vous devez activer \"Override DFS\" pour permettre le balayage de tous les canaux 5G",
 		"title": "Analyse Wi-Fi",
 		"vendor": "vendeur"
 	}
