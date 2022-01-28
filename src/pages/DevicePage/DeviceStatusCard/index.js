@@ -21,10 +21,31 @@ import { prettyDate, compactSecondsToDetailed, cleanBytesString } from 'utils/he
 import styles from './index.module.scss';
 
 const errorField = (t) => (
-  <CAlert className="py-0" color="danger">
+  <CAlert className="py-0 my-0" color="danger">
     {t('status.error')}
   </CAlert>
 );
+
+const stats = (lastStats) => (
+  <div>
+    {lastStats?.unit?.load[0] !== undefined ? (lastStats?.unit?.load[0] * 100).toFixed(2) : '-'}%
+    {' / '}
+    {lastStats?.unit?.load[1] !== undefined ? (lastStats?.unit?.load[1] * 100).toFixed(2) : '-'}%
+    {' / '}
+    {lastStats?.unit?.load[2] !== undefined ? (lastStats?.unit?.load[2] * 100).toFixed(2) : '-'}%
+  </div>
+);
+
+const waitingForUpdateField = (t) => (
+  <CAlert className="py-0 my-0" color="info">
+    {t('common.waiting_for_update')}
+  </CAlert>
+);
+
+const displayInfo = (value, toDisplay, t) => {
+  if (value !== undefined) return toDisplay;
+  return waitingForUpdateField(t);
+};
 
 const getMemoryColor = (memTotal, memFree) => {
   let memoryUsed = 0;
@@ -39,6 +60,16 @@ const getMemoryPercentage = (memTotal, memFree) => {
   if (memTotal <= 0) return `0%`;
   return `${Math.floor(((memTotal - memFree) / memTotal) * 100)}%`;
 };
+
+const memory = (lastStats) => (
+  <CAlert
+    style={{ width: '40px' }}
+    className="p-0 text-center"
+    color={getMemoryColor(lastStats?.unit?.memory?.total ?? 0, lastStats?.unit?.memory?.free ?? 0)}
+  >
+    {getMemoryPercentage(lastStats?.unit?.memory?.total ?? 0, lastStats?.unit?.memory?.free ?? 0)}
+  </CAlert>
+);
 
 const DeviceStatusCard = ({
   t,
@@ -113,11 +144,15 @@ const DeviceStatusCard = ({
                 <CCol className="my-1" md="8" xl="8">
                   {error
                     ? errorField(t)
-                    : compactSecondsToDetailed(
+                    : displayInfo(
                         lastStats?.unit?.uptime,
-                        t('common.day'),
-                        t('common.days'),
-                        t('common.seconds'),
+                        compactSecondsToDetailed(
+                          lastStats?.unit?.uptime,
+                          t('common.day'),
+                          t('common.days'),
+                          t('common.seconds'),
+                        ),
+                        t,
                       )}
                 </CCol>
                 <CCol className="my-1" md="4" xl="4">
@@ -130,7 +165,13 @@ const DeviceStatusCard = ({
                   {t('status.localtime')}:
                 </CCol>
                 <CCol className="my-1" md="8" xl="8">
-                  {error ? errorField(t) : prettyDate(lastStats?.unit?.localtime)}
+                  {error
+                    ? errorField(t)
+                    : displayInfo(
+                        lastStats?.unit?.localtime,
+                        prettyDate(lastStats?.unit?.localtime),
+                        t,
+                      )}
                 </CCol>
                 <CCol className="mt-1" md="4" xl="4">
                   <CLabel>{t('firmware.revision')}: </CLabel>
@@ -150,52 +191,29 @@ const DeviceStatusCard = ({
                   {t('status.load_averages')}:
                 </CCol>
                 <CCol className="mb-1" md="8" xl="8">
-                  {error ? (
-                    errorField(t)
-                  ) : (
-                    <div>
-                      {lastStats?.unit?.load[0] !== undefined
-                        ? (lastStats?.unit?.load[0] * 100).toFixed(2)
-                        : '-'}
-                      %{' / '}
-                      {lastStats?.unit?.load[1] !== undefined
-                        ? (lastStats?.unit?.load[1] * 100).toFixed(2)
-                        : '-'}
-                      %{' / '}
-                      {lastStats?.unit?.load[2] !== undefined
-                        ? (lastStats?.unit?.load[2] * 100).toFixed(2)
-                        : '-'}
-                      %
-                    </div>
-                  )}
+                  {error
+                    ? errorField(t)
+                    : displayInfo(lastStats?.unit?.memory?.total, stats(lastStats), t)}
                 </CCol>
                 <CCol className="mb-1" md="4" xl="4">
                   {t('status.total_memory')}:
                 </CCol>
                 <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
-                  {error ? errorField(t) : cleanBytesString(lastStats?.unit?.memory?.total)}
+                  {error
+                    ? errorField(t)
+                    : displayInfo(
+                        lastStats?.unit?.memory?.total,
+                        cleanBytesString(lastStats?.unit?.memory?.total),
+                        t,
+                      )}
                 </CCol>
                 <CCol className="mb-1" md="4" xl="4">
                   {t('status.memory')}:
                 </CCol>
                 <CCol className="mb-1" md="8" xl="8" style={{ paddingTop: '5px' }}>
-                  {error ? (
-                    errorField(t)
-                  ) : (
-                    <CAlert
-                      style={{ width: '40px' }}
-                      className="p-0 text-center"
-                      color={getMemoryColor(
-                        lastStats?.unit?.memory?.total ?? 0,
-                        lastStats?.unit?.memory?.free ?? 0,
-                      )}
-                    >
-                      {getMemoryPercentage(
-                        lastStats?.unit?.memory?.total ?? 0,
-                        lastStats?.unit?.memory?.free ?? 0,
-                      )}
-                    </CAlert>
-                  )}
+                  {error
+                    ? errorField(t)
+                    : displayInfo(lastStats?.unit?.memory?.total, memory(lastStats), t)}
                 </CCol>
               </CRow>
             </CCol>
