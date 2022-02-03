@@ -114,8 +114,11 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
     }
 
     // Looping through all the data
+    let prevTx = 0;
+    let prevRx = 0;
     for (const log of sortedData) {
       // Looping through the interfaces of the log
+      const version = log.data.version ?? 0;
       for (const inter of log.data.interfaces) {
         if (inter.ssids?.length > 0) {
           let totalTx = 0;
@@ -123,12 +126,19 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
           for (const ssid of inter.ssids) {
             if (ssid.associations) {
               for (const assoc of ssid.associations) {
-                if (assoc.deltas) {
-                  totalTx += assoc.deltas?.tx_bytes ?? 0;
-                  totalRx += assoc.deltas?.rx_bytes ?? 0;
+                if (version === 0) {
+                  if (assoc.deltas) {
+                    totalTx += assoc.deltas?.tx_bytes ?? 0;
+                    totalRx += assoc.deltas?.rx_bytes ?? 0;
+                  } else {
+                    totalTx += assoc.tx_bytes ?? 0;
+                    totalRx += assoc.rx_bytes ?? 0;
+                  }
                 } else {
-                  totalTx += assoc.tx_bytes ?? 0;
-                  totalRx += assoc.rx_bytes ?? 0;
+                  totalTx += assoc.tx_bytes - prevTx ?? 0;
+                  totalRx += assoc.rx_bytes - prevRx ?? 0;
+                  prevTx = assoc.tx_bytes;
+                  prevRx = assoc.rx_bytes;
                 }
               }
             }
@@ -146,6 +156,16 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
       }
     }
 
+    for (let y = 0; y < interfaceList.length; y += 1) {
+      for (let z = 0; z < interfaceList[y].length; z += 1) {
+        const newArray = interfaceList[y][z].data;
+        if (newArray.length > 0) newArray.shift();
+        interfaceList[y][z].data = newArray;
+      }
+    }
+
+    const newCategories = categories;
+    if (newCategories.length > 0) newCategories.shift();
     const interfaceOptions = {
       chart: {
         id: 'chart',
@@ -160,7 +180,7 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
             fontSize: '15px',
           },
         },
-        categories,
+        categories: newCategories,
         tickAmount: areSameDay ? 15 : 10,
       },
       yaxis: {
