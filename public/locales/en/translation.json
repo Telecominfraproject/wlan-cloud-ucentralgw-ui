@@ -206,6 +206,7 @@
 		"vendors": "Vendors",
 		"view_more": "View more",
 		"visibility": "Visibility",
+		"waiting_for_update": "Waiting for Update",
 		"yes": "Yes"
 	},
 	"configuration": {
@@ -804,7 +805,9 @@
 		"associations": "Associations",
 		"mode": "Mode",
 		"network_diagram": "Network Diagram",
+		"override_dfs": "Override DFS",
 		"radios": "Radios",
+		"scan_warning": "Your 5G radio is on a radar channel, you must enable “Override DFS” to allow scanning of all 5G channels",
 		"title": "Wi-Fi Analysis",
 		"vendor": "Vendor"
 	}

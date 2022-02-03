@@ -206,6 +206,7 @@
 		"vendors": "Vendedores",
 		"view_more": "Ver más",
 		"visibility": "Visibilidad",
+		"waiting_for_update": "Esperando actualización",
 		"yes": "Sí"
 	},
 	"configuration": {
@@ -804,7 +805,9 @@
 		"associations": "Asociaciones",
 		"mode": "Modo",
 		"network_diagram": "Diagrama de Red",
+		"override_dfs": "Anular DFS",
 		"radios": "Radios",
+		"scan_warning": "Su radio 5G está en un canal de radar, debe habilitar \"Anular DFS\" para permitir el escaneo de todos los canales 5G",
 		"title": "Análisis de Wi-Fi",
 		"vendor": "Vendedor"
 	}

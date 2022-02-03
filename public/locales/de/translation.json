@@ -206,6 +206,7 @@
 		"vendors": "Anbieter",
 		"view_more": "Mehr anzeigen",
 		"visibility": "Sichtweite",
+		"waiting_for_update": "Warten auf Aktualisierung",
 		"yes": "Ja"
 	},
 	"configuration": {
@@ -804,7 +805,9 @@
 		"associations": "Verbände",
 		"mode": "Modus",
 		"network_diagram": "Netzwerkdiagramm",
+		"override_dfs": "DFS überschreiben",
 		"radios": "Radios",
+		"scan_warning": "Ihr 5G-Funkgerät befindet sich auf einem Radarkanal, Sie müssen „Override DFS“ aktivieren, um das Scannen aller 5G-Kanäle zu ermöglichen",
 		"title": "WLAN-Analyse",
 		"vendor": "Verkäufer"
 	}
