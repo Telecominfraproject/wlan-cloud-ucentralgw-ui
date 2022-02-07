@@ -31,7 +31,10 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
       scanList.forEach((device) => {
         if (device.channel === channelNumber) {
           const deviceToAdd = {};
-          deviceToAdd.SSID = device.ssid ?? 'N/A';
+          if (device.ssid && device.ssid.length > 0) deviceToAdd.SSID = device.ssid;
+          else {
+            deviceToAdd.SSID = device.meshid && device.meshid.length > 0 ? device.meshid : 'N/A';
+          }
           deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
           channel.devices.push(deviceToAdd);
         }
