@@ -76,6 +76,16 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
       memoryUsed[2].data.push(Math.floor(log.data.unit.memory.cached / 1024 / 1024));
     }
 
+    const newUsed = memoryUsed[0].data;
+    if (newUsed.length > 0) newUsed.shift();
+    memoryUsed[0].data = newUsed;
+    const newBuff = memoryUsed[1].data;
+    if (newBuff.length > 0) newBuff.shift();
+    memoryUsed[1].data = newBuff;
+    const newCached = memoryUsed[2].data;
+    if (newCached.length > 0) newCached.shift();
+    memoryUsed[2].data = newCached;
+
     // This dictionary will have a key that is the interface name and a value of it's index in the final array
     const interfaceTypes = {};
     const interfaceList = [];
@@ -135,16 +145,23 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
                     totalRx += assoc.rx_bytes ?? 0;
                   }
                 } else {
-                  totalTx += assoc.tx_bytes - prevTx ?? 0;
-                  totalRx += assoc.rx_bytes - prevRx ?? 0;
-                  prevTx = assoc.tx_bytes;
-                  prevRx = assoc.rx_bytes;
+                  totalTx += assoc.tx_bytes ?? 0;
+                  totalRx += assoc.rx_bytes ?? 0;
                 }
               }
             }
           }
-          interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
-          interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
+          if (version > 0) {
+            const tx = Math.floor(totalTx / 1024);
+            const rx = Math.floor(totalRx / 1024);
+            interfaceList[interfaceTypes[inter.name]][0].data.push(tx - prevTx);
+            interfaceList[interfaceTypes[inter.name]][1].data.push(rx - prevRx);
+            prevTx = tx;
+            prevRx = rx;
+          } else {
+            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
+            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
+          }
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
             inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
