@@ -145,16 +145,23 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
                     totalRx += assoc.rx_bytes ?? 0;
                   }
                 } else {
-                  totalTx += assoc.tx_bytes - prevTx ?? 0;
-                  totalRx += assoc.rx_bytes - prevRx ?? 0;
+                  totalTx += assoc.tx_bytes ?? 0;
+                  totalRx += assoc.rx_bytes ?? 0;
                 }
               }
             }
           }
-          prevTx = Math.floor(totalTx / 1024);
-          prevRx = Math.floor(totalRx / 1024);
-          interfaceList[interfaceTypes[inter.name]][0].data.push(prevTx);
-          interfaceList[interfaceTypes[inter.name]][1].data.push(prevRx);
+          if (version > 0) {
+            const tx = Math.floor(totalTx / 1024);
+            const rx = Math.floor(totalRx / 1024);
+            interfaceList[interfaceTypes[inter.name]][0].data.push(tx - prevTx);
+            interfaceList[interfaceTypes[inter.name]][1].data.push(rx - prevRx);
+            prevTx = tx;
+            prevRx = rx;
+          } else {
+            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
+            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
+          }
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
             inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
