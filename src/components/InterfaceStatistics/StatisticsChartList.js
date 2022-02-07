@@ -147,14 +147,14 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
                 } else {
                   totalTx += assoc.tx_bytes - prevTx ?? 0;
                   totalRx += assoc.rx_bytes - prevRx ?? 0;
-                  prevTx = assoc.tx_bytes;
-                  prevRx = assoc.rx_bytes;
                 }
               }
             }
           }
-          interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
-          interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
+          prevTx = Math.floor(totalTx / 1024);
+          prevRx = Math.floor(totalRx / 1024);
+          interfaceList[interfaceTypes[inter.name]][0].data.push(prevTx);
+          interfaceList[interfaceTypes[inter.name]][1].data.push(prevRx);
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
             inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
