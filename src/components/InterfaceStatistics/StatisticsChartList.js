@@ -154,8 +154,8 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
           if (version > 0) {
             const tx = Math.floor(totalTx / 1024);
             const rx = Math.floor(totalRx / 1024);
-            interfaceList[interfaceTypes[inter.name]][0].data.push(tx - prevTx);
-            interfaceList[interfaceTypes[inter.name]][1].data.push(rx - prevRx);
+            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(tx - prevTx, 0));
+            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(rx - prevRx, 0));
             prevTx = tx;
             prevRx = rx;
           } else {

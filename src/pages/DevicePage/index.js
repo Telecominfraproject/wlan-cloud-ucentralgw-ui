@@ -64,7 +64,7 @@ const DevicePage = () => {
         if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
       .catch((e) => {
-        setDeviceConfig(null);
+        setDeviceConfig(deviceInfo);
         addToast({
           title: t('common.error'),
           body: t('device.error_fetching_device', { error: e.response?.data?.ErrorDescription }),
