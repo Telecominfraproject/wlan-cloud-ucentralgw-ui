@@ -5,12 +5,14 @@ import { CButton, CModal, CModalHeader, CModalBody, CModalTitle, CPopover } from
 import CIcon from '@coreui/icons-react';
 import { cilCloudDownload, cilX } from '@coreui/icons';
 import PropTypes from 'prop-types';
-import { prettyDate } from 'utils/helper';
+import { prettyDate, prettyDateForFile } from 'utils/helper';
+import { useDevice } from 'ucentral-libs';
 import { CSVLink } from 'react-csv';
 import WifiChannelTable from './WifiChannelTable';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const { t } = useTranslation();
+  const { deviceSerialNumber } = useDevice();
 
   const getData = useCallback(() => {
     if (scanResults === null || scanResults.length === 0) return [];
@@ -90,7 +92,12 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
         </CModalTitle>
         <div className="text-right">
           <CPopover content={t('common.download')}>
-            <CSVLink data={getData()}>
+            <CSVLink
+              filename={`wifi_scan_${deviceSerialNumber}_${
+                date !== '' ? prettyDateForFile(date) : ''
+              }`}
+              data={getData()}
+            >
               <CButton color="primary" variant="outline" className="ml-2">
                 <CIcon content={cilCloudDownload} />
               </CButton>
