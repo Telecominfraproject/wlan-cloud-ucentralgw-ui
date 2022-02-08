@@ -95,7 +95,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
             <CSVLink
               filename={`wifi_scan_${deviceSerialNumber}_${
                 date !== '' ? prettyDateForFile(date) : ''
-              }`}
+              }.csv`}
               data={getData()}
             >
               <CButton color="primary" variant="outline" className="ml-2">
