@@ -596,7 +596,7 @@
 		"channel": "Canal",
 		"directions": "Ejecute un escaneo wifi de este dispositivo, que debería tomar aproximadamente 25 segundos.",
 		"re_scan": "Vuelva a escanear",
-		"result_directions": "Haga clic en el botón '$ t (scan.re_scan)' si desea realizar un escaneo con la misma configuración que el anterior.",
+		"result_directions": "Puede hacer clic en el botón 'Escanear' en la parte superior derecha para $t(scan.re_scan)",
 		"results": "Resultados de escaneo Wi-Fi",
 		"scan": "Escanear",
 		"scanning": "Exploración... ",

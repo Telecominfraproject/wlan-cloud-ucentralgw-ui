@@ -51,7 +51,6 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const parseThroughList = useCallback(() => {
     const dbmNumber = 4294967295;
     const listOfChannels = [];
-    const listCsv = [];
 
     scanResults.forEach((scan) => {
       if (!listOfChannels.includes(scan.channel)) {
@@ -75,7 +74,6 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
           }
           deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
           channel.devices.push(deviceToAdd);
-          listCsv.push({ ...device, ...deviceToAdd });
         }
       });
 

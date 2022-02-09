@@ -596,7 +596,7 @@
 		"channel": "Kanal",
 		"directions": "Starten Sie einen WiFi-Scan dieses Geräts, der ungefähr 25 Sekunden dauern sollte.",
 		"re_scan": "Erneut scannen",
-		"result_directions": "Bitte klicken Sie auf die Schaltfläche '$t(scan.re_scan)', wenn Sie einen Scan mit derselben Konfiguration wie beim letzten Scan durchführen möchten.",
+		"result_directions": "Sie können oben rechts auf die Schaltfläche „Scannen“ klicken, um $t(scan.re_scan)",
 		"results": "Ergebnisse des WiFi-Scans",
 		"scan": "Scan",
 		"scanning": "Scannen... ",

@@ -596,7 +596,7 @@
 		"channel": "Channel",
 		"directions": "Launch a wifi scan of this device, which should take approximately 25 seconds.",
 		"re_scan": "Re-Scan",
-		"result_directions": "Please click the '$t(scan.re_scan)' button if you would like to do a scan with the same configuration as the last.",
+		"result_directions": "You can click the 'Scan' button at the top right to $t(scan.re_scan)",
 		"results": "Wi-Fi Scan Results",
 		"scan": "Scan",
 		"scanning": "Scanning... ",

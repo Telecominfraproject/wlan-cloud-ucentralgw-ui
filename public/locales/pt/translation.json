@@ -596,7 +596,7 @@
 		"channel": "Canal",
 		"directions": "Inicie uma verificação de wi-fi deste dispositivo, o que deve levar aproximadamente 25 segundos.",
 		"re_scan": "Verificar novamente",
-		"result_directions": "Clique no botão '$ t (scan.re_scan)' se desejar fazer uma varredura com a mesma configuração da anterior.",
+		"result_directions": "Você pode clicar no botão 'Scan' no canto superior direito para $t(scan.re_scan)",
 		"results": "Resultados da verificação de Wi-Fi",
 		"scan": "Varredura",
 		"scanning": "Scanning... ",

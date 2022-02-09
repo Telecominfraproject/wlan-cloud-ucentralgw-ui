@@ -596,7 +596,7 @@
 		"channel": "Canal",
 		"directions": "Lancez une analyse wifi de cet appareil, ce qui devrait prendre environ 25 secondes.",
 		"re_scan": "Nouvelle analyse",
-		"result_directions": "Veuillez cliquer sur le bouton '$t(scan.re_scan)' si vous souhaitez effectuer un scan avec la même configuration que le précédent.",
+		"result_directions": "Vous pouvez cliquer sur le bouton 'Scan' en haut à droite pour $t(scan.re_scan)",
 		"results": "Résultats de l'analyse Wi-Fi",
 		"scan": "Balayage",
 		"scanning": "Balayage... ",
