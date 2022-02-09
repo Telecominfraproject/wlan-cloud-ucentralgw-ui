@@ -7,7 +7,7 @@ import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
 import axiosInstance from 'utils/axiosInstance';
-import { DeviceProvider, useAuth, useToast } from 'ucentral-libs';
+import { DeviceProvider, useAuth } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
@@ -21,7 +21,6 @@ const DevicePage = () => {
   const { deviceId } = useParams();
   const [index, setIndex] = useState(0);
   const { currentToken, endpoints } = useAuth();
-  const { addToast } = useToast();
   const [lastStats, setLastStats] = useState(null);
   const [status, setStatus] = useState(null);
   const [deviceConfig, setDeviceConfig] = useState(null);
@@ -63,14 +62,8 @@ const DevicePage = () => {
       .then((response) => {
         if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
-      .catch((e) => {
-        setDeviceConfig(null);
-        addToast({
-          title: t('common.error'),
-          body: t('device.error_fetching_device', { error: e.response?.data?.ErrorDescription }),
-          color: 'danger',
-          autohide: true,
-        });
+      .catch(() => {
+        setDeviceConfig(deviceInfo);
       });
   };
 
