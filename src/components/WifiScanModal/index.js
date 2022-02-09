@@ -13,7 +13,7 @@ import {
   CPopover,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilCloudDownload, cilMagnifyingGlass, cilX } from '@coreui/icons';
+import { cilCloudDownload, cilGauge, cilX } from '@coreui/icons';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -201,7 +201,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
               onClick={doAction}
               disabled={waiting}
             >
-              <CIcon content={cilMagnifyingGlass} />
+              <CIcon content={cilGauge} />
             </CButton>
           </CPopover>
           <CPopover content={t('common.close')}>
