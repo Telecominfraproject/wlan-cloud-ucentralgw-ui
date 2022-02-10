@@ -28,6 +28,15 @@ export const prettyDate = (dateString) => {
     date.getSeconds(),
   )}`;
 };
+export const prettyDateForFile = (dateString) => {
+  const convertedTimestamp = unixToDateString(dateString);
+  const date = new Date(convertedTimestamp);
+  return `${date.getFullYear()}_${prettyNumber(date.getMonth() + 1)}_${prettyNumber(
+    date.getDate(),
+  )}_${prettyNumber(date.getHours())}h${prettyNumber(date.getMinutes())}m${prettyNumber(
+    date.getSeconds(),
+  )}s`;
+};
 
 export const unixToTime = (dateString) => {
   const convertedTimestamp = unixToDateString(dateString);
