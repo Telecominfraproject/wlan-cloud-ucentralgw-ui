@@ -1,4 +1,5 @@
 import {
+  CAlert,
   CButton,
   CModal,
   CModalHeader,
@@ -100,8 +101,14 @@ const ConfigureModal = ({ show, toggleModal }) => {
         });
         toggleModal();
       })
-      .catch(() => {
+      .catch((e) => {
         setResponseBody('Error while submitting command!');
+        addToast({
+          title: t('common.error'),
+          body: `${t('common.general_error')}: ${e.response?.data?.ErrorDescription}`,
+          color: 'danger',
+          autohide: true,
+        });
         setHadFailure(true);
       })
       .finally(() => {
@@ -196,11 +203,9 @@ const ConfigureModal = ({ show, toggleModal }) => {
                 />
               </CCol>
             </CRow>
-            <div hidden={!hadSuccess && !hadFailure}>
-              <div>
-                <pre className="ignore">{responseBody}</pre>
-              </div>
-            </div>
+            <CAlert color="danger" hidden={!hadSuccess && !hadFailure}>
+              {responseBody}
+            </CAlert>
           </CModalBody>
           <CModalFooter>
             <div hidden={!checkingIfSure}>Are you sure?</div>
