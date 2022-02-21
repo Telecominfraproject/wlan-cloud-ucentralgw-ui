@@ -11,6 +11,7 @@ import {
   CCol,
   CSpinner,
   CPopover,
+  CSelect,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilCloudDownload, cilGauge, cilX } from '@coreui/icons';
@@ -34,6 +35,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const [errorCode, setErrorCode] = useState(0);
   const [waiting, setWaiting] = useState(false);
   const [dfs, setDfs] = useState(true);
+  const [bandwidth, setBandwidth] = useState('');
   const [activeScan, setActiveScan] = useState(false);
   const [hideOptions, setHideOptions] = useState(false);
   const [channelList, setChannelList] = useState([]);
@@ -53,6 +55,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setWaiting(false);
     setChannelList([]);
     setCsvData(null);
+    setBandwidth('');
     setDfs(true);
     setActiveScan(false);
     setHideOptions(false);
@@ -135,6 +138,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     const parameters = {
       serialNumber: deviceSerialNumber,
       override_dfs: dfs,
+      bandwidth: bandwidth !== '' ? bandwidth : undefined,
       activeScan,
     };
     const headers = {
@@ -243,6 +247,26 @@ const WifiScanModal = ({ show, toggleModal }) => {
                   labelOn={t('common.on')}
                   labelOff={t('common.off')}
                 />
+              </CForm>
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol md="3">
+              <p className="pl-2">Bandwidth:</p>
+            </CCol>
+            <CCol>
+              <CForm className="pl-4">
+                <CSelect
+                  custom
+                  value={bandwidth}
+                  onChange={(e) => setBandwidth(e.target.value)}
+                  style={{ width: '100px' }}
+                >
+                  <option value="">Default</option>
+                  <option value="20">20 MHz</option>
+                  <option value="40">40 MHz</option>
+                  <option value="80">80 MHz</option>
+                </CSelect>
               </CForm>
             </CCol>
           </CRow>
