@@ -5,7 +5,7 @@ import { cilX } from '@coreui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth, useDevice } from 'ucentral-libs';
+import { useAuth, useDevice, CopyToClipboardButton } from 'ucentral-libs';
 
 const LatestStatisticsModal = ({ show, toggle }) => {
   const { t } = useTranslation();
@@ -51,6 +51,13 @@ const LatestStatisticsModal = ({ show, toggle }) => {
         </div>
       </CModalHeader>
       <CModalBody>
+        <div style={{ textAlign: 'right' }}>
+          <CopyToClipboardButton
+            t={t}
+            size="lg"
+            content={JSON.stringify(latestStats ?? {}, null, 4)}
+          />
+        </div>
         <pre className="ignore">{JSON.stringify(latestStats, null, 2)}</pre>
       </CModalBody>
     </CModal>

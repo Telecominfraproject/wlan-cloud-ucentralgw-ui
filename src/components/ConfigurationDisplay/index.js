@@ -37,7 +37,7 @@ const ConfigurationDisplay = ({ getData, deviceConfig }) => {
           <CopyToClipboardButton
             t={t}
             size="sm"
-            content={JSON.stringify(deviceConfig?.configuration ?? {})}
+            content={JSON.stringify(deviceConfig?.configuration ?? {}, null, 4)}
           />
         </h5>
         <CRow>
