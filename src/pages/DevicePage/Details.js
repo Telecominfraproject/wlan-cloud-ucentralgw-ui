@@ -16,6 +16,8 @@ import CIcon from '@coreui/icons-react';
 import { cilSync } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
 import { CopyToClipboardButton, HideTextButton } from 'ucentral-libs';
+import { getCountryFromLocale } from 'utils/countries';
+import ReactCountryFlag from 'react-country-flag';
 
 import styles from './index.module.scss';
 
@@ -99,10 +101,10 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 />
               </CCol>
               <CCol className="border-left" lg="2" xl="1" xxl="1">
-                <CLabel>{t('configuration.owner')}:</CLabel>
+                <CLabel>{t('inventory.subscriber')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
-                {deviceConfig?.owner}
+                {deviceConfig?.subscriber}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
                 <CLabel>{t('common.mac')}:</CLabel>
@@ -154,6 +156,29 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
                 {deviceConfig?.location}
+              </CCol>
+              <CCol lg="2" xl="1" xxl="1">
+                <CLabel>Locale:</CLabel>
+              </CCol>
+              <CCol className="border-right" lg="2" xl="3" xxl="3">
+                {deviceConfig?.locale !== '' && (
+                  <ReactCountryFlag
+                    style={{ width: '24px', height: '24px' }}
+                    countryCode={deviceConfig?.locale}
+                    svg
+                  />
+                )}
+                {'  '}
+                {deviceConfig?.locale && deviceConfig?.locale !== ''
+                  ? deviceConfig.locale
+                  : 'Unknown'}{' '}
+                - {getCountryFromLocale(deviceConfig?.locale ?? '')}
+              </CCol>
+              <CCol lg="2" xl="1" xxl="1">
+                <CLabel>{t('common.modified')}: </CLabel>
+              </CCol>
+              <CCol lg="2" xl="3" xxl="3">
+                {prettyDate(deviceConfig?.modified)}
               </CCol>
             </CRow>
           </div>
