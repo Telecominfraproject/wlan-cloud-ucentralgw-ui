@@ -170,9 +170,9 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 )}
                 {'  '}
                 {deviceConfig?.locale && deviceConfig?.locale !== ''
-                  ? deviceConfig.locale
-                  : 'Unknown'}{' '}
-                - {getCountryFromLocale(deviceConfig?.locale ?? '')}
+                  ? `${deviceConfig.locale} - `
+                  : 'Unknown'}
+                {getCountryFromLocale(deviceConfig?.locale ?? '')}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
                 <CLabel>{t('common.modified')}: </CLabel>
