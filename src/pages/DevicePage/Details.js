@@ -107,7 +107,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 {deviceConfig?.subscriber}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
-                <CLabel>{t('common.mac')}:</CLabel>
+                <CLabel>MAC:</CLabel>
               </CCol>
               <CCol className="border-right" lg="2" xl="3" xxl="3">
                 {deviceConfig?.macAddress}
@@ -119,12 +119,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 {deviceConfig?.deviceType}
               </CCol>
               <CCol className="border-left" lg="2" xl="1" xxl="1">
-                <CLabel>
-                  {deviceConfig?.venue?.substring(0, 3) === 'ent'
-                    ? t('entity.entity')
-                    : t('inventory.venue')}
-                  :
-                </CLabel>
+                <CLabel>{t('entity.entity')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
                 {deviceConfig?.venue?.substring(0, 3) === 'ent'
@@ -133,11 +128,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                       deviceConfig?.venue?.slice(4),
                       deviceConfig?.extendedInfo,
                     )
-                  : displayExtra(
-                      'venue',
-                      deviceConfig?.venue?.slice(4),
-                      deviceConfig?.extendedInfo,
-                    )}
+                  : ''}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
                 <CLabel>{t('common.manufacturer')}:</CLabel>
@@ -152,10 +143,12 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 {prettyDate(deviceConfig?.createdTimestamp)}
               </CCol>
               <CCol className="border-left" lg="2" xl="1" xxl="1">
-                <CLabel>{t('configuration.location')}:</CLabel>
+                <CLabel>{t('inventory.venue')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
-                {deviceConfig?.location}
+                {deviceConfig?.venue?.substring(0, 3) === 'ven'
+                  ? displayExtra('venue', deviceConfig?.venue?.slice(4), deviceConfig?.extendedInfo)
+                  : ''}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
                 <CLabel>Locale:</CLabel>
@@ -179,6 +172,12 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
                 {prettyDate(deviceConfig?.modified)}
+              </CCol>
+              <CCol className="border-left" lg="2" xl="1" xxl="1">
+                <CLabel>{t('configuration.location')}:</CLabel>
+              </CCol>
+              <CCol lg="2" xl="3" xxl="3">
+                {deviceConfig?.location}
               </CCol>
             </CRow>
           </div>
