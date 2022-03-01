@@ -48,6 +48,7 @@ ingresses:
     - chart-example.local
     paths:
     - path: /
+      pathType: ImplementationSpecific
       serviceName: owgwui
       servicePort: http
 

@@ -2,7 +2,7 @@
 {{- range $ingress, $ingressValue := .Values.ingresses }}
 {{- if $ingressValue.enabled }}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: {{ include "owgwui.ingress.apiVersion" $root }}
 kind: Ingress
 metadata:
   name: {{ include "owgwui.fullname" $root }}-{{ $ingress }}
@@ -36,9 +36,23 @@ spec:
       paths:
       {{- range $ingressValue.paths }}
         - path: {{ .path }}
+          {{- if $root.Capabilities.APIVersions.Has "networking.k8s.io/v1" }}
+          pathType: {{ .pathType | default "ImplementationSpecific" }}
+          {{- end }}
           backend:
+            {{- if $root.Capabilities.APIVersions.Has "networking.k8s.io/v1" }}
+            service:
+              name: {{ include "owgwui.fullname" $root }}-{{ .serviceName }}
+              port:
+              {{- if kindIs "string" .servicePort }}
+                name: {{ .servicePort }}
+              {{- else }}
+                number: {{ .servicePort }}
+              {{- end }}
+            {{- else }}
             serviceName: {{ include "owgwui.fullname" $root }}-{{ .serviceName }}
             servicePort: {{ .servicePort }}
+            {{- end }}
       {{- end }}
   {{- end }}
 
