@@ -15,14 +15,17 @@ import {
 import CIcon from '@coreui/icons-react';
 import { cilSync } from '@coreui/icons';
 import { prettyDate } from 'utils/helper';
-import { CopyToClipboardButton, HideTextButton } from 'ucentral-libs';
+import { CopyToClipboardButton, HideTextButton, useAuth } from 'ucentral-libs';
 import { getCountryFromLocale } from 'utils/countries';
 import ReactCountryFlag from 'react-country-flag';
+import axiosInstance from 'utils/axiosInstance';
 
 import styles from './index.module.scss';
 
 const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [subName, setSubName] = useState('');
+  const { currentToken, endpoints } = useAuth();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -34,21 +37,51 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
     return showPassword ? password : '******';
   };
 
-  const displayExtra = (key, value, extraData) => {
-    if (!extraData || !extraData[key]) return value;
+  const getSubData = async (subId) => {
+    const options = {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${currentToken}`,
+      },
+    };
 
-    if (!localStorage.getItem('owprov-ui') || key === 'owner') return extraData[key].name;
+    axiosInstance
+      .get(`${endpoints.owsec}/api/v1/subuser/${subId}`, options)
+      .then((response) => setSubName(response.data.name ?? ''))
+      .catch(() => setSubName(''));
+  };
+
+  const getSubscriber = () => {
+    if (!deviceConfig?.subscriber || deviceConfig.subscriber === '') return '';
+    getSubData(deviceConfig.subscriber);
 
     return (
       <CLink
         className="c-subheader-nav-link align-self-center"
         aria-current="page"
-        href={`${localStorage.getItem('owprov-ui')}/#/${key === 'entity' ? 'entity' : 'venue'}/${
-          extraData[key].id
-        }`}
+        href={`${localStorage.getItem('owprov-ui')}/#/subscriber/${deviceConfig.subscriber}`}
         target="_blank"
       >
-        {extraData[key].name}
+        {subName !== '' ? subName : deviceConfig.subscriber}
+      </CLink>
+    );
+  };
+
+  const displayExtra = (key, value, extraData) => {
+    if (!extraData || !extraData[key]) return value;
+
+    if (!localStorage.getItem('owprov-ui')) return extraData[key].name;
+
+    return (
+      <CLink
+        className="c-subheader-nav-link align-self-center"
+        aria-current="page"
+        href={`${localStorage.getItem('owprov-ui')}/#/${
+          key === 'entity' ? 'entity' : 'venue'
+        }/${value}`}
+        target="_blank"
+      >
+        {!extraData || !extraData[key] ? value : extraData[key].name}
       </CLink>
     );
   };
@@ -104,7 +137,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 <CLabel>{t('inventory.subscriber')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
-                {deviceConfig?.subscriber}
+                {getSubscriber()}
               </CCol>
               <CCol lg="2" xl="1" xxl="1">
                 <CLabel>MAC:</CLabel>
@@ -122,7 +155,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 <CLabel>{t('entity.entity')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
-                {deviceConfig?.venue?.substring(0, 3) === 'ent'
+                {deviceConfig?.entity !== ''
                   ? displayExtra(
                       'entity',
                       deviceConfig?.venue?.slice(4),
@@ -146,7 +179,7 @@ const DeviceDetails = ({ t, loading, getData, status, deviceConfig, lastStats })
                 <CLabel>{t('inventory.venue')}:</CLabel>
               </CCol>
               <CCol lg="2" xl="3" xxl="3">
-                {deviceConfig?.venue?.substring(0, 3) === 'ven'
+                {deviceConfig?.venue !== ''
                   ? displayExtra('venue', deviceConfig?.venue?.slice(4), deviceConfig?.extendedInfo)
                   : ''}
               </CCol>
