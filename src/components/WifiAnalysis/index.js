@@ -147,7 +147,7 @@ const WifiAnalysis = () => {
 
             if ('associations' in ssid) {
               for (const association of ssid.associations) {
-                bssidObj[association.bssid] = 0;
+                bssidObj[association.station] = 0;
 
                 const data = {
                   radio: radioInfo,
@@ -181,7 +181,7 @@ const WifiAnalysis = () => {
     for (let i = 0; i < newParsedAssociationStats.length; i += 1) {
       for (let y = 0; y < newParsedAssociationStats[i].length; y += 1) {
         newParsedAssociationStats[i][y].vendor =
-          vendors[newParsedAssociationStats[i][y].bssid] ?? '-';
+          vendors[newParsedAssociationStats[i][y].station] ?? '-';
       }
     }
 
