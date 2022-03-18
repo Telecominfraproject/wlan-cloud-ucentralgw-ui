@@ -27,6 +27,7 @@ import ReactTooltip from 'react-tooltip';
 import { v4 as createUuid } from 'uuid';
 import { cleanBytesString } from 'utils/helper';
 import { DeviceBadge, LoadingButton } from 'ucentral-libs';
+import ReactCountryFlag from 'react-country-flag';
 import styles from './index.module.scss';
 
 const DeviceListTable = ({
@@ -324,11 +325,18 @@ const DeviceListTable = ({
               ipAddress: (item) => (
                 <td className="align-middle">
                   <CPopover
-                    content={item.ipAddress ? item.ipAddress : t('common.na')}
+                    content={`${item.locale !== '' ? `${item.locale} - ` : ''}${item.ipAddress}`}
                     placement="top"
                   >
                     <div style={{ width: 'calc(8vw)' }} className="text-truncate align-middle">
-                      {item.ipAddress}
+                      {item.locale !== '' && item.ipAddress !== '' && (
+                        <ReactCountryFlag
+                          style={{ width: '24px', height: '24px' }}
+                          countryCode={item?.locale}
+                          svg
+                        />
+                      )}
+                      {`  ${item.ipAddress}`}
                     </div>
                   </CPopover>
                 </td>

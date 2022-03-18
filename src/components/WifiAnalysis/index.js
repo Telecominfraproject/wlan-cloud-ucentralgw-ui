@@ -152,7 +152,7 @@ const WifiAnalysis = () => {
                 const data = {
                   radio: radioInfo,
                   ...extractIp(stat.data, association.bssid),
-                  bssid: association.bssid,
+                  station: association.station,
                   ssid: ssid.ssid,
                   rssi: association.rssi ? parseDbm(association.rssi) : '-',
                   mode: ssid.mode,
