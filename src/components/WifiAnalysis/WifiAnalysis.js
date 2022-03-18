@@ -23,7 +23,7 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
   };
   const columns = [
     { key: 'radio', label: '#', _style: { width: '1%' } },
-    { key: 'bssid', label: 'BSSID', _style: { width: '1%' } },
+    { key: 'station', label: 'Station ID', _style: { width: '1%' } },
     { key: 'vendor', label: t('wifi_analysis.vendor'), _style: { width: '15%' }, sorter: false },
     { key: 'mode', label: t('wifi_analysis.mode'), _style: { width: '1%' }, sorter: false },
     { key: 'ssid', label: 'SSID', _style: { width: '15%' } },
@@ -84,12 +84,12 @@ const WifiAnalysisTable = ({ t, data, loading }) => {
         sorter
         sorterValue={{ column: 'radio', asc: true }}
         scopedSlots={{
-          bssid: (item) => (
+          station: (item) => (
             <td
               className="text-center align-middle"
               style={{ fontFamily: 'monospace', fontSize: '0.96rem' }}
             >
-              {item.bssid}
+              {item.station}
             </td>
           ),
           radio: (item) => <td className="text-center align-middle">{item.radio.radio}</td>,
