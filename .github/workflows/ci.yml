@@ -37,3 +37,12 @@ jobs:
         registry: tip-tip-wlan-cloud-ucentral.jfrog.io
         registry_user: ucentral
         registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+    - name: Notify on failure via Slack
+      if: failure() && github.ref == 'refs/heads/main'
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_USERNAME: GitHub Actions failure notifier
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_COLOR: "${{ job.status }}"
+        SLACK_ICON: https://raw.githubusercontent.com/quintessence/slack-icons/master/images/github-logo-slack-icon.png
