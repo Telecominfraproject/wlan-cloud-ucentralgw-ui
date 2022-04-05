@@ -1,6 +1,6 @@
 {
   "name": "ucentral-client",
-  "version": "2.6.11",
+  "version": "2.6.12",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.1",
