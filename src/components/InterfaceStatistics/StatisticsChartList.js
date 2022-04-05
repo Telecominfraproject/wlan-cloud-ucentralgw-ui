@@ -130,48 +130,19 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
       // Looping through the interfaces of the log
       const version = log.data.version ?? 0;
       for (const inter of log.data.interfaces) {
-        if (inter.ssids?.length > 0) {
-          let totalTx = 0;
-          let totalRx = 0;
-          for (const ssid of inter.ssids) {
-            if (ssid.associations) {
-              for (const assoc of ssid.associations) {
-                if (version === 0) {
-                  if (assoc.deltas) {
-                    totalTx += Math.max(0, assoc.deltas?.tx_bytes ?? 0);
-                    totalRx += Math.max(0, assoc.deltas?.rx_bytes ?? 0);
-                  } else {
-                    totalTx += Math.max(0, assoc.tx_bytes ?? 0);
-                    totalRx += Math.max(0, assoc.rx_bytes ?? 0);
-                  }
-                } else {
-                  totalTx += Math.max(0, assoc.tx_bytes ?? 0);
-                  totalRx += Math.max(0, assoc.rx_bytes ?? 0);
-                }
-              }
-            }
-          }
-          if (version > 0) {
-            const tx = Math.floor(totalTx / 1024);
-            const rx = Math.floor(totalRx / 1024);
-            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(0, tx - prevTx));
-            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(0, rx - prevRx));
-            prevTx = tx;
-            prevRx = rx;
-          } else {
-            interfaceList[interfaceTypes[inter.name]][0].data.push(
-              Math.max(0, Math.floor(totalTx / 1024)),
-            );
-            interfaceList[interfaceTypes[inter.name]][1].data.push(
-              Math.max(0, Math.floor(totalRx / 1024)),
-            );
-          }
+        if (version > 0) {
+          const tx = inter.counters ? Math.floor(inter.counters.tx_bytes) : 0;
+          const rx = inter.counters ? Math.floor(inter.counters.rx_bytes) : 0;
+          interfaceList[interfaceTypes[inter.name]][0].data.push(tx - prevTx);
+          interfaceList[interfaceTypes[inter.name]][1].data.push(rx - prevRx);
+          prevTx = tx;
+          prevRx = rx;
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
-            inter.counters ? Math.max(0, Math.floor(inter.counters.tx_bytes)) : 0,
+            inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
           );
           interfaceList[interfaceTypes[inter.name]][1].data.push(
-            inter.counters ? Math.max(0, Math.floor(inter.counters.rx_bytes)) : 0,
+            inter.counters ? Math.floor(inter.counters.rx_bytes) : 0,
           );
         }
       }
