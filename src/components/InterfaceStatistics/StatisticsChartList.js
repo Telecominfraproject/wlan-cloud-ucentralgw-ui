@@ -154,13 +154,17 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
           if (version > 0) {
             const tx = Math.floor(totalTx / 1024);
             const rx = Math.floor(totalRx / 1024);
-            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(tx - prevTx, 0));
-            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(rx - prevRx, 0));
+            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(0, tx - prevTx));
+            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(0, rx - prevRx));
             prevTx = tx;
             prevRx = rx;
           } else {
-            interfaceList[interfaceTypes[inter.name]][0].data.push(Math.floor(totalTx / 1024));
-            interfaceList[interfaceTypes[inter.name]][1].data.push(Math.floor(totalRx / 1024));
+            interfaceList[interfaceTypes[inter.name]][0].data.push(
+              Math.max(0, Math.floor(totalTx / 1024)),
+            );
+            interfaceList[interfaceTypes[inter.name]][1].data.push(
+              Math.max(0, Math.floor(totalRx / 1024)),
+            );
           }
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
