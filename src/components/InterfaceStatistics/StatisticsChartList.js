@@ -138,15 +138,15 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
               for (const assoc of ssid.associations) {
                 if (version === 0) {
                   if (assoc.deltas) {
-                    totalTx += assoc.deltas?.tx_bytes ?? 0;
-                    totalRx += assoc.deltas?.rx_bytes ?? 0;
+                    totalTx += Math.max(0, assoc.deltas?.tx_bytes ?? 0);
+                    totalRx += Math.max(0, assoc.deltas?.rx_bytes ?? 0);
                   } else {
-                    totalTx += assoc.tx_bytes ?? 0;
-                    totalRx += assoc.rx_bytes ?? 0;
+                    totalTx += Math.max(0, assoc.tx_bytes ?? 0);
+                    totalRx += Math.max(0, assoc.rx_bytes ?? 0);
                   }
                 } else {
-                  totalTx += assoc.tx_bytes ?? 0;
-                  totalRx += assoc.rx_bytes ?? 0;
+                  totalTx += Math.max(0, assoc.tx_bytes ?? 0);
+                  totalRx += Math.max(0, assoc.rx_bytes ?? 0);
                 }
               }
             }
@@ -168,10 +168,10 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
           }
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
-            inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
+            inter.counters ? Math.max(0, Math.floor(inter.counters.tx_bytes)) : 0,
           );
           interfaceList[interfaceTypes[inter.name]][1].data.push(
-            inter.counters ? Math.floor(inter.counters.rx_bytes) : 0,
+            inter.counters ? Math.max(0, Math.floor(inter.counters.rx_bytes)) : 0,
           );
         }
       }
