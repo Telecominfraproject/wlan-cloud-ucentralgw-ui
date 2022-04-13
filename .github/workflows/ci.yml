@@ -47,3 +47,25 @@ jobs:
         SLACK_COLOR: "${{ job.status }}"
         SLACK_ICON: https://raw.githubusercontent.com/quintessence/slack-icons/master/images/github-logo-slack-icon.png
         SLACK_TITLE: Docker build failed for OWGW-UI service
+
+  trigger-deploy-to-dev:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - docker
+    steps:
+    - name: Checkout actions repo
+      uses: actions/checkout@v2
+      with:
+        repository: Telecominfraproject/.github
+        path: github
+
+    - name: Trigger deployment of the latest version to dev instance and wait for result
+      uses: ./github/composite-actions/trigger-workflow-and-wait
+      with:
+        owner: Telecominfraproject
+        repo: wlan-testing
+        workflow: ucentralgw-dev-deployment.yaml
+        token: ${{ secrets.WLAN_TESTING_PAT }}
+        ref: master
+        inputs: '{"force_latest": "true"}'
