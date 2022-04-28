@@ -46,7 +46,7 @@ const DeviceSearchBar = ({ action }) => {
       socket.onmessage = (event) => {
         if (checkIfJson(event.data)) {
           const result = JSON.parse(event.data);
-          if (result.command === 'serial_number_search' && result.serialNumbers) {
+          if (result.serialNumbers) {
             setResults(result.serialNumbers);
           }
         }
