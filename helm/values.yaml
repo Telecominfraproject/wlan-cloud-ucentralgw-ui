@@ -13,7 +13,7 @@ images:
 
 services:
   owgwui:
-    type: NodePort
+    type: ClusterIP
     ports:
       http:
         servicePort: 80
