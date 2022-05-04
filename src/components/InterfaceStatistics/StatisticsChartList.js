@@ -133,18 +133,18 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
         if (version > 0) {
           const prevTx = prevTxObj[inter.name] !== undefined ? prevTxObj[inter.name] : 0;
           const prevRx = prevTxObj[inter.name] !== undefined ? prevRxObj[inter.name] : 0;
-          const tx = inter.counters ? inter.counters.tx_bytes : 0;
-          const rx = inter.counters ? inter.counters.rx_bytes : 0;
+          const tx = inter.counters ? Math.floor(inter.counters.tx_bytes / 1024) : 0;
+          const rx = inter.counters ? Math.floor(inter.counters.rx_bytes / 1024) : 0;
           interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(0, tx - prevTx));
           interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(0, rx - prevRx));
           prevTxObj[inter.name] = tx;
           prevRxObj[inter.name] = rx;
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
-            inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
+            inter.counters ? Math.floor(inter.counters.tx_bytes / 1024) : 0,
           );
           interfaceList[interfaceTypes[inter.name]][1].data.push(
-            inter.counters ? Math.floor(inter.counters.rx_bytes) : 0,
+            inter.counters ? Math.floor(inter.counters.rx_bytes / 1024) : 0,
           );
         }
       }

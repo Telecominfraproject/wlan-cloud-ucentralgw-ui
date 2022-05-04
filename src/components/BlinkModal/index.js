@@ -62,12 +62,14 @@ const BlinkModal = ({ show, toggleModal }) => {
         { headers },
       )
       .then(() => {
-        addToast({
-          title: t('common.success'),
-          body: t('commands.command_success'),
-          color: 'success',
-          autohide: true,
-        });
+        if (chosenPattern !== 'blink') {
+          addToast({
+            title: t('common.success'),
+            body: t('commands.command_success'),
+            color: 'success',
+            autohide: true,
+          });
+        }
         toggleModal();
       })
       .catch(() => {
@@ -145,8 +147,10 @@ const BlinkModal = ({ show, toggleModal }) => {
           </CModalBody>
           <CModalFooter>
             <LoadingButton
-              label={t('blink.set_leds')}
-              isLoadingLabel={t('common.loading_ellipsis')}
+              label={t('common.submit')}
+              isLoadingLabel={
+                chosenPattern === 'blink' ? 'LEDs are blinking...  ' : t('common.loading_ellipsis')
+              }
               isLoading={waiting}
               action={doAction}
               block={false}

@@ -6,6 +6,7 @@ import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceSearchBar from 'components/DeviceSearchBar';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import FirmwareHistoryModal from 'components/FirmwareHistoryModal';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 import { useAuth, useToast } from 'ucentral-libs';
 import Table from './Table';
 import meshIcon from '../../assets/icons/Mesh.png';
@@ -36,6 +37,7 @@ const DeviceList = () => {
     deviceType: '',
     serialNumber: '',
   });
+  const { lastMessage } = useGlobalWebSocket();
 
   const deviceIcons = {
     meshIcon,
@@ -358,6 +360,22 @@ const DeviceList = () => {
   useEffect(() => {
     getCount();
   }, []);
+
+  useEffect(() => {
+    if (lastMessage && lastMessage.type === 'DEVICE') {
+      const { serialNumber: msgSerial, isConnected } = lastMessage;
+      if (devices.find(({ serialNumber }) => serialNumber === msgSerial)) {
+        const newDevices = devices.map((device) => {
+          if (device.serialNumber !== msgSerial) return device;
+          return {
+            ...device,
+            connected: isConnected,
+          };
+        });
+        setDevices(newDevices);
+      }
+    }
+  }, [lastMessage, devices]);
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
