@@ -119,8 +119,13 @@ const DevicePage = () => {
     if (deviceId) {
       addDeviceListener({
         serialNumber: deviceId,
-        types: ['device_connection', 'device_disconnection', 'device_firmware_upgrade'],
-        onTrigger: () => getData(),
+        types: [
+          'device_connection',
+          'device_disconnection',
+          'device_firmware_upgrade',
+          'device_statistics',
+        ],
+        onTrigger: () => refresh(),
       });
       getDevice();
       getData();

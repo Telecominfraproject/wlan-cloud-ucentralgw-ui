@@ -18,6 +18,7 @@ const DeviceList = () => {
   const { t } = useTranslation();
   const { addToast } = useToast();
   const history = useHistory();
+  const [overrides, setOverrides] = useState({});
   const [page, setPage] = useState(parseInt(sessionStorage.getItem('deviceTable') ?? 0, 10));
   const { currentToken, endpoints } = useAuth();
   const [upgradeStatus, setUpgradeStatus] = useState({
@@ -58,6 +59,7 @@ const DeviceList = () => {
 
   const getDeviceInformation = (selectedPage = page, devicePerPage = devicesPerPage) => {
     setLoading(true);
+    setOverrides({});
 
     const options = {
       headers: {
@@ -357,6 +359,15 @@ const DeviceList = () => {
       });
   };
 
+  const displayDevices = () =>
+    devices.map((device) => ({
+      ...device,
+      connected:
+        overrides[device.serialNumber] !== undefined
+          ? overrides[device.serialNumber]
+          : device.connected,
+    }));
+
   useEffect(() => {
     getCount();
   }, []);
@@ -364,18 +375,11 @@ const DeviceList = () => {
   useEffect(() => {
     if (lastMessage && lastMessage.type === 'DEVICE') {
       const { serialNumber: msgSerial, isConnected } = lastMessage;
-      if (devices.find(({ serialNumber }) => serialNumber === msgSerial)) {
-        const newDevices = devices.map((device) => {
-          if (device.serialNumber !== msgSerial) return device;
-          return {
-            ...device,
-            connected: isConnected,
-          };
-        });
-        setDevices(newDevices);
+      if (overrides[msgSerial] === undefined || overrides[msgSerial] !== isConnected) {
+        setOverrides({ ...overrides, [msgSerial]: isConnected });
       }
     }
-  }, [lastMessage, devices]);
+  }, [lastMessage, overrides]);
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
@@ -400,7 +404,7 @@ const DeviceList = () => {
         currentPage={page}
         t={t}
         searchBar={<DeviceSearchBar />}
-        devices={devices}
+        devices={displayDevices()}
         loading={loading}
         updateDevicesPerPage={updateDevicesPerPage}
         devicesPerPage={devicesPerPage}

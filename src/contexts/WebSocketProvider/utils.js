@@ -6,6 +6,7 @@ export const deviceNotificationTypes = [
   'device_connection',
   'device_disconnection',
   'device_firmware_upgrade',
+  'device_statistics',
 ];
 
 export const extractWebSocketResponse = (message) => {

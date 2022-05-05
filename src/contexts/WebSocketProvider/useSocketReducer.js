@@ -15,7 +15,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'NEW_NOTIFICATION': {
       const obj = { type: 'NOTIFICATION', data: action.notification, timestamp: new Date() };
-      return { allMessages: [...state.allMessages, obj], lastMessage: obj };
+      return { ...state, lastMessage: obj };
     }
     case 'NEW_COMMAND': {
       const obj = {
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
         timestamp: new Date(),
         id: action.data.command_response_id,
       };
-      return { allMessages: [...state.allMessages, obj], lastMessage: obj };
+      return { ...state, lastMessage: obj };
     }
     case 'NEW_DEVICE_NOTIFICATION': {
       const newListeners = state.deviceListeners;
@@ -59,11 +59,7 @@ const reducer = (state, action) => {
         }
       }
 
-      return {
-        allMessages: state.allMessages,
-        lastMessage: obj ?? state.lastMessage,
-        deviceListeners: newListeners,
-      };
+      return { ...state, lastMessage: obj ?? state.lastMessage, deviceListeners: newListeners };
     }
     case 'ADD_DEVICE_LISTENER': {
       let newListeners = action.types.map((actionType) => ({
@@ -73,29 +69,18 @@ const reducer = (state, action) => {
         onTrigger: action.onTrigger,
       }));
       newListeners = newListeners.concat(state.deviceListeners);
-      return {
-        allMessages: state.allMessages,
-        lastMessage: state.lastMessage,
-        deviceListeners: newListeners,
-      };
+      return { ...state, lastMessage: state.lastMessage, deviceListeners: newListeners };
     }
     case 'REMOVE_DEVICE_LISTENER': {
       const newListeners = state.deviceListeners.filter(
         (listener) =>
           listener.serialNumber !== action.serialNumber || listener.onTrigger === undefined,
       );
-      return {
-        allMessages: state.allMessages,
-        lastMessage: state.lastMessage,
-        deviceListeners: newListeners,
-      };
+      return { ...state, lastMessage: state.lastMessage, deviceListeners: newListeners };
     }
     case 'UNKNOWN': {
       const obj = { type: 'UNKNOWN', data: action.newMessage, timestamp: new Date() };
-      return {
-        allMessages: [...state.allMessages, obj],
-        lastMessage: obj,
-      };
+      return { ...state, lastMessage: obj };
     }
     default:
       throw new Error();
@@ -103,12 +88,11 @@ const reducer = (state, action) => {
 };
 
 const useSocketReducer = () => {
-  const [{ allMessages, lastMessage, deviceListeners }, dispatch] = useReducer(reducer, {
-    allMessages: [],
+  const [{ lastMessage, deviceListeners }, dispatch] = useReducer(reducer, {
     deviceListeners: [],
   });
 
-  return { allMessages, lastMessage, deviceListeners, dispatch };
+  return { lastMessage, deviceListeners, dispatch };
 };
 
 export default useSocketReducer;

@@ -8,7 +8,6 @@ import { extractWebSocketResponse } from './utils';
 const WebSocketContext = React.createContext({
   webSocket: undefined,
   isOpen: false,
-  allMessages: [],
   addDeviceListener: () => {},
 });
 
@@ -16,7 +15,7 @@ export const WebSocketProvider = ({ children }) => {
   const { currentToken, endpoints } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const ws = useRef(undefined);
-  const { allMessages, lastMessage, dispatch } = useSocketReducer();
+  const { lastMessage, dispatch } = useSocketReducer();
   const { pushNotification } = useWebSocketNotification();
 
   const onMessage = useCallback((message) => {
@@ -68,7 +67,6 @@ export const WebSocketProvider = ({ children }) => {
   }, [ws?.current]);
   const values = useMemo(
     () => ({
-      allMessages,
       lastMessage,
       webSocket: ws.current,
       addDeviceListener: ({ serialNumber, types, addToast, onTrigger }) =>
@@ -77,7 +75,7 @@ export const WebSocketProvider = ({ children }) => {
         dispatch({ type: 'REMOVE_DEVICE_LISTENER', serialNumber }),
       isOpen,
     }),
-    [ws, isOpen, allMessages, lastMessage],
+    [ws, isOpen, lastMessage],
   );
 
   return <WebSocketContext.Provider value={values}>{children}</WebSocketContext.Provider>;

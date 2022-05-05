@@ -87,12 +87,6 @@ const ActionModal = ({ show, toggleModal }) => {
               autohide: true,
             }),
         });
-        addToast({
-          title: t('common.success'),
-          body: t('commands.reboot_start'),
-          color: 'success',
-          autohide: true,
-        });
         toggleModal();
       })
       .catch(() => {
