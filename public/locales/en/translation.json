@@ -7,6 +7,7 @@
 		"connecting": "Connecting...",
 		"factory_reset": "Factory Reset",
 		"firmware_upgrade": "Firmware Upgrade",
+		"logdump": "Tech Support Dump",
 		"reboot": "Reboot",
 		"telemetry": "Telemetry",
 		"title": "Commands",
@@ -551,6 +552,16 @@
 		"successfully_assigned": "Location Successfully Assigned!",
 		"title": "Locations",
 		"update_error": "Error updating location: {{error}}"
+	},
+	"logdump": {
+		"directions": "Remotely gather device logs and configuration for debugging purposes",
+		"download_logdump": "Download Tech Support Dump Archive",
+		"title": "Tech Support Dump",
+		"logdump": "Tech Support Dump",
+		"logdump_not_successful": "Tech support dump not successful: gateway reported the following error : {{error}}",
+		"wait_for_file": "Would you like to wait until the tech support archive is ready?",
+		"waiting_directions": "Please wait for the tech support dump archive. This may take some time. You can exit the wait and retrieve the support archive from the commands table later.",
+		"waiting_seconds": "Time Elapsed: {{seconds}} seconds"
 	},
 	"login": {
 		"account_verification": "Account Verification",

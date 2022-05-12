@@ -7,6 +7,7 @@
 		"connecting": "De liaison...",
 		"factory_reset": "Retour aux paramètres d'usine",
 		"firmware_upgrade": "Mise à jour du firmware",
+		"logdump": "Vidage du support technique",
 		"reboot": "Redémarrer",
 		"telemetry": "Télémétrie",
 		"title": "Les commandes",
@@ -551,6 +552,16 @@
 		"successfully_assigned": "Emplacement attribué avec succès !",
 		"title": "Emplacements",
 		"update_error": "Erreur lors de la mise à jour de l'emplacement : {{error}}"
+	},
+	"logdump": {
+		"directions": "Recueillir à distance les journaux et la configuration des appareils à des fins de débogage",
+		"download_logdump": "Télécharger l'archive de vidage du support technique",
+		"title": "Vidage du support technique",
+		"logdump": "Vidage du support technique",
+		"logdump_not_successful": "Vidage du support technique non réussie : la passerelle a signalé l'erreur suivante : {{error}}",
+		"wait_for_file": "Souhaitez-vous attendre que l'archive de vidage du support technique soit prête?",
+		"waiting_directions": "Veuillez attendre l'archive de vidage du support technique. Cela peut prendre un certain temps. Vous pouvez quitter l'attente et récupérer l'archive de la table des commandes plus tard.",
+		"waiting_seconds": "Temps écoulé : {{seconds}} secondes"
 	},
 	"login": {
 		"account_verification": "Vérification de compte",

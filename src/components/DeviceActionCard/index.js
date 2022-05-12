@@ -13,6 +13,7 @@ import BlinkModal from 'components/BlinkModal';
 import FactoryResetModal from 'components/FactoryResetModal';
 import EventQueueModal from 'components/EventQueueModal';
 import TelemetryModal from 'components/TelemetryModal';
+import LogDumpModal from 'components/LogDumpModal';
 
 const DeviceActions = ({ device }) => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const DeviceActions = ({ device }) => {
   const [showFactoryModal, toggleFactoryResetModal] = useToggle(false);
   const [showQueueModal, toggleQueueModal] = useToggle(false);
   const [showTelemetryModal, toggleTelemetryModal] = useToggle(false);
+  const [showLogDumpModal, toggleLogDumpModal] = useToggle(false);
 
   const getRttysInfo = () => {
     setConnectLoading(true);
@@ -163,6 +165,18 @@ const DeviceActions = ({ device }) => {
             </CButton>
           </CCol>
         </CRow>
+        <CRow className="my-1">
+          <CCol>
+            <CButton
+              block
+              disabled={device === null}
+              color="primary"
+              onClick={toggleLogDumpModal}
+            >
+              {t('actions.logdump')}
+            </CButton>
+          </CCol>
+        </CRow>
       </CCardBody>
       <RebootModal show={showRebootModal} toggleModal={toggleRebootModal} />
       <BlinkModal show={showBlinkModal} toggleModal={toggleBlinkModal} />
@@ -182,6 +196,7 @@ const DeviceActions = ({ device }) => {
       <FactoryResetModal show={showFactoryModal} toggleModal={toggleFactoryResetModal} />
       <EventQueueModal show={showQueueModal} toggle={toggleQueueModal} />
       <TelemetryModal show={showTelemetryModal} toggle={toggleTelemetryModal} />
+      <LogDumpModal show={showLogDumpModal} toggle={toggleLogDumpModal} />
     </CCard>
   );
 };

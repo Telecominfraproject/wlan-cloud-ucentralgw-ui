@@ -7,6 +7,7 @@
 		"connecting": "Conectando ...",
 		"factory_reset": "Restablecimiento De Fábrica",
 		"firmware_upgrade": "Actualización de firmware",
+		"logdump": "Volcado de soporte técnico",
 		"reboot": "Reiniciar",
 		"telemetry": "Telemetria",
 		"title": "Comandos",
@@ -551,6 +552,16 @@
 		"successfully_assigned": "¡Ubicación asignada correctamente!",
 		"title": "Ubicaciones",
 		"update_error": "Error al actualizar la ubicación: {{error}}"
+	},
+	"logdump": {
+		"directions": "Recopile de forma remota los registros y la configuración de los dispositivos con fines de depuración",
+		"download_logdump": "Descargar archivo de volcado de soporte técnico",
+		"title": "Volcado de soporte técnico",
+		"logdump": "Volcado de soporte técnico",
+		"logdump_not_successful": "El volcado de soporte técnico no tuvo éxito: la puerta de enlace informó el siguiente error: {{error}}",
+		"wait_for_file": "¿Le gustaría esperar hasta que el archivo de soporte técnico esté listo?",
+		"waiting_directions": "Espere el archivo de volcado de soporte técnico. Esto puede tomar algo de tiempo. Puede salir de la espera y recuperar el archivo de soporte de la tabla de comandos más tarde.",
+		"waiting_seconds": "Tiempo transcurrido: {{seconds}} segundos"
 	},
 	"login": {
 		"account_verification": "Verificación de la cuenta",

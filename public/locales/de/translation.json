@@ -7,6 +7,7 @@
 		"connecting": "Die Verbindung wird hergestellt ...",
 		"factory_reset": "Auf Werkseinstellungen zurückgesetzt",
 		"firmware_upgrade": "Firmware Aktualisierung",
+		"logdump": "Archiv für den technischen Support",
 		"reboot": "Gerät neustarten",
 		"telemetry": "Telemetrie",
 		"title": "Geräte Administrations",
@@ -551,6 +552,16 @@
 		"successfully_assigned": "Standort erfolgreich zugewiesen!",
 		"title": "Standorte",
 		"update_error": "Fehler beim Aktualisieren des Standorts: {{error}}"
+	},
+	"logdump": {
+		"directions": "Sammeln Sie Geräteprotokolle und -konfigurationen zu Debugging-Zwecken aus der Ferne",
+		"download_logdump": "Tech-Support-Archivs herunterladen",
+		"title": "Archiv für den technischen Support",
+		"logdump": "Archiv für den technischen Support",
+		"logdump_not_successful": "Archiv für den technischen support nicht erfolgreich: Gateway hat folgenden Fehler gemeldet: {{error}}",
+		"wait_for_file": "Möchten Sie warten, bis die Archiv für den technischen support fertig ist?",
+		"waiting_directions": "Bitte warten Sie auf das Archiv des technischen Supports. Dies könnte eine Weile dauern. Sie können das Warten beenden und die Ablaufverfolgungsdatei später aus der Befehlstabelle abrufen.",
+		"waiting_seconds": "Verstrichene Zeit: {{seconds}} Sekunden"
 	},
 	"login": {
 		"account_verification": "Bestätigung des Kontos",

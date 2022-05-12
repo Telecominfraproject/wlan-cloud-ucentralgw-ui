@@ -7,6 +7,7 @@
 		"connecting": "A ligar ...",
 		"factory_reset": "Restauração de fábrica",
 		"firmware_upgrade": "Atualização de firmware",
+		"logdump": "Despejo de suporte técnico",
 		"reboot": "Reiniciar",
 		"telemetry": "Telemetria",
 		"title": "Comandos",
@@ -551,6 +552,16 @@
 		"successfully_assigned": "Local atribuído com sucesso!",
 		"title": "Localizações",
 		"update_error": "Erro ao atualizar local: {{error}}"
+	},
+	"logdump": {
+		"directions": "Reúna remotamente os logs e a configuração do dispositivo para fins de depuração",
+		"download_logdump": "Baixar arquivo de despejo de suporte técnico",
+		"title": "Despejo de suporte técnico",
+		"logdump": "Despejo de suporte técnico",
+		"logdump_not_successful": "O despejo do suporte técnico não foi bem-sucedido: o gateway relatou o seguinte erro: {{error}}",
+		"wait_for_file": "Você gostaria de esperar até que o arquivo de despejo de suporte técnico esteja pronto?",
+		"waiting_directions": "Aguarde o arquivo de despejo de suporte técnico. Isto pode tomar algum tempo. Você pode sair e ver os resultados da tabela de comandos posteriormente.",
+		"waiting_seconds": "Tempo decorrido: {{seconds}} segundos"
 	},
 	"login": {
 		"account_verification": "Verificação de conta",

@@ -156,6 +156,26 @@ const DeviceCommands = () => {
       });
   };
 
+  const downloadLogDump = (uuid) => {
+    const options = {
+      headers: {
+        Accept: 'application/octet-stream',
+        Authorization: `Bearer ${currentToken}`,
+      },
+      responseType: 'arraybuffer',
+    };
+
+    axiosInstance
+      .get(`${endpoints.owgw}/api/v1/file/${uuid}?serialNumber=${deviceSerialNumber}`, options)
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/octet-stream' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `TechSupportDump_${uuid}.tar.gz`;
+        link.click();
+      });
+  };
+
   const deleteCommand = async () => {
     if (uuidDelete === '') {
       return false;
@@ -186,6 +206,8 @@ const DeviceCommands = () => {
       setShowScanModal(true);
     } else if (item.command === 'trace' && item.waitingForFile === 0) {
       downloadTrace(item.UUID);
+    } else if (item.command === 'logdump' && item.waitingForFile === 0) {
+      downloadLogDump(item.UUID);
     } else {
       setModalDetails(item.results ?? item);
       setDetailsUuid(item.UUID);
@@ -349,7 +371,9 @@ const DeviceCommands = () => {
                     >
                       <CPopover
                         content={
-                          item.command === 'trace' ? t('common.download') : t('common.result')
+                          item.command === 'trace' ? t('common.download')
+                          : item.command === 'logdump' ? t('common.download')
+                          : t('common.result')
                         }
                       >
                         <CButton
@@ -363,6 +387,8 @@ const DeviceCommands = () => {
                           }}
                         >
                           {item.command === 'trace' ? (
+                            <CIcon name="cil-cloud-download" content={cilCloudDownload} />
+                          ) : item.command === 'logdump' ? (
                             <CIcon name="cil-cloud-download" content={cilCloudDownload} />
                           ) : (
                             <CIcon name="cil-calendar-check" content={cilCalendarCheck} />
