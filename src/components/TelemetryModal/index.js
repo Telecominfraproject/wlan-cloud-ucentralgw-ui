@@ -36,11 +36,13 @@ const TelemetryModal = ({ show, toggle }) => {
   const [lastMessage, setLastMessage] = useState({});
   const [receivedMessages, setReceivedMessages] = useState(0);
   const [types, setTypes] = useState([]);
+  const [lifetime, setLifetime] = useState(5);
   const [interval, setInterval] = useState(3);
   const [loading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState('');
 
   const onIntervalChange = (e) => setInterval(e.target.value);
+  const onLifetimeChange = (e) => setLifetime(e.target.value);
 
   const closeSocket = () => {
     if (socket !== null) {
@@ -57,6 +59,7 @@ const TelemetryModal = ({ show, toggle }) => {
     const parameters = {
       serialNumber: deviceSerialNumber,
       interval: parseInt(interval, 10),
+      lifetime: parseInt(lifetime * 60, 10),
       types: types.map((type) => type.value),
     };
 
@@ -147,6 +150,21 @@ const TelemetryModal = ({ show, toggle }) => {
               </CCol>
             </CRow>
             <CRow>
+              <CCol>{`${t('telemetry.lifetime')}: ${lifetime} ${t('common.minutes')}`}</CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                <CInput
+                  type="range"
+                  min="1"
+                  max="120"
+                  step="1"
+                  onChange={onLifetimeChange}
+                  value={lifetime}
+                />
+              </CCol>
+            </CRow>
+            <CRow>
               <CCol sm="2" className="pt-2">
                 {t('telemetry.types')}:
               </CCol>
@@ -176,6 +194,11 @@ const TelemetryModal = ({ show, toggle }) => {
             <CRow>
               <CCol>
                 {t('telemetry.interval')}: {interval} {t('common.seconds')}
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                {t('telemetry.lifetime')}: {lifetime} {t('common.minutes')}
               </CCol>
             </CRow>
             <CRow>
