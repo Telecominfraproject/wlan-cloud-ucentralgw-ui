@@ -715,6 +715,7 @@
 		"connection_failed": "Falha ao criar conexão. Erro: {{error}}",
 		"interval": "intervalo",
 		"lifetime": "Duração",
+		"outputmode": "Modo saída",
 		"last_update": "Última atualização",
 		"types": "Tipos"
 	},

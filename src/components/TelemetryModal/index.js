@@ -12,6 +12,9 @@ import {
   CRow,
   CCol,
   CInput,
+  CFormGroup,
+  CInputRadio,
+  CLabel,
   CSpinner,
   CAlert,
 } from '@coreui/react';
@@ -36,6 +39,7 @@ const TelemetryModal = ({ show, toggle }) => {
   const [lastMessage, setLastMessage] = useState({});
   const [receivedMessages, setReceivedMessages] = useState(0);
   const [types, setTypes] = useState([]);
+  const [chosenMethod, setChosenMethod] = useState('false');
   const [lifetime, setLifetime] = useState(5);
   const [interval, setInterval] = useState(3);
   const [loading, setLoading] = useState(false);
@@ -60,6 +64,7 @@ const TelemetryModal = ({ show, toggle }) => {
       serialNumber: deviceSerialNumber,
       interval: parseInt(interval, 10),
       lifetime: parseInt(lifetime * 60, 10),
+      kafka: chosenMethod,
       types: types.map((type) => type.value),
     };
 
@@ -75,7 +80,16 @@ const TelemetryModal = ({ show, toggle }) => {
         { headers },
       )
       .then((response) => {
-        if (response.data.uri && response.data.uri !== '') {
+        if (chosenMethod === 'true') {
+          addToast({
+              title: t('common.success'),
+              body: t('commands.command_success'),
+              color: 'success',
+              autohide: true,
+            });
+          toggle();
+        }
+        else if (response.data.uri && response.data.uri !== '') {
           setReceivedMessages(0);
           setSocket(new WebSocket(response.data.uri));
         }
@@ -164,6 +178,35 @@ const TelemetryModal = ({ show, toggle }) => {
                 />
               </CCol>
             </CRow>
+            <CFormGroup row className="mb-0">
+              <CCol md="3">
+                <CLabel>{t('telemetry.outputmode')}</CLabel>
+              </CCol>
+              <CCol>
+                <CFormGroup variant="checkbox" onClick={() => setChosenMethod('false')} inline>
+                  <CInputRadio
+                    defaultChecked={chosenMethod === 'false'}
+                    id="traceRadio1"
+                    name="radios"
+                    value="traceOption1"
+                  />
+                  <CLabel variant="checkbox" htmlFor="traceRadio1">
+                    Websocket
+                  </CLabel>
+                </CFormGroup>
+                <CFormGroup variant="checkbox" onClick={() => setChosenMethod('true')} inline>
+                  <CInputRadio
+                    defaultChecked={chosenMethod === 'true'}
+                    id="traceRadio2"
+                    name="radios"
+                    value="traceOption2"
+                  />
+                  <CLabel variant="checkbox" htmlFor="traceRadio2">
+                    Kafka
+                  </CLabel>
+                </CFormGroup>
+              </CCol>
+            </CFormGroup>
             <CRow>
               <CCol sm="2" className="pt-2">
                 {t('telemetry.types')}:
