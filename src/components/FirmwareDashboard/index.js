@@ -65,9 +65,12 @@ const FirmwareDashboard = () => {
     const statusColors = [];
     const statusLabels = [];
     const totalDevices = parsedData.status.reduce((acc, point) => acc + point.value, 0);
+    parsedData.statusDevices = {};
+    parsedData.numberOfDevices = totalDevices;
     for (const point of parsedData.status) {
-      statusDs.push(Math.round((point.value / totalDevices) * 100));
+      statusDs.push(point.value);
       statusLabels.push(point.tag);
+      parsedData[point.value] = point.value;
       let color = '';
       switch (point.tag) {
         case 'connected':

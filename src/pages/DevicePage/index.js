@@ -127,8 +127,7 @@ const DevicePage = () => {
         ],
         onTrigger: () => refresh(),
       });
-      getDevice();
-      getData();
+      refresh();
     }
 
     return () => {

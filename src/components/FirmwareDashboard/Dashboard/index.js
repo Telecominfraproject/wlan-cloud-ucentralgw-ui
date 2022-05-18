@@ -65,7 +65,16 @@ const FirmwareDashboard = ({ t, data, loading }) => {
           </CCol>
           <CCol>
             <CWidgetIcon
-              text={t('common.devices')}
+              text={
+                <div>
+                  <div className="float-left">{t('common.devices')}</div>
+                  <div className="float-left ml-2">
+                    <CPopover content={t('device.firmware_count_explanation')}>
+                      <CIcon content={cilInfo} />
+                    </CPopover>
+                  </div>
+                </div>
+              }
               header={<h2>{data.numberOfDevices}</h2>}
               color="primary"
               iconPadding={false}
@@ -212,7 +221,7 @@ const FirmwareDashboard = ({ t, data, loading }) => {
                     tooltips: {
                       callbacks: {
                         title: (item, ds) => ds.labels[item[0].index],
-                        label: (item, ds) => `${ds.datasets[0].data[item.index]}%`,
+                        label: (item, ds) => `${ds.datasets[0].data[item.index]} devices`,
                       },
                     },
                     legend: {
