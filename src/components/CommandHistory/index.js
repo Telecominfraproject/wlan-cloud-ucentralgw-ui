@@ -358,6 +358,7 @@ const DeviceCommands = () => {
                           shape="square"
                           size="sm"
                           className="mx-2"
+                          disabled={item.completed === 0}
                           onClick={() => {
                             toggleDetails(item);
                           }}

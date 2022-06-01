@@ -414,6 +414,8 @@ const DeviceListTable = ({
                 nextClassName="page-item"
                 nextLinkClassName="page-link"
                 activeClassName="active"
+                pageRangeDisplayed={5}
+                marginPagesDisplayed={1}
               />
             </div>
             <p className="pr-2 mt-1">{t('common.items_per_page')}</p>

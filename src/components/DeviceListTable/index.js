@@ -21,6 +21,7 @@ const DeviceList = () => {
   const [overrides, setOverrides] = useState({});
   const [page, setPage] = useState(parseInt(sessionStorage.getItem('deviceTable') ?? 0, 10));
   const { currentToken, endpoints } = useAuth();
+  const [deviceToRefresh, setDeviceToRefresh] = useState(undefined);
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
@@ -373,13 +374,16 @@ const DeviceList = () => {
   }, []);
 
   useEffect(() => {
+    if (deviceToRefresh) refreshDevice(deviceToRefresh.serial);
+  }, [deviceToRefresh?.timestamp]);
+
+  useEffect(() => {
     if (lastMessage && lastMessage.type === 'DEVICE') {
-      const { serialNumber: msgSerial, isConnected } = lastMessage;
-      if (overrides[msgSerial] === undefined || overrides[msgSerial] !== isConnected) {
-        setOverrides({ ...overrides, [msgSerial]: isConnected });
-      }
+      const { serialNumber: msgSerial, timestamp } = lastMessage;
+      if (timestamp !== deviceToRefresh?.timestamp)
+        setDeviceToRefresh({ serial: msgSerial, timestamp });
     }
-  }, [lastMessage, overrides]);
+  }, [lastMessage, deviceToRefresh]);
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
