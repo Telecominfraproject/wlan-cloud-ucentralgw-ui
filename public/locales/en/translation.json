@@ -719,6 +719,8 @@
 	"telemetry": {
 		"connection_failed": "Failed to create connection. Error: {{error}}",
 		"interval": "Interval",
+		"lifetime": "Duration",
+		"outputmode": "Output Mode",
 		"last_update": "Last Update",
 		"types": "Types"
 	},
