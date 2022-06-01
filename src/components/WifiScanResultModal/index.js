@@ -1,5 +1,5 @@
 /* eslint-disable-rule prefer-destructuring */
-import React, { useCallback } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CButton, CModal, CModalHeader, CModalBody, CModalTitle, CPopover } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
@@ -9,12 +9,14 @@ import { prettyDate, prettyDateForFile } from 'utils/helper';
 import { useDevice } from 'ucentral-libs';
 import { CSVLink } from 'react-csv';
 import WifiChannelTable from './WifiChannelTable';
+import IeDisplay from './IeDisplay';
 
 const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
   const { t } = useTranslation();
   const { deviceSerialNumber } = useDevice();
+  const [selectedIes, setSelectedIes] = useState(undefined);
 
-  const getData = useCallback(() => {
+  const getData = useMemo(() => {
     if (scanResults === null || scanResults.length === 0) return [];
     const dbmNumber = 4294967295;
     const listOfChannels = [];
@@ -31,7 +33,6 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
         channel: channelNumber,
         devices: [],
       };
-
       scanResults.forEach((device) => {
         if (device.channel === channelNumber) {
           const deviceToAdd = {};
@@ -41,14 +42,15 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
           }
           deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
           channel.devices.push(deviceToAdd);
-          listCsv.push({ ...deviceToAdd, ...device });
+          listCsv.push({ ...deviceToAdd, ...device, ies: JSON.stringify(device.ies, null, 4) });
         }
       });
     });
     return listCsv;
   }, [scanResults]);
 
-  const parseThroughList = useCallback(() => {
+  const parseThroughList = useMemo(() => {
+    if (!scanResults) return null;
     const dbmNumber = 4294967295;
     const listOfChannels = [];
 
@@ -73,6 +75,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
             deviceToAdd.SSID = device.meshid && device.meshid.length > 0 ? device.meshid : 'N/A';
           }
           deviceToAdd.Signal = (dbmNumber - device.signal) * -1;
+          deviceToAdd.ies = device.ies;
           channel.devices.push(deviceToAdd);
         }
       });
@@ -81,6 +84,10 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
     });
     return finalList;
   }, [scanResults]);
+
+  useEffect(() => {
+    setSelectedIes(undefined);
+  }, [show]);
 
   return (
     <CModal size="lg" show={show} onClose={toggle}>
@@ -94,7 +101,7 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
               filename={`wifi_scan_${deviceSerialNumber}_${
                 date !== '' ? prettyDateForFile(date) : ''
               }.csv`}
-              data={getData()}
+              data={getData}
             >
               <CButton color="primary" variant="outline" className="ml-2">
                 <CIcon content={cilCloudDownload} />
@@ -109,7 +116,10 @@ const WifiScanResultModal = ({ show, toggle, scanResults, date }) => {
         </div>
       </CModalHeader>
       <CModalBody>
-        {scanResults === null ? null : <WifiChannelTable channels={parseThroughList()} />}
+        {selectedIes && <IeDisplay ies={selectedIes} setIes={setSelectedIes} />}
+        {selectedIes || scanResults === null ? null : (
+          <WifiChannelTable channels={parseThroughList} setIes={setSelectedIes} />
+        )}
       </CModalBody>
     </CModal>
   );
