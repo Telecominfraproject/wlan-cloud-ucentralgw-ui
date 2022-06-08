@@ -59,6 +59,14 @@ export const checkIfJson = (string) => {
   return true;
 };
 
+export const toJson = (string) => {
+  try {
+    return JSON.parse(string);
+  } catch (e) {
+    return undefined;
+  }
+};
+
 export const secondsToDetailed = (
   seconds,
   dayLabel,

@@ -22,11 +22,13 @@ import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 
 const ActionModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addDeviceListener } = useGlobalWebSocket();
   const { addToast } = useToast();
   const [waiting, setWaiting] = useState(false);
   const [result, setResult] = useState(null);
@@ -74,11 +76,16 @@ const ActionModal = ({ show, toggleModal }) => {
         { headers },
       )
       .then(() => {
-        addToast({
-          title: t('common.success'),
-          body: t('commands.command_success'),
-          color: 'success',
-          autohide: true,
+        addDeviceListener({
+          serialNumber: deviceSerialNumber,
+          types: ['device_connection', 'device_disconnection'],
+          addToast: (title, body) =>
+            addToast({
+              title,
+              body,
+              color: 'info',
+              autohide: true,
+            }),
         });
         toggleModal();
       })

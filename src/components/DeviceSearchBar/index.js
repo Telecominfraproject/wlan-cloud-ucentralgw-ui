@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useAuth, DeviceSearchBar as SearchBar } from 'ucentral-libs';
-import { checkIfJson } from 'utils/helper';
+import { toJson } from 'utils/helper';
 
 const DeviceSearchBar = ({ action }) => {
   const { t } = useTranslation();
@@ -44,11 +44,9 @@ const DeviceSearchBar = ({ action }) => {
       };
 
       socket.onmessage = (event) => {
-        if (checkIfJson(event.data)) {
-          const result = JSON.parse(event.data);
-          if (result.serialNumbers) {
-            setResults(result.serialNumbers);
-          }
+        const result = toJson(event.data);
+        if (result && result.serialNumbers) {
+          setResults(result.serialNumbers);
         }
       };
 

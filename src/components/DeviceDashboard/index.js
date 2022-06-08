@@ -55,9 +55,12 @@ const DeviceDashboard = () => {
     const statusColors = [];
     const statusLabels = [];
     let totalDevices = parsedData.status.reduce((acc, point) => acc + point.value, 0);
+    parsedData.numberOfDevices = totalDevices;
+    parsedData.statusDevices = {};
     for (const point of parsedData.status) {
-      statusDs.push(Math.round((point.value / totalDevices) * 100));
+      statusDs.push(point.value);
       statusLabels.push(point.tag);
+      parsedData.statusDevices[point.value] = Math.round((point.value / totalDevices) * 100);
       let color = '';
       switch (point.tag) {
         case 'connected':
@@ -96,7 +99,7 @@ const DeviceDashboard = () => {
     const healthLabels = [];
     totalDevices = parsedData.healths.reduce((acc, point) => acc + point.value, 0);
     for (const point of parsedData.healths) {
-      healthDs.push(Math.round((point.value / totalDevices) * 100));
+      healthDs.push(point.value);
       healthLabels.push(point.tag);
       let color = '';
       switch (point.tag) {
@@ -122,6 +125,12 @@ const DeviceDashboard = () => {
       }
       healthColors.push(color);
     }
+    parsedData.healthDevices = {
+      [devicesAt100]: Math.round((devicesAt100 / totalDevices) * 100),
+      [devicesUp90]: Math.round((devicesUp90 / totalDevices) * 100),
+      [devicesUp60]: Math.round((devicesUp60 / totalDevices) * 100),
+      [devicesDown60]: Math.round((devicesDown60 / totalDevices) * 100),
+    };
     parsedData.healths = {
       datasets: [
         {
@@ -144,10 +153,12 @@ const DeviceDashboard = () => {
     const associationsColors = [];
     const associationsLabels = [];
     const totalAssociations = parsedData.associations.reduce((acc, point) => acc + point.value, 0);
+    parsedData.associationData = {};
     for (let i = 0; i < parsedData.associations.length; i += 1) {
       const point = parsedData.associations[i];
-      associationsDs.push(Math.round((point.value / totalAssociations) * 100));
+      associationsDs.push(point.value);
       associationsLabels.push(point.tag);
+      parsedData.associationData[point.value] = Math.round((point.value / totalAssociations) * 100);
 
       switch (parsedData.associations[i].tag) {
         case '2G':
@@ -258,8 +269,10 @@ const DeviceDashboard = () => {
     const certificatesColors = [];
     const certificatesLabels = [];
     const totalCerts = parsedData.certificates.reduce((acc, point) => acc + point.value, 0);
+    parsedData.certificateData = {};
     for (const point of parsedData.certificates) {
-      certificatesDs.push(Math.round((point.value / totalCerts) * 100));
+      certificatesDs.push(point.value);
+      parsedData.certificateData[point.value] = Math.round((point.value / totalCerts) * 100);
       certificatesLabels.push(point.tag);
       let color = '';
       switch (point.tag) {

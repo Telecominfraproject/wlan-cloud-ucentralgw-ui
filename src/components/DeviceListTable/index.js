@@ -6,6 +6,7 @@ import { getItem, setItem } from 'utils/localStorageHelper';
 import DeviceSearchBar from 'components/DeviceSearchBar';
 import DeviceFirmwareModal from 'components/DeviceFirmwareModal';
 import FirmwareHistoryModal from 'components/FirmwareHistoryModal';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 import { useAuth, useToast } from 'ucentral-libs';
 import Table from './Table';
 import meshIcon from '../../assets/icons/Mesh.png';
@@ -17,8 +18,10 @@ const DeviceList = () => {
   const { t } = useTranslation();
   const { addToast } = useToast();
   const history = useHistory();
+  const [overrides, setOverrides] = useState({});
   const [page, setPage] = useState(parseInt(sessionStorage.getItem('deviceTable') ?? 0, 10));
   const { currentToken, endpoints } = useAuth();
+  const [deviceToRefresh, setDeviceToRefresh] = useState(undefined);
   const [upgradeStatus, setUpgradeStatus] = useState({
     loading: false,
   });
@@ -36,6 +39,7 @@ const DeviceList = () => {
     deviceType: '',
     serialNumber: '',
   });
+  const { lastMessage } = useGlobalWebSocket();
 
   const deviceIcons = {
     meshIcon,
@@ -56,6 +60,7 @@ const DeviceList = () => {
 
   const getDeviceInformation = (selectedPage = page, devicePerPage = devicesPerPage) => {
     setLoading(true);
+    setOverrides({});
 
     const options = {
       headers: {
@@ -355,9 +360,30 @@ const DeviceList = () => {
       });
   };
 
+  const displayDevices = () =>
+    devices.map((device) => ({
+      ...device,
+      connected:
+        overrides[device.serialNumber] !== undefined
+          ? overrides[device.serialNumber]
+          : device.connected,
+    }));
+
   useEffect(() => {
     getCount();
   }, []);
+
+  useEffect(() => {
+    if (deviceToRefresh) refreshDevice(deviceToRefresh.serial);
+  }, [deviceToRefresh?.timestamp]);
+
+  useEffect(() => {
+    if (lastMessage && lastMessage.type === 'DEVICE') {
+      const { serialNumber: msgSerial, timestamp } = lastMessage;
+      if (timestamp !== deviceToRefresh?.timestamp)
+        setDeviceToRefresh({ serial: msgSerial, timestamp });
+    }
+  }, [lastMessage, deviceToRefresh]);
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
@@ -382,7 +408,7 @@ const DeviceList = () => {
         currentPage={page}
         t={t}
         searchBar={<DeviceSearchBar />}
-        devices={devices}
+        devices={displayDevices()}
         loading={loading}
         updateDevicesPerPage={updateDevicesPerPage}
         devicesPerPage={devicesPerPage}

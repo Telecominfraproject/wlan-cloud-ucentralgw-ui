@@ -5,6 +5,7 @@ import { CSidebarNavItem } from '@coreui/react';
 import { cilBarcode, cilRouter, cilSave, cilSettings, cilPeople } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { Header, Sidebar, Footer, PageContainer, ToastProvider, useAuth } from 'ucentral-libs';
+import { WebSocketProvider } from 'contexts/WebSocketProvider';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
@@ -70,7 +71,9 @@ const TheLayout = () => {
         />
         <div className="c-body">
           <ToastProvider>
-            <PageContainer t={t} routes={routes} redirectTo="/devices" />
+            <WebSocketProvider>
+              <PageContainer t={t} routes={routes} redirectTo="/devices" />
+            </WebSocketProvider>
           </ToastProvider>
         </div>
         <Footer t={t} version={process.env.VERSION} />

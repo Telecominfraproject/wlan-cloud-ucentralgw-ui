@@ -1,5 +1,6 @@
 # System
 replicaCount: 1
+revisionHistoryLimit: 2
 
 nameOverride: ""
 fullnameOverride: ""
@@ -48,6 +49,7 @@ ingresses:
     - chart-example.local
     paths:
     - path: /
+      pathType: ImplementationSpecific
       serviceName: owgwui
       servicePort: http
 
@@ -68,6 +70,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+podAnnotations: {}
 
 # Application
 public_env_variables:

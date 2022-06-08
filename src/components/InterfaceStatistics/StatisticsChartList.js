@@ -4,7 +4,7 @@ import { CSpinner } from '@coreui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as createUuid } from 'uuid';
 import axiosInstance from 'utils/axiosInstance';
-import { useAuth, useDevice } from 'ucentral-libs';
+import { useAuth } from 'ucentral-libs';
 import {
   capitalizeFirstLetter,
   datesSameDay,
@@ -14,11 +14,10 @@ import {
 } from 'utils/helper';
 import DeviceStatisticsChart from './DeviceStatisticsChart';
 
-const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) => {
+const StatisticsChartList = ({ deviceSerialNumber, setOptions, section, time }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const { currentToken, endpoints } = useAuth();
-  const { deviceSerialNumber } = useDevice();
   const [statOptions, setStatOptions] = useState({
     interfaceList: [],
     memory: [],
@@ -133,18 +132,18 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
         if (version > 0) {
           const prevTx = prevTxObj[inter.name] !== undefined ? prevTxObj[inter.name] : 0;
           const prevRx = prevTxObj[inter.name] !== undefined ? prevRxObj[inter.name] : 0;
-          const tx = inter.counters ? inter.counters.tx_bytes : 0;
-          const rx = inter.counters ? inter.counters.rx_bytes : 0;
+          const tx = inter.counters ? Math.floor(inter.counters.tx_bytes / 1024) : 0;
+          const rx = inter.counters ? Math.floor(inter.counters.rx_bytes / 1024) : 0;
           interfaceList[interfaceTypes[inter.name]][0].data.push(Math.max(0, tx - prevTx));
           interfaceList[interfaceTypes[inter.name]][1].data.push(Math.max(0, rx - prevRx));
           prevTxObj[inter.name] = tx;
           prevRxObj[inter.name] = rx;
         } else {
           interfaceList[interfaceTypes[inter.name]][0].data.push(
-            inter.counters ? Math.floor(inter.counters.tx_bytes) : 0,
+            inter.counters ? Math.floor(inter.counters.tx_bytes / 1024) : 0,
           );
           interfaceList[interfaceTypes[inter.name]][1].data.push(
-            inter.counters ? Math.floor(inter.counters.rx_bytes) : 0,
+            inter.counters ? Math.floor(inter.counters.rx_bytes / 1024) : 0,
           );
         }
       }
@@ -244,10 +243,6 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
       }));
       setOptions([...sectionOptions, { value: 'memory', label: t('statistics.memory') }]);
       setStatOptions({ ...newOptions });
-      if (sortedData.length > 0) {
-        setStart(new Date(sortedData[0].recorded * 1000));
-        setEnd(new Date(sortedData[sortedData.length - 1].recorded * 1000));
-      }
     }
   };
 
@@ -358,11 +353,10 @@ const StatisticsChartList = ({ setOptions, section, setStart, setEnd, time }) =>
 };
 
 StatisticsChartList.propTypes = {
+  deviceSerialNumber: PropTypes.string.isRequired,
   setOptions: PropTypes.func.isRequired,
   section: PropTypes.string.isRequired,
   time: PropTypes.instanceOf(Object).isRequired,
-  setStart: PropTypes.func.isRequired,
-  setEnd: PropTypes.func.isRequired,
 };
 
 export default React.memo(StatisticsChartList);

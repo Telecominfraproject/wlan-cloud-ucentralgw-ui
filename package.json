@@ -1,6 +1,6 @@
 {
   "name": "ucentral-client",
-  "version": "2.6.14",
+  "version": "2.7.0",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.1",
@@ -10,6 +10,7 @@
     "apexcharts": "^3.27.1",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
+    "buffer": "^6.0.3",
     "dagre": "^0.8.5",
     "i18next": "^20.3.1",
     "i18next-browser-languagedetector": "^6.1.2",

@@ -40,7 +40,7 @@ const TraceModal = ({ show, toggleModal }) => {
   const [responseBody, setResponseBody] = useState('');
   const [chosenInterface, setChosenInterface] = useState('up');
   const [isDeviceConnected, setIsDeviceConnected] = useState(false);
-  const [waitForTrace, setWaitForTrace] = useState(false);
+  const [waitForTrace, setWaitForTrace] = useState(true);
   const [waitingForTrace, setWaitingForTrace] = useState(false);
   const [commandUuid, setCommandUuid] = useState(null);
 
@@ -49,7 +49,7 @@ const TraceModal = ({ show, toggleModal }) => {
   };
 
   useEffect(() => {
-    setWaitForTrace(false);
+    setWaitForTrace(true);
     setHadSuccess(false);
     setHadFailure(false);
     setResponseBody('');
@@ -137,25 +137,19 @@ const TraceModal = ({ show, toggleModal }) => {
         <CModalBody>
           <h6>{t('trace.directions')}</h6>
           <CRow className="mt-3">
-            <CCol>
-              <CButton
-                disabled={blockFields}
-                block
-                color="primary"
-                onClick={() => setUsingDuration(true)}
-              >
-                {t('common.duration')}
-              </CButton>
+            <CCol md="4" className="pt-2">
+              {t('contact.type')}
             </CCol>
-            <CCol>
-              <CButton
+            <CCol xs="12" md="8">
+              <CSelect
+                custom
+                value={usingDuration ? 'duration' : 'packets'}
                 disabled={blockFields}
-                block
-                color="primary"
-                onClick={() => setUsingDuration(false)}
+                onChange={(e) => setUsingDuration(e.target.value === 'duration')}
               >
-                {t('trace.packets')}
-              </CButton>
+                <option value="duration">{t('common.duration')}</option>
+                <option value="packets">{t('trace.packets')}</option>
+              </CSelect>
             </CCol>
           </CRow>
           <CRow className="mt-3">
@@ -220,7 +214,7 @@ const TraceModal = ({ show, toggleModal }) => {
             </CCol>
           </CRow>
           <CRow className="mt-3" hidden={!isDeviceConnected}>
-            <CCol md="8">
+            <CCol md="7">
               <p>{t('trace.wait_for_file')}</p>
             </CCol>
             <CCol>

@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
 import CapabilitiesDisplay from 'components/CapabilitiesDisplay';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 import NotesTab from './NotesTab';
 import DeviceDetails from './Details';
 import DeviceStatusCard from './DeviceStatusCard';
@@ -26,6 +27,7 @@ const DevicePage = () => {
   const [deviceConfig, setDeviceConfig] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { addDeviceListener, removeDeviceListener } = useGlobalWebSocket();
 
   const updateNav = (target) => {
     sessionStorage.setItem('devicePageIndex', target);
@@ -115,9 +117,26 @@ const DevicePage = () => {
   useEffect(() => {
     setError(false);
     if (deviceId) {
-      getDevice();
-      getData();
+      addDeviceListener({
+        serialNumber: deviceId,
+        types: [
+          'device_connection',
+          'device_disconnection',
+          'device_firmware_upgrade',
+          'device_statistics',
+        ],
+        onTrigger: () => refresh(),
+      });
+      refresh();
     }
+
+    return () => {
+      if (deviceId) {
+        removeDeviceListener({
+          serialNumber: deviceId,
+        });
+      }
+    };
   }, [deviceId]);
 
   return (

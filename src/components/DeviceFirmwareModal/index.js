@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useAuth, useToast, useToggle } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import { useTranslation } from 'react-i18next';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 import Modal from './Modal';
 
 const DeviceFirmwareModal = ({
@@ -19,6 +20,7 @@ const DeviceFirmwareModal = ({
   const [loading, setLoading] = useState(false);
   const [firmwareVersions, setFirmwareVersions] = useState([]);
   const [keepRedirector, toggleKeepRedirector, setKeepRedirector] = useToggle(true);
+  const { addDeviceListener } = useGlobalWebSocket();
 
   const getPartialFirmware = async (offset) => {
     const headers = {
@@ -90,6 +92,17 @@ const DeviceFirmwareModal = ({
         headers,
       })
       .then((response) => {
+        addDeviceListener({
+          serialNumber: device.serialNumber,
+          types: ['device_firmware_upgrade'],
+          addToast: (title, body) =>
+            addToast({
+              title,
+              body,
+              color: 'info',
+              autohide: true,
+            }),
+        });
         setUpgradeStatus({
           loading: false,
           result: {

@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "owgwui.name" . }}
@@ -26,6 +27,12 @@ spec:
         {{- with .Values.services.owgwui.labels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
     spec:
 
       containers:
