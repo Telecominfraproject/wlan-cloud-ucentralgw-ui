@@ -49,7 +49,7 @@ const WifiAnalysis = () => {
   const secondsToLabel = (seconds) =>
     compactSecondsToDetailed(seconds, t('common.day'), t('common.days'), t('common.seconds'));
 
-  const extractIp = (json, bssid) => {
+  const extractIp = (json, station) => {
     const ips = {
       ipV4: [],
       ipV6: [],
@@ -57,7 +57,7 @@ const WifiAnalysis = () => {
     for (const obj of json.interfaces) {
       if ('clients' in obj) {
         for (const client of obj.clients) {
-          if (client.mac === bssid) {
+          if (client.mac === station) {
             ips.ipV4 = ips.ipV4.concat(client.ipv4_addresses ?? []);
             ips.ipV6 = ips.ipV6.concat(client.ipv6_addresses ?? []);
           }
@@ -151,7 +151,7 @@ const WifiAnalysis = () => {
 
                 const data = {
                   radio: radioInfo,
-                  ...extractIp(stat.data, association.bssid),
+                  ...extractIp(stat.data, association.station),
                   station: association.station,
                   ssid: ssid.ssid,
                   rssi: association.rssi ? parseDbm(association.rssi) : '-',

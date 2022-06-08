@@ -1,6 +1,6 @@
 {
   "name": "ucentral-client",
-  "version": "2.6.25",
+  "version": "2.6.26",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.1",
@@ -10,6 +10,7 @@
     "apexcharts": "^3.27.1",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
+    "buffer": "^6.0.3",
     "dagre": "^0.8.5",
     "i18next": "^20.3.1",
     "i18next-browser-languagedetector": "^6.1.2",
@@ -28,7 +29,7 @@
     "react-tooltip": "^4.2.21",
     "react-widgets": "^5.1.1",
     "sass": "^1.35.1",
-    "ucentral-libs": "^1.0.60",
+    "ucentral-libs": "^1.0.61",
     "uuid": "^8.3.2"
   },
   "main": "index.js",

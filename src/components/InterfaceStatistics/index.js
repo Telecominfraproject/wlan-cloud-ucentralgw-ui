@@ -12,54 +12,97 @@ import {
 } from '@coreui/react';
 import DatePicker from 'react-widgets/DatePicker';
 import { cilSync } from '@coreui/icons';
+import { useDevice } from 'ucentral-libs';
 import CIcon from '@coreui/icons-react';
+import { useGlobalWebSocket } from 'contexts/WebSocketProvider';
 import StatisticsChartList from './StatisticsChartList';
 import LatestStatisticsmodal from './LatestStatisticsModal';
 
+const getStart = () => {
+  const date = new Date();
+  date.setHours(date.getHours() - 1);
+  return date;
+};
 const DeviceStatisticsCard = () => {
   const { t } = useTranslation();
   const [showLatestModal, setShowLatestModal] = useState(false);
   const [options, setOptions] = useState([]);
   const [section, setSection] = useState('');
-  const [start, setStart] = useState(null);
   const [startError, setStartError] = useState(false);
-  const [end, setEnd] = useState(null);
   const [endError, setEndError] = useState(false);
-  const [time, setTime] = useState({ refreshId: '0', start: null, end: null });
+  const { deviceSerialNumber } = useDevice();
+  const [nextUpdate, setNextUpdate] = useState(undefined);
+  const { addDeviceListener, removeDeviceListener } = useGlobalWebSocket();
+  const [time, setTime] = useState({
+    refreshId: '0',
+    start: getStart(),
+    end: new Date().toISOString(),
+  });
 
   const toggleLatestModal = () => {
     setShowLatestModal(!showLatestModal);
   };
 
-  const modifyStart = (value) => {
+  const modifyStart = (value, refresh = true) => {
     try {
       new Date(value).toISOString();
       setStartError(false);
-      setStart(value);
+      if (refresh) setTime({ ...time, refreshId: createUuid(), start: value, isChosen: true });
+      else setTime({ ...time, start: value, isChosen: true });
     } catch (e) {
-      setStart('');
       setStartError(true);
     }
   };
 
-  const modifyEnd = (value) => {
+  const modifyEnd = (value, refresh = true) => {
     try {
       new Date(value).toISOString();
       setEndError(false);
-      setEnd(value);
+      if (refresh) setTime({ ...time, refreshId: createUuid(), end: value, isChosen: true });
+      else setTime({ ...time, end: value, isChosen: true });
     } catch (e) {
-      setEnd('');
       setEndError(true);
     }
   };
 
   const refresh = () => {
-    setTime({ refreshId: createUuid(), start, end });
+    setTime({ refreshId: createUuid(), start: getStart(), end: new Date().toISOString() });
+  };
+
+  const handleRefreshClick = () => {
+    refresh();
   };
 
   useEffect(() => {
     if (section === '' && options.length > 0) setSection(options[0].value);
   }, [options]);
+
+  useEffect(() => {
+    if (nextUpdate && !time.isChosen) {
+      setTime({ refreshId: createUuid(), start: getStart(), end: new Date().toISOString() });
+      setNextUpdate(undefined);
+    }
+  }, [nextUpdate, time]);
+
+  useEffect(() => {
+    setNextUpdate(undefined);
+    if (deviceSerialNumber) {
+      addDeviceListener({
+        serialNumber: deviceSerialNumber,
+        types: ['device_statistics'],
+        onTrigger: () => setNextUpdate(1),
+      });
+      refresh();
+    }
+
+    return () => {
+      if (deviceSerialNumber) {
+        removeDeviceListener({
+          serialNumber: deviceSerialNumber,
+        });
+      }
+    };
+  }, [deviceSerialNumber]);
 
   return (
     <div>
@@ -68,7 +111,12 @@ const DeviceStatisticsCard = () => {
           <div className="d-flex flex-row-reverse align-items-center">
             <div className="pl-2">
               <CPopover content={t('common.refresh')}>
-                <CButton size="sm" color="info" onClick={refresh} disabled={startError || endError}>
+                <CButton
+                  size="sm"
+                  color="info"
+                  onClick={handleRefreshClick}
+                  disabled={startError || endError}
+                >
                   <CIcon content={cilSync} />
                 </CButton>
               </CPopover>
@@ -77,7 +125,7 @@ const DeviceStatisticsCard = () => {
               <DatePicker
                 includeTime
                 onChange={(date) => modifyEnd(date)}
-                value={end ? new Date(end) : undefined}
+                value={time.end ? new Date(time.end) : undefined}
               />
               <CFormText color="danger" hidden={!endError}>
                 {t('common.invalid_date_explanation')}
@@ -88,7 +136,7 @@ const DeviceStatisticsCard = () => {
               <DatePicker
                 includeTime
                 onChange={(date) => modifyStart(date)}
-                value={start ? new Date(start) : undefined}
+                value={time.start ? new Date(time.start) : undefined}
               />
               <CFormText color="danger" hidden={!startError}>
                 {t('common.invalid_date_explanation')}
@@ -118,11 +166,10 @@ const DeviceStatisticsCard = () => {
         </CCardHeader>
         <CCardBody className="p-1">
           <StatisticsChartList
+            deviceSerialNumber={deviceSerialNumber}
             setOptions={setOptions}
             section={section}
             time={time}
-            setStart={setStart}
-            setEnd={setEnd}
           />
         </CCardBody>
       </CCard>
