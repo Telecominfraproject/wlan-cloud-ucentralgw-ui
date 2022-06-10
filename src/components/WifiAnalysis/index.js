@@ -238,7 +238,7 @@ const WifiAnalysis = () => {
 
   return (
     <div>
-      <CCard>
+      <CCard className="mb-0">
         <CCardHeader className="dark-header d-flex flex-row-reverse align-items-center">
           <div className="pl-2">
             <CPopover content={t('common.refresh')}>
@@ -254,35 +254,47 @@ const WifiAnalysis = () => {
           </div>
         </CCardHeader>
         <CCardBody>
-          <CRow className="mb-4">
-            <CCol className="text-center">
-              <input
-                type="range"
-                style={{ width: '80%' }}
-                className="form-range"
-                min="0"
-                max={range}
-                step="1"
-                onChange={(e) => updateSelectedStats(e.target.value)}
-                defaultValue={range}
-                disabled={!selectedRadioStats}
-              />
-              <h5>
-                {t('common.timestamp')}: {tableTime}
-              </h5>
-            </CCol>
-          </CRow>
-          <div className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
-            <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
-            <RadioAnalysisTable data={selectedRadioStats ?? []} loading={loading} range={range} />
-            <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>
-            <WifiAnalysisTable
-              t={t}
-              data={selectedAssociationStats ?? []}
-              loading={loading}
-              range={range}
-            />
-          </div>
+          {!loading && parsedAssociationStats.length === 0 ? (
+            <div className="text-center">
+              <h3>{t('wifi_analysis.waiting_for_data')}</h3>
+            </div>
+          ) : (
+            <>
+              <CRow className="mb-4">
+                <CCol className="text-center">
+                  <input
+                    type="range"
+                    style={{ width: '80%' }}
+                    className="form-range"
+                    min="0"
+                    max={range}
+                    step="1"
+                    onChange={(e) => updateSelectedStats(e.target.value)}
+                    defaultValue={range}
+                    disabled={!selectedRadioStats}
+                  />
+                  <h5>
+                    {t('common.timestamp')}: {tableTime}
+                  </h5>
+                </CCol>
+              </CRow>
+              <div className="overflow-auto" style={{ height: 'calc(100vh - 300px)' }}>
+                <h5 className="pb-3 text-center">{t('wifi_analysis.radios')}</h5>
+                <RadioAnalysisTable
+                  data={selectedRadioStats ?? []}
+                  loading={loading}
+                  range={range}
+                />
+                <h5 className="pt-5 pb-3 text-center">{t('wifi_analysis.associations')}</h5>
+                <WifiAnalysisTable
+                  t={t}
+                  data={selectedAssociationStats ?? []}
+                  loading={loading}
+                  range={range}
+                />
+              </div>
+            </>
+          )}
         </CCardBody>
       </CCard>
       <CModal size="xl" show={showModal} onClose={toggleModal}>

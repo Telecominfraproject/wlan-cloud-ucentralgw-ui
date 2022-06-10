@@ -719,9 +719,9 @@
 	"telemetry": {
 		"connection_failed": "Falha ao criar conexão. Erro: {{error}}",
 		"interval": "intervalo",
+		"last_update": "Última atualização",
 		"lifetime": "Duração",
 		"outputmode": "Modo saída",
-		"last_update": "Última atualização",
 		"types": "Tipos"
 	},
 	"trace": {
@@ -816,6 +816,7 @@
 		"radios": "Rádios",
 		"scan_warning": "Seu rádio 5G está em um canal de radar, você deve habilitar “Override DFS” para permitir a varredura de todos os canais 5G",
 		"title": "Análise de Wi-Fi",
-		"vendor": "fornecedor"
+		"vendor": "fornecedor",
+		"waiting_for_data": "Aguardando para receber dados do dispositivo. Verifique novamente mais tarde"
 	}
 }

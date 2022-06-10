@@ -719,9 +719,9 @@
 	"telemetry": {
 		"connection_failed": "Verbindung konnte nicht hergestellt werden. Fehler: {{error}}",
 		"interval": "Intervall",
+		"last_update": "Letztes Update",
 		"lifetime": "Dauer",
 		"outputmode": "Ausgabemodus",
-		"last_update": "Letztes Update",
 		"types": "Typen"
 	},
 	"trace": {
@@ -816,6 +816,7 @@
 		"radios": "Radios",
 		"scan_warning": "Ihr 5G-Funkgerät befindet sich auf einem Radarkanal, Sie müssen „Override DFS“ aktivieren, um das Scannen aller 5G-Kanäle zu ermöglichen",
 		"title": "WLAN-Analyse",
-		"vendor": "Verkäufer"
+		"vendor": "Verkäufer",
+		"waiting_for_data": "Warten auf Empfang von Gerätedaten. Bitte schauen Sie später noch einmal nach"
 	}
 }
