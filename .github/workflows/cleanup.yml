@@ -20,7 +20,7 @@ jobs:
 
           if [[ ! $PR_BRANCH_TAG =~ (main|master|release-*) ]]; then
             echo "PR branch is $PR_BRANCH_TAG, deleting Docker image"
-            curl -uucentral:${{ secrets.DOCKER_REGISTRY_PASSWORD }} -X DELETE "https://tip.jfrog.io/artifactory/tip-wlan-cloud-ucentral/owgw-ui/$PR_BRANCH_TAG"
+            curl -s -uucentral:${{ secrets.DOCKER_REGISTRY_PASSWORD }} -X DELETE "https://tip.jfrog.io/artifactory/tip-wlan-cloud-ucentral/owgw-ui/$PR_BRANCH_TAG"
           else
             echo "PR branch is $PR_BRANCH_TAG, not deleting Docker image"
           fi
