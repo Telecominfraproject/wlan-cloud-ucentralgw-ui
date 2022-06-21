@@ -82,7 +82,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setActiveScan(false);
     setHideOptions(false);
     setErrorCode(0);
-    setIes(undefined);
+    setIes([]);
   }, [show]);
 
   const parseThroughList = (scanList) => {
@@ -164,7 +164,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       override_dfs: dfs,
       bandwidth: bandwidth !== '' ? bandwidth : undefined,
       activeScan,
-      ies: ies.length > 0 ? ies.map(({ value }) => value) : undefined,
+      ies: ies?.length > 0 ? ies.map(({ value }) => value) : undefined,
     };
     const headers = {
       Accept: 'application/json',
