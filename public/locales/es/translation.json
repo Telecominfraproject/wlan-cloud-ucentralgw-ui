@@ -719,9 +719,9 @@
 	"telemetry": {
 		"connection_failed": "No se pudo crear la conexión. Error: {{error}}",
 		"interval": "intervalo",
+		"last_update": "Última actualización",
 		"lifetime": "Duración",
 		"outputmode": "Modo salida",
-		"last_update": "Última actualización",
 		"types": "Los tipos"
 	},
 	"trace": {
@@ -816,6 +816,7 @@
 		"radios": "Radios",
 		"scan_warning": "Su radio 5G está en un canal de radar, debe habilitar \"Anular DFS\" para permitir el escaneo de todos los canales 5G",
 		"title": "Análisis de Wi-Fi",
-		"vendor": "Vendedor"
+		"vendor": "Vendedor",
+		"waiting_for_data": "Esperando recibir datos del dispositivo. Vuelva a consultar más tarde"
 	}
 }
