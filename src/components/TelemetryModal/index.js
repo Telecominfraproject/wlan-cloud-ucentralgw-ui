@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
@@ -55,6 +55,17 @@ const TelemetryModal = ({ show, toggle }) => {
     }
   };
 
+  const msgToDisplay = useMemo(() => {
+    const display = {};
+    if (lastMessage) {
+      for (const type of types) {
+        display[type.value] = lastMessage[type.value];
+      }
+    }
+
+    return display;
+  }, [lastMessage, types]);
+
   const getUrl = () => {
     setLastUpdate('');
     setLastMessage({});
@@ -82,14 +93,13 @@ const TelemetryModal = ({ show, toggle }) => {
       .then((response) => {
         if (chosenMethod === 'true') {
           addToast({
-              title: t('common.success'),
-              body: t('commands.command_success'),
-              color: 'success',
-              autohide: true,
-            });
+            title: t('common.success'),
+            body: t('commands.command_success'),
+            color: 'success',
+            autohide: true,
+          });
           toggle();
-        }
-        else if (response.data.uri && response.data.uri !== '') {
+        } else if (response.data.uri && response.data.uri !== '') {
           setReceivedMessages(0);
           setSocket(new WebSocket(response.data.uri));
         }
@@ -259,7 +269,7 @@ const TelemetryModal = ({ show, toggle }) => {
             </CRow>
             <CRow>
               <CCol>
-                <pre>{JSON.stringify(lastMessage, null, 2)}</pre>
+                <pre>{JSON.stringify(msgToDisplay, null, 2)}</pre>
               </CCol>
             </CRow>
             <CRow>
