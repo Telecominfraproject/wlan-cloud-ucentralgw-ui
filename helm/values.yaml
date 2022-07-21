@@ -7,7 +7,7 @@ fullnameOverride: ""
 images:
   owgwui:
     repository: tip-tip-wlan-cloud-ucentral.jfrog.io/owgw-ui
-    tag: v2.4.0
+    tag: v2.4.2
     pullPolicy: Always
 
 services:
