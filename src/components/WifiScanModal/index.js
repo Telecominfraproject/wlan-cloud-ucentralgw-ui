@@ -24,27 +24,17 @@ import { useAuth, useDevice } from 'ucentral-libs';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 import { CSVLink } from 'react-csv';
-import Select from 'react-select';
 import IeDisplay from 'components/WifiScanResultModal/IeDisplay';
 import IE_OPTIONS from './IE_OPTIONS.json';
 
-const getIeOptions = () => {
-  const arr = [];
-  for (const [key, value] of Object.entries(IE_OPTIONS)) {
-    arr.push({
-      label: `${key} (${value})`,
-      value,
-    });
-  }
-  return arr;
-};
+const allIes = Object.entries(IE_OPTIONS).map(([, value]) => value);
+
 const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [selectedIes, setSelectedIes] = useState(undefined);
-  const [ies, setIes] = useState([]);
   const [hadFailure, setHadFailure] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
   const [waiting, setWaiting] = useState(false);
@@ -63,14 +53,6 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setActiveScan(!activeScan);
   };
 
-  const onIesChange = (v) => {
-    if (v.find(({ value }) => value === '*')) {
-      setIes(getIeOptions());
-    } else {
-      setIes(v);
-    }
-  };
-
   useEffect(() => {
     setHadSuccess(false);
     setHadFailure(false);
@@ -82,7 +64,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
     setActiveScan(false);
     setHideOptions(false);
     setErrorCode(0);
-    setIes([]);
+    setSelectedIes(undefined);
   }, [show]);
 
   const parseThroughList = (scanList) => {
@@ -164,7 +146,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
       override_dfs: dfs,
       bandwidth: bandwidth !== '' ? bandwidth : undefined,
       activeScan,
-      ies: ies?.length > 0 ? ies.map(({ value }) => value) : undefined,
+      ies: allIes,
     };
     const headers = {
       Accept: 'application/json',
@@ -289,23 +271,6 @@ const WifiScanModal = ({ show, toggleModal }) => {
               </CSelect>
             </CCol>
           </CRow>
-          <CRow className="mt-3">
-            <CCol md="3">
-              <p className="pl-2">{t('actions.request_ie')}:</p>
-            </CCol>
-            <CCol>
-              <Select
-                isMulti
-                closeMenuOnSelect={false}
-                name="request_ie"
-                options={[{ label: 'All', value: '*' }, ...getIeOptions()]}
-                onChange={onIesChange}
-                value={ies}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </CCol>
-          </CRow>
         </div>
         <div hidden={!waiting}>
           <CRow>
@@ -332,10 +297,10 @@ const WifiScanModal = ({ show, toggleModal }) => {
               </CCol>
             </CRow>
           )}
-          {selectedIes && <IeDisplay ies={selectedIes} setIes={setSelectedIes} />}
           {selectedIes || channelList === null ? null : (
             <WifiChannelTable channels={channelList} setIes={setSelectedIes} />
           )}
+          {selectedIes && <IeDisplay ies={selectedIes} setIes={setSelectedIes} />}
         </div>
       </CModalBody>
     </CModal>
