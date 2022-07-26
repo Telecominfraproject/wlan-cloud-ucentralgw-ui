@@ -1,5 +1,3 @@
-export const cleanTimestamp = (timestamp) => timestamp.replace('T', ' ').replace('Z', ' ');
-
 export const cleanBytesString = (bytes, decimals = 2) => {
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
   if (!bytes || bytes === 0) {

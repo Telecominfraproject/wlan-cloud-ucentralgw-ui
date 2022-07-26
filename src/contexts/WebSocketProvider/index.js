@@ -38,18 +38,19 @@ export const WebSocketProvider = ({ children }) => {
 
   // useEffect for created the WebSocket and 'storing' it in useRef
   useEffect(() => {
-    ws.current = new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`);
-    ws.current.onopen = () => {
-      setIsOpen(true);
-      ws.current?.send(`token:${currentToken}`);
-    };
-    ws.current.onclose = () => {
-      setIsOpen(false);
-    };
-    ws.current.onerror = () => {
-      setIsOpen(false);
-    };
-
+    if (endpoints?.owgw !== undefined) {
+      ws.current = new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`);
+      ws.current.onopen = () => {
+        setIsOpen(true);
+        ws.current?.send(`token:${currentToken}`);
+      };
+      ws.current.onclose = () => {
+        setIsOpen(false);
+      };
+      ws.current.onerror = () => {
+        setIsOpen(false);
+      };
+    }
     const wsCurrent = ws?.current;
     return () => wsCurrent?.close();
   }, []);
