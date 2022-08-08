@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { CButton, CModal, CModalHeader, CModalBody, CModalTitle, CPopover } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilX } from '@coreui/icons';
@@ -32,6 +32,17 @@ const LatestStatisticsModal = ({ show, toggle }) => {
       .catch(() => {});
   };
 
+  const latestStatsString = useMemo(() => {
+    if (latestStats) {
+      try {
+        return JSON.stringify(latestStats, null, 2);
+      } catch (e) {
+        return '';
+      }
+    }
+    return '';
+  }, [latestStats]);
+
   useEffect(() => {
     if (show) {
       getLatestStats();
@@ -52,13 +63,9 @@ const LatestStatisticsModal = ({ show, toggle }) => {
       </CModalHeader>
       <CModalBody>
         <div style={{ textAlign: 'right' }}>
-          <CopyToClipboardButton
-            t={t}
-            size="lg"
-            content={JSON.stringify(latestStats ?? {}, null, 4)}
-          />
+          <CopyToClipboardButton t={t} size="lg" content={latestStatsString} />
         </div>
-        <pre className="ignore">{JSON.stringify(latestStats, null, 2)}</pre>
+        <pre className="ignore">{latestStatsString}</pre>
       </CModalBody>
     </CModal>
   );

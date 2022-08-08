@@ -31,25 +31,3 @@ export const extractWebSocketResponse = (message) => {
   }
   return undefined;
 };
-
-export const getStatusFromNotification = (notification) => {
-  let status = 'success';
-  if (notification.content.warning?.length > 0) status = 'warning';
-  if (notification.content.error?.length > 0) status = 'error';
-
-  return status;
-};
-
-export const getNotificationDescription = (t, notification) => {
-  if (
-    notification.content.type === 'venue_configuration_update' ||
-    notification.content.type === 'entity_configuration_update'
-  ) {
-    return t('configurations.notification_details', {
-      success: notification.content.success.length,
-      warning: notification.content.warning.length,
-      error: notification.content.error.length,
-    });
-  }
-  return notification.content.details;
-};
