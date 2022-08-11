@@ -25,6 +25,7 @@ const NetworkDiagram = ({ show, elements, setElements }) => {
         onElementsRemove={onElementsRemove}
         onLoad={onLoad}
         snapToGrid
+        minZoom={0.1}
         snapGrid={[20, 20]}
       >
         <MiniMap
