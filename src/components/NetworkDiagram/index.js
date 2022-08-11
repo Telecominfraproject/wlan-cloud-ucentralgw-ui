@@ -47,7 +47,7 @@ const associationNode = (associationInfo) => (
   <div>
     <CRow>
       <CCol className="text-center">
-        <h6>{associationInfo.bssid}</h6>
+        <h6>{associationInfo.station}</h6>
       </CCol>
     </CRow>
     <CRow>
@@ -92,7 +92,6 @@ const NetworkDiagram = ({ show, radios, associations }) => {
     // Creating the association nodes and their edges
     for (let i = 0; i < associations.length; i += 1) {
       const assoc = associations[i];
-
       // If the radio has not been added, we create a new unknown radio based on its index
       if (radiosAdded[assoc.radio.radioIndex] === undefined) {
         newElements.push({
@@ -107,7 +106,7 @@ const NetworkDiagram = ({ show, radios, associations }) => {
 
       // Adding the association
       newElements.push({
-        id: `a-${assoc.bssid}`,
+        id: `a-${assoc.station}`,
         data: { label: associationNode(assoc) },
         position: {
           x: getX(radiosAdded[assoc.radio.radioIndex]),
@@ -120,9 +119,9 @@ const NetworkDiagram = ({ show, radios, associations }) => {
 
       // Creating the edge
       newElements.push({
-        id: `e-${assoc.radio.radioIndex}-${assoc.bssid}`,
+        id: `e-${assoc.radio.radioIndex}-${assoc.station}`,
         source: `r-${assoc.radio.radioIndex}`,
-        target: `a-${assoc.bssid}`,
+        target: `a-${assoc.station}`,
         arrowHeadType: 'arrowclosed',
       });
     }
