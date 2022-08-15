@@ -1,4 +1,4 @@
-FROM node:14-alpine3.11 AS build
+FROM node:18.7.0-alpine3.15 AS build
 
 COPY package.json package-lock.json /
 
@@ -8,7 +8,7 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:1.20.1-alpine AS runtime
+FROM nginx:1.22.0-alpine AS runtime
 
 COPY --from=build /build/ /usr/share/nginx/html/
 
