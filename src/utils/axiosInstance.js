@@ -1,5 +1,6 @@
 import * as axios from 'axios';
 import axiosRetry from 'axios-retry';
+import { LOGOUT_ON_SEC_ERROR_CODES } from 'constants';
 
 const axiosInstance = axios.create();
 
@@ -27,7 +28,7 @@ axiosInstance.interceptors.response.use(
           retries += 1;
           localStorage.setItem('sec_retries', retries);
         }
-        if (error.response.data?.ErrorCode === 9) {
+        if (LOGOUT_ON_SEC_ERROR_CODES.includes(error.response.data?.ErrorCode)) {
           localStorage.removeItem('access_token');
           localStorage.removeItem('gateway_endpoints');
           sessionStorage.clear();

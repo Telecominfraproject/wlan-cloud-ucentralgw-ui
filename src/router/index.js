@@ -13,7 +13,7 @@ const Routes = () => {
       path="/"
       name="Devices"
       render={(props) =>
-        currentToken !== '' && Object.keys(endpoints).length !== 0 ? (
+        currentToken !== '' && endpoints && Object.keys(endpoints).length !== 0 ? (
           <TheLayout {...props} />
         ) : (
           <ToastProvider>
