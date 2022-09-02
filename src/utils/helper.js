@@ -141,3 +141,25 @@ export const testRegex = (value, regexString) => {
 };
 
 export const datesSameDay = (first, second) => first.getDate() === second.getDate();
+
+const units = {
+  year: 24 * 60 * 60 * 1000 * 365,
+  month: (24 * 60 * 60 * 1000 * 365) / 12,
+  day: 24 * 60 * 60 * 1000,
+  hour: 60 * 60 * 1000,
+  minute: 60 * 1000,
+  second: 1000,
+};
+
+const rtf = new Intl.RelativeTimeFormat('en', { localeMatcher: 'best fit', style: 'long' });
+export const formatDaysAgo = (d1, d2 = new Date()) => {
+  const convertedTimestamp = unixToDateString(d1);
+  const date = new Date(convertedTimestamp);
+  const elapsed = date - d2;
+
+  for (const [key] of Object.entries(units))
+    if (Math.abs(elapsed) > units[key] || key === 'second')
+      return rtf.format(Math.round(elapsed / units[key]), key);
+
+  return prettyDate(date);
+};
