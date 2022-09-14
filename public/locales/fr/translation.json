@@ -337,6 +337,7 @@
 		"error_fetching_devices": "Erreur lors de la récupération des appareils : {{error}}",
 		"firmware_count_explanation": "Il s'agit du nombre total d'appareils qui ont été ajoutés à ce serveur de micrologiciel, y compris les appareils qui ne pointent pas actuellement vers le serveur de passerelle associé.",
 		"health_explanation": "Santé des appareils connectés ((Appareils = 100 % * 100 + Appareils> 90 % * 95 + Appareils> 60 % * 75 + Appareils < 60 % * 35) / Appareils connectés)",
+		"mac_not_found": "Numéro de série introuvable, vous redirigeant vers la page Appareils",
 		"memory_explanation": "Nombre d'appareils connectés avec la mémoire correspondante utilisée %",
 		"remove_from_blacklist": "Supprimer de la liste noire",
 		"success_added_blacklist": "Appareil ajouté avec succès à la liste noire !",

@@ -337,6 +337,7 @@
 		"error_fetching_devices": "Error al recuperar dispositivos: {{error}}",
 		"firmware_count_explanation": "Esta es la cantidad total de dispositivos que se agregaron a este servidor de firmware, incluidos los dispositivos que actualmente no apuntan al servidor de puerta de enlace relacionado.",
 		"health_explanation": "Estado de los dispositivos conectados ((Dispositivos = 100% * 100 + Dispositivos> 90% * 95 + Dispositivos> 60% * 75 + Dispositivos <60% * 35) / Dispositivos conectados)",
+		"mac_not_found": "Número de serie no encontrado, lo redirige a la página Dispositivos",
 		"memory_explanation": "Cantidad de dispositivos conectados con la memoria correspondiente utilizada%",
 		"remove_from_blacklist": "ELIMINAR DE LA LISTA NEGRA",
 		"success_added_blacklist": "¡Dispositivo agregado exitosamente a la lista negra!",

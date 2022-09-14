@@ -337,6 +337,7 @@
 		"error_fetching_devices": "Fehler beim Abrufen von Geräten: {{error}}",
 		"firmware_count_explanation": "Dies ist die Gesamtzahl der Geräte, die diesem Firmware-Server hinzugefügt wurden, einschließlich der Geräte, die derzeit nicht auf den zugehörigen Gateway-Server verweisen.",
 		"health_explanation": "Zustand der verbundenen Geräte ((Geräte = 100 % * 100 + Geräte > 90 % * 95 + Geräte > 60 % * 75 + Geräte < 60 % * 35) / Verbundene Geräte)",
+		"mac_not_found": "Seriennummer nicht gefunden, Sie werden zur Seite „Geräte“ weitergeleitet",
 		"memory_explanation": "Anzahl verbundener Geräte mit entsprechendem belegtem Speicher %",
 		"remove_from_blacklist": "Von der schwarzen Liste entfernen",
 		"success_added_blacklist": "Gerät erfolgreich zur Blacklist hinzugefügt!",
