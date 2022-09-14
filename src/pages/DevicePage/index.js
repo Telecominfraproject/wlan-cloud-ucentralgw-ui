@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { CRow, CCol, CCard, CCardBody, CNav, CNavLink, CTabPane, CTabContent } from '@coreui/react';
 import DeviceHealth from 'components/DeviceHealth';
 import CommandHistory from 'components/CommandHistory';
@@ -7,7 +7,7 @@ import DeviceLogs from 'components/DeviceLogs';
 import DeviceStatisticsCard from 'components/InterfaceStatistics';
 import DeviceActionCard from 'components/DeviceActionCard';
 import axiosInstance from 'utils/axiosInstance';
-import { DeviceProvider, useAuth } from 'ucentral-libs';
+import { DeviceProvider, useAuth, useToast } from 'ucentral-libs';
 import { useTranslation } from 'react-i18next';
 import ConfigurationDisplay from 'components/ConfigurationDisplay';
 import WifiAnalysis from 'components/WifiAnalysis';
@@ -23,7 +23,9 @@ const DevicePage = () => {
   const [index, setIndex] = useState(0);
   const { currentToken, endpoints } = useAuth();
   const [lastStats, setLastStats] = useState(null);
+  const { addToast } = useToast();
   const [status, setStatus] = useState(null);
+  const history = useHistory();
   const [deviceConfig, setDeviceConfig] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,7 +66,16 @@ const DevicePage = () => {
       .then((response) => {
         if (response) setDeviceConfig({ ...deviceInfo, extendedInfo: response.data.extendedInfo });
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response?.status === 404 || e.response?.status === 400) {
+          addToast({
+            title: t('common.error'),
+            body: t('device.mac_not_found'),
+            color: 'danger',
+            autohide: true,
+          });
+          history.push('/devices');
+        }
         setDeviceConfig(deviceInfo);
       });
   };

@@ -337,6 +337,7 @@
 		"error_fetching_devices": "Error while fetching devices: {{error}}",
 		"firmware_count_explanation": "This is the total amount of devices that were added to this firmware server, including devices not currently pointing at the related gateway server.",
 		"health_explanation": "Health of connected devices ((Devices=100% * 100 + Devices>90% * 95 + Devices>60% * 75 + Devices<60% * 35) / ConnectedDevices)",
+		"mac_not_found": "Serial number not found, redirecting you to the Devices page",
 		"memory_explanation": "Amount of connected devices with corresponding memory used percentage",
 		"remove_from_blacklist": "Remove from blacklist",
 		"success_added_blacklist": "Device successfully added to blacklist!",
