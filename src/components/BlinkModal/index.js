@@ -72,7 +72,18 @@ const BlinkModal = ({ show, toggleModal }) => {
         }
         toggleModal();
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
         setResult('error');
       })
       .finally(() => {

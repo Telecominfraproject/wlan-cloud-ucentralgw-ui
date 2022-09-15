@@ -23,13 +23,14 @@ import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
-import { LoadingButton, useAuth, useDevice } from 'ucentral-libs';
+import { LoadingButton, useAuth, useDevice, useToast } from 'ucentral-libs';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 import WaitingForTraceBody from './WaitingForTraceBody';
 
 const TraceModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
+  const { addToast } = useToast();
   const { deviceSerialNumber, getDeviceConnection } = useDevice();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
@@ -94,7 +95,18 @@ const TraceModal = ({ show, toggleModal }) => {
           setWaitingForTrace(true);
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
         setResponseBody(t('commands.error'));
         setHadFailure(true);
       })

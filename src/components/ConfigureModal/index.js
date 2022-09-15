@@ -103,12 +103,17 @@ const ConfigureModal = ({ show, toggleModal }) => {
       })
       .catch((e) => {
         setResponseBody('Error while submitting command!');
-        addToast({
-          title: t('common.error'),
-          body: `${t('common.general_error')}: ${e.response?.data?.ErrorDescription}`,
-          color: 'danger',
-          autohide: true,
-        });
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
         setHadFailure(true);
       })
       .finally(() => {

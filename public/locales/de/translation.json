@@ -326,6 +326,7 @@
 	"device": {
 		"add_to_blacklist": "Gerät zur Blacklist hinzufügen",
 		"all_devices": "Alle Geräte",
+		"already_running_command": "Gerät führt bereits einen Befehl aus, bitte versuchen Sie es später erneut",
 		"blacklisted_on": "Datum",
 		"capabilities": "Fähigkeiten",
 		"certificate_explanation": "Zertifikate der angeschlossenen Geräte",

@@ -18,7 +18,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import 'react-widgets/styles.css';
-import { useAuth, useDevice } from 'ucentral-libs';
+import { useAuth, useDevice, useToast } from 'ucentral-libs';
 import axiosInstance from 'utils/axiosInstance';
 import SuccessfulActionModalBody from 'components/SuccessfulActionModalBody';
 
@@ -26,6 +26,7 @@ const ConfigureModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [hadFailure, setHadFailure] = useState(false);
   const [doingNow, setDoingNow] = useState(false);
@@ -74,7 +75,18 @@ const ConfigureModal = ({ show, toggleModal }) => {
       .then(() => {
         setHadSuccess(true);
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
         setResponseBody(t('commands.error'));
         setHadFailure(true);
       })

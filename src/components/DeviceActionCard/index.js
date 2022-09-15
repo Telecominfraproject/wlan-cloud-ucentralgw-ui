@@ -54,12 +54,17 @@ const DeviceActions = ({ device }) => {
         if (newWindow) newWindow.opener = null;
       })
       .catch((e) => {
-        addToast({
-          title: t('common.error'),
-          body: t('connect.error_trying_to_connect', { error: e.response?.data?.ErrorDescription }),
-          color: 'danger',
-          autohide: true,
-        });
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
       })
       .finally(() => {
         setConnectLoading(false);
@@ -68,18 +73,20 @@ const DeviceActions = ({ device }) => {
 
   useEffect(() => {
     if (upgradeStatus.result !== undefined) {
-      addToast({
-        title: upgradeStatus.result.success ? t('common.success') : t('common.error'),
-        body: upgradeStatus.result.success
-          ? t('firmware.upgrade_command_submitted')
-          : upgradeStatus.result.error,
-        color: upgradeStatus.result.success ? 'success' : 'danger',
-        autohide: true,
-      });
+      if (upgradeStatus.result.success) {
+        addToast({
+          title: upgradeStatus.result.success ? t('common.success') : t('common.error'),
+          body: upgradeStatus.result.success
+            ? t('firmware.upgrade_command_submitted')
+            : upgradeStatus.result.error,
+          color: upgradeStatus.result.success ? 'success' : 'danger',
+          autohide: true,
+        });
+        setShowUpgradeModal(false);
+      }
       setUpgradeStatus({
         loading: false,
       });
-      setShowUpgradeModal(false);
     }
   }, [upgradeStatus]);
 
