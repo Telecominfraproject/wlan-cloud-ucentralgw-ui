@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axiosInstance';
 import eventBus from 'utils/eventBus';
 import { prettyDateForFile } from 'utils/helper';
-import { useAuth, useDevice } from 'ucentral-libs';
+import { useAuth, useDevice, useToast } from 'ucentral-libs';
 import WifiChannelTable from 'components/WifiScanResultModal/WifiChannelTable';
 import 'react-widgets/styles.css';
 import { CSVLink } from 'react-csv';
@@ -33,6 +33,7 @@ const WifiScanModal = ({ show, toggleModal }) => {
   const { t } = useTranslation();
   const { currentToken, endpoints } = useAuth();
   const { deviceSerialNumber } = useDevice();
+  const { addToast } = useToast();
   const [hadSuccess, setHadSuccess] = useState(false);
   const [selectedIes, setSelectedIes] = useState(undefined);
   const [hadFailure, setHadFailure] = useState(false);
@@ -172,7 +173,18 @@ const WifiScanModal = ({ show, toggleModal }) => {
           setHadFailure(true);
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
         setHadFailure(true);
       })
       .finally(() => {

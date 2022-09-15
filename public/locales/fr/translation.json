@@ -326,6 +326,7 @@
 	"device": {
 		"add_to_blacklist": "Ajouter un appareil à la liste noire",
 		"all_devices": "Tous les dispositifs",
+		"already_running_command": "L'appareil exécute déjà une commande, veuillez réessayer plus tard",
 		"blacklisted_on": "Rendez-vous amoureux",
 		"capabilities": "Capacités",
 		"certificate_explanation": "Certificats des appareils connectés",

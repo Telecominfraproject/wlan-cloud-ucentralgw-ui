@@ -34,12 +34,17 @@ const EventQueueModal = ({ show, toggle }) => {
         setResult(response.data);
       })
       .catch((e) => {
-        addToast({
-          title: t('common.error'),
-          body: t('commands.unable_queue', { error: e.response?.data?.ErrorDescription }),
-          color: 'danger',
-          autohide: true,
-        });
+        if (e.response?.data?.ErrorDescription !== undefined) {
+          const split = e.response?.data?.ErrorDescription.split(':');
+          if (split !== undefined && split.length >= 2) {
+            addToast({
+              title: t('common.error'),
+              body: split[1],
+              color: 'danger',
+              autohide: true,
+            });
+          }
+        }
       })
       .finally(() => {
         setLoading(false);
