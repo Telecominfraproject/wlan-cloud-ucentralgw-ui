@@ -246,18 +246,33 @@ const StatisticsChartList = ({ deviceSerialNumber, setOptions, section, time }) 
         setOptions([...sectionOptions, { value: 'memory', label: t('statistics.memory') }]);
         setStatOptions({ ...newOptions });
       }
-      setError(false);
+      setError(undefined);
     } catch (e) {
-      setError(true);
+      if (data?.length === 0) {
+        setError('nodata');
+      } else {
+        setError('error');
+      }
     }
   };
 
   const getInterface = useCallback(() => {
-    if (error) {
+    if (error === 'error') {
       return (
-        <CAlert color="danger" style={{ width: '240px' }}>
-          Error while parsing statistics
-        </CAlert>
+        <div style={{ textAlign: 'center' }}>
+          <CAlert color="danger" style={{ width: '240px', margin: 'auto' }}>
+            Error while parsing statistics
+          </CAlert>
+        </div>
+      );
+    }
+    if (error === 'nodata') {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <CAlert color="danger" style={{ width: '340px', margin: 'auto' }}>
+            No available statistics during this time period
+          </CAlert>
+        </div>
       );
     }
     if (statOptions.interfaceList.length === 0) return <p>N/A</p>;
