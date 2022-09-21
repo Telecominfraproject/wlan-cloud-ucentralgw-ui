@@ -205,10 +205,11 @@ const DeviceCommands = () => {
 
   const columns = [
     { key: 'submitted', label: t('common.submitted'), filter: false, _style: { width: '20%' } },
-    { key: 'command', label: t('common.command'), _style: { width: '15%' } },
+    { key: 'command', label: t('common.command'), _style: { width: '0%' } },
+    { key: 'status', label: t('common.status'), _style: { width: '0%' } },
     { key: 'executed', label: t('common.executed'), filter: false, _style: { width: '16%' } },
     { key: 'completed', label: t('common.completed'), filter: false, _style: { width: '16%' } },
-    { key: 'errorCode', label: t('common.error_code'), filter: false, _style: { width: '8%' } },
+    { key: 'errorCode', label: t('common.error_code'), filter: false },
     {
       key: 'show_buttons',
       label: '',
@@ -317,16 +318,17 @@ const DeviceCommands = () => {
                     {item.completed && item.completed !== 0 ? (
                       <FormattedDate date={item.completed} />
                     ) : (
-                      'Pending'
+                      '-'
                     )}
                   </td>
                 ),
+                status: (item) => <td className="align-middle">{item.status}</td>,
                 executed: (item) => (
                   <td className="align-middle">
                     {item.executed && item.executed !== 0 ? (
                       <FormattedDate date={item.executed} />
                     ) : (
-                      'Pending'
+                      '-'
                     )}
                   </td>
                 ),
@@ -335,7 +337,7 @@ const DeviceCommands = () => {
                     {item.submitted && item.submitted !== '' ? (
                       <FormattedDate date={item.submitted} />
                     ) : (
-                      'Pending'
+                      '-'
                     )}
                   </td>
                 ),
