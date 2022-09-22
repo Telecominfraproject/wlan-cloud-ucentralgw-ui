@@ -130,6 +130,25 @@ export const compactSecondsToDetailed = (seconds, dayLabel, daysLabel, secondsLa
   return finalString;
 };
 
+export const extraCompactSecondsToDetailed = (seconds) => {
+  let secondsLeft = seconds;
+  const days = Math.floor(secondsLeft / (3600 * 24));
+  secondsLeft -= days * (3600 * 24);
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft -= hours * 3600;
+  const minutes = Math.floor(secondsLeft / 60);
+  secondsLeft -= minutes * 60;
+
+  let finalString = '';
+
+  finalString = `${finalString}${prettyNumber(days)}:`;
+  finalString = `${finalString}${prettyNumber(hours)}:`;
+  finalString = `${finalString}${prettyNumber(minutes)}:`;
+  finalString = `${finalString}${prettyNumber(secondsLeft)}`;
+
+  return finalString;
+};
+
 export const validateEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
   return regex.test(email);
