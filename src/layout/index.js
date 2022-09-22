@@ -4,13 +4,20 @@ import routes from 'routes';
 import { CSidebarNavItem } from '@coreui/react';
 import { cilBarcode, cilRouter, cilSave, cilSettings, cilPeople } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { Header, Sidebar, Footer, PageContainer, ToastProvider, useAuth } from 'ucentral-libs';
+import { Header, Footer, PageContainer, ToastProvider, useAuth } from 'ucentral-libs';
 import { WebSocketProvider } from 'contexts/WebSocketProvider';
+import Sidebar from './Sidebar';
+import SidebarDevices from './Devices';
 
 const TheLayout = () => {
   const [showSidebar, setShowSidebar] = useState('responsive');
   const { endpoints, currentToken, user, avatar, logout } = useAuth();
   const { t, i18n } = useTranslation();
+  const [newConnectionData, setNewConnectionData] = useState();
+
+  const onConnectionDataChange = React.useCallback((newData) => {
+    setNewConnectionData({ ...newData });
+  }, []);
 
   return (
     <div className="c-app c-default-layout">
@@ -50,6 +57,7 @@ const TheLayout = () => {
               to="/system"
               icon={<CIcon content={cilSettings} size="xl" className="mr-3" />}
             />
+            <SidebarDevices newData={newConnectionData} />
           </>
         }
         redirectTo="/devices"
@@ -71,7 +79,7 @@ const TheLayout = () => {
         />
         <div className="c-body">
           <ToastProvider>
-            <WebSocketProvider>
+            <WebSocketProvider setNewConnectionData={onConnectionDataChange}>
               <PageContainer t={t} routes={routes} redirectTo="/devices" />
             </WebSocketProvider>
           </ToastProvider>

@@ -11,7 +11,7 @@ const WebSocketContext = React.createContext({
   addDeviceListener: () => {},
 });
 
-export const WebSocketProvider = ({ children }) => {
+export const WebSocketProvider = ({ children, setNewConnectionData }) => {
   const { currentToken, endpoints } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const ws = useRef(undefined);
@@ -20,6 +20,9 @@ export const WebSocketProvider = ({ children }) => {
 
   const onMessage = useCallback((message) => {
     const result = extractWebSocketResponse(message);
+    if (result?.type === 'device_connections_statistics') {
+      setNewConnectionData(result.content);
+    }
     if (result?.type === 'NOTIFICATION') {
       dispatch({ type: 'NEW_NOTIFICATION', notification: result.notification });
       pushNotification(result.notification);
@@ -84,6 +87,7 @@ export const WebSocketProvider = ({ children }) => {
 
 WebSocketProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  setNewConnectionData: PropTypes.func.isRequired,
 };
 
 export const useGlobalWebSocket = () => React.useContext(WebSocketContext);
