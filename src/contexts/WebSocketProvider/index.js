@@ -39,24 +39,29 @@ export const WebSocketProvider = ({ children, setNewConnectionData }) => {
     }
   }, []);
 
+  const onStartWebSocket = () => {
+    ws.current = new WebSocket(`${endpoints.owgw?.replace('https', 'wss')}/api/v1/ws`);
+    ws.current.onopen = () => {
+      setIsOpen(true);
+      ws.current?.send(`token:${currentToken}`);
+    };
+    ws.current.onclose = () => {
+      setIsOpen(false);
+      setTimeout(onStartWebSocket, 3000);
+    };
+    ws.current.onerror = () => {
+      setIsOpen(false);
+    };
+  };
+
   // useEffect for created the WebSocket and 'storing' it in useRef
   useEffect(() => {
     if (endpoints?.owgw !== undefined) {
-      ws.current = new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`);
-      ws.current.onopen = () => {
-        setIsOpen(true);
-        ws.current?.send(`token:${currentToken}`);
-      };
-      ws.current.onclose = () => {
-        setIsOpen(false);
-      };
-      ws.current.onerror = () => {
-        setIsOpen(false);
-      };
+      onStartWebSocket();
     }
     const wsCurrent = ws?.current;
     return () => wsCurrent?.close();
-  }, []);
+  }, [endpoints]);
 
   // useEffect for generating global notifications
   useEffect(() => {
@@ -69,6 +74,7 @@ export const WebSocketProvider = ({ children, setNewConnectionData }) => {
       if (wsCurrent) wsCurrent.removeEventListener('message', onMessage);
     };
   }, [ws?.current]);
+
   const values = useMemo(
     () => ({
       lastMessage,

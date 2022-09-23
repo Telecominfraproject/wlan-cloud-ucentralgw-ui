@@ -80,8 +80,8 @@ const SidebarDevices = ({ newData }) => {
         borderTop: '3px solid #d8dbe0',
         color: 'white',
         textAlign: 'center',
-        paddingTop: '5px',
-        paddingBottom: '5px',
+        paddingTop: '15px',
+        paddingBottom: '25px',
       }}
     >
       <h3 style={{ marginBottom: '0px' }}>{stats?.connectedDevices ?? stats?.numberOfDevices}</h3>
