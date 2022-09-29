@@ -26,6 +26,9 @@ export const extractWebSocketResponse = (message) => {
     if (data.command_response_id) {
       return { data, type: 'COMMAND' };
     }
+    if (data.notification.type === 'device_connections_statistics') {
+      return { content: data.notification.content, type: 'device_connections_statistics' };
+    }
   } catch {
     return undefined;
   }

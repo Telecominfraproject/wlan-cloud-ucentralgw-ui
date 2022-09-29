@@ -11,7 +11,7 @@ const WebSocketContext = React.createContext({
   addDeviceListener: () => {},
 });
 
-export const WebSocketProvider = ({ children }) => {
+export const WebSocketProvider = ({ children, setNewConnectionData }) => {
   const { currentToken, endpoints } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const ws = useRef(undefined);
@@ -20,6 +20,9 @@ export const WebSocketProvider = ({ children }) => {
 
   const onMessage = useCallback((message) => {
     const result = extractWebSocketResponse(message);
+    if (result?.type === 'device_connections_statistics') {
+      setNewConnectionData(result.content);
+    }
     if (result?.type === 'NOTIFICATION') {
       dispatch({ type: 'NEW_NOTIFICATION', notification: result.notification });
       pushNotification(result.notification);
@@ -36,24 +39,29 @@ export const WebSocketProvider = ({ children }) => {
     }
   }, []);
 
+  const onStartWebSocket = () => {
+    ws.current = new WebSocket(`${endpoints.owgw?.replace('https', 'wss')}/api/v1/ws`);
+    ws.current.onopen = () => {
+      setIsOpen(true);
+      ws.current?.send(`token:${currentToken}`);
+    };
+    ws.current.onclose = () => {
+      setIsOpen(false);
+      setTimeout(onStartWebSocket, 3000);
+    };
+    ws.current.onerror = () => {
+      setIsOpen(false);
+    };
+  };
+
   // useEffect for created the WebSocket and 'storing' it in useRef
   useEffect(() => {
     if (endpoints?.owgw !== undefined) {
-      ws.current = new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`);
-      ws.current.onopen = () => {
-        setIsOpen(true);
-        ws.current?.send(`token:${currentToken}`);
-      };
-      ws.current.onclose = () => {
-        setIsOpen(false);
-      };
-      ws.current.onerror = () => {
-        setIsOpen(false);
-      };
+      onStartWebSocket();
     }
     const wsCurrent = ws?.current;
     return () => wsCurrent?.close();
-  }, []);
+  }, [endpoints]);
 
   // useEffect for generating global notifications
   useEffect(() => {
@@ -66,6 +74,7 @@ export const WebSocketProvider = ({ children }) => {
       if (wsCurrent) wsCurrent.removeEventListener('message', onMessage);
     };
   }, [ws?.current]);
+
   const values = useMemo(
     () => ({
       lastMessage,
@@ -84,6 +93,7 @@ export const WebSocketProvider = ({ children }) => {
 
 WebSocketProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  setNewConnectionData: PropTypes.func.isRequired,
 };
 
 export const useGlobalWebSocket = () => React.useContext(WebSocketContext);
