@@ -39,19 +39,25 @@ export const WebSocketProvider = ({ children, setNewConnectionData }) => {
     }
   }, []);
 
-  const onStartWebSocket = () => {
-    ws.current = new WebSocket(`${endpoints.owgw?.replace('https', 'wss')}/api/v1/ws`);
-    ws.current.onopen = () => {
-      setIsOpen(true);
-      ws.current?.send(`token:${currentToken}`);
-    };
-    ws.current.onclose = () => {
-      setIsOpen(false);
-      setTimeout(onStartWebSocket, 3000);
-    };
-    ws.current.onerror = () => {
-      setIsOpen(false);
-    };
+  const onStartWebSocket = (tries = 0) => {
+    const newTries = tries + 1;
+    if (tries <= 10) {
+      ws.current = new WebSocket(
+        `${endpoints.owgw?.replace('https', 'wss').replace('http', 'ws')}/api/v1/ws`,
+      );
+      ws.current.onopen = () => {
+        setIsOpen(true);
+        ws.current?.send(`token:${currentToken}`);
+      };
+      ws.current.onclose = () => {
+        setIsOpen(false);
+        setTimeout(() => onStartWebSocket(newTries), 3000);
+      };
+      ws.current.onerror = () => {
+        setIsOpen(false);
+        setTimeout(() => onStartWebSocket(newTries), 3000);
+      };
+    }
   };
 
   // useEffect for created the WebSocket and 'storing' it in useRef
@@ -74,6 +80,33 @@ export const WebSocketProvider = ({ children, setNewConnectionData }) => {
       if (wsCurrent) wsCurrent.removeEventListener('message', onMessage);
     };
   }, [ws?.current]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      let timeoutId;
+
+      if (ws?.current) {
+        if (document.visibilityState === 'hidden') {
+          timeoutId = setTimeout(() => {
+            ws.current.onclose = () => {};
+            ws.current?.close();
+            setIsOpen(false);
+          }, 5000);
+        } else {
+          clearTimeout(timeoutId);
+
+          if (!isOpen && endpoints?.owgw !== undefined) {
+            onStartWebSocket();
+          }
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [ws?.current, isOpen]);
 
   const values = useMemo(
     () => ({

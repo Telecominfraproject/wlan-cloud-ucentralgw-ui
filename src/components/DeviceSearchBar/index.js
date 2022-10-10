@@ -25,7 +25,11 @@ const DeviceSearchBar = ({ action }) => {
         }
       } else if (socket.readyState !== WebSocket.CONNECTING && endpoints?.owgw !== undefined) {
         setWaitingSearch(value);
-        setSocket(new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`));
+        setSocket(
+          new WebSocket(
+            `${endpoints.owgw.replace('https', 'wss').replace('http', 'ws')}/api/v1/ws`,
+          ),
+        );
       } else {
         setWaitingSearch(value);
       }
@@ -61,7 +65,9 @@ const DeviceSearchBar = ({ action }) => {
 
   useEffect(() => {
     if (socket === null && endpoints?.owgw !== undefined) {
-      setSocket(new WebSocket(`${endpoints.owgw.replace('https', 'wss')}/api/v1/ws`));
+      setSocket(
+        new WebSocket(`${endpoints.owgw.replace('https', 'wss').replace('http', 'ws')}/api/v1/ws`),
+      );
     }
   }, []);
 
