@@ -1,5 +1,6 @@
 import * as axios from 'axios';
 import { AUTH_EXPIRED_TOKEN_CODE, AUTH_INVALID_TOKEN_CODE } from './apiErrors';
+import { AxiosError } from 'models/Axios';
 
 export const secUrl = `${
   // @ts-ignore
@@ -15,7 +16,7 @@ sec.defaults.headers.post.Accept = 'application/json';
 sec.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -45,7 +46,7 @@ prov.defaults.headers.post.Accept = 'application/json';
 prov.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -75,7 +76,7 @@ gw.defaults.headers.post.Accept = 'application/json';
 gw.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -105,7 +106,7 @@ fms.defaults.headers.post.Accept = 'application/json';
 fms.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -135,7 +136,7 @@ sub.defaults.headers.post.Accept = 'application/json';
 sub.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -165,7 +166,7 @@ owls.defaults.headers.post.Accept = 'application/json';
 owls.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -195,7 +196,7 @@ analytics.defaults.headers.post.Accept = 'application/json';
 analytics.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -225,7 +226,7 @@ installer.defaults.headers.post.Accept = 'application/json';
 installer.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
@@ -255,7 +256,7 @@ rrm.defaults.headers.post.Accept = 'application/json';
 rrm.interceptors.response.use(
   // Success actions
   undefined,
-  (error: axios.AxiosError) => {
+  (error: AxiosError) => {
     switch (error?.response?.status) {
       case 401:
         break;
