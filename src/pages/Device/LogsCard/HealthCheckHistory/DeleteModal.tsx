@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Alert, AlertIcon, Box, Button, Center, useDisclosure, useToast } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import ReactDatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { DeleteButton } from 'components/Buttons/DeleteButton';
 import { Modal } from 'components/Modals/Modal';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useDeleteHealthChecks } from 'hooks/Network/HealthChecks';
+import { AxiosError } from 'models/Axios';
 
 const CustomInputButton = React.forwardRef(
   ({ value, onClick }: { value: string; onClick: () => void }, ref: React.LegacyRef<HTMLButtonElement>) => (

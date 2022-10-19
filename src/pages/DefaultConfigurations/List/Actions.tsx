@@ -17,10 +17,10 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { DefaultConfigurationResponse, useDeleteDefaultConfig } from 'hooks/Network/DefaultConfigurations';
+import { AxiosError } from 'models/Axios';
 
 type Props = {
   config: DefaultConfigurationResponse;

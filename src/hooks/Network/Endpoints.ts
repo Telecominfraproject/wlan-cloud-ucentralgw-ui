@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { axiosGw, axiosProv, axiosSec } from 'constants/axiosInstances';
+import { AxiosError } from 'models/Axios';
 
 export type EndpointApiResponse = {
   authenticationType: string;

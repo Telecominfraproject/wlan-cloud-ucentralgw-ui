@@ -1,9 +1,9 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { axiosFms, axiosGw } from 'constants/axiosInstances';
+import { AxiosError } from 'models/Axios';
 import { Firmware } from 'models/Firmware';
 import { Note } from 'models/Note';
 

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { axiosProv } from 'constants/axiosInstances';
+import { AxiosError } from 'models/Axios';
 import { Note } from 'models/Note';
 
 export type InventoryTag = {

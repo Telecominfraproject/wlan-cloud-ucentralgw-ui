@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
+import { AxiosError } from 'models/Axios';
 
 export type UseMutationResultProps = {
   objName: string;

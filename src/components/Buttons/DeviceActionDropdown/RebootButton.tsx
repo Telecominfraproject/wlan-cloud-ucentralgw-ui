@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { MenuItem, useToast } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useControllerStore } from 'contexts/ControllerSocketProvider/useStore';
 import { useRebootDevice } from 'hooks/Network/Devices';
 import { useMutationResult } from 'hooks/useMutationResult';
+import { AxiosError } from 'models/Axios';
 import { GatewayDevice } from 'models/Device';
 
 type Props = {

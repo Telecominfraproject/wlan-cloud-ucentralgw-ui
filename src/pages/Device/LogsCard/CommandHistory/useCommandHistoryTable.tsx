@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Badge, Box, HStack, IconButton, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
 import { DeviceCommandHistory, useDeleteCommand, useGetCommandHistory } from 'hooks/Network/Commands';
+import { AxiosError } from 'models/Axios';
 import { Column } from 'models/Table';
 
 type Props = {

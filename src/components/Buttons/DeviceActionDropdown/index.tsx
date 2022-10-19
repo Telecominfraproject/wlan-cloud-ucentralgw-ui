@@ -1,11 +1,11 @@
 import React from 'react';
 import { IconButton, Menu, MenuButton, MenuItem, MenuList, Spinner, Tooltip } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { Wrench } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import RebootMenuItem from './RebootButton';
 import { useBlinkDevice, useGetDeviceRtty } from 'hooks/Network/Devices';
 import { useMutationResult } from 'hooks/useMutationResult';
+import { AxiosError } from 'models/Axios';
 import { GatewayDevice } from 'models/Device';
 
 interface Props {
@@ -36,7 +36,7 @@ const DeviceActionDropdown = ({
   size,
 }: Props) => {
   const { t } = useTranslation();
-  const { refetch: getRtty, isLoading: isRtty } = useGetDeviceRtty({
+  const { refetch: getRtty, isInitialLoading: isRtty } = useGetDeviceRtty({
     serialNumber: device.serialNumber,
     extraId: 'inventory-modal',
   });

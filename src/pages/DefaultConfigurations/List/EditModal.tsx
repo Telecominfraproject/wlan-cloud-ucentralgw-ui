@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Box, SimpleGrid, useBoolean, UseDisclosureReturn, useToast } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -15,6 +14,7 @@ import { DefaultConfigurationResponse, useUpdateDefaultConfig } from 'hooks/Netw
 import { useGetDeviceTypes } from 'hooks/Network/Firmware';
 import { useFormModal } from 'hooks/useFormModal';
 import { useFormRef } from 'hooks/useFormRef';
+import { AxiosError } from 'models/Axios';
 
 type Props = {
   modalProps: UseDisclosureReturn;

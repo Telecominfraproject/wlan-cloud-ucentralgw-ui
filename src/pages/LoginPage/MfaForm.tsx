@@ -15,10 +15,10 @@ import {
   PinInput,
   PinInputField,
 } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'contexts/AuthProvider';
 import { useSendPhoneCode, useSendVerifyCode } from 'hooks/Network/Login';
+import { AxiosError } from 'models/Axios';
 import { LoginFormProps } from 'models/Login';
 
 export interface MfaFormProps {

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { axiosGw } from 'constants/axiosInstances';
 import { useEndpointStatus } from 'hooks/useEndpointStatus';
+import { AxiosError } from 'models/Axios';
 import { DeviceConfiguration } from 'models/Device';
 
 export type DefaultConfigurationResponse = {

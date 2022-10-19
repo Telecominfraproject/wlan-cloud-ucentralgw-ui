@@ -15,7 +15,6 @@ import {
   Link,
   SimpleGrid,
 } from '@chakra-ui/react';
-import { AxiosError } from 'axios';
 import { Formik, Field, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -23,6 +22,7 @@ import { StringField } from 'components/Form/Fields/StringField';
 import { useAuth } from 'contexts/AuthProvider';
 import { useLogin } from 'hooks/Network/Login';
 import { useApiRequirements } from 'hooks/useApiRequirements';
+import { AxiosError } from 'models/Axios';
 import { FormFieldProps } from 'models/FormField';
 import { LoginFormProps } from 'models/Login';
 

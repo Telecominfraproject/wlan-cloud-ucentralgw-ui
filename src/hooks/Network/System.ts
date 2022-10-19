@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import * as axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { AxiosError } from 'models/Axios';
 
 type System = {
   UI?: string;

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { axiosGw } from 'constants/axiosInstances';
+import { AxiosError } from 'models/Axios';
 
 export type DeviceLog = {
   UUID: string;
