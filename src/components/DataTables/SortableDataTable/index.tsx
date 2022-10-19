@@ -39,9 +39,9 @@ import {
   TableInstance,
 } from 'react-table';
 import { v4 as uuid } from 'uuid';
-import { LoadingOverlay } from 'components/LoadingOverlay';
 import SortIcon from './SortIcon';
 import { isColumnSorted, isSortedDesc, onSortClick } from './utils';
+import { LoadingOverlay } from 'components/LoadingOverlay';
 import { Column, PageInfo, SortInfo } from 'models/Table';
 
 interface Props {

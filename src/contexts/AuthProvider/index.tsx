@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { AuthProviderProps, AuthProviderReturn, useGetConfigurationDescriptions } from './utils';
 import {
   axiosAnalytics,
   axiosFms,
@@ -20,7 +21,6 @@ import {
 import { useGetEndpoints } from 'hooks/Network/Endpoints';
 import { Endpoint } from 'models/Endpoint';
 import { Preference } from 'models/Preference';
-import { AuthProviderProps, AuthProviderReturn, useGetConfigurationDescriptions } from './utils';
 
 const AuthContext = React.createContext({} as AuthProviderReturn);
 

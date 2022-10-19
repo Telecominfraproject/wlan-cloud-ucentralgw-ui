@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import CreateUserForm from './Form';
+import { CloseButton } from 'components/Buttons/CloseButton';
+import { SaveButton } from 'components/Buttons/SaveButton';
+import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
+import { ModalHeader } from 'components/Modals/GenericModal/ModalHeader';
+import { axiosSec } from 'constants/axiosInstances';
 import { useAuth } from 'contexts/AuthProvider';
 import { useFormRef } from 'hooks/useFormRef';
-import { ModalHeader } from 'components/Modals/GenericModal/ModalHeader';
-import { SaveButton } from 'components/Buttons/SaveButton';
-import { CloseButton } from 'components/Buttons/CloseButton';
-import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
-import { axiosSec } from 'constants/axiosInstances';
 
 const propTypes = {
   requirements: PropTypes.shape({

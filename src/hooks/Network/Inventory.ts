@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { AxiosError } from 'axios';
+import { useQuery } from 'react-query';
 import { axiosProv } from 'constants/axiosInstances';
 import { Note } from 'models/Note';
-import { useQuery } from 'react-query';
 
 export type InventoryTag = {
   contact: string;

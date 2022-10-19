@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Box, Flex, Heading, Spacer } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { ParsedRadio } from './RadiosTable';
-import { Column } from 'models/Table';
-import DataCell from 'components/TableCells/DataCell';
-import { DataTable } from 'components/DataTables/DataTable';
 import { ColumnPicker } from 'components/DataTables/ColumnPicker';
+import { DataTable } from 'components/DataTables/DataTable';
+import DataCell from 'components/TableCells/DataCell';
+import { Column } from 'models/Table';
 
 export type ParsedAssociation = {
   radio?: ParsedRadio;

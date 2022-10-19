@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Flex, Heading, Tooltip, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { useGetDevicesStats } from 'hooks/Network/Devices';
 import { compactSecondsToDetailed, minimalSecondsToDetailed } from 'helpers/dateFormatting';
+import { useGetDevicesStats } from 'hooks/Network/Devices';
 
 const SidebarDevices = () => {
   const { t } = useTranslation();

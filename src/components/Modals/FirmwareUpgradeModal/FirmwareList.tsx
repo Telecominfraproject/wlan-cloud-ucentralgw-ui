@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
-import { Firmware } from 'models/Firmware';
 import { compactDate } from 'helpers/dateFormatting';
 import { bytesString } from 'helpers/stringHelper';
+import { Firmware } from 'models/Firmware';
 
 interface Props {
   firmware: Firmware[];

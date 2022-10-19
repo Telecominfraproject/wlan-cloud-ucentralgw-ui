@@ -20,12 +20,12 @@ import { MultiValue, Select } from 'chakra-react-select';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import SystemCertificatesTable from './SystemCertificatesTable';
-import { useGetSubsystems, useGetSystemInfo, useReloadSubsystems } from 'hooks/Network/System';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { compactSecondsToDetailed } from 'helpers/dateFormatting';
 import { EndpointApiResponse } from 'hooks/Network/Endpoints';
+import { useGetSubsystems, useGetSystemInfo, useReloadSubsystems } from 'hooks/Network/System';
 
 interface Props {
   endpoint: EndpointApiResponse;

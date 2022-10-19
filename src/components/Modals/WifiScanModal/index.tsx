@@ -3,18 +3,18 @@ import { Modal, ModalOverlay, ModalContent, ModalBody, Center, Spinner } from '@
 import { ArrowLeft, Download, Gauge } from 'phosphor-react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
-import { CloseButton } from 'components/Buttons/CloseButton';
-import { ResponsiveButton } from 'components/Buttons/ResponsiveButton';
-import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';
 import WifiScanForm from './Form';
 import WifiScanResultDisplay from './ResultDisplay';
-import { DeviceScanResult, WifiScanCommand } from 'models/Device';
+import { CloseButton } from 'components/Buttons/CloseButton';
+import { ResponsiveButton } from 'components/Buttons/ResponsiveButton';
+import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
+import { dateForFilename } from 'helpers/dateFormatting';
 import { useWifiScanDevice } from 'hooks/Network/Devices';
 import useCommandModal from 'hooks/useCommandModal';
 import { useFormRef } from 'hooks/useFormRef';
+import { DeviceScanResult, WifiScanCommand } from 'models/Device';
 import { ModalProps } from 'models/Modal';
-import { dateForFilename } from 'helpers/dateFormatting';
 
 export type WifiScanModalProps = {
   modalProps: ModalProps;

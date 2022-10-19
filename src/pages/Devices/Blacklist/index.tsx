@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
 import CreateBlacklistModal from './CreateModal';
 import EditBlacklistModal from './EditModal';
-import { Column, PageInfo } from 'models/Table';
-import { BlacklistDevice, useGetBlacklistCount, useGetBlacklistDevices } from 'hooks/Network/Blacklist';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { ColumnPicker } from 'components/DataTables/ColumnPicker';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { ColumnPicker } from 'components/DataTables/ColumnPicker';
 import { DataTable } from 'components/DataTables/DataTable';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { BlacklistDevice, useGetBlacklistCount, useGetBlacklistDevices } from 'hooks/Network/Blacklist';
+import { Column, PageInfo } from 'models/Table';
 
 const DeviceListCard = () => {
   const { t } = useTranslation();

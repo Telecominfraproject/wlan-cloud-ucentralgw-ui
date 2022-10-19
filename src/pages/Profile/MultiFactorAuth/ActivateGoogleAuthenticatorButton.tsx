@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, useDisclosure } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { useUpdateAccount } from 'hooks/Network/Account';
-import { useAuth } from 'contexts/AuthProvider';
 import GoogleAuthenticatorModal from './GoogleAuthenticatorModal';
+import { useAuth } from 'contexts/AuthProvider';
+import { useUpdateAccount } from 'hooks/Network/Account';
 
 const ActivateGoogleAuthenticatorButton = () => {
   const { t } = useTranslation();

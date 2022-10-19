@@ -17,17 +17,17 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import FirmwareDetailsModal from './Modal';
 import UriCell from './UriCell';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { DataTable } from 'components/DataTables/DataTable';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { LoadingOverlay } from 'components/LoadingOverlay';
+import DataCell from 'components/TableCells/DataCell';
 import { getRevision } from 'helpers/stringHelper';
 import { useGetDeviceTypes, useGetFirmwareDeviceType } from 'hooks/Network/Firmware';
 import { Firmware } from 'models/Firmware';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
-import DataCell from 'components/TableCells/DataCell';
 import { Column } from 'models/Table';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { CardBody } from 'components/Containers/Card/CardBody';
-import { LoadingOverlay } from 'components/LoadingOverlay';
-import { DataTable } from 'components/DataTables/DataTable';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
 
 const FirmwareListTable = () => {
   const { t } = useTranslation();

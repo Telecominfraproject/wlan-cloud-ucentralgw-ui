@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { DeviceLog, useGetDeviceLogs } from 'hooks/Network/DeviceLogs';
 import { Column } from 'models/Table';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 
 type Props = {
   serialNumber: string;

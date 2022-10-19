@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ColumnPicker } from 'components/DataTables/ColumnPicker';
-import { Column } from 'models/Table';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
-import { DataTable } from 'components/DataTables/DataTable';
 import { Box, Button, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import DeleteHealthChecksModal from './DeleteModal';
 import useHealthCheckTable from './useHealthCheckTable';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { ColumnPicker } from 'components/DataTables/ColumnPicker';
+import { DataTable } from 'components/DataTables/DataTable';
+import { Column } from 'models/Table';
 
 type Props = {
   serialNumber: string;

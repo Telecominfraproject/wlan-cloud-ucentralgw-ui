@@ -1,11 +1,11 @@
 import React from 'react';
 import { IconButton, Menu, MenuButton, MenuItem, MenuList, Tooltip, useToast } from '@chakra-ui/react';
+import axios from 'axios';
 import { Wrench } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { useSendUserEmailValidation, useSuspendUser, useResetMfa, useResetPassword } from 'hooks/Network/Users';
 import { useMutationResult } from 'hooks/useMutationResult';
-import axios from 'axios';
 
 interface Props {
   id: string;

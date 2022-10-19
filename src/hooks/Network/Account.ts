@@ -4,10 +4,10 @@ import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { v4 as uuid } from 'uuid';
-import { axiosSec } from 'constants/axiosInstances';
-import { Preference } from 'models/Preference';
 import { User } from '../../models/User';
+import { axiosSec } from 'constants/axiosInstances';
 import { Note } from 'models/Note';
+import { Preference } from 'models/Preference';
 
 export const useUpdatePreferences = () => {
   const queryClient = useQueryClient();

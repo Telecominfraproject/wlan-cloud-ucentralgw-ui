@@ -6,12 +6,12 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import * as Yup from 'yup';
-import { testRegex } from 'helpers/formTests';
-import { useAuth } from 'contexts/AuthProvider';
-import { useApiRequirements } from 'hooks/useApiRequirements';
-import { StringField } from 'components/Form/Fields/StringField';
 import { SelectField } from 'components/Form/Fields/SelectField';
+import { StringField } from 'components/Form/Fields/StringField';
 import { ToggleField } from 'components/Form/Fields/ToggleField';
+import { useAuth } from 'contexts/AuthProvider';
+import { testRegex } from 'helpers/formTests';
+import { useApiRequirements } from 'hooks/useApiRequirements';
 
 const propTypes = {
   isOpen: PropTypes.bool.isRequired,

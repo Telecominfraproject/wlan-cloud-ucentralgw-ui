@@ -20,13 +20,13 @@ import {
 } from '@chakra-ui/react';
 import { Plus } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { DataTable } from '../../components/DataTables/DataTable';
+import FormattedDate from '../../components/InformationDisplays/FormattedDate';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { DataTable } from '../../components/DataTables/DataTable';
-import FormattedDate from '../../components/InformationDisplays/FormattedDate';
-import { useUpdateAccount } from 'hooks/Network/Account';
 import { useAuth } from 'contexts/AuthProvider';
+import { useUpdateAccount } from 'hooks/Network/Account';
 import { Note } from 'models/Note';
 import { Column } from 'models/Table';
 

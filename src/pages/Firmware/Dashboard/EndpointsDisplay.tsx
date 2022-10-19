@@ -3,9 +3,9 @@ import { Heading, Table, Tbody, Td, Th, Thead, Tooltip, Tr } from '@chakra-ui/re
 import { Info } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { FirmwareDashboardEndpoint } from 'hooks/Network/Firmware';
 
 type Props = {

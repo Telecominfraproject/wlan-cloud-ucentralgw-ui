@@ -11,9 +11,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { BlacklistDevice, useUpdateBlacklist } from 'hooks/Network/Blacklist';
 import { SaveButton } from 'components/Buttons/SaveButton';
 import { Modal } from 'components/Modals/Modal';
+import { BlacklistDevice, useUpdateBlacklist } from 'hooks/Network/Blacklist';
 
 type Props = {
   modalProps: {

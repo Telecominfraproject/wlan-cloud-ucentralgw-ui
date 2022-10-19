@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import { axiosGw } from 'constants/axiosInstances';
-import { DeviceRttyApiResponse, GatewayDevice, WifiScanCommand, WifiScanResult } from 'models/Device';
 import { useAuth } from 'contexts/AuthProvider';
 import { useEndpointStatus } from 'hooks/useEndpointStatus';
+import { DeviceRttyApiResponse, GatewayDevice, WifiScanCommand, WifiScanResult } from 'models/Device';
 import { Note } from 'models/Note';
 import { PageInfo } from 'models/Table';
 

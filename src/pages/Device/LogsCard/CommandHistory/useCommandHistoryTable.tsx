@@ -3,9 +3,9 @@ import { Badge, Box, HStack, IconButton, Tooltip, useDisclosure, useToast } from
 import { AxiosError } from 'axios';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { DeviceCommandHistory, useDeleteCommand, useGetCommandHistory } from 'hooks/Network/Commands';
-import { uppercaseFirstLetter } from 'helpers/stringHelper';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { uppercaseFirstLetter } from 'helpers/stringHelper';
+import { DeviceCommandHistory, useDeleteCommand, useGetCommandHistory } from 'hooks/Network/Commands';
 import { Column } from 'models/Table';
 
 type Props = {

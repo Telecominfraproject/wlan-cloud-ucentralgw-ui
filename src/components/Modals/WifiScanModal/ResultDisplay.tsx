@@ -3,8 +3,8 @@ import { Alert, Heading, SimpleGrid } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import ResultCard from './ResultCard';
-import { DeviceScanResult, ScanChannel, WifiScanResult } from 'models/Device';
 import { parseDbm } from 'helpers/stringHelper';
+import { DeviceScanResult, ScanChannel, WifiScanResult } from 'models/Device';
 
 interface Props {
   results: WifiScanResult;

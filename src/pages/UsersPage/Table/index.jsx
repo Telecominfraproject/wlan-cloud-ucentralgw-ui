@@ -1,21 +1,21 @@
 import React, { useCallback, useState } from 'react';
 import { Avatar, Box, Button, Flex, Heading, useDisclosure, useToast } from '@chakra-ui/react';
 import { ArrowsClockwise } from 'phosphor-react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import CreateUserModal from './CreateUserModal';
 import EditUserModal from './EditUserModal';
-import PropTypes from 'prop-types';
 import UserActions from './UserActions';
-import { useGetUsers } from 'hooks/Network/Users';
-import { useAuth } from 'contexts/AuthProvider';
-import { useGetRequirements } from 'hooks/Network/Requirements';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { ColumnPicker } from 'components/DataTables/ColumnPicker';
-import { CardBody } from 'components/Containers/Card/CardBody';
 import { DataTable } from 'components/DataTables/DataTable';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { useAuth } from 'contexts/AuthProvider';
+import { useGetRequirements } from 'hooks/Network/Requirements';
+import { useGetUsers } from 'hooks/Network/Users';
 
 const propTypes = {
   title: PropTypes.string,

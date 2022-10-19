@@ -14,10 +14,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { useCreateBlacklist } from 'hooks/Network/Blacklist';
 import { CreateButton } from 'components/Buttons/CreateButton';
-import { Modal } from 'components/Modals/Modal';
 import { SaveButton } from 'components/Buttons/SaveButton';
+import { Modal } from 'components/Modals/Modal';
+import { useCreateBlacklist } from 'hooks/Network/Blacklist';
 
 const CreateBlacklistModal = () => {
   const { t } = useTranslation();

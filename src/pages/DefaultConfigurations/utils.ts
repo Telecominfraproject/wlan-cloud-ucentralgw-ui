@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { testJson } from 'helpers/formTests';
 import * as Yup from 'yup';
+import { testJson } from 'helpers/formTests';
 
 export const DefaultConfigurationSchema = (t: (str: string) => string) =>
   Yup.object()

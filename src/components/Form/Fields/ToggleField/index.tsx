@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import Field from './FastToggleInput';
-import { FieldProps } from 'models/Form';
 import { useFastField } from 'hooks/useFastField';
+import { FieldProps } from 'models/Form';
 
 export interface ToggleFieldProps extends FieldProps {
   falseIsUndefined?: boolean;

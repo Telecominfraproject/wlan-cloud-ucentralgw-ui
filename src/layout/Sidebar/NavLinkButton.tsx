@@ -3,8 +3,8 @@ import { Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import { Route } from 'models/Routes';
 import IconBox from 'components/Containers/IconBox';
+import { Route } from 'models/Routes';
 
 const variantChange = '0.2s linear';
 

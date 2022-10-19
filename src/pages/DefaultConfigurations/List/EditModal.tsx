@@ -5,16 +5,16 @@ import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { DefaultConfigurationSchema } from '../utils';
+import { EditButton } from 'components/Buttons/EditButton';
+import { SaveButton } from 'components/Buttons/SaveButton';
+import { StringField } from 'components/Form/Fields/StringField';
 import MultiSelectField from 'components/Form/MultiSelectField';
+import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
+import { Modal } from 'components/Modals/Modal';
 import { DefaultConfigurationResponse, useUpdateDefaultConfig } from 'hooks/Network/DefaultConfigurations';
 import { useGetDeviceTypes } from 'hooks/Network/Firmware';
-import { useFormRef } from 'hooks/useFormRef';
 import { useFormModal } from 'hooks/useFormModal';
-import { Modal } from 'components/Modals/Modal';
-import { SaveButton } from 'components/Buttons/SaveButton';
-import { EditButton } from 'components/Buttons/EditButton';
-import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
-import { StringField } from 'components/Form/Fields/StringField';
+import { useFormRef } from 'hooks/useFormRef';
 
 type Props = {
   modalProps: UseDisclosureReturn;

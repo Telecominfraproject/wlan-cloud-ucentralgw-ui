@@ -17,11 +17,11 @@ import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { StringField } from 'components/Form/Fields/StringField';
-import { LoginFormProps } from 'models/Login';
 import { useAuth } from 'contexts/AuthProvider';
-import { useChangePassword } from 'hooks/Network/Login';
 import { testRegex } from 'helpers/formTests';
+import { useChangePassword } from 'hooks/Network/Login';
 import { useApiRequirements } from 'hooks/useApiRequirements';
+import { LoginFormProps } from 'models/Login';
 
 const LoginSchema = (t: (str: string) => string, { passRegex }: { passRegex: string }) =>
   Yup.object().shape({

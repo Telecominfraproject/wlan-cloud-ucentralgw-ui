@@ -14,13 +14,13 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { JsonViewer } from '@textea/json-viewer';
-import { useGetDeviceCapabilities } from 'hooks/Network/Devices';
-import { Modal } from 'components/Modals/Modal';
+import { useTranslation } from 'react-i18next';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
-import { LoadingOverlay } from 'components/LoadingOverlay';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { LoadingOverlay } from 'components/LoadingOverlay';
+import { Modal } from 'components/Modals/Modal';
+import { useGetDeviceCapabilities } from 'hooks/Network/Devices';
 
 type Props = {
   serialNumber: string;

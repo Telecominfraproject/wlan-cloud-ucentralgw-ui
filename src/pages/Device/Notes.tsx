@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { Card } from 'components/Containers/Card';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { CardBody } from 'components/Containers/Card/CardBody';
 import {
   Box,
   Button,
@@ -23,11 +20,14 @@ import {
 } from '@chakra-ui/react';
 import { Plus } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { useGetDevice, useUpdateDevice } from 'hooks/Network/Devices';
+import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { DataTable } from 'components/DataTables/DataTable';
-import { Column } from 'models/Table';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { useGetDevice, useUpdateDevice } from 'hooks/Network/Devices';
 import { Note } from 'models/Note';
+import { Column } from 'models/Table';
 
 type Props = {
   serialNumber: string;

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
-import { Card } from 'components/Containers/Card';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { Box, Flex, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import WifiAnalysisAssocationsTable, { ParsedAssociation } from './AssocationsTable';
 import WifiAnalysisRadioTable, { ParsedRadio } from './RadiosTable';
-import { DeviceStatistics, useGetDeviceNewestStats, useGetMacOuis } from 'hooks/Network/Statistics';
-import { parseDbm } from 'helpers/stringHelper';
+import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { compactSecondsToDetailed } from 'helpers/dateFormatting';
+import { parseDbm } from 'helpers/stringHelper';
+import { DeviceStatistics, useGetDeviceNewestStats, useGetMacOuis } from 'hooks/Network/Statistics';
 
 type Props = {
   serialNumber: string;

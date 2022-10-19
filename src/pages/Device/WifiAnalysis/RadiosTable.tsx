@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Box, Flex, Heading, Spacer } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { Column } from 'models/Table';
 import { ColumnPicker } from 'components/DataTables/ColumnPicker';
 import { DataTable } from 'components/DataTables/DataTable';
+import { Column } from 'models/Table';
 
 export type ParsedRadio = {
   recorded: number;

@@ -1,7 +1,7 @@
-import { useFastField } from 'hooks/useFastField';
-import { FieldProps } from 'models/Form';
 import React, { useCallback } from 'react';
 import Field from './NumberInput';
+import { useFastField } from 'hooks/useFastField';
+import { FieldProps } from 'models/Form';
 
 const parseToInt = (val: string, acceptEmptyValue: boolean) => {
   if (acceptEmptyValue && val === '') return undefined;

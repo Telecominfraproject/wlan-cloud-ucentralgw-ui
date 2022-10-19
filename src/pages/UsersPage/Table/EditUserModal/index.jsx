@@ -14,14 +14,14 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import UpdateUserForm from './Form';
+import { CloseButton } from 'components/Buttons/CloseButton';
+import { EditButton } from 'components/Buttons/EditButton';
+import { SaveButton } from 'components/Buttons/SaveButton';
+import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
+import { ModalHeader } from 'components/Modals/GenericModal/ModalHeader';
+import { axiosSec } from 'constants/axiosInstances';
 import { useGetUser } from 'hooks/Network/Users';
 import { useFormRef } from 'hooks/useFormRef';
-import { SaveButton } from 'components/Buttons/SaveButton';
-import { EditButton } from 'components/Buttons/EditButton';
-import { CloseButton } from 'components/Buttons/CloseButton';
-import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
-import { axiosSec } from 'constants/axiosInstances';
-import { ModalHeader } from 'components/Modals/GenericModal/ModalHeader';
 
 const propTypes = {
   isOpen: PropTypes.bool.isRequired,

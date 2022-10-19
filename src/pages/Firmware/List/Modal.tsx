@@ -24,15 +24,16 @@ import {
 } from '@chakra-ui/react';
 import { Pen, Plus, X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { getRevision } from 'helpers/stringHelper';
-import { Firmware } from 'models/Firmware';
-import { useUpdateUpdateFirmware } from 'hooks/Network/Firmware';
-import { Column } from 'models/Table';
-import { Note } from 'models/Note';
-import { Modal } from 'components/Modals/Modal';
+import { SaveButton } from 'components/Buttons/SaveButton';
 import { DataTable } from 'components/DataTables/DataTable';
-import DataCell from 'components/TableCells/DataCell';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { Modal } from 'components/Modals/Modal';
+import DataCell from 'components/TableCells/DataCell';
+import { getRevision } from 'helpers/stringHelper';
+import { useUpdateUpdateFirmware } from 'hooks/Network/Firmware';
+import { Firmware } from 'models/Firmware';
+import { Note } from 'models/Note';
+import { Column } from 'models/Table';
 
 type Props = {
   modalProps: UseDisclosureReturn;
@@ -190,7 +191,6 @@ const FirmwareDetailsModal = ({ modalProps, firmware }: Props) => {
               ml={2}
             />
             {isEditingDescription && (
-              // @ts-ignore
               <SaveButton onClick={onSaveDescription} ml={2} isCompact size="sm" isLoading={updateFirmware.isLoading} />
             )}
           </FormLabel>

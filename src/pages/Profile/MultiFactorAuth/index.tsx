@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Divider, Flex, Heading, Spacer, Tag, Text, VStack } from '@chakra-ui/react';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import { useTranslation } from 'react-i18next';
-import { Card } from 'components/Containers/Card';
-import { CardBody } from 'components/Containers/Card/CardBody';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import ActivateEmailMfaButton from './ActivateEmailMfaButton';
 import ActivateGoogleAuthenticatorButton from './ActivateGoogleAuthenticatorButton';
 import ActivateSmsAuthButton from './ActivateSmsAuthButton';
 import DeactivateMfaButton from './DeactivateMfaButton';
+import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { useAuth } from 'contexts/AuthProvider';
 
 const MultiFactorAuthProfile = () => {

@@ -15,13 +15,13 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
+import { JsonViewer } from '@textea/json-viewer';
 import { ClockCounterClockwise } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { useGetDeviceLastStats } from 'hooks/Network/Statistics';
-import { Modal } from 'components/Modals/Modal';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { LoadingOverlay } from 'components/LoadingOverlay';
-import { JsonViewer } from '@textea/json-viewer';
+import { Modal } from 'components/Modals/Modal';
+import { useGetDeviceLastStats } from 'hooks/Network/Statistics';
 
 type Props = {
   serialNumber: string;

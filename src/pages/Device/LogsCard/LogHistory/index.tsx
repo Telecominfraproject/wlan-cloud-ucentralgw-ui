@@ -3,10 +3,10 @@ import { Box, Button, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/r
 import { useTranslation } from 'react-i18next';
 import DeleteLogModal from './DeleteModal';
 import useDeviceLogsTable from './useDeviceLogsTable';
-import { ColumnPicker } from 'components/DataTables/ColumnPicker';
-import { Column } from 'models/Table';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { ColumnPicker } from 'components/DataTables/ColumnPicker';
 import { DataTable } from 'components/DataTables/DataTable';
+import { Column } from 'models/Table';
 
 type Props = {
   serialNumber: string;

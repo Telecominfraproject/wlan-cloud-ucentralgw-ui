@@ -3,9 +3,9 @@ import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/r
 import { useTranslation } from 'react-i18next';
 import FirmwareDashboard from './Dashboard';
 import FirmwareListTable from './List';
-import { useAuth } from 'contexts/AuthProvider';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { Card } from 'components/Containers/Card';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { useAuth } from 'contexts/AuthProvider';
 
 const STORAGE_KEY = 'firmware-tab-index';
 

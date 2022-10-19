@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { SelectField } from '../../Form/Fields/SelectField';
 import { ToggleField } from '../../Form/Fields/ToggleField';
-import { ModalProps } from 'models/Modal';
 import { WifiScanCommand } from 'models/Device';
+import { ModalProps } from 'models/Modal';
 
 const defaultValues: WifiScanCommand = {
   activeScan: false,

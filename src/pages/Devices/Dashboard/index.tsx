@@ -13,12 +13,12 @@ import OverallHealthSimple from './OverallHealth';
 import OverallHealthPieChart from './OverallHealthPieChart';
 import UptimesBarChart from './UptimesBarChart';
 import VendorBarChart from './VendorBarChart';
-import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { CardBody } from 'components/Containers/Card/CardBody';
-import { useGetControllerDashboard } from 'hooks/Network/Controller';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { useGetControllerDashboard } from 'hooks/Network/Controller';
 
 const DevicesDashboard = () => {
   const { t } = useTranslation();

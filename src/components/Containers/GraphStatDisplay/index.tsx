@@ -3,8 +3,8 @@ import { Box, Heading, IconButton, Spacer, Tooltip, useDisclosure } from '@chakr
 import { ArrowsOut, Info } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../Card';
-import { CardHeader } from '../Card/CardHeader';
 import { CardBody } from '../Card/CardBody';
+import { CardHeader } from '../Card/CardHeader';
 import { Modal } from 'components/Modals/Modal';
 
 type Props = {

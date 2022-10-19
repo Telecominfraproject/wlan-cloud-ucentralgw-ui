@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import debounce from 'helpers/debounce';
 import useWebSocketCommand from './useWebSocketCommand';
 import { ProviderCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
+import debounce from 'helpers/debounce';
 
 export type UseDeviceSearchProps = {
   minLength?: number;

@@ -10,18 +10,18 @@ import DeviceStatisticsCard from './StatisticsCard';
 import DeviceSummary from './Summary';
 import WifiAnalysisCard from './WifiAnalysis';
 import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
-import FactoryResetModal from 'components/Modals/FactoryResetModal';
-import { useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
-import { WifiScanModal } from 'components/Modals/WifiScanModal';
-import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
-import { TraceModal } from 'components/Modals/TraceModal';
-import { EventQueueModal } from 'components/Modals/EventQueueModal';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
+import { EventQueueModal } from 'components/Modals/EventQueueModal';
+import FactoryResetModal from 'components/Modals/FactoryResetModal';
+import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
+import { TraceModal } from 'components/Modals/TraceModal';
+import { WifiScanModal } from 'components/Modals/WifiScanModal';
+import { useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
 
 type Props = {
   serialNumber: string;

@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
-import { useField } from 'formik';
 import { SelectInput } from './FastSelectInput';
-import { FormFieldProps } from 'models/FormField';
 import { useFastField } from 'hooks/useFastField';
+import { FormFieldProps } from 'models/FormField';
 
 export interface SelectFieldProps extends FormFieldProps {
   options: { label: string; value: string | number }[];

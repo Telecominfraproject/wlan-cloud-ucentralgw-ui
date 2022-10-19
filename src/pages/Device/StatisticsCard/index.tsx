@@ -6,16 +6,16 @@ import StatisticsCardDatePickers from './DatePickers';
 import InterfaceChart from './InterfaceChart';
 import DeviceMemoryChart from './MemoryChart';
 import ViewLastStatsModal from './ViewLastStatsModal';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { LoadingOverlay } from 'components/LoadingOverlay';
 import {
   DeviceStatistics,
   useGetDeviceStatsLatestHour,
   useGetDeviceStatsWithTimestamps,
 } from 'hooks/Network/Statistics';
-import { Card } from 'components/Containers/Card';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
-import { CardBody } from 'components/Containers/Card/CardBody';
-import { LoadingOverlay } from 'components/LoadingOverlay';
 
 const extractMemory = (stat: DeviceStatistics) => {
   let used: number | undefined;

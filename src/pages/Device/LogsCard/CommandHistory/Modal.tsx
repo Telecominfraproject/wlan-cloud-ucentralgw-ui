@@ -13,17 +13,18 @@ import {
   Tabs,
   useColorMode,
 } from '@chakra-ui/react';
+import { JsonViewer } from '@textea/json-viewer';
 import { Download } from 'phosphor-react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
-import { JsonViewer } from '@textea/json-viewer';
+import { ResponsiveButton } from 'components/Buttons/ResponsiveButton';
+import { Modal } from 'components/Modals/Modal';
+import WifiScanResultDisplay from 'components/Modals/WifiScanModal/ResultDisplay';
+import { compactDate, dateForFilename } from 'helpers/dateFormatting';
+import { uppercaseFirstLetter } from 'helpers/stringHelper';
+import { DeviceCommandHistory } from 'hooks/Network/Commands';
 import { useDownloadTrace } from 'hooks/Network/Trace';
 import { DeviceScanResult } from 'models/Device';
-import { Modal } from 'components/Modals/Modal';
-import { uppercaseFirstLetter } from 'helpers/stringHelper';
-import { compactDate, dateForFilename } from 'helpers/dateFormatting';
-import { ResponsiveButton } from 'components/Buttons/ResponsiveButton';
-import { DeviceCommandHistory } from 'hooks/Network/Commands';
 
 type Props = {
   modalProps: {

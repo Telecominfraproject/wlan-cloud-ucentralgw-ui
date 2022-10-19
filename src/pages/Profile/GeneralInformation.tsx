@@ -12,12 +12,12 @@ import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { StringField } from 'components/Form/Fields/StringField';
 import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
-import { useApiRequirements } from 'hooks/useApiRequirements';
 import { useAuth } from 'contexts/AuthProvider';
-import { useUpdateAccount } from 'hooks/Network/Account';
-import { useFormRef } from 'hooks/useFormRef';
-import { useFormModal } from 'hooks/useFormModal';
 import { testRegex } from 'helpers/formTests';
+import { useUpdateAccount } from 'hooks/Network/Account';
+import { useApiRequirements } from 'hooks/useApiRequirements';
+import { useFormModal } from 'hooks/useFormModal';
+import { useFormRef } from 'hooks/useFormRef';
 
 const FormSchema = (t: (str: string) => string, { passRegex }: { passRegex: string }) =>
   Yup.object().shape({

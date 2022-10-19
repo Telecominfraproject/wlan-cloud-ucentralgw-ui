@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import Blacklist from './Blacklist';
 import DevicesDashboard from './Dashboard';
 import DeviceListCard from './ListCard';
-import { useAuth } from 'contexts/AuthProvider';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { useAuth } from 'contexts/AuthProvider';
 
 const getDefaultTabIndex = () => {
   const index = localStorage.getItem('devices-tab-index') || '0';

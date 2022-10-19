@@ -23,8 +23,8 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../Modal';
-import { useTelemetry } from 'hooks/Network/Telemetry';
 import { lowercaseFirstLetter } from 'helpers/stringHelper';
+import { useTelemetry } from 'hooks/Network/Telemetry';
 
 export type TelemetryModalProps = {
   serialNumber: string;

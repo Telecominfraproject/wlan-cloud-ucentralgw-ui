@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import ViewCapabilitiesModal from './ViewCapabilitiesModal';
 import ViewConfigurationModal from './ViewConfigurationModal';
 import { Card } from 'components/Containers/Card';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { compactDate } from 'helpers/dateFormatting';
 import { useGetDevice } from 'hooks/Network/Devices';
 import { useGetProvUi } from 'hooks/Network/Endpoints';
-import { DeviceConfiguration } from 'models/Device';
-import { compactDate } from 'helpers/dateFormatting';
 import { useGetTag } from 'hooks/Network/Inventory';
+import { DeviceConfiguration } from 'models/Device';
 
 type Props = {
   serialNumber: string;

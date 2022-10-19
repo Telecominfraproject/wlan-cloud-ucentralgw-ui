@@ -19,8 +19,8 @@ import createLinks from './CreateLinks';
 import SidebarDevices from './Devices';
 import darkLogo from 'assets/Logo_Dark_Mode.svg';
 import lightLogo from 'assets/Logo_Light_Mode.svg';
-import { Route } from 'models/Routes';
 import { useAuth } from 'contexts/AuthProvider';
+import { Route } from 'models/Routes';
 
 const variantChange = '0.2s linear';
 

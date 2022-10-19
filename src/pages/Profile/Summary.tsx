@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Avatar, AvatarBadge, Box, Center, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import { Pen } from 'phosphor-react';
+import AvatarModal from './AvatarModal';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
-import AvatarModal from './AvatarModal';
 import { useAuth } from 'contexts/AuthProvider';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
 

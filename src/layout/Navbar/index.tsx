@@ -20,9 +20,9 @@ import {
 import { ArrowCircleLeft } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import routes from 'router/routes';
-import { useAuth } from 'contexts/AuthProvider';
 import LanguageSwitcher from 'components/LanguageSwitcher';
+import { useAuth } from 'contexts/AuthProvider';
+import routes from 'router/routes';
 
 interface Props {
   secondary: boolean;

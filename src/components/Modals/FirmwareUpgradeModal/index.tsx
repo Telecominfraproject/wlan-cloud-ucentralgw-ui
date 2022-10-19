@@ -13,14 +13,14 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { CloseButton } from 'components/Buttons/CloseButton';
-import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';
 import FirmwareList from './FirmwareList';
-import { ModalProps } from 'models/Modal';
+import { CloseButton } from 'components/Buttons/CloseButton';
+import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
 import { useGetDevice } from 'hooks/Network/Devices';
 import { useGetAvailableFirmware, useUpdateDeviceFirmware } from 'hooks/Network/Firmware';
 import useCommandModal from 'hooks/useCommandModal';
+import { ModalProps } from 'models/Modal';
 
 export type FirmwareUpgradeModalProps = {
   modalProps: ModalProps;

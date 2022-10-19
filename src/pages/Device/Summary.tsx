@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Card } from 'components/Containers/Card';
-import { CardBody } from 'components/Containers/Card/CardBody';
 import { Flex, Grid, GridItem, Heading, Image, Tag } from '@chakra-ui/react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
-import { bytesString, getRevision } from 'helpers/stringHelper';
-import COUNTRY_LIST from 'constants/countryList';
+import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import COUNTRY_LIST from 'constants/countryList';
 import { compactDate, compactSecondsToDetailed } from 'helpers/dateFormatting';
+import { bytesString, getRevision } from 'helpers/stringHelper';
 import { useGetDevice, useGetDeviceStatus } from 'hooks/Network/Devices';
 import { useGetDeviceLastStats } from 'hooks/Network/Statistics';
 

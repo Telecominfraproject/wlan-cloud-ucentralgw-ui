@@ -1,5 +1,5 @@
-import { bytesString } from 'helpers/stringHelper';
 import React, { useMemo } from 'react';
+import { bytesString } from 'helpers/stringHelper';
 
 const DataCell: React.FC<{ bytes?: number }> = ({ bytes }) => {
   const data = useMemo(() => {

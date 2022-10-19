@@ -11,8 +11,8 @@ import {
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import { JsonViewer } from '@textea/json-viewer';
+import { useTranslation } from 'react-i18next';
 import { Modal } from 'components/Modals/Modal';
 import { DeviceConfiguration } from 'models/Device';
 

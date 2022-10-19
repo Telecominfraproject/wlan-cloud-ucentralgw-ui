@@ -17,9 +17,9 @@ import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { StringField } from '../../components/Form/Fields/StringField';
-import { LoginFormProps } from 'models/Login';
-import { useApiRequirements } from 'hooks/useApiRequirements';
 import { useForgotPassword } from 'hooks/Network/Login';
+import { useApiRequirements } from 'hooks/useApiRequirements';
+import { LoginFormProps } from 'models/Login';
 
 const ForgotPasswordSchema = Yup.object().shape({
   userId: Yup.string().email('Invalid email').required('Required'),

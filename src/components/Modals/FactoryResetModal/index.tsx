@@ -1,8 +1,8 @@
 import React from 'react';
 import { useBoolean, Center, Spinner, Alert, FormControl, FormLabel, Switch, Button } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { useFactoryReset } from 'hooks/Network/Devices';
 import { Modal } from '../Modal';
+import { useFactoryReset } from 'hooks/Network/Devices';
 import { ModalProps } from 'models/Modal';
 
 interface Props {

@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import * as Yup from 'yup';
-import { useAuth } from 'contexts/AuthProvider';
-import { useApiRequirements } from 'hooks/useApiRequirements';
-import { StringField } from 'components/Form/Fields/StringField';
-import { SelectField } from 'components/Form/Fields/SelectField';
-import { ToggleField } from 'components/Form/Fields/ToggleField';
 import { NotesField } from 'components/Form/Fields/NotesField';
-import { testObjectName } from 'helpers/formTests';
+import { SelectField } from 'components/Form/Fields/SelectField';
+import { StringField } from 'components/Form/Fields/StringField';
+import { ToggleField } from 'components/Form/Fields/ToggleField';
+import { useAuth } from 'contexts/AuthProvider';
+import { testObjectName, testRegex } from 'helpers/formTests';
+import { useApiRequirements } from 'hooks/useApiRequirements';
 
 const UpdateUserSchema = (t, { passRegex }) =>
   Yup.object().shape({

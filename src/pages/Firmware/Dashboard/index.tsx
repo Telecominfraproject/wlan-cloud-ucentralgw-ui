@@ -11,12 +11,12 @@ import FirmwareLatestPieChart from './LatestPieChart';
 import OuisBarChart from './OuisBarChart';
 import UnknownFirmwareBarChart from './UnknownFirmwareBarChart';
 import UpToDateDevicesSimple from './UpToDateDevices';
-import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { useGetFirmwareDashboard } from 'hooks/Network/Firmware';
-import { CardBody } from 'components/Containers/Card/CardBody';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
+import FormattedDate from 'components/InformationDisplays/FormattedDate';
+import { useGetFirmwareDashboard } from 'hooks/Network/Firmware';
 
 const FirmwareDashboard = () => {
   const { t } = useTranslation();
