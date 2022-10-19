@@ -125,7 +125,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
   }, [parsedData]);
 
   return (
-    <Card mb={4}>
+    (<Card mb={4}>
       <CardHeader>
         <Flex w="100%">
           <Heading size="md" w="180px">
@@ -151,7 +151,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
         <Box>
           {parsedData && parsedData[sliderIndex]?.associations[0]?.recorded !== undefined ? (
             // @ts-ignore
-            <FormattedDate date={parsedData[sliderIndex]?.associations[0]?.recorded} />
+            (<FormattedDate date={parsedData[sliderIndex]?.associations[0]?.recorded} />)
           ) : (
             '-'
           )}
@@ -161,7 +161,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
           <WifiAnalysisAssocationsTable data={parsedData?.[sliderIndex]?.associations} ouis={ouiKeyValue} />
         </Box>
       </CardBody>
-    </Card>
+    </Card>)
   );
 };
 

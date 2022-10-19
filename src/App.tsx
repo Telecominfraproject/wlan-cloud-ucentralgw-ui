@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Spinner } from '@chakra-ui/react';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { HashRouter } from 'react-router-dom';
 import { AuthProvider } from 'contexts/AuthProvider';
 import { ControllerSocketProvider } from 'contexts/ControllerSocketProvider';

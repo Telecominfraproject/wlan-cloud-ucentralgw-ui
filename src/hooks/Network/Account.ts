@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useToast } from '@chakra-ui/react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import { User } from '../../models/User';
 import { axiosSec } from 'constants/axiosInstances';

@@ -17,10 +17,10 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 import { v4 as uuid } from 'uuid';
 import ActionsDropdown from './ActionsDropdown';
 import { axiosSec } from 'constants/axiosInstances';

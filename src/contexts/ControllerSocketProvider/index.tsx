@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { QueryClient, useQueryClient } from 'react-query';
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import { useControllerStore } from './useStore';
 import { SerialSearchMessage, WebSocketInitialMessage, WebSocketNotification } from './utils';
 import { axiosGw, axiosSec } from 'constants/axiosInstances';

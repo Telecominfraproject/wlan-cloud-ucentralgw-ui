@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
 import { axiosSec } from 'constants/axiosInstances';
 import { User } from 'models/User';
 

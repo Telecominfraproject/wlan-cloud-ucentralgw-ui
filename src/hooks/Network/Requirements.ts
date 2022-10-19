@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { axiosSec } from '../../constants/axiosInstances';
 
 // eslint-disable-next-line import/prefer-default-export

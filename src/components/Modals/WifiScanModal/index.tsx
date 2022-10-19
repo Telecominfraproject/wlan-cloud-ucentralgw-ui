@@ -57,7 +57,7 @@ export const WifiScanModal = ({ modalProps: { isOpen, onClose }, serialNumber }:
     if (isOpen) resetData();
   }, [isOpen]);
   return (
-    <Modal onClose={closeModal} isOpen={isOpen} size="xl" scrollBehavior="inside">
+    (<Modal onClose={closeModal} isOpen={isOpen} size="xl" scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent maxWidth={{ sm: '600px', md: '700px', lg: '800px', xl: '50%' }}>
         <ModalHeader
@@ -66,7 +66,7 @@ export const WifiScanModal = ({ modalProps: { isOpen, onClose }, serialNumber }:
             <>
               {csvData ? (
                 // @ts-ignore
-                <CSVLink
+                (<CSVLink
                   filename={`wifi_scan_${serialNumber}_${dateForFilename(new Date().getTime() / 1000)}.csv`}
                   data={csvData as object[]}
                 >
@@ -77,7 +77,7 @@ export const WifiScanModal = ({ modalProps: { isOpen, onClose }, serialNumber }:
                     label={t('common.download')}
                     onClick={() => {}}
                   />
-                </CSVLink>
+                </CSVLink>)
               ) : (
                 <ResponsiveButton
                   color="gray"
@@ -118,6 +118,6 @@ export const WifiScanModal = ({ modalProps: { isOpen, onClose }, serialNumber }:
         confirm={closeCancelAndForm}
         cancel={closeConfirm}
       />
-    </Modal>
+    </Modal>)
   );
 };

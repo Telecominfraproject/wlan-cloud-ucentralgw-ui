@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { axiosGw } from 'constants/axiosInstances';
 
 export type TraceResponse = {

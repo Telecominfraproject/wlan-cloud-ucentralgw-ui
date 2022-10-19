@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
 import { axiosGw, axiosProv, axiosSec } from 'constants/axiosInstances';
 
 export type EndpointApiResponse = {

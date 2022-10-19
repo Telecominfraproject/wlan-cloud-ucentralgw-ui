@@ -36,8 +36,8 @@ import {
   TableInstance,
 } from 'react-table';
 import { v4 as uuid } from 'uuid';
-import { LoadingOverlay } from 'components/LoadingOverlay';
 import SortIcon from './SortIcon';
+import { LoadingOverlay } from 'components/LoadingOverlay';
 import { Column, PageInfo } from 'models/Table';
 
 const defaultProps = {

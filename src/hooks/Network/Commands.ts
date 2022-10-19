@@ -1,5 +1,5 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { axiosGw } from 'constants/axiosInstances';
 
 export type DeviceCommandHistory = {

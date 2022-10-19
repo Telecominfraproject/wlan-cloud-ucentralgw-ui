@@ -1,9 +1,9 @@
 import React from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 import CreateUserForm from './Form';
 import { CloseButton } from 'components/Buttons/CloseButton';
 import { SaveButton } from 'components/Buttons/SaveButton';

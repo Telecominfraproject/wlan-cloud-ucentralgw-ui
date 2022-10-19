@@ -10,9 +10,9 @@ import {
   useDisclosure,
   useBoolean,
 } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 import UpdateUserForm from './Form';
 import { CloseButton } from 'components/Buttons/CloseButton';
 import { EditButton } from 'components/Buttons/EditButton';
