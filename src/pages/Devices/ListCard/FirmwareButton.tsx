@@ -20,14 +20,18 @@ const DeviceListFirmwareButton = ({ device, age, onOpenUpgrade }: Props) => {
   const computedAge = React.useMemo(() => {
     if (age?.latest !== undefined) {
       return {
-        state: age.latest ? t('controller.firmware.latest') : t('controller.firmware.outdated'),
+        state: age.latest
+          ? t('controller.firmware.latest')
+          : t('controller.firmware.outdated', {
+              count: age.age ? Math.ceil(age.age / 24 / 60 / 60) : t('common.unknown'),
+            }),
         color: age.latest ? 'green.200' : 'yellow.200',
         hover: age.latest ? 'green.300' : 'yellow.300',
         icon: age.latest ? CheckCircle : WarningCircle,
       };
     }
     return {
-      state: t('controller.firmware.unrecognized'),
+      state: t('controller.firmware.old_firmware'),
       color: 'gray.200',
       hover: 'gray.300',
       icon: Question,
