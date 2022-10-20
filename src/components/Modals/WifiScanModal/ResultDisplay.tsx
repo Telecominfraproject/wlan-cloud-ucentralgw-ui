@@ -31,8 +31,9 @@ const WifiScanResultDisplay: React.FC<Props> = ({ results, setCsvData }) => {
               const signal: number | string = parseDbm(deviceResult.signal);
               if (deviceResult.ssid && deviceResult.ssid.length > 0) ssid = deviceResult.ssid;
               else ssid = deviceResult.meshid && deviceResult.meshid.length > 0 ? deviceResult.meshid : 'N/A';
-              channel.devices.push({ ssid, signal });
-              listCsv.push({ ...deviceResult, ssid, signal });
+              channel.devices.push({ ...deviceResult, ssid, signal });
+              // @ts-ignore
+              listCsv.push({ ...deviceResult, ssid, signal, ies: JSON.stringify(deviceResult.ies) });
             }
           }
           createdChannels[scan.channel] = channel;
@@ -60,7 +61,7 @@ const WifiScanResultDisplay: React.FC<Props> = ({ results, setCsvData }) => {
       <Heading size="sm">
         {t('commands.execution_time')}: {Math.floor(results.executionTime / 1000)}s
       </Heading>
-      <SimpleGrid minChildWidth="300px" spacing="20px">
+      <SimpleGrid minChildWidth="360px" spacing={2}>
         {scanResults?.scanList.map((channel) => (
           <ResultCard key={uuid()} channelInfo={channel} />
         ))}

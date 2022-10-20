@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Blacklist from './Blacklist';
 import DevicesDashboard from './Dashboard';
 import DeviceListCard from './ListCard';
+import LogsCard from './Logs';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { useAuth } from 'contexts/AuthProvider';
@@ -37,6 +38,7 @@ const DevicesPage = () => {
                 <Tab>{t('analytics.dashboard')}</Tab>
                 <Tab>{t('devices.title')}</Tab>
                 <Tab>{t('controller.devices.blacklist')}</Tab>
+                <Tab>{t('system.backend_logs')}</Tab>
               </CardHeader>
             </TabList>
             <TabPanels>
@@ -74,6 +76,18 @@ const DevicesPage = () => {
                   borderBottomRightRadius="15px"
                 >
                   <Blacklist />
+                </Box>
+              </TabPanel>
+              <TabPanel p={0}>
+                <Box
+                  borderLeft="1px solid"
+                  borderRight="1px solid"
+                  borderBottom="1px solid"
+                  borderColor="var(--chakra-colors-chakra-border-color)"
+                  borderBottomLeftRadius="15px"
+                  borderBottomRightRadius="15px"
+                >
+                  <LogsCard />
                 </Box>
               </TabPanel>
             </TabPanels>

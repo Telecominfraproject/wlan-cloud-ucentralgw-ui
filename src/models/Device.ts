@@ -96,12 +96,12 @@ interface BssidResult {
   channel: number;
   frequency: number;
   ht_oper: string;
-  ies: string[];
+  ies: { content: unknown; name: string; type: number }[];
   last_seen: number;
+  ssid: string;
   signal: number;
-  ssid?: string;
-  meshid?: string;
   tsf: number;
+  meshid?: string;
   vht_oper: string;
 }
 
@@ -124,8 +124,18 @@ export interface WifiScanResult {
 }
 
 export interface DeviceScanResult {
+  bssid: string;
+  capability: number;
+  channel: number;
+  frequency: number;
+  ht_oper: string;
+  ies: { content: unknown; name: string; type: number }[];
+  last_seen: number;
   ssid: string;
   signal: number | string;
+  tsf: number;
+  meshid?: string;
+  vht_oper: string;
 }
 export interface ScanChannel {
   channel: number;

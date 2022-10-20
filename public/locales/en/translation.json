@@ -289,6 +289,7 @@
 		"save": "Save",
 		"search": "Search",
 		"seconds": "Seconds",
+		"select_all": "Show All",
 		"select_value": "Select Value",
 		"sending": "Sending",
 		"sent_code": "Sent Code!",
@@ -870,6 +871,7 @@
 		"title": "Subscribers"
 	},
 	"system": {
+		"backend_logs": "Back-End Logs",
 		"could_not_retrieve": "Error: could not retrieve {{name}} system information",
 		"endpoint": "Endpoint",
 		"hostname": "Host Name",

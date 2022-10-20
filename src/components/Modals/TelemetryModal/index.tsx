@@ -96,6 +96,12 @@ const _TelemetryModal = ({ serialNumber, modalProps }: TelemetryModalProps) => {
       clearTimeout(timerID);
     };
   }, [lastDate]);
+  React.useEffect(() => {
+    setForm({
+      ...form,
+      serialNumber,
+    });
+  }, [serialNumber]);
 
   return (
     <Modal

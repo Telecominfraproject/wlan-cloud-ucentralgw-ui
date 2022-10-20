@@ -289,6 +289,7 @@
 		"save": "Salve ",
 		"search": "Procurar",
 		"seconds": "Segundos",
+		"select_all": "mostre tudo",
 		"select_value": "Selecione o valor",
 		"sending": "Enviando",
 		"sent_code": "Código enviado!",
@@ -870,6 +871,7 @@
 		"title": "Inscritos"
 	},
 	"system": {
+		"backend_logs": "Registros de back-end",
 		"could_not_retrieve": "Erro: não foi possível recuperar {{name}} informações do sistema",
 		"endpoint": "Ponto final",
 		"hostname": "Nome de anfitrião",

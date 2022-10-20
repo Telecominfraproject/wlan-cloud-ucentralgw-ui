@@ -26,16 +26,16 @@ import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import DataCell from 'components/TableCells/DataCell';
 import NumberCell from 'components/TableCells/NumberCell';
 import { DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
-import { useGetFirmwareAges } from 'hooks/Network/Firmware';
+import { FirmwareAgeResponse, useGetFirmwareAges } from 'hooks/Network/Firmware';
 import { Column, PageInfo } from 'models/Table';
 
 const ICON_STYLE = { width: '24px', height: '24px', borderRadius: '20px' };
 
 const ICONS = {
-  AP,
-  SWITCH,
-  IOT,
-  MESH,
+  AP: <Image borderRadius="full" boxSize="25px" src={AP} left="auto" right="auto" />,
+  SWITCH: <Image borderRadius="full" boxSize="25px" src={SWITCH} left="auto" right="auto" />,
+  IOT: <Image borderRadius="full" boxSize="25px" src={IOT} left="auto" right="auto" />,
+  MESH: <Image borderRadius="full" boxSize="25px" src={MESH} left="auto" right="auto" />,
 };
 
 const BADGE_COLORS: Record<string, string> = {
@@ -117,7 +117,7 @@ const DeviceListCard = () => {
             device.connected ? t('common.connected') : t('common.disconnected')
           }`}
         >
-          <Image borderRadius="full" boxSize="25px" src={ICONS[device.deviceType]} left="auto" right="auto" />
+          {ICONS[device.deviceType]}
         </Tooltip>
         <Box
           w="0.65em"
@@ -157,12 +157,8 @@ const DeviceListCard = () => {
     [],
   );
   const firmwareCell = React.useCallback(
-    (device: DeviceWithStatus) => (
-      <DeviceListFirmwareButton
-        device={device}
-        age={getAges?.data?.ages.find(({ serialNumber: devSerial }) => devSerial === device.serialNumber)}
-        onOpenUpgrade={onOpenUpgradeModal}
-      />
+    (device: DeviceWithStatus & { age?: FirmwareAgeResponse }) => (
+      <DeviceListFirmwareButton device={device} age={device.age} onOpenUpgrade={onOpenUpgradeModal} />
     ),
     [getAges],
   );
@@ -320,6 +316,15 @@ const DeviceListCard = () => {
     ],
     [t, firmwareCell],
   );
+
+  const data = React.useMemo(() => {
+    if (!getDevices.data) return [];
+    return getDevices.data.devicesWithStatus.map((device) => ({
+      ...device,
+      age: getAges?.data?.ages.find(({ serialNumber: devSerial }) => devSerial === device.serialNumber),
+    }));
+  }, [getAges, getDevices]);
+
   return (
     <>
       <CardHeader px={4} pt={4}>
@@ -348,14 +353,14 @@ const DeviceListCard = () => {
         <Box overflowX="auto" w="100%">
           <DataTable
             columns={
-              columns as {
+              columns.filter(({ id }) => !hiddenColumns.find((hidden) => hidden === id)) as {
                 id: string;
                 Header: string;
                 Footer: string;
                 accessor: string;
               }[]
             }
-            data={getDevices.data?.devicesWithStatus ?? []}
+            data={data ?? []}
             isLoading={getCount.isFetching || getDevices.isFetching}
             isManual
             hiddenColumns={hiddenColumns}

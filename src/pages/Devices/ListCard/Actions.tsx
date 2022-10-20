@@ -115,4 +115,4 @@ const Actions: React.FC<Props> = ({
   );
 };
 
-export default Actions;
+export default React.memo(Actions);
