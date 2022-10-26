@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HStack, Modal as ChakraModal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { HStack, LayoutProps, Modal as ChakraModal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
 import { ModalHeader } from '../GenericModal/ModalHeader';
 import { CloseButton } from 'components/Buttons/CloseButton';
 
@@ -10,12 +10,14 @@ export type ModalProps = {
   topRightButtons?: React.ReactNode;
   options?: {
     modalSize?: 'sm' | 'md' | 'lg';
+    maxWidth?: LayoutProps['maxWidth'];
   };
   children: React.ReactElement;
 };
 
 const _Modal = ({ isOpen, onClose, title, topRightButtons, options, children }: ModalProps) => {
   const maxWidth = React.useMemo(() => {
+    if (options?.maxWidth) return options.maxWidth;
     if (options?.modalSize === 'sm') return undefined;
     if (options?.modalSize === 'lg') {
       return { sm: '90%', md: '900px', lg: '1000px', xl: '80%' };

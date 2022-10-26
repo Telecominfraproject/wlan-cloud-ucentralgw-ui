@@ -31,13 +31,13 @@ const SystemPage = () => {
       .map((endpoint) => <SystemTile key={uuid()} endpoint={endpoint} token={token} />);
   }, [endpoints, token, isUserLoaded]);
 
+  if (!isUserLoaded) return null;
+
   return (
     <Flex flexDirection="column" pt="75px">
-      {isUserLoaded ? (
-        <SimpleGrid minChildWidth="500px" spacing="20px" mb={3}>
-          {endpointsList}
-        </SimpleGrid>
-      ) : null}
+      <SimpleGrid minChildWidth="500px" spacing="20px" mb={3}>
+        {endpointsList}
+      </SimpleGrid>
     </Flex>
   );
 };

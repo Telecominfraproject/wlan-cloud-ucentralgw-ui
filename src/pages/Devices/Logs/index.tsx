@@ -29,10 +29,10 @@ const LogsCard = () => {
             <Td fontFamily="monospace" pt={2} fontSize="md">
               {msg.data?.serialNumber ?? '-'}
             </Td>
-            <Td>
+            <Td whiteSpace="nowrap">
               <Box>{labels[msg.data.type] ?? msg.data.type}</Box>
             </Td>
-            <Td>{JSON.stringify(msg.data)}</Td>
+            <Td whiteSpace="nowrap">{JSON.stringify(msg.data)}</Td>
           </Tr>
         );
       }
@@ -42,10 +42,10 @@ const LogsCard = () => {
           <Td fontFamily="monospace" pt={2} fontSize="md">
             -
           </Td>
-          <Td>
+          <Td whiteSpace="nowrap">
             <Box>{t('common.unknown')}</Box>
           </Td>
-          <Td>{JSON.stringify(msg.data)}</Td>
+          <Td whiteSpace="nowrap">{JSON.stringify(msg.data)}</Td>
         </Tr>
       );
     },
@@ -99,7 +99,7 @@ const LogsCard = () => {
               <Th w="100px">{t('common.time')}</Th>
               <Th w="140px">{t('inventory.serial_number')}</Th>
               <Th w="200px">{t('common.type')}</Th>
-              <Th minW="60%">{t('analytics.raw_data')}</Th>
+              <Th minW="100%">{t('analytics.raw_data')}</Th>
             </Thead>
             <Tbody>{rows}</Tbody>
           </Table>

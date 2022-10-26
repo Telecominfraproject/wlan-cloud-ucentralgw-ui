@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { AxiosError } from 'models/Axios';
@@ -61,7 +61,7 @@ export const useGetSubsystems = ({
             },
           },
         )
-        .then(({ data }: { data: { list: string[] } }) => data.list),
+        .then(({ data }: { data: { list: string[] } }) => data.list ?? []),
     {
       staleTime: 60000,
       enabled,
@@ -120,4 +120,82 @@ export const useReloadSubsystems = ({
       },
     },
   );
+};
+
+export const useGetSystemLogLevels = ({
+  endpoint,
+  enabled,
+  token,
+}: {
+  endpoint: string;
+  enabled: boolean;
+  token: string;
+}) =>
+  useQuery(
+    ['get-log-levels', endpoint],
+    () =>
+      axiosInstance
+        .post(
+          `${endpoint}/api/v1/system`,
+          { command: 'getloglevels' },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then(({ data }: { data: { tagList: { tag: string; value: string }[] } }) => data.tagList ?? []),
+    {
+      staleTime: 60000,
+      enabled,
+    },
+  );
+
+export const useGetSystemLogLevelNames = ({
+  endpoint,
+  enabled,
+  token,
+}: {
+  endpoint: string;
+  enabled: boolean;
+  token: string;
+}) =>
+  useQuery(
+    ['get-log-level-names', endpoint],
+    () =>
+      axiosInstance
+        .post(
+          `${endpoint}/api/v1/system`,
+          { command: 'getloglevelnames' },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then(({ data }: { data: { list: string[] } }) => data.list ?? []),
+    {
+      staleTime: 60000,
+      enabled,
+    },
+  );
+
+const changeLogLevel = (endpoint: string, token: string) => async (subsystems: { tag: string; value: string }[]) =>
+  axiosInstance.post(
+    `${endpoint}/api/v1/system`,
+    { command: 'setloglevel', subsystems },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+export const useUpdateSystemLogLevels = ({ endpoint, token }: { endpoint: string; token: string }) => {
+  const queryClient = useQueryClient();
+
+  return useMutation(changeLogLevel(endpoint, token), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['get-log-levels', endpoint]);
+    },
+  });
 };

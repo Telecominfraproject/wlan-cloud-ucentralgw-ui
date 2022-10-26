@@ -18,7 +18,10 @@ const SystemCertificatesTable: React.FC<Props> = ({ certificates }) => {
   const memoizedExpiry = useCallback((expiresOn: number) => compactDate(expiresOn), []);
 
   const columns = React.useMemo(
-    (): Column<{ expiresOn: number; filename: string }>[] => [
+    (): Column<{
+      expiresOn: number;
+      filename: string;
+    }>[] => [
       {
         id: 'expiresOn',
         Header: t('certificates.expires_on'),
@@ -41,7 +44,7 @@ const SystemCertificatesTable: React.FC<Props> = ({ certificates }) => {
 
   return (
     <DataTable
-      columns={columns}
+      columns={columns as Column<object>[]}
       data={certificates ?? []}
       obj={t('certificates.title')}
       hideControls

@@ -19,6 +19,7 @@ import {
 import { MultiValue, Select } from 'chakra-react-select';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import SystemLoggingButton from './LoggingButton';
 import SystemCertificatesTable from './SystemCertificatesTable';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
@@ -32,7 +33,7 @@ interface Props {
   token: string;
 }
 
-const SystemTile: React.FC<Props> = ({ endpoint, token }) => {
+const SystemTile = ({ endpoint, token }: Props) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [subs, setSubs] = useState<{ value: string; label: string }[]>([]);
@@ -68,6 +69,7 @@ const SystemTile: React.FC<Props> = ({ endpoint, token }) => {
         <Box display="flex" mb={2}>
           <Heading pt={0}>{endpoint.type}</Heading>
           <Spacer />
+          <SystemLoggingButton endpoint={endpoint} token={token} />
           <Button
             mt={1}
             minWidth="112px"
@@ -83,35 +85,51 @@ const SystemTile: React.FC<Props> = ({ endpoint, token }) => {
           <VStack w="100%">
             <SimpleGrid minChildWidth="500px" w="100%">
               <Flex>
-                <Box w="150px">{t('system.endpoint')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.endpoint')}:
+                </Heading>
                 {endpoint.uri}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.hostname')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.hostname')}:
+                </Heading>
                 {system?.hostname}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.os')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.os')}:
+                </Heading>
                 {system?.os}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.processors')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.processors')}:
+                </Heading>
                 {system?.processors}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.start')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.start')}:
+                </Heading>
                 {system?.start ? <FormattedDate date={system?.start} /> : '-'}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.uptime')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.uptime')}:
+                </Heading>
                 {system?.uptime ? compactSecondsToDetailed(system.uptime, t) : '-'}
               </Flex>
               <Flex>
-                <Box w="150px">{t('system.version')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('system.version')}:
+                </Heading>
                 {system?.version}
               </Flex>
               <Flex>
-                <Box w="150px">{t('certificates.title')}:</Box>
+                <Heading size="sm" w="150px" my="auto">
+                  {t('certificates.title')}:
+                </Heading>
                 {system?.certificates && system.certificates?.length > 0 ? (
                   <Button variant="link" onClick={onOpen} p={0} m={0} maxH={7}>
                     {t('common.details')} {system.certificates.length}
@@ -122,7 +140,9 @@ const SystemTile: React.FC<Props> = ({ endpoint, token }) => {
               </Flex>
             </SimpleGrid>
             <Flex w="100%">
-              <Box w="150px">{t('system.subsystems')}:</Box>
+              <Heading size="sm" w="150px" my="auto">
+                {t('system.subsystems')}:
+              </Heading>
               <Box w="400px">
                 <Select
                   chakraStyles={{
