@@ -1,4 +1,10 @@
 /src/assets
 /build
 /node_modules
+/dist
+/icons
+helm
+docker-entrypoint.d
+.dockerignore
+DockerFile
 .github
