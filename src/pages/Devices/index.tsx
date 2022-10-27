@@ -38,7 +38,7 @@ const DevicesPage = () => {
                 <Tab>{t('analytics.dashboard')}</Tab>
                 <Tab>{t('devices.title')}</Tab>
                 <Tab>{t('controller.devices.blacklist')}</Tab>
-                <Tab>{t('system.backend_logs')}</Tab>
+                <Tab>{t('devices.notifications')}</Tab>
               </CardHeader>
             </TabList>
             <TabPanels>
