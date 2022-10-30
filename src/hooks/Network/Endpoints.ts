@@ -1,8 +1,5 @@
-import { useToast } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 import { axiosGw, axiosProv, axiosSec } from 'constants/axiosInstances';
-import { AxiosError } from 'models/Axios';
 
 export type EndpointApiResponse = {
   authenticationType: string;
@@ -12,11 +9,8 @@ export type EndpointApiResponse = {
   vendor: string;
 };
 
-export const useGetEndpoints = ({ onSuccess }: { onSuccess: (data: EndpointApiResponse[]) => void }) => {
-  const { t } = useTranslation();
-  const toast = useToast();
-
-  return useQuery(
+export const useGetEndpoints = ({ onSuccess }: { onSuccess: (data: EndpointApiResponse[]) => void }) =>
+  useQuery(
     ['get-endpoints'],
     () =>
       axiosSec
@@ -26,21 +20,8 @@ export const useGetEndpoints = ({ onSuccess }: { onSuccess: (data: EndpointApiRe
       enabled: false,
       staleTime: Infinity,
       onSuccess,
-      onError: (e: AxiosError) => {
-        if (!toast.isActive('endpoints-fetching-error'))
-          toast({
-            id: 'user-fetching-error',
-            title: t('common.error'),
-            description: t('user.error_fetching', { e: e?.response?.data?.ErrorDescription }),
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-            position: 'top-right',
-          });
-      },
     },
   );
-};
 
 export const useGetGatewayUi = () =>
   useQuery(['get-gw-ui'], () => axiosGw.get('system?command=info').then(({ data }) => data.UI), {
