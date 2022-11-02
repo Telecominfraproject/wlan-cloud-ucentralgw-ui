@@ -106,6 +106,14 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               <Heading size="sm">{t('analytics.memory')}:</Heading>
             </GridItem>
             <GridItem colSpan={1}>{getMemory()}</GridItem>
+            <GridItem colSpan={1} alignContent="center" alignItems="center">
+              <Heading size="sm">{t('devices.certificate_expires_in')}:</Heading>
+            </GridItem>
+            <GridItem colSpan={1}>
+              {getStatus.data?.certificateExpiryDate && (
+                <FormattedDate date={getStatus.data?.certificateExpiryDate} hidePrefix />
+              )}
+            </GridItem>
           </Grid>
         </Flex>
       </CardBody>

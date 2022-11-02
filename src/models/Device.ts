@@ -21,6 +21,7 @@ export interface GatewayDevice {
   modified: number;
   notes: Note[];
   owner: string;
+  restrictedDevice: boolean;
   serialNumber: string;
   subscriber: string;
   venue: string;
