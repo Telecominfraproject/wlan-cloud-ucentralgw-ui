@@ -43,7 +43,7 @@ const SystemPage = () => {
       <Card mb={4} py={2} px={4}>
         <CardHeader>
           <Heading size="md" my="auto">
-            {t('controller.firmware.endpoints')} ({endpoints?.length ?? 0})
+            {t('controller.firmware.endpoints')}
           </Heading>
           <Spacer />
           <RefreshButton onClick={refetch} isFetching={isFetching} />

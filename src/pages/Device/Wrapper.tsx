@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Heading, HStack, Spacer, Tag, TagLabel, TagLeftIcon, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { Heart, HeartBreak, WifiHigh, WifiSlash } from 'phosphor-react';
+import { Heart, HeartBreak, LockSimple, WifiHigh, WifiSlash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import DeviceDetails from './Details';
@@ -97,6 +97,12 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             <Heading size="md">{serialNumber}</Heading>
             {connectedTag}
             {healthTag}
+            {getDevice.data?.restrictedDevice && (
+              <Tag size="lg" colorScheme="gray">
+                <TagLeftIcon boxSize="18px" as={LockSimple} />
+                <TagLabel>{t('devices.restricted')}</TagLabel>
+              </Tag>
+            )}
           </HStack>
           <Spacer />
           <HStack spacing={2}>

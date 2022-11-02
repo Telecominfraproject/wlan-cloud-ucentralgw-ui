@@ -43,6 +43,7 @@ export type DeviceWithStatus = {
   associations_5G: number;
   compatible: string;
   connected: boolean;
+  certificateExpiryDate?: number;
   createdTimestamp: number;
   devicePassword: string;
   deviceType: 'AP' | 'SWITCH' | 'IOT' | 'MESH';
@@ -62,6 +63,7 @@ export type DeviceWithStatus = {
   modified: number;
   notes: Note[];
   owner: string;
+  restrictedDevice: boolean;
   rxBytes: number;
   serialNumber: string;
   subscriber: string;
@@ -124,6 +126,7 @@ export type DeviceStatus = {
   associations_2G: number;
   associations_5G: number;
   connected: boolean;
+  certificateExpiryDate: number;
   connectionCompletionTime: number;
   firmware: string;
   ipAddress: string;
@@ -245,7 +248,7 @@ export const useDeleteDevice = ({ serialNumber }: { serialNumber: string }) => {
 
   return useMutation(deleteDevice, {
     onSuccess: () => {
-      queryClient.invalidateQueries('devices');
+      queryClient.invalidateQueries(['devices']);
       queryClient.invalidateQueries(['device', serialNumber]);
     },
   });
@@ -396,7 +399,7 @@ export const useUpdateDevice = ({ serialNumber }: { serialNumber: string }) => {
 
   return useMutation(modifyDevice, {
     onSuccess: () => {
-      queryClient.invalidateQueries('devices');
+      queryClient.invalidateQueries(['devices']);
       queryClient.invalidateQueries(['device', serialNumber]);
     },
   });

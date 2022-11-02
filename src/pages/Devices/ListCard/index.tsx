@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Button, Heading, Image, Spacer, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { LockSimple } from 'phosphor-react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -115,7 +116,7 @@ const DeviceListCard = () => {
         <Tooltip
           label={`${device.verifiedCertificate} - ${
             device.connected ? t('common.connected') : t('common.disconnected')
-          }`}
+          } ${device.restrictedDevice ? `- ${t('devices.restricted')}` : ''}`}
         >
           {ICONS[device.deviceType]}
         </Tooltip>
@@ -130,6 +131,26 @@ const DeviceListCard = () => {
           borderColor="gray.200"
           borderWidth={1}
         />
+        {device.restrictedDevice && (
+          <Box
+            w="0.95em"
+            h="0.95em"
+            borderRadius="full"
+            position="absolute"
+            bg="blue.100"
+            left={-1}
+            top={0}
+            borderColor="gray.200"
+            borderWidth={1}
+          >
+            <LockSimple
+              size={12}
+              style={{
+                color: 'black',
+              }}
+            />
+          </Box>
+        )}
       </Box>
     ),
     [],
@@ -152,8 +173,12 @@ const DeviceListCard = () => {
     [],
   );
   const dateCell = React.useCallback(
-    (v: number | string) =>
-      v !== undefined && typeof v === 'number' && v !== 0 ? <FormattedDate date={v as number} /> : '-',
+    (v?: number | string, hidePrefix?: boolean) =>
+      v !== undefined && typeof v === 'number' && v !== 0 ? (
+        <FormattedDate date={v as number} hidePrefix={hidePrefix} />
+      ) : (
+        '-'
+      ),
     [],
   );
   const firmwareCell = React.useCallback(
@@ -300,6 +325,15 @@ const DeviceListCard = () => {
         Footer: '',
         accessor: 'associations_6G',
         Cell: () => numberCell(0),
+        customWidth: '50px',
+        disableSortBy: true,
+      },
+      {
+        id: 'certificateExpiryDate',
+        Header: t('devices.certificate_expiry'),
+        Footer: '',
+        accessor: 'certificateExpiryDate',
+        Cell: (v) => dateCell(v.cell.row.original.certificateExpiryDate, true),
         customWidth: '50px',
         disableSortBy: true,
       },
