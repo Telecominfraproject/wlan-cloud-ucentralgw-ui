@@ -118,7 +118,7 @@ const DeviceListCard = () => {
             device.connected ? t('common.connected') : t('common.disconnected')
           } ${device.restrictedDevice ? `- ${t('devices.restricted')}` : ''}`}
         >
-          {ICONS[device.deviceType]}
+          {ICONS[device.deviceType] ?? ICONS.AP}
         </Tooltip>
         <Box
           w="0.65em"
