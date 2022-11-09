@@ -1,26 +1,14 @@
+import { QueryClient } from '@tanstack/react-query';
 import { v4 as uuid } from 'uuid';
 import create from 'zustand';
-import {
-  ACCEPTED_VENUE_NOTIFICATION_TYPES,
-  ProvisioningCommandResponse,
-  ProvisioningSocketRawMessage,
-  ProvisioningVenueNotificationMessage,
-  SocketEventCallback,
-  SocketWebSocketNotificationData,
-} from './utils';
-import { axiosProv } from 'constants/axiosInstances';
+import { SecuritySocketRawMessage, SocketEventCallback, SocketWebSocketNotificationData } from './utils';
+import { axiosSec } from 'constants/axiosInstances';
 import { NotificationType } from 'models/Socket';
 
-export type ProvisioningWebSocketMessage =
+export type SecurityWebSocketMessage =
   | {
       type: 'NOTIFICATION';
       data: SocketWebSocketNotificationData;
-      timestamp: Date;
-      id: string;
-    }
-  | {
-      type: 'COMMAND';
-      data: ProvisioningCommandResponse;
       timestamp: Date;
       id: string;
     }
@@ -35,9 +23,7 @@ export type ProvisioningWebSocketMessage =
       id: string;
     };
 
-const parseRawWebSocketMessage = (
-  message?: ProvisioningSocketRawMessage,
-): SocketWebSocketNotificationData | undefined => {
+const parseRawWebSocketMessage = (message?: SecuritySocketRawMessage): SocketWebSocketNotificationData | undefined => {
   if (message && message.notification) {
     if (message.notification.type_id === 1) {
       return {
@@ -45,40 +31,22 @@ const parseRawWebSocketMessage = (
         log: message.notification.content,
       };
     }
-    if (
-      message.notification.type_id === 1000 ||
-      message.notification.type_id === 2000 ||
-      message.notification.type_id === 3000
-    ) {
-      return {
-        type: 'NOTIFICATION',
-        data: message.notification,
-      };
-    }
   } else if (message?.notificationTypes) {
     return {
       type: 'INITIAL_MESSAGE',
       message,
     };
-  } else if (message?.response && message.command_response_id) {
-    return {
-      type: 'COMMAND',
-      data: message as ProvisioningCommandResponse,
-    };
   }
   return undefined;
 };
 
-export type ProvisioningStoreState = {
+export type SecurityStoreState = {
   availableLogTypes: NotificationType[];
   hiddenLogIds: number[];
   setHiddenLogIds: (logsToHide: number[]) => void;
-  lastMessage?: ProvisioningWebSocketMessage;
-  allMessages: ProvisioningWebSocketMessage[];
-  addMessage: (
-    rawMsg: ProvisioningSocketRawMessage,
-    pushNotification: (notification: ProvisioningVenueNotificationMessage['notification']) => void,
-  ) => void;
+  lastMessage?: SecurityWebSocketMessage;
+  allMessages: SecurityWebSocketMessage[];
+  addMessage: (rawMsg: SecuritySocketRawMessage, queryClient: QueryClient) => void;
   eventListeners: SocketEventCallback[];
   addEventListeners: (callback: SocketEventCallback[]) => void;
   webSocket?: WebSocket;
@@ -91,7 +59,7 @@ export type ProvisioningStoreState = {
   errors: { str: string; timestamp: Date }[];
 };
 
-export const useProvisioningStore = create<ProvisioningStoreState>((set, get) => ({
+export const useSecurityStore = create<SecurityStoreState>((set, get) => ({
   availableLogTypes: [],
   hiddenLogIds: [],
   setHiddenLogIds: (logsToHide: number[]) => {
@@ -100,8 +68,8 @@ export const useProvisioningStore = create<ProvisioningStoreState>((set, get) =>
       hiddenLogIds: logsToHide,
     }));
   },
-  allMessages: [] as ProvisioningWebSocketMessage[],
-  addMessage: (rawMsg, pushNotification) => {
+  allMessages: [] as SecurityWebSocketMessage[],
+  addMessage: (rawMsg: SecuritySocketRawMessage) => {
     try {
       const msg = parseRawWebSocketMessage(rawMsg);
       if (msg) {
@@ -111,27 +79,17 @@ export const useProvisioningStore = create<ProvisioningStoreState>((set, get) =>
             set({ availableLogTypes: msg.message.notificationTypes });
           }
         }
-        // Handle venue notifications
-        if (msg.type === 'NOTIFICATION' && ACCEPTED_VENUE_NOTIFICATION_TYPES.includes(msg.data.type_id)) {
-          pushNotification(msg.data);
-        }
         // General handling
-        const obj: ProvisioningWebSocketMessage =
-          msg.type === 'COMMAND'
-            ? {
-                type: 'COMMAND',
-                data: msg.data,
-                timestamp: new Date(),
-                id: uuid(),
-              }
-            : {
-                type: 'NOTIFICATION',
-                data: msg,
-                timestamp: msg.log?.timestamp ? new Date(msg.log.timestamp * 1000) : new Date(),
-                id: uuid(),
-              };
+        const obj: SecurityWebSocketMessage = {
+          type: 'NOTIFICATION',
+          data: msg,
+          timestamp: msg.log?.timestamp ? new Date(msg.log.timestamp * 1000) : new Date(),
+          id: uuid(),
+        };
 
-        const eventsToFire = get().eventListeners.filter(({ type }) => type === msg.type);
+        const eventsToFire = get().eventListeners.filter(
+          ({ type, serialNumber }) => type === msg.type && serialNumber === msg.serialNumber,
+        );
 
         if (eventsToFire.length > 0) {
           for (const event of eventsToFire) {
@@ -177,7 +135,7 @@ export const useProvisioningStore = create<ProvisioningStoreState>((set, get) =>
       set({
         webSocket: new WebSocket(
           `${
-            axiosProv?.defaults?.baseURL ? axiosProv.defaults.baseURL.replace('https', 'wss').replace('http', 'ws') : ''
+            axiosSec?.defaults?.baseURL ? axiosSec.defaults.baseURL.replace('https', 'wss').replace('http', 'ws') : ''
           }/ws`,
         ),
       });

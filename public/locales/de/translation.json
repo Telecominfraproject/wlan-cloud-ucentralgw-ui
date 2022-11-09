@@ -788,6 +788,22 @@
 		"your_new_password": "Dein neues Passwort",
 		"your_password": "Ihr Passwort"
 	},
+	"logs": {
+		"configuration_upgrade": "Konfigurationsaktualisierung",
+		"device_firmware_upgrade": "Firmware-Aktualisierung",
+		"device_statistics": "Gerätestatistik",
+		"export": "Export",
+		"filter": "Filter",
+		"firmware": "Firmware",
+		"global_connections": "Globale Verbindungen",
+		"level": "Niveau",
+		"message": "Botschaft",
+		"one": "Log",
+		"receiving_types": "Typen empfangen",
+		"security": "Sicherheit",
+		"source": "Quelle",
+		"thread": "Faden"
+	},
 	"map": {
 		"auto_align": "Automatisch ausrichten",
 		"auto_map": "Automatische Karte",
@@ -803,6 +819,10 @@
 		"set_as_default": "Als Standard einstellen",
 		"title": "Karte",
 		"visibility": "Sichtweite"
+	},
+	"notification": {
+		"one": "Benachrichtigung",
+		"other": "Benachrichtigungen"
 	},
 	"operator": {
 		"delete_explanation": "Möchten Sie diesen Operator wirklich löschen? Dieser Vorgang ist nicht umkehrbar",
@@ -848,6 +868,21 @@
 		"parameters": "Parameter",
 		"vendor": "Verkäufer",
 		"version": "Ausführung"
+	},
+	"script": {
+		"automatic": "Automatik",
+		"custom_domain": "Benutzerdefinierten Domain",
+		"deferred": "Aufgeschoben",
+		"device_title": "Führen Sie das Geräteskript aus",
+		"explanation": "Führen Sie ein benutzerdefiniertes Skript auf diesem Gerät aus und laden Sie die Ergebnisse herunter",
+		"file_too_large": "Bitte wählen Sie eine Datei aus, die kleiner als 500 KB ist",
+		"now": "Jetzt",
+		"one": "Skript",
+		"schedule_success": "Geplante Skriptausführung!",
+		"signature": "Unterschrift",
+		"timeout": "Auszeit",
+		"upload_destination": "Ziel hochladen",
+		"when": "Ausführung planen"
 	},
 	"service": {
 		"billing_code": "Abrechnungscode",

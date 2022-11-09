@@ -788,6 +788,22 @@
 		"your_new_password": "Tu nueva contraseña",
 		"your_password": "Tu contraseña"
 	},
+	"logs": {
+		"configuration_upgrade": "Actualización de configuración",
+		"device_firmware_upgrade": "Actualización de firmware",
+		"device_statistics": "Estadísticas del dispositivo",
+		"export": "Exportar",
+		"filter": "Filtrar",
+		"firmware": "Firmware",
+		"global_connections": "Conexiones globales",
+		"level": "Nivel",
+		"message": "Mensaje",
+		"one": "Iniciar sesión",
+		"receiving_types": "Tipos de recepción",
+		"security": "SEGURIDAD",
+		"source": "Fuente",
+		"thread": "Hilo"
+	},
 	"map": {
 		"auto_align": "Alineación automática",
 		"auto_map": "Mapa automático",
@@ -803,6 +819,10 @@
 		"set_as_default": "Establecer por defecto",
 		"title": "Mapa",
 		"visibility": "Visibilidad"
+	},
+	"notification": {
+		"one": "Notificación",
+		"other": "Notificaciones"
 	},
 	"operator": {
 		"delete_explanation": "¿Está seguro de que desea eliminar este operador? Esta operación no es reversible.",
@@ -848,6 +868,21 @@
 		"parameters": "Parámetros",
 		"vendor": "Vendedor",
 		"version": "Versión"
+	},
+	"script": {
+		"automatic": "Automático",
+		"custom_domain": "Dominio personalizado",
+		"deferred": "Diferido",
+		"device_title": "Ejecutar secuencia de comandos del dispositivo",
+		"explanation": "Ejecute un script personalizado en este dispositivo y descargue sus resultados",
+		"file_too_large": "Seleccione un archivo que tenga menos de 500 KB",
+		"now": "ahora",
+		"one": "Guión",
+		"schedule_success": "¡Ejecución de script programada!",
+		"signature": "Firma",
+		"timeout": "Se acabó el tiempo",
+		"upload_destination": "Cargar destino",
+		"when": "Programar Ejecucion"
 	},
 	"service": {
 		"billing_code": "Código de facturación",

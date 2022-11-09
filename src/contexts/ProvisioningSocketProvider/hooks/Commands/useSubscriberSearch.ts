@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import useWebSocketCommand from './useWebSocketCommand';
-import { ProviderCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
+import { ProvisioningCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
 import debounce from 'helpers/debounce';
 import { Subscriber } from 'models/Subscriber';
 
@@ -15,7 +15,7 @@ export const useSubscriberSearch = ({ minLength = 4, operatorId, mode }: UseSubs
     { command: string; emailSearch?: string; nameSearch?: string; operatorId?: string } | undefined
   >(undefined);
   const [results, setResults] = useState<Subscriber[]>([]);
-  const onNewResult = (newResult: ProviderCommandResponse) => {
+  const onNewResult = (newResult: ProvisioningCommandResponse) => {
     if (newResult.response.users) setResults(newResult.response.users as Subscriber[]);
   };
   const { isOpen, send } = useWebSocketCommand({ callback: onNewResult });

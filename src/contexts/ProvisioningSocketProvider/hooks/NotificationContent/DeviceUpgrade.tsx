@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, Heading, ListItem, UnorderedList } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
-import { ProviderWebSocketVenueUpdateResponse } from 'contexts/ProvisioningSocketProvider/utils';
+import { ProvisioningVenueNotificationMessage } from 'contexts/ProvisioningSocketProvider/utils';
 
 interface Props {
-  notification: ProviderWebSocketVenueUpdateResponse;
+  notification: ProvisioningVenueNotificationMessage['notification'];
 }
 
 const DeviceUpgradeNotificationContent = ({ notification }: Props) => {

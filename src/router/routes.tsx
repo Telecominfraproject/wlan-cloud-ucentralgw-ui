@@ -1,12 +1,13 @@
 import React from 'react';
 import { Icon } from '@chakra-ui/react';
-import { Barcode, FloppyDisk, Info, UsersThree, WifiHigh } from 'phosphor-react';
+import { Barcode, FloppyDisk, Info, ListBullets, UsersThree, WifiHigh } from 'phosphor-react';
 import { Route } from 'models/Routes';
 
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));
 const DevicePage = React.lazy(() => import('pages/Device'));
 const DevicesPage = React.lazy(() => import('pages/Devices'));
 const FirmwarePage = React.lazy(() => import('pages/Firmware'));
+const NotificationsPage = React.lazy(() => import('pages/Notifications'));
 const ProfilePage = React.lazy(() => import('pages/Profile'));
 const SystemPage = React.lazy(() => import('pages/SystemPage'));
 const UsersPage = React.lazy(() => import('pages/UsersPage'));
@@ -38,6 +39,15 @@ const routes: Route[] = [
       <Icon as={Barcode} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
     ),
     component: DefaultConfigurationsPage,
+  },
+  {
+    authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+    path: '/logs',
+    name: 'controller.devices.logs',
+    icon: (active: boolean) => (
+      <Icon as={ListBullets} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
+    ),
+    component: NotificationsPage,
   },
   {
     hidden: true,

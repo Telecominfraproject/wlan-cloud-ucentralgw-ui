@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import debounce from '../../../../helpers/debounce';
 import useWebSocketCommand from './useWebSocketCommand';
-import { ProviderCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
-import debounce from 'helpers/debounce';
+import { ProvisioningCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
 
 export type UseDeviceSearchProps = {
   minLength?: number;
@@ -14,7 +14,7 @@ export const useProviderDeviceSearch = ({ minLength = 4, operatorId }: UseDevice
     { command: string; serial_prefix: string; operatorId?: string } | undefined
   >(undefined);
   const [results, setResults] = useState<string[]>([]);
-  const onNewResult = (newResult: ProviderCommandResponse) => {
+  const onNewResult = (newResult: ProvisioningCommandResponse) => {
     if (newResult.response.serialNumbers) setResults(newResult.response.serialNumbers as string[]);
   };
   const { isOpen, send } = useWebSocketCommand({ callback: onNewResult });

@@ -1,76 +1,99 @@
+import { InitialSocketMessage } from 'models/Socket';
 import { Subscriber } from 'models/Subscriber';
 
-// Notifications we react to from the WS
-export const acceptedNotificationTypes = [
-  'venue_configuration_update',
-  'entity_configuration_update',
-  'venue_rebooter',
-  'venue_upgrader',
-];
-
-// Data received from WS on Venue update notification
-export type ProviderWebSocketVenueUpdateResponse = {
-  notification_id: number;
-  type: 'venue_configuration_update' | 'entity_configuration_update' | 'venue_rebooter' | 'venue_upgrader';
-  content: {
-    type: 'venue_configuration_update' | 'entity_configuration_update' | 'venue_rebooter' | 'venue_upgrader';
-    title: string;
-    details: string;
-    success: string[];
-    noFirmware?: string[];
-    notConnected?: string[];
-    skipped?: string[];
-    warning: string[];
-    error: string[];
-    timeStamp: number;
-  };
+export type ProvisioningSocketNotificationTypeId = 1 | 1000 | 2000 | 3000 | 4000 | 5000 | 6000;
+export const ProvisioningSocketNotificationTypeMap = {
+  1: 'logs',
+  1000: 'venue_fw_upgrade',
+  2000: 'venue_config_update',
+  3000: 'venue_rebooter',
 };
 
-export type ProviderCommandResponse = {
+export const ACCEPTED_VENUE_NOTIFICATION_TYPES = [1000, 2000, 3000];
+
+export type ProvisioningCommandResponse = {
   command_response_id: number;
   response: { serialNumbers?: string[]; users?: Subscriber[]; results?: string[] };
+  notification?: undefined;
+  notificationTypes?: undefined;
 };
 
-// Parsed WebSocket message
-export type ProviderWebSocketParsedMessage =
+type LogMessage = {
+  notification: {
+    notificationId: number;
+    type?: undefined;
+    type_id: 1;
+    content: {
+      level: LogLevel;
+      msg: string;
+      source: string;
+      thread_id: number;
+      thread_name: string;
+      timestamp: number;
+    };
+  };
+  command_response_id?: undefined;
+  response?: undefined;
+  notificationTypes?: undefined;
+};
+
+export type ProvisioningVenueNotificationMessage = {
+  notification: {
+    notification_id: number;
+    type?: 'venue_fw_upgrade' | 'venue_config_update' | 'venue_rebooter';
+    type_id: 1000 | 2000 | 3000;
+    content: {
+      title: string;
+      details: string;
+      success: string[];
+      noFirmware?: string[];
+      notConnected?: string[];
+      skipped?: string[];
+      warning: string[];
+      error: string[];
+      timeStamp: number;
+    };
+  };
+  command_response_id?: undefined;
+  response?: undefined;
+  notificationTypes?: undefined;
+};
+
+export type ProvisioningSocketRawMessage =
+  | Partial<LogMessage>
+  | Partial<ProvisioningVenueNotificationMessage>
+  | Partial<ProvisioningCommandResponse>
+  | InitialSocketMessage;
+
+export type LogLevel = 'information' | 'critical' | 'debug' | 'error' | 'fatal' | 'notice' | 'trace' | 'warning';
+
+export type SocketWebSocketNotificationData =
   | {
       type: 'NOTIFICATION';
-      data: ProviderWebSocketVenueUpdateResponse;
+      data: ProvisioningVenueNotificationMessage['notification'];
+      log?: undefined;
+      notificationTypes?: undefined;
+    }
+  | {
+      type: 'LOG';
+      notificationTypes?: undefined;
+      log: LogMessage['notification']['content'];
     }
   | {
       type: 'COMMAND';
-      data: ProviderCommandResponse;
+      data: ProvisioningCommandResponse;
+      notificationTypes?: undefined;
+      log?: undefined;
+    }
+  | {
+      type: 'INITIAL_MESSAGE';
+      notificationTypes?: undefined;
+      log?: undefined;
+      message: InitialSocketMessage;
     };
-
-// Parsing raw WS messages into a more usable format
-export const extractProviderWebSocketResponse = (message: MessageEvent): ProviderWebSocketParsedMessage | undefined => {
-  try {
-    const data = JSON.parse(message.data);
-    if (data.notification && acceptedNotificationTypes.includes(data.notification.type)) {
-      const notification = data.notification as ProviderWebSocketVenueUpdateResponse;
-      return { data: notification, type: 'NOTIFICATION' };
-    }
-    if (data.command_response_id) {
-      return { data, type: 'COMMAND' } as {
-        type: 'COMMAND';
-        data: ProviderCommandResponse;
-      };
-    }
-  } catch {
-    return undefined;
-  }
-  return undefined;
+export type SocketEventCallback = {
+  id: string;
+  type: 'LOG';
+  serialNumber: string;
+  callback: () => void;
 };
-
-// What we store in the store
-export type ProviderWebSocketMessage =
-  | {
-      type: 'NOTIFICATION';
-      data: ProviderWebSocketParsedMessage;
-      timestamp: Date;
-    }
-  | {
-      type: 'COMMAND';
-      data: ProviderCommandResponse;
-      timestamp: Date;
-    };
