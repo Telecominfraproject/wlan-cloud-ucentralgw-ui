@@ -788,6 +788,22 @@
 		"your_new_password": "Votre nouveau mot de passe",
 		"your_password": "Votre mot de passe"
 	},
+	"logs": {
+		"configuration_upgrade": "Mise à jour de la configuration",
+		"device_firmware_upgrade": "Mise à jour du firmware",
+		"device_statistics": "Statistiques de l'appareil",
+		"export": "Exportation",
+		"filter": "Filtre",
+		"firmware": "Micrologiciel",
+		"global_connections": "Connexions mondiales",
+		"level": "Niveau",
+		"message": "Message",
+		"one": "Bûche",
+		"receiving_types": "Types de réception",
+		"security": "SÉCURITÉ",
+		"source": "La source",
+		"thread": "Fil de discussion"
+	},
 	"map": {
 		"auto_align": "Alignement automatique",
 		"auto_map": "Carte automatique",
@@ -803,6 +819,10 @@
 		"set_as_default": "Définir par défaut",
 		"title": "Carte",
 		"visibility": "Visibilité"
+	},
+	"notification": {
+		"one": "Notification",
+		"other": "Les notifications"
 	},
 	"operator": {
 		"delete_explanation": "Voulez-vous vraiment supprimer cet opérateur ? Cette opération n'est pas réversible",
@@ -848,6 +868,21 @@
 		"parameters": "Paramètres",
 		"vendor": "vendeur",
 		"version": "Version"
+	},
+	"script": {
+		"automatic": "Automatique",
+		"custom_domain": "Domaine personnalisé",
+		"deferred": "Différé",
+		"device_title": "Exécuter le script de périphérique",
+		"explanation": "Exécutez un script personnalisé sur cet appareil et téléchargez ses résultats",
+		"file_too_large": "Veuillez sélectionner un fichier de moins de 500 Ko",
+		"now": "À présent",
+		"one": "Scénario",
+		"schedule_success": "Exécution du script planifié !",
+		"signature": "signature",
+		"timeout": "Temps libre",
+		"upload_destination": "Destination de téléchargement",
+		"when": "Planifier l'exécution"
 	},
 	"service": {
 		"billing_code": "Code de facturation",

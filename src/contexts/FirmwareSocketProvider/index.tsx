@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useControllerStore } from './useStore';
-import { ControllerSocketRawMessage } from './utils';
-import { axiosGw, axiosSec } from 'constants/axiosInstances';
+import { useFirmwareStore } from './useStore';
+import { FirmwareSocketRawMessage } from './utils';
+import { axiosFms, axiosSec } from 'constants/axiosInstances';
 import { useAuth } from 'contexts/AuthProvider';
 
-export type ControllerSocketContextReturn = Record<string, unknown>;
+export type FirmwareSocketContextReturn = Record<string, unknown>;
 
-const ControllerSocketContext = React.createContext<ControllerSocketContextReturn>({
+const FirmwareSocketContext = React.createContext<FirmwareSocketContextReturn>({
   webSocket: undefined,
   isOpen: false,
 });
 
-export const ControllerSocketProvider = ({ children }: { children: React.ReactElement }) => {
+export const FirmwareSocketProvider = ({ children }: { children: React.ReactElement }) => {
   const { token, isUserLoaded } = useAuth();
-  const { addMessage, isOpen, webSocket, onStartWebSocket } = useControllerStore((state) => ({
+  const { addMessage, isOpen, webSocket, onStartWebSocket } = useFirmwareStore((state) => ({
     addMessage: state.addMessage,
     isOpen: state.isWebSocketOpen,
     webSocket: state.webSocket,
@@ -25,7 +25,7 @@ export const ControllerSocketProvider = ({ children }: { children: React.ReactEl
 
   const onMessage = useCallback((message: MessageEvent<string>) => {
     try {
-      const data = JSON.parse(message.data) as ControllerSocketRawMessage | undefined;
+      const data = JSON.parse(message.data) as FirmwareSocketRawMessage | undefined;
       if (data) {
         addMessage(data, queryClient);
       }
@@ -37,7 +37,7 @@ export const ControllerSocketProvider = ({ children }: { children: React.ReactEl
 
   // useEffect for created the WebSocket and 'storing' it in useRef
   useEffect(() => {
-    if (isUserLoaded && axiosGw?.defaults?.baseURL !== axiosSec?.defaults?.baseURL) {
+    if (isUserLoaded && axiosFms?.defaults?.baseURL !== axiosSec?.defaults?.baseURL) {
       onStartWebSocket(token ?? '');
     }
 
@@ -71,7 +71,7 @@ export const ControllerSocketProvider = ({ children }: { children: React.ReactEl
           // If tab is active again, verify if browser killed the WS
           clearTimeout(timeoutId);
 
-          if (!isOpen && isUserLoaded && axiosGw?.defaults?.baseURL !== axiosSec?.defaults?.baseURL) {
+          if (!isOpen && isUserLoaded && axiosFms?.defaults?.baseURL !== axiosSec?.defaults?.baseURL) {
             onStartWebSocket(token ?? '');
           }
         }
@@ -84,10 +84,9 @@ export const ControllerSocketProvider = ({ children }: { children: React.ReactEl
     };
   }, [webSocket, isOpen]);
 
-  const values: ControllerSocketContextReturn = useMemo(() => ({}), []);
+  const values: FirmwareSocketContextReturn = useMemo(() => ({}), []);
 
-  return <ControllerSocketContext.Provider value={values}>{children}</ControllerSocketContext.Provider>;
+  return <FirmwareSocketContext.Provider value={values}>{children}</FirmwareSocketContext.Provider>;
 };
 
-export const useGlobalControllerSocket: () => ControllerSocketContextReturn = () =>
-  React.useContext(ControllerSocketContext);
+export const useGlobalFirmwareSocket: () => FirmwareSocketContextReturn = () => React.useContext(FirmwareSocketContext);

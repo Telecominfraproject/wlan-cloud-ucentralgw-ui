@@ -45,8 +45,8 @@ export const useControllerDeviceSearch = ({ minLength = 4 }: UseControllerDevice
 
   const onInputChange = useCallback(
     (v: string) => {
+      setTempValue(v);
       if (v !== tempValue) {
-        setTempValue(v);
         debounceChange(v);
       }
     },

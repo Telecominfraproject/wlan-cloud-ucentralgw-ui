@@ -4,7 +4,9 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { HashRouter } from 'react-router-dom';
 import { AuthProvider } from 'contexts/AuthProvider';
 import { ControllerSocketProvider } from 'contexts/ControllerSocketProvider';
+import { FirmwareSocketProvider } from 'contexts/FirmwareSocketProvider';
 import { ProvisioningSocketProvider } from 'contexts/ProvisioningSocketProvider';
+import { SecuritySocketProvider } from 'contexts/SecuritySocketProvider';
 import Router from 'router';
 
 const queryClient = new QueryClient({
@@ -24,11 +26,15 @@ const App = () => {
       <HashRouter>
         <Suspense fallback={<Spinner />}>
           <AuthProvider token={storageToken !== null ? storageToken : undefined}>
-            <ProvisioningSocketProvider>
-              <ControllerSocketProvider>
-                <Router />
-              </ControllerSocketProvider>
-            </ProvisioningSocketProvider>
+            <SecuritySocketProvider>
+              <FirmwareSocketProvider>
+                <ProvisioningSocketProvider>
+                  <ControllerSocketProvider>
+                    <Router />
+                  </ControllerSocketProvider>
+                </ProvisioningSocketProvider>
+              </FirmwareSocketProvider>
+            </SecuritySocketProvider>
           </AuthProvider>
         </Suspense>
       </HashRouter>

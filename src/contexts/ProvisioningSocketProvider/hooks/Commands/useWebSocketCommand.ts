@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useProviderStore } from 'contexts/ProvisioningSocketProvider/useStore';
-import { ProviderCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
+import { useProvisioningStore } from '../../useStore';
+import { ProvisioningCommandResponse } from '../../utils';
 import { randomIntId } from 'helpers/stringHelper';
 
-const useProviderWebSocketCommand = ({ callback }: { callback: (command: ProviderCommandResponse) => void }) => {
-  const { isOpen, webSocket, lastMessage } = useProviderStore((state) => ({
+const useProviderWebSocketCommand = ({ callback }: { callback: (command: ProvisioningCommandResponse) => void }) => {
+  const { isOpen, webSocket, lastMessage } = useProvisioningStore((state) => ({
     isOpen: state.isWebSocketOpen,
     webSocket: state.webSocket,
     lastMessage: state.lastMessage,

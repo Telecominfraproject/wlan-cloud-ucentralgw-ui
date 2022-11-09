@@ -19,14 +19,14 @@ import {
   IconButton,
   Tooltip,
 } from '@chakra-ui/react';
-import { StringMap, TOptions } from 'i18next';
+import { TOptions } from 'i18next';
 import { X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
-import { ProviderWebSocketVenueUpdateResponse } from '../../utils';
+import { ProvisioningVenueNotificationMessage } from '../../utils';
 import NotificationContent from '.';
 
-const getStatusFromNotification = (notification: ProviderWebSocketVenueUpdateResponse) => {
+const getStatusFromNotification = (notification: ProvisioningVenueNotificationMessage['notification']) => {
   let status: 'success' | 'warning' | 'error' = 'success';
   if (notification.content.warning?.length > 0) status = 'warning';
   if (notification.content.error?.length > 0) status = 'error';
@@ -35,15 +35,10 @@ const getStatusFromNotification = (notification: ProviderWebSocketVenueUpdateRes
 };
 
 const getNotificationDescription = (
-  t: (key: string, options?: string | TOptions<StringMap> | undefined) => string,
-  notification: ProviderWebSocketVenueUpdateResponse,
+  t: (key: string, options?: string | TOptions<Record<string, number>> | undefined) => string,
+  notification: ProvisioningVenueNotificationMessage['notification'],
 ) => {
-  if (
-    notification.content.type === 'venue_configuration_update' ||
-    notification.content.type === 'entity_configuration_update' ||
-    notification.content.type === 'venue_rebooter' ||
-    notification.content.type === 'venue_upgrader'
-  ) {
+  if (notification.type_id === 1000 || notification.type_id === 2000 || notification.type_id === 3000) {
     return t('configurations.notification_details', {
       success: notification.content.success?.length ?? 0,
       warning: notification.content.warning?.length ?? 0,
@@ -56,16 +51,19 @@ const getNotificationDescription = (
 const useWebSocketNotification = () => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [notif, setNotif] = useState<ProviderWebSocketVenueUpdateResponse | undefined>(undefined);
+  const [notif, setNotif] = useState<ProvisioningVenueNotificationMessage['notification'] | undefined>(undefined);
   const toast = useToast();
 
-  const openDetails = useCallback((newObj: ProviderWebSocketVenueUpdateResponse, closeToast?: () => void) => {
-    setNotif(newObj);
-    if (closeToast) closeToast();
-    onOpen();
-  }, []);
+  const openDetails = useCallback(
+    (newObj: ProvisioningVenueNotificationMessage['notification'], closeToast?: () => void) => {
+      setNotif(newObj);
+      if (closeToast) closeToast();
+      onOpen();
+    },
+    [],
+  );
 
-  const pushNotification = useCallback((notification: ProviderWebSocketVenueUpdateResponse) => {
+  const pushNotification = useCallback((notification: ProvisioningVenueNotificationMessage['notification']) => {
     toast({
       id: uuid(),
       duration: 5000,

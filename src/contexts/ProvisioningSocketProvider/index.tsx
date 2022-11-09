@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import useWebSocketNotification from './hooks/NotificationContent/useWebSocketNotification';
-import { useProviderStore } from './useStore';
-import { extractProviderWebSocketResponse } from './utils';
+import { useProvisioningStore } from './useStore';
+import { ProvisioningSocketRawMessage } from './utils';
 import { axiosProv, axiosSec } from 'constants/axiosInstances';
 import { useAuth } from 'contexts/AuthProvider';
 
-export type ProviderSocketContextReturn = Record<string, unknown>;
+export type ProvisioningSocketContextReturn = Record<string, unknown>;
 
-const ProviderSocketContext = React.createContext<ProviderSocketContextReturn>({
+const ProvisioningSocketContext = React.createContext<ProvisioningSocketContextReturn>({
   webSocket: undefined,
   isOpen: false,
 });
@@ -15,22 +15,18 @@ const ProviderSocketContext = React.createContext<ProviderSocketContextReturn>({
 export const ProvisioningSocketProvider = ({ children }: { children: React.ReactElement }) => {
   const { token, isUserLoaded } = useAuth();
   const { pushNotification, modal } = useWebSocketNotification();
-  const { addMessage, isOpen, setIsOpen, webSocket, onStartWebSocket } = useProviderStore((state) => ({
+  const { addMessage, isOpen, webSocket, onStartWebSocket } = useProvisioningStore((state) => ({
     addMessage: state.addMessage,
-    setIsOpen: state.setWebSocketOpen,
     isOpen: state.isWebSocketOpen,
     webSocket: state.webSocket,
     onStartWebSocket: state.startWebSocket,
   }));
 
-  const onMessage = useCallback((msg: MessageEvent<string>) => {
+  const onMessage = useCallback((message: MessageEvent<string>) => {
     try {
-      const extracted = extractProviderWebSocketResponse(msg);
-      if (extracted) {
-        addMessage(extracted);
-        if (extracted.type === 'NOTIFICATION') {
-          pushNotification(extracted.data);
-        }
+      const data = JSON.parse(message.data) as ProvisioningSocketRawMessage | undefined;
+      if (data) {
+        addMessage(data, pushNotification);
       }
       return undefined;
     } catch {
@@ -65,12 +61,13 @@ export const ProvisioningSocketProvider = ({ children }: { children: React.React
 
       if (webSocket) {
         if (document.visibilityState === 'hidden') {
-          timeoutId = setTimeout(() => {
+          /* timeoutId = setTimeout(() => {
             if (webSocket) webSocket.onclose = () => {};
             webSocket?.close();
             setIsOpen(false);
-          }, 5000);
+          }, 5000); */
         } else {
+          // If tab is active again, verify if browser killed the WS
           clearTimeout(timeoutId);
 
           if (!isOpen && isUserLoaded && axiosProv?.defaults?.baseURL !== axiosSec?.defaults?.baseURL) {
@@ -86,17 +83,17 @@ export const ProvisioningSocketProvider = ({ children }: { children: React.React
     };
   }, [webSocket, isOpen]);
 
-  const values: ProviderSocketContextReturn = useMemo(() => ({}), []);
+  const values: ProvisioningSocketContextReturn = useMemo(() => ({}), []);
 
   return (
-    <ProviderSocketContext.Provider value={values}>
+    <ProvisioningSocketContext.Provider value={values}>
       <>
         {children}
         {modal}
       </>
-    </ProviderSocketContext.Provider>
+    </ProvisioningSocketContext.Provider>
   );
 };
 
-export const useGlobalProvisioningSocket: () => ProviderSocketContextReturn = () =>
-  React.useContext(ProviderSocketContext);
+export const useGlobalProvisioningSocket: () => ProvisioningSocketContextReturn = () =>
+  React.useContext(ProvisioningSocketContext);

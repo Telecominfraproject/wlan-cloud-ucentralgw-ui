@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import useWebSocketCommand from './useWebSocketCommand';
-import { ProviderCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
+import { ProvisioningCommandResponse } from 'contexts/ProvisioningSocketProvider/utils';
 import debounce from 'helpers/debounce';
 
 export type UseLocationSearchProps = {
@@ -11,7 +11,7 @@ export const useLocationSearch = ({ minLength = 8 }: UseLocationSearchProps) => 
   const [tempValue, setTempValue] = useState('');
   const [waitingSearch, setWaitingSearch] = useState<{ command: string; address: string } | undefined>(undefined);
   const [results, setResults] = useState<string[]>([]);
-  const onNewResult = (newResult: ProviderCommandResponse) => {
+  const onNewResult = (newResult: ProvisioningCommandResponse) => {
     if (newResult.response.results) setResults(newResult.response.results as string[]);
   };
   const { isOpen, send } = useWebSocketCommand({ callback: onNewResult });
