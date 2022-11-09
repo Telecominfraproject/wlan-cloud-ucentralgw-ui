@@ -14,6 +14,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from '../../Buttons/SaveButton';
 import { Modal } from '../Modal';
+import { FileInputButton } from 'components/Buttons/FileInputButton';
 import { useConfigureDevice } from 'hooks/Network/Commands';
 
 export type ConfigureModalProps = {
@@ -91,7 +92,16 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
         </Alert>
         <FormControl isInvalid={!isValid && newConfig.length > 0}>
           <FormLabel>{t('configurations.one')}</FormLabel>
-          <Textarea height="auto" minH="200px" value={newConfig} onChange={onChange} />
+          <Box mb={2} w="240px">
+            <FileInputButton
+              value={newConfig}
+              setValue={(v) => setNewConfig(v)}
+              refreshId="1"
+              accept=".json"
+              isStringFile
+            />
+          </Box>
+          <Textarea height="auto" minH="600px" value={newConfig} onChange={onChange} />
           <FormErrorMessage>{t('controller.configure.invalid')}</FormErrorMessage>
         </FormControl>
       </>
