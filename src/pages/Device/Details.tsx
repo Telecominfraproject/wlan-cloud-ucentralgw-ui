@@ -23,7 +23,7 @@ const DeviceDetails = ({ serialNumber }: Props) => {
   const getDevice = useGetDevice({ serialNumber });
   const getTag = useGetTag({ serialNumber });
   const { isOpen: isShowingPassword, onToggle: onTogglePassword } = useDisclosure();
-  const { hasCopied, onCopy } = useClipboard(
+  const { hasCopied, onCopy, setValue } = useClipboard(
     getDevice.data?.devicePassword !== undefined && getDevice.data?.devicePassword !== ''
       ? getDevice.data?.devicePassword
       : 'openwifi',
@@ -38,6 +38,16 @@ const DeviceDetails = ({ serialNumber }: Props) => {
   };
 
   const goToProvUi = (dir: string) => `${getProvUi.data}/#/${dir}`;
+
+  React.useEffect(() => {
+    if (getDevice.data) {
+      setValue(
+        getDevice.data?.devicePassword !== undefined && getDevice.data?.devicePassword !== ''
+          ? getDevice.data?.devicePassword
+          : 'openwifi',
+      );
+    }
+  }, [getDevice.data]);
 
   return (
     <Card mb={4}>

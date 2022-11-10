@@ -19,8 +19,14 @@ import { DeviceConfiguration } from 'models/Device';
 const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfiguration }) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(configuration ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(configuration ?? {}, null, 2));
   const { colorMode } = useColorMode();
+
+  React.useEffect(() => {
+    if (configuration) {
+      setValue(JSON.stringify(configuration, null, 2));
+    }
+  }, [configuration]);
 
   return (
     <>
