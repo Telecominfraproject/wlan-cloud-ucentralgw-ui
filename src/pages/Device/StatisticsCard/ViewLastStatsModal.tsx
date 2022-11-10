@@ -31,9 +31,14 @@ const ViewLastStatsModal = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const getLastStats = useGetDeviceLastStats({ serialNumber });
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(getLastStats.data ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(getLastStats.data ?? {}, null, 2));
   const { colorMode } = useColorMode();
 
+  React.useEffect(() => {
+    if (getLastStats.data) {
+      setValue(JSON.stringify(getLastStats.data, null, 2));
+    }
+  }, [getLastStats.data]);
   return (
     <>
       <Tooltip label={t('statistics.last_stats')}>

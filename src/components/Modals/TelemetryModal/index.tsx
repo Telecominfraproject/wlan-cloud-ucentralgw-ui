@@ -53,7 +53,7 @@ const _TelemetryModal = ({ serialNumber, modalProps }: TelemetryModalProps) => {
   });
   const [lastDate, setLastDate] = React.useState<Date>(new Date());
   const telemetry = useTelemetry();
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(telemetry.lastMessage?.msg ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(telemetry.lastMessage?.msg ?? {}, null, 2));
 
   const onStart = () => {
     telemetry.startTelemetry(form, modalProps.onClose);
@@ -88,6 +88,10 @@ const _TelemetryModal = ({ serialNumber, modalProps }: TelemetryModalProps) => {
   React.useEffect(() => {
     telemetry.closeSocket();
   }, [modalProps.isOpen]);
+
+  React.useEffect(() => {
+    setValue(JSON.stringify(telemetry.lastMessage?.msg ?? {}, null, 2));
+  }, [telemetry.lastMessage?.msg]);
 
   React.useEffect(() => {
     const timerID = setTimeout(() => tick(), 1000);

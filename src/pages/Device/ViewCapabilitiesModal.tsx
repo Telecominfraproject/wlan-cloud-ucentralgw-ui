@@ -30,9 +30,16 @@ const ViewCapabilitiesModal = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const getCapabilities = useGetDeviceCapabilities({ serialNumber });
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(getCapabilities.data?.capabilities ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(
+    JSON.stringify(getCapabilities.data?.capabilities ?? {}, null, 2),
+  );
   const { colorMode } = useColorMode();
 
+  React.useEffect(() => {
+    if (getCapabilities.data) {
+      setValue(JSON.stringify(getCapabilities.data.capabilities, null, 2));
+    }
+  }, [getCapabilities.data]);
   return (
     <>
       <Button onClick={onOpen} colorScheme="pink" mr={2}>
