@@ -245,6 +245,7 @@
 		"identification": "Identifizierung",
 		"inherit": "Erben",
 		"language": "Sprache",
+		"last_use": "Zuletzt verwendeten",
 		"lifetime": "Lebenszeit",
 		"locale": "Gebietsschema",
 		"logout": "Ausloggen",
@@ -261,6 +262,7 @@
 		"model": "Modell",
 		"modified": "Geändert",
 		"monthly": "Monatlich",
+		"months": "Monate",
 		"my_account": "Mein Konto",
 		"name": "Name",
 		"name_error": "Der Name muss weniger als 50 Zeichen lang sein",
@@ -314,6 +316,7 @@
 		"use_file": "Datei verwenden",
 		"value": "Wert",
 		"variable": "Variable",
+		"view": "Aussicht",
 		"view_details": "Details anzeigen",
 		"view_in_gateway": "Im Controller anzeigen",
 		"view_json": "JSON anzeigen",
@@ -742,6 +745,15 @@
 		"successful_macs": "Erfolgreiche MACs",
 		"title": "Arbeitsplätze"
 	},
+	"keys": {
+		"description_error": "Die Beschreibung muss weniger als 64 Zeichen lang sein",
+		"expire_error": "Der Ablauf darf nicht mehr als ein Jahr in der Zukunft liegen",
+		"expires": "Läuft ab",
+		"max_keys": "Max. Schlüssel erreicht (10)",
+		"name_error": "Der Name sollte eindeutig sein und aus 6 bis 20 alphanumerischen Zeichen bestehen",
+		"one": "API-Schlüssel",
+		"other": "API-Schlüssel"
+	},
 	"locations": {
 		"address_line_one": "Adresszeile eins",
 		"address_line_two": "Adresszeile zwei",
@@ -802,7 +814,10 @@
 		"receiving_types": "Typen empfangen",
 		"security": "Sicherheit",
 		"source": "Quelle",
-		"thread": "Faden"
+		"thread": "Faden",
+		"venue_config": "Aufbau",
+		"venue_reboot": "Starten Sie neu",
+		"venue_upgrade": "Aktualisierung"
 	},
 	"map": {
 		"auto_align": "Automatisch ausrichten",
@@ -837,6 +852,22 @@
 	"organization": {
 		"my_organization": "Meine Organisation",
 		"title": "Organisation"
+	},
+	"overrides": {
+		"delete_source": "Alle Überschreibungen von {{source}}löschen",
+		"ignore_overrides": "Konfigurationsüberschreibungen ignorieren",
+		"name_error": "Der Parameter ist bereits von Ihrer Quelle definiert",
+		"one": "Konfigurationsüberschreibung",
+		"other": "Konfigurationsüberschreibungen",
+		"param_name": "Parameter",
+		"param_value": "Wert",
+		"parameter": "Parameter",
+		"reason": "Grund",
+		"reason_error": "Ihr Grund muss weniger als 64 Zeichen lang sein. lang",
+		"source": "Quelle",
+		"tx_power_error": "Die Sendeleistung muss zwischen 1 und 32 liegen",
+		"update_success": "Aktualisierte Konfigurationsüberschreibungen!",
+		"value": "Wert"
 	},
 	"profile": {
 		"about_me": "Über mich",

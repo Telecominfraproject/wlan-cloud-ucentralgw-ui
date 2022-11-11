@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Masonry from 'react-masonry-css';
+import ApiKeysCard from './ApiKeys';
 import GeneralInformationProfile from './GeneralInformation';
 import MultiFactorAuthProfile from './MultiFactorAuth';
 import ProfileNotes from './Notes';
@@ -10,7 +11,7 @@ const ProfileLayout = () => (
     breakpointCols={{
       default: 3,
       1800: 2,
-      1100: 1,
+      1200: 1,
     }}
     className="my-masonry-grid"
     columnClassName="my-masonry-grid_column"
@@ -19,6 +20,7 @@ const ProfileLayout = () => (
     <MultiFactorAuthProfile />
     <GeneralInformationProfile />
     <ProfileNotes />
+    <ApiKeysCard />
   </Masonry>
 );
 
