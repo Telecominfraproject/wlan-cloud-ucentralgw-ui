@@ -51,7 +51,7 @@ export const useDeleteCommand = () => {
 
   return useMutation(deleteCommandHistory, {
     onSuccess: () => {
-      queryClient.invalidateQueries('commands');
+      queryClient.invalidateQueries(['commands']);
     },
   });
 };
@@ -93,7 +93,7 @@ export type EventQueueResponse = {
 const getEventQueue = async (serialNumber: string) =>
   axiosGw
     .post(`device/${serialNumber}/eventqueue`, {
-      types: ['dhcp', 'wifi'],
+      types: ['dhcp-snooping', 'wifi-frames'],
       serialNumber,
     })
     .then((response) => response.data as EventQueueResponse);

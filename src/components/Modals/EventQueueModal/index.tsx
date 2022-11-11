@@ -31,12 +31,15 @@ export type EventQueueModalProps = {
 export const EventQueueModal = ({ serialNumber, modalProps }: EventQueueModalProps) => {
   const { t } = useTranslation();
   const eventQueue = useGetEventQueue();
-  const { hasCopied, onCopy } = useClipboard(JSON.stringify(eventQueue.data ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(eventQueue.data ?? {}, null, 2));
 
   const fetch = () => {
     eventQueue.mutate(serialNumber);
   };
 
+  React.useEffect(() => {
+    setValue(JSON.stringify(eventQueue.data ?? {}, null, 2));
+  }, [eventQueue.data]);
   React.useEffect(() => {
     if (modalProps.isOpen) fetch();
   }, [modalProps.isOpen]);
