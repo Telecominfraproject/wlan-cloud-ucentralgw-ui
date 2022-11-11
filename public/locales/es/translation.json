@@ -245,6 +245,7 @@
 		"identification": "identificación",
 		"inherit": "Heredar",
 		"language": "idioma",
+		"last_use": "Utilizado por última vez",
 		"lifetime": "Toda la vida",
 		"locale": "lugar",
 		"logout": "Cerrar sesión",
@@ -261,6 +262,7 @@
 		"model": "Modelo",
 		"modified": "Modificado",
 		"monthly": "Mensual",
+		"months": "Meses",
 		"my_account": "Mi cuenta",
 		"name": "Nombre",
 		"name_error": "El nombre debe tener menos de 50 caracteres",
@@ -314,6 +316,7 @@
 		"use_file": "Usar archivo",
 		"value": "Valor",
 		"variable": "Variable",
+		"view": "Ver",
 		"view_details": "Ver detalles",
 		"view_in_gateway": "Ver en controlador",
 		"view_json": "Ver JSON",
@@ -742,6 +745,15 @@
 		"successful_macs": "MAC exitosos",
 		"title": "Trabajos"
 	},
+	"keys": {
+		"description_error": "La descripción debe tener menos de 64 caracteres",
+		"expire_error": "El vencimiento no puede ser más de un año en el futuro",
+		"expires": "Vence",
+		"max_keys": "Número máximo de claves alcanzado (10)",
+		"name_error": "El nombre debe ser único y tener entre 6 y 20 caracteres alfanuméricos",
+		"one": "Clave API",
+		"other": "Claves de api"
+	},
 	"locations": {
 		"address_line_one": "Dirección Línea Uno",
 		"address_line_two": "Dirección línea dos",
@@ -802,7 +814,10 @@
 		"receiving_types": "Tipos de recepción",
 		"security": "SEGURIDAD",
 		"source": "Fuente",
-		"thread": "Hilo"
+		"thread": "Hilo",
+		"venue_config": "Configuración",
+		"venue_reboot": "Reiniciar",
+		"venue_upgrade": "Mejorar"
 	},
 	"map": {
 		"auto_align": "Alineación automática",
@@ -837,6 +852,22 @@
 	"organization": {
 		"my_organization": "MI ORGANIZACION",
 		"title": "Organización"
+	},
+	"overrides": {
+		"delete_source": "Eliminar todas las anulaciones de {{source}}",
+		"ignore_overrides": "Ignorar anulaciones de configuración",
+		"name_error": "El parámetro ya está definido por su fuente",
+		"one": "Anulación de configuración",
+		"other": "Anulaciones de configuración",
+		"param_name": "parámetro",
+		"param_value": "Valor",
+		"parameter": "parámetro",
+		"reason": "Razón",
+		"reason_error": "Su motivo debe tener menos de 64 caracteres. largo",
+		"source": "Fuente",
+		"tx_power_error": "La potencia Tx debe estar entre 1 y 32",
+		"update_success": "¡Anulaciones de configuración actualizadas!",
+		"value": "Valor"
 	},
 	"profile": {
 		"about_me": "Sobre mí",

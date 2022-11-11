@@ -245,6 +245,7 @@
 		"identification": "Identification",
 		"inherit": "Inherit",
 		"language": "Language",
+		"last_use": "Last Use",
 		"lifetime": "Lifetime",
 		"locale": "Locale",
 		"logout": "Logout",
@@ -261,6 +262,7 @@
 		"model": "Model",
 		"modified": "Modified",
 		"monthly": "Monthly",
+		"months": "Months",
 		"my_account": "My Account",
 		"name": "Name",
 		"name_error": "Name must be less than 50 characters long",
@@ -314,6 +316,7 @@
 		"use_file": "Use File",
 		"value": "Value",
 		"variable": "Variable",
+		"view": "View",
 		"view_details": "View Details",
 		"view_in_gateway": "View In Controller",
 		"view_json": "View JSON",
@@ -742,6 +745,15 @@
 		"successful_macs": "Successful MACs",
 		"title": "Jobs"
 	},
+	"keys": {
+		"description_error": "Description needs to be less than 64 characters long",
+		"expire_error": "The expiry cannot be more than one year in the future",
+		"expires": "Expires",
+		"max_keys": "Max keys reached (10)",
+		"name_error": "Name should be unique and be between 6 and 20 alphanumeric characters",
+		"one": "API Key",
+		"other": "API Keys"
+	},
 	"locations": {
 		"address_line_one": "Address Line One",
 		"address_line_two": "Address Line Two",
@@ -802,7 +814,10 @@
 		"receiving_types": "Receiving Types",
 		"security": "Security",
 		"source": "Source",
-		"thread": "Thread"
+		"thread": "Thread",
+		"venue_config": "Configuration",
+		"venue_reboot": "Reboot",
+		"venue_upgrade": "Upgrade"
 	},
 	"map": {
 		"auto_align": "Auto Align",
@@ -837,6 +852,22 @@
 	"organization": {
 		"my_organization": "My Organization",
 		"title": "Organization"
+	},
+	"overrides": {
+		"delete_source": "Delete all overrides from {{source}}",
+		"ignore_overrides": "Ignore Configuration Overrides",
+		"name_error": "Parameter is already defined by your source",
+		"one": "Configuration Override",
+		"other": "Configuration Overrides",
+		"param_name": "Parameter",
+		"param_value": "Value",
+		"parameter": "Parameter",
+		"reason": "Reason",
+		"reason_error": "Your reason needs to be less than 64 chars. long",
+		"source": "Source",
+		"tx_power_error": "Tx power needs to be between 1 and 32",
+		"update_success": "Updated Configuration Overrides!",
+		"value": "Value"
 	},
 	"profile": {
 		"about_me": "About Me",

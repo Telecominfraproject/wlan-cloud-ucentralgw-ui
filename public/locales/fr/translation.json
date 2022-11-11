@@ -245,6 +245,7 @@
 		"identification": "Identification",
 		"inherit": "Hériter",
 		"language": "La langue",
+		"last_use": "Dernière utilisation",
 		"lifetime": "durée de vie",
 		"locale": "lieu",
 		"logout": "Connectez - Out",
@@ -261,6 +262,7 @@
 		"model": "Modèle",
 		"modified": "Modifié",
 		"monthly": "Mensuel",
+		"months": "mois",
 		"my_account": "Mon compte",
 		"name": "Prénom",
 		"name_error": "Le nom doit comporter moins de 50 caractères",
@@ -314,6 +316,7 @@
 		"use_file": "Utiliser le fichier",
 		"value": "Valeur",
 		"variable": "Variable",
+		"view": "Vue",
 		"view_details": "Voir les détails",
 		"view_in_gateway": "Afficher dans le contrôleur",
 		"view_json": "Afficher JSON",
@@ -742,6 +745,15 @@
 		"successful_macs": "MAC réussis",
 		"title": "Emplois"
 	},
+	"keys": {
+		"description_error": "La description doit comporter moins de 64 caractères",
+		"expire_error": "L'expiration ne peut pas être supérieure à un an dans le futur",
+		"expires": "EXPIRÉ",
+		"max_keys": "Max de clés atteint (10)",
+		"name_error": "Le nom doit être unique et comporter entre 6 et 20 caractères alphanumériques",
+		"one": "Clé API",
+		"other": "Clés API"
+	},
 	"locations": {
 		"address_line_one": "Adresse Ligne 1",
 		"address_line_two": "Adresse ligne deux",
@@ -802,7 +814,10 @@
 		"receiving_types": "Types de réception",
 		"security": "SÉCURITÉ",
 		"source": "La source",
-		"thread": "Fil de discussion"
+		"thread": "Fil de discussion",
+		"venue_config": "Configuration",
+		"venue_reboot": "Redémarrer",
+		"venue_upgrade": "Améliorer"
 	},
 	"map": {
 		"auto_align": "Alignement automatique",
@@ -837,6 +852,22 @@
 	"organization": {
 		"my_organization": "Mon organisation",
 		"title": "Organisation"
+	},
+	"overrides": {
+		"delete_source": "Supprimer tous les remplacements de {{source}}",
+		"ignore_overrides": "Ignorer les remplacements de configuration",
+		"name_error": "Le paramètre est déjà défini par votre source",
+		"one": "Remplacement de la configuration",
+		"other": "Remplacements de configuration",
+		"param_name": "paramètre",
+		"param_value": "Valeur",
+		"parameter": "paramètre",
+		"reason": "raison",
+		"reason_error": "Votre raison doit être inférieure à 64 caractères. long",
+		"source": "La source",
+		"tx_power_error": "La puissance de transmission doit être comprise entre 1 et 32",
+		"update_success": "Remplacements de configuration mis à jour !",
+		"value": "Valeur"
 	},
 	"profile": {
 		"about_me": "À propos de moi",

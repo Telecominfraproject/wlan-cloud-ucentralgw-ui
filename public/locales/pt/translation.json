@@ -245,6 +245,7 @@
 		"identification": "Identificação",
 		"inherit": "Herdar",
 		"language": "Língua",
+		"last_use": "Usado por último",
 		"lifetime": "Tempo de vida",
 		"locale": "Localidade",
 		"logout": "Sair",
@@ -261,6 +262,7 @@
 		"model": "Modelo",
 		"modified": "Modificado",
 		"monthly": "Por mês",
+		"months": "Meses",
 		"my_account": "Minha conta",
 		"name": "Nome",
 		"name_error": "O nome deve ter menos de 50 caracteres",
@@ -314,6 +316,7 @@
 		"use_file": "Usar arquivo",
 		"value": "Valor",
 		"variable": "Variável",
+		"view": "Visão",
 		"view_details": "VER DETALHES",
 		"view_in_gateway": "Ver no controlador",
 		"view_json": "Ver JSON",
@@ -742,6 +745,15 @@
 		"successful_macs": "MACs de sucesso",
 		"title": "Empregos"
 	},
+	"keys": {
+		"description_error": "A descrição precisa ter menos de 64 caracteres",
+		"expire_error": "A expiração não pode ser superior a um ano no futuro",
+		"expires": "expira",
+		"max_keys": "Teclas máximas alcançadas (10)",
+		"name_error": "O nome deve ser único e ter entre 6 e 20 caracteres alfanuméricos",
+		"one": "Chave API",
+		"other": "Chaves de Api"
+	},
 	"locations": {
 		"address_line_one": "Linha de endereço um",
 		"address_line_two": "Linha de endereço dois",
@@ -802,7 +814,10 @@
 		"receiving_types": "Tipos de recebimento",
 		"security": "SEGURANÇA",
 		"source": "Fonte",
-		"thread": "FIO"
+		"thread": "FIO",
+		"venue_config": "Configuração",
+		"venue_reboot": "Reiniciar",
+		"venue_upgrade": "Melhorar"
 	},
 	"map": {
 		"auto_align": "Alinhamento Automático",
@@ -837,6 +852,22 @@
 	"organization": {
 		"my_organization": "Minha organização",
 		"title": "Organização"
+	},
+	"overrides": {
+		"delete_source": "Excluir todas as substituições de {{source}}",
+		"ignore_overrides": "Ignorar substituições de configuração",
+		"name_error": "O parâmetro já está definido pela sua fonte",
+		"one": "Substituição de configuração",
+		"other": "Substituições de configuração",
+		"param_name": "parâmetro",
+		"param_value": "Valor",
+		"parameter": "parâmetro",
+		"reason": "RAZÃO",
+		"reason_error": "Seu motivo precisa ter menos de 64 caracteres. grandes",
+		"source": "Fonte",
+		"tx_power_error": "A potência Tx precisa estar entre 1 e 32",
+		"update_success": "Substituições de configuração atualizadas!",
+		"value": "Valor"
 	},
 	"profile": {
 		"about_me": "Sobre mim",
