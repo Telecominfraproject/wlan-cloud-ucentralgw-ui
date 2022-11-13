@@ -3,22 +3,29 @@ import { Heading } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'contexts/AuthProvider';
 import { useControllerDeviceSearch } from 'contexts/ControllerSocketProvider/hooks/Commands/useDeviceSearch';
+import { useControllerStore } from 'contexts/ControllerSocketProvider/useStore';
 
 const DeviceSearchBar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { inputValue, results, onInputChange, isOpen } = useControllerDeviceSearch({
+  const { token } = useAuth();
+  const { startWebSocket, isWebSocketOpen } = useControllerStore((state) => ({
+    startWebSocket: state.startWebSocket,
+    isWebSocketOpen: state.isWebSocketOpen,
+  }));
+  const { inputValue, results, onInputChange } = useControllerDeviceSearch({
     minLength: 2,
   });
 
   const NoOptionsMessage = React.useCallback(
     () => (
       <Heading size="sm" textAlign="center">
-        {t('common.no_devices_found')}
+        {isWebSocketOpen ? t('common.no_devices_found') : `${t('controller.devices.connecting')}...`}
       </Heading>
     ),
-    [t],
+    [t, isWebSocketOpen],
   );
   const onClick = React.useCallback((v: { value: string }) => {
     navigate(`/devices/${v.value}`);
@@ -27,6 +34,11 @@ const DeviceSearchBar = () => {
     if (v.length === 0 || v.match('^[a-fA-F0-9-*]+$')) onInputChange(v);
   }, []);
 
+  const onFocus = () => {
+    if (!isWebSocketOpen && token && token.length > 0) {
+      startWebSocket(token, 0);
+    }
+  };
   return (
     <Select
       chakraStyles={{
@@ -57,9 +69,9 @@ const DeviceSearchBar = () => {
       value={inputValue}
       placeholder={t('common.search')}
       onInputChange={onChange}
+      onFocus={onFocus}
       // @ts-ignore
       onChange={onClick}
-      isDisabled={!isOpen}
     />
   );
 };

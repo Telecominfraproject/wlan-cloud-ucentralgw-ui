@@ -226,7 +226,7 @@ export const useControllerStore = create<ControllerStoreState>((set, get) => ({
           ws.send(`token:${token}`);
         };
         ws.onclose = () => {
-          set({ isWebSocketOpen: false });
+          set({ isWebSocketOpen: false, lastSearchResults: [] });
           setTimeout(() => get().startWebSocket(token, newTries), 3000);
         };
       }
