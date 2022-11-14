@@ -155,7 +155,7 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
           columns={columns as Column<unknown>[]}
           hiddenColumns={hiddenColumns}
           setHiddenColumns={setHiddenColumns}
-          preference="gateway.device.analysis.radio.hiddenColumns"
+          preference="gateway.device.analysis.associations.hiddenColumns"
           size="sm"
         />
       </Flex>
@@ -169,8 +169,9 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
               accessor: string;
             }[]
           }
+          hiddenColumns={hiddenColumns}
           data={data ?? []}
-          obj={t('controller.devices.logs')}
+          hideEmptyListText
           // @ts-ignore
           hideControls
           showAllRows
