@@ -98,7 +98,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
           columns={columns as Column<unknown>[]}
           hiddenColumns={hiddenColumns}
           setHiddenColumns={setHiddenColumns}
-          preference="gateway.device.analysis.associations.hiddenColumns"
+          preference="gateway.device.analysis.radio.hiddenColumns"
           size="sm"
         />
       </Flex>
@@ -112,6 +112,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
               accessor: string;
             }[]
           }
+          hiddenColumns={hiddenColumns}
           data={data ?? []}
           obj={t('controller.devices.logs')}
           // @ts-ignore
