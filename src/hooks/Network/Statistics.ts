@@ -189,29 +189,61 @@ export const useGetMacOuis = ({ macs, onError }: { macs?: string[]; onError?: (e
     onError,
   });
 
-const getStatsBetweenTimestamps = (limit: number, start?: number, end?: number, serialNumber?: string) => async () =>
+const getStatsBetweenTimestamps = async (params: {
+  start?: number;
+  end?: number;
+  serialNumber?: string;
+  offset: number;
+}) =>
   axiosGw
-    .get(`device/${serialNumber}/statistics?startDate=${start}&endDate=${end}&limit=${limit}`)
-    .then((response) => response.data) as Promise<{
-    data: { data: DeviceStatistics; UUID: string; recorded: number }[];
-  }>;
+    .get(
+      `device/${params.serialNumber}/statistics?startDate=${params.start}&endDate=${params.end}&offset=${params.offset}&limit=100`,
+    )
+    .then((response) => response.data.data as { data: DeviceStatistics; UUID: string; recorded: number }[]);
+
+const getStatsBetweenTimestampsCount = async (params: { start?: number; end?: number; serialNumber?: string }) =>
+  axiosGw
+    .get(`device/${params.serialNumber}/statistics?startDate=${params.start}&endDate=${params.end}&countOnly=true`)
+    .then((response) => response.data.count as number)
+    .catch(() => 0);
+
+const getStatsBetweenTimestampsWithProgress =
+  (params: { start?: number; end?: number; serialNumber?: string }, setProgress?: (pct: number) => void) =>
+  async () => {
+    const { start, end, serialNumber } = params;
+    if (setProgress) setProgress(0);
+    const count = await getStatsBetweenTimestampsCount(params);
+    let allStats: { data: DeviceStatistics; UUID: string; recorded: number }[] = [];
+    let offset = 0;
+    let latestResponse: { data: DeviceStatistics; UUID: string; recorded: number }[];
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      latestResponse = await getStatsBetweenTimestamps({ start, end, serialNumber, offset });
+      allStats = allStats.concat(latestResponse);
+      offset += 100;
+      if (setProgress && count > 0) setProgress((allStats.length / count) * 100);
+    } while (latestResponse.length === 100);
+    if (setProgress) setProgress(100);
+
+    return allStats.sort((a, b) => a.recorded - b.recorded);
+  };
 
 export const useGetDeviceStatsWithTimestamps = ({
   serialNumber,
-  limit,
   start,
   end,
   onError,
+  setProgress,
 }: {
   serialNumber?: string;
-  limit: number;
   start?: number;
   end?: number;
   onError?: (e: AxiosError) => void;
+  setProgress?: (pct: number) => void;
 }) =>
   useQuery(
-    ['deviceStatistics', serialNumber, { limit, start, end }],
-    getStatsBetweenTimestamps(limit, start, end, serialNumber),
+    ['deviceStatistics', serialNumber, { start, end }],
+    getStatsBetweenTimestampsWithProgress({ start, end, serialNumber }, setProgress),
     {
       enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
       staleTime: 1000 * 60,
