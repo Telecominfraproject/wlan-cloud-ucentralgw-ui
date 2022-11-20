@@ -10,7 +10,7 @@ const DevicePage = () => {
 
   return (
     <Flex flexDirection="column" pt="75px">
-      {isUserLoaded && id !== undefined && <DevicePageWrapper serialNumber={id} />}
+      {isUserLoaded && id !== undefined && <DevicePageWrapper serialNumber={id.toLowerCase()} />}
     </Flex>
   );
 };
