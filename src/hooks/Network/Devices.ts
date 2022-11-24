@@ -41,6 +41,7 @@ export type DeviceWithStatus = {
   UUID: number;
   associations_2G: number;
   associations_5G: number;
+  associations_6G: number;
   compatible: string;
   connected: boolean;
   certificateExpiryDate?: number;
