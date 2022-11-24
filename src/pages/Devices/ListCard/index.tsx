@@ -200,7 +200,7 @@ const DeviceListCard = () => {
     ),
     [],
   );
-  const numberCell = React.useCallback((v: number) => <NumberCell value={v} />, []);
+  const numberCell = React.useCallback((v?: number) => <NumberCell value={v !== undefined ? v : 0} />, []);
   const actionCell = React.useCallback(
     (device: DeviceWithStatus) => (
       <Actions
@@ -324,7 +324,7 @@ const DeviceListCard = () => {
         Header: '6G',
         Footer: '',
         accessor: 'associations_6G',
-        Cell: () => numberCell(0),
+        Cell: (v) => numberCell(v.cell.row.original.associations_6G),
         customWidth: '50px',
         disableSortBy: true,
       },
