@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';
 
@@ -151,7 +151,7 @@ export const useGetDeviceLastStats = ({
   onError?: (e: AxiosError) => void;
 }) =>
   useQuery(['device', serialNumber, 'last-statistics'], () => getLastStats(serialNumber), {
-    enabled: serialNumber !== undefined && serialNumber !== '',
+    enabled: serialNumber !== undefined && serialNumber !== '' && false,
     staleTime: 1000 * 60,
     onError,
   });
@@ -171,12 +171,24 @@ export const useGetDeviceNewestStats = ({
   serialNumber?: string;
   limit: number;
   onError?: (e: AxiosError) => void;
-}) =>
-  useQuery(['deviceStatistics', serialNumber, 'newest', { limit }], getNewestStats(limit, serialNumber), {
+}) => {
+  const queryClient = useQueryClient();
+
+  return useQuery(['deviceStatistics', serialNumber, 'newest', { limit }], getNewestStats(limit, serialNumber), {
     enabled: serialNumber !== undefined && serialNumber !== '',
     staleTime: 1000 * 60,
+    onSuccess: (response) => {
+      const entry = response.data[0];
+      // If we have a valid entry, we prefill lastStats, if not we trigger a fetch of the last statistics
+      if (entry) {
+        queryClient.setQueryData(['device', serialNumber, 'last-statistics'], entry.data);
+      } else {
+        queryClient.fetchQuery(['device', serialNumber, 'last-statistics']);
+      }
+    },
     onError,
   });
+};
 
 const getOuis = (macs?: string[]) => async () =>
   axiosGw.get(`/ouis?macList=${macs?.join(',')}`).then((response) => response.data) as Promise<{
@@ -250,34 +262,3 @@ export const useGetDeviceStatsWithTimestamps = ({
       onError,
     },
   );
-const getStart = () => {
-  const date = new Date();
-  date.setHours(date.getHours() - 1);
-  return Math.floor(date.getTime() / 1000);
-};
-const getLatestHour = (limit: number, serialNumber?: string) => async () =>
-  axiosGw
-    .get(
-      `device/${serialNumber}/statistics?startDate=${getStart()}&endDate=${Math.floor(
-        new Date().getTime() / 1000,
-      )}&limit=${limit}`,
-    )
-    .then((response) => response.data) as Promise<{
-    data: { data: DeviceStatistics; UUID: string; recorded: number }[];
-  }>;
-
-export const useGetDeviceStatsLatestHour = ({
-  serialNumber,
-  limit,
-  onError,
-}: {
-  serialNumber?: string;
-  limit: number;
-  onError?: (e: AxiosError) => void;
-}) =>
-  useQuery(['deviceStatistics', serialNumber, 'latestHour'], getLatestHour(limit, serialNumber), {
-    enabled: serialNumber !== undefined && serialNumber !== '',
-    staleTime: 1000 * 60,
-    keepPreviousData: true,
-    onError,
-  });

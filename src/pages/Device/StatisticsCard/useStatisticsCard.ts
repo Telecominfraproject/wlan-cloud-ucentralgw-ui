@@ -1,10 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
-import {
-  DeviceStatistics,
-  useGetDeviceStatsLatestHour,
-  useGetDeviceStatsWithTimestamps,
-} from 'hooks/Network/Statistics';
+import { DeviceStatistics, useGetDeviceNewestStats, useGetDeviceStatsWithTimestamps } from 'hooks/Network/Statistics';
 
 const extractMemory = (stat: DeviceStatistics) => {
   let used: number | undefined;
@@ -25,7 +21,7 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
   const onProgressChange = React.useCallback((newProgress: number) => {
     setProgress(newProgress);
   }, []);
-  const getStats = useGetDeviceStatsLatestHour({ serialNumber, limit: 100 });
+  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 100 });
   const getCustomStats = useGetDeviceStatsWithTimestamps({
     serialNumber,
     start: time ? Math.floor(time.start.getTime() / 1000) : undefined,
@@ -52,7 +48,10 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
     const previousRx: { [key: string]: number } = {};
     const previousTx: { [key: string]: number } = {};
 
-    const dataToLoop = getCustomStats.data ?? getStats.data?.data;
+    let dataToLoop = getCustomStats.data ?? getStats.data?.data;
+    if (dataToLoop && !getCustomStats.data) {
+      dataToLoop = [...dataToLoop].reverse();
+    }
 
     for (const [index, stat] of dataToLoop ? dataToLoop.entries() : []) {
       if (index === 0) {

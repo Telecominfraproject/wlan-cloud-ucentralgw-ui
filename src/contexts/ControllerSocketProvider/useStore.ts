@@ -97,7 +97,7 @@ const handleConnectionNotification = (serialNumber: string, isConnected: boolean
 
 // Invalidate latest device stats
 const handleDeviceStatsNotification = (serialNumber: string, queryClient: QueryClient) => {
-  queryClient.invalidateQueries(['deviceStatistics', serialNumber, 'latestHour']);
+  queryClient.invalidateQueries(['deviceStatistics', serialNumber, 'newest']);
 };
 
 // Set new global connection stats
