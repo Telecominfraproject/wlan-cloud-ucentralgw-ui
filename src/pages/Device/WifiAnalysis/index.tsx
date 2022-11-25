@@ -24,6 +24,7 @@ const parseRadios = (t: (str: string) => string, data: { data: DeviceStatistics;
         radios.push({
           recorded: data.recorded,
           index: i,
+          band: radio.band?.[0],
           channel: radio.channel,
           channelWidth: radio.channel_width,
           noise: radio.noise ? parseDbm(radio.noise) : '-',

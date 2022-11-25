@@ -86,6 +86,7 @@ export type DeviceStatistics = {
     active_ms: number;
     busy_ms: number;
     channel: number;
+    band?: string[];
     channel_width: string;
     noise: number;
     phy: string;
