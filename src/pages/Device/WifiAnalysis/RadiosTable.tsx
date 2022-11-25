@@ -8,6 +8,7 @@ import { Column } from 'models/Table';
 export type ParsedRadio = {
   recorded: number;
   band?: string;
+  deductedBand: string;
   index: number;
   channel: number;
   channelWidth: string;
@@ -27,7 +28,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
   const { t } = useTranslation();
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 
-  const indexCell = React.useCallback((radio: ParsedRadio) => radio?.band ?? radio?.index, []);
+  const indexCell = React.useCallback((radio: ParsedRadio) => radio.band ?? radio.deductedBand, []);
 
   const columns: Column<ParsedRadio>[] = React.useMemo(
     (): Column<ParsedRadio>[] => [

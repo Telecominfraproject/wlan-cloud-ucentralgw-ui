@@ -25,6 +25,7 @@ const parseRadios = (t: (str: string) => string, data: { data: DeviceStatistics;
           recorded: data.recorded,
           index: i,
           band: radio.band?.[0],
+          deductedBand: radio.channel && radio.channel > 16 ? '5G' : '2G',
           channel: radio.channel,
           channelWidth: radio.channel_width,
           noise: radio.noise ? parseDbm(radio.noise) : '-',
