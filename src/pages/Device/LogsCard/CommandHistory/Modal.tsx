@@ -122,7 +122,7 @@ const CommandDetailsModal = ({ modalProps, command }: Props) => {
                       <AccordionIcon />
                     </AccordionButton>
                   </h2>
-                  <AccordionPanel pb={4}>
+                  <AccordionPanel pb={4} overflowX="auto" overflowY="auto" maxH="500px">
                     <pre>{JSON.stringify(command.results?.status, null, 2)}</pre>
                   </AccordionPanel>
                 </AccordionItem>
@@ -161,7 +161,7 @@ const CommandDetailsModal = ({ modalProps, command }: Props) => {
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                <AccordionPanel pb={4}>
+                <AccordionPanel pb={4} overflowX="auto" overflowY="auto" maxH="500px">
                   <pre>{JSON.stringify(command, null, 2)}</pre>
                 </AccordionPanel>
               </AccordionItem>
