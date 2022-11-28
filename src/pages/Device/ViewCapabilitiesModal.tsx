@@ -105,7 +105,7 @@ const ViewCapabilitiesModal = ({ serialNumber }: Props) => {
                       <AccordionIcon />
                     </AccordionButton>
                   </h2>
-                  <AccordionPanel pb={4}>
+                  <AccordionPanel pb={4} overflowX="auto" overflowY="auto" maxH="500px">
                     <pre>{JSON.stringify(getCapabilities.data.capabilities, null, 2)}</pre>
                   </AccordionPanel>
                 </AccordionItem>
