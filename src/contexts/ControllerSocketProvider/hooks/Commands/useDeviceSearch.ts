@@ -5,9 +5,10 @@ import { randomIntId } from 'helpers/stringHelper';
 
 export type UseControllerDeviceSearchProps = {
   minLength?: number;
+  maxLength?: number;
 };
 
-export const useControllerDeviceSearch = ({ minLength = 4 }: UseControllerDeviceSearchProps) => {
+export const useControllerDeviceSearch = ({ minLength = 4, maxLength = 12 }: UseControllerDeviceSearchProps) => {
   const [tempValue, setTempValue] = useState('');
   const [waitingSearch, setWaitingSearch] = useState<
     { command: string; serial_prefix: string; operatorId?: string } | undefined
@@ -31,7 +32,8 @@ export const useControllerDeviceSearch = ({ minLength = 4 }: UseControllerDevice
   );
   const onChange = useCallback(
     (v: string) => {
-      if (v.length >= minLength) setWaitingSearch({ command: 'serial_number_search', serial_prefix: v });
+      if (v.length >= minLength || v.length <= maxLength)
+        setWaitingSearch({ command: 'serial_number_search', serial_prefix: v });
     },
     [setWaitingSearch],
   );

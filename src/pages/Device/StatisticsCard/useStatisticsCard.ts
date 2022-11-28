@@ -21,7 +21,7 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
   const onProgressChange = React.useCallback((newProgress: number) => {
     setProgress(newProgress);
   }, []);
-  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 100 });
+  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 30 });
   const getCustomStats = useGetDeviceStatsWithTimestamps({
     serialNumber,
     start: time ? Math.floor(time.start.getTime() / 1000) : undefined,
