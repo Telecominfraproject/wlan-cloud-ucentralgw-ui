@@ -24,6 +24,8 @@ const parseRadios = (t: (str: string) => string, data: { data: DeviceStatistics;
         radios.push({
           recorded: data.recorded,
           index: i,
+          band: radio.band?.[0],
+          deductedBand: radio.channel && radio.channel > 16 ? '5G' : '2G',
           channel: radio.channel,
           channelWidth: radio.channel_width,
           noise: radio.noise ? parseDbm(radio.noise) : '-',
@@ -90,7 +92,7 @@ const parseAssociations = (data: { data: DeviceStatistics; recorded: number }, r
 const WifiAnalysisCard = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const [sliderIndex, setSliderIndex] = React.useState(0);
-  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 20 });
+  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 100 });
   const parsedData = React.useMemo(() => {
     if (!getStats.data) return undefined;
 
@@ -104,6 +106,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
 
     return data.reverse();
   }, [getStats.data]);
+
   const getOuis = useGetMacOuis({ macs: parsedData?.[sliderIndex]?.associations?.map((d) => d.station) });
   const ouiKeyValue = React.useMemo(() => {
     if (!getOuis.data) return undefined;
@@ -125,7 +128,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
   }, [parsedData]);
 
   return (
-    (<Card mb={4}>
+    <Card mb={4}>
       <CardHeader>
         <Flex w="100%">
           <Heading size="md" w="180px">
@@ -149,9 +152,9 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
       </CardHeader>
       <CardBody display="block">
         <Box>
-          {parsedData && parsedData[sliderIndex]?.associations[0]?.recorded !== undefined ? (
+          {parsedData && parsedData[sliderIndex]?.radios[0]?.recorded !== undefined ? (
             // @ts-ignore
-            (<FormattedDate date={parsedData[sliderIndex]?.associations[0]?.recorded} />)
+            <FormattedDate date={parsedData[sliderIndex]?.radios[0]?.recorded} />
           ) : (
             '-'
           )}
@@ -161,7 +164,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
           <WifiAnalysisAssocationsTable data={parsedData?.[sliderIndex]?.associations} ouis={ouiKeyValue} />
         </Box>
       </CardBody>
-    </Card>)
+    </Card>
   );
 };
 

@@ -7,6 +7,8 @@ import { Column } from 'models/Table';
 
 export type ParsedRadio = {
   recorded: number;
+  band?: string;
+  deductedBand: string;
   index: number;
   channel: number;
   channelWidth: string;
@@ -26,15 +28,19 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
   const { t } = useTranslation();
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 
+  const indexCell = React.useCallback((radio: ParsedRadio) => radio.band ?? radio.deductedBand, []);
+
   const columns: Column<ParsedRadio>[] = React.useMemo(
     (): Column<ParsedRadio>[] => [
       {
         id: 'index',
-        Header: '#',
+        Header: '',
         Footer: '',
         accessor: 'index',
+        Cell: ({ cell }) => indexCell(cell.row.original),
         customWidth: '35px',
         alwaysShow: true,
+        disableSortBy: true,
       },
       {
         id: 'channel',
@@ -115,6 +121,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
           hiddenColumns={hiddenColumns}
           data={data ?? []}
           obj={t('controller.devices.logs')}
+          sortBy={data?.[0]?.band ? [{ id: 'index', desc: true }] : undefined}
           // @ts-ignore
           hideControls
           showAllRows

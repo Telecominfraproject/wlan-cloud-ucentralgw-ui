@@ -47,16 +47,19 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
     [],
   );
   const dataCell = React.useCallback((v: number) => <DataCell bytes={v} />, []);
+  const indexCell = React.useCallback((assoc: ParsedAssociation) => assoc.radio?.band ?? assoc.radio?.deductedBand, []);
 
   const columns: Column<ParsedAssociation>[] = React.useMemo(
     (): Column<ParsedAssociation>[] => [
       {
         id: 'index',
-        Header: '#',
+        Header: '',
         Footer: '',
         accessor: 'radio.index',
+        Cell: ({ cell }) => indexCell(cell.row.original),
         customWidth: '35px',
         alwaysShow: true,
+        disableSortBy: true,
       },
       {
         id: 'station',
@@ -172,6 +175,7 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
           hiddenColumns={hiddenColumns}
           data={data ?? []}
           hideEmptyListText
+          sortBy={data?.[0]?.radio?.band ? [{ id: 'index', desc: true }] : undefined}
           // @ts-ignore
           hideControls
           showAllRows
