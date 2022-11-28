@@ -223,7 +223,7 @@ export const useGetDevice = ({ serialNumber, onClose }: { serialNumber?: string;
       onError: (e: AxiosError) => {
         if (!toast.isActive('gateway-device-fetching-error'))
           toast({
-            id: 'gateway-device-error',
+            id: 'gateway-device-fetching-error',
             title: t('common.error'),
             description:
               e?.response?.status === 404
