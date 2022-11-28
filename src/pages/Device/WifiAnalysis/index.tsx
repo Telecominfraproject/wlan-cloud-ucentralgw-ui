@@ -92,7 +92,7 @@ const parseAssociations = (data: { data: DeviceStatistics; recorded: number }, r
 const WifiAnalysisCard = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const [sliderIndex, setSliderIndex] = React.useState(0);
-  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 100 });
+  const getStats = useGetDeviceNewestStats({ serialNumber, limit: 30 });
   const parsedData = React.useMemo(() => {
     if (!getStats.data) return undefined;
 

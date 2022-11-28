@@ -175,7 +175,7 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
           hiddenColumns={hiddenColumns}
           data={data ?? []}
           hideEmptyListText
-          sortBy={data?.[0]?.radio?.band ? [{ id: 'index', desc: true }] : undefined}
+          sortBy={[{ id: 'index', desc: true }]}
           // @ts-ignore
           hideControls
           showAllRows

@@ -31,7 +31,7 @@ const DeviceSearchBar = () => {
     navigate(`/devices/${v.value}`);
   }, []);
   const onChange = React.useCallback((v: string) => {
-    if (v.length === 0 || v.match('^[a-fA-F0-9-*]+$')) onInputChange(v);
+    if ((v.length === 0 || v.match('^[a-fA-F0-9-*]+$')) && v.length <= 13) onInputChange(v);
   }, []);
 
   const onFocus = () => {

@@ -121,7 +121,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
           hiddenColumns={hiddenColumns}
           data={data ?? []}
           obj={t('controller.devices.logs')}
-          sortBy={data?.[0]?.band ? [{ id: 'index', desc: true }] : undefined}
+          sortBy={[{ id: 'index', desc: true }]}
           // @ts-ignore
           hideControls
           showAllRows
