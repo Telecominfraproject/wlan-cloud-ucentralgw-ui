@@ -1,5 +1,6 @@
 import { Note } from './Note';
 
+
 export type UserRole =
   | 'root'
   | 'admin'
@@ -11,13 +12,31 @@ export type UserRole =
   | 'noc'
   | 'accounting';
 
-export interface User {
-  name: string;
+export type User = {
   avatar: string;
+  blackListed: boolean;
+  creationDate: number;
+  currentLoginURI: string;
+  currentPassword: string;
   description: string;
-  currentPassword?: string;
-  id: string;
   email: string;
+  id: string;
+  lastEmailCheck: number;
+  lastLogin: number;
+  lastPasswordChange: number;
+  lastPasswords: string[];
+  locale: string;
+  location: string;
+  modified: number;
+  name: string;
+  notes: Note[];
+  oauthType: string;
+  oauthUserInfo: string;
+  owner: string;
+  securityPolicy: string;
+  securityPolicyChange: number;
+  signingUp: string;
+  suspended: boolean;
   userRole: UserRole;
   userTypeProprietaryInfo: {
     authenticatorSecret: string;
@@ -27,6 +46,9 @@ export interface User {
     };
     mobiles: { number: string }[];
   };
-  suspended: boolean;
-  notes: Note[];
-}
+  validated: boolean;
+  validationDate: number;
+  validationEmail: string;
+  validationURI: string;
+  waitingForEmailCheck: boolean;
+};

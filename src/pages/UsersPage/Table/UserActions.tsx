@@ -17,67 +17,56 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import ActionsDropdown from './ActionsDropdown';
-import { axiosSec } from 'constants/axiosInstances';
+import { useDeleteUser, User } from 'hooks/Network/Users';
 
-const deleteUserApi = async (userId) => axiosSec.delete(`/user/${userId}`).then(() => true);
-
-const propTypes = {
-  cell: PropTypes.shape({
-    original: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      suspended: PropTypes.bool.isRequired,
-      waitingForEmailCheck: PropTypes.bool.isRequired,
-    }).isRequired,
-  }).isRequired,
-  refreshTable: PropTypes.func.isRequired,
-  openEdit: PropTypes.func.isRequired,
+type Props = {
+  user: User;
+  openEdit: (user: User) => void;
+  refreshTable: () => void;
 };
 
-const UserActions = ({ cell: { original: user }, refreshTable, openEdit }) => {
+const UserActions = ({ user, openEdit, refreshTable }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const deleteUser = useMutation(() => deleteUserApi(user.id), {
-    onSuccess: () => {
-      onClose();
-      refreshTable();
-      toast({
-        id: `user-delete-success${uuid()}`,
-        title: t('common.success'),
-        description: t('crud.success_delete_obj', {
-          obj: user.name,
-        }),
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    },
-    onError: (e) => {
-      toast({
-        id: 'user-delete-error',
-        title: t('common.error'),
-        description: t('crud.error_delete_obj', {
-          obj: user.name,
-          e: e?.response?.data?.ErrorDescription,
-        }),
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    },
-  });
+  const deleteUser = useDeleteUser();
 
-  const handleDeleteClick = () => deleteUser.mutateAsync();
-  const handleEditClick = () => openEdit(user.id);
+  const handleDeleteClick = () =>
+    deleteUser.mutate(user.id, {
+      onSuccess: () => {
+        onClose();
+        toast({
+          id: `user-delete-success${uuid()}`,
+          title: t('common.success'),
+          description: t('crud.success_delete_obj', {
+            obj: user.name,
+          }),
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      },
+      onError: (e) => {
+        if (axios.isAxiosError(e))
+          toast({
+            id: 'user-delete-error',
+            title: t('common.error'),
+            description: e?.response?.data?.ErrorDescription,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+      },
+    });
+
+  const handleEditClick = () => openEdit(user);
 
   return (
     <Flex>
@@ -85,7 +74,7 @@ const UserActions = ({ cell: { original: user }, refreshTable, openEdit }) => {
         <Tooltip hasArrow label={t('crud.delete')} placement="top" isDisabled={isOpen}>
           <Box>
             <PopoverTrigger>
-              <IconButton colorScheme="red" icon={<Trash size={20} />} size="sm" />
+              <IconButton aria-label={t('crud.delete')} colorScheme="red" icon={<Trash size={20} />} size="sm" />
             </PopoverTrigger>
           </Box>
         </Tooltip>
@@ -97,10 +86,10 @@ const UserActions = ({ cell: { original: user }, refreshTable, openEdit }) => {
           <PopoverFooter>
             <Center>
               <Button colorScheme="gray" mr="1" onClick={onClose}>
-                Cancel
+                {t('common.cancel')}
               </Button>
               <Button colorScheme="red" ml="1" onClick={handleDeleteClick} isLoading={deleteUser.isLoading}>
-                Yes
+                {t('common.yes')}
               </Button>
             </Center>
           </PopoverFooter>
@@ -114,6 +103,7 @@ const UserActions = ({ cell: { original: user }, refreshTable, openEdit }) => {
       />
       <Tooltip hasArrow label={t('common.view_details')} placement="top">
         <IconButton
+          aria-label={t('common.view_details')}
           ml={2}
           colorScheme="blue"
           icon={<MagnifyingGlass size={20} />}
@@ -124,7 +114,5 @@ const UserActions = ({ cell: { original: user }, refreshTable, openEdit }) => {
     </Flex>
   );
 };
-
-UserActions.propTypes = propTypes;
 
 export default UserActions;

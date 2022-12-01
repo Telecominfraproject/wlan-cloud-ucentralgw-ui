@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { User } from '../../models/User';
+import { UserRole } from './Users';
 import { axiosSec } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';
 import { Note } from 'models/Note';
@@ -141,6 +142,7 @@ export const useUpdateAccount = ({ user }: { user?: User }) => {
         };
         mobiles?: { number: string }[];
       };
+      userRole?: UserRole;
       notes?: Note[];
     }) => axiosSec.put(`user/${user?.id ?? userInfo?.id}`, userInfo),
     {

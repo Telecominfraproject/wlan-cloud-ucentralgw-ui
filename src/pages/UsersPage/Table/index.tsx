@@ -1,67 +1,55 @@
 import React, { useCallback, useState } from 'react';
-import { Avatar, Box, Button, Flex, Heading, useDisclosure, useToast } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 import { ArrowsClockwise } from 'phosphor-react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
+import { ColumnPicker } from '../../../components/DataTables/ColumnPicker';
+import { DataTable } from '../../../components/DataTables/DataTable';
+import FormattedDate from '../../../components/InformationDisplays/FormattedDate';
 import CreateUserModal from './CreateUserModal';
 import EditUserModal from './EditUserModal';
 import UserActions from './UserActions';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { ColumnPicker } from 'components/DataTables/ColumnPicker';
-import { DataTable } from 'components/DataTables/DataTable';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { useAuth } from 'contexts/AuthProvider';
-import { useGetRequirements } from 'hooks/Network/Requirements';
 import { useGetUsers } from 'hooks/Network/Users';
+import { Column } from 'models/Table';
+import { User } from 'models/User';
 
-const propTypes = {
-  title: PropTypes.string,
-};
-
-const defaultProps = {
-  title: null,
-};
-
-const UserTable = ({ title }) => {
+const UserTable = () => {
   const { t } = useTranslation();
-  const toast = useToast();
   const { user } = useAuth();
-  const [usersWithAvatars, setUsersWithAvatars] = useState([]);
-  const { data: requirements } = useGetRequirements();
   const [editId, setEditId] = useState('');
-  const [hiddenColumns, setHiddenColumns] = useState([]);
+  const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const { isOpen: editOpen, onOpen: openEdit, onClose: closeEdit } = useDisclosure();
-  const { data: users, refetch: refreshUsers, isFetching } = useGetUsers({ t, toast, setUsersWithAvatars });
+  const { data: users, refetch: refreshUsers, isFetching } = useGetUsers();
 
-  const openEditModal = (userId) => {
-    setEditId(userId);
+  const openEditModal = (editUser: User) => {
+    setEditId(editUser.id);
     openEdit();
   };
 
   const memoizedActions = useCallback(
-    (cell) => <UserActions cell={cell.row} refreshTable={refreshUsers} key={uuid()} openEdit={openEditModal} />,
+    (userActions: User) => (
+      <UserActions user={userActions} refreshTable={refreshUsers} key={uuid()} openEdit={openEditModal} />
+    ),
     [],
   );
-  const memoizedDate = useCallback((cell) => <FormattedDate date={cell.row.values.lastLogin} key={uuid()} />, []);
+  const memoizedDate = useCallback((date: number) => <FormattedDate date={date} key={uuid()} />, []);
 
-  const memoizedAvatar = useCallback(
-    (cell) => <Avatar name={cell.row.values.name} src={cell.row.original.avatar} />,
-    [],
-  );
+  const memoizedAvatar = useCallback((name: string, avatar: string) => <Avatar name={name} src={avatar} />, []);
 
   // Columns array. This array contains your table headings and accessors which maps keys from data array
   const columns = React.useMemo(() => {
-    const baseColumns = [
+    const baseColumns: Column<User>[] = [
       {
         id: 'avatar',
         Header: t('account.avatar'),
         Footer: '',
         accessor: 'avatar',
         customWidth: '32px',
-        Cell: ({ cell }) => memoizedAvatar(cell),
+        Cell: ({ cell }) => memoizedAvatar(cell.row.original.name, cell.row.original.avatar),
         disableSortBy: true,
         alwaysShow: true,
       },
@@ -97,7 +85,7 @@ const UserTable = ({ title }) => {
         Header: t('users.last_login'),
         Footer: '',
         accessor: 'lastLogin',
-        Cell: ({ cell }) => memoizedDate(cell, 'lastLogin'),
+        Cell: ({ cell }) => memoizedDate(cell.row.original.lastLogin),
         customMinWidth: '150px',
         customWidth: '150px',
       },
@@ -116,7 +104,7 @@ const UserTable = ({ title }) => {
         Footer: '',
         accessor: 'Id',
         customWidth: '80px',
-        Cell: ({ cell }) => memoizedActions(cell),
+        Cell: ({ cell }) => memoizedActions(cell.row.original),
         disableSortBy: true,
         alwaysShow: true,
       });
@@ -124,30 +112,22 @@ const UserTable = ({ title }) => {
     return baseColumns;
   }, [t, user]);
 
-  const showUsers = () => {
-    if (usersWithAvatars.length > 0) return usersWithAvatars;
-    return users ?? [];
-  };
-
   return (
     <>
       <Card>
         <CardHeader mb="10px">
-          <Box>
-            <Heading size="md">{title}</Heading>
-          </Box>
           <Flex w="100%" flexDirection="row" alignItems="center">
             <Box ms="auto">
               <ColumnPicker
-                columns={columns}
+                columns={columns as Column<unknown>[]}
                 hiddenColumns={hiddenColumns}
                 setHiddenColumns={setHiddenColumns}
                 preference="provisioning.userTable.hiddenColumns"
               />
-              <CreateUserModal requirements={requirements} refreshUsers={refreshUsers} />
+              <CreateUserModal />
               <Button
                 colorScheme="gray"
-                onClick={refreshUsers}
+                onClick={() => refreshUsers()}
                 rightIcon={<ArrowsClockwise />}
                 ml={2}
                 isLoading={isFetching}
@@ -160,27 +140,20 @@ const UserTable = ({ title }) => {
         <CardBody>
           <Box overflowX="auto" w="100%">
             <DataTable
-              columns={columns}
-              data={showUsers()}
+              columns={columns as Column<object>[]}
+              data={users?.filter((curr) => curr.email !== user?.email) ?? []}
               isLoading={isFetching}
               obj={t('users.title')}
+              sortBy={[{ id: 'email', desc: false }]}
               hiddenColumns={hiddenColumns}
               fullScreen
             />
           </Box>
         </CardBody>
       </Card>
-      <EditUserModal
-        isOpen={editOpen}
-        onClose={closeEdit}
-        userId={editId}
-        requirements={requirements}
-        refreshUsers={refreshUsers}
-      />
+      <EditUserModal isOpen={editOpen} onClose={closeEdit} userId={editId} />
     </>
   );
 };
 
-UserTable.propTypes = propTypes;
-UserTable.defaultProps = defaultProps;
 export default UserTable;
