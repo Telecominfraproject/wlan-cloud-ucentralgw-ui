@@ -1,20 +1,24 @@
 import * as React from 'react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Box, Center, Flex, Heading, Link, Spacer, Spinner, useToast } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading, HStack, Link, Spacer, Spinner, useToast } from '@chakra-ui/react';
+import axios from 'axios';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import * as Yup from 'yup';
+import DeleteProfileButton from './DeleteButton';
 import { SaveButton } from 'components/Buttons/SaveButton';
 import { ToggleEditButton } from 'components/Buttons/ToggleEditButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { SelectField } from 'components/Form/Fields/SelectField';
 import { StringField } from 'components/Form/Fields/StringField';
 import { ConfirmCloseAlertModal } from 'components/Modals/ConfirmCloseAlert';
 import { useAuth } from 'contexts/AuthProvider';
 import { testRegex } from 'helpers/formTests';
 import { useUpdateAccount } from 'hooks/Network/Account';
+import { UserRole } from 'hooks/Network/Users';
 import { useApiRequirements } from 'hooks/useApiRequirements';
 import { useFormModal } from 'hooks/useFormModal';
 import { useFormRef } from 'hooks/useFormRef';
@@ -70,13 +74,16 @@ const GeneralInformationProfile = () => {
       <CardHeader mb={2}>
         <Heading size="md">{t('profile.your_profile')}</Heading>
         <Spacer />
-        <SaveButton
-          onClick={form.submitForm}
-          isLoading={form.isSubmitting}
-          isDisabled={!form.isValid || !form.dirty}
-          hidden={!isEditing}
-        />
-        <ToggleEditButton toggleEdit={toggleEditing} isEditing={isEditing} ml={2} />
+        <HStack>
+          <SaveButton
+            onClick={form.submitForm}
+            isLoading={form.isSubmitting}
+            isDisabled={!form.isValid || !form.dirty}
+            hidden={!isEditing}
+          />
+          <ToggleEditButton toggleEdit={toggleEditing} isEditing={isEditing} />
+          <DeleteProfileButton isDisabled={isEditing} />
+        </HStack>
       </CardHeader>
       <CardBody display="block">
         {!user ? (
@@ -89,6 +96,7 @@ const GeneralInformationProfile = () => {
             firstName: string;
             lastName: string;
             newPassword?: string;
+            userRole: UserRole;
           }>
             key={formKey}
             initialValues={
@@ -97,11 +105,13 @@ const GeneralInformationProfile = () => {
                 description: user?.description ?? '',
                 firstName: user?.name.split(' ')[0] ?? '',
                 lastName: user?.name.split(' ')[1] ?? '',
+                userRole: user?.userRole,
               } as {
                 description: string;
                 firstName: string;
                 lastName: string;
                 newPassword?: string;
+                userRole: UserRole;
               }
             }
             innerRef={
@@ -111,17 +121,19 @@ const GeneralInformationProfile = () => {
                   firstName: string;
                   lastName: string;
                   newPassword?: string;
+                  userRole: UserRole;
                 }>
               >
             }
             validationSchema={FormSchema(t, { passRegex: passwordPattern })}
-            onSubmit={async ({ description, firstName, lastName, newPassword }, { setSubmitting }) => {
+            onSubmit={async ({ description, firstName, lastName, newPassword, userRole }, { setSubmitting }) => {
               await updateUser.mutateAsync(
                 {
                   id: user?.id,
                   description,
                   name: `${firstName} ${lastName}`,
                   currentPassword: newPassword,
+                  userRole: user?.userRole === 'root' ? userRole : undefined,
                 },
                 {
                   onSuccess: () => {
@@ -139,13 +151,45 @@ const GeneralInformationProfile = () => {
                       position: 'top-right',
                     });
                   },
+                  onError: (e) => {
+                    if (axios.isAxiosError(e)) {
+                      toast({
+                        id: 'account-update-error',
+                        title: t('common.error'),
+                        description: e.response?.data?.ErrorDescription,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                        position: 'top-right',
+                      });
+                    }
+                  },
                 },
               );
             }}
           >
             {({ isSubmitting }) => (
               <Form>
-                <StringField name="email" label={t('common.email')} isDisabled />
+                <Flex>
+                  <StringField name="email" label={t('common.email')} isDisabled />
+                  <Box w={8} />
+                  <SelectField
+                    name="userRole"
+                    label={t('user.role')}
+                    options={[
+                      { value: 'accounting', label: 'Accounting' },
+                      { value: 'admin', label: 'Admin' },
+                      { value: 'csr', label: 'CSR' },
+                      { value: 'installer', label: 'Installer' },
+                      { value: 'noc', label: 'NOC' },
+                      { value: 'root', label: 'Root' },
+                      { value: 'system', label: 'System' },
+                    ]}
+                    isRequired
+                    isDisabled={isSubmitting || !isEditing || user?.userRole !== 'root'}
+                    w="max-content"
+                  />
+                </Flex>
                 <Flex my={4}>
                   <StringField
                     name="firstName"
