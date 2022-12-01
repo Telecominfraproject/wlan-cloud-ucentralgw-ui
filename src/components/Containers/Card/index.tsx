@@ -1,7 +1,22 @@
 import React from 'react';
-import { BackgroundProps, Box, InteractivityProps, LayoutProps, SpaceProps, useStyleConfig } from '@chakra-ui/react';
+import {
+  BackgroundProps,
+  Box,
+  EffectProps,
+  InteractivityProps,
+  LayoutProps,
+  PositionProps,
+  SpaceProps,
+  useStyleConfig,
+} from '@chakra-ui/react';
 
-export interface CardProps extends LayoutProps, SpaceProps, BackgroundProps, InteractivityProps {
+export interface CardProps
+  extends LayoutProps,
+    SpaceProps,
+    BackgroundProps,
+    InteractivityProps,
+    PositionProps,
+    EffectProps {
   variant?: string;
   onClick?: () => void;
   className?: string;

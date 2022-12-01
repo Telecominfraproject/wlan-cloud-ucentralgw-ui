@@ -1,5 +1,18 @@
 import * as React from 'react';
-import { Box, Heading, HStack, Spacer, Tag, TagLabel, TagLeftIcon, Tooltip, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  HStack,
+  Portal,
+  Spacer,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Tooltip,
+  useBreakpoint,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { Heart, HeartBreak, LockSimple, WifiHigh, WifiSlash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
@@ -18,6 +31,7 @@ import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
+import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
@@ -29,6 +43,7 @@ type Props = {
 
 const DevicePageWrapper = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
+  const breakpoint = useBreakpoint();
   const getDevice = useGetDevice({ serialNumber });
   const getStatus = useGetDeviceStatus({ serialNumber });
   const getHealth = useGetDeviceHealthChecks({ serialNumber, limit: 1 });
@@ -39,7 +54,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const upgradeModalProps = useDisclosure();
   const telemetryModalProps = useDisclosure();
   const traceModalProps = useDisclosure();
-
+  const scriptModal = useScriptModal();
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
 
@@ -83,6 +98,10 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     );
   }, [getStatus.data, getHealth.data]);
 
+  // Sticky-top styles
+  const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
+  const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
+
   const refresh = () => {
     getDevice.refetch();
     getStatus.refetch();
@@ -91,54 +110,110 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
 
   return (
     <>
-      <Card p={2} mb={4}>
-        <CardHeader>
-          <HStack spacing={2}>
-            <Heading size="md">{serialNumber}</Heading>
-            {connectedTag}
-            {healthTag}
-            {getDevice.data?.restrictedDevice && (
-              <Tag size="lg" colorScheme="gray">
-                <TagLeftIcon boxSize="18px" as={LockSimple} />
-                <TagLabel>{t('devices.restricted')}</TagLabel>
-              </Tag>
-            )}
-          </HStack>
-          <Spacer />
-          <HStack spacing={2}>
-            {getDevice?.data && (
-              <DeviceActionDropdown
+      {isCompact ? (
+        <Card p={2} mb={4}>
+          <CardHeader>
+            <HStack spacing={2}>
+              <Heading size="md">{serialNumber}</Heading>
+              {connectedTag}
+              {healthTag}
+              {getDevice.data?.restrictedDevice && (
+                <Tag size="lg" colorScheme="gray">
+                  <TagLeftIcon boxSize="18px" as={LockSimple} />
+                  <TagLabel>{t('devices.restricted')}</TagLabel>
+                </Tag>
+              )}
+            </HStack>
+            <Spacer />
+            <HStack spacing={2}>
+              {getDevice?.data && (
+                <DeviceActionDropdown
+                  // @ts-ignore
+                  device={getDevice?.data}
+                  refresh={refresh}
+                  onOpenScan={scanModalProps.onOpen}
+                  onOpenFactoryReset={resetModalProps.onOpen}
+                  onOpenUpgradeModal={upgradeModalProps.onOpen}
+                  onOpenTrace={traceModalProps.onOpen}
+                  onOpenEventQueue={eventQueueProps.onOpen}
+                  onOpenConfigureModal={configureModalProps.onOpen}
+                  onOpenTelemetryModal={telemetryModalProps.onOpen}
+                  onOpenScriptModal={scriptModal.openModal}
+                  size="md"
+                />
+              )}
+              <RefreshButton
+                onClick={refresh}
+                isFetching={getDevice.isFetching || getHealth.isFetching || getStatus.isFetching}
+                isCompact
                 // @ts-ignore
-                device={getDevice?.data}
-                refresh={refresh}
-                onOpenScan={scanModalProps.onOpen}
-                onOpenFactoryReset={resetModalProps.onOpen}
-                onOpenUpgradeModal={upgradeModalProps.onOpen}
-                onOpenTrace={traceModalProps.onOpen}
-                onOpenEventQueue={eventQueueProps.onOpen}
-                onOpenConfigureModal={configureModalProps.onOpen}
-                onOpenTelemetryModal={telemetryModalProps.onOpen}
-                size="md"
+                colorScheme="blue"
               />
-            )}
-            <RefreshButton
-              onClick={refresh}
-              isFetching={getDevice.isFetching || getHealth.isFetching || getStatus.isFetching}
-              isCompact
-              // @ts-ignore
-              colorScheme="blue"
-            />
-          </HStack>
-        </CardHeader>
-        <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
-        <FirmwareUpgradeModal modalProps={upgradeModalProps} serialNumber={serialNumber} />
-        <FactoryResetModal modalProps={resetModalProps} serialNumber={serialNumber} />
-        <TraceModal serialNumber={serialNumber} modalProps={traceModalProps} />
-        <EventQueueModal serialNumber={serialNumber} modalProps={eventQueueProps} />
-        <ConfigureModal serialNumber={serialNumber} modalProps={configureModalProps} />
-        <TelemetryModal serialNumber={serialNumber} modalProps={telemetryModalProps} />
-      </Card>
-      <Box marginLeft="10px">
+            </HStack>
+          </CardHeader>
+        </Card>
+      ) : (
+        <Portal>
+          <Card
+            p={2}
+            mb={4}
+            top="100px"
+            position="fixed"
+            w="calc(100vw - 271px)"
+            right={{ base: '0px', sm: '0px', lg: '20px' }}
+            boxShadow={boxShadow}
+          >
+            <CardHeader>
+              <HStack spacing={2}>
+                <Heading size="md">{serialNumber}</Heading>
+                {connectedTag}
+                {healthTag}
+                {getDevice.data?.restrictedDevice && (
+                  <Tag size="lg" colorScheme="gray">
+                    <TagLeftIcon boxSize="18px" as={LockSimple} />
+                    <TagLabel>{t('devices.restricted')}</TagLabel>
+                  </Tag>
+                )}
+              </HStack>
+              <Spacer />
+              <HStack spacing={2}>
+                {getDevice?.data && (
+                  <DeviceActionDropdown
+                    // @ts-ignore
+                    device={getDevice?.data}
+                    refresh={refresh}
+                    onOpenScan={scanModalProps.onOpen}
+                    onOpenFactoryReset={resetModalProps.onOpen}
+                    onOpenUpgradeModal={upgradeModalProps.onOpen}
+                    onOpenTrace={traceModalProps.onOpen}
+                    onOpenEventQueue={eventQueueProps.onOpen}
+                    onOpenConfigureModal={configureModalProps.onOpen}
+                    onOpenTelemetryModal={telemetryModalProps.onOpen}
+                    onOpenScriptModal={scriptModal.openModal}
+                    size="md"
+                  />
+                )}
+                <RefreshButton
+                  onClick={refresh}
+                  isFetching={getDevice.isFetching || getHealth.isFetching || getStatus.isFetching}
+                  isCompact
+                  // @ts-ignore
+                  colorScheme="blue"
+                />
+              </HStack>
+            </CardHeader>
+          </Card>
+        </Portal>
+      )}
+      <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
+      <FirmwareUpgradeModal modalProps={upgradeModalProps} serialNumber={serialNumber} />
+      <FactoryResetModal modalProps={resetModalProps} serialNumber={serialNumber} />
+      <TraceModal serialNumber={serialNumber} modalProps={traceModalProps} />
+      <EventQueueModal serialNumber={serialNumber} modalProps={eventQueueProps} />
+      <ConfigureModal serialNumber={serialNumber} modalProps={configureModalProps} />
+      <TelemetryModal serialNumber={serialNumber} modalProps={telemetryModalProps} />
+      {scriptModal.modal}
+      <Box mt={isCompact ? '0px' : '68px'}>
         <Masonry
           breakpointCols={{
             default: 3,
