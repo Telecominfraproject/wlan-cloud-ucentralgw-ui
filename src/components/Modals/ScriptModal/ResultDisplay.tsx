@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Center, Code } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Code } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { DeviceCommandHistory, useDownloadScriptResult } from 'hooks/Network/Commands';
 
@@ -15,6 +15,22 @@ const ScriptResultDisplay = ({ result }: Props) => {
     download.refetch();
   };
 
+  if (result.errorCode !== 0) {
+    return (
+      <Center my="100px">
+        <Alert status="error">
+          <AlertIcon />
+          <Box>
+            <AlertTitle>{t('common.error')}</AlertTitle>
+            <AlertDescription>
+              {result.errorCode}: {result.results?.status?.result}
+            </AlertDescription>
+          </Box>
+        </Alert>
+      </Center>
+    );
+  }
+
   if (result.details?.uri !== undefined) {
     return (
       <Center my="100px">
@@ -22,7 +38,7 @@ const ScriptResultDisplay = ({ result }: Props) => {
           onClick={onDownload}
           colorScheme="blue"
           isLoading={download.isFetching}
-          isDisabled={result.waitingForFile === 1}
+          isDisabled={result.waitingForFile !== 0}
         >
           {result.waitingForFile === 0 ? t('common.download') : t('script.file_not_ready')}
         </Button>

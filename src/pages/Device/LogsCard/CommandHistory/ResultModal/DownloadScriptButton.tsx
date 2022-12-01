@@ -14,7 +14,14 @@ const DownloadScriptButton = ({ command }: Props) => {
     commandId: command?.UUID ?? '',
   });
 
-  if (!command || command.command !== 'script' || command.details?.uri === undefined || command.details?.uri === '')
+  if (
+    !command ||
+    command.command !== 'script' ||
+    command.details?.uri === undefined ||
+    command.details?.uri === '' ||
+    command.status !== 'completed' ||
+    command.errorCode !== 0
+  )
     return null;
 
   return (
