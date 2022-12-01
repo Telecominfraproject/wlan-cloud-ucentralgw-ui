@@ -12,7 +12,7 @@ const DownloadTraceButton = ({ command }: Props) => {
   const { t } = useTranslation();
   const download = useDownloadTrace({ serialNumber: command?.serialNumber ?? '', commandId: command?.UUID ?? '' });
 
-  if (!command || command.command !== 'trace') return null;
+  if (!command || command.command !== 'trace' || command.status !== 'completed' || command.errorCode !== 0) return null;
 
   return (
     <ResponsiveButton
