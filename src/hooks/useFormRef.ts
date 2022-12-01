@@ -2,7 +2,6 @@ import { Ref, useCallback, useMemo, useState } from 'react';
 import { FormikProps } from 'formik';
 import { FormType } from '../models/Form';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useFormRef = () => {
   const [form, setForm] = useState<FormType>({
     submitForm: () => {},

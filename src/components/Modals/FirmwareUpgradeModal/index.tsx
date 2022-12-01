@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref, useRef } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -12,11 +12,14 @@ import {
   Switch,
   Heading,
 } from '@chakra-ui/react';
+import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid } from 'uuid';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';
 import FirmwareList from './FirmwareList';
 import { CloseButton } from 'components/Buttons/CloseButton';
 import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
+import { SignatureField } from 'components/Form/Fields/SignatureField';
 import { useGetDevice } from 'hooks/Network/Devices';
 import { useGetAvailableFirmware, useUpdateDeviceFirmware } from 'hooks/Network/Firmware';
 import useCommandModal from 'hooks/useCommandModal';
@@ -29,6 +32,13 @@ export type FirmwareUpgradeModalProps = {
 
 export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNumber }: FirmwareUpgradeModalProps) => {
   const { t } = useTranslation();
+  const [formKey, setFormKey] = React.useState(uuid());
+  const ref = useRef<
+    | FormikProps<{
+        signature?: string | undefined;
+      }>
+    | undefined
+  >();
   const [isRedirector, { toggle }] = useBoolean(false);
   const { data: device, isFetching: isFetchingDevice } = useGetDevice({ serialNumber, onClose });
   const { data: firmware, isFetching: isFetchingFirmware } = useGetAvailableFirmware({
@@ -44,11 +54,19 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
   });
 
   const submit = (uri: string) => {
-    upgrade({ keepRedirector: isRedirector, uri });
+    upgrade({
+      keepRedirector: isRedirector,
+      uri,
+      signature: device?.restrictedDevice ? ref.current?.values?.signature : undefined,
+    });
   };
 
+  React.useEffect(() => {
+    setFormKey(uuid());
+  }, [isOpen]);
+
   return (
-    <Modal onClose={closeModal} isOpen={isOpen} size="xl" scrollBehavior="inside">
+    <Modal onClose={closeModal} isOpen={isOpen} size="xl">
       <ModalOverlay />
       <ModalContent maxWidth={{ sm: '90%', md: '900px', lg: '1000px', xl: '80%' }}>
         <ModalHeader
@@ -71,6 +89,19 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
                 </FormLabel>
                 <Switch isChecked={isRedirector} onChange={toggle} borderRadius="15px" size="lg" />
               </FormControl>
+              {device?.restrictedDevice && (
+                <Formik<{ signature?: string }>
+                  innerRef={ref as Ref<FormikProps<{ signature?: string | undefined }>> | undefined}
+                  key={formKey}
+                  enableReinitialize
+                  initialValues={{
+                    signature: undefined,
+                  }}
+                  onSubmit={() => {}}
+                >
+                  <SignatureField name="signature" />
+                </Formik>
+              )}
               {firmware?.firmwares && (
                 <FirmwareList firmware={firmware.firmwares} upgrade={submit} isLoading={isUpgrading} />
               )}

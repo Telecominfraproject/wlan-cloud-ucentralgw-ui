@@ -7,7 +7,7 @@ export interface useFastFieldProps {
 
 const _useFastField = <Type>({ name }: useFastFieldProps) => {
   const { setFieldValue } = useFormikContext();
-  const [{ value }, { touched, error }, { setValue, setTouched }] = useField(name);
+  const [{ value }, { touched, error }, { setValue, setTouched }] = useField<Type>(name);
 
   const onChange = useCallback((newValue: Type) => {
     setValue(newValue, true);

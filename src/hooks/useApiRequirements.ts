@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { secUrl } from '../constants/axiosInstances';
 import { useGetRequirements } from './Network/Requirements';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useApiRequirements = () => {
   const { data: requirements } = useGetRequirements();
 

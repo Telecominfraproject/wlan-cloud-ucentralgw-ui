@@ -112,6 +112,7 @@ export interface WifiScanResult {
   completed: number;
   errorCode: number;
   errorText: string;
+  serialNumber: string;
   executed: number;
   executionTime: number;
   results: {

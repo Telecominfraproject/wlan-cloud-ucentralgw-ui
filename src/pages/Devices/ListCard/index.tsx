@@ -21,6 +21,7 @@ import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
+import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
@@ -59,6 +60,7 @@ const DeviceListCard = () => {
   const eventQueueProps = useDisclosure();
   const telemetryModalProps = useDisclosure();
   const configureModalProps = useDisclosure();
+  const scriptModal = useScriptModal();
   const getCount = useGetDeviceCount({ enabled: true });
   const getDevices = useGetDevices({
     pageInfo,
@@ -213,6 +215,7 @@ const DeviceListCard = () => {
         onOpenEventQueue={onOpenEventQueue}
         onOpenConfigureModal={onOpenConfigure}
         onOpenTelemetryModal={onOpenTelemetry}
+        onOpenScriptModal={scriptModal.openModal}
       />
     ),
     [],
@@ -403,6 +406,7 @@ const DeviceListCard = () => {
             // @ts-ignore
             setPageInfo={setPageInfo}
             saveSettingsId="gateway.devices.table"
+            minHeight="600px"
           />
         </Box>
       </CardBody>
@@ -413,6 +417,7 @@ const DeviceListCard = () => {
       <EventQueueModal modalProps={eventQueueProps} serialNumber={serialNumber} />
       <ConfigureModal modalProps={configureModalProps} serialNumber={serialNumber} />
       <TelemetryModal modalProps={telemetryModalProps} serialNumber={serialNumber} />
+      {scriptModal.modal}
     </>
   );
 };

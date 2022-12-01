@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { DeviceWithStatus, useDeleteDevice } from 'hooks/Network/Devices';
+import { GatewayDevice } from 'models/Device';
 
 interface Props {
   device: DeviceWithStatus;
@@ -32,6 +33,7 @@ interface Props {
   onOpenEventQueue: (serialNumber: string) => void;
   onOpenConfigureModal: (serialNumber: string) => void;
   onOpenTelemetryModal: (serialNumber: string) => void;
+  onOpenScriptModal: (device: GatewayDevice) => void;
 }
 
 const Actions: React.FC<Props> = ({
@@ -44,6 +46,7 @@ const Actions: React.FC<Props> = ({
   onOpenEventQueue,
   onOpenConfigureModal,
   onOpenTelemetryModal,
+  onOpenScriptModal,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -100,6 +103,7 @@ const Actions: React.FC<Props> = ({
         onOpenEventQueue={onOpenEventQueue}
         onOpenConfigureModal={onOpenConfigureModal}
         onOpenTelemetryModal={onOpenTelemetryModal}
+        onOpenScriptModal={onOpenScriptModal}
       />
       <Tooltip hasArrow label={t('common.view_details')} placement="top">
         <IconButton

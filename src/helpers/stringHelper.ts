@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const getRevision = (str?: string) => {
   if (!str) return '-';
 

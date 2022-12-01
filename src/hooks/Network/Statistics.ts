@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, IconButton, Tooltip, useBreakpoint } from '@chakra-ui/react';
+import { Button, IconButton, ThemeTypings, Tooltip, useBreakpoint } from '@chakra-ui/react';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +10,7 @@ export interface RefreshButtonProps {
   isCompact?: boolean;
   ml?: string | number;
   size?: 'sm' | 'md' | 'lg';
+  colorScheme?: ThemeTypings['colorSchemes'];
 }
 
 const _RefreshButton: React.FC<RefreshButtonProps> = ({
