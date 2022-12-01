@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const COLORS = [
   '#63b598',
   '#ce7d78',

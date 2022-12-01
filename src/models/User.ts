@@ -1,5 +1,16 @@
 import { Note } from './Note';
 
+export type UserRole =
+  | 'root'
+  | 'admin'
+  | 'subscriber'
+  | 'partner'
+  | 'csr'
+  | 'system'
+  | 'installer'
+  | 'noc'
+  | 'accounting';
+
 export interface User {
   name: string;
   avatar: string;
@@ -7,7 +18,7 @@ export interface User {
   currentPassword?: string;
   id: string;
   email: string;
-  userRole: string;
+  userRole: UserRole;
   userTypeProprietaryInfo: {
     authenticatorSecret: string;
     mfa: {

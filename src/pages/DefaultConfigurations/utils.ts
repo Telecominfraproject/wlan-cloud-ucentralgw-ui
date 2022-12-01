@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import * as Yup from 'yup';
 import { testJson } from 'helpers/formTests';
 

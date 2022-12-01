@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Button, Center, Heading } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import CommandDetailsModal from './Modal';
+import CommandResultModal from './ResultModal';
 import useCommandHistoryTable from './useCommandHistoryTable';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { ColumnPicker } from 'components/DataTables/ColumnPicker';
@@ -64,7 +64,7 @@ const CommandHistory = ({ serialNumber }: Props) => {
           </Center>
         )}
       </Box>
-      <CommandDetailsModal command={selectedCommand} modalProps={detailsModalProps} />
+      <CommandResultModal command={selectedCommand} modalProps={detailsModalProps} />
     </Box>
   );
 };

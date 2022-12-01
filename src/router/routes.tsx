@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@chakra-ui/react';
-import { Barcode, FloppyDisk, Info, ListBullets, UsersThree, WifiHigh } from 'phosphor-react';
+import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, WifiHigh } from 'phosphor-react';
 import { Route } from 'models/Routes';
 
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));
@@ -9,6 +9,7 @@ const DevicesPage = React.lazy(() => import('pages/Devices'));
 const FirmwarePage = React.lazy(() => import('pages/Firmware'));
 const NotificationsPage = React.lazy(() => import('pages/Notifications'));
 const ProfilePage = React.lazy(() => import('pages/Profile'));
+const ScriptsPage = React.lazy(() => import('pages/Scripts'));
 const SystemPage = React.lazy(() => import('pages/SystemPage'));
 const UsersPage = React.lazy(() => import('pages/UsersPage'));
 
@@ -30,6 +31,15 @@ const routes: Route[] = [
       <Icon as={FloppyDisk} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
     ),
     component: FirmwarePage,
+  },
+  {
+    authorized: ['root'],
+    path: '/scripts/:id',
+    name: 'script.other',
+    icon: (active: boolean) => (
+      <Icon as={TerminalWindow} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
+    ),
+    component: ScriptsPage,
   },
   {
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],

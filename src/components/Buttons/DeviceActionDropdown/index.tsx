@@ -1,5 +1,16 @@
 import React from 'react';
-import { Button, IconButton, Menu, MenuButton, MenuItem, MenuList, Spinner, Tooltip, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Portal,
+  Spinner,
+  Tooltip,
+  useToast,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { Wrench } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +32,7 @@ interface Props {
   onOpenEventQueue: (serialNumber: string) => void;
   onOpenConfigureModal: (serialNumber: string) => void;
   onOpenTelemetryModal: (serialNumber: string) => void;
+  onOpenScriptModal: (device: GatewayDevice) => void;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -35,6 +47,7 @@ const DeviceActionDropdown = ({
   onOpenEventQueue,
   onOpenTelemetryModal,
   onOpenConfigureModal,
+  onOpenScriptModal,
   size,
 }: Props) => {
   const { t } = useTranslation();
@@ -67,6 +80,7 @@ const DeviceActionDropdown = ({
   const handleOpenQueue = () => onOpenEventQueue(device.serialNumber);
   const handleOpenConfigure = () => onOpenConfigureModal(device.serialNumber);
   const handleOpenTelemetry = () => onOpenTelemetryModal(device.serialNumber);
+  const handleOpenScript = () => onOpenScriptModal(device);
   const handleUpdateToLatest = () => {
     updateToLatest.mutate(
       { keepRedirector: true },
@@ -124,7 +138,7 @@ const DeviceActionDropdown = ({
             },
           ]);
         },
-        onError: (e: unknown) => {
+        onError: (e) => {
           if (axios.isAxiosError(e)) {
             toast({
               id: `upgrade-to-latest-error-${device.serialNumber}`,
@@ -143,7 +157,7 @@ const DeviceActionDropdown = ({
   const handleConnectClick = () => getRtty();
 
   return (
-    <Menu>
+    <Menu preventOverflow>
       <Tooltip label={t('commands.other')}>
         {size === undefined ? (
           <MenuButton
@@ -167,21 +181,24 @@ const DeviceActionDropdown = ({
           </MenuButton>
         )}
       </Tooltip>
-      <MenuList>
-        <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
-        <MenuItem onClick={handleOpenConfigure}>{t('controller.configure.title')}</MenuItem>
-        <MenuItem onClick={handleConnectClick}>{t('commands.connect')}</MenuItem>
-        <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
-        <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
-        <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
-        <RebootMenuItem device={device} refresh={refresh} />
-        <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
-        <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
-        <MenuItem onClick={handleUpdateToLatest} hidden>
-          {t('premium.toolbox.upgrade_to_latest')}
-        </MenuItem>
-        <MenuItem onClick={handleOpenScan}>{t('commands.wifiscan')}</MenuItem>
-      </MenuList>
+      <Portal>
+        <MenuList>
+          <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
+          <MenuItem onClick={handleOpenConfigure}>{t('controller.configure.title')}</MenuItem>
+          <MenuItem onClick={handleConnectClick}>{t('commands.connect')}</MenuItem>
+          <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
+          <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
+          <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
+          <RebootMenuItem device={device} refresh={refresh} />
+          <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
+          <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
+          <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
+          <MenuItem onClick={handleUpdateToLatest} hidden>
+            {t('premium.toolbox.upgrade_to_latest')}
+          </MenuItem>
+          <MenuItem onClick={handleOpenScan}>{t('commands.wifiscan')}</MenuItem>
+        </MenuList>
+      </Portal>
     </Menu>
   );
 };

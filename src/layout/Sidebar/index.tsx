@@ -8,61 +8,76 @@ import {
   DrawerOverlay,
   Flex,
   useColorModeValue,
-  useColorMode,
   Text,
   Spacer,
   useBreakpoint,
+  VStack,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import createLinks from './CreateLinks';
-import SidebarDevices from './Devices';
-import darkLogo from 'assets/Logo_Dark_Mode.svg';
-import lightLogo from 'assets/Logo_Light_Mode.svg';
+import { v4 as uuid } from 'uuid';
+import { NavLinkButton } from './NavLinkButton';
 import { useAuth } from 'contexts/AuthProvider';
 import { Route } from 'models/Routes';
 
 const variantChange = '0.2s linear';
 
-interface Props {
+export type SidebarProps = {
   routes: Route[];
   isOpen: boolean;
   toggle: () => void;
-}
+  logo: React.ReactNode;
+  version: string;
+  children?: React.ReactNode;
+  topNav?: (isRouteActive: (str: string, str2: string) => boolean, toggleSidebar: () => void) => React.ReactNode;
+};
 
-const Sidebar = ({ routes, isOpen, toggle }: Props) => {
+export const Sidebar = ({ routes, isOpen, toggle, logo, version, topNav, children }: SidebarProps) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const location = useLocation();
-  const { colorMode } = useColorMode();
   const navbarShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
   const breakpoint = useBreakpoint();
 
-  const activeRoute = (routeName: string, otherRoute: string | undefined) => {
+  const isRouteActive = (routeName: string, otherRoute?: string) => {
     if (otherRoute)
-      return location.pathname.split('/')[1] === routeName.split('/')[1] ||
+      return (
+        location.pathname.split('/')[1] === routeName.split('/')[1] ||
         location.pathname.split('/')[1] === otherRoute.split('/')[1]
-        ? 'active'
-        : '';
+      );
 
-    return location.pathname === routeName ? 'active' : '';
+    return location.pathname === routeName.replace(':id', '0');
   };
 
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
 
   const brand = (
-    <Box pt="25px" mb="12px">
-      <img
-        src={colorMode === 'light' ? lightLogo : darkLogo}
-        alt="OpenWifi"
-        width="180px"
-        height="100px"
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      />
+    <Box pt="25px" mb="15px" px="12px">
+      {logo}
     </Box>
+  );
+
+  const sidebarContent = React.useMemo(
+    () => (
+      <>
+        <VStack spacing={2} alignItems="start" w="100%" px={4}>
+          {topNav ? topNav(isRouteActive, toggle) : null}
+          {routes
+            .filter(({ hidden, authorized }) => !hidden && authorized.includes(user?.userRole ?? ''))
+            .map((route) => (
+              <NavLinkButton key={uuid()} isActive={isRouteActive(route.path)} route={route} toggleSidebar={toggle} />
+            ))}
+        </VStack>
+        <Spacer />
+        <Box mb={2}>{children}</Box>
+        <Box>
+          <Text color="gray.400">
+            {t('footer.version')} {version}
+          </Text>
+        </Box>
+      </>
+    ),
+    [user?.userRole, location],
   );
 
   return (
@@ -70,8 +85,8 @@ const Sidebar = ({ routes, isOpen, toggle }: Props) => {
       <Drawer isOpen={isCompact && isOpen} onClose={toggle} placement="left">
         <DrawerOverlay />
         <DrawerContent
-          w="200px"
-          maxW="200px"
+          w="250px"
+          maxW="250px"
           ms={{
             base: '16px',
           }}
@@ -81,20 +96,11 @@ const Sidebar = ({ routes, isOpen, toggle }: Props) => {
           borderRadius="16px"
         >
           <DrawerCloseButton />
-          <DrawerBody w="200px" px={0}>
-            <Box maxW="200px" h="90vh">
-              <Box>{brand}</Box>
+          <DrawerBody maxW="250px" px="1rem">
+            <Box maxW="100%" h="90vh">
+              {brand}
               <Flex direction="column" mb="40px" h="calc(100vh - 200px)" alignItems="center" overflowY="auto">
-                <Box>{createLinks(routes, activeRoute, user?.userRole ?? '')}</Box>
-                <Spacer />
-                <Box mb={2}>
-                  <SidebarDevices />
-                </Box>
-                <Box>
-                  <Text color="gray.400">
-                    {t('footer.version')} {__APP_VERSION__}
-                  </Text>
-                </Box>
+                {sidebarContent}
               </Flex>
             </Box>
           </DrawerBody>
@@ -108,24 +114,14 @@ const Sidebar = ({ routes, isOpen, toggle }: Props) => {
             transition={variantChange}
             w="200px"
             maxW="200px"
-            ms="14px"
             h="calc(100vh - 32px)"
-            mt="16px"
+            my="16px"
             ml="16px"
             borderRadius="16px"
           >
-            <Box>{brand}</Box>
+            {brand}
             <Flex direction="column" h="calc(100vh - 160px)" alignItems="center" overflowY="auto">
-              <Box>{createLinks(routes, activeRoute, user?.userRole ?? '')}</Box>
-              <Spacer />
-              <Box mb={2}>
-                <SidebarDevices />
-              </Box>
-              <Box>
-                <Text color="gray.400">
-                  {t('footer.version')} {__APP_VERSION__}
-                </Text>
-              </Box>
+              {sidebarContent}
             </Flex>
           </Box>
         </Box>
@@ -133,5 +129,3 @@ const Sidebar = ({ routes, isOpen, toggle }: Props) => {
     </>
   );
 };
-
-export default Sidebar;

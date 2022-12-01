@@ -12,9 +12,17 @@ export type ColumnPickerProps = {
   hiddenColumns: string[];
   setHiddenColumns: (str: string[]) => void;
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  isCompact?: boolean;
 };
 
-export const ColumnPicker = ({ preference, columns, hiddenColumns, setHiddenColumns, size }: ColumnPickerProps) => {
+export const ColumnPicker = ({
+  preference,
+  columns,
+  hiddenColumns,
+  setHiddenColumns,
+  size,
+  isCompact,
+}: ColumnPickerProps) => {
   const { t } = useTranslation();
   const { getPref, setPref } = useAuth();
   const breakpoint = useBreakpoint();
@@ -32,7 +40,7 @@ export const ColumnPicker = ({ preference, columns, hiddenColumns, setHiddenColu
     setHiddenColumns(savedPrefs ? savedPrefs.split(',') : []);
   }, []);
 
-  if (breakpoint === 'base' || breakpoint === 'sm') {
+  if (isCompact || breakpoint === 'base' || breakpoint === 'sm') {
     return (
       <Menu closeOnSelect={false}>
         <MenuButton as={IconButton} size={size} icon={<FunnelSimple />} />

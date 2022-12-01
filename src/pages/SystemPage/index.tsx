@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Heading, SimpleGrid, Spacer } from '@chakra-ui/react';
+import { Heading, SimpleGrid, Spacer } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import SystemTile from './SystemTile';
@@ -12,11 +12,11 @@ import { useGetEndpoints } from 'hooks/Network/Endpoints';
 
 const SystemPage = () => {
   const { t } = useTranslation();
-  const { token, isUserLoaded } = useAuth();
+  const { token } = useAuth();
   const { data: endpoints, refetch, isFetching } = useGetEndpoints({ onSuccess: () => {} });
 
   const endpointsList = React.useMemo(() => {
-    if (!endpoints || !token || !isUserLoaded) return null;
+    if (!endpoints || !token) return null;
 
     const endpointList = [...endpoints];
     endpointList.push({
@@ -34,12 +34,10 @@ const SystemPage = () => {
         return 0;
       })
       .map((endpoint) => <SystemTile key={uuid()} endpoint={endpoint} token={token} />);
-  }, [endpoints, token, isUserLoaded]);
-
-  if (!isUserLoaded) return null;
+  }, [endpoints, token]);
 
   return (
-    <Flex flexDirection="column" pt="75px">
+    <>
       <Card mb={4} py={2} px={4}>
         <CardHeader>
           <Heading size="md" my="auto">
@@ -52,7 +50,7 @@ const SystemPage = () => {
       <SimpleGrid minChildWidth="500px" spacing="20px" mb={3}>
         {endpointsList}
       </SimpleGrid>
-    </Flex>
+    </>
   );
 };
 export default SystemPage;

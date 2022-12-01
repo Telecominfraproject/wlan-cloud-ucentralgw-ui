@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { useQuery } from '@tanstack/react-query';
 import { axiosProv } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';

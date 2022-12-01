@@ -15,7 +15,6 @@
     "project": "./tsconfig.json"
   },
   "ignorePatterns": ["build/", "dist/"],
-  "plugins": ["import", "react", "@typescript-eslint", "prettier"],
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -27,6 +26,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
+  "plugins": ["import", "react", "@typescript-eslint", "prettier"],
   "rules": {
     "import/extensions": [
       "error",
@@ -69,6 +69,7 @@
     ],
     "max-len": ["error", { "code": 150 }],
     "@typescript-eslint/ban-ts-comment": ["off"],
+    "import/prefer-default-export": ["off"],
     "react/prop-types": ["warn"],
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": ["off"],
