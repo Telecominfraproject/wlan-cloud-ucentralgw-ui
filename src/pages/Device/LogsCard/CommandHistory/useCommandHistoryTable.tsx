@@ -4,7 +4,12 @@ import { MagnifyingGlass, Trash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
-import { DeviceCommandHistory, useDeleteCommand, useGetCommandHistory } from 'hooks/Network/Commands';
+import {
+  DeviceCommandHistory,
+  useDeleteCommand,
+  useGetCommandHistory,
+  useGetCommandHistoryWithTimestamps,
+} from 'hooks/Network/Commands';
 import { AxiosError } from 'models/Axios';
 import { Column } from 'models/Table';
 
@@ -15,6 +20,12 @@ type Props = {
 
 const useCommandHistoryTable = ({ serialNumber, limit }: Props) => {
   const { t } = useTranslation();
+  const [time, setTime] = React.useState<{ start: Date; end: Date } | undefined>();
+  const getCustomCommands = useGetCommandHistoryWithTimestamps({
+    serialNumber,
+    start: time ? Math.floor(time.start.getTime() / 1000) : undefined,
+    end: time ? Math.floor(time.end.getTime() / 1000) : undefined,
+  });
   const getCommands = useGetCommandHistory({ serialNumber, limit });
   const deleteCommand = useDeleteCommand();
   const [selectedCommand, setSelectedCommand] = React.useState<DeviceCommandHistory | undefined>();
@@ -185,8 +196,11 @@ const useCommandHistoryTable = ({ serialNumber, limit }: Props) => {
   return {
     columns,
     getCommands,
+    getCustomCommands,
     selectedCommand,
     detailsModalProps,
+    time,
+    setTime,
   };
 };
 

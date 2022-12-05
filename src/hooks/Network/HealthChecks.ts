@@ -33,6 +33,30 @@ export const useGetHealthChecks = ({
     onError,
   });
 
+const getHealthChecksWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+  axiosGw
+    .get(`device/${serialNumber}/healthchecks?startDate=${start}&endDate=${end}`)
+    .then((response) => response.data) as Promise<{
+    values: HealthCheck[];
+    serialNumber: string;
+  }>;
+export const useGetHealthChecksWithTimestamps = ({
+  serialNumber,
+  start,
+  end,
+  onError,
+}: {
+  serialNumber?: string;
+  start?: number;
+  end?: number;
+  onError?: (e: AxiosError) => void;
+}) =>
+  useQuery(['healthchecks', serialNumber, { start, end }], getHealthChecksWithTimestamps(serialNumber, start, end), {
+    enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
+    staleTime: 1000 * 60,
+    onError,
+  });
+
 const deleteHealthChecks = async ({ serialNumber, endDate }: { serialNumber: string; endDate: number }) =>
   axiosGw.delete(`device/${serialNumber}/healthchecks?endDate=${endDate}`);
 export const useDeleteHealthChecks = () => {
@@ -40,7 +64,7 @@ export const useDeleteHealthChecks = () => {
 
   return useMutation(deleteHealthChecks, {
     onSuccess: () => {
-      queryClient.invalidateQueries('healthchecks');
+      queryClient.invalidateQueries(['healthchecks']);
     },
   });
 };

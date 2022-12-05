@@ -40,7 +40,31 @@ export const useDeleteLogs = () => {
 
   return useMutation(deleteLogs, {
     onSuccess: () => {
-      queryClient.invalidateQueries('devicelogs');
+      queryClient.invalidateQueries(['devicelogs']);
     },
   });
 };
+
+const getDeviceLogsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+  axiosGw
+    .get(`device/${serialNumber}/logs?startDate=${start}&endDate=${end}`)
+    .then((response) => response.data) as Promise<{
+    values: DeviceLog[];
+    serialNumber: string;
+  }>;
+export const useGetDeviceLogsWithTimestamps = ({
+  serialNumber,
+  start,
+  end,
+  onError,
+}: {
+  serialNumber?: string;
+  start?: number;
+  end?: number;
+  onError?: (e: AxiosError) => void;
+}) =>
+  useQuery(['devicelogs', serialNumber, { start, end }], getDeviceLogsWithTimestamps(serialNumber, start, end), {
+    enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
+    staleTime: 1000 * 60,
+    onError,
+  });
