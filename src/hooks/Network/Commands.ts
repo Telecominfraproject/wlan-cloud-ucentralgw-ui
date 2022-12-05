@@ -57,6 +57,29 @@ export const useGetCommandHistory = ({
     onError,
   });
 
+const getCommandsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+  axiosGw
+    .get(`commands?serialNumber=${serialNumber}&startDate=${start}&endDate=${end}`)
+    .then((response) => response.data) as Promise<{
+    commands: DeviceCommandHistory[];
+  }>;
+export const useGetCommandHistoryWithTimestamps = ({
+  serialNumber,
+  start,
+  end,
+  onError,
+}: {
+  serialNumber?: string;
+  start?: number;
+  end?: number;
+  onError?: (e: AxiosError) => void;
+}) =>
+  useQuery(['commands', serialNumber, { start, end }], getCommandsWithTimestamps(serialNumber, start, end), {
+    enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
+    staleTime: 1000 * 60,
+    onError,
+  });
+
 const deleteCommandHistory = async (id: string) => axiosGw.delete(`command/${id}`);
 export const useDeleteCommand = () => {
   const queryClient = useQueryClient();

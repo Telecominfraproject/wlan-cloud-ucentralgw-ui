@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Badge, Box } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
-import { HealthCheck, useGetHealthChecks } from 'hooks/Network/HealthChecks';
+import { HealthCheck, useGetHealthChecks, useGetHealthChecksWithTimestamps } from 'hooks/Network/HealthChecks';
 import { Column } from 'models/Table';
 
 type Props = {
@@ -13,6 +13,12 @@ type Props = {
 const useHealthCheckTable = ({ serialNumber, limit }: Props) => {
   const { t } = useTranslation();
   const getHealthChecks = useGetHealthChecks({ serialNumber, limit });
+  const [time, setTime] = React.useState<{ start: Date; end: Date } | undefined>();
+  const getCustomHealthChecks = useGetHealthChecksWithTimestamps({
+    serialNumber,
+    start: time ? Math.floor(time.start.getTime() / 1000) : undefined,
+    end: time ? Math.floor(time.end.getTime() / 1000) : undefined,
+  });
 
   const dateCell = React.useCallback(
     (v: number) => (
@@ -80,6 +86,9 @@ const useHealthCheckTable = ({ serialNumber, limit }: Props) => {
   return {
     columns,
     getHealthChecks,
+    getCustomHealthChecks,
+    time,
+    setTime,
   };
 };
 
