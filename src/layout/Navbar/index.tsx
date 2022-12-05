@@ -132,15 +132,17 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
                       <Avatar h="40px" w="40px" fontSize="0.8rem" lineHeight="2rem" src={avatar} name={user?.name} />
                     </HStack>
                   </MenuButton>
-                  <MenuList
-                    bg={useColorModeValue('white', 'gray.900')}
-                    borderColor={useColorModeValue('gray.200', 'gray.700')}
-                  >
-                    <MenuItem onClick={goToProfile} w="100%">
-                      {t('account.title')}
-                    </MenuItem>
-                    <MenuItem onClick={logout}>{t('common.logout')}</MenuItem>
-                  </MenuList>
+                  <Portal>
+                    <MenuList
+                      bg={useColorModeValue('white', 'gray.900')}
+                      borderColor={useColorModeValue('gray.200', 'gray.700')}
+                    >
+                      <MenuItem onClick={goToProfile} w="100%">
+                        {t('account.title')}
+                      </MenuItem>
+                      <MenuItem onClick={logout}>{t('common.logout')}</MenuItem>
+                    </MenuList>
+                  </Portal>
                 </Menu>
               </HStack>
             </Flex>
