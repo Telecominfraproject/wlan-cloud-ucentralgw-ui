@@ -161,7 +161,7 @@ const _TelemetryModal = ({ serialNumber, modalProps }: TelemetryModalProps) => {
                 {hasCopied ? `${t('common.copied')}!` : t('common.copy')}
               </Button>
             </Box>
-            <Box maxH="400px" overflowY="auto">
+            <Box maxH="calc(100vh - 380px)" minH="300px" overflowY="auto">
               <pre>{JSON.stringify(telemetry.lastMessage?.msg ?? {}, null, 2)}</pre>
             </Box>
           </>
