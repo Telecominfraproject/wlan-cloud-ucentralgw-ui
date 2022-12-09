@@ -40,6 +40,7 @@ const ViewCapabilitiesModal = ({ serialNumber }: Props) => {
       setValue(JSON.stringify(getCapabilities.data.capabilities, null, 2));
     }
   }, [getCapabilities.data]);
+
   return (
     <>
       <Button onClick={onOpen} colorScheme="pink" mr={2}>
@@ -74,42 +75,44 @@ const ViewCapabilitiesModal = ({ serialNumber }: Props) => {
               <Heading size="sm" mb={2}>
                 {t('controller.devices.last_modified')}: <FormattedDate date={getCapabilities.data.lastUpdate} />
               </Heading>
-              <Accordion defaultIndex={0} allowToggle>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex="1" textAlign="left">
-                        {t('common.preview')}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <JsonViewer
-                      rootName={false}
-                      displayDataTypes={false}
-                      enableClipboard={false}
-                      theme={colorMode === 'light' ? undefined : 'dark'}
-                      defaultInspectDepth={1}
-                      value={getCapabilities.data.capabilities as object}
-                      style={{ background: 'unset', display: 'unset' }}
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex="1" textAlign="left">
-                        {t('analytics.raw_data')}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} overflowX="auto" overflowY="auto" maxH="500px">
-                    <pre>{JSON.stringify(getCapabilities.data.capabilities, null, 2)}</pre>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+              <Box maxH="calc(100vh - 250px)" minH="300px" overflowY="auto">
+                <Accordion defaultIndex={0} allowToggle>
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex="1" textAlign="left">
+                          {t('common.preview')}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <JsonViewer
+                        rootName={false}
+                        displayDataTypes={false}
+                        enableClipboard={false}
+                        theme={colorMode === 'light' ? undefined : 'dark'}
+                        defaultInspectDepth={1}
+                        value={getCapabilities.data.capabilities as object}
+                        style={{ background: 'unset', display: 'unset' }}
+                      />
+                    </AccordionPanel>
+                  </AccordionItem>
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex="1" textAlign="left">
+                          {t('analytics.raw_data')}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4} overflowX="auto">
+                      <pre>{JSON.stringify(getCapabilities.data.capabilities, null, 2)}</pre>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
             </LoadingOverlay>
           )}
         </Box>
