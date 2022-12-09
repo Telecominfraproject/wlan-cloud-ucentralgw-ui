@@ -45,42 +45,44 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
       >
         <Box display="inline-block" w="100%">
           {configuration && (
-            <Accordion defaultIndex={0} allowToggle>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left">
-                      {t('common.preview')}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <JsonViewer
-                    rootName={false}
-                    displayDataTypes={false}
-                    enableClipboard={false}
-                    theme={colorMode === 'light' ? undefined : 'dark'}
-                    defaultInspectDepth={1}
-                    value={configuration as object}
-                    style={{ background: 'unset', display: 'unset' }}
-                  />
-                </AccordionPanel>
-              </AccordionItem>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left">
-                      {t('analytics.raw_data')}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4} overflowX="auto" overflowY="auto" maxH="500px">
-                  <pre>{JSON.stringify(configuration, null, 2)}</pre>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
+            <Box maxH="calc(100vh - 250px)" minH="300px" overflowY="auto">
+              <Accordion defaultIndex={0} allowToggle>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box flex="1" textAlign="left">
+                        {t('common.preview')}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <JsonViewer
+                      rootName={false}
+                      displayDataTypes={false}
+                      enableClipboard={false}
+                      theme={colorMode === 'light' ? undefined : 'dark'}
+                      defaultInspectDepth={1}
+                      value={configuration as object}
+                      style={{ background: 'unset', display: 'unset' }}
+                    />
+                  </AccordionPanel>
+                </AccordionItem>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box flex="1" textAlign="left">
+                        {t('analytics.raw_data')}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4} overflowX="auto">
+                    <pre>{JSON.stringify(configuration, null, 2)}</pre>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+            </Box>
           )}
         </Box>
       </Modal>
