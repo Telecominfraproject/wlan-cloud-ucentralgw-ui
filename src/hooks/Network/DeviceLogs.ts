@@ -45,13 +45,33 @@ export const useDeleteLogs = () => {
   });
 };
 
-const getDeviceLogsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+const getLogsBatch = (serialNumber?: string, start?: number, end?: number, limit?: number, offset?: number) =>
   axiosGw
-    .get(`device/${serialNumber}/logs?startDate=${start}&endDate=${end}`)
+    .get(`device/${serialNumber}/logs?startDate=${start}&endDate=${end}&limit=${limit}&offset=${offset}`)
     .then((response) => response.data) as Promise<{
     values: DeviceLog[];
     serialNumber: string;
   }>;
+
+const getDeviceLogsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () => {
+  let offset = 0;
+  const limit = 100;
+  let logs: DeviceLog[] = [];
+  let latestResponse: {
+    values: DeviceLog[];
+    serialNumber: string;
+  };
+  do {
+    // eslint-disable-next-line no-await-in-loop
+    latestResponse = await getLogsBatch(serialNumber, start, end, limit, offset);
+    logs = logs.concat(latestResponse.values);
+    offset += limit;
+  } while (latestResponse.values.length === limit);
+  return {
+    values: logs,
+  };
+};
+
 export const useGetDeviceLogsWithTimestamps = ({
   serialNumber,
   start,
