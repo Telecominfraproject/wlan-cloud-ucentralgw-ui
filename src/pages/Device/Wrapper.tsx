@@ -26,6 +26,7 @@ import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
+import DeviceSearchBar from 'components/DeviceSearchBar';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
@@ -112,7 +113,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     <>
       {isCompact ? (
         <Card p={2} mb={4}>
-          <CardHeader>
+          <CardHeader overflowX="auto">
             <HStack spacing={2}>
               <Heading size="md">{serialNumber}</Heading>
               {connectedTag}
@@ -126,6 +127,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             </HStack>
             <Spacer />
             <HStack spacing={2}>
+              {breakpoint !== 'base' && breakpoint !== 'md' && <DeviceSearchBar />}
               {getDevice?.data && (
                 <DeviceActionDropdown
                   // @ts-ignore
@@ -140,6 +142,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   onOpenTelemetryModal={telemetryModalProps.onOpen}
                   onOpenScriptModal={scriptModal.openModal}
                   size="md"
+                  isCompact
                 />
               )}
               <RefreshButton
@@ -177,6 +180,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
               </HStack>
               <Spacer />
               <HStack spacing={2}>
+                <DeviceSearchBar />
                 {getDevice?.data && (
                   <DeviceActionDropdown
                     // @ts-ignore
