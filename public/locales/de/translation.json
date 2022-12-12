@@ -894,6 +894,20 @@
 		"title": "Ressourcen",
 		"variable": "Variable"
 	},
+	"restrictions": {
+		"algo": "Signaturalgorithmus",
+		"allowed": "dürfen",
+		"countries": "erlaubte Länder",
+		"developer": "Entwicklermodus",
+		"dfs": "DFS-Überschreibung",
+		"gw_commands": "Gateway-Befehle",
+		"identifier": "Identifikator",
+		"key_verification": "Überprüfung des Signaturschlüssels",
+		"restricted": "Beschränkt",
+		"signed_upgrade": "Nur signiertes Upgrade",
+		"title": "Beschränkungen",
+		"tty": "TTY-Zugriff"
+	},
 	"rrm": {
 		"algorithm": "Algorithmus",
 		"algorithm_other": "Algorithmen",
