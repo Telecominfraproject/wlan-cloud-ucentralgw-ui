@@ -1,16 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Portal,
-  Spinner,
-  Tooltip,
-  useToast,
-} from '@chakra-ui/react';
+import { Button, IconButton, Menu, MenuButton, MenuItem, MenuList, Spinner, Tooltip, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { Wrench } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +23,7 @@ interface Props {
   onOpenTelemetryModal: (serialNumber: string) => void;
   onOpenScriptModal: (device: GatewayDevice) => void;
   size?: 'sm' | 'md' | 'lg';
+  isCompact?: boolean;
 }
 
 const DeviceActionDropdown = ({
@@ -49,6 +39,7 @@ const DeviceActionDropdown = ({
   onOpenConfigureModal,
   onOpenScriptModal,
   size,
+  isCompact,
 }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
@@ -157,9 +148,9 @@ const DeviceActionDropdown = ({
   const handleConnectClick = () => getRtty();
 
   return (
-    <Menu preventOverflow>
+    <Menu>
       <Tooltip label={t('commands.other')}>
-        {size === undefined ? (
+        {size === undefined || isCompact ? (
           <MenuButton
             as={IconButton}
             aria-label="Commands"
@@ -181,24 +172,22 @@ const DeviceActionDropdown = ({
           </MenuButton>
         )}
       </Tooltip>
-      <Portal>
-        <MenuList>
-          <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
-          <MenuItem onClick={handleOpenConfigure}>{t('controller.configure.title')}</MenuItem>
-          <MenuItem onClick={handleConnectClick}>{t('commands.connect')}</MenuItem>
-          <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
-          <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
-          <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
-          <RebootMenuItem device={device} refresh={refresh} />
-          <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
-          <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
-          <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
-          <MenuItem onClick={handleUpdateToLatest} hidden>
-            {t('premium.toolbox.upgrade_to_latest')}
-          </MenuItem>
-          <MenuItem onClick={handleOpenScan}>{t('commands.wifiscan')}</MenuItem>
-        </MenuList>
-      </Portal>
+      <MenuList>
+        <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
+        <MenuItem onClick={handleOpenConfigure}>{t('controller.configure.title')}</MenuItem>
+        <MenuItem onClick={handleConnectClick}>{t('commands.connect')}</MenuItem>
+        <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
+        <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
+        <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
+        <RebootMenuItem device={device} refresh={refresh} />
+        <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
+        <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
+        <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
+        <MenuItem onClick={handleUpdateToLatest} hidden>
+          {t('premium.toolbox.upgrade_to_latest')}
+        </MenuItem>
+        <MenuItem onClick={handleOpenScan}>{t('commands.wifiscan')}</MenuItem>
+      </MenuList>
     </Menu>
   );
 };
