@@ -75,7 +75,7 @@ const HistoryDatePickers = ({ defaults, setTime, onClear }: Props) => {
   }, [defaults]);
 
   return (
-    <Popover>
+    <Popover placement="top">
       {({ isOpen, onClose }) => (
         <>
           <PopoverTrigger>
@@ -126,7 +126,7 @@ const HistoryDatePickers = ({ defaults, setTime, onClear }: Props) => {
                     </Box>
                   </Flex>
                   <Flex>
-                    <Heading size="sm" my="auto" mr={4}>
+                    <Heading size="sm" my="auto" ml={2} mr={2}>
                       {t('common.end')}:{' '}
                     </Heading>
                     <Box w="170px">
@@ -160,7 +160,7 @@ const HistoryDatePickers = ({ defaults, setTime, onClear }: Props) => {
                       customInput={<CustomInputButton />}
                     />
                   </Box>
-                  <Heading size="sm" my="auto" mr={2}>
+                  <Heading size="sm" my="auto" ml={2} mr={2}>
                     {t('common.end')}:{' '}
                   </Heading>
                   <Box w="170px">
