@@ -22,6 +22,20 @@ export interface GatewayDevice {
   notes: Note[];
   owner: string;
   restrictedDevice: boolean;
+  restrictionDetails?: {
+    dfs: boolean;
+    ssh: boolean;
+    rtty: boolean;
+    tty: boolean;
+    developer: boolean;
+    upgrade: boolean;
+    commands: boolean;
+    country: string[];
+    key_info: {
+      vendor: string;
+      algo: string;
+    };
+  };
   serialNumber: string;
   subscriber: string;
   venue: string;

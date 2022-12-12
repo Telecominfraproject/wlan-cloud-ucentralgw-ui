@@ -19,6 +19,7 @@ import Masonry from 'react-masonry-css';
 import DeviceDetails from './Details';
 import DeviceLogsCard from './LogsCard';
 import DeviceNotes from './Notes';
+import RestrictionsCard from './RestrictionsCard';
 import DeviceStatisticsCard from './StatisticsCard';
 import DeviceSummary from './Summary';
 import WifiAnalysisCard from './WifiAnalysis';
@@ -232,6 +233,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceStatisticsCard serialNumber={serialNumber} />
           <WifiAnalysisCard serialNumber={serialNumber} />
           <DeviceLogsCard serialNumber={serialNumber} />
+          <RestrictionsCard serialNumber={serialNumber} />
+          <Box />
           <DeviceNotes serialNumber={serialNumber} />
         </Masonry>
       </Box>

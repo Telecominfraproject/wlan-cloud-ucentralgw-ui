@@ -894,6 +894,20 @@
 		"title": "Ressources",
 		"variable": "Variable"
 	},
+	"restrictions": {
+		"algo": "Algorithme de signature",
+		"allowed": "Permis",
+		"countries": "Pays autorisés",
+		"developer": "Mode développeur",
+		"dfs": "Remplacement DFS",
+		"gw_commands": "Commandes de passerelle",
+		"identifier": "Identifiant",
+		"key_verification": "Vérification de la clé de signature",
+		"restricted": "Limité",
+		"signed_upgrade": "Mise à niveau signée uniquement",
+		"title": "Restrictions",
+		"tty": "Accès ATS"
+	},
 	"rrm": {
 		"algorithm": "Algorithme",
 		"algorithm_other": "Algorithmes",

@@ -894,6 +894,20 @@
 		"title": "Recursos",
 		"variable": "Variable"
 	},
+	"restrictions": {
+		"algo": "Algoritmo de firma",
+		"allowed": "Permitido",
+		"countries": "países permitidos",
+		"developer": "Modo desarrollador",
+		"dfs": "Anulación de DFS",
+		"gw_commands": "Comandos de puerta de enlace",
+		"identifier": "Identificador",
+		"key_verification": "Verificación de clave de firma",
+		"restricted": "Restringido",
+		"signed_upgrade": "Solo actualización firmada",
+		"title": "Las restricciones",
+		"tty": "Acceso TTY"
+	},
 	"rrm": {
 		"algorithm": "Algoritmo",
 		"algorithm_other": "Algoritmos",
