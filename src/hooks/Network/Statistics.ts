@@ -64,6 +64,18 @@ type DeviceInterfaceStatistics = {
       };
       tx_retries: number;
     }[];
+    counters?: {
+      collisions: number;
+      multicast: number;
+      rx_bytes: number;
+      rx_dropped: number;
+      rx_errors: number;
+      rx_packets: number;
+      tx_bytes: number;
+      tx_dropped: number;
+      tx_errors: number;
+      tx_packets: number;
+    };
     bssid: string;
     iface: string;
     location: string;

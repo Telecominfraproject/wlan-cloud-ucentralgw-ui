@@ -73,8 +73,17 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
         memoryData.recorded.push(stat.recorded);
 
         for (const inter of stat.data.interfaces ?? []) {
-          const rx = inter.counters?.rx_bytes ?? 0;
-          const tx = inter.counters?.tx_bytes ?? 0;
+          const isInterUpstream = inter.name?.substring(0, 2) === 'up';
+          let rx = inter.counters?.rx_bytes ?? 0;
+          let tx = inter.counters?.tx_bytes ?? 0;
+
+          if (isInterUpstream) {
+            for (const ssid of inter.ssids ?? []) {
+              rx += ssid.counters?.rx_bytes ?? 0;
+              tx += ssid.counters?.tx_bytes ?? 0;
+            }
+          }
+
           let rxDelta = rx - (previousRx[inter.name] ?? 0);
           if (rxDelta < 0) rxDelta = 0;
           let txDelta = tx - (previousTx[inter.name] ?? 0);
