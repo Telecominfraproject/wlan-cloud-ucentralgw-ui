@@ -33,13 +33,34 @@ export const useGetHealthChecks = ({
     onError,
   });
 
-const getHealthChecksWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+const getHealthChecksBatch = (serialNumber?: string, start?: number, end?: number, limit?: number, offset?: number) =>
   axiosGw
-    .get(`device/${serialNumber}/healthchecks?startDate=${start}&endDate=${end}`)
+    .get(`device/${serialNumber}/healthchecks?startDate=${start}&endDate=${end}&limit=${limit}&offset=${offset}`)
     .then((response) => response.data) as Promise<{
     values: HealthCheck[];
     serialNumber: string;
   }>;
+
+const getHealthChecksByBatches = (serialNumber?: string, start?: number, end?: number) => async () => {
+  let offset = 0;
+  const limit = 100;
+  let checks: HealthCheck[] = [];
+  let latestResponse: {
+    values: HealthCheck[];
+    serialNumber: string;
+  };
+  do {
+    // eslint-disable-next-line no-await-in-loop
+    latestResponse = await getHealthChecksBatch(serialNumber, start, end, limit, offset);
+    checks = checks.concat(latestResponse.values);
+    offset += limit;
+  } while (latestResponse.values.length === limit);
+  return {
+    values: checks,
+    serialNumber: latestResponse.serialNumber,
+  };
+};
+
 export const useGetHealthChecksWithTimestamps = ({
   serialNumber,
   start,
@@ -51,7 +72,7 @@ export const useGetHealthChecksWithTimestamps = ({
   end?: number;
   onError?: (e: AxiosError) => void;
 }) =>
-  useQuery(['healthchecks', serialNumber, { start, end }], getHealthChecksWithTimestamps(serialNumber, start, end), {
+  useQuery(['healthchecks', serialNumber, { start, end }], getHealthChecksByBatches(serialNumber, start, end), {
     enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
     staleTime: 1000 * 60,
     onError,

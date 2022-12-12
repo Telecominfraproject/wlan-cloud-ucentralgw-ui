@@ -57,12 +57,31 @@ export const useGetCommandHistory = ({
     onError,
   });
 
-const getCommandsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () =>
+const getCommandsBatch = (serialNumber?: string, start?: number, end?: number, limit?: number, offset?: number) =>
   axiosGw
-    .get(`commands?serialNumber=${serialNumber}&startDate=${start}&endDate=${end}`)
+    .get(`commands?serialNumber=${serialNumber}&startDate=${start}&endDate=${end}&limit=${limit}&offset=${offset}`)
     .then((response) => response.data) as Promise<{
     commands: DeviceCommandHistory[];
   }>;
+
+const getCommandsByBatches = (serialNumber?: string, start?: number, end?: number) => async () => {
+  let offset = 0;
+  const limit = 100;
+  let commands: DeviceCommandHistory[] = [];
+  let latestResponse: {
+    commands: DeviceCommandHistory[];
+  };
+  do {
+    // eslint-disable-next-line no-await-in-loop
+    latestResponse = await getCommandsBatch(serialNumber, start, end, limit, offset);
+    commands = commands.concat(latestResponse.commands);
+    offset += limit;
+  } while (latestResponse.commands.length === limit);
+  return {
+    commands,
+  };
+};
+
 export const useGetCommandHistoryWithTimestamps = ({
   serialNumber,
   start,
@@ -74,7 +93,7 @@ export const useGetCommandHistoryWithTimestamps = ({
   end?: number;
   onError?: (e: AxiosError) => void;
 }) =>
-  useQuery(['commands', serialNumber, { start, end }], getCommandsWithTimestamps(serialNumber, start, end), {
+  useQuery(['commands', serialNumber, { start, end }], getCommandsByBatches(serialNumber, start, end), {
     enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
     staleTime: 1000 * 60,
     onError,
