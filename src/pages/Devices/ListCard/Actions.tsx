@@ -5,6 +5,7 @@ import {
   Center,
   Flex,
   IconButton,
+  Link,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -18,7 +19,6 @@ import {
 } from '@chakra-ui/react';
 import { MagnifyingGlass, Trash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { DeviceWithStatus, useDeleteDevice } from 'hooks/Network/Devices';
 import { GatewayDevice } from 'models/Device';
@@ -49,13 +49,11 @@ const Actions: React.FC<Props> = ({
   onOpenScriptModal,
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutateAsync: deleteDevice, isLoading: isDeleting } = useDeleteDevice({
     serialNumber: device.serialNumber,
   });
 
-  const handleViewDetailsClick = () => navigate(`/devices/${device.serialNumber}`);
   const handleDeleteClick = () =>
     deleteDevice(device.serialNumber, {
       onSuccess: () => {
@@ -106,14 +104,15 @@ const Actions: React.FC<Props> = ({
         onOpenScriptModal={onOpenScriptModal}
       />
       <Tooltip hasArrow label={t('common.view_details')} placement="top">
-        <IconButton
-          aria-label={t('common.view_details')}
-          ml={2}
-          colorScheme="blue"
-          icon={<MagnifyingGlass size={20} />}
-          size="sm"
-          onClick={handleViewDetailsClick}
-        />
+        <Link href={`#/devices/${device.serialNumber}`}>
+          <IconButton
+            aria-label={t('common.view_details')}
+            ml={2}
+            colorScheme="blue"
+            icon={<MagnifyingGlass size={20} />}
+            size="sm"
+          />
+        </Link>
       </Tooltip>
     </Flex>
   );
