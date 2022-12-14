@@ -902,7 +902,7 @@
 		"dfs": "Anulación de DFS",
 		"gw_commands": "Comandos de puerta de enlace",
 		"identifier": "Identificador",
-		"key_verification": "Verificación de clave de firma",
+		"key_verification": "Información clave de firma",
 		"restricted": "Restringido",
 		"signed_upgrade": "Solo actualización firmada",
 		"title": "Las restricciones",
