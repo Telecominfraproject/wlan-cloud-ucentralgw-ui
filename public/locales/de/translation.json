@@ -902,7 +902,7 @@
 		"dfs": "DFS-Überschreibung",
 		"gw_commands": "Gateway-Befehle",
 		"identifier": "Identifikator",
-		"key_verification": "Überprüfung des Signaturschlüssels",
+		"key_verification": "Signieren von Schlüsselinformationen",
 		"restricted": "Beschränkt",
 		"signed_upgrade": "Nur signiertes Upgrade",
 		"title": "Beschränkungen",

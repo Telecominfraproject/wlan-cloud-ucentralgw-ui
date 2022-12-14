@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Box, Button, Heading, Image, Spacer, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { Box, Heading, Image, Link, Spacer, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { LockSimple } from 'phosphor-react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
 import DeviceListFirmwareButton from './FirmwareButton';
 import AP from './icons/AP.png';
@@ -49,7 +48,6 @@ const BADGE_COLORS: Record<string, string> = {
 
 const DeviceListCard = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = React.useState<string>('');
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const [pageInfo, setPageInfo] = React.useState<PageInfo | undefined>(undefined);
@@ -97,10 +95,6 @@ const DeviceListCard = () => {
   const onOpenConfigure = (serial: string) => {
     setSerialNumber(serial);
     configureModalProps.onOpen();
-  };
-
-  const goToSerial = (serial: string) => () => {
-    navigate(`/devices/${serial}`);
   };
 
   const badgeCell = React.useCallback(
@@ -160,9 +154,9 @@ const DeviceListCard = () => {
 
   const serialCell = React.useCallback(
     (device: DeviceWithStatus) => (
-      <Button variant="link" onClick={goToSerial(device.serialNumber)} fontSize="sm">
+      <Link href={`#/devices/${device.serialNumber}`} fontSize="sm" my="auto" pt={1}>
         <pre>{device.serialNumber}</pre>
-      </Button>
+      </Link>
     ),
     [],
   );
@@ -406,7 +400,6 @@ const DeviceListCard = () => {
             // @ts-ignore
             setPageInfo={setPageInfo}
             saveSettingsId="gateway.devices.table"
-            minHeight="600px"
           />
         </Box>
       </CardBody>

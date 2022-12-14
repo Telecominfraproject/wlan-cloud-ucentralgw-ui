@@ -902,7 +902,7 @@
 		"dfs": "Remplacement DFS",
 		"gw_commands": "Commandes de passerelle",
 		"identifier": "Identifiant",
-		"key_verification": "Vérification de la clé de signature",
+		"key_verification": "Signature des informations clés",
 		"restricted": "Limité",
 		"signed_upgrade": "Mise à niveau signée uniquement",
 		"title": "Restrictions",

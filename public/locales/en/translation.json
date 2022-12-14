@@ -902,7 +902,7 @@
 		"dfs": "DFS Override",
 		"gw_commands": "Gateway Commands",
 		"identifier": "Identifier",
-		"key_verification": "Signing Key Verification",
+		"key_verification": "Signing Key Information",
 		"restricted": "Restricted",
 		"signed_upgrade": "Signed Upgrade Only",
 		"title": "Restrictions",

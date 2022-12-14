@@ -902,7 +902,7 @@
 		"dfs": "Substituição DFS",
 		"gw_commands": "Comandos de gateway",
 		"identifier": "Identificador",
-		"key_verification": "Verificação da chave de assinatura",
+		"key_verification": "Informações Chave de Assinatura",
 		"restricted": "Restrito",
 		"signed_upgrade": "Somente atualização assinada",
 		"title": "RESTRIÇÕES",
