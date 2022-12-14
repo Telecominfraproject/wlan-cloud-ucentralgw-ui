@@ -21,6 +21,18 @@ type DeviceInterfaceStatistics = {
     tx_errors: number;
     tx_packets: number;
   };
+  'counters-aggregate'?: {
+    collisions: number;
+    multicast: number;
+    rx_bytes: number;
+    rx_dropped: number;
+    rx_errors: number;
+    rx_packets: number;
+    tx_bytes: number;
+    tx_dropped: number;
+    tx_errors: number;
+    tx_packets: number;
+  };
   ssids?: {
     associations?: {
       ack_signal: number;

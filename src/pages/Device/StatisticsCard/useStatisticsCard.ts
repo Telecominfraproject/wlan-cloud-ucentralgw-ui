@@ -77,7 +77,10 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
           let rx = inter.counters?.rx_bytes ?? 0;
           let tx = inter.counters?.tx_bytes ?? 0;
 
-          if (isInterUpstream) {
+          if (inter['counters-aggregate']) {
+            rx = inter['counters-aggregate'].rx_bytes;
+            tx = inter['counters-aggregate'].tx_bytes;
+          } else if (isInterUpstream) {
             for (const ssid of inter.ssids ?? []) {
               rx += ssid.counters?.rx_bytes ?? 0;
               tx += ssid.counters?.tx_bytes ?? 0;
