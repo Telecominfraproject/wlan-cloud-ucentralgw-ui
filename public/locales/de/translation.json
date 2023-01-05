@@ -175,6 +175,7 @@
 		"other": "Befehle",
 		"override_dfs": "DFS überschreiben",
 		"reboot": "Starten Sie neu",
+		"reboot_description": "Möchten Sie dieses Gerät neu starten?",
 		"reboot_error": "Fehler beim Senden des Neustartbefehls: {{e}}",
 		"reboot_success": "Neustartbefehl erfolgreich gesendet!",
 		"revision": "Revision",

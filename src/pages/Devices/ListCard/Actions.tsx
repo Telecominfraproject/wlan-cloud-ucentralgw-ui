@@ -34,6 +34,7 @@ interface Props {
   onOpenConfigureModal: (serialNumber: string) => void;
   onOpenTelemetryModal: (serialNumber: string) => void;
   onOpenScriptModal: (device: GatewayDevice) => void;
+  onOpenRebootModal: (serialNumber: string) => void;
 }
 
 const Actions: React.FC<Props> = ({
@@ -47,6 +48,7 @@ const Actions: React.FC<Props> = ({
   onOpenConfigureModal,
   onOpenTelemetryModal,
   onOpenScriptModal,
+  onOpenRebootModal,
 }) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -102,6 +104,7 @@ const Actions: React.FC<Props> = ({
         onOpenConfigureModal={onOpenConfigureModal}
         onOpenTelemetryModal={onOpenTelemetryModal}
         onOpenScriptModal={onOpenScriptModal}
+        onOpenRebootModal={onOpenRebootModal}
       />
       <Tooltip hasArrow label={t('common.view_details')} placement="top">
         <Link href={`#/devices/${device.serialNumber}`}>

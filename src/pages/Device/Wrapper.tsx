@@ -33,6 +33,7 @@ import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
+import { RebootModal } from 'components/Modals/RebootModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
@@ -56,6 +57,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const upgradeModalProps = useDisclosure();
   const telemetryModalProps = useDisclosure();
   const traceModalProps = useDisclosure();
+  const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
@@ -142,6 +144,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   onOpenConfigureModal={configureModalProps.onOpen}
                   onOpenTelemetryModal={telemetryModalProps.onOpen}
                   onOpenScriptModal={scriptModal.openModal}
+                  onOpenRebootModal={rebootModalProps.onOpen}
                   size="md"
                   isCompact
                 />
@@ -194,6 +197,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenEventQueue={eventQueueProps.onOpen}
                     onOpenConfigureModal={configureModalProps.onOpen}
                     onOpenTelemetryModal={telemetryModalProps.onOpen}
+                    onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
                     size="md"
                   />
@@ -217,6 +221,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       <EventQueueModal serialNumber={serialNumber} modalProps={eventQueueProps} />
       <ConfigureModal serialNumber={serialNumber} modalProps={configureModalProps} />
       <TelemetryModal serialNumber={serialNumber} modalProps={telemetryModalProps} />
+      <RebootModal serialNumber={serialNumber} modalProps={rebootModalProps} />
       {scriptModal.modal}
       <Box mt={isCompact ? '0px' : '68px'}>
         <Masonry

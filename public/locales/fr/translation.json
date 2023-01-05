@@ -175,6 +175,7 @@
 		"other": "Les commandes",
 		"override_dfs": "Remplacer DFS",
 		"reboot": "Redémarrer",
+		"reboot_description": "Voulez-vous redémarrer cet appareil ?",
 		"reboot_error": "Erreur lors de l'envoi de la commande de redémarrage : {{e}}",
 		"reboot_success": "Commande de redémarrage envoyée avec succès !",
 		"revision": "Révision",

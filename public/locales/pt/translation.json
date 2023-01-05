@@ -175,6 +175,7 @@
 		"other": "comandos",
 		"override_dfs": "Substituir DFS",
 		"reboot": "Reiniciar",
+		"reboot_description": "Deseja reiniciar este dispositivo?",
 		"reboot_error": "Erro ao enviar o comando de reinicialização: {{e}}",
 		"reboot_success": "Comando de reinicialização enviado com sucesso!",
 		"revision": "revisão",
