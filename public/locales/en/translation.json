@@ -175,6 +175,7 @@
 		"other": "Commands",
 		"override_dfs": "Override DFS",
 		"reboot": "Reboot",
+		"reboot_description": "Do you want to reboot this device?",
 		"reboot_error": "Error while sending reboot command: {{e}}",
 		"reboot_success": "Successfully sent reboot command!",
 		"revision": "Revision",

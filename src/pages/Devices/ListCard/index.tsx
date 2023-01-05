@@ -20,6 +20,7 @@ import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
+import { RebootModal } from 'components/Modals/RebootModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
@@ -58,6 +59,7 @@ const DeviceListCard = () => {
   const eventQueueProps = useDisclosure();
   const telemetryModalProps = useDisclosure();
   const configureModalProps = useDisclosure();
+  const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
   const getCount = useGetDeviceCount({ enabled: true });
   const getDevices = useGetDevices({
@@ -95,6 +97,10 @@ const DeviceListCard = () => {
   const onOpenConfigure = (serial: string) => {
     setSerialNumber(serial);
     configureModalProps.onOpen();
+  };
+  const onOpenReboot = (serial: string) => {
+    setSerialNumber(serial);
+    rebootModalProps.onOpen();
   };
 
   const badgeCell = React.useCallback(
@@ -210,6 +216,7 @@ const DeviceListCard = () => {
         onOpenConfigureModal={onOpenConfigure}
         onOpenTelemetryModal={onOpenTelemetry}
         onOpenScriptModal={scriptModal.openModal}
+        onOpenRebootModal={onOpenReboot}
       />
     ),
     [],
@@ -410,6 +417,7 @@ const DeviceListCard = () => {
       <EventQueueModal modalProps={eventQueueProps} serialNumber={serialNumber} />
       <ConfigureModal modalProps={configureModalProps} serialNumber={serialNumber} />
       <TelemetryModal modalProps={telemetryModalProps} serialNumber={serialNumber} />
+      <RebootModal modalProps={rebootModalProps} serialNumber={serialNumber} />
       {scriptModal.modal}
     </>
   );
