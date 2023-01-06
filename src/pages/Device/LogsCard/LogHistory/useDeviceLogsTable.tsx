@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, IconButton, Text, useDisclosure } from '@chakra-ui/react';
+import { MagnifyingGlass } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import DetailedLogViewModal from './DetailedLogViewModal';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { DeviceLog, useGetDeviceLogs, useGetDeviceLogsWithTimestamps } from 'hooks/Network/DeviceLogs';
 import { Column } from 'models/Table';
@@ -8,17 +10,48 @@ import { Column } from 'models/Table';
 type Props = {
   serialNumber: string;
   limit: number;
+  logType: 0 | 1;
 };
 
-const useDeviceLogsTable = ({ serialNumber, limit }: Props) => {
+const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
   const { t } = useTranslation();
-  const getLogs = useGetDeviceLogs({ serialNumber, limit });
+  const getLogs = useGetDeviceLogs({ serialNumber, limit, logType });
+  const modalProps = useDisclosure();
+  const [log, setLog] = React.useState<DeviceLog | undefined>();
   const [time, setTime] = React.useState<{ start: Date; end: Date } | undefined>();
   const getCustomLogs = useGetDeviceLogsWithTimestamps({
     serialNumber,
     start: time ? Math.floor(time.start.getTime() / 1000) : undefined,
     end: time ? Math.floor(time.end.getTime() / 1000) : undefined,
+    logType,
   });
+
+  const onOpen = React.useCallback((v: DeviceLog) => {
+    setLog(v);
+    modalProps.onOpen();
+  }, []);
+
+  const logCell = React.useCallback(
+    (v: DeviceLog) =>
+      logType === 1 ? (
+        <Box display="flex">
+          <IconButton
+            aria-label="Open Log Details"
+            onClick={() => onOpen(v)}
+            colorScheme="blue"
+            icon={<MagnifyingGlass size={16} />}
+            size="xs"
+            mr={2}
+          />
+          <Text my="auto" maxW="calc(20vw)" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+            {v.log}
+          </Text>
+        </Box>
+      ) : (
+        v.log
+      ),
+    [onOpen],
+  );
 
   const dateCell = React.useCallback(
     (v: number) => (
@@ -65,6 +98,7 @@ const useDeviceLogsTable = ({ serialNumber, limit }: Props) => {
         Footer: '',
         accessor: 'log',
         customWidth: '35px',
+        Cell: (v) => logCell(v.cell.row.original),
         disableSortBy: true,
       },
       {
@@ -85,6 +119,7 @@ const useDeviceLogsTable = ({ serialNumber, limit }: Props) => {
     getCustomLogs,
     time,
     setTime,
+    modal: <DetailedLogViewModal modalProps={modalProps} log={log} />,
   };
 };
 

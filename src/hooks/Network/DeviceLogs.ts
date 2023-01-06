@@ -11,8 +11,10 @@ export type DeviceLog = {
   severity: number;
 };
 
-const getDeviceLogs = (limit: number, serialNumber?: string) => async () =>
-  axiosGw.get(`device/${serialNumber}/logs?newest=true&limit=${limit}`).then((response) => response.data) as Promise<{
+const getDeviceLogs = (limit: number, serialNumber?: string, logType?: 0 | 1) => async () =>
+  axiosGw
+    .get(`device/${serialNumber}/logs?newest=true&limit=${limit}&logType=${logType}`)
+    .then((response) => response.data) as Promise<{
     values: DeviceLog[];
     serialNumber: string;
   }>;
@@ -21,20 +23,29 @@ export const useGetDeviceLogs = ({
   serialNumber,
   limit,
   onError,
+  logType,
 }: {
   serialNumber?: string;
   limit: number;
   onError?: (e: AxiosError) => void;
+  logType?: 0 | 1;
 }) =>
-  useQuery(['devicelogs', serialNumber, { limit }], getDeviceLogs(limit, serialNumber), {
+  useQuery(['devicelogs', serialNumber, { limit, logType }], getDeviceLogs(limit, serialNumber, logType ?? 0), {
     keepPreviousData: true,
     enabled: serialNumber !== undefined && serialNumber !== '',
     staleTime: 30000,
     onError,
   });
 
-const deleteLogs = async ({ serialNumber, endDate }: { serialNumber: string; endDate: number }) =>
-  axiosGw.delete(`device/${serialNumber}/logs?endDate=${endDate}`);
+const deleteLogs = async ({
+  serialNumber,
+  endDate,
+  logType,
+}: {
+  serialNumber: string;
+  endDate: number;
+  logType: 0 | 1;
+}) => axiosGw.delete(`device/${serialNumber}/logs?endDate=${endDate}&logType=${logType}`);
 export const useDeleteLogs = () => {
   const queryClient = useQueryClient();
 
@@ -45,46 +56,62 @@ export const useDeleteLogs = () => {
   });
 };
 
-const getLogsBatch = (serialNumber?: string, start?: number, end?: number, limit?: number, offset?: number) =>
+const getLogsBatch = (
+  serialNumber?: string,
+  start?: number,
+  end?: number,
+  limit?: number,
+  offset?: number,
+  logType?: 0 | 1,
+) =>
   axiosGw
-    .get(`device/${serialNumber}/logs?startDate=${start}&endDate=${end}&limit=${limit}&offset=${offset}`)
+    .get(
+      `device/${serialNumber}/logs?startDate=${start}&endDate=${end}&limit=${limit}&offset=${offset}&logType=${logType}`,
+    )
     .then((response) => response.data) as Promise<{
     values: DeviceLog[];
     serialNumber: string;
   }>;
 
-const getDeviceLogsWithTimestamps = (serialNumber?: string, start?: number, end?: number) => async () => {
-  let offset = 0;
-  const limit = 100;
-  let logs: DeviceLog[] = [];
-  let latestResponse: {
-    values: DeviceLog[];
-    serialNumber: string;
+const getDeviceLogsWithTimestamps =
+  (serialNumber?: string, start?: number, end?: number, logType?: 0 | 1) => async () => {
+    let offset = 0;
+    const limit = 100;
+    let logs: DeviceLog[] = [];
+    let latestResponse: {
+      values: DeviceLog[];
+      serialNumber: string;
+    };
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      latestResponse = await getLogsBatch(serialNumber, start, end, limit, offset, logType);
+      logs = logs.concat(latestResponse.values);
+      offset += limit;
+    } while (latestResponse.values.length === limit);
+    return {
+      values: logs,
+    };
   };
-  do {
-    // eslint-disable-next-line no-await-in-loop
-    latestResponse = await getLogsBatch(serialNumber, start, end, limit, offset);
-    logs = logs.concat(latestResponse.values);
-    offset += limit;
-  } while (latestResponse.values.length === limit);
-  return {
-    values: logs,
-  };
-};
 
 export const useGetDeviceLogsWithTimestamps = ({
   serialNumber,
   start,
   end,
   onError,
+  logType,
 }: {
   serialNumber?: string;
   start?: number;
   end?: number;
   onError?: (e: AxiosError) => void;
+  logType?: 0 | 1;
 }) =>
-  useQuery(['devicelogs', serialNumber, { start, end }], getDeviceLogsWithTimestamps(serialNumber, start, end), {
-    enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
-    staleTime: 1000 * 60,
-    onError,
-  });
+  useQuery(
+    ['devicelogs', serialNumber, { start, end, logType }],
+    getDeviceLogsWithTimestamps(serialNumber, start, end, logType ?? 0),
+    {
+      enabled: serialNumber !== undefined && serialNumber !== '' && start !== undefined && end !== undefined,
+      staleTime: 1000 * 60,
+      onError,
+    },
+  );
