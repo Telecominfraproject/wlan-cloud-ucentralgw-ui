@@ -16,8 +16,8 @@ const CustomInputButton = React.forwardRef(
   ),
 );
 
-type Props = { serialNumber: string };
-const DeleteLogModal = ({ serialNumber }: Props) => {
+type Props = { serialNumber: string; logType: 0 | 1 };
+const DeleteLogModal = ({ serialNumber, logType }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
   const modalProps = useDisclosure();
@@ -26,7 +26,7 @@ const DeleteLogModal = ({ serialNumber }: Props) => {
 
   const onDeleteClick = () => {
     deleteLogs.mutate(
-      { endDate: Math.floor(date.getTime() / 1000), serialNumber },
+      { endDate: Math.floor(date.getTime() / 1000), serialNumber, logType },
       {
         onSuccess: () => {
           modalProps.onClose();

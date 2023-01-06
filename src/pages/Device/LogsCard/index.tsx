@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import CommandHistory from './CommandHistory';
 import HealthCheckHistory from './HealthCheckHistory';
 import LogHistory from './LogHistory';
+import CrashLogs from './LogHistory/CrashLogs';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 
@@ -32,6 +33,9 @@ const DeviceLogsCard = ({ serialNumber }: Props) => {
             <Tab fontSize="lg" fontWeight="bold">
               {t('controller.devices.logs')}
             </Tab>
+            <Tab fontSize="lg" fontWeight="bold">
+              {t('devices.crash_logs')}
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel p={0}>
@@ -51,9 +55,11 @@ const DeviceLogsCard = ({ serialNumber }: Props) => {
             <TabPanel>
               <HealthCheckHistory serialNumber={serialNumber} />
             </TabPanel>
-
             <TabPanel>
               <LogHistory serialNumber={serialNumber} />
+            </TabPanel>
+            <TabPanel>
+              <CrashLogs serialNumber={serialNumber} />
             </TabPanel>
           </TabPanels>
         </Tabs>

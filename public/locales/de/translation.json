@@ -392,6 +392,7 @@
 		"warning_pushes_one": "Warten auf Geräteverbindung: {{count}}",
 		"warning_pushes_other": "Warten auf Geräteverbindung: {{count}}",
 		"weight": "Gewicht",
+		"wifi_bands_max": "Es können nicht mehr als 8 SSIDs dieses WLAN-Band verwenden",
 		"wifi_frames": "WiFi-Frames"
 	},
 	"contacts": {
@@ -601,6 +602,7 @@
 		"certificate_expires_in": "Zertifikat läuft ab in",
 		"certificate_expiry": "Zert. Läuft ab in",
 		"connected": "In Verbindung gebracht",
+		"crash_logs": "Absturzprotokolle",
 		"create_errors": "Fehler beim Versuch, Geräte zu erstellen",
 		"create_success": " Geräte erfolgreich erstellt",
 		"current_firmware": "Aktuelle Firmware",
@@ -614,6 +616,7 @@
 		"import_device_warning": "Bitte stellen Sie sicher, dass am Anfang oder Ende von Werten keine zusätzlichen Leerzeichen stehen, es sei denn, es handelt sich um einen Teil des gewünschten Werts",
 		"import_explanation": "Für den Massenimport von Geräten müssen Sie eine CSV-Datei mit den folgenden Spalten verwenden: SerialNumber, DeviceType, Name, Description, Note",
 		"invalid_serial_number": "Ungültige Seriennummer (muss 12 HEX-Zeichen lang sein)",
+		"logs_one": "Log",
 		"new_devices": "Neue Geräte",
 		"no_model_image": "Kein Modellbild gefunden",
 		"not_connected": "Nicht verbunden",

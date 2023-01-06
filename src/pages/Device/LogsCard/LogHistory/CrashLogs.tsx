@@ -12,11 +12,15 @@ import { Column } from 'models/Table';
 type Props = {
   serialNumber: string;
 };
-const LogHistory = ({ serialNumber }: Props) => {
+const CrashLogs = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const [limit, setLimit] = React.useState(25);
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
-  const { time, setTime, getCustomLogs, getLogs, columns } = useDeviceLogsTable({ serialNumber, limit, logType: 0 });
+  const { time, setTime, getCustomLogs, getLogs, columns, modal } = useDeviceLogsTable({
+    serialNumber,
+    limit,
+    logType: 1,
+  });
 
   const setNewTime = (start: Date, end: Date) => {
     setTime({ start, end });
@@ -71,7 +75,7 @@ const LogHistory = ({ serialNumber }: Props) => {
           showAllRows
         />
         {getLogs.data !== undefined && (
-          <Center mt={2} hidden={getCustomLogs.data !== undefined}>
+          <Center mt={1} hidden={getCustomLogs.data !== undefined}>
             {!noMoreAvailable || getLogs.isFetching ? (
               <Button colorScheme="blue" onClick={raiseLimit} isLoading={getLogs.isFetching}>
                 {t('controller.devices.show_more')}
@@ -82,8 +86,9 @@ const LogHistory = ({ serialNumber }: Props) => {
           </Center>
         )}
       </Box>
+      {modal}
     </Box>
   );
 };
 
-export default LogHistory;
+export default CrashLogs;
