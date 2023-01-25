@@ -12,9 +12,11 @@ interface Props {
   isSuspended: boolean;
   isWaitingForCheck: boolean;
   refresh: () => void;
+  isDisabled?: boolean;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-const UserActions: React.FC<Props> = ({ id, isSuspended, isWaitingForCheck, refresh }) => {
+const UserActions = ({ id, isSuspended, isWaitingForCheck, refresh, size = 'sm', isDisabled }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
   const { mutateAsync: sendValidation } = useSendUserEmailValidation({ id, refresh });
@@ -76,9 +78,16 @@ const UserActions: React.FC<Props> = ({ id, isSuspended, isWaitingForCheck, refr
   return (
     <Menu>
       <Tooltip label={t('commands.other')}>
-        <MenuButton as={IconButton} aria-label="Commands" icon={<Wrench size={20} />} size="sm" ml={2} />
+        <MenuButton
+          as={IconButton}
+          aria-label="Commands"
+          icon={<Wrench size={20} />}
+          size={size}
+          ml={2}
+          isDisabled={isDisabled}
+        />
       </Tooltip>
-      <MenuList>
+      <MenuList fontSize="md">
         <MenuItem onClick={handleSuspendClick}>
           {isSuspended ? t('users.reactivate_user') : t('users.suspend')}
         </MenuItem>

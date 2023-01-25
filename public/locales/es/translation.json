@@ -801,6 +801,7 @@
 		"reset_password": "Restablecer la contraseña",
 		"sign_in": "Registrarse",
 		"sms_instructions": "Debería recibir un código de 6 dígitos en su teléfono pronto. Por favor, introdúzcalo a continuación para iniciar sesión",
+		"suspended_error": "Cuenta suspendida, comuníquese con su administrador",
 		"verification": "Verifica tu inicio de sesión",
 		"waiting_for_email_verification": "Cuenta aún no validada por correo electrónico. Mire su bandeja de entrada o solicite a su administrador que vuelva a enviar una validación.",
 		"welcome_back": "¡Dar una buena acogida!",
@@ -1057,9 +1058,11 @@
 		"previous_page": "Página anterior"
 	},
 	"user": {
+		"email_not_validated": "correo electrónico no validado",
 		"error_fetching": "Error al obtener la información del usuario: {{e}}",
 		"password": "Contraseña",
 		"role": "papel",
+		"suspended": "Suspendido",
 		"title": "Usuario"
 	},
 	"users": {

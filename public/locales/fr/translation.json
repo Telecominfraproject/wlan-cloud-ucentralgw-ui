@@ -801,6 +801,7 @@
 		"reset_password": "Réinitialiser le mot de passe",
 		"sign_in": "se connecter",
 		"sms_instructions": "Vous devriez bientôt recevoir un code à 6 chiffres sur votre téléphone. Veuillez le saisir ci-dessous pour vous connecter",
+		"suspended_error": "Compte suspendu, veuillez contacter votre administrateur",
 		"verification": "Vérifiez votre connexion",
 		"waiting_for_email_verification": "Compte pas encore e-mail validé. Veuillez consulter votre boîte de réception ou demander à votre administrateur de renvoyer une validation",
 		"welcome_back": "Nous saluons le retour!",
@@ -1057,9 +1058,11 @@
 		"previous_page": "Page précédente"
 	},
 	"user": {
+		"email_not_validated": "Mail non valide",
 		"error_fetching": "Erreur lors de la récupération des informations utilisateur : {{e}}",
 		"password": "Mot de passe",
 		"role": "Rôle",
+		"suspended": "Suspendu",
 		"title": "Utilisateur"
 	},
 	"users": {

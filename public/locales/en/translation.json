@@ -801,6 +801,7 @@
 		"reset_password": "Reset Password",
 		"sign_in": "Sign In",
 		"sms_instructions": "You should receive a 6-digit code on your phone soon. Please enter it below to login",
+		"suspended_error": "Suspended account, please contact your administrator",
 		"verification": "Verify your login",
 		"waiting_for_email_verification": "Account not yet email validated. Please look at your inbox or ask your administrator to resend a validation",
 		"welcome_back": "Welcome Back!",
@@ -1057,9 +1058,11 @@
 		"previous_page": "Previous Page"
 	},
 	"user": {
+		"email_not_validated": "email not validated",
 		"error_fetching": "Error fetching user information: {{e}}",
 		"password": "Password",
 		"role": "Role",
+		"suspended": "suspended",
 		"title": "User"
 	},
 	"users": {

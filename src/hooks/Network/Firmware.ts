@@ -7,35 +7,49 @@ import { AxiosError } from 'models/Axios';
 import { Firmware } from 'models/Firmware';
 import { Note } from 'models/Note';
 
+const getAvailableFirmwareBatch = async (deviceType: string, limit: number, offset: number) =>
+  axiosFms
+    .get(`firmwares?deviceType=${deviceType}&limit=${limit}&offset=${offset}`)
+    .then(({ data }: { data: { firmwares: Firmware[] } }) => data);
+
+const getAllAvailableFirmware = async (deviceType: string) => {
+  const limit = 500;
+  let offset = 0;
+  let data: { firmwares: Firmware[] } = { firmwares: [] };
+  let lastResponse: { firmwares: Firmware[] } = { firmwares: [] };
+  do {
+    // eslint-disable-next-line no-await-in-loop
+    lastResponse = await getAvailableFirmwareBatch(deviceType, limit, offset);
+    data = {
+      firmwares: [...data.firmwares, ...lastResponse.firmwares],
+    };
+    offset += 500;
+  } while (lastResponse.firmwares.length === 500);
+  return data;
+};
+
 export const useGetAvailableFirmware = ({ deviceType }: { deviceType: string }) => {
   const { t } = useTranslation();
   const toast = useToast();
 
-  return useQuery(
-    ['get-device-profile'],
-    () =>
-      axiosFms
-        .get(`firmwares?deviceType=${deviceType}&limit=10000&offset=0`)
-        .then(({ data }: { data: { firmwares: Firmware[] } }) => data),
-    {
-      enabled: deviceType !== '',
-      onError: (e: AxiosError) => {
-        if (!toast.isActive('firmware-fetching-error'))
-          toast({
-            id: 'firmware-fetching-error',
-            title: t('common.error'),
-            description: t('crud.error_fetching_obj', {
-              e: e?.response?.data?.ErrorDescription,
-              obj: t('analytics.firmware'),
-            }),
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-            position: 'top-right',
-          });
-      },
+  return useQuery(['firmware'], () => getAllAvailableFirmware(deviceType), {
+    enabled: deviceType !== '',
+    onError: (e: AxiosError) => {
+      if (!toast.isActive('firmware-fetching-error'))
+        toast({
+          id: 'firmware-fetching-error',
+          title: t('common.error'),
+          description: t('crud.error_fetching_obj', {
+            e: e?.response?.data?.ErrorDescription,
+            obj: t('analytics.firmware'),
+          }),
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
     },
-  );
+  });
 };
 
 export const useUpdateDeviceToLatest = ({ serialNumber, compatible }: { serialNumber: string; compatible: string }) =>

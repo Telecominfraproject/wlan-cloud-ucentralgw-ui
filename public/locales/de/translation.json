@@ -801,6 +801,7 @@
 		"reset_password": "Passwort zurücksetzen",
 		"sign_in": "Einloggen",
 		"sms_instructions": "Sie sollten bald einen 6-stelligen Code auf Ihrem Telefon erhalten. Bitte geben Sie es unten ein, um sich anzumelden",
+		"suspended_error": "Konto gesperrt, wenden Sie sich bitte an Ihren Administrator",
 		"verification": "Bestätigen Sie Ihre Anmeldung",
 		"waiting_for_email_verification": "Konto noch nicht per E-Mail validiert. Bitte sehen Sie in Ihrem Posteingang nach oder bitten Sie Ihren Administrator, eine Bestätigung erneut zu senden",
 		"welcome_back": "Willkommen zurück!",
@@ -1057,9 +1058,11 @@
 		"previous_page": "Vorherige Seite"
 	},
 	"user": {
+		"email_not_validated": "E-Mail nicht validiert",
 		"error_fetching": "Fehler beim Abrufen der Benutzerinformationen: {{e}}",
 		"password": "Passwort",
 		"role": "Rolle",
+		"suspended": "Suspendiert",
 		"title": "Nutzer"
 	},
 	"users": {
