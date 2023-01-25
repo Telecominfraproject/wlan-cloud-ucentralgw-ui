@@ -62,7 +62,7 @@ const UpdateUserForm = ({ editing, isOpen, onClose, selectedUser, formRef }: Pro
 
   useEffect(() => {
     setFormKey(uuid());
-  }, [isOpen]);
+  }, [isOpen, editing]);
 
   return (
     <Formik

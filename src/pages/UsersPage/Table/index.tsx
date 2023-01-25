@@ -141,7 +141,7 @@ const UserTable = () => {
           <Box overflowX="auto" w="100%">
             <DataTable
               columns={columns as Column<object>[]}
-              data={users?.filter((curr) => curr.email !== user?.email) ?? []}
+              data={users ?? []}
               isLoading={isFetching}
               obj={t('users.title')}
               sortBy={[{ id: 'email', desc: false }]}
