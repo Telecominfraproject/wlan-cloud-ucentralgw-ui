@@ -1,6 +1,6 @@
 {
   "name": "ucentral-client",
-  "version": "2.9.0(3)",
+  "version": "2.9.0(4)",
   "description": "",
   "private": true,
   "main": "index.tsx",
