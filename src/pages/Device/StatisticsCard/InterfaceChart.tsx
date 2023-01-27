@@ -45,21 +45,21 @@ const InterfaceChart = ({ data }: Props) => {
   const points = {
     labels: data.recorded.map((recorded) => new Date(recorded * 1000).toLocaleTimeString()),
     datasets: [
-        {
-          // Real 'Tx', but shown as 'Rx'
-          label: 'Tx',
-          data: data.rx.map((tx) => Math.floor((tx / factor) * 100) / 100),
-          borderColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
-          backgroundColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
-        },
-        {
-          // Real 'Rx', but shown as 'Tx'
-          label: 'Rx',
-          data: data.tx.map((rx) => Math.floor((rx / factor) * 100) / 100),
-          borderColor: colorMode === 'light' ? '#48BB78' : '#9AE6B4', // green-400 - green-200
-          backgroundColor: colorMode === 'light' ? '#48BB78' : '#9AE6B4', // green-400 - green-200
-        },
-      ],
+      {
+        // Real 'Tx', but shown as 'Rx'
+        label: 'Tx',
+        data: data.rx.map((tx) => (Math.floor((tx / factor) * 100) / 100).toFixed(2)),
+        borderColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
+        backgroundColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
+      },
+      {
+        // Real 'Rx', but shown as 'Tx'
+        label: 'Rx',
+        data: data.tx.map((rx) => (Math.floor((rx / factor) * 100) / 100).toFixed(2)),
+        borderColor: colorMode === 'light' ? '#48BB78' : '#9AE6B4', // green-400 - green-200
+        backgroundColor: colorMode === 'light' ? '#48BB78' : '#9AE6B4', // green-400 - green-200
+      },
+    ],
   };
 
   return (
