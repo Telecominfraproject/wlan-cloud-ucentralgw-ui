@@ -70,7 +70,13 @@ export const useUpdateDeviceFirmware = ({ serialNumber, onClose }: { serialNumbe
 
   return useMutation(
     ({ keepRedirector, uri, signature }: { keepRedirector: boolean; uri: string; signature?: string }) =>
-      axiosGw.post(`device/${serialNumber}/upgrade`, { serialNumber, when: 0, keepRedirector, uri, signature }),
+      axiosGw.post(`device/${serialNumber}/upgrade${signature ? `?FWsignature=${signature}` : ''}`, {
+        serialNumber,
+        when: 0,
+        keepRedirector,
+        uri,
+        signature,
+      }),
     {
       onSuccess: () => {
         toast({
