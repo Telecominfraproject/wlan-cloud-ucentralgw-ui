@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';
 
@@ -160,6 +160,11 @@ export type DeviceStatistics = {
       };
     };
   };
+  gps?: {
+    elevation: string;
+    latitude: string;
+    longitude: string;
+  };
   version?: number;
 };
 const getLastStats = (serialNumber?: string) =>
@@ -175,7 +180,7 @@ export const useGetDeviceLastStats = ({
   onError?: (e: AxiosError) => void;
 }) =>
   useQuery(['device', serialNumber, 'last-statistics'], () => getLastStats(serialNumber), {
-    enabled: serialNumber !== undefined && serialNumber !== '' && false,
+    enabled: serialNumber !== undefined && serialNumber !== '',
     staleTime: 1000 * 60,
     onError,
   });
@@ -195,24 +200,12 @@ export const useGetDeviceNewestStats = ({
   serialNumber?: string;
   limit: number;
   onError?: (e: AxiosError) => void;
-}) => {
-  const queryClient = useQueryClient();
-
-  return useQuery(['deviceStatistics', serialNumber, 'newest', { limit }], getNewestStats(limit, serialNumber), {
+}) =>
+  useQuery(['deviceStatistics', serialNumber, 'newest', { limit }], getNewestStats(limit, serialNumber), {
     enabled: serialNumber !== undefined && serialNumber !== '',
     staleTime: 1000 * 60,
-    onSuccess: (response) => {
-      const entry = response.data[0];
-      // If we have a valid entry, we prefill lastStats, if not we trigger a fetch of the last statistics
-      if (entry) {
-        queryClient.setQueryData(['device', serialNumber, 'last-statistics'], entry.data);
-      } else {
-        queryClient.fetchQuery(['device', serialNumber, 'last-statistics']);
-      }
-    },
     onError,
   });
-};
 
 const getOuis = (macs?: string[]) => async () =>
   axiosGw.get(`/ouis?macList=${macs?.join(',')}`).then((response) => response.data) as Promise<{

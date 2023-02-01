@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Flex, Grid, GridItem, Heading, Image, Tag } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Heading, Image, Tag } from '@chakra-ui/react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
+import LocationDisplayButton from './LocationDisplayButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
@@ -90,11 +91,12 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               {!getDevice.data?.locale || getDevice.data?.locale === '' ? (
                 '-'
               ) : (
-                <>
+                <Box mr={2}>
                   <ReactCountryFlag style={ICON_STYLE} countryCode={getDevice.data.locale} svg />
                   {COUNTRY_LIST.find(({ value }) => value === getDevice.data.locale)?.label}
-                </>
+                </Box>
               )}
+              <LocationDisplayButton serialNumber={serialNumber} />
             </GridItem>
             <GridItem colSpan={1} alignContent="center" alignItems="center">
               <Heading size="sm">{t('analytics.last_contact')}:</Heading>

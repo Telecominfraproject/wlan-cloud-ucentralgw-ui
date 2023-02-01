@@ -38,7 +38,7 @@ const ViewLastStatsModal = ({ serialNumber }: Props) => {
     if (getLastStats.data) {
       setValue(JSON.stringify(getLastStats.data, null, 2));
     }
-  }, [getLastStats.data]);
+  }, [getLastStats.data, isOpen]);
   return (
     <>
       <Tooltip label={t('statistics.last_stats')}>
