@@ -100,6 +100,7 @@ const SortableDataTable: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
+  const hoveredRowBg = useColorModeValue('gray.100', 'gray.600');
   const textColor = useColorModeValue('gray.700', 'white');
   const getPageSize = () => {
     const saved = saveSettingsId ? localStorage.getItem(saveSettingsId) : undefined;
@@ -223,7 +224,13 @@ const SortableDataTable: React.FC<Props> = ({
                 {page.map((row: Row) => {
                   prepareRow(row);
                   return (
-                    <Tr {...row.getRowProps()} key={uuid()}>
+                    <Tr
+                      {...row.getRowProps()}
+                      key={uuid()}
+                      _hover={{
+                        backgroundColor: hoveredRowBg,
+                      }}
+                    >
                       {
                         // @ts-ignore
                         row.cells.map((cell) => (

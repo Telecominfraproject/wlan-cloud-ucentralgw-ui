@@ -21,8 +21,8 @@ import axios from 'axios';
 import { FloppyDisk } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
+import { Modal } from '../../../../components/Modals/Modal';
 import { LoadingOverlay } from 'components/LoadingOverlay';
-import { Modal } from 'components/Modals/Modal';
 import { useGetSystemLogLevelNames, useGetSystemLogLevels, useUpdateSystemLogLevels } from 'hooks/Network/System';
 
 type Props = {
