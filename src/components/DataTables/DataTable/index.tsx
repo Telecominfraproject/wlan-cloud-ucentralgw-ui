@@ -53,6 +53,7 @@ export type DataTableProps = {
   obj?: string;
   sortBy?: { id: string; desc: boolean }[];
   hiddenColumns?: string[];
+  hideEmptyListText?: boolean;
   hideControls?: boolean;
   minHeight?: string | number;
   fullScreen?: boolean;
@@ -77,6 +78,7 @@ const _DataTable = ({
   sortBy,
   hiddenColumns,
   hideControls,
+  hideEmptyListText,
   count,
   setPageInfo,
   isManual,
@@ -86,6 +88,7 @@ const _DataTable = ({
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
   const textColor = useColorModeValue('gray.700', 'white');
+  const hoveredRowBg = useColorModeValue('gray.100', 'gray.600');
   const getPageSize = () => {
     try {
       if (showAllRows) return 1000000;
@@ -142,6 +145,10 @@ const _DataTable = ({
     usePagination,
   ) as TableInstanceWithHooks<object>;
 
+  const handleGoToPage = (newPage: number) => {
+    if (saveSettingsId) localStorage.setItem(`${saveSettingsId}.page`, String(newPage));
+    gotoPage(newPage);
+  };
   const handleNextPage = () => {
     nextPage();
     if (saveSettingsId) localStorage.setItem(`${saveSettingsId}.page`, String(pageIndex + 1));
@@ -256,7 +263,13 @@ const _DataTable = ({
                 {page.map((row: Row) => {
                   prepareRow(row);
                   return (
-                    <Tr {...row.getRowProps()} key={uuid()}>
+                    <Tr
+                      {...row.getRowProps()}
+                      key={uuid()}
+                      _hover={{
+                        backgroundColor: hoveredRowBg,
+                      }}
+                    >
                       {
                         // @ts-ignore
                         row.cells.map((cell) => (
@@ -288,7 +301,7 @@ const _DataTable = ({
               </Tbody>
             )}
           </Table>
-          {!isLoading && data.length === 0 && (
+          {!isLoading && data.length === 0 && !hideEmptyListText && (
             <Center>
               {obj ? (
                 <Heading size="md" pt={12}>
@@ -309,7 +322,7 @@ const _DataTable = ({
             <Tooltip label={t('table.first_page')}>
               <IconButton
                 aria-label="Go to first page"
-                onClick={() => gotoPage(0)}
+                onClick={() => handleGoToPage(0)}
                 isDisabled={!canPreviousPage}
                 icon={<ArrowLeftIcon h={3} w={3} />}
                 mr={4}
@@ -347,7 +360,7 @@ const _DataTable = ({
                   max={pageOptions.length}
                   onChange={(_: unknown, numberValue: number) => {
                     const newPage = numberValue ? numberValue - 1 : 0;
-                    gotoPage(newPage);
+                    handleGoToPage(newPage);
                   }}
                   defaultValue={pageIndex + 1}
                 >
@@ -386,7 +399,7 @@ const _DataTable = ({
             <Tooltip label={t('table.last_page')}>
               <IconButton
                 aria-label="Go to last page"
-                onClick={() => gotoPage(pageCount - 1)}
+                onClick={() => handleGoToPage(pageCount - 1)}
                 isDisabled={!canNextPage}
                 icon={<ArrowRightIcon h={3} w={3} />}
                 ml={4}

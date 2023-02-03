@@ -19,11 +19,11 @@ import {
 import { MultiValue, Select } from 'chakra-react-select';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import FormattedDate from '../../../components/InformationDisplays/FormattedDate';
 import SystemLoggingButton from './LoggingButton';
 import SystemCertificatesTable from './SystemCertificatesTable';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { compactSecondsToDetailed } from 'helpers/dateFormatting';
 import { EndpointApiResponse } from 'hooks/Network/Endpoints';
 import { useGetSubsystems, useGetSystemInfo, useReloadSubsystems } from 'hooks/Network/System';
@@ -65,7 +65,7 @@ const SystemTile = ({ endpoint, token }: Props) => {
 
   return (
     <>
-      <Card>
+      <Card variant="widget">
         <Box display="flex" mb={2}>
           <Heading pt={0}>{endpoint.type}</Heading>
           <Spacer />
@@ -73,7 +73,7 @@ const SystemTile = ({ endpoint, token }: Props) => {
           <Button
             mt={1}
             minWidth="112px"
-            colorScheme="gray"
+            colorScheme="blue"
             rightIcon={<ArrowsClockwise />}
             onClick={refresh}
             isLoading={isFetchingSystem || isFetchingSubsystems}
@@ -179,7 +179,7 @@ const SystemTile = ({ endpoint, token }: Props) => {
                   ml={2}
                   onClick={handleReloadClick}
                   icon={<ArrowsClockwise size={20} />}
-                  colorScheme="gray"
+                  colorScheme="blue"
                   isLoading={isReloading}
                   isDisabled={subs.length === 0}
                 />
