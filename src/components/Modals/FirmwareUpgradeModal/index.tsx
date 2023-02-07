@@ -57,7 +57,8 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
     upgrade({
       keepRedirector: isRedirector,
       uri,
-      signature: device?.restrictedDevice ? ref.current?.values?.signature : undefined,
+      signature:
+        device?.restrictedDevice && !device?.restrictionDetails?.developer ? ref.current?.values?.signature : undefined,
     });
   };
 
@@ -89,7 +90,7 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
                 </FormLabel>
                 <Switch isChecked={isRedirector} onChange={toggle} borderRadius="15px" size="lg" />
               </FormControl>
-              {device?.restrictedDevice && (
+              {device?.restrictedDevice && !device?.restrictionDetails?.developer && (
                 <Formik<{ signature?: string }>
                   innerRef={ref as Ref<FormikProps<{ signature?: string | undefined }>> | undefined}
                   key={formKey}

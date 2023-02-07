@@ -76,7 +76,7 @@ export const ScriptModal = ({ device, modalProps }: ScriptModalProps) => {
         when: 0,
         deferred: data.deferred,
         timeout: data.timeout,
-        signature: device?.restrictedDevice ? data.signature : undefined,
+        signature: device?.restrictedDevice && !device?.restrictionDetails?.developer ? data.signature : undefined,
         uri: data.defaultUploadURI && data.defaultUploadURI?.length > 0 ? data.defaultUploadURI : undefined,
         scriptId: selectedScript,
         type: data.type,

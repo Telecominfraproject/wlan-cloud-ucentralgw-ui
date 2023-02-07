@@ -630,6 +630,8 @@
 		"one": "Gerät",
 		"reassign_already_owned": "Geräte neu zuweisen, die bereits vorhanden sind und einem anderen Unternehmen/Veranstaltungsort/Abonnenten gehören?",
 		"restricted": "Beschränkt",
+		"restricted_overriden": "Dies ist ein eingeschränktes Gerät, aber es befindet sich im Entwicklungsmodus. Alle Einschränkungen werden derzeit ignoriert",
+		"restrictions_overriden_title": "Dev-Modus",
 		"sanity": "Gesundheit",
 		"start_import": "Geräteimport starten",
 		"test_batch": "Testen Sie Importdaten",

@@ -183,7 +183,9 @@ const CustomScriptForm = ({
             <>
               <Flex>
                 <Box>
-                  {device?.restrictedDevice && <SignatureField name="signature" isDisabled={areFieldsDisabled} />}
+                  {device?.restrictedDevice && !device?.restrictionDetails?.developer && (
+                    <SignatureField name="signature" isDisabled={areFieldsDisabled} />
+                  )}
                 </Box>
               </Flex>
               <SelectField
