@@ -630,6 +630,8 @@
 		"one": "Dispositivo",
 		"reassign_already_owned": "Reatribuir dispositivos que já existem e são de propriedade de outra entidade/local/assinante?",
 		"restricted": "Restrito",
+		"restricted_overriden": "Este é um dispositivo restrito, mas está em modo de desenvolvimento. Todas as restrições são atualmente ignoradas",
+		"restrictions_overriden_title": "Modo de desenvolvedor",
 		"sanity": "Sanidade",
 		"start_import": "Iniciar importação de dispositivos",
 		"test_batch": "Dados de importação de teste",

@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { Box, Flex, Heading, ListItem, Text, UnorderedList } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  ListItem,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Text,
+  Tooltip,
+  UnorderedList,
+} from '@chakra-ui/react';
 import { LockSimple, LockSimpleOpen } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'components/Containers/Card';
@@ -20,7 +31,7 @@ const RestrictionsCard = ({ serialNumber }: Props) => {
     ssh: 'SSH',
     rtty: 'RTTY',
     tty: t('restrictions.tty'),
-    developer: t('restrictions.developer'),
+    // developer: t('restrictions.developer'),
     upgrade: t('restrictions.signed_upgrade'),
     commands: t('restrictions.gw_commands'),
   } as { [key: string]: string };
@@ -38,27 +49,52 @@ const RestrictionsCard = ({ serialNumber }: Props) => {
     return restrictedKeys.map(([k]) => <ListItem key={k}>{LABELS[k]}</ListItem>);
   };
 
+  const isMissingSigningInfo =
+    !restrictions.key_info ||
+    (!restrictions.key_info.algo && !restrictions.key_info.vendor) ||
+    (restrictions.key_info.algo.length === 0 && restrictions.key_info.vendor.length === 0);
+
   return (
     <Card mb={4}>
       <CardHeader>
-        <Heading size="md">{t('restrictions.title')}</Heading>
+        <Heading size="md" my="auto" mr={2}>
+          {t('restrictions.title')}
+        </Heading>
+        {getDevice.data?.restrictionDetails?.developer ? (
+          <Tooltip label={t('devices.restricted_overriden')} hasArrow>
+            <Tag size="lg" colorScheme="green">
+              <TagLeftIcon boxSize="18px" as={LockSimpleOpen} />
+              <TagLabel>{t('devices.restrictions_overriden_title')}</TagLabel>
+            </Tag>
+          </Tooltip>
+        ) : null}
       </CardHeader>
       <CardBody p={0} display="block">
         <Flex mt={2}>
-          <Heading size="sm" mr={2}>
+          <Heading size="sm" mr={2} my="auto">
             {t('restrictions.countries')}:
           </Heading>
-          <Text>{restrictions.country.join(', ')}</Text>
+          <Text my="auto">
+            {restrictions.country?.length === 0 ? t('common.all') : restrictions.country.join(', ')}
+          </Text>
         </Flex>
-        <Heading size="sm" mt={2}>
-          {t('restrictions.key_verification')}
-        </Heading>
-        <UnorderedList>
+        <Flex mt={2}>
+          <Heading size="sm" mt={2} my="auto">
+            {t('restrictions.key_verification')} {isMissingSigningInfo ? ':' : ''}
+          </Heading>
+          {isMissingSigningInfo ? (
+            <Text my="auto" ml={2}>
+              {t('common.none')}
+            </Text>
+          ) : null}
+        </Flex>
+        <UnorderedList hidden={isMissingSigningInfo}>
           <ListItem>
-            {t('controller.wifi.vendor')}: {restrictions.key_info?.vendor}
+            {t('controller.wifi.vendor')}:{' '}
+            {restrictions.key_info?.vendor?.length > 0 ? restrictions.key_info?.vendor : '-'}
           </ListItem>
           <ListItem>
-            {t('restrictions.algo')}: {restrictions.key_info?.algo}
+            {t('restrictions.algo')}: {restrictions.key_info?.algo?.length > 0 ? restrictions.key_info?.algo : '-'}
           </ListItem>
         </UnorderedList>
         <Flex mt={2}>

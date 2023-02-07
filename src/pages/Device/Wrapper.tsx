@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Heart, HeartBreak, LockSimple, WifiHigh, WifiSlash } from 'phosphor-react';
+import { Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import DeviceDetails from './Details';
@@ -59,6 +59,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const traceModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
+  // Sticky-top styles
+  const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
+  const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
 
@@ -102,9 +105,28 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     );
   }, [getStatus.data, getHealth.data]);
 
-  // Sticky-top styles
-  const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
-  const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
+  const restrictedTag = React.useMemo(() => {
+    if (!getDevice.data || !getDevice.data.restrictedDevice) return null;
+
+    if (getDevice.data.restrictionDetails?.developer)
+      return (
+        <Tooltip label={t('devices.restricted_overriden')} hasArrow>
+          <Tag size="lg" colorScheme="green">
+            <TagLeftIcon boxSize="18px" as={LockSimpleOpen} />
+            <TagLabel>
+              {t('devices.restricted')} {isCompact ? '' : '(Dev Mode)'}
+            </TagLabel>
+          </Tag>
+        </Tooltip>
+      );
+
+    return (
+      <Tag size="lg" colorScheme="red">
+        <TagLeftIcon boxSize="18px" as={LockSimple} />
+        <TagLabel>{t('devices.restricted')}</TagLabel>
+      </Tag>
+    );
+  }, [getDevice.data, isCompact]);
 
   const refresh = () => {
     getDevice.refetch();
@@ -121,12 +143,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
               <Heading size="md">{serialNumber}</Heading>
               {connectedTag}
               {healthTag}
-              {getDevice.data?.restrictedDevice && (
-                <Tag size="lg" colorScheme="gray">
-                  <TagLeftIcon boxSize="18px" as={LockSimple} />
-                  <TagLabel>{t('devices.restricted')}</TagLabel>
-                </Tag>
-              )}
+              {restrictedTag}
             </HStack>
             <Spacer />
             <HStack spacing={2}>
@@ -175,12 +192,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                 <Heading size="md">{serialNumber}</Heading>
                 {connectedTag}
                 {healthTag}
-                {getDevice.data?.restrictedDevice && (
-                  <Tag size="lg" colorScheme="gray">
-                    <TagLeftIcon boxSize="18px" as={LockSimple} />
-                    <TagLabel>{t('devices.restricted')}</TagLabel>
-                  </Tag>
-                )}
+                {restrictedTag}
               </HStack>
               <Spacer />
               <HStack spacing={2}>
