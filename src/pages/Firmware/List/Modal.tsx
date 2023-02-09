@@ -191,6 +191,7 @@ const FirmwareDetailsModal = ({ modalProps, firmware }: Props) => {
               ml={2}
             />
             {isEditingDescription && (
+              // @ts-ignore
               <SaveButton onClick={onSaveDescription} ml={2} isCompact size="sm" isLoading={updateFirmware.isLoading} />
             )}
           </FormLabel>
@@ -202,48 +203,51 @@ const FirmwareDetailsModal = ({ modalProps, firmware }: Props) => {
             isDisabled={!isEditingDescription}
           />
         </FormControl>
-        <FormControl>
-          <FormLabel>
-            {t('common.notes')}{' '}
-            <Popover trigger="click" placement="auto">
-              {({ onClose }) => (
-                <>
-                  <PopoverTrigger>
-                    <IconButton
-                      aria-label={`${t('crud.add')} ${t('common.note')}`}
-                      size="sm"
-                      icon={<Plus size={20} />}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent w={breakpoint === 'base' ? 'calc(80vw)' : '500px'}>
-                    <PopoverArrow />
-                    <PopoverCloseButton alignContent="center" mt={1} />
-                    <PopoverHeader display="flex">{t('profile.add_new_note')}</PopoverHeader>
-                    <PopoverBody>
-                      <Box>
-                        <Textarea h="100px" placeholder="Your new note" value={newNote} onChange={onNoteChange} />
-                      </Box>
-                      <Center mt={2}>
-                        <Button
-                          colorScheme="blue"
-                          isDisabled={newNote.length === 0}
-                          onClick={onNoteSubmit(onClose)}
-                          isLoading={updateFirmware.isLoading}
-                        >
-                          {t('crud.add')}
-                        </Button>
-                      </Center>
-                    </PopoverBody>
-                  </PopoverContent>
-                </>
-              )}
-            </Popover>
-          </FormLabel>
-          <Box overflowX="auto" overflowY="auto" maxH="400px">
-            <DataTable columns={columns as Column<object>[]} data={notes} obj={t('common.notes')} minHeight="200px" />
-          </Box>
-        </FormControl>
       </SimpleGrid>
+      <FormControl mt={2}>
+        <FormLabel>
+          {t('common.notes')}{' '}
+          <Popover trigger="click" placement="auto">
+            {({ onClose }) => (
+              <>
+                <PopoverTrigger>
+                  <IconButton aria-label={`${t('crud.add')} ${t('common.note')}`} size="sm" icon={<Plus size={20} />} />
+                </PopoverTrigger>
+                <PopoverContent w={breakpoint === 'base' ? 'calc(80vw)' : '500px'}>
+                  <PopoverArrow />
+                  <PopoverCloseButton alignContent="center" mt={1} />
+                  <PopoverHeader display="flex">{t('profile.add_new_note')}</PopoverHeader>
+                  <PopoverBody>
+                    <Box>
+                      <Textarea h="100px" placeholder="Your new note" value={newNote} onChange={onNoteChange} />
+                    </Box>
+                    <Center mt={2}>
+                      <Button
+                        colorScheme="blue"
+                        isDisabled={newNote.length === 0}
+                        onClick={onNoteSubmit(onClose)}
+                        isLoading={updateFirmware.isLoading}
+                      >
+                        {t('crud.add')}
+                      </Button>
+                    </Center>
+                  </PopoverBody>
+                </PopoverContent>
+              </>
+            )}
+          </Popover>
+        </FormLabel>
+      </FormControl>
+      <Box overflowX="auto" overflowY="auto" maxH="400px" mb={4}>
+        <DataTable
+          columns={columns as Column<object>[]}
+          data={notes}
+          obj={t('common.notes')}
+          minHeight="200px"
+          showAllRows
+          hideControls
+        />
+      </Box>
     </Modal>
   );
 };

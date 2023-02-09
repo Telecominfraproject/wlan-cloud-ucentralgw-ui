@@ -685,6 +685,13 @@
 		"update_success": "Entité mise à jour !",
 		"venues_under_root": "Les lieux ne peuvent pas être créés directement sous l'entité racine"
 	},
+	"firmware": {
+		"db_update_warning": "Cette opération se fait automatiquement quotidiennement sans avoir besoin d'utiliser cette mise à jour manuelle. La mise à jour de cette base de données peut prendre jusqu'à 25 minutes",
+		"last_db_update_modal": "Base de données du micrologiciel",
+		"last_db_update_title": "Base de données",
+		"start_db_update": "Démarrer la mise à jour de la base de données",
+		"started_db_update": "Mise à jour de la base de données démarrée, cette opération devrait prendre jusqu'à 25 minutes"
+	},
 	"footer": {
 		"powered_by": "Alimenté par",
 		"version": "Version"
@@ -1128,6 +1135,7 @@
 		"upgrade_all_devices": "Mettre à niveau tous les appareils vers le dernier micrologiciel",
 		"upgrade_all_devices_error": "Erreur lors de la mise à jour des appareils : {{e}}",
 		"upgrade_all_devices_success": "La mise à niveau des appareils a démarré avec succès !",
+		"upgrade_options_available": "Voici toutes les révisions disponibles, veuillez sélectionner celle vers laquelle vous souhaitez que TOUS les appareils de ce lieu soient mis à niveau",
 		"use_existing": "Utiliser l'existant",
 		"use_existing_contacts": "Utiliser les contacts existants",
 		"use_this_contact": "Utilisez ce contact"

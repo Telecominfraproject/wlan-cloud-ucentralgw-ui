@@ -685,6 +685,13 @@
 		"update_success": "Entität aktualisiert!",
 		"venues_under_root": "Veranstaltungsorte können nicht direkt unter der Root-Entität erstellt werden"
 	},
+	"firmware": {
+		"db_update_warning": "Dieser Vorgang wird täglich automatisch durchgeführt, ohne dass dieses manuelle Update verwendet werden muss. Die Aktualisierung dieser Datenbank kann bis zu 25 Minuten dauern",
+		"last_db_update_modal": "Firmware-Datenbank",
+		"last_db_update_title": "Datenbank",
+		"start_db_update": "Datenbankaktualisierung starten",
+		"started_db_update": "Datenbankaktualisierung gestartet, dieser Vorgang sollte bis zu 25 Minuten dauern"
+	},
 	"footer": {
 		"powered_by": "Unterstützt von",
 		"version": "Ausführung"
@@ -1128,6 +1135,7 @@
 		"upgrade_all_devices": "Aktualisieren Sie alle Geräte auf die neueste Firmware",
 		"upgrade_all_devices_error": "Fehler beim Aktualisieren von Geräten: {{e}}",
 		"upgrade_all_devices_success": "Upgrade von Geräten erfolgreich gestartet!",
+		"upgrade_options_available": "Hier sind alle verfügbaren Revisionen, bitte wählen Sie diejenige aus, auf die ALLE Geräte dieses Veranstaltungsortes aktualisiert werden sollen",
 		"use_existing": "Benutze existierendes",
 		"use_existing_contacts": "Verwenden Sie vorhandene Kontakte",
 		"use_this_contact": "Verwenden Sie diesen Kontakt"
