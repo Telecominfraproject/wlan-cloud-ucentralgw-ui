@@ -16,6 +16,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import FirmwareDetailsModal from './Modal';
+import UpdateDbButton from './UpdateDbButton';
 import UriCell from './UriCell';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { CardBody } from 'components/Containers/Card/CardBody';
@@ -143,6 +144,7 @@ const FirmwareListTable = () => {
           </Box>
           <Text>{t('controller.firmware.show_dev_releases')}</Text>
           <Switch isChecked={showDevFirmware} onChange={toggle} size="lg" />
+          <UpdateDbButton />
           <RefreshButton
             onClick={() => {
               getDeviceTypes.refetch();

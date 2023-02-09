@@ -685,6 +685,13 @@
 		"update_success": "¡Entidad actualizada!",
 		"venues_under_root": "Los lugares no se pueden crear directamente bajo la entidad raíz"
 	},
+	"firmware": {
+		"db_update_warning": "Esta operación se realiza automáticamente todos los días de forma automática sin necesidad de utilizar esta actualización manual. La actualización de esta base de datos puede tardar hasta 25 minutos",
+		"last_db_update_modal": "Base de datos de firmware",
+		"last_db_update_title": "Base de datos",
+		"start_db_update": "Iniciar actualización de la base de datos",
+		"started_db_update": "Actualización de la base de datos iniciada, esta operación debería tardar hasta 25 minutos en completarse"
+	},
 	"footer": {
 		"powered_by": "energizado por",
 		"version": "Versión"
@@ -1128,6 +1135,7 @@
 		"upgrade_all_devices": "Actualice todos los dispositivos al firmware más reciente",
 		"upgrade_all_devices_error": "Error al actualizar dispositivos: {{e}}",
 		"upgrade_all_devices_success": "¡Comenzó con éxito la actualización de dispositivos!",
+		"upgrade_options_available": "Aquí están todas las revisiones disponibles, seleccione la que desea que TODOS los dispositivos de este lugar se actualicen",
 		"use_existing": "Utilizar existente",
 		"use_existing_contacts": "Usar contactos existentes",
 		"use_this_contact": "Usa este contacto"

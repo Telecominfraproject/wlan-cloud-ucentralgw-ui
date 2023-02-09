@@ -32,7 +32,7 @@ export const useGetAvailableFirmware = ({ deviceType }: { deviceType: string }) 
   const { t } = useTranslation();
   const toast = useToast();
 
-  return useQuery(['firmware'], () => getAllAvailableFirmware(deviceType), {
+  return useQuery(['get-device-profile'], () => getAllAvailableFirmware(deviceType), {
     enabled: deviceType !== '',
     onError: (e: AxiosError) => {
       if (!toast.isActive('firmware-fetching-error'))
@@ -242,3 +242,23 @@ export const useGetFirmwareDashboard = () =>
     keepPreviousData: true,
     refetchInterval: 30000,
   });
+
+const getLastDbUpdate = async () =>
+  axiosFms.get(`firmwares?updateTimeOnly=true`).then((response) => response.data as { lastUpdateTime: number });
+export const useGetFirmwareDbUpdate = () =>
+  useQuery(['firmware', 'db'], getLastDbUpdate, {
+    keepPreviousData: true,
+    staleTime: 30 * 1000,
+  });
+
+const updateDb = async () => axiosFms.put(`firmwares?update=true`);
+
+export const useUpdateFirmwareDb = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(updateDb, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['firmware', 'db']);
+    },
+  });
+};

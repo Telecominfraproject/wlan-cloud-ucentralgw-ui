@@ -685,6 +685,13 @@
 		"update_success": "Entity updated!",
 		"venues_under_root": "Venues cannot be created directly under the root entity"
 	},
+	"firmware": {
+		"db_update_warning": "This operation is done daily automatically without need to use this manual update. Updating this database can take up to 25 minutes",
+		"last_db_update_modal": "Firmware Database",
+		"last_db_update_title": "Database",
+		"start_db_update": "Start Database Update",
+		"started_db_update": "Started database update, this operation should take up to 25 minutes to complete"
+	},
 	"footer": {
 		"powered_by": "Powered By",
 		"version": "Version"
@@ -1128,6 +1135,7 @@
 		"upgrade_all_devices": "Upgrade All Devices to Latest Firmware",
 		"upgrade_all_devices_error": "Error upgrading devices: {{e}}",
 		"upgrade_all_devices_success": "Successfully started upgrading devices!",
+		"upgrade_options_available": "Here are all available revisions, please select the one you want ALL of this venue's devices to be upgrade to",
 		"use_existing": "Use Existing",
 		"use_existing_contacts": "Use Existing Contacts",
 		"use_this_contact": "Use this contact"
