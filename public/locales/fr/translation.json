@@ -1132,7 +1132,7 @@
 		"title": "Les lieux",
 		"update_all_devices": "Mettre à jour toutes les configurations de périphérique",
 		"update_success": "Lieu mis à jour !",
-		"upgrade_all_devices": "Mettre à niveau tous les appareils vers le dernier micrologiciel",
+		"upgrade_all_devices": "Mettre à niveau le micrologiciel de tous les appareils",
 		"upgrade_all_devices_error": "Erreur lors de la mise à jour des appareils : {{e}}",
 		"upgrade_all_devices_success": "La mise à niveau des appareils a démarré avec succès !",
 		"upgrade_options_available": "Voici toutes les révisions disponibles, veuillez sélectionner celle vers laquelle vous souhaitez que TOUS les appareils de ce lieu soient mis à niveau",

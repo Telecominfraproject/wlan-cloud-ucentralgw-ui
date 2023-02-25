@@ -1132,7 +1132,7 @@
 		"title": "Locais",
 		"update_all_devices": "Atualizar todas as configurações do dispositivo",
 		"update_success": "Local atualizado!",
-		"upgrade_all_devices": "Atualize todos os dispositivos para o firmware mais recente",
+		"upgrade_all_devices": "Atualize o firmware de todos os dispositivos",
 		"upgrade_all_devices_error": "Erro ao atualizar dispositivos: {{e}}",
 		"upgrade_all_devices_success": "Atualização de dispositivos iniciada com sucesso!",
 		"upgrade_options_available": "Aqui estão todas as revisões disponíveis, selecione aquela para a qual você deseja que TODOS os dispositivos deste local sejam atualizados",

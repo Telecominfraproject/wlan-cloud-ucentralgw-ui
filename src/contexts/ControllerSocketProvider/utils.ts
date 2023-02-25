@@ -52,6 +52,8 @@ type ConnectionStatisticsMessage = {
       numberOfDevices: number;
       numberOfConnectingDevices: number;
       averageConnectedTime: number;
+      tx: number;
+      rx: number;
     };
   };
   serialNumbers?: undefined;
@@ -85,6 +87,8 @@ export type SocketWebSocketNotificationData =
         numberOfDevices: number;
         numberOfConnectingDevices: number;
         averageConnectedTime: number;
+        rx: number;
+        tx: number;
       };
       serialNumber?: undefined;
       log?: undefined;
