@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Flex, Heading, Tooltip, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { compactSecondsToDetailed, minimalSecondsToDetailed } from 'helpers/dateFormatting';
+import { bytesString } from 'helpers/stringHelper';
 import { useGetDevicesStats } from 'hooks/Network/Devices';
 
 const SidebarDevices = () => {
@@ -48,7 +49,7 @@ const SidebarDevices = () => {
   if (!getStats.data) return null;
 
   return (
-    <VStack spacing={4}>
+    <VStack mb={-1}>
       <Flex flexDir="column" textAlign="center">
         <Heading size="md">{getStats.data.connectedDevices}</Heading>
         <Heading size="xs">
@@ -56,6 +57,16 @@ const SidebarDevices = () => {
         </Heading>
         <Heading size="xs" mt={1} fontStyle="italic" fontWeight="normal" color="gray.400">
           ({getStats.data.connectingDevices} {t('controller.devices.connecting')})
+        </Heading>
+        <Heading
+          size="xs"
+          mt={1}
+          fontStyle="italic"
+          fontWeight="normal"
+          color="gray.400"
+          hidden={getStats.data.rx === undefined || getStats.data.tx === undefined}
+        >
+          Rx: {bytesString(getStats.data.rx)}, Tx: {bytesString(getStats.data.tx)}
         </Heading>
         <Tooltip hasArrow label={compactSecondsToDetailed(getStats.data.averageConnectionTime, t)}>
           <Heading size="md" textAlign="center" mt={2}>

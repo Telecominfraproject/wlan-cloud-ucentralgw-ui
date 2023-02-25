@@ -1132,7 +1132,7 @@
 		"title": "Veranstaltungsorte",
 		"update_all_devices": "Alle Gerätekonfigurationen aktualisieren",
 		"update_success": "Veranstaltungsort aktualisiert!",
-		"upgrade_all_devices": "Aktualisieren Sie alle Geräte auf die neueste Firmware",
+		"upgrade_all_devices": "Aktualisieren Sie die Firmware aller Geräte",
 		"upgrade_all_devices_error": "Fehler beim Aktualisieren von Geräten: {{e}}",
 		"upgrade_all_devices_success": "Upgrade von Geräten erfolgreich gestartet!",
 		"upgrade_options_available": "Hier sind alle verfügbaren Revisionen, bitte wählen Sie diejenige aus, auf die ALLE Geräte dieses Veranstaltungsortes aktualisiert werden sollen",

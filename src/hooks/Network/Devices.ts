@@ -165,7 +165,10 @@ export type DevicesStats = {
   averageConnectionTime: number;
   connectedDevices: number;
   connectingDevices: number;
+  tx: number;
+  rx: number;
 };
+
 const getInitialStats = async () =>
   axiosGw.get(`devices?connectionStatistics=true`).then(({ data }: { data: DevicesStats }) => data);
 export const useGetDevicesStats = ({ onError }: { onError?: (e: AxiosError) => void }) => {

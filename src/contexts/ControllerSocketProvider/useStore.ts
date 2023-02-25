@@ -149,6 +149,8 @@ export const useControllerStore = create<ControllerStoreState>((set, get) => ({
               connectedDevices: msg.statistics.numberOfDevices,
               connectingDevices: msg.statistics.numberOfConnectingDevices,
               averageConnectionTime: msg.statistics.averageConnectedTime,
+              tx: msg.statistics.tx,
+              rx: msg.statistics.rx,
             },
             queryClient,
           );

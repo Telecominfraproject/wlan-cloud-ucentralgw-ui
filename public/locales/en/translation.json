@@ -1132,7 +1132,7 @@
 		"title": "Venues",
 		"update_all_devices": "Update All Device Configurations",
 		"update_success": "Venue updated!",
-		"upgrade_all_devices": "Upgrade All Devices to Latest Firmware",
+		"upgrade_all_devices": "Upgrade All Devices Firmware",
 		"upgrade_all_devices_error": "Error upgrading devices: {{e}}",
 		"upgrade_all_devices_success": "Successfully started upgrading devices!",
 		"upgrade_options_available": "Here are all available revisions, please select the one you want ALL of this venue's devices to be upgrade to",

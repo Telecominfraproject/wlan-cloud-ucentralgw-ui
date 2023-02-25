@@ -1132,7 +1132,7 @@
 		"title": "Sedes",
 		"update_all_devices": "Actualizar todas las configuraciones de dispositivos",
 		"update_success": "Lugar actualizado!",
-		"upgrade_all_devices": "Actualice todos los dispositivos al firmware más reciente",
+		"upgrade_all_devices": "Actualizar el firmware de todos los dispositivos",
 		"upgrade_all_devices_error": "Error al actualizar dispositivos: {{e}}",
 		"upgrade_all_devices_success": "¡Comenzó con éxito la actualización de dispositivos!",
 		"upgrade_options_available": "Aquí están todas las revisiones disponibles, seleccione la que desea que TODOS los dispositivos de este lugar se actualicen",
