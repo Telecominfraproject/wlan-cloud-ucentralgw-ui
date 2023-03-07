@@ -25,10 +25,10 @@ const UserTable = () => {
   const { isOpen: editOpen, onOpen: openEdit, onClose: closeEdit } = useDisclosure();
   const { data: users, refetch: refreshUsers, isFetching } = useGetUsers();
 
-  const openEditModal = (editUser: User) => {
+  const openEditModal = React.useCallback((editUser: User) => {
     setEditId(editUser.id);
     openEdit();
-  };
+  }, []);
 
   const memoizedActions = useCallback(
     (userActions: User) => (
@@ -99,7 +99,7 @@ const UserTable = () => {
     ];
     if (user?.userRole !== 'csr')
       baseColumns.push({
-        id: 'user',
+        id: 'actions',
         Header: t('common.actions'),
         Footer: '',
         accessor: 'Id',
@@ -139,14 +139,15 @@ const UserTable = () => {
         </CardHeader>
         <CardBody>
           <Box overflowX="auto" w="100%">
-            <DataTable
-              columns={columns as Column<object>[]}
+            <DataTable<User>
+              columns={columns}
               data={users ?? []}
               isLoading={isFetching}
               obj={t('users.title')}
               sortBy={[{ id: 'email', desc: false }]}
               hiddenColumns={hiddenColumns}
               fullScreen
+              onRowClick={openEditModal}
             />
           </Box>
         </CardBody>

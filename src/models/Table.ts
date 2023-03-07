@@ -20,6 +20,7 @@ export interface Column<T> {
   alwaysShow?: boolean;
   Footer?: string;
   accessor?: string;
+  stopPropagation?: boolean;
   disableSortBy?: boolean;
   hasPopover?: boolean;
   customMaxWidth?: string;
