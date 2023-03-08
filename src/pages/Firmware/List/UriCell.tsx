@@ -11,7 +11,15 @@ const UriCell = ({ uri }: Props) => {
 
   return (
     <Box display="flex">
-      <Button onClick={copy.onCopy} size="xs" colorScheme="teal" mr={2}>
+      <Button
+        onClick={(e) => {
+          copy.onCopy();
+          e.stopPropagation();
+        }}
+        size="xs"
+        colorScheme="teal"
+        mr={2}
+      >
         {copy.hasCopied ? `${t('common.copied')}!` : t('common.copy')}
       </Button>
       <Text my="auto">{uri}</Text>

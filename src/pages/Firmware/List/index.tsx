@@ -158,13 +158,14 @@ const FirmwareListTable = () => {
       <CardBody p={4}>
         <Box overflowX="auto" w="100%">
           <LoadingOverlay isLoading={getDeviceTypes.isFetching || getFirmware.isFetching}>
-            <DataTable
-              columns={columns as Column<object>[]}
+            <DataTable<Firmware>
+              columns={columns}
               saveSettingsId="firmware.table"
               data={getFirmware.data?.filter((firmw) => showDevFirmware || !firmw.revision.includes('devel')) ?? []}
               obj={t('analytics.firmware')}
               minHeight="200px"
               sortBy={[{ id: 'imageDate', desc: true }]}
+              onRowClick={(firmw) => handleViewDetailsClick(firmw)()}
             />
           </LoadingOverlay>
         </Box>

@@ -110,6 +110,18 @@ export const useDeleteCommand = () => {
   });
 };
 
+export const useGetSingleCommandHistory = ({ serialNumber, commandId }: { serialNumber: string; commandId: string }) =>
+  useQuery(
+    ['commands', serialNumber, commandId],
+    () =>
+      axiosGw
+        .get(`command/${commandId}?serialNumber=${serialNumber}`)
+        .then((response) => response.data as DeviceCommandHistory),
+    {
+      enabled: serialNumber !== undefined && serialNumber !== '' && commandId !== undefined && commandId !== '',
+    },
+  );
+
 export type EventQueueResponse = {
   UUID: string;
   attachFile: number;
@@ -245,6 +257,7 @@ export const useDeviceScript = ({ serialNumber }: { serialNumber: string }) => {
       queryClient.invalidateQueries(['commands', serialNumber]);
     },
     onError: (e) => {
+      queryClient.invalidateQueries(['commands', serialNumber]);
       if (axios.isAxiosError(e)) {
         toast({
           id: 'script-error',

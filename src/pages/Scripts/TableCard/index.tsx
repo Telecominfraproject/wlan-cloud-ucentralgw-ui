@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Box, Button, Heading, HStack, Spacer } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import ScriptTableActions from './Actions';
 import CreateScriptButton from './CreateButton';
 import useScriptsTable from './useScriptsTable';
@@ -21,6 +22,7 @@ type Props = {
 const ScriptTableCard = ({ onIdSelect }: Props) => {
   const { t } = useTranslation();
   const { query, hiddenColumns } = useScriptsTable();
+  const { id } = useParams();
 
   const dateCell = React.useCallback((date: number) => <FormattedDate date={date} />, []);
   const actionCell = React.useCallback(
@@ -108,8 +110,8 @@ const ScriptTableCard = ({ onIdSelect }: Props) => {
       </CardHeader>
       <CardBody>
         <Box w="100%" h="300px" overflowY="auto">
-          <DataTable
-            columns={columns as Column<object>[]}
+          <DataTable<Script>
+            columns={columns}
             saveSettingsId="apiKeys.profile.table"
             data={query.data ?? []}
             obj={t('script.other')}
@@ -118,6 +120,8 @@ const ScriptTableCard = ({ onIdSelect }: Props) => {
             hiddenColumns={hiddenColumns[0]}
             showAllRows
             hideControls
+            onRowClick={(script) => onIdSelect(script.id)}
+            isRowClickable={(script) => script.id !== id}
           />
         </Box>
       </CardBody>

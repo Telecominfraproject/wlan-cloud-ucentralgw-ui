@@ -35,7 +35,10 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
   const parsedData = React.useMemo(() => {
     if (!getStats.data && !getCustomStats.data) return undefined;
 
-    const data: Record<string, { tx: number[]; rx: number[]; recorded: number[]; maxRx: number; maxTx: number }> = {};
+    const data: Record<
+      string,
+      { tx: number[]; rx: number[]; recorded: number[]; maxRx: number; maxTx: number; removed?: boolean }
+    > = {};
     const memoryData = {
       used: [] as number[],
       buffered: [] as number[],
@@ -100,6 +103,18 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
               maxRx: rxDelta,
             };
           else {
+            if (data[inter.name] && !data[inter.name]?.removed && data[inter.name]?.recorded.length === 1) {
+              data[inter.name]?.tx.shift();
+              data[inter.name]?.rx.shift();
+              data[inter.name]?.recorded.shift();
+              // @ts-ignore
+              data[inter.name].maxRx = rxDelta;
+              // @ts-ignore
+              data[inter.name].maxTx = txDelta;
+              // @ts-ignore
+              data[inter.name].removed = true;
+            }
+
             data[inter.name]?.rx.push(rxDelta);
             data[inter.name]?.tx.push(txDelta);
             data[inter.name]?.recorded.push(stat.recorded);
