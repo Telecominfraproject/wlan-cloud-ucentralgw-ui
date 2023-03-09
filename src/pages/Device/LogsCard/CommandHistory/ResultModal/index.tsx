@@ -28,7 +28,7 @@ import { Modal } from 'components/Modals/Modal';
 import WifiScanResultDisplay from 'components/Modals/WifiScanModal/ResultDisplay';
 import { compactDate } from 'helpers/dateFormatting';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
-import { DeviceCommandHistory } from 'hooks/Network/Commands';
+import { DeviceCommandHistory, useGetSingleCommandHistory } from 'hooks/Network/Commands';
 import { WifiScanResult } from 'models/Device';
 
 type Props = {
@@ -39,9 +39,13 @@ type Props = {
   command?: DeviceCommandHistory;
 };
 
-const CommandResultModal = ({ modalProps, command }: Props) => {
+const CommandResultModal = ({ modalProps, command: initialCommandInfo }: Props) => {
   const { t } = useTranslation();
   const { colorMode } = useColorMode();
+  const { data: command } = useGetSingleCommandHistory({
+    commandId: initialCommandInfo?.UUID ?? '',
+    serialNumber: initialCommandInfo?.serialNumber ?? '',
+  });
 
   if (!command) return null;
 
