@@ -92,7 +92,11 @@ export const useDownloadTrace = ({ serialNumber, commandId }: { serialNumber: st
       const blob = new Blob([response.data], { type: 'application/octet-stream' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = `Trace_${commandId}.pcap`;
+      const headerLine =
+        (response.headers['content-disposition'] as string | undefined) ??
+        (response.headers['content-disposition'] as string | undefined);
+      const filename = headerLine?.split('filename=')[1]?.split(',')[0] ?? `Trace_${commandId}.pcap`;
+      link.download = filename;
       link.click();
     },
   });
