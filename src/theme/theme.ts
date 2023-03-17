@@ -1,4 +1,4 @@
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react';
+import { extendTheme, Tooltip, type ThemeConfig } from '@chakra-ui/react';
 import CardComponent from './additions/card/Card';
 import CardBodyComponent from './additions/card/CardBody';
 import CardHeaderComponent from './additions/card/CardHeader';
@@ -36,5 +36,7 @@ const theme = extendTheme({
     PanelContent: PanelContentComponent.components.PanelContent,
   },
 });
+
+Tooltip.defaultProps = { ...Tooltip.defaultProps, hasArrow: true };
 
 export default theme;

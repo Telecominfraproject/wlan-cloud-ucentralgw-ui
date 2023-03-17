@@ -276,8 +276,11 @@ export const useDeviceScript = ({ serialNumber }: { serialNumber: string }) => {
 const downloadScript = (serialNumber: string, commandId: string) =>
   axiosGw.get(`file/${commandId}?serialNumber=${serialNumber}`, { responseType: 'arraybuffer' });
 
-export const useDownloadScriptResult = ({ serialNumber, commandId }: { serialNumber: string; commandId: string }) =>
-  useQuery(['download-script', serialNumber, commandId], () => downloadScript(serialNumber, commandId), {
+export const useDownloadScriptResult = ({ serialNumber, commandId }: { serialNumber: string; commandId: string }) => {
+  const { t } = useTranslation();
+  const toast = useToast();
+
+  return useQuery(['download-script', serialNumber, commandId], () => downloadScript(serialNumber, commandId), {
     enabled: false,
     onSuccess: (response) => {
       const blob = new Blob([response.data], { type: 'application/octet-stream' });
@@ -290,4 +293,27 @@ export const useDownloadScriptResult = ({ serialNumber, commandId }: { serialNum
       link.download = filename;
       link.click();
     },
+    onError: (e) => {
+      if (axios.isAxiosError(e)) {
+        const bufferResponse = e.response?.data;
+        let errorMessage = '';
+        // If the response is a buffer, parse to JSON object
+        if (bufferResponse instanceof ArrayBuffer) {
+          const decoder = new TextDecoder('utf-8');
+          const json = JSON.parse(decoder.decode(bufferResponse));
+          errorMessage = json.ErrorDescription;
+        }
+
+        toast({
+          id: `script-download-error-${serialNumber}`,
+          title: t('common.error'),
+          description: errorMessage,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
+    },
   });
+};

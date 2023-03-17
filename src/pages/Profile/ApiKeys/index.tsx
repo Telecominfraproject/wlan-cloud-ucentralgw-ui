@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Box } from '@chakra-ui/react';
 import ApiKeyTable from './Table';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
@@ -10,7 +11,9 @@ const ApiKeysCard = () => {
   return (
     <Card p={4}>
       <CardBody>
-        <ApiKeyTable userId={user?.id ?? ''} />
+        <Box w="100%">
+          <ApiKeyTable userId={user?.id ?? ''} />
+        </Box>
       </CardBody>
     </Card>
   );

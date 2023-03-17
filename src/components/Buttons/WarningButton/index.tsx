@@ -16,7 +16,7 @@ const _WarningButton: React.FC<WarningButtonProps> = ({
   onClick,
   isDisabled,
   isLoading,
-  isCompact,
+  isCompact = true,
   label,
   ...props
 }) => {

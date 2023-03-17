@@ -1,18 +1,15 @@
 import * as React from 'react';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
-  Center,
   Heading,
   HStack,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
   Portal,
   Spacer,
   Tag,
@@ -62,6 +59,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
   const breakpoint = useBreakpoint();
+  const cancelRef = React.useRef(null);
   const navigate = useNavigate();
   const { mutateAsync: deleteDevice, isLoading: isDeleting } = useDeleteDevice({
     serialNumber,
@@ -197,7 +195,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             <Spacer />
             <HStack spacing={2}>
               {breakpoint !== 'base' && breakpoint !== 'md' && <DeviceSearchBar />}
-
+              <DeleteButton isCompact onClick={onDeleteOpen} />
               {getDevice?.data && (
                 <DeviceActionDropdown
                   // @ts-ignore
@@ -216,33 +214,6 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   isCompact
                 />
               )}
-              <Popover isOpen={isDeleteOpen} onOpen={onDeleteOpen} onClose={onDeleteClose}>
-                <Tooltip hasArrow label={t('crud.delete')} placement="top" isDisabled={isDeleteOpen}>
-                  <Box>
-                    <PopoverTrigger>
-                      <DeleteButton isCompact onClick={() => {}} />
-                    </PopoverTrigger>
-                  </Box>
-                </Tooltip>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader>
-                    {t('crud.delete')} {serialNumber}
-                  </PopoverHeader>
-                  <PopoverBody>{t('crud.delete_confirm', { obj: t('devices.one') })}</PopoverBody>
-                  <PopoverFooter>
-                    <Center>
-                      <Button colorScheme="gray" mr="1" onClick={onDeleteClose}>
-                        {t('common.cancel')}
-                      </Button>
-                      <Button colorScheme="red" ml="1" onClick={handleDeleteClick} isLoading={isDeleting}>
-                        {t('common.yes')}
-                      </Button>
-                    </Center>
-                  </PopoverFooter>
-                </PopoverContent>
-              </Popover>
               <RefreshButton
                 onClick={refresh}
                 isFetching={getDevice.isFetching || getHealth.isFetching || getStatus.isFetching}
@@ -274,6 +245,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
               <Spacer />
               <HStack spacing={2}>
                 <DeviceSearchBar />
+                <DeleteButton isCompact onClick={onDeleteOpen} />
                 {getDevice?.data && (
                   <DeviceActionDropdown
                     // @ts-ignore
@@ -289,35 +261,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
                     size="md"
+                    isCompact
                   />
                 )}
-                <Popover isOpen={isDeleteOpen} onOpen={onDeleteOpen} onClose={onDeleteClose}>
-                  <Tooltip hasArrow label={t('crud.delete')} placement="top" isDisabled={isDeleteOpen}>
-                    <Box>
-                      <PopoverTrigger>
-                        <DeleteButton isCompact onClick={() => {}} />
-                      </PopoverTrigger>
-                    </Box>
-                  </Tooltip>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverHeader>
-                      {t('crud.delete')} {serialNumber}
-                    </PopoverHeader>
-                    <PopoverBody>{t('crud.delete_confirm', { obj: t('devices.one') })}</PopoverBody>
-                    <PopoverFooter>
-                      <Center>
-                        <Button colorScheme="gray" mr="1" onClick={onDeleteClose}>
-                          {t('common.cancel')}
-                        </Button>
-                        <Button colorScheme="red" ml="1" onClick={handleDeleteClick} isLoading={isDeleting}>
-                          {t('common.yes')}
-                        </Button>
-                      </Center>
-                    </PopoverFooter>
-                  </PopoverContent>
-                </Popover>
                 <RefreshButton
                   onClick={refresh}
                   isFetching={getDevice.isFetching || getHealth.isFetching || getStatus.isFetching}
@@ -330,6 +276,24 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           </Card>
         </Portal>
       )}
+      <AlertDialog isOpen={isDeleteOpen} leastDestructiveRef={cancelRef} onClose={onDeleteClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              {t('crud.delete')} {serialNumber}
+            </AlertDialogHeader>
+            <AlertDialogBody>{t('crud.delete_confirm', { obj: t('devices.one') })}</AlertDialogBody>
+            <AlertDialogFooter>
+              <Button colorScheme="gray" mr="1" onClick={onDeleteClose} ref={cancelRef}>
+                {t('common.cancel')}
+              </Button>
+              <Button colorScheme="red" ml="1" onClick={handleDeleteClick} isLoading={isDeleting}>
+                {t('common.yes')}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
       <FirmwareUpgradeModal modalProps={upgradeModalProps} serialNumber={serialNumber} />
       <FactoryResetModal modalProps={resetModalProps} serialNumber={serialNumber} />

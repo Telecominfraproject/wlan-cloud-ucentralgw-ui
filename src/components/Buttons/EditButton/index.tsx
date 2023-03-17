@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton, Button, Tooltip, useBreakpoint } from '@chakra-ui/react';
 import { Pen } from 'phosphor-react';
+import { useTranslation } from 'react-i18next';
 
 export interface EditButtonProps {
   onClick: () => void;
@@ -11,7 +12,15 @@ export interface EditButtonProps {
   ml?: string | number;
 }
 
-const _EditButton: React.FC<EditButtonProps> = ({ onClick, label, isDisabled, isLoading, isCompact, ...props }) => {
+const _EditButton: React.FC<EditButtonProps> = ({
+  onClick,
+  label,
+  isDisabled,
+  isLoading,
+  isCompact = true,
+  ...props
+}) => {
+  const { t } = useTranslation();
   const breakpoint = useBreakpoint();
 
   if (!isCompact && breakpoint !== 'base' && breakpoint !== 'sm') {
@@ -24,12 +33,12 @@ const _EditButton: React.FC<EditButtonProps> = ({ onClick, label, isDisabled, is
         isDisabled={isDisabled}
         {...props}
       >
-        {label}
+        {label ?? t('common.edit')}
       </Button>
     );
   }
   return (
-    <Tooltip label={label}>
+    <Tooltip label={label ?? t('common.edit')} hasArrow>
       <IconButton
         aria-label="edit"
         colorScheme="gray"

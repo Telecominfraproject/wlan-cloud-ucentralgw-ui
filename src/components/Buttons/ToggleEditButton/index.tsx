@@ -20,7 +20,7 @@ const _ToggleEditButton: React.FC<ToggleEditButtonProps> = ({
   isDirty,
   isDisabled,
   isLoading,
-  isCompact,
+  isCompact = true,
   ml,
   ...props
 }) => {

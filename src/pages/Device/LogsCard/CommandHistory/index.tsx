@@ -44,13 +44,13 @@ const CommandHistory = ({ serialNumber }: Props) => {
       <Box textAlign="right" display="flex">
         <Spacer />
         <HStack>
-          <HistoryDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
           <ColumnPicker
             columns={columns as Column<unknown>[]}
             hiddenColumns={hiddenColumns}
             setHiddenColumns={setHiddenColumns}
             preference="gateway.device.commandshistory.hiddenColumns"
           />
+          <HistoryDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
           <RefreshButton
             isCompact
             isFetching={getCommands.isFetching}

@@ -11,7 +11,14 @@ export interface CreateButtonProps extends SpaceProps {
   label?: string;
 }
 
-const _CreateButton: React.FC<CreateButtonProps> = ({ onClick, isDisabled, isLoading, isCompact, label, ...props }) => {
+const _CreateButton: React.FC<CreateButtonProps> = ({
+  onClick,
+  isDisabled,
+  isLoading,
+  isCompact = true,
+  label,
+  ...props
+}) => {
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
 
