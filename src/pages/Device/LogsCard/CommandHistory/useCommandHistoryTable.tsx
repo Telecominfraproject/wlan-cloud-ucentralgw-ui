@@ -99,22 +99,22 @@ const useCommandHistoryTable = ({ serialNumber, limit }: Props) => {
   const actionCell = React.useCallback(
     (command: DeviceCommandHistory) => (
       <HStack>
-        <Tooltip label={t('common.view_details')}>
-          <IconButton
-            aria-label={t('common.view_details')}
-            onClick={onOpenDetails(command)}
-            colorScheme="blue"
-            icon={<MagnifyingGlass size={20} />}
-            size="sm"
-            isLoading={loadingDeleteSerial === command.UUID}
-          />
-        </Tooltip>
         <Tooltip label={t('crud.delete')}>
           <IconButton
             aria-label={t('crud.delete')}
             onClick={onDeleteClick(command)}
             colorScheme="red"
             icon={<Trash size={20} />}
+            size="sm"
+            isLoading={loadingDeleteSerial === command.UUID}
+          />
+        </Tooltip>
+        <Tooltip label={t('common.view_details')}>
+          <IconButton
+            aria-label={t('common.view_details')}
+            onClick={onOpenDetails(command)}
+            colorScheme="blue"
+            icon={<MagnifyingGlass size={20} />}
             size="sm"
             isLoading={loadingDeleteSerial === command.UUID}
           />

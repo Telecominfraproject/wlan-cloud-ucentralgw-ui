@@ -7,9 +7,11 @@ import {
   Box,
   Button,
   Center,
+  IconButton,
   Tag,
   TagLabel,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -58,9 +60,14 @@ const UpdateDbButton = () => {
 
   return (
     <>
-      <Button colorScheme="teal" leftIcon={<Database size={20} />} onClick={onOpen}>
-        {t('firmware.last_db_update_title')}
-      </Button>
+      <Tooltip label={t('firmware.last_db_update_title')}>
+        <IconButton
+          aria-label={t('firmware.last_db_update_title')}
+          colorScheme="teal"
+          icon={<Database size={20} />}
+          onClick={onOpen}
+        />
+      </Tooltip>
       <Modal
         isOpen={isOpen}
         onClose={onClose}

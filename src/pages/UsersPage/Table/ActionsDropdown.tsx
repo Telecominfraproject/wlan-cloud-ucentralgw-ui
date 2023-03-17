@@ -77,7 +77,7 @@ const UserActions = ({ id, isSuspended, isWaitingForCheck, refresh, size = 'sm',
 
   return (
     <Menu>
-      <Tooltip label={t('commands.other')}>
+      <Tooltip label={t('common.actions')}>
         <MenuButton
           as={IconButton}
           aria-label="Commands"

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Flex, HStack, Select, Spacer, Table, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, Flex, HStack, IconButton, Select, Spacer, Table, Text, Th, Thead, Tooltip, Tr } from '@chakra-ui/react';
 import { Download } from 'phosphor-react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
@@ -127,9 +127,9 @@ const LogsCard = () => {
             filename={`logs_${dateForFilename(new Date().getTime() / 1000)}.csv`}
             data={downloadableLogs as object[]}
           >
-            <Button onClick={() => {}} colorScheme="blue" leftIcon={<Download />}>
-              {t('logs.export')}
-            </Button>
+            <Tooltip label={t('logs.export')} hasArrow>
+              <IconButton aria-label={t('logs.export')} icon={<Download />} colorScheme="blue" />
+            </Tooltip>
           </CSVLink>
         </HStack>
       </CardHeader>

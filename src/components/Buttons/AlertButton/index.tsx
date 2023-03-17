@@ -12,7 +12,14 @@ export interface AlertButtonProps extends ThemeProps {
   label?: string;
 }
 
-const _AlertButton: React.FC<AlertButtonProps> = ({ onClick, isDisabled, isLoading, isCompact, label, ...props }) => {
+const _AlertButton: React.FC<AlertButtonProps> = ({
+  onClick,
+  isDisabled,
+  isLoading,
+  isCompact = true,
+  label,
+  ...props
+}) => {
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
 

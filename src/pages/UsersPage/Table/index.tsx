@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Avatar, Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
-import { ArrowsClockwise } from 'phosphor-react';
+import { Avatar, Box, Flex, useDisclosure } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { ColumnPicker } from '../../../components/DataTables/ColumnPicker';
@@ -9,6 +8,7 @@ import FormattedDate from '../../../components/InformationDisplays/FormattedDate
 import CreateUserModal from './CreateUserModal';
 import EditUserModal from './EditUserModal';
 import UserActions from './UserActions';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
@@ -125,15 +125,7 @@ const UserTable = () => {
                 preference="provisioning.userTable.hiddenColumns"
               />
               <CreateUserModal />
-              <Button
-                colorScheme="gray"
-                onClick={() => refreshUsers()}
-                rightIcon={<ArrowsClockwise />}
-                ml={2}
-                isLoading={isFetching}
-              >
-                {t('common.refresh')}
-              </Button>
+              <RefreshButton onClick={refreshUsers} isFetching={isFetching} ml={2} />
             </Box>
           </Flex>
         </CardHeader>

@@ -9,12 +9,15 @@ import {
   Button,
   Center,
   Heading,
+  IconButton,
   Spinner,
+  Tooltip,
   useClipboard,
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
+import { ListDashes } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
@@ -43,9 +46,15 @@ const ViewCapabilitiesModal = ({ serialNumber }: Props) => {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="pink" mr={2}>
-        {t('controller.devices.capabilities')}
-      </Button>
+      <Tooltip label={t('controller.devices.capabilities')} hasArrow>
+        <IconButton
+          aria-label={t('controller.devices.capabilities')}
+          icon={<ListDashes size={20} />}
+          onClick={onOpen}
+          colorScheme="pink"
+          mr={2}
+        />
+      </Tooltip>
       <Modal
         isOpen={isOpen}
         title={t('controller.devices.capabilities')}

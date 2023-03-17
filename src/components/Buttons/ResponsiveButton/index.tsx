@@ -15,7 +15,7 @@ const _ResponsiveButton: React.FC<ResponsiveButtonProps> = ({
   onClick,
   isDisabled,
   isLoading,
-  isCompact,
+  isCompact = true,
   color,
   label,
   icon,

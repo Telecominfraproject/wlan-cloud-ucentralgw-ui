@@ -51,7 +51,7 @@ const DeviceActionDropdown = ({
   onOpenScriptModal,
   onOpenRebootModal,
   size,
-  isCompact,
+  isCompact = true,
 }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
@@ -163,7 +163,7 @@ const DeviceActionDropdown = ({
 
   return (
     <Menu>
-      <Tooltip label={t('commands.other')}>
+      <Tooltip label={t('common.actions')}>
         {size === undefined || isCompact ? (
           <MenuButton
             as={IconButton}
@@ -182,7 +182,7 @@ const DeviceActionDropdown = ({
             isDisabled={isDisabled}
             ml={2}
           >
-            {t('commands.other')}
+            {t('common.actions')}
           </MenuButton>
         )}
       </Tooltip>

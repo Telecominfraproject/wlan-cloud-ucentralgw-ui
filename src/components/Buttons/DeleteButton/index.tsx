@@ -16,7 +16,7 @@ const _DeleteButton: React.FC<DeleteButtonProps> = ({
   onClick,
   isDisabled,
   isLoading,
-  isCompact,
+  isCompact = true,
   label,
   ml,
   ...props

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { AddIcon } from '@chakra-ui/icons';
-import { Button, useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from '../../../../components/Buttons/SaveButton';
 import { ConfirmCloseAlertModal } from '../../../../components/Modals/ConfirmCloseAlert';
 import { Modal } from '../../../../components/Modals/Modal';
 import CreateUserForm, { CreateUserFormValues } from './Form';
+import { CreateButton } from 'components/Buttons/CreateButton';
 import { useAuth } from 'contexts/AuthProvider';
 import { useFormRef } from 'hooks/useFormRef';
 
@@ -25,16 +25,7 @@ const CreateUserModal = () => {
 
   return (
     <>
-      <Button
-        hidden={user?.userRole === 'csr'}
-        alignItems="center"
-        colorScheme="blue"
-        rightIcon={<AddIcon />}
-        onClick={onOpen}
-        ml={2}
-      >
-        {t('crud.create')}
-      </Button>
+      {user?.userRole === 'CSR' ? null : <CreateButton onClick={onOpen} ml={2} />}
       <Modal
         isOpen={isOpen}
         onClose={closeModal}

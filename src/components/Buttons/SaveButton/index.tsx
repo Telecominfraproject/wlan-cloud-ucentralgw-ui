@@ -18,7 +18,7 @@ const _SaveButton: React.FC<SaveButtonProps> = ({
   onClick,
   isDisabled,
   isLoading,
-  isCompact,
+  isCompact = true,
   isDirty,
   dirtyCheck,
   ...props

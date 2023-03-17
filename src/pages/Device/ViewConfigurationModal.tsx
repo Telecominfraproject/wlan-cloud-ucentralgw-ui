@@ -7,11 +7,14 @@ import {
   AccordionPanel,
   Box,
   Button,
+  IconButton,
+  Tooltip,
   useClipboard,
   useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
+import { Barcode } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'components/Modals/Modal';
 import { DeviceConfiguration } from 'models/Device';
@@ -30,9 +33,14 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
 
   return (
     <>
-      <Button onClick={onOpen} isDisabled={!configuration} colorScheme="purple">
-        {t('configurations.one')}
-      </Button>
+      <Tooltip label={t('configurations.one')} hasArrow>
+        <IconButton
+          aria-label={t('configurations.one')}
+          icon={<Barcode size={20} />}
+          onClick={onOpen}
+          colorScheme="purple"
+        />
+      </Tooltip>
       <Modal
         isOpen={isOpen}
         title={t('configurations.one')}
