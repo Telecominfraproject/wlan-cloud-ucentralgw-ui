@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryFunctionContext, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';
 
@@ -89,3 +89,18 @@ export const useDeleteHealthChecks = () => {
     },
   });
 };
+
+const getDevicesWithHealthBetween = (
+  context: QueryFunctionContext<[string, string, { lowerLimit: number; upperLimit: number }]>,
+) =>
+  axiosGw
+    .get(`devices?health=true&lowLimit=${context.queryKey[2].lowerLimit}&highLimit=${context.queryKey[2].upperLimit}`)
+    .then((res) => res.data.serialNumbers as string[]);
+
+export const useGetDevicesWithHealthBetween = ({
+  lowerLimit,
+  upperLimit,
+}: {
+  lowerLimit: number;
+  upperLimit: number;
+}) => useQuery(['devices', 'health', { lowerLimit, upperLimit }], getDevicesWithHealthBetween);

@@ -52,8 +52,6 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
           <Heading size="md">{t('configurations.statistics')}</Heading>
           <Spacer />
           <HStack>
-            <ViewLastStatsModal serialNumber={serialNumber} />
-            <StatisticsCardDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
             <Select value={selected} onChange={onSelectInterface}>
               {parsedData?.interfaces
                 ? Object.keys(parsedData.interfaces).map((v) => (
@@ -64,6 +62,8 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
                 : null}
               <option value="memory">{t('statistics.memory')}</option>
             </Select>
+            <StatisticsCardDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
+            <ViewLastStatsModal serialNumber={serialNumber} />
             <RefreshButton
               size="sm"
               onClick={refresh}

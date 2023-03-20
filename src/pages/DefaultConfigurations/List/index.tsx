@@ -99,13 +99,14 @@ const DefaultConfigurationsList = () => {
       <CardBody>
         <Box overflowX="auto" w="100%">
           <LoadingOverlay isLoading={getConfigs.isFetching}>
-            <DataTable
-              columns={columns as Column<object>[]}
+            <DataTable<DefaultConfigurationResponse>
+              columns={columns}
               saveSettingsId="firmware.table"
               data={getConfigs.data ?? []}
               obj={t('controller.configurations.title')}
               minHeight="200px"
               sortBy={[{ id: 'name', desc: true }]}
+              onRowClick={onViewDetails}
             />
           </LoadingOverlay>
         </Box>

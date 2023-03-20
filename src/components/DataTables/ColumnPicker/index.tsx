@@ -21,7 +21,7 @@ export const ColumnPicker = ({
   hiddenColumns,
   setHiddenColumns,
   size,
-  isCompact,
+  isCompact = true,
 }: ColumnPickerProps) => {
   const { t } = useTranslation();
   const { getPref, setPref } = useAuth();

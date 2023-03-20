@@ -60,8 +60,14 @@ export const ScriptModal = ({ device, modalProps }: ScriptModalProps) => {
     let requestData: {
       [k: string]: unknown;
       serialNumber: string;
+      script?: string;
       timeout?: number | undefined;
     } = data;
+
+    if (requestData.script) {
+      requestData.script = btoa(requestData.script);
+    }
+
     if (selectedScript === 'diagnostics') {
       requestData = {
         serialNumber: device?.serialNumber ?? '',
@@ -87,6 +93,19 @@ export const ScriptModal = ({ device, modalProps }: ScriptModalProps) => {
       onSuccess: (response) => {
         setValue(response.results?.status?.result ?? JSON.stringify(response.results ?? {}, null, 2));
         queryClient.invalidateQueries(['commands', device?.serialNumber ?? '']);
+      },
+      onError: (e) => {
+        if (axios.isAxiosError(e) && e.response?.data?.ErrorDescription) {
+          toast({
+            id: 'script-update-error',
+            title: t('common.error'),
+            description: e.response?.data?.ErrorDescription,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+        }
       },
     });
     if (!waitForResponse) {

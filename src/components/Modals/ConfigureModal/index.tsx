@@ -5,17 +5,22 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Textarea,
   useToast,
 } from '@chakra-ui/react';
+import { ClipboardText } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from '../../Buttons/SaveButton';
 import { Modal } from '../Modal';
 import { FileInputButton } from 'components/Buttons/FileInputButton';
 import { useConfigureDevice } from 'hooks/Network/Commands';
+import { useGetDevice } from 'hooks/Network/Devices';
+import { AxiosError } from 'models/Axios';
 
 export type ConfigureModalProps = {
   serialNumber: string;
@@ -29,11 +34,17 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
   const { t } = useTranslation();
   const toast = useToast();
   const configure = useConfigureDevice({ serialNumber });
+  const getDevice = useGetDevice({ serialNumber });
+
   const [newConfig, setNewConfig] = React.useState('');
 
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewConfig(e.target.value);
   }, []);
+
+  const onImportConfiguration = () => {
+    setNewConfig(getDevice.data?.configuration ? JSON.stringify(getDevice.data.configuration, null, 4) : '');
+  };
   const isValid = React.useMemo(() => {
     try {
       JSON.parse(newConfig);
@@ -60,9 +71,7 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
           modalProps.onClose();
         },
       });
-    } catch (e) {
-      // console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (
@@ -79,10 +88,7 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
             <AlertIcon />
             <Box>
               <AlertTitle>{t('common.error')}</AlertTitle>
-              {
-                // @ts-ignore
-                <AlertDescription>{configure.error?.response?.data?.ErrorDescription}</AlertDescription>
-              }
+              <AlertDescription>{(configure.error as AxiosError)?.response?.data?.ErrorDescription}</AlertDescription>
             </Box>
           </Alert>
         )}
@@ -92,15 +98,25 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
         </Alert>
         <FormControl isInvalid={!isValid && newConfig.length > 0}>
           <FormLabel>{t('configurations.one')}</FormLabel>
-          <Box mb={2} w="240px">
-            <FileInputButton
-              value={newConfig}
-              setValue={(v) => setNewConfig(v)}
-              refreshId="1"
-              accept=".json"
-              isStringFile
-            />
-          </Box>
+          <Flex mb={2}>
+            <Box w="240px">
+              <FileInputButton
+                value={newConfig}
+                setValue={(v) => setNewConfig(v)}
+                refreshId="1"
+                accept=".json"
+                isStringFile
+              />
+            </Box>
+            <Button
+              rightIcon={<ClipboardText size={20} />}
+              onClick={onImportConfiguration}
+              hidden={!getDevice.data}
+              ml={2}
+            >
+              Current Configuration
+            </Button>
+          </Flex>
           <Textarea height="auto" minH="600px" value={newConfig} onChange={onChange} />
           <FormErrorMessage>{t('controller.configure.invalid')}</FormErrorMessage>
         </FormControl>

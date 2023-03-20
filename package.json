@@ -1,13 +1,13 @@
 {
   "name": "ucentral-client",
-  "version": "2.9.0(13)",
+  "version": "2.9.0(23)",
   "description": "",
   "private": true,
   "main": "index.tsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "format": "prettier --write \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*x.{ts,tsx,js,jsx}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "TIMING=1 eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
     "clean": "rm -rf node_modules && rm -rf build"

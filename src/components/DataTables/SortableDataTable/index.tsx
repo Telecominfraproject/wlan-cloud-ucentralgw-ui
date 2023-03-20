@@ -249,8 +249,12 @@ const SortableDataTable: React.FC<Props> = ({
                             fontSize="14px"
                             // @ts-ignore
                             textAlign={cell.column.isCentered ? 'center' : undefined}
-                            // @ts-ignore
-                            fontFamily={cell.column.isMonospace ? 'monospace' : undefined}
+                            fontFamily={
+                              // @ts-ignore
+                              cell.column.isMonospace
+                                ? 'Inter, SFMono-Regular, Menlo, Monaco, Consolas, monospace'
+                                : undefined
+                            }
                           >
                             {cell.render('Cell')}
                           </Td>

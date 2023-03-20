@@ -1,6 +1,13 @@
 import * as React from 'react';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
+  Button,
   Heading,
   HStack,
   Portal,
@@ -12,10 +19,13 @@ import {
   useBreakpoint,
   useColorModeValue,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
+import { useNavigate } from 'react-router-dom';
 import DeviceDetails from './Details';
 import DeviceLogsCard from './LogsCard';
 import DeviceNotes from './Notes';
@@ -23,6 +33,7 @@ import RestrictionsCard from './RestrictionsCard';
 import DeviceStatisticsCard from './StatisticsCard';
 import DeviceSummary from './Summary';
 import WifiAnalysisCard from './WifiAnalysis';
+import { DeleteButton } from 'components/Buttons/DeleteButton';
 import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
@@ -38,7 +49,7 @@ import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
-import { useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
+import { useDeleteDevice, useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
 
 type Props = {
   serialNumber: string;
@@ -46,10 +57,17 @@ type Props = {
 
 const DevicePageWrapper = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
+  const toast = useToast();
   const breakpoint = useBreakpoint();
+  const cancelRef = React.useRef(null);
+  const navigate = useNavigate();
+  const { mutateAsync: deleteDevice, isLoading: isDeleting } = useDeleteDevice({
+    serialNumber,
+  });
   const getDevice = useGetDevice({ serialNumber });
   const getStatus = useGetDeviceStatus({ serialNumber });
   const getHealth = useGetDeviceHealthChecks({ serialNumber, limit: 1 });
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
   const scanModalProps = useDisclosure();
   const resetModalProps = useDisclosure();
   const eventQueueProps = useDisclosure();
@@ -62,6 +80,35 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   // Sticky-top styles
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
   const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
+
+  const handleDeleteClick = () =>
+    deleteDevice(serialNumber, {
+      onSuccess: () => {
+        toast({
+          id: `delete-device-success-${serialNumber}`,
+          title: t('common.success'),
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        navigate('/devices');
+      },
+      onError: (e) => {
+        if (axios.isAxiosError(e)) {
+          toast({
+            id: `delete-device-error-${serialNumber}`,
+            title: t('common.error'),
+            description: e.response?.data?.ErrorDescription,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+        }
+      },
+    });
+
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
 
@@ -148,6 +195,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             <Spacer />
             <HStack spacing={2}>
               {breakpoint !== 'base' && breakpoint !== 'md' && <DeviceSearchBar />}
+              <DeleteButton isCompact onClick={onDeleteOpen} />
               {getDevice?.data && (
                 <DeviceActionDropdown
                   // @ts-ignore
@@ -197,6 +245,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
               <Spacer />
               <HStack spacing={2}>
                 <DeviceSearchBar />
+                <DeleteButton isCompact onClick={onDeleteOpen} />
                 {getDevice?.data && (
                   <DeviceActionDropdown
                     // @ts-ignore
@@ -212,6 +261,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
                     size="md"
+                    isCompact
                   />
                 )}
                 <RefreshButton
@@ -226,6 +276,24 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           </Card>
         </Portal>
       )}
+      <AlertDialog isOpen={isDeleteOpen} leastDestructiveRef={cancelRef} onClose={onDeleteClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              {t('crud.delete')} {serialNumber}
+            </AlertDialogHeader>
+            <AlertDialogBody>{t('crud.delete_confirm', { obj: t('devices.one') })}</AlertDialogBody>
+            <AlertDialogFooter>
+              <Button colorScheme="gray" mr="1" onClick={onDeleteClose} ref={cancelRef}>
+                {t('common.cancel')}
+              </Button>
+              <Button colorScheme="red" ml="1" onClick={handleDeleteClick} isLoading={isDeleting}>
+                {t('common.yes')}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
       <FirmwareUpgradeModal modalProps={upgradeModalProps} serialNumber={serialNumber} />
       <FactoryResetModal modalProps={resetModalProps} serialNumber={serialNumber} />

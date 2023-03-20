@@ -3,6 +3,7 @@ import { Box, Heading, Image, Link, Spacer, Tooltip, useDisclosure } from '@chak
 import { LockSimple } from 'phosphor-react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
 import DeviceListFirmwareButton from './FirmwareButton';
 import AP from './icons/AP.png';
@@ -49,6 +50,7 @@ const BADGE_COLORS: Record<string, string> = {
 
 const DeviceListCard = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = React.useState<string>('');
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const [pageInfo, setPageInfo] = React.useState<PageInfo | undefined>(undefined);
@@ -252,6 +254,7 @@ const DeviceListCard = () => {
         Footer: '',
         accessor: 'firmware',
         Cell: (v) => firmwareCell(v.cell.row.original),
+        stopPropagation: true,
         customWidth: '50px',
         disableSortBy: true,
       },
@@ -389,7 +392,7 @@ const DeviceListCard = () => {
       </CardHeader>
       <CardBody p={4}>
         <Box overflowX="auto" w="100%">
-          <DataTable
+          <DataTable<DeviceWithStatus>
             columns={
               columns.filter(({ id }) => !hiddenColumns.find((hidden) => hidden === id)) as {
                 id: string;
@@ -407,6 +410,8 @@ const DeviceListCard = () => {
             // @ts-ignore
             setPageInfo={setPageInfo}
             saveSettingsId="gateway.devices.table"
+            onRowClick={(device) => navigate(`devices/${device.serialNumber}`)}
+            isRowClickable={() => true}
           />
         </Box>
       </CardBody>

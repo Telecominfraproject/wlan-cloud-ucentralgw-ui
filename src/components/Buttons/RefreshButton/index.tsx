@@ -17,7 +17,7 @@ const _RefreshButton: React.FC<RefreshButtonProps> = ({
   onClick,
   isDisabled,
   isFetching,
-  isCompact,
+  isCompact = true,
   ml,
   size,
   ...props

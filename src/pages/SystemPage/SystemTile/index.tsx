@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import FormattedDate from '../../../components/InformationDisplays/FormattedDate';
 import SystemLoggingButton from './LoggingButton';
 import SystemCertificatesTable from './SystemCertificatesTable';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { compactSecondsToDetailed } from 'helpers/dateFormatting';
@@ -70,16 +71,7 @@ const SystemTile = ({ endpoint, token }: Props) => {
           <Heading pt={0}>{endpoint.type}</Heading>
           <Spacer />
           <SystemLoggingButton endpoint={endpoint} token={token} />
-          <Button
-            mt={1}
-            minWidth="112px"
-            colorScheme="blue"
-            rightIcon={<ArrowsClockwise />}
-            onClick={refresh}
-            isLoading={isFetchingSystem || isFetchingSubsystems}
-          >
-            {t('common.refresh')}
-          </Button>
+          <RefreshButton onClick={refresh} isFetching={isFetchingSystem || isFetchingSubsystems} />
         </Box>
         <CardBody>
           <VStack w="100%">
