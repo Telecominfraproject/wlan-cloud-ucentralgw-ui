@@ -16,6 +16,7 @@ type Props = {
 export const useStatisticsCard = ({ serialNumber }: Props) => {
   const [selected, setSelected] = React.useState('memory');
   const [progress, setProgress] = React.useState(0);
+  const [hasSelectedNew, setHasSelectedNew] = React.useState(false);
   const [time, setTime] = React.useState<{ start: Date; end: Date } | undefined>();
   const onProgressChange = React.useCallback((newProgress: number) => {
     setProgress(newProgress);
@@ -29,6 +30,7 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
   });
 
   const onSelectInterface = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setHasSelectedNew(true);
     setSelected(event.target.value);
   };
 
@@ -59,7 +61,7 @@ export const useStatisticsCard = ({ serialNumber }: Props) => {
       if (index === 0) {
         let updated = false;
         for (const inter of stat.data.interfaces ?? []) {
-          if (!updated && selected === 'memory') {
+          if (!hasSelectedNew && !updated && selected === 'memory') {
             updated = true;
             setSelected(inter.name);
           }

@@ -34,20 +34,29 @@ const DeviceMemoryChart = ({ data }: Props) => {
       {
         label: 'Free',
         data: data.free.map((free) => Math.floor(free / 1024 / 1024)),
-        borderColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
-        backgroundColor: colorMode === 'light' ? '#63B3ED' : '#BEE3F8', // blue-300 - blue-100
-      },
-      {
-        label: 'Buffered',
-        data: data.buffered.map((buffered) => Math.floor(buffered / 1024 / 1024)),
-        borderColor: colorMode === 'light' ? '#ECC94B' : '#FAF089', // yellow-400 - yellow-200
-        backgroundColor: colorMode === 'light' ? '#ECC94B' : '#FAF089', // yellow-400 - yellow-200
+        borderColor: colorMode === 'light' ? 'rgb(99, 179, 237, 1)' : 'rgb(190, 227, 248, 1)', // blue-300 - blue-100
+        backgroundColor: colorMode === 'light' ? 'rgb(99, 179, 237, 0.3)' : 'rgb(190, 227, 248, 0.3)', // blue-300 - blue-100
+        tension: 0.5,
+        pointRadius: 0,
+        fill: '+1',
       },
       {
         label: 'Cached',
         data: data.cached.map((cached) => Math.floor(cached / 1024 / 1024)),
-        borderColor: colorMode === 'light' ? '#ED64A6' : '#FBB6CE', // pink-400 - pink-200
-        backgroundColor: colorMode === 'light' ? '#ED64A6' : '#FBB6CE', // pink-400 - pink-200
+        borderColor: colorMode === 'light' ? 'rgb(237, 100, 166, 1)' : 'rgb(251, 182, 206, 1)', // pink-400 - pink-200
+        backgroundColor: colorMode === 'light' ? 'rgb(237, 100, 166, 0.3)' : 'rgb(251, 182, 206, 0.3)', // pink-400 - pink-200
+        tension: 0.5,
+        pointRadius: 0,
+        fill: '+1',
+      },
+      {
+        label: 'Buffered',
+        data: data.buffered.map((buffered) => Math.floor(buffered / 1024 / 1024)),
+        borderColor: colorMode === 'light' ? 'rgb(255, 240, 31, 1)' : 'rgb(250, 240, 137, 1)', // yellow-400 - yellow-200
+        backgroundColor: colorMode === 'light' ? 'rgb(255, 240, 31, 0.3)' : 'rgb(250, 240, 137, 0.3)', // yellow-400 - yellow-200
+        tension: 0.5,
+        pointRadius: 0,
+        fill: 'origin',
       },
     ],
   };
