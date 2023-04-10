@@ -126,3 +126,40 @@ export const dateForFilename = (dateString: number) => {
     date.getDate(),
   )}_${twoDigitNumber(date.getHours())}h${twoDigitNumber(date.getMinutes())}m${twoDigitNumber(date.getSeconds())}s`;
 };
+
+export const formatDaysAgoCompact = (d1: number, d2: number = new Date().getTime()) => {
+  try {
+    const convertedTimestamp = unixToDateString(d1);
+    const date = new Date(convertedTimestamp).getTime();
+    const elapsed = date - d2;
+
+    for (const key of Object.keys(UNITS)) {
+      if (
+        Math.abs(elapsed) > UNITS[key as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second'] ||
+        key === 'second'
+      ) {
+        const result = RTF.format(
+          Math.round(elapsed / UNITS[key as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second']),
+          key as Intl.RelativeTimeFormatUnit,
+        );
+        return result
+          .replace(' years', 'y')
+          .replace(' year', 'y')
+          .replace(' months', 'm')
+          .replace(' month', 'm')
+          .replace(' days', 'd')
+          .replace(' day', 'd')
+          .replace(' hours', 'h')
+          .replace(' hour', 'h')
+          .replace(' minutes', 'm')
+          .replace(' minute', 'm')
+          .replace(' seconds', 's')
+          .replace(' second', 's');
+      }
+    }
+
+    return compactDate(date);
+  } catch {
+    return '-';
+  }
+};

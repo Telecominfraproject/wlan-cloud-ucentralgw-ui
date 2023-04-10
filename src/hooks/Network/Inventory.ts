@@ -55,4 +55,5 @@ export const useGetTag = ({ serialNumber, onError }: { serialNumber?: string; on
   useQuery(['tag', serialNumber], () => getTag(serialNumber), {
     enabled: serialNumber !== undefined && serialNumber !== '',
     onError,
+    staleTime: 1000 * 60 * 5,
   });

@@ -1,13 +1,20 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { Box, BoxProps } from '@chakra-ui/react';
 
-const NumberCell = ({ value }: { value?: number }) => {
-  const data = useMemo(() => {
+type Props = {
+  value?: number;
+  boxProps?: BoxProps;
+  showZerosAs?: string;
+};
+
+const NumberCell = ({ value, boxProps, showZerosAs }: Props) => {
+  const getData = () => {
     if (value === undefined) return '-';
-
+    if (value === 0 && showZerosAs) return showZerosAs;
     return value.toLocaleString();
-  }, [value]);
+  };
 
-  return <div>{data}</div>;
+  return <Box {...boxProps}>{getData()}</Box>;
 };
 
 export default React.memo(NumberCell);

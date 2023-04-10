@@ -28,7 +28,6 @@ const DeviceDetails = ({ serialNumber }: Props) => {
       ? getDevice.data?.devicePassword
       : 'openwifi',
   );
-
   const getPassword = () => {
     if (!getDevice.data) return '-';
     if (isShowingPassword) {
