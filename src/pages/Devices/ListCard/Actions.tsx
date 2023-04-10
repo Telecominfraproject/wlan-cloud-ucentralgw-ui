@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Center,
-  Flex,
+  HStack,
   IconButton,
   Link,
   Popover,
@@ -64,7 +64,7 @@ const Actions: React.FC<Props> = ({
     });
 
   return (
-    <Flex>
+    <HStack spacing={2}>
       <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
         <Tooltip hasArrow label={t('crud.delete')} placement="top" isDisabled={isOpen}>
           <Box>
@@ -110,14 +110,13 @@ const Actions: React.FC<Props> = ({
         <Link href={`#/devices/${device.serialNumber}`}>
           <IconButton
             aria-label={t('common.view_details')}
-            ml={2}
             colorScheme="blue"
             icon={<MagnifyingGlass size={20} />}
             size="sm"
           />
         </Link>
       </Tooltip>
-    </Flex>
+    </HStack>
   );
 };
 

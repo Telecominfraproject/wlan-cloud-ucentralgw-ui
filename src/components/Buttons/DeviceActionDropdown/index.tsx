@@ -1,18 +1,17 @@
 import React from 'react';
 import {
-  Button,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Portal,
-  Spinner,
   Tooltip,
+  useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { Wrench } from 'phosphor-react';
+import { Barcode, Power, TerminalWindow, WifiHigh, Wrench } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { useControllerStore } from 'contexts/ControllerSocketProvider/useStore';
 import { useBlinkDevice, useGetDeviceRtty } from 'hooks/Network/Devices';
@@ -51,12 +50,13 @@ const DeviceActionDropdown = ({
   onOpenScriptModal,
   onOpenRebootModal,
   size,
-  isCompact = true,
+  isCompact,
 }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
+  const connectColor = useColorModeValue('blackAlpha', 'gray');
   const addEventListeners = useControllerStore((state) => state.addEventListeners);
-  const { refetch: getRtty, isInitialLoading: isRtty } = useGetDeviceRtty({
+  const { refetch: getRtty, isFetching: isRtty } = useGetDeviceRtty({
     serialNumber: device.serialNumber,
     extraId: 'inventory-modal',
   });
@@ -162,49 +162,90 @@ const DeviceActionDropdown = ({
   const handleRebootClick = () => onOpenRebootModal(device.serialNumber);
 
   return (
-    <Menu>
-      <Tooltip label={t('common.actions')}>
-        {size === undefined || isCompact ? (
+    <>
+      <Tooltip label={t('commands.connect')}>
+        <IconButton
+          aria-label="Connect"
+          icon={<TerminalWindow size={20} />}
+          size={size ?? 'sm'}
+          isDisabled={isDisabled}
+          isLoading={isRtty}
+          onClick={handleConnectClick}
+          colorScheme={connectColor}
+          hidden={isCompact}
+        />
+      </Tooltip>
+      <Tooltip label={t('controller.configure.title')}>
+        <IconButton
+          aria-label={t('controller.configure.title')}
+          icon={<Barcode size={20} />}
+          size={size ?? 'sm'}
+          isDisabled={isDisabled}
+          onClick={handleOpenConfigure}
+          colorScheme="purple"
+          hidden={isCompact}
+        />
+      </Tooltip>
+      <Tooltip label={t('commands.reboot')}>
+        <IconButton
+          aria-label={t('commands.reboot')}
+          icon={<Power size={20} />}
+          size={size ?? 'sm'}
+          isDisabled={isDisabled}
+          onClick={handleRebootClick}
+          colorScheme="green"
+          hidden={isCompact}
+        />
+      </Tooltip>
+      <Tooltip label={t('commands.wifiscan')}>
+        <IconButton
+          aria-label={t('commands.wifiscan')}
+          icon={<WifiHigh size={20} />}
+          size={size ?? 'sm'}
+          isDisabled={isDisabled}
+          onClick={handleOpenScan}
+          colorScheme="teal"
+          hidden={isCompact}
+        />
+      </Tooltip>
+      <Menu>
+        <Tooltip label={t('common.actions')}>
           <MenuButton
             as={IconButton}
             aria-label="Commands"
-            icon={isRtty ? <Spinner /> : <Wrench size={20} />}
+            icon={<Wrench size={20} />}
             size={size ?? 'sm'}
             isDisabled={isDisabled}
-            ml={2}
           />
-        ) : (
-          <MenuButton
-            as={Button}
-            aria-label="Commands"
-            rightIcon={isRtty ? <Spinner /> : <Wrench size={20} />}
-            size={size ?? 'sm'}
-            isDisabled={isDisabled}
-            ml={2}
-          >
-            {t('common.actions')}
-          </MenuButton>
-        )}
-      </Tooltip>
-      <Portal>
-        <MenuList>
-          <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
-          <MenuItem onClick={handleOpenConfigure}>{t('controller.configure.title')}</MenuItem>
-          <MenuItem onClick={handleConnectClick}>{t('commands.connect')}</MenuItem>
-          <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
-          <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
-          <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
-          <MenuItem onClick={handleRebootClick}>{t('commands.reboot')}</MenuItem>
-          <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
-          <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
-          <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
-          <MenuItem onClick={handleUpdateToLatest} hidden>
-            {t('premium.toolbox.upgrade_to_latest')}
-          </MenuItem>
-          <MenuItem onClick={handleOpenScan}>{t('commands.wifiscan')}</MenuItem>
-        </MenuList>
-      </Portal>
-    </Menu>
+        </Tooltip>
+        <Portal>
+          <MenuList maxH="315px" overflowY="auto">
+            <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
+            <MenuItem onClick={handleOpenConfigure} hidden={!isCompact}>
+              {t('controller.configure.title')}
+            </MenuItem>
+            <MenuItem onClick={handleConnectClick} hidden={!isCompact}>
+              {t('commands.connect')}
+            </MenuItem>
+            <MenuItem onClick={handleOpenQueue}>{t('controller.queue.title')}</MenuItem>
+            <MenuItem onClick={handleOpenFactoryReset}>{t('commands.factory_reset')}</MenuItem>
+            <MenuItem onClick={handleOpenUpgrade}>{t('commands.firmware_upgrade')}</MenuItem>
+            <MenuItem onClick={handleRebootClick} hidden={!isCompact}>
+              {t('commands.reboot')}
+            </MenuItem>
+            <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
+            <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
+            <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
+            <MenuItem onClick={handleUpdateToLatest} hidden>
+              {t('premium.toolbox.upgrade_to_latest')}
+            </MenuItem>
+            <MenuItem onClick={handleOpenScan} hidden={!isCompact}>
+              {t('commands.wifiscan')}
+            </MenuItem>
+          </MenuList>
+        </Portal>
+      </Menu>
+    </>
   );
 };
 

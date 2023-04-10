@@ -185,7 +185,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     <>
       {isCompact ? (
         <Card p={2} mb={4}>
-          <CardHeader overflowX="auto">
+          <CardHeader>
             <HStack spacing={2}>
               <Heading size="md">{serialNumber}</Heading>
               {connectedTag}
@@ -194,7 +194,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             </HStack>
             <Spacer />
             <HStack spacing={2}>
-              {breakpoint !== 'base' && breakpoint !== 'md' && <DeviceSearchBar />}
+              <DeviceSearchBar />
               <DeleteButton isCompact onClick={onDeleteOpen} />
               {getDevice?.data && (
                 <DeviceActionDropdown
@@ -261,7 +261,6 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
                     size="md"
-                    isCompact
                   />
                 )}
                 <RefreshButton
@@ -282,7 +281,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               {t('crud.delete')} {serialNumber}
             </AlertDialogHeader>
+
             <AlertDialogBody>{t('crud.delete_confirm', { obj: t('devices.one') })}</AlertDialogBody>
+
             <AlertDialogFooter>
               <Button colorScheme="gray" mr="1" onClick={onDeleteClose} ref={cancelRef}>
                 {t('common.cancel')}
@@ -306,7 +307,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       <Box mt={isCompact ? '0px' : '68px'}>
         <Masonry
           breakpointCols={{
-            default: 3,
+            default: 2,
             2200: 2,
             1100: 1,
           }}
