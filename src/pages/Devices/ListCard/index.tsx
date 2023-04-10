@@ -1,20 +1,29 @@
 import * as React from 'react';
-import { Box, Heading, Image, Link, Spacer, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { LockSimple } from 'phosphor-react';
+import { Box, Center, Image, Link, Tag, TagLabel, TagRightIcon, Tooltip, useDisclosure } from '@chakra-ui/react';
+import {
+  CheckCircle,
+  Heart,
+  HeartBreak,
+  LockSimple,
+  ThermometerCold,
+  ThermometerHot,
+  WarningCircle,
+} from 'phosphor-react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
 import DeviceListFirmwareButton from './FirmwareButton';
+import DeviceTableGpsCell from './GpsCell';
 import AP from './icons/AP.png';
 import IOT from './icons/IOT.png';
 import MESH from './icons/MESH.png';
 import SWITCH from './icons/SWITCH.png';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
+import ProvisioningStatusCell from './ProvisioningStatusCell';
+import DeviceUptimeCell from './Uptime';
 import { CardBody } from 'components/Containers/Card/CardBody';
-import { CardHeader } from 'components/Containers/Card/CardHeader';
-import { ColumnPicker } from 'components/DataTables/ColumnPicker';
-import { DataTable } from 'components/DataTables/DataTable';
+import { DataGrid } from 'components/DataTables/DataGrid';
+import { DataGridColumn, useDataGrid } from 'components/DataTables/DataGrid/useDataGrid';
 import DeviceSearchBar from 'components/DeviceSearchBar';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
@@ -30,8 +39,16 @@ import DataCell from 'components/TableCells/DataCell';
 import NumberCell from 'components/TableCells/NumberCell';
 import { DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
 import { FirmwareAgeResponse, useGetFirmwareAges } from 'hooks/Network/Firmware';
-import { Column, PageInfo } from 'models/Table';
 
+const fourDigitNumber = (v: number) => {
+  if (v === 0) {
+    return '0.00';
+  }
+  const str = v.toString();
+  const fourthChar = str.charAt(3);
+  if (fourthChar === '.') return `${str.slice(0, 3)}`;
+  return `${str.slice(0, 4)}`;
+};
 const ICON_STYLE = { width: '24px', height: '24px', borderRadius: '20px' };
 
 const ICONS = {
@@ -52,8 +69,6 @@ const DeviceListCard = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = React.useState<string>('');
-  const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
-  const [pageInfo, setPageInfo] = React.useState<PageInfo | undefined>(undefined);
   const scanModalProps = useDisclosure();
   const resetModalProps = useDisclosure();
   const upgradeModalProps = useDisclosure();
@@ -63,9 +78,13 @@ const DeviceListCard = () => {
   const configureModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
+  const tableController = useDataGrid({ tableSettingsId: 'gateway.devices.table' });
   const getCount = useGetDeviceCount({ enabled: true });
   const getDevices = useGetDevices({
-    pageInfo,
+    pageInfo: {
+      limit: tableController.pageInfo.pageSize,
+      index: tableController.pageInfo.pageIndex,
+    },
     enabled: true,
   });
   const getAges = useGetFirmwareAges({
@@ -171,7 +190,7 @@ const DeviceListCard = () => {
   const dataCell = React.useCallback(
     (v: number) => (
       <Box textAlign="right">
-        <DataCell bytes={v} />
+        <DataCell bytes={v} showZerosAs="-" />
       </Box>
     ),
     [],
@@ -185,12 +204,27 @@ const DeviceListCard = () => {
       ),
     [],
   );
+  const compactDateCell = React.useCallback(
+    (v?: number | string, hidePrefix?: boolean) =>
+      v !== undefined && typeof v === 'number' && v !== 0 ? (
+        <FormattedDate date={v as number} hidePrefix={hidePrefix} isCompact />
+      ) : (
+        '-'
+      ),
+    [],
+  );
   const firmwareCell = React.useCallback(
     (device: DeviceWithStatus & { age?: FirmwareAgeResponse }) => (
       <DeviceListFirmwareButton device={device} age={device.age} onOpenUpgrade={onOpenUpgradeModal} />
     ),
     [getAges],
   );
+  const provCell = React.useCallback(
+    (device: DeviceWithStatus) =>
+      device.subscriber || device.entity || device.venue ? <ProvisioningStatusCell device={device} /> : '-',
+    [],
+  );
+  const uptimeCell = React.useCallback((device: DeviceWithStatus) => <DeviceUptimeCell device={device} />, []);
   const localeCell = React.useCallback(
     (device: DeviceWithStatus) => (
       <Tooltip label={`${device.locale !== '' ? `${device.locale} - ` : ''}${device.ipAddress}`} placement="top">
@@ -198,13 +232,25 @@ const DeviceListCard = () => {
           {device.locale !== '' && device.ipAddress !== '' && (
             <ReactCountryFlag style={ICON_STYLE} countryCode={device.locale} svg />
           )}
-          {`  ${device.ipAddress}`}
+          {`  ${device.ipAddress.length > 0 ? device.ipAddress : '-'}`}
         </Box>
       </Tooltip>
     ),
     [],
   );
-  const numberCell = React.useCallback((v?: number) => <NumberCell value={v !== undefined ? v : 0} />, []);
+  const gpsCell = React.useCallback((device: DeviceWithStatus) => <DeviceTableGpsCell device={device} />, []);
+  const numberCell = React.useCallback(
+    (v?: number) => (
+      <NumberCell
+        value={v !== undefined ? v : 0}
+        showZerosAs="-"
+        boxProps={{
+          textAlign: 'right',
+        }}
+      />
+    ),
+    [],
+  );
   const actionCell = React.useCallback(
     (device: DeviceWithStatus) => (
       <Actions
@@ -224,135 +270,358 @@ const DeviceListCard = () => {
     [],
   );
 
-  const columns: Column<DeviceWithStatus>[] = React.useMemo(
-    (): Column<DeviceWithStatus>[] => [
+  const sanityCell = React.useCallback((device: DeviceWithStatus) => {
+    if (!device.connected) return <Center>-</Center>;
+
+    let colorScheme = 'red';
+    if (device.sanity >= 80) colorScheme = 'yellow';
+    if (device.sanity === 100) colorScheme = 'green';
+
+    return (
+      <Center>
+        <Tag borderRadius="full" variant="subtle" colorScheme={colorScheme}>
+          <TagLabel>{device.sanity}%</TagLabel>
+          <TagRightIcon marginStart="0.1rem" as={colorScheme === 'green' ? Heart : HeartBreak} />
+        </Tag>
+      </Center>
+    );
+  }, []);
+
+  const loadCell = React.useCallback((device: DeviceWithStatus) => {
+    if (!device.connected) return <Center>-</Center>;
+
+    let colorScheme = 'red';
+    if (device.load <= 20) colorScheme = 'yellow';
+    if (device.load <= 5) colorScheme = 'green';
+
+    return (
+      <Center>
+        <Tag borderRadius="full" variant="subtle" colorScheme={colorScheme}>
+          <TagLabel>{fourDigitNumber(device.load)}%</TagLabel>
+          <TagRightIcon marginStart="0.1rem" as={colorScheme === 'green' ? CheckCircle : WarningCircle} />
+        </Tag>
+      </Center>
+    );
+  }, []);
+  const memoryCell = React.useCallback((device: DeviceWithStatus) => {
+    if (!device.connected) return <Center>-</Center>;
+
+    let colorScheme = 'red';
+    if (device.memoryUsed <= 85) colorScheme = 'yellow';
+    if (device.memoryUsed <= 60) colorScheme = 'green';
+
+    return (
+      <Center>
+        <Tag borderRadius="full" variant="subtle" colorScheme={colorScheme}>
+          <TagLabel>{fourDigitNumber(device.memoryUsed)}%</TagLabel>
+          <TagRightIcon marginStart="0.1rem" as={colorScheme === 'green' ? CheckCircle : WarningCircle} />
+        </Tag>
+      </Center>
+    );
+  }, []);
+  const temperatureCell = React.useCallback((device: DeviceWithStatus) => {
+    if (!device.connected || device.temperature === 0) return <Center>-</Center>;
+
+    let colorScheme = 'red';
+    if (device.temperature <= 85) colorScheme = 'yellow';
+    if (device.temperature <= 75) colorScheme = 'green';
+
+    return (
+      <Center>
+        <Tag borderRadius="full" variant="subtle" colorScheme={colorScheme}>
+          <TagLabel>{fourDigitNumber(device.temperature)}°C</TagLabel>
+          <TagRightIcon marginStart="0.1rem" as={colorScheme === 'green' ? ThermometerCold : ThermometerHot} />
+        </Tag>
+      </Center>
+    );
+  }, []);
+
+  const columns: DataGridColumn<DeviceWithStatus>[] = React.useMemo(
+    (): DataGridColumn<DeviceWithStatus>[] => [
       {
         id: 'badge',
-        Header: '',
-        Footer: '',
-        accessor: 'badge',
-        Cell: (v) => badgeCell(v.cell.row.original),
-        customWidth: '35px',
-        alwaysShow: true,
-        disableSortBy: true,
+        header: '',
+        footer: '',
+        accessorKey: 'badge',
+        cell: (v) => badgeCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          customWidth: '35px',
+          alwaysShow: true,
+        },
       },
       {
         id: 'serialNumber',
-        Header: t('inventory.serial_number'),
-        Footer: '',
-        accessor: 'serialNumber',
-        Cell: (v) => serialCell(v.cell.row.original),
-        alwaysShow: true,
-        customMaxWidth: '200px',
-        customWidth: '130px',
-        customMinWidth: '130px',
-        disableSortBy: true,
+        header: t('inventory.serial_number'),
+        footer: '',
+        accessorKey: 'serialNumber',
+        cell: (v) => serialCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          alwaysShow: true,
+          customMaxWidth: '200px',
+          customWidth: '130px',
+          customMinWidth: '130px',
+        },
+      },
+      {
+        id: 'sanity',
+        header: t('devices.sanity'),
+        footer: '',
+        cell: (v) => sanityCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          headerStyleProps: {
+            textAlign: 'center',
+          },
+        },
+      },
+      {
+        id: 'memory',
+        header: t('analytics.memory'),
+        footer: '',
+        cell: (v) => memoryCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          headerStyleProps: {
+            textAlign: 'center',
+          },
+        },
+      },
+      {
+        id: 'load',
+        header: 'Load',
+        footer: '',
+        cell: (v) => loadCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          headerOptions: {
+            tooltip: 'CPU Load',
+          },
+          headerStyleProps: {
+            textAlign: 'center',
+          },
+        },
+      },
+      {
+        id: 'temperature',
+        header: 'Temp',
+        footer: '',
+        cell: (v) => temperatureCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          headerOptions: {
+            tooltip: t('analytics.temperature'),
+          },
+          columnSelectorOptions: {
+            label: t('analytics.temperature'),
+          },
+          headerStyleProps: {
+            textAlign: 'center',
+          },
+        },
       },
       {
         id: 'firmware',
-        Header: t('commands.revision'),
-        Footer: '',
-        accessor: 'firmware',
-        Cell: (v) => firmwareCell(v.cell.row.original),
-        stopPropagation: true,
-        customWidth: '50px',
-        disableSortBy: true,
+        header: t('commands.revision'),
+        footer: '',
+        accessorKey: 'firmware',
+        cell: (v) => firmwareCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          stopPropagation: true,
+          customWidth: '50px',
+        },
       },
       {
         id: 'compatible',
-        Header: t('common.type'),
-        Footer: '',
-        accessor: 'compatible',
-        customWidth: '50px',
-        disableSortBy: true,
+        header: t('common.type'),
+        footer: '',
+        accessorKey: 'compatible',
+        enableSorting: false,
       },
       {
         id: 'IP',
-        Header: 'IP',
-        Footer: '',
-        accessor: 'IP',
-        Cell: (v) => localeCell(v.cell.row.original),
-        disableSortBy: true,
+        header: 'IP',
+        footer: '',
+        accessorKey: 'IP',
+        cell: (v) => localeCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          customMaxWidth: '140px',
+          customWidth: '130px',
+          customMinWidth: '130px',
+        },
+      },
+      {
+        id: 'provisioning',
+        header: 'Provisioning',
+        footer: '',
+        cell: (v) => provCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          stopPropagation: true,
+        },
+      },
+      {
+        id: 'radius',
+        header: 'Rad',
+        footer: '',
+        accessorKey: 'hasRADIUSSessions',
+        cell: (v) =>
+          numberCell(
+            typeof v.cell.row.original.hasRADIUSSessions === 'number' ? v.cell.row.original.hasRADIUSSessions : 0,
+          ),
+        enableSorting: false,
+        meta: {
+          customWidth: '40px',
+          customMinWidth: '40px',
+          columnSelectorOptions: {
+            label: 'Radius Sessions',
+          },
+          headerOptions: {
+            tooltip: 'Current active radius sessions',
+          },
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
+      },
+      {
+        id: 'GPS',
+        header: 'GPS',
+        footer: '',
+        cell: (v) => gpsCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          customWidth: '32px',
+          stopPropagation: true,
+        },
+      },
+      {
+        id: 'uptime',
+        header: t('system.uptime'),
+        footer: '',
+        cell: (v) => uptimeCell(v.cell.row.original),
+        enableSorting: false,
       },
       {
         id: 'lastContact',
-        Header: t('analytics.last_contact'),
-        Footer: '',
-        accessor: 'lastContact',
-        Cell: (v) => dateCell(v.cell.row.original.lastContact),
-        disableSortBy: true,
+        header: t('analytics.last_contact'),
+        footer: '',
+        accessorKey: 'lastContact',
+        cell: (v) => dateCell(v.cell.row.original.lastContact),
+        enableSorting: false,
       },
       {
         id: 'lastFWUpdate',
-        Header: t('controller.devices.last_upgrade'),
-        Footer: '',
-        accessor: 'lastFWUpdate',
-        Cell: (v) => dateCell(v.cell.row.original.lastFWUpdate),
-        disableSortBy: true,
+        header: t('controller.devices.last_upgrade'),
+        footer: '',
+        accessorKey: 'lastFWUpdate',
+        cell: (v) => dateCell(v.cell.row.original.lastFWUpdate),
+        enableSorting: false,
       },
       {
         id: 'rxBytes',
-        Header: 'Rx',
-        Footer: '',
-        accessor: 'rxBytes',
-        Cell: (v) => dataCell(v.cell.row.original.rxBytes),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: 'Rx',
+        footer: '',
+        accessorKey: 'rxBytes',
+        cell: (v) => dataCell(v.cell.row.original.rxBytes),
+        enableSorting: false,
+        meta: {
+          customWidth: '50px',
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
       },
       {
         id: 'txBytes',
-        Header: 'Tx',
-        Footer: '',
-        accessor: 'txBytes',
-        Cell: (v) => dataCell(v.cell.row.original.txBytes),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: 'Tx',
+        footer: '',
+        accessorKey: 'txBytes',
+        cell: (v) => dataCell(v.cell.row.original.txBytes),
+        enableSorting: false,
+        meta: {
+          customWidth: '40px',
+          customMinWidth: '40px',
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
       },
       {
         id: '2G',
-        Header: '2G',
-        Footer: '',
-        accessor: 'associations_2G',
-        Cell: (v) => numberCell(v.cell.row.original.associations_2G),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: '2G',
+        footer: '',
+        accessorKey: 'associations_2G',
+        cell: (v) => numberCell(v.cell.row.original.associations_2G),
+        enableSorting: false,
+        meta: {
+          customWidth: '40px',
+          customMinWidth: '40px',
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
       },
       {
         id: '5G',
-        Header: '5G',
-        Footer: '',
-        accessor: 'associations_5G',
-        Cell: (v) => numberCell(v.cell.row.original.associations_5G),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: '5G',
+        footer: '',
+        accessorKey: 'associations_5G',
+        cell: (v) => numberCell(v.cell.row.original.associations_5G),
+        enableSorting: false,
+        meta: {
+          customWidth: '40px',
+          customMinWidth: '40px',
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
       },
       {
         id: '6G',
-        Header: '6G',
-        Footer: '',
-        accessor: 'associations_6G',
-        Cell: (v) => numberCell(v.cell.row.original.associations_6G),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: '6G',
+        footer: '',
+        accessorKey: 'associations_6G',
+        cell: (v) => numberCell(v.cell.row.original.associations_6G),
+        enableSorting: false,
+        meta: {
+          customWidth: '40px',
+          customMinWidth: '40px',
+          headerStyleProps: {
+            textAlign: 'right',
+          },
+        },
       },
       {
         id: 'certificateExpiryDate',
-        Header: t('devices.certificate_expiry'),
-        Footer: '',
-        accessor: 'certificateExpiryDate',
-        Cell: (v) => dateCell(v.cell.row.original.certificateExpiryDate, true),
-        customWidth: '50px',
-        disableSortBy: true,
+        header: 'Exp',
+        footer: '',
+        accessorKey: 'certificateExpiryDate',
+        cell: (v) => compactDateCell(v.cell.row.original.certificateExpiryDate, true),
+        enableSorting: false,
+        meta: {
+          columnSelectorOptions: {
+            label: 'Certificate Expiry',
+          },
+          headerOptions: {
+            tooltip: 'Certificate Expiry Date',
+          },
+        },
       },
       {
         id: 'actions',
-        Header: t('common.actions'),
-        Footer: '',
-        accessor: 'actions',
-        Cell: (v) => actionCell(v.cell.row.original),
-        customWidth: '50px',
-        alwaysShow: true,
-        disableSortBy: true,
+        header: t('common.actions'),
+        footer: '',
+        accessorKey: 'actions',
+        cell: (v) => actionCell(v.cell.row.original),
+        enableSorting: false,
+        meta: {
+          customWidth: '50px',
+          alwaysShow: true,
+        },
       },
     ],
     [t, firmwareCell],
@@ -368,50 +637,27 @@ const DeviceListCard = () => {
 
   return (
     <>
-      <CardHeader px={4} pt={4}>
-        <Heading size="md" my="auto" mr={2}>
-          {getCount.data?.count} {t('devices.title')}
-        </Heading>
-        <DeviceSearchBar />
-        <Spacer />
-        <ColumnPicker
-          columns={columns as Column<unknown>[]}
-          hiddenColumns={hiddenColumns}
-          setHiddenColumns={setHiddenColumns}
-          preference="gateway.devices.table.hiddenColumns"
-        />
-        <RefreshButton
-          onClick={() => {
-            getDevices.refetch();
-            getCount.refetch();
-          }}
-          isCompact
-          ml={2}
-          isFetching={getCount.isFetching || getDevices.isFetching}
-        />
-      </CardHeader>
       <CardBody p={4}>
         <Box overflowX="auto" w="100%">
-          <DataTable<DeviceWithStatus>
-            columns={
-              columns.filter(({ id }) => !hiddenColumns.find((hidden) => hidden === id)) as {
-                id: string;
-                Header: string;
-                Footer: string;
-                accessor: string;
-              }[]
-            }
-            data={data ?? []}
+          <DataGrid<DeviceWithStatus>
+            controller={tableController}
+            header={{
+              title: `${getCount.data?.count} ${t('devices.title')}`,
+              objectListed: t('devices.title'),
+              leftContent: <DeviceSearchBar />,
+            }}
+            columns={columns}
+            data={data}
             isLoading={getCount.isFetching || getDevices.isFetching}
-            isManual
-            hiddenColumns={hiddenColumns}
-            obj={t('devices.title')}
-            count={getCount.data?.count || 0}
-            // @ts-ignore
-            setPageInfo={setPageInfo}
-            saveSettingsId="gateway.devices.table"
-            onRowClick={(device) => navigate(`devices/${device.serialNumber}`)}
-            isRowClickable={() => true}
+            options={{
+              count: getCount.data?.count,
+              isManual: true,
+              onRowClick: (device) => () => navigate(`devices/${device.serialNumber}`),
+              refetch: () => {
+                getDevices.refetch();
+                getCount.refetch();
+              },
+            }}
           />
         </Box>
       </CardBody>

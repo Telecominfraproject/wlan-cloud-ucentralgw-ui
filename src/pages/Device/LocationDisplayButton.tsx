@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { Box, Button, Flex, FormControl, FormLabel, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Icon,
+  Tooltip,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { Globe } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
@@ -11,13 +21,15 @@ import { useGetDeviceLastStats } from 'hooks/Network/Statistics';
 
 type Props = {
   serialNumber: string;
+  isCompact?: boolean;
 };
 
-const LocationDisplayButton = ({ serialNumber }: Props) => {
+const LocationDisplayButton = ({ serialNumber, isCompact }: Props) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const getGoogleApiKey = useGetSystemSecret({ secret: 'google.maps.apikey' });
   const getLastStats = useGetDeviceLastStats({ serialNumber });
+  const iconColor = useColorModeValue('blue.500', 'blue.200');
 
   const location: google.maps.LatLngLiteral | undefined = React.useMemo(() => {
     if (!getLastStats.data?.gps) return undefined;
@@ -38,9 +50,15 @@ const LocationDisplayButton = ({ serialNumber }: Props) => {
 
   return (
     <>
-      <Button variant="link" onClick={onOpen} rightIcon={<Globe size={20} />} colorScheme="blue">
-        {t('locations.view_gps')}
-      </Button>
+      {isCompact ? (
+        <Tooltip label={t('locations.view_gps')}>
+          <Icon as={Globe} boxSize={6} onClick={onOpen} color={iconColor} cursor="pointer" />
+        </Tooltip>
+      ) : (
+        <Button variant="link" onClick={onOpen} rightIcon={<Globe size={20} />} colorScheme="blue">
+          {t('locations.view_gps')}
+        </Button>
+      )}
       <Modal isOpen={isOpen} onClose={onClose} title={t('locations.one')}>
         <Box w="100%" h="100%">
           <Flex mb={4}>
