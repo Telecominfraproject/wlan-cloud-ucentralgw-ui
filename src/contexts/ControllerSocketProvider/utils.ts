@@ -116,9 +116,16 @@ export type SocketWebSocketNotificationData =
       log?: undefined;
       message: InitialSocketMessage;
     };
-export type SocketEventCallback = {
-  id: string;
-  type: 'DEVICE_CONNECTION' | 'DEVICE_DISCONNECTION';
-  serialNumber: string;
-  callback: () => void;
-};
+export type SocketEventCallback =
+  | {
+      id: string;
+      type: 'DEVICE_CONNECTION' | 'DEVICE_DISCONNECTION';
+      serialNumber: string;
+      callback: () => void;
+    }
+  | {
+      id: string;
+      type: 'DEVICE_SEARCH_RESULTS';
+      searchId: number;
+      callback: (serialNumbers: string[]) => void;
+    };

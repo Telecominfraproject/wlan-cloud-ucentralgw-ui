@@ -11,6 +11,8 @@ export interface GatewayDevice {
   entity: string;
   firmware: string;
   fwUpdatePolicy: string;
+  hasGPS: boolean;
+  hasRADIUSSessions: number;
   lastConfigurationChange: number;
   lastConfigurationDownload: number;
   lastFWUpdate: number;

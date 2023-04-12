@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import create from 'zustand';
 import { ControllerSocketRawMessage, SocketEventCallback, SocketWebSocketNotificationData } from './utils';
 import { axiosGw } from 'constants/axiosInstances';
+import { randomIntId } from 'helpers/stringHelper';
 import { DevicesStats, DeviceWithStatus } from 'hooks/Network/Devices';
 import { NotificationType } from 'models/Socket';
 
@@ -122,6 +123,7 @@ export type ControllerStoreState = {
   lastSearchResults: string[];
   setLastSearchResults: (result: string[]) => void;
   errors: { str: string; timestamp: Date }[];
+  searchSerialNumber: (serialNumber: string, timeout?: number) => Promise<string[]>;
 };
 
 export const useControllerStore = create<ControllerStoreState>((set, get) => ({
@@ -169,13 +171,23 @@ export const useControllerStore = create<ControllerStoreState>((set, get) => ({
           id: uuid(),
         };
 
-        const eventsToFire = get().eventListeners.filter(
-          ({ type, serialNumber }) => type === msg.type && serialNumber === msg.serialNumber,
-        );
+        const eventsToFire = get().eventListeners.filter((event) => {
+          if (event.type === 'DEVICE_CONNECTION' || event.type === 'DEVICE_DISCONNECTION') {
+            return event.serialNumber === msg.serialNumber;
+          }
+          if (msg.type === 'DEVICE_SEARCH_RESULTS' && event.type === 'DEVICE_SEARCH_RESULTS') {
+            return true;
+          }
+          return false;
+        });
 
         if (eventsToFire.length > 0) {
           for (const event of eventsToFire) {
-            event.callback();
+            if (event.type === 'DEVICE_SEARCH_RESULTS' && msg.type === 'DEVICE_SEARCH_RESULTS') {
+              event.callback(msg.serialNumbers);
+            } else if (event.type === 'DEVICE_CONNECTION' || event.type === 'DEVICE_DISCONNECTION') {
+              event.callback();
+            }
           }
 
           return set((state) => ({
@@ -211,6 +223,37 @@ export const useControllerStore = create<ControllerStoreState>((set, get) => ({
     const ws = get().webSocket;
     if (ws) ws.send(str);
   },
+  searchSerialNumber: async (serialNumber: string, timeout = 1000 * 5): Promise<string[]> =>
+    new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Promise timed out after ${timeout} ms`));
+      }, timeout);
+      const ws = get().webSocket;
+      if (ws) {
+        const id = randomIntId();
+        get().addEventListeners([
+          {
+            id: uuid(),
+            type: 'DEVICE_SEARCH_RESULTS',
+            searchId: id,
+            callback: (serialNumbers: string[]) => {
+              clearTimeout(timer);
+              resolve(serialNumbers);
+            },
+          },
+        ]);
+        ws.send(
+          JSON.stringify({
+            command: 'serial_number_search',
+            serial_prefix: serialNumber,
+            id: randomIntId(),
+          }),
+        );
+      } else {
+        clearTimeout(timer);
+        reject(new Error('No websocket connection'));
+      }
+    }),
   startWebSocket: (token: string, tries = 0) => {
     const newTries = tries + 1;
     if (tries <= 10) {
