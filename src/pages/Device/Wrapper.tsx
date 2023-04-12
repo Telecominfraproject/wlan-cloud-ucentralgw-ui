@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import DeviceDetails from './Details';
 import DeviceLogsCard from './LogsCard';
 import DeviceNotes from './Notes';
+import RadiusClientsCard from './RadiusClients';
 import RestrictionsCard from './RestrictionsCard';
 import DeviceStatisticsCard from './StatisticsCard';
 import DeviceSummary from './Summary';
@@ -38,7 +39,7 @@ import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
-import DeviceSearchBar from 'components/DeviceSearchBar';
+import GlobalSearchBar from 'components/GlobalSearchBar';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
@@ -194,7 +195,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             </HStack>
             <Spacer />
             <HStack spacing={2}>
-              <DeviceSearchBar />
+              <GlobalSearchBar />
               <DeleteButton isCompact onClick={onDeleteOpen} />
               {getDevice?.data && (
                 <DeviceActionDropdown
@@ -244,7 +245,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
               </HStack>
               <Spacer />
               <HStack spacing={2}>
-                <DeviceSearchBar />
+                <GlobalSearchBar />
                 <DeleteButton isCompact onClick={onDeleteOpen} />
                 {getDevice?.data && (
                   <DeviceActionDropdown
@@ -319,6 +320,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceStatisticsCard serialNumber={serialNumber} />
           <WifiAnalysisCard serialNumber={serialNumber} />
           <DeviceLogsCard serialNumber={serialNumber} />
+          {getDevice.data && getDevice.data?.hasRADIUSSessions > 0 ? (
+            <RadiusClientsCard serialNumber={serialNumber} />
+          ) : null}
           <RestrictionsCard serialNumber={serialNumber} />
           <Box />
           <DeviceNotes serialNumber={serialNumber} />

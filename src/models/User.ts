@@ -1,6 +1,5 @@
 import { Note } from './Note';
 
-
 export type UserRole =
   | 'root'
   | 'admin'

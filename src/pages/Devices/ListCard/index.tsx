@@ -24,7 +24,7 @@ import DeviceUptimeCell from './Uptime';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { DataGrid } from 'components/DataTables/DataGrid';
 import { DataGridColumn, useDataGrid } from 'components/DataTables/DataGrid/useDataGrid';
-import DeviceSearchBar from 'components/DeviceSearchBar';
+import GlobalSearchBar from 'components/GlobalSearchBar';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
@@ -644,7 +644,7 @@ const DeviceListCard = () => {
             header={{
               title: `${getCount.data?.count} ${t('devices.title')}`,
               objectListed: t('devices.title'),
-              leftContent: <DeviceSearchBar />,
+              leftContent: <GlobalSearchBar />,
             }}
             columns={columns}
             data={data}
