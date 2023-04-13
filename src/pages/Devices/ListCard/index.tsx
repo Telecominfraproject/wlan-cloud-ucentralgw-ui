@@ -40,7 +40,8 @@ import NumberCell from 'components/TableCells/NumberCell';
 import { DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
 import { FirmwareAgeResponse, useGetFirmwareAges } from 'hooks/Network/Firmware';
 
-const fourDigitNumber = (v: number) => {
+const fourDigitNumber = (v?: number) => {
+  if (v === undefined || typeof v !== 'number') return '-';
   if (v === 0) {
     return '0.00';
   }
