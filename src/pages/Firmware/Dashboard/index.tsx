@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Center, Spacer, Spinner } from '@chakra-ui/react';
-import { Clock, WifiHigh } from 'phosphor-react';
+import { Clock, WifiHigh } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import AverageFirmwareAge from './AverageFirmwareAge';

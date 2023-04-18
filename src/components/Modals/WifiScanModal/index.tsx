@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Center, Spinner } from '@chakra-ui/react';
-import { ArrowLeft, Download, Gauge } from 'phosphor-react';
+import { ArrowLeft, Download, Gauge } from '@phosphor-icons/react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';

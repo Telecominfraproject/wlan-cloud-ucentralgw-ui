@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IconButton, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { Article } from 'phosphor-react';
+import { Article } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import SystemLoggingModal from './Modal';
 import { EndpointApiResponse } from 'hooks/Network/Endpoints';

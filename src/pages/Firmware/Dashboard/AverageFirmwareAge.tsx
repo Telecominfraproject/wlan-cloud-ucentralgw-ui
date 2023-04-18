@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Cake } from 'phosphor-react';
+import { Cake } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
 import { FirmwareDashboardResponse } from 'hooks/Network/Firmware';

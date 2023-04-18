@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, IconButton, Tooltip, useBreakpoint, useDisclosure } from '@chakra-ui/react';
-import { Pencil, X } from 'phosphor-react';
+import { Pencil, X } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmCloseAlertModal } from '../../Modals/ConfirmCloseAlert';
 

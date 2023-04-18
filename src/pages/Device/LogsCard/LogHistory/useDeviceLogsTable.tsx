@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, IconButton, Text, useDisclosure } from '@chakra-ui/react';
-import { MagnifyingGlass } from 'phosphor-react';
+import { MagnifyingGlass } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import DetailedLogViewModal from './DetailedLogViewModal';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';

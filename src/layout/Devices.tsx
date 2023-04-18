@@ -10,7 +10,7 @@ import {
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
-import { ArrowSquareDown, ArrowSquareUp, Clock } from 'phosphor-react';
+import { ArrowSquareDown, ArrowSquareUp, Clock } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'components/Containers/Card';
 import { compactSecondsToDetailed, minimalSecondsToDetailed } from 'helpers/dateFormatting';

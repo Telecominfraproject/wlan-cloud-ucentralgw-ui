@@ -11,7 +11,7 @@ import {
   Tooltip,
   UnorderedList,
 } from '@chakra-ui/react';
-import { LockSimple, LockSimpleOpen } from 'phosphor-react';
+import { LockSimple, LockSimpleOpen } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';

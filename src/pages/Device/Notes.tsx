@@ -18,7 +18,7 @@ import {
   useToast,
   useBreakpoint,
 } from '@chakra-ui/react';
-import { Plus } from 'phosphor-react';
+import { Plus } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';

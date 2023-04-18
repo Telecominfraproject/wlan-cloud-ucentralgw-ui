@@ -18,7 +18,7 @@ import {
   useBreakpoint,
   Portal,
 } from '@chakra-ui/react';
-import { ArrowCircleLeft } from 'phosphor-react';
+import { ArrowCircleLeft } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthProvider';

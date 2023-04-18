@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Checkbox, IconButton, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
 import { VisibilityState } from '@tanstack/react-table';
-import { FunnelSimple } from 'phosphor-react';
+import { FunnelSimple } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { DataGridColumn } from './useDataGrid';

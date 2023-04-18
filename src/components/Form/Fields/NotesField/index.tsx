@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import { IconButton, Input, InputGroup, InputRightElement, Tooltip } from '@chakra-ui/react';
-import { Trash } from 'phosphor-react';
+import { Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { DataTable } from '../../../DataTables/DataTable';

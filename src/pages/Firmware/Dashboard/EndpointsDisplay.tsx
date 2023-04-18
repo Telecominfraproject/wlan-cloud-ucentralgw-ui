@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Heading, Table, Tbody, Td, Th, Thead, Tooltip, Tr } from '@chakra-ui/react';
-import { Info } from 'phosphor-react';
+import { Info } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { Card } from 'components/Containers/Card';

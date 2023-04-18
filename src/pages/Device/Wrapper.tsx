@@ -22,7 +22,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from 'phosphor-react';
+import { Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import { useNavigate } from 'react-router-dom';

@@ -17,7 +17,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
-import { ListDashes } from 'phosphor-react';
+import { ListDashes } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';

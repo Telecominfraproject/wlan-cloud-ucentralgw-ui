@@ -17,7 +17,7 @@ import {
   Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import { MagnifyingGlass, Trash } from 'phosphor-react';
+import { MagnifyingGlass, Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Script, useDeleteScript } from 'hooks/Network/Scripts';

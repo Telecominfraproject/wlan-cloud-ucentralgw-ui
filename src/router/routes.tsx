@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@chakra-ui/react';
-import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, WifiHigh } from 'phosphor-react';
+import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, WifiHigh } from '@phosphor-icons/react';
 import { Route } from 'models/Routes';
 
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));

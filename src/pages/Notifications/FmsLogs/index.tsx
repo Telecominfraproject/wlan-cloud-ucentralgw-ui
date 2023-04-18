@@ -14,7 +14,7 @@ import {
   Tooltip,
   Tr,
 } from '@chakra-ui/react';
-import { Download } from 'phosphor-react';
+import { Download } from '@phosphor-icons/react';
 import { CSVLink } from 'react-csv';
 import { useTranslation } from 'react-i18next';
 import ReactVirtualizedAutoSizer from 'react-virtualized-auto-sizer';

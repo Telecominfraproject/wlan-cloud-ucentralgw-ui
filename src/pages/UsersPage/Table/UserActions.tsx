@@ -18,7 +18,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { MagnifyingGlass, Trash } from 'phosphor-react';
+import { MagnifyingGlass, Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import ActionsDropdown from './ActionsDropdown';

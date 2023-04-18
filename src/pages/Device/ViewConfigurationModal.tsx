@@ -14,7 +14,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
-import { Barcode } from 'phosphor-react';
+import { Barcode } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'components/Modals/Modal';
 import { DeviceConfiguration } from 'models/Device';

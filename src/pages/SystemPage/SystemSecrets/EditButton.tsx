@@ -22,7 +22,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Pencil } from 'phosphor-react';
+import { Pencil } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Secret, useUpdateSystemSecret } from 'hooks/Network/Secrets';
 import { AxiosError } from 'models/Axios';

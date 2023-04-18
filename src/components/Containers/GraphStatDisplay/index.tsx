@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Heading, IconButton, Spacer, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { ArrowsOut, Info } from 'phosphor-react';
+import { ArrowsOut, Info } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../Card';
 import { CardBody } from '../Card/CardBody';

@@ -20,7 +20,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { TOptions } from 'i18next';
-import { X } from 'phosphor-react';
+import { X } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { ProvisioningVenueNotificationMessage } from '../../utils';

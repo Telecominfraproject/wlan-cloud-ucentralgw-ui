@@ -22,7 +22,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { Pen } from 'phosphor-react';
+import { Pen } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ApiKey, useUpdateApiKey } from 'hooks/Network/ApiKeys';
 

@@ -9,7 +9,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import { Question } from 'phosphor-react';
+import { Question } from '@phosphor-icons/react';
 
 export type InfoPopoverProps = {
   title: string;

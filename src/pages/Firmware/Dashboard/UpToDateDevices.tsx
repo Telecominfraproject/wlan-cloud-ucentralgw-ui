@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FloppyDisk } from 'phosphor-react';
+import { FloppyDisk } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
 import { FirmwareDashboardResponse } from 'hooks/Network/Firmware';

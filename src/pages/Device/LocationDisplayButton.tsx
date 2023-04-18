@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Wrapper } from '@googlemaps/react-wrapper';
-import { Globe } from 'phosphor-react';
+import { Globe } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { GoogleMap } from 'components/Maps/GoogleMap';
 import { GoogleMapMarker } from 'components/Maps/GoogleMap/Marker';
