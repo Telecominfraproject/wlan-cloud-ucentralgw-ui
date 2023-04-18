@@ -55,7 +55,8 @@ const getDevicesProvisioningStatus = async (serialNumbers: string[]) =>
               provisioning,
             };
           }),
-        );
+        )
+        .catch(() => []);
 
 const getDeviceGatewayInfo = (limit: number, offset: number) =>
   axiosGw
