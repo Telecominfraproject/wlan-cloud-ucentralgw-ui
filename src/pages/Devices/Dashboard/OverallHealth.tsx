@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Heart, Warning } from 'phosphor-react';
+import { Heart, Warning } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import SimpleIconStatDisplay from 'components/Containers/SimpleIconStatDisplay';
 import { ControllerDashboardHealth } from 'hooks/Network/Controller';

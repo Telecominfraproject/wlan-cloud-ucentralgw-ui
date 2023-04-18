@@ -16,7 +16,7 @@ import {
   Tooltip,
   useBreakpoint,
 } from '@chakra-ui/react';
-import { Clock, Prohibit } from 'phosphor-react';
+import { Clock, Prohibit } from '@phosphor-icons/react';
 import ReactDatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { CloseButton } from 'components/Buttons/CloseButton';

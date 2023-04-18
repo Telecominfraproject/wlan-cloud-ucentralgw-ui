@@ -14,7 +14,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
-import { ArrowLeft } from 'phosphor-react';
+import { ArrowLeft } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { Card } from 'components/Containers/Card';

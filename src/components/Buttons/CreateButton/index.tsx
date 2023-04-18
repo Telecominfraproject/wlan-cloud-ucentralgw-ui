@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, IconButton, Tooltip, useBreakpoint, SpaceProps } from '@chakra-ui/react';
-import { Plus } from 'phosphor-react';
+import { Plus } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
 export interface CreateButtonProps extends SpaceProps {

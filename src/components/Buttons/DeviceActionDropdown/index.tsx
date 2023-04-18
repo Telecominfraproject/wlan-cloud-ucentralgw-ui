@@ -11,7 +11,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { Barcode, Power, TerminalWindow, WifiHigh, Wrench } from 'phosphor-react';
+import { Barcode, Power, TerminalWindow, WifiHigh, Wrench } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useControllerStore } from 'contexts/ControllerSocketProvider/useStore';
 import { useBlinkDevice, useGetDeviceRtty } from 'hooks/Network/Devices';

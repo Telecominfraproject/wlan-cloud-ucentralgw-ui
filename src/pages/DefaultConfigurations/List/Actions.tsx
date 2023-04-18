@@ -17,7 +17,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { MagnifyingGlass, Trash } from 'phosphor-react';
+import { MagnifyingGlass, Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { DefaultConfigurationResponse, useDeleteDefaultConfig } from 'hooks/Network/DefaultConfigurations';
 import { AxiosError } from 'models/Axios';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@chakra-ui/react';
 import { SortDirection } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, Circle } from 'phosphor-react';
+import { ArrowDown, ArrowUp, Circle } from '@phosphor-icons/react';
 
 export type DataGridSortIconProps = {
   sortInfo: false | SortDirection;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Tooltip } from '@chakra-ui/react';
-import { CheckCircle, Question, WarningCircle } from 'phosphor-react';
+import { CheckCircle, Question, WarningCircle } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { getRevision } from 'helpers/stringHelper';
 import { DeviceWithStatus } from 'hooks/Network/Devices';

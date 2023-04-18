@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, IconButton, Text, Tooltip, useDisclosure } from '@chakra-ui/react';
-import { Pen } from 'phosphor-react';
+import { Pen } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import AddPhoneNumberModal from './AddPhoneNumberModal';
 import { useAuth } from 'contexts/AuthProvider';

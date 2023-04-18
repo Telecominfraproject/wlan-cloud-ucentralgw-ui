@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { Button, IconButton, Tooltip, useBreakpoint } from '@chakra-ui/react';
-import { ArrowRight, FloppyDisk } from 'phosphor-react';
+import { ArrowRight, FloppyDisk } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
 export interface StepButtonProps {

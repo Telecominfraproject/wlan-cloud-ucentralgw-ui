@@ -22,7 +22,7 @@ import {
   useClipboard,
   UseDisclosureReturn,
 } from '@chakra-ui/react';
-import { Pen, Plus, X } from 'phosphor-react';
+import { Pen, Plus, X } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from 'components/Buttons/SaveButton';
 import { DataTable } from 'components/DataTables/DataTable';

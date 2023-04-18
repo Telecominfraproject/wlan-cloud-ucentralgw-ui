@@ -17,7 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { MultiValue, Select } from 'chakra-react-select';
-import { ArrowsClockwise } from 'phosphor-react';
+import { ArrowsClockwise } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from '../../../components/InformationDisplays/FormattedDate';
 import SystemLoggingButton from './LoggingButton';

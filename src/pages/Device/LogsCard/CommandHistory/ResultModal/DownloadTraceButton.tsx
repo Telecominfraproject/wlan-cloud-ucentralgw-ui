@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Download } from 'phosphor-react';
+import { Download } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ResponsiveButton } from 'components/Buttons/ResponsiveButton';
 import { DeviceCommandHistory } from 'hooks/Network/Commands';

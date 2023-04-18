@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { As, Flex, Heading, Icon, Spacer, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
-import { Info } from 'phosphor-react';
+import { Info } from '@phosphor-icons/react';
 import { Card } from '../Card';
 
 type Props = {

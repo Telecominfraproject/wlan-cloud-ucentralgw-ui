@@ -12,7 +12,7 @@ import {
   Spinner,
   Switch,
 } from '@chakra-ui/react';
-import { ArrowLeft } from 'phosphor-react';
+import { ArrowLeft } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../Modal';
 import { useDownloadTrace, useTrace } from 'hooks/Network/Trace';

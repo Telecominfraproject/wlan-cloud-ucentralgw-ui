@@ -122,9 +122,9 @@ export const getHoursAgo = (hoursAgo = 1, date = new Date()) => {
 export const dateForFilename = (dateString: number) => {
   const convertedTimestamp = unixToDateString(dateString);
   const date = new Date(convertedTimestamp);
-  return `${date.getFullYear()}_${twoDigitNumber(date.getMonth() + 1)}_${twoDigitNumber(
+  return `${date.getFullYear()}.${twoDigitNumber(date.getMonth() + 1)}.${twoDigitNumber(
     date.getDate(),
-  )}_${twoDigitNumber(date.getHours())}h${twoDigitNumber(date.getMinutes())}m${twoDigitNumber(date.getSeconds())}s`;
+  )}-${twoDigitNumber(date.getHours())}.${twoDigitNumber(date.getMinutes())}.${twoDigitNumber(date.getSeconds())}`;
 };
 
 export const formatDaysAgoCompact = (d1: number, d2: number = new Date().getTime()) => {

@@ -13,7 +13,7 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react';
-import { ClipboardText } from 'phosphor-react';
+import { ClipboardText } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from '../../Buttons/SaveButton';
 import { Modal } from '../Modal';

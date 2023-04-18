@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Button, Tooltip, useBreakpoint } from '@chakra-ui/react';
-import { Pen } from 'phosphor-react';
+import { Pen } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
 export interface EditButtonProps {

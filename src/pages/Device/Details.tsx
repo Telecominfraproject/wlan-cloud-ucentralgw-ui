@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Grid, GridItem, Heading, Link, Spacer, useClipboard, useDisclosure } from '@chakra-ui/react';
-import { Eye, EyeSlash } from 'phosphor-react';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import ViewCapabilitiesModal from './ViewCapabilitiesModal';
 import ViewConfigurationModal from './ViewConfigurationModal';

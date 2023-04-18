@@ -19,7 +19,7 @@ import {
   Text,
   useClipboard,
 } from '@chakra-ui/react';
-import { Eye, Trash } from 'phosphor-react';
+import { Eye, Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import EditSecretButton from './EditButton';
 import { Secret, useDeleteSystemSecret } from 'hooks/Network/Secrets';

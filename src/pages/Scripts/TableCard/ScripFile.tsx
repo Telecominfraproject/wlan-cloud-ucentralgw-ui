@@ -13,7 +13,7 @@ import {
   useBoolean,
   useClipboard,
 } from '@chakra-ui/react';
-import { UploadSimple } from 'phosphor-react';
+import { UploadSimple } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { useFastField } from 'hooks/useFastField';

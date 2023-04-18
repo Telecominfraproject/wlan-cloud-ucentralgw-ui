@@ -16,7 +16,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
-import { ClockCounterClockwise } from 'phosphor-react';
+import { ClockCounterClockwise } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { LoadingOverlay } from 'components/LoadingOverlay';

@@ -16,7 +16,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { Database } from 'phosphor-react';
+import { Database } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { Modal } from 'components/Modals/Modal';

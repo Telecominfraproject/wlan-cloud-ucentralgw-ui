@@ -8,11 +8,12 @@ import {
   ThermometerCold,
   ThermometerHot,
   WarningCircle,
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
+import ExportDevicesTableButton from './ExportButton';
 import DeviceListFirmwareButton from './FirmwareButton';
 import DeviceTableGpsCell from './GpsCell';
 import AP from './icons/AP.png';
@@ -646,6 +647,9 @@ const DeviceListCard = () => {
               title: `${getCount.data?.count} ${t('devices.title')}`,
               objectListed: t('devices.title'),
               leftContent: <GlobalSearchBar />,
+              otherButtons: (
+                <ExportDevicesTableButton currentPageSerialNumbers={data.map((device) => device.serialNumber)} />
+              ),
             }}
             columns={columns}
             data={data}

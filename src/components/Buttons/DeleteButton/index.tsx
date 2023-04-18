@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, IconButton, Tooltip, useBreakpoint } from '@chakra-ui/react';
-import { Trash } from 'phosphor-react';
+import { Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
 export interface DeleteButtonProps {

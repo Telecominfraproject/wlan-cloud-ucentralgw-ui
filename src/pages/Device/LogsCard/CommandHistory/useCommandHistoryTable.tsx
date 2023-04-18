@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Badge, Box, HStack, IconButton, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
-import { MagnifyingGlass, Trash } from 'phosphor-react';
+import { MagnifyingGlass, Trash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
