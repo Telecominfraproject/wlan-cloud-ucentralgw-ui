@@ -65,6 +65,7 @@ const BADGE_COLORS: Record<string, string> = {
   NO_CERTIFICATE: 'red',
   MISMATCH_SERIAL: 'yellow',
   VERIFIED: 'green',
+  SIMULATED: 'purple',
 };
 
 const DeviceListCard = () => {
