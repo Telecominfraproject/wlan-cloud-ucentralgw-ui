@@ -81,7 +81,9 @@ const DeviceListCard = () => {
   const configureModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
-  const tableController = useDataGrid({ tableSettingsId: 'gateway.devices.table' });
+  const tableController = useDataGrid({
+    tableSettingsId: 'gateway.devices.table',
+  });
   const getCount = useGetDeviceCount({ enabled: true });
   const getDevices = useGetDevices({
     pageInfo: {
@@ -133,14 +135,14 @@ const DeviceListCard = () => {
         h="35px"
         w="35px"
         borderRadius="50em"
-        bgColor={BADGE_COLORS[device.verifiedCertificate] ?? 'red'}
+        bgColor={BADGE_COLORS[device.simulated ? 'SIMULATED' : device.verifiedCertificate] ?? 'red'}
         alignItems="center"
         display="inline-flex"
         justifyContent="center"
         position="relative"
       >
         <Tooltip
-          label={`${device.verifiedCertificate} - ${
+          label={`${device.simulated ? 'SIMULATED' : device.verifiedCertificate} - ${
             device.connected ? t('common.connected') : t('common.disconnected')
           } ${device.restrictedDevice ? `- ${t('devices.restricted')}` : ''}`}
         >
@@ -325,14 +327,15 @@ const DeviceListCard = () => {
   const temperatureCell = React.useCallback((device: DeviceWithStatus) => {
     if (!device.connected || device.temperature === 0) return <Center>-</Center>;
 
+    const temperature = device.temperature > 1000 ? device.temperature / 1000 : device.temperature;
     let colorScheme = 'red';
-    if (device.temperature <= 85) colorScheme = 'yellow';
-    if (device.temperature <= 75) colorScheme = 'green';
+    if (temperature <= 85) colorScheme = 'yellow';
+    if (temperature <= 75) colorScheme = 'green';
 
     return (
       <Center>
         <Tag borderRadius="full" variant="subtle" colorScheme={colorScheme}>
-          <TagLabel>{fourDigitNumber(device.temperature)}°C</TagLabel>
+          <TagLabel>{fourDigitNumber(temperature)}°C</TagLabel>
           <TagRightIcon marginStart="0.1rem" as={colorScheme === 'green' ? ThermometerCold : ThermometerHot} />
         </Tag>
       </Center>
@@ -349,6 +352,10 @@ const DeviceListCard = () => {
         cell: (v) => badgeCell(v.cell.row.original),
         enableSorting: false,
         meta: {
+          columnSelectorOptions: {
+            label: 'Connection Badge',
+          },
+          anchored: true,
           customWidth: '35px',
           alwaysShow: true,
         },
@@ -361,6 +368,7 @@ const DeviceListCard = () => {
         cell: (v) => serialCell(v.cell.row.original),
         enableSorting: false,
         meta: {
+          anchored: true,
           alwaysShow: true,
           customMaxWidth: '200px',
           customWidth: '130px',
@@ -507,6 +515,24 @@ const DeviceListCard = () => {
         footer: '',
         cell: (v) => uptimeCell(v.cell.row.original),
         enableSorting: false,
+      },
+      {
+        id: 'lastRecordedContact',
+        header: t('analytics.last_connected'),
+        footer: '',
+        accessorKey: 'lastRecordedContact',
+        cell: (v) =>
+          dateCell(
+            v.cell.row.original.lastContact !== 0
+              ? v.cell.row.original.lastContact
+              : v.cell.row.original.lastRecordedContact,
+          ),
+        enableSorting: false,
+        meta: {
+          headerOptions: {
+            tooltip: t('analytics.last_connected_tooltip'),
+          },
+        },
       },
       {
         id: 'lastContact',
