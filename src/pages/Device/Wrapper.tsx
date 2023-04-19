@@ -12,17 +12,13 @@ import {
   HStack,
   Portal,
   Spacer,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  Tooltip,
   useBreakpoint,
   useColorModeValue,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { Circuitry, Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from '@phosphor-icons/react';
 import axios from 'axios';
-import { Heart, HeartBreak, LockSimple, LockSimpleOpen, WifiHigh, WifiSlash } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import Masonry from 'react-masonry-css';
 import { useNavigate } from 'react-router-dom';
@@ -39,8 +35,8 @@ import DeviceActionDropdown from 'components/Buttons/DeviceActionDropdown';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { ResponsiveTag } from 'components/Containers/ResponsiveTag';
 import GlobalSearchBar from 'components/GlobalSearchBar';
-import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { ConfigureModal } from 'components/Modals/ConfigureModal';
 import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
@@ -114,10 +110,11 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     if (!getStatus.data) return null;
 
     return (
-      <Tag size="lg" colorScheme={getStatus?.data?.connected ? 'green' : 'red'}>
-        <TagLeftIcon boxSize="18px" as={getStatus.data.connected ? WifiHigh : WifiSlash} />
-        <TagLabel>{getStatus?.data?.connected ? t('common.connected') : t('common.disconnected')}</TagLabel>
-      </Tag>
+      <ResponsiveTag
+        label={getStatus?.data?.connected ? t('common.connected') : t('common.disconnected')}
+        colorScheme={getStatus?.data?.connected ? 'green' : 'red'}
+        icon={getStatus.data.connected ? WifiHigh : WifiSlash}
+      />
     );
   }, [getStatus.data]);
 
@@ -133,23 +130,12 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       if (sanityValue === 100) color = 'green';
       else if (sanityValue > 80) color = 'yellow';
     }
-
     return (
-      <Tooltip
-        hasArrow
-        label={
-          getHealth.data?.values?.[0]?.recorded !== undefined ? (
-            <FormattedDate date={getHealth.data?.values?.[0]?.recorded} />
-          ) : (
-            ''
-          )
-        }
-      >
-        <Tag size="lg" colorScheme={color}>
-          <TagLeftIcon boxSize="18px" as={color === 'green' ? Heart : HeartBreak} />
-          <TagLabel>{sanity ? `${sanity}%` : t('common.unknown')}</TagLabel>
-        </Tag>
-      </Tooltip>
+      <ResponsiveTag
+        label={sanity ? `${sanity}%` : t('common.unknown')}
+        colorScheme={color}
+        icon={color === 'green' ? Heart : HeartBreak}
+      />
     );
   }, [getStatus.data, getHealth.data]);
 
@@ -158,21 +144,21 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
 
     if (getDevice.data.restrictionDetails?.developer)
       return (
-        <Tooltip label={t('devices.restricted_overriden')} hasArrow>
-          <Tag size="lg" colorScheme="green">
-            <TagLeftIcon boxSize="18px" as={LockSimpleOpen} />
-            <TagLabel>
-              {t('devices.restricted')} {isCompact ? '' : '(Dev Mode)'}
-            </TagLabel>
-          </Tag>
-        </Tooltip>
+        <ResponsiveTag
+          label={`${t('devices.restricted')} ${isCompact ? '' : '(Dev Mode)'}`}
+          tooltip={t('devices.restricted_overriden')}
+          colorScheme="green"
+          icon={LockSimpleOpen}
+        />
       );
 
     return (
-      <Tag size="lg" colorScheme="red">
-        <TagLeftIcon boxSize="18px" as={LockSimple} />
-        <TagLabel>{t('devices.restricted')}</TagLabel>
-      </Tag>
+      <ResponsiveTag
+        label={t('devices.restricted')}
+        tooltip={t('devices.restricted')}
+        colorScheme="red"
+        icon={LockSimple}
+      />
     );
   }, [getDevice.data, isCompact]);
 
@@ -189,6 +175,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <CardHeader>
             <HStack spacing={2}>
               <Heading size="md">{serialNumber}</Heading>
+              {getDevice.data?.simulated ? (
+                <ResponsiveTag label={t('simulation.simulated')} colorScheme="purple" icon={Circuitry} />
+              ) : null}
               {connectedTag}
               {healthTag}
               {restrictedTag}
@@ -239,6 +228,9 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
             <CardHeader>
               <HStack spacing={2}>
                 <Heading size="md">{serialNumber}</Heading>
+                {getDevice.data?.simulated ? (
+                  <ResponsiveTag label={t('simulation.simulated')} colorScheme="purple" icon={Circuitry} />
+                ) : null}
                 {connectedTag}
                 {healthTag}
                 {restrictedTag}

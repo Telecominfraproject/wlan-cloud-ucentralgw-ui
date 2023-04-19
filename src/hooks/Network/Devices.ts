@@ -58,6 +58,7 @@ export type DeviceWithStatus = {
   lastConfigurationDownload: number;
   lastContact: number | string;
   lastFWUpdate: number;
+  lastRecordedContact: number;
   load: number;
   locale: string;
   location: string;
@@ -73,6 +74,7 @@ export type DeviceWithStatus = {
   restrictedDevice: boolean;
   rxBytes: number;
   serialNumber: string;
+  simulated: boolean;
   subscriber: string;
   temperature: number;
   txBytes: number;

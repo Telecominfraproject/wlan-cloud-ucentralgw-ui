@@ -39,6 +39,7 @@ export interface GatewayDevice {
     };
   };
   serialNumber: string;
+  simulated: boolean;
   subscriber: string;
   venue: string;
 }

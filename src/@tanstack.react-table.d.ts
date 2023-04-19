@@ -6,6 +6,7 @@ declare module '@tanstack/table-core' {
   interface ColumnMeta<TData extends RowData, TValue> {
     stopPropagation?: boolean;
     alwaysShow?: boolean;
+    anchored?: boolean;
     hasPopover?: boolean;
     customMaxWidth?: string;
     customMinWidth?: string;
