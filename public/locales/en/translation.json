@@ -64,6 +64,8 @@
 		"health": "Health",
 		"inactive": "Inactive",
 		"interval": "Interval",
+		"last_connected": "Last Connected",
+		"last_connected_tooltip": "Last time this device was connected to the controller. This can be used to estimate when a device disconnected",
 		"last_connection": "Last Connection",
 		"last_contact": "Last Contact",
 		"last_disconnection": "Last Disconnection",
@@ -542,6 +544,8 @@
 		},
 		"radius": {
 			"calling_station_id": "Station",
+			"disconnect": "Disconnect",
+			"disconnect_success": "Radius session disconnected!",
 			"input_octets": "Input",
 			"output_octets": "Output",
 			"radius_clients": "Radius Clients",
@@ -1010,6 +1014,7 @@
 		"infinite": "Infinite",
 		"keep_alive": "Keep Alive",
 		"mac_prefix": "MAC Prefix",
+		"mac_prefix_length": "Your MAC prefix needs to be valid 6 HEX digits (ex.: 00112233)",
 		"max_associations": "Max. Associations",
 		"max_clients": "Max. Clients",
 		"min_associations": "Min. Associations",
@@ -1040,6 +1045,7 @@
 	},
 	"statistics": {
 		"last_stats": "Last Statistics",
+		"latest": "Latest Statistics",
 		"memory": "Memory"
 	},
 	"subscribers": {

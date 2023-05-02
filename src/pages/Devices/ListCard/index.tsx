@@ -83,6 +83,31 @@ const DeviceListCard = () => {
   const scriptModal = useScriptModal();
   const tableController = useDataGrid({
     tableSettingsId: 'gateway.devices.table',
+    defaultOrder: [
+      'badge',
+      'serialNumber',
+      'sanity',
+      'memory',
+      'load',
+      'temperature',
+      'firmware',
+      'compatible',
+      'IP',
+      'provisioning',
+      'radius',
+      'GPS',
+      'uptime',
+      'lastRecordedContact',
+      'lastContact',
+      'lastFWUpdate',
+      'rxBytes',
+      'txBytes',
+      '2G',
+      '5G',
+      '6G',
+      'certificateExpiryDate',
+      'actions',
+    ],
   });
   const getCount = useGetDeviceCount({ enabled: true });
   const getDevices = useGetDevices({
@@ -662,37 +687,33 @@ const DeviceListCard = () => {
       ...device,
       age: getAges?.data?.ages.find(({ serialNumber: devSerial }) => devSerial === device.serialNumber),
     }));
-  }, [getAges, getDevices]);
+  }, [getAges, getDevices.data, getDevices.dataUpdatedAt]);
 
   return (
-    <>
-      <CardBody p={4}>
-        <Box overflowX="auto" w="100%">
-          <DataGrid<DeviceWithStatus>
-            controller={tableController}
-            header={{
-              title: `${getCount.data?.count} ${t('devices.title')}`,
-              objectListed: t('devices.title'),
-              leftContent: <GlobalSearchBar />,
-              otherButtons: (
-                <ExportDevicesTableButton currentPageSerialNumbers={data.map((device) => device.serialNumber)} />
-              ),
-            }}
-            columns={columns}
-            data={data}
-            isLoading={getCount.isFetching || getDevices.isFetching}
-            options={{
-              count: getCount.data?.count,
-              isManual: true,
-              onRowClick: (device) => () => navigate(`devices/${device.serialNumber}`),
-              refetch: () => {
-                getDevices.refetch();
-                getCount.refetch();
-              },
-            }}
-          />
-        </Box>
-      </CardBody>
+    <CardBody p={4}>
+      <DataGrid<DeviceWithStatus>
+        controller={tableController}
+        header={{
+          title: `${getCount.data?.count} ${t('devices.title')}`,
+          objectListed: t('devices.title'),
+          leftContent: <GlobalSearchBar />,
+          otherButtons: (
+            <ExportDevicesTableButton currentPageSerialNumbers={data.map((device) => device.serialNumber)} />
+          ),
+        }}
+        columns={columns}
+        data={data}
+        isLoading={getCount.isFetching || getDevices.isFetching}
+        options={{
+          count: getCount.data?.count,
+          isManual: true,
+          onRowClick: (device) => () => navigate(`devices/${device.serialNumber}`),
+          refetch: () => {
+            getDevices.refetch();
+            getCount.refetch();
+          },
+        }}
+      />
       <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
       <FirmwareUpgradeModal modalProps={upgradeModalProps} serialNumber={serialNumber} />
       <FactoryResetModal modalProps={resetModalProps} serialNumber={serialNumber} />
@@ -702,7 +723,7 @@ const DeviceListCard = () => {
       <TelemetryModal modalProps={telemetryModalProps} serialNumber={serialNumber} />
       <RebootModal modalProps={rebootModalProps} serialNumber={serialNumber} />
       {scriptModal.modal}
-    </>
+    </CardBody>
   );
 };
 

@@ -8,7 +8,7 @@ export type DataGridHeaderRowProps<TValue extends object> = {
 };
 
 export const DataGridHeaderRow = <TValue extends object>({ headerGroup }: DataGridHeaderRowProps<TValue>) => (
-  <Tr p={0}>
+  <Tr p={0} borderRight="1px solid gray">
     {headerGroup.headers.map((header) => (
       <Th
         color="gray.400"
@@ -20,6 +20,8 @@ export const DataGridHeaderRow = <TValue extends object>({ headerGroup }: DataGr
         fontSize="sm"
         onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
         cursor={header.column.getCanSort() ? 'pointer' : undefined}
+        border="0.5px solid gray"
+        px={1}
       >
         <Flex display="flex" alignItems="center">
           {header.isPlaceholder ? null : (

@@ -1,51 +1,23 @@
 import React from 'react';
 import { Box, Checkbox, IconButton, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
-import { VisibilityState } from '@tanstack/react-table';
 import { FunnelSimple } from '@phosphor-icons/react';
+import { VisibilityState } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import { DataGridColumn } from './useDataGrid';
-import { useAuth } from 'contexts/AuthProvider';
 
 export type DataGridColumnPickerProps<TValue extends object> = {
-  preference: string;
   columns: DataGridColumn<TValue>[];
   columnVisibility: VisibilityState;
-  setColumnVisibility: (str: VisibilityState) => void;
+  toggleVisibility: (id: string) => void;
 };
 
 export const DataGridColumnPicker = <TValue extends object>({
-  preference,
   columns,
   columnVisibility,
-  setColumnVisibility,
+  toggleVisibility,
 }: DataGridColumnPickerProps<TValue>) => {
   const { t } = useTranslation();
-  const { getPref, setPref } = useAuth();
-
-  const handleColumnClick = React.useCallback(
-    (id: string) => {
-      const newVisibility = { ...columnVisibility };
-      newVisibility[id] = newVisibility[id] !== undefined ? !newVisibility[id] : false;
-      const hiddenColumnsArray = Object.entries(newVisibility)
-        .filter(([, value]) => !value)
-        .map(([key]) => key);
-      setPref({ preference, value: hiddenColumnsArray.join(',') });
-      setColumnVisibility({ ...newVisibility });
-    },
-    [columnVisibility],
-  );
-
-  React.useEffect(() => {
-    const savedPrefs = getPref(preference);
-
-    if (savedPrefs) {
-      const savedHiddenColumns = savedPrefs.split(',');
-      setColumnVisibility(savedHiddenColumns.reduce((acc, curr) => ({ ...acc, [curr]: false }), {}));
-    } else {
-      setColumnVisibility({});
-    }
-  }, [preference]);
 
   return (
     <Box>
@@ -58,7 +30,7 @@ export const DataGridColumnPicker = <TValue extends object>({
             .filter((col) => col.id && col.header)
             .map((column) => {
               const handleClick =
-                column.id !== undefined ? () => handleColumnClick(column.id as unknown as string) : undefined;
+                column.id !== undefined ? () => toggleVisibility(column.id as unknown as string) : undefined;
               const id = column.id ?? uuid();
               let label = column.header?.toString() ?? 'Unrecognized column';
               if (column.meta?.columnSelectorOptions?.label) label = column.meta.columnSelectorOptions.label;
