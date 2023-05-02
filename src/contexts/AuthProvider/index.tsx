@@ -89,7 +89,7 @@ export const AuthProvider = ({ token, children }: AuthProviderProps) => {
     return null;
   };
 
-  const setPref = ({ preference, value }: { preference: string; value: string }) => {
+  const setPref = async ({ preference, value }: { preference: string; value: string }) => {
     let updated = false;
     if (preferences) {
       const newPreferences: Preference[] = preferences.map((pref: Preference) => {
@@ -102,15 +102,41 @@ export const AuthProvider = ({ token, children }: AuthProviderProps) => {
 
       if (!updated) newPreferences.push({ tag: preference, value });
 
-      updatePreferences.mutateAsync(newPreferences);
+      await updatePreferences.mutateAsync(newPreferences);
     }
   };
 
-  const deletePref = (preference: string) => {
+  const setPrefs = async (preferencesToUpdate: Preference[]) => {
     if (preferences) {
-      const newPreferences: Preference[] = preferences.filter((pref: Preference) => pref.tag !== preference);
+      const updatedPreferences: string[] = [];
+      const newPreferences = preferences.map((pref: Preference) => {
+        const preferenceToUpdate = preferencesToUpdate.find(
+          (prefToUpdate: Preference) => prefToUpdate.tag === pref.tag,
+        );
+        if (preferenceToUpdate) {
+          updatedPreferences.push(pref.tag);
+          return { tag: pref.tag, value: preferenceToUpdate.value };
+        }
+        return pref;
+      });
 
-      updatePreferences.mutateAsync(newPreferences);
+      for (const preferenceToUpdate of preferencesToUpdate) {
+        if (!updatedPreferences.includes(preferenceToUpdate.tag)) {
+          newPreferences.push(preferenceToUpdate);
+        }
+      }
+
+      await updatePreferences.mutateAsync(newPreferences);
+    }
+  };
+
+  const deletePref = async (preference: string | string[]) => {
+    if (preferences) {
+      const newPreferences: Preference[] = preferences.filter((pref: Preference) =>
+        typeof preference === 'string' ? pref.tag !== preference : !preference.includes(pref.tag),
+      );
+
+      await updatePreferences.mutateAsync(newPreferences);
     }
   };
 
@@ -146,6 +172,7 @@ export const AuthProvider = ({ token, children }: AuthProviderProps) => {
       ref,
       getPref,
       setPref,
+      setPrefs,
       deletePref,
       endpoints,
       configurationDescriptions,

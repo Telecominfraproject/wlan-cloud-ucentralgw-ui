@@ -64,6 +64,8 @@
 		"health": "santé",
 		"inactive": "Inactif",
 		"interval": "Intervalle",
+		"last_connected": "Dernière connexion",
+		"last_connected_tooltip": "La dernière fois que cet appareil a été connecté au contrôleur. Cela peut être utilisé pour estimer quand un appareil s'est déconnecté",
 		"last_connection": "Dernière connexion",
 		"last_contact": "Dernier contact",
 		"last_disconnection": "Dernière déconnexion",
@@ -542,6 +544,8 @@
 		},
 		"radius": {
 			"calling_station_id": "Station",
+			"disconnect": "déconnecter",
+			"disconnect_success": "Session Radius déconnectée !",
 			"input_octets": "Contribution",
 			"output_octets": "Sortie",
 			"radius_clients": "Clients rayon",
@@ -1010,6 +1014,7 @@
 		"infinite": "Infini",
 		"keep_alive": "Rester en vie",
 		"mac_prefix": "Préfixe MAC",
+		"mac_prefix_length": "Votre préfixe MAC doit être valide à 6 chiffres HEX (ex. : 00112233)",
 		"max_associations": "Max. Les associations",
 		"max_clients": "Max. Clients",
 		"min_associations": "Min. Les associations",
@@ -1040,6 +1045,7 @@
 	},
 	"statistics": {
 		"last_stats": "Dernières statistiques",
+		"latest": "Dernières statistiques",
 		"memory": "mémoire"
 	},
 	"subscribers": {

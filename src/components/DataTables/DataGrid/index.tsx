@@ -16,12 +16,15 @@ import {
 } from '@chakra-ui/react';
 import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
+import { RefreshButton } from '../../Buttons/RefreshButton';
 import { DataGridCellRow } from './CellRow';
-import { DataGridColumnPicker } from './DataGridColumnPicker';
 import { DataGridHeaderRow } from './HeaderRow';
 import DataGridControls from './Input';
+import TableSettingsModal from './TableSettingsModal';
 import { DataGridColumn, UseDataGridReturn } from './useDataGrid';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { Card } from 'components/Containers/Card';
+import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { LoadingOverlay } from 'components/LoadingOverlay';
 
 export type ColumnOptions = {
@@ -36,6 +39,7 @@ export type DataGridOptions<TValue extends object> = {
   minimumHeight?: LayoutProps['minH'];
   onRowClick?: (row: TValue) => (() => void) | undefined;
   refetch?: () => void;
+  showAsCard?: boolean;
 };
 
 export type DataGridProps<TValue extends object> = {
@@ -107,6 +111,19 @@ export const DataGrid = <TValue extends object>({
     [options.isManual, controller.sortBy, pageCount],
   );
 
+  const orderedColumns = React.useMemo(() => {
+    const order = controller.columnOrder.filter((id) => columns.find((col) => col.id === id));
+    if (order.length !== columns.length) {
+      for (const col of columns) {
+        if (!order.includes(col.id)) {
+          order.push(col.id);
+        }
+      }
+    }
+
+    return columns.slice().sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  }, [columns, controller.columnOrder]);
+
   const table = useReactTable<TValue>({
     // react-table base functions
     getCoreRowModel: getCoreRowModel(),
@@ -115,7 +132,7 @@ export const DataGrid = <TValue extends object>({
 
     // Table State
     data,
-    columns,
+    columns: orderedColumns,
     state: {
       sorting: controller.sortBy,
       columnVisibility: controller.columnVisibility,
@@ -140,7 +157,54 @@ export const DataGrid = <TValue extends object>({
     );
   }
 
-  return (
+  return options.showAsCard ? (
+    <Card>
+      <CardHeader>
+        <Heading size="md" my="auto" mr={2}>
+          {header.title}
+        </Heading>
+        {header.leftContent}
+        <Spacer />
+        <HStack spacing={2}>
+          {header.otherButtons}
+          {header.addButton}
+          {
+            // @ts-ignore
+            <TableSettingsModal<TValue> controller={controller} columns={columns} />
+          }
+          {options.refetch ? <RefreshButton onClick={options.refetch} isCompact isFetching={isLoading} /> : null}
+        </HStack>
+      </CardHeader>
+      <CardBody display="flex" flexDirection="column">
+        <LoadingOverlay isLoading={isLoading}>
+          <TableContainer minH={minimumHeight}>
+            <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px">
+              <Thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <DataGridHeaderRow<TValue> key={headerGroup.id} headerGroup={headerGroup} />
+                ))}
+              </Thead>
+              <Tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <DataGridCellRow<TValue> key={row.id} row={row} onRowClick={onRowClick} rowStyle={{ hoveredRowBg }} />
+                ))}
+              </Tbody>
+            </Table>
+            {data?.length === 0 ? (
+              <Center mt={8}>
+                <Heading size="md">
+                  {header.objectListed
+                    ? t('common.no_obj_found', { obj: header.objectListed })
+                    : t('common.empty_list')}
+                </Heading>
+              </Center>
+            ) : null}
+          </TableContainer>
+        </LoadingOverlay>
+        {!options.isHidingControls ? <DataGridControls table={table} isDisabled={isLoading} /> : null}
+      </CardBody>
+    </Card>
+  ) : (
     <Box w="100%">
       <Flex mb={2}>
         <Heading size="md" my="auto" mr={2}>
@@ -151,18 +215,16 @@ export const DataGrid = <TValue extends object>({
         <HStack spacing={2}>
           {header.otherButtons}
           {header.addButton}
-          <DataGridColumnPicker
-            columns={columns}
-            columnVisibility={controller.columnVisibility}
-            setColumnVisibility={controller.setColumnVisibility}
-            preference={`${controller.tableSettingsId}.hiddenColumns`}
-          />
+          {
+            // @ts-ignore
+            <TableSettingsModal<TValue> controller={controller} columns={columns} />
+          }
           {options.refetch ? <RefreshButton onClick={options.refetch} isCompact isFetching={isLoading} /> : null}
         </HStack>
       </Flex>
       <LoadingOverlay isLoading={isLoading}>
         <TableContainer minH={minimumHeight}>
-          <Table size="small" textColor={textColor} w="100%" fontSize="14px">
+          <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px">
             <Thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <DataGridHeaderRow<TValue> key={headerGroup.id} headerGroup={headerGroup} />

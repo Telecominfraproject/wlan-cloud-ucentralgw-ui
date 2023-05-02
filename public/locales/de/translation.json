@@ -64,6 +64,8 @@
 		"health": "Gesundheit",
 		"inactive": "Inaktiv",
 		"interval": "Intervall",
+		"last_connected": "Zuletzt verbunden",
+		"last_connected_tooltip": "Das letzte Mal, wann dieses Gerät mit dem Controller verbunden war. Dies kann verwendet werden, um abzuschätzen, wann ein Gerät getrennt wurde",
 		"last_connection": "Letzte Verbindung",
 		"last_contact": "Letzter Kontakt",
 		"last_disconnection": "Letzte Trennung",
@@ -542,6 +544,8 @@
 		},
 		"radius": {
 			"calling_station_id": "Stations",
+			"disconnect": "Trennen",
+			"disconnect_success": "Radius-Sitzung getrennt!",
 			"input_octets": "Eingang",
 			"output_octets": "Ausgabe",
 			"radius_clients": "Radius-Kunden",
@@ -1010,6 +1014,7 @@
 		"infinite": "Unendlich",
 		"keep_alive": "Bleib am Leben",
 		"mac_prefix": "MAC-Präfix",
+		"mac_prefix_length": "Ihr MAC-Präfix muss gültige 6 HEX-Ziffern haben (z. B.: 00112233)",
 		"max_associations": "max. Verbände",
 		"max_clients": "Max. Kunden",
 		"min_associations": "Mindest. Verbände",
@@ -1040,6 +1045,7 @@
 	},
 	"statistics": {
 		"last_stats": "Letzte Statistik",
+		"latest": "Neueste Statistiken",
 		"memory": "Erinnerung"
 	},
 	"subscribers": {
