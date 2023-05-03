@@ -1,10 +1,25 @@
 import * as React from 'react';
-import { Box, Flex, Grid, GridItem, Heading, Image, Tag } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Box,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Image,
+  Tag,
+  useColorMode,
+} from '@chakra-ui/react';
+import { Cloud } from '@phosphor-icons/react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import LocationDisplayButton from './LocationDisplayButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import COUNTRY_LIST from 'constants/countryList';
 import { compactDate, compactSecondsToDetailed } from 'helpers/dateFormatting';
@@ -20,6 +35,7 @@ type Props = {
 
 const DeviceSummary = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
+  const { colorMode } = useColorMode();
   const getDevice = useGetDevice({ serialNumber });
   const getStatus = useGetDeviceStatus({ serialNumber });
   const getStats = useGetDeviceLastStats({ serialNumber });
@@ -47,11 +63,37 @@ const DeviceSummary = ({ serialNumber }: Props) => {
   };
   return (
     <Card mb={4}>
+      <CardHeader
+        headerStyle={{
+          color: 'blue',
+        }}
+        icon={<Cloud weight="bold" size={20} />}
+      >
+        <Heading size="md">{t('common.status')}</Heading>
+      </CardHeader>
       <CardBody>
         <Flex w="100%" alignItems="center">
           <Image
             src={`devices/${getDevice.data?.compatible}.png`}
             alt={getDevice?.data?.compatible}
+            fallback={
+              <Box minW="220px" w="220px" h="220px" mr={4} display="flex">
+                <Image
+                  src="devices/generic_ap.png"
+                  alt={getDevice?.data?.compatible}
+                  w="220px"
+                  h="220px"
+                  position="absolute"
+                  filter={colorMode === 'dark' ? 'invert(1)' : undefined}
+                />
+                <Center>
+                  <Alert status="info" opacity={0.95} py={1} variant="solid">
+                    <AlertIcon />
+                    <AlertDescription fontSize="sm">{t('devices.no_model_image')}</AlertDescription>
+                  </Alert>
+                </Center>
+              </Box>
+            }
             boxSize="220px"
             mr={4}
           />

@@ -1,4 +1,4 @@
-import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
+import { QueryFunctionContext, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 
 export type RadiusSession = {
@@ -46,3 +46,22 @@ export const useGetStationRadiusSessions = ({ station }: { station: string }) =>
   useQuery(['radius-sessions', 'station', station], getStationSessions, {
     staleTime: 1000 * 60,
   });
+
+const disconnectRadiusSession = async (session: RadiusSession) =>
+  axiosGw
+    .put(`radiusSessions/${session.serialNumber}?operation=coadm`, {
+      accountingSessionId: session.accountingSessionId,
+      accountingMultiSessionId: session.accountingMultiSessionId,
+      callingStationId: session.callingStationId,
+    })
+    .then(() => session);
+
+export const useDisconnectRadiusSession = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(disconnectRadiusSession, {
+    onSuccess: (session) => {
+      queryClient.invalidateQueries(['radius-sessions', session.serialNumber]);
+    },
+  });
+};

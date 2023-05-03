@@ -10,7 +10,7 @@ import { Sidebar } from './Sidebar';
 import darkLogo from 'assets/Logo_Dark_Mode.svg';
 import lightLogo from 'assets/Logo_Light_Mode.svg';
 import LanguageSwitcher from 'components/LanguageSwitcher';
-import { Route as RouteProps } from 'models/Routes';
+import { RouteName } from 'models/Routes';
 import NotFoundPage from 'pages/NotFound';
 import routes from 'router/routes';
 
@@ -22,18 +22,57 @@ const Layout = () => {
   document.documentElement.dir = 'ltr';
 
   const activeRoute = React.useMemo(() => {
-    const route = routes.find(
-      (r) => r.path === location.pathname || location.pathname.split('/')[1] === r.path.split('/')[1],
-    );
+    let name: RouteName = '';
+    for (const route of routes) {
+      if (!route.children && route.path === location.pathname) {
+        name = route.navName ?? route.name;
+        break;
+      }
+      if (route.path?.includes('/:')) {
+        const routePath = route.path.split('/:')[0];
+        const currPath = location.pathname.split('/');
+        if (routePath && location.pathname.startsWith(routePath) && currPath.length === 3) {
+          name = route.navName ?? route.name;
+          break;
+        }
+      }
+      if (route.children) {
+        for (const child of route.children) {
+          if (child.path === location.pathname) {
+            name = child.navName ?? child.name;
+            break;
+          }
+        }
+      }
+    }
 
-    if (route) return route.navName ? t(route.navName) : t(route.name);
+    if (typeof name === 'function') return name(t);
 
-    return '';
+    if (name.includes('PATH')) {
+      name = location.pathname.split('/')[location.pathname.split('/').length - 1] ?? '';
+    }
+
+    if (name.includes('RAW-')) name.replace('RAW-', '');
+
+    return t(name);
   }, [t, location.pathname]);
 
-  const getRoutes = (r: RouteProps[]) =>
-    // @ts-ignore
-    r.map((route: RouteProps) => <Route path={route.path} element={<route.component />} key={uuid()} />);
+  const routeInstances = React.useMemo(() => {
+    const instances = [];
+
+    for (const route of routes) {
+      // @ts-ignore
+      if (!route.children) instances.push(<Route path={route.path} element={<route.component />} key={route.id} />);
+      else {
+        for (const child of route.children) {
+          // @ts-ignore
+          instances.push(<Route path={child.path} element={<child.component />} key={child.id} />);
+        }
+      }
+    }
+
+    return instances;
+  }, []);
 
   return (
     <>
@@ -59,9 +98,7 @@ const Layout = () => {
       </Sidebar>
       <Navbar toggleSidebar={toggleSidebar} languageSwitcher={<LanguageSwitcher />} activeRoute={activeRoute} />
       <PageContainer waitForUser>
-        <Routes>
-          {[...getRoutes(routes as RouteProps[]), <Route path="*" element={<NotFoundPage />} key={uuid()} />]}
-        </Routes>
+        <Routes>{[...routeInstances, <Route path="*" element={<NotFoundPage />} key={uuid()} />]}</Routes>
       </PageContainer>
     </>
   );

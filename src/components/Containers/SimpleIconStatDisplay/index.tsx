@@ -15,19 +15,19 @@ const SimpleIconStatDisplay = ({ title, description, icon, value, color }: Props
   const bgColor = useColorModeValue(color[0], color[1]);
 
   return (
-    <Card variant="widget" w="100%" p={3}>
-      <Flex h="70px" w="100%">
+    <Card p={3} bgColor={bgColor}>
+      <Flex h="70px" w="100%" color="white">
         <Flex direction="column" justifyContent="center">
           <Heading size="lg">{value}</Heading>
           <Heading size="sm" display="flex">
-            <Text opacity={0.8}>{title}</Text>
+            <Text>{title}</Text>
             <Tooltip label={description} hasArrow>
               <Info style={{ marginLeft: '4px', marginTop: '2px' }} />
             </Tooltip>
           </Heading>
         </Flex>
         <Spacer />
-        <Icon borderRadius="15px" my="auto" as={icon} boxSize="70px" bgColor={bgColor} color="white" />
+        <Icon borderRadius="15px" my="auto" as={icon} boxSize="70px" color="white" />
       </Flex>
     </Card>
   );

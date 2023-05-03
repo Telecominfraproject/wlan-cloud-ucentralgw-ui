@@ -115,8 +115,8 @@ const ProfileNotes = () => {
   );
 
   return (
-    <Card p={4}>
-      <CardHeader mb={2}>
+    <Card>
+      <CardHeader>
         <Heading size="md">{t('common.notes')}</Heading>
         <Spacer />
         <Popover trigger="click" placement="auto">

@@ -22,7 +22,6 @@ import MESH from './icons/MESH.png';
 import SWITCH from './icons/SWITCH.png';
 import ProvisioningStatusCell from './ProvisioningStatusCell';
 import DeviceUptimeCell from './Uptime';
-import { CardBody } from 'components/Containers/Card/CardBody';
 import { DataGrid } from 'components/DataTables/DataGrid';
 import { DataGridColumn, useDataGrid } from 'components/DataTables/DataGrid/useDataGrid';
 import GlobalSearchBar from 'components/GlobalSearchBar';
@@ -690,7 +689,7 @@ const DeviceListCard = () => {
   }, [getAges, getDevices.data, getDevices.dataUpdatedAt]);
 
   return (
-    <CardBody p={4}>
+    <>
       <DataGrid<DeviceWithStatus>
         controller={tableController}
         header={{
@@ -712,6 +711,7 @@ const DeviceListCard = () => {
             getDevices.refetch();
             getCount.refetch();
           },
+          showAsCard: true,
         }}
       />
       <WifiScanModal modalProps={scanModalProps} serialNumber={serialNumber} />
@@ -723,7 +723,7 @@ const DeviceListCard = () => {
       <TelemetryModal modalProps={telemetryModalProps} serialNumber={serialNumber} />
       <RebootModal modalProps={rebootModalProps} serialNumber={serialNumber} />
       {scriptModal.modal}
-    </CardBody>
+    </>
   );
 };
 

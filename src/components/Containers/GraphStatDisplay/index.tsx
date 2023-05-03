@@ -18,7 +18,7 @@ const GraphStatDisplay = ({ chart, title, explanation }: Props) => {
 
   return (
     <>
-      <Card variant="widget" w="100%">
+      <Card>
         <CardHeader>
           <Heading mr={2} my="auto" size="md">
             {title}

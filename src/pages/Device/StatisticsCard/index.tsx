@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Center, Flex, Heading, HStack, Select, Spacer, Spinner } from '@chakra-ui/react';
+import { ChartLine } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import StatisticsCardDatePickers from './DatePickers';
@@ -47,33 +48,36 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
 
   return (
     <Card mb={4}>
-      <CardHeader display="block">
-        <Flex>
-          <Heading size="md">{t('configurations.statistics')}</Heading>
-          <Spacer />
-          <HStack>
-            <Select value={selected} onChange={onSelectInterface}>
-              {parsedData?.interfaces
-                ? Object.keys(parsedData.interfaces).map((v) => (
-                    <option value={v} key={uuid()}>
-                      {v}
-                    </option>
-                  ))
-                : null}
-              <option value="memory">{t('statistics.memory')}</option>
-            </Select>
-            <StatisticsCardDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
-            <ViewLastStatsModal serialNumber={serialNumber} />
-            <RefreshButton
-              size="sm"
-              onClick={refresh}
-              isCompact
-              isFetching={isLoading.isLoading}
-              // @ts-ignore
-              colorScheme="blue"
-            />
-          </HStack>
-        </Flex>
+      <CardHeader
+        icon={<ChartLine weight="bold" size={20} />}
+        headerStyle={{
+          color: 'green',
+        }}
+      >
+        <Heading size="md">{t('configurations.statistics')}</Heading>
+        <Spacer />
+        <HStack>
+          <Select value={selected} onChange={onSelectInterface}>
+            {parsedData?.interfaces
+              ? Object.keys(parsedData.interfaces).map((v) => (
+                  <option value={v} key={uuid()}>
+                    {v}
+                  </option>
+                ))
+              : null}
+            <option value="memory">{t('statistics.memory')}</option>
+          </Select>
+          <StatisticsCardDatePickers defaults={time} setTime={setNewTime} onClear={onClear} />
+          <ViewLastStatsModal serialNumber={serialNumber} />
+          <RefreshButton
+            size="sm"
+            onClick={refresh}
+            isCompact
+            isFetching={isLoading.isLoading}
+            // @ts-ignore
+            colorScheme="blue"
+          />
+        </HStack>
       </CardHeader>
       <CardBody display="block" mb={2} minH="230px">
         {time && (

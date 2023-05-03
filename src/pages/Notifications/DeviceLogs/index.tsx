@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ReactVirtualizedAutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
 import DeviceLogsSearchBar from './DeviceLogsSearchBar';
+import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import ShownLogsDropdown from 'components/ShownLogsDropdown';
@@ -106,8 +107,8 @@ const LogsCard = () => {
   );
 
   return (
-    <>
-      <CardHeader px={4} pt={4}>
+    <Card>
+      <CardHeader>
         <DeviceLogsSearchBar onSearchSelect={onSerialSelect} />
         <Spacer />
         <HStack spacing={2}>
@@ -133,7 +134,7 @@ const LogsCard = () => {
           </CSVLink>
         </HStack>
       </CardHeader>
-      <CardBody p={4}>
+      <CardBody>
         <Box overflowX="auto" w="100%">
           <Table size="sm">
             <Thead>
@@ -158,7 +159,7 @@ const LogsCard = () => {
           </Box>
         </Box>
       </CardBody>
-    </>
+    </Card>
   );
 };
 

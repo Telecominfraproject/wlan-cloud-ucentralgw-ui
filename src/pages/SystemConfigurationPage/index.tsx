@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   BackgroundProps,
-  Box,
   EffectProps,
   Heading,
   InteractivityProps,
@@ -18,7 +17,7 @@ import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { useAuth } from 'contexts/AuthProvider';
 
-export interface SystemSecretsCardProps
+interface SystemConfigurationPageProps
   extends LayoutProps,
     SpaceProps,
     BackgroundProps,
@@ -26,7 +25,7 @@ export interface SystemSecretsCardProps
     PositionProps,
     EffectProps {}
 
-export const SystemSecretsCard = ({ ...props }: SystemSecretsCardProps) => {
+const SystemConfigurationPage = ({ ...props }: SystemConfigurationPageProps) => {
   const { t } = useTranslation();
   const { user } = useAuth();
 
@@ -35,19 +34,19 @@ export const SystemSecretsCard = ({ ...props }: SystemSecretsCardProps) => {
   }
 
   return (
-    <Box px={4} py={4}>
-      <Card variant="widget" {...props}>
-        <CardHeader>
-          <Heading size="md" my="auto">
-            {t('system.secrets')}
-          </Heading>
-          <Spacer />
-          <SystemSecretCreateButton />
-        </CardHeader>
-        <CardBody p={4}>
-          <SystemSecretsTable />
-        </CardBody>
-      </Card>
-    </Box>
+    <Card {...props}>
+      <CardHeader>
+        <Heading size="md" my="auto">
+          {t('system.secrets')}
+        </Heading>
+        <Spacer />
+        <SystemSecretCreateButton />
+      </CardHeader>
+      <CardBody p={4}>
+        <SystemSecretsTable />
+      </CardBody>
+    </Card>
   );
 };
+
+export default SystemConfigurationPage;

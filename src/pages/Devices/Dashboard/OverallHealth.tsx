@@ -34,7 +34,7 @@ const OverallHealthSimple = ({ data }: Props) => {
     let color: [string, string] = ['green.300', 'green.300'];
     let icon = Heart;
 
-    if (avg >= 80) {
+    if (avg >= 80 && avg < 100) {
       icon = Warning;
       color = ['yellow.300', 'yellow.300'];
     } else if (avg < 80) {

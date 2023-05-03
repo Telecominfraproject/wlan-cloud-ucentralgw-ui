@@ -4,7 +4,6 @@ import {
   AlertDescription,
   AlertIcon,
   Box,
-  Button,
   Center,
   Heading,
   Select,
@@ -18,11 +17,11 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { FloppyDisk } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
-import { Modal } from '../../../../components/Modals/Modal';
+import { SaveButton } from 'components/Buttons/SaveButton';
 import { LoadingOverlay } from 'components/LoadingOverlay';
+import { Modal } from 'components/Modals/Modal';
 import { useGetSystemLogLevelNames, useGetSystemLogLevels, useUpdateSystemLogLevels } from 'hooks/Network/System';
 
 type Props = {
@@ -138,15 +137,7 @@ const SystemLoggingModal = ({ modalProps, endpoint, token }: Props) => {
         maxWidth: { sm: '600px', md: '600px', lg: '600px', xl: '600px' },
       }}
       topRightButtons={
-        <Button
-          colorScheme="blue"
-          rightIcon={<FloppyDisk size={20} />}
-          onClick={onUpdate}
-          isDisabled={newLevels.length === 0}
-          isLoading={updateLevels.isLoading}
-        >
-          {t('system.update_levels')} {newLevels.length > 0 ? newLevels.length : ''}
-        </Button>
+        <SaveButton onClick={onUpdate} isDisabled={newLevels.length === 0} isLoading={updateLevels.isLoading} />
       }
     >
       <>

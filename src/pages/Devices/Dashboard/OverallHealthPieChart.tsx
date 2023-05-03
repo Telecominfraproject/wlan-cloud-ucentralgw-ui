@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
 import {
-  useColorMode,
   Alert,
   AlertDescription,
   AlertTitle,
@@ -15,6 +14,7 @@ import {
   UnorderedList,
   useClipboard,
   Tooltip as ChakraTooltip,
+  useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
 import {

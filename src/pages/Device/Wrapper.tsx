@@ -8,7 +8,6 @@ import {
   AlertDialogOverlay,
   Box,
   Button,
-  Heading,
   HStack,
   Portal,
   Spacer,
@@ -171,20 +170,19 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   return (
     <>
       {isCompact ? (
-        <Card p={2} mb={4}>
-          <CardHeader>
+        <Card mb={4}>
+          <CardHeader variant="unstyled" p="8px">
             <HStack spacing={2}>
-              <Heading size="md">{serialNumber}</Heading>
               {getDevice.data?.simulated ? (
                 <ResponsiveTag label={t('simulation.simulated')} colorScheme="purple" icon={Circuitry} />
               ) : null}
               {connectedTag}
               {healthTag}
               {restrictedTag}
+              <GlobalSearchBar />
             </HStack>
             <Spacer />
             <HStack spacing={2}>
-              <GlobalSearchBar />
               <DeleteButton isCompact onClick={onDeleteOpen} />
               {getDevice?.data && (
                 <DeviceActionDropdown
@@ -215,29 +213,28 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           </CardHeader>
         </Card>
       ) : (
-        <Portal>
+        <Portal appendToParentPortal={false}>
           <Card
-            p={2}
             mb={4}
             top="100px"
             position="fixed"
-            w="calc(100vw - 271px)"
+            w="calc(100% - 255px)"
             right={{ base: '0px', sm: '0px', lg: '20px' }}
             boxShadow={boxShadow}
+            p="8px"
           >
-            <CardHeader>
+            <CardHeader variant="unstyled">
               <HStack spacing={2}>
-                <Heading size="md">{serialNumber}</Heading>
                 {getDevice.data?.simulated ? (
                   <ResponsiveTag label={t('simulation.simulated')} colorScheme="purple" icon={Circuitry} />
                 ) : null}
                 {connectedTag}
                 {healthTag}
                 {restrictedTag}
+                <GlobalSearchBar />
               </HStack>
               <Spacer />
               <HStack spacing={2}>
-                <GlobalSearchBar />
                 <DeleteButton isCompact onClick={onDeleteOpen} />
                 {getDevice?.data && (
                   <DeviceActionDropdown

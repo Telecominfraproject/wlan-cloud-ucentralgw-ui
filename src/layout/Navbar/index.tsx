@@ -97,14 +97,22 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
         ps="12px"
         pt="8px"
         top="15px"
-        w={isCompact ? '100%' : 'calc(100vw - 271px)'}
+        border={scrolled ? '0.5px solid' : undefined}
+        w={isCompact ? '100%' : 'calc(100% - 254px)'}
       >
-        <Flex w="100%" flexDirection="row" alignItems="center">
+        <Flex
+          w="100%"
+          flexDirection="row"
+          alignItems="center"
+          justifyItems="center"
+          alignContent="center"
+          justifyContent="center"
+        >
           {isCompact && <HamburgerIcon w="24px" h="24px" onClick={toggleSidebar} mr={10} mt={1} />}
-          <Heading>{activeRoute}</Heading>
+          <Heading size="lg">{activeRoute}</Heading>
           <Tooltip label={t('common.go_back')}>
             <IconButton
-              mt={2}
+              mt={1}
               ml={4}
               colorScheme="blue"
               aria-label={t('common.go_back')}

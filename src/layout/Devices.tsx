@@ -54,7 +54,7 @@ const SidebarDevices = () => {
   if (!getStats.data) return null;
 
   return (
-    <Card borderWidth="2px">
+    <Card p={4}>
       <Tooltip hasArrow label={t('controller.stats.seconds_ago', { s: time })}>
         <CircularProgress
           isIndeterminate

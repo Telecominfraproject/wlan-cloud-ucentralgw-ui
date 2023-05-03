@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Box,
   Button,
   Flex,
@@ -16,15 +11,17 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { MultiValue, Select } from 'chakra-react-select';
 import { ArrowsClockwise } from '@phosphor-icons/react';
+import { MultiValue, Select } from 'chakra-react-select';
 import { useTranslation } from 'react-i18next';
+import { RefreshButton } from '../../../components/Buttons/RefreshButton';
 import FormattedDate from '../../../components/InformationDisplays/FormattedDate';
 import SystemLoggingButton from './LoggingButton';
 import SystemCertificatesTable from './SystemCertificatesTable';
-import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
+import { CardHeader } from 'components/Containers/Card/CardHeader';
+import { Modal } from 'components/Modals/Modal';
 import { compactSecondsToDetailed } from 'helpers/dateFormatting';
 import { EndpointApiResponse } from 'hooks/Network/Endpoints';
 import { useGetSubsystems, useGetSystemInfo, useReloadSubsystems } from 'hooks/Network/System';
@@ -66,13 +63,13 @@ const SystemTile = ({ endpoint, token }: Props) => {
 
   return (
     <>
-      <Card variant="widget">
-        <Box display="flex" mb={2}>
+      <Card>
+        <CardHeader>
           <Heading pt={0}>{endpoint.type}</Heading>
           <Spacer />
           <SystemLoggingButton endpoint={endpoint} token={token} />
           <RefreshButton onClick={refresh} isFetching={isFetchingSystem || isFetchingSubsystems} />
-        </Box>
+        </CardHeader>
         <CardBody>
           <VStack w="100%">
             <SimpleGrid minChildWidth="500px" w="100%">
@@ -180,16 +177,16 @@ const SystemTile = ({ endpoint, token }: Props) => {
           </VStack>
         </CardBody>
       </Card>
-      <AlertDialog leastDestructiveRef={undefined} isOpen={isOpen} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader>{t('certificates.title')}</AlertDialogHeader>
-            <AlertDialogBody pb={6}>
-              <SystemCertificatesTable certificates={system?.certificates} />
-            </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        title={t('certificates.title')}
+        options={{
+          modalSize: 'sm',
+        }}
+      >
+        <SystemCertificatesTable certificates={system?.certificates} />
+      </Modal>
     </>
   );
 };
