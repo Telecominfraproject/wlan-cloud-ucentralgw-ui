@@ -19,6 +19,7 @@ import FirmwareDetailsModal from './Modal';
 import UpdateDbButton from './UpdateDbButton';
 import UriCell from './UriCell';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
+import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { DataTable } from 'components/DataTables/DataTable';
@@ -126,8 +127,8 @@ const FirmwareListTable = () => {
   }, [deviceType, getDeviceTypes]);
 
   return (
-    <>
-      <CardHeader px={4} pt={4}>
+    <Card>
+      <CardHeader>
         <Heading size="md" my="auto" mr={2}>
           {t('analytics.firmware')} {getFirmware.data ? `(${getFirmware.data.length})` : ''}
         </Heading>
@@ -155,7 +156,7 @@ const FirmwareListTable = () => {
           />
         </HStack>
       </CardHeader>
-      <CardBody p={4}>
+      <CardBody>
         <Box overflowX="auto" w="100%">
           <LoadingOverlay isLoading={getDeviceTypes.isFetching || getFirmware.isFetching}>
             <DataTable<Firmware>
@@ -171,7 +172,7 @@ const FirmwareListTable = () => {
         </Box>
       </CardBody>
       <FirmwareDetailsModal firmware={firmware} modalProps={modalProps} />
-    </>
+    </Card>
   );
 };
 

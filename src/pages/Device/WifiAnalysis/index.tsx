@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Box, Flex, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
+import { Box, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from '@chakra-ui/react';
+import { WifiHigh } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import WifiAnalysisAssocationsTable, { ParsedAssociation } from './AssocationsTable';
 import WifiAnalysisRadioTable, { ParsedRadio } from './RadiosTable';
@@ -129,36 +130,41 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
 
   return (
     <Card mb={4}>
-      <CardHeader>
-        <Flex w="100%">
-          <Heading size="md" w="180px">
-            {t('controller.wifi.wifi_analysis')}
-          </Heading>
-          {parsedData && (
-            <Slider
-              step={1}
-              value={sliderIndex}
-              max={parsedData.length === 0 ? 0 : parsedData.length - 1}
-              onChange={onSliderChange}
-              focusThumbOnChange={false}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-          )}
-        </Flex>
+      <CardHeader
+        headerStyle={{
+          color: 'teal',
+        }}
+        icon={<WifiHigh size={20} />}
+      >
+        <Heading size="md" w="180px">
+          {t('controller.wifi.wifi_analysis')}
+        </Heading>
       </CardHeader>
       <CardBody display="block">
-        <Box>
+        <Text>
+          When:{' '}
           {parsedData && parsedData[sliderIndex]?.radios[0]?.recorded !== undefined ? (
             // @ts-ignore
             <FormattedDate date={parsedData[sliderIndex]?.radios[0]?.recorded} />
           ) : (
             '-'
           )}
-        </Box>
+        </Text>
+        {parsedData && (
+          <Slider
+            step={1}
+            value={sliderIndex}
+            max={parsedData.length === 0 ? 0 : parsedData.length - 1}
+            onChange={onSliderChange}
+            focusThumbOnChange={false}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        )}
+        <Box />
         <Box w="100%">
           <WifiAnalysisRadioTable data={parsedData?.[sliderIndex]?.radios} />
           <WifiAnalysisAssocationsTable data={parsedData?.[sliderIndex]?.associations} ouis={ouiKeyValue} />

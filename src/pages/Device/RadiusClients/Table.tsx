@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import DeviceRadiusActions from './ActionCell';
 import { DataGrid } from 'components/DataTables/DataGrid';
 import { DataGridColumn, useDataGrid } from 'components/DataTables/DataGrid/useDataGrid';
 import DataCell from 'components/TableCells/DataCell';
@@ -12,9 +13,10 @@ type Props = {
   sessions: RadiusSession[];
   refetch: () => void;
   isFetching: boolean;
+  onAnalysisOpen: (mac: string) => (() => void) | undefined;
 };
 
-const DeviceRadiusClientsTable = ({ sessions, refetch, isFetching }: Props) => {
+const DeviceRadiusClientsTable = ({ sessions, refetch, isFetching, onAnalysisOpen }: Props) => {
   const { t } = useTranslation();
   const tableController = useDataGrid({
     tableSettingsId: 'gateway.device_radius_sessions.table',
@@ -24,6 +26,7 @@ const DeviceRadiusClientsTable = ({ sessions, refetch, isFetching }: Props) => {
         desc: false,
       },
     ],
+    defaultOrder: ['callingStationId', 'userName', 'sessionTime', 'inputOctets', 'outputOctets', 'actions'],
   });
 
   const columns: DataGridColumn<RadiusSession>[] = React.useMemo(
@@ -107,6 +110,17 @@ const DeviceRadiusClientsTable = ({ sessions, refetch, isFetching }: Props) => {
           },
         },
       },
+      {
+        id: 'actions',
+        header: '',
+        cell: ({ cell }) => <DeviceRadiusActions session={cell.row.original} onAnalysisOpen={onAnalysisOpen} />,
+        meta: {
+          alwaysShow: true,
+          columnSelectorOptions: {
+            label: t('common.actions'),
+          },
+        },
+      },
     ],
     [t],
   );
@@ -124,6 +138,8 @@ const DeviceRadiusClientsTable = ({ sessions, refetch, isFetching }: Props) => {
       options={{
         refetch,
         minimumHeight: '200px',
+        onRowClick: (session) => onAnalysisOpen(session.callingStationId),
+        showAsCard: true,
       }}
     />
   );

@@ -33,7 +33,14 @@ const LanguageSwitcher = () => {
   return (
     <Menu>
       <Tooltip label={t('common.language')}>
-        <MenuButton background="transparent" as={IconButton} aria-label="Commands" icon={languageIcon} size="sm" />
+        <MenuButton
+          background="transparent"
+          variant="ghost"
+          as={IconButton}
+          aria-label="Commands"
+          icon={languageIcon}
+          size="sm"
+        />
       </Tooltip>
       <MenuList>
         <MenuItem onClick={changeLanguage('de')}>Deutsche</MenuItem>

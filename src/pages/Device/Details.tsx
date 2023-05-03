@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Grid, GridItem, Heading, Link, Spacer, useClipboard, useDisclosure } from '@chakra-ui/react';
-import { Eye, EyeSlash } from '@phosphor-icons/react';
+import { Eye, EyeSlash, ListBullets } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import ViewCapabilitiesModal from './ViewCapabilitiesModal';
 import ViewConfigurationModal from './ViewConfigurationModal';
@@ -50,7 +50,13 @@ const DeviceDetails = ({ serialNumber }: Props) => {
 
   return (
     <Card mb={4}>
-      <CardHeader mb={2}>
+      <CardHeader
+        mb={2}
+        headerStyle={{
+          color: 'purple',
+        }}
+        icon={<ListBullets weight="bold" size={20} />}
+      >
         <Heading size="md">{t('common.details')}</Heading>
         <Spacer />
         <ViewCapabilitiesModal serialNumber={serialNumber} />

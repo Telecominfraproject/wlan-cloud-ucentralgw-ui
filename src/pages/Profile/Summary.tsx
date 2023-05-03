@@ -12,7 +12,7 @@ const SummaryInformationProfile = () => {
   const { user, avatar } = useAuth();
 
   return (
-    <Card p={4}>
+    <Card>
       <CardBody display="block">
         <Box
           h="120px"

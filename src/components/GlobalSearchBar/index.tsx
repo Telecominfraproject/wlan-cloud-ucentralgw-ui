@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { Tooltip, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import {
   AsyncSelect,
   ChakraStylesConfig,
@@ -14,7 +14,9 @@ import { useControllerStore } from 'contexts/ControllerSocketProvider/useStore';
 import debounce from 'helpers/debounce';
 import { getUsernameRadiusSessions } from 'hooks/Network/Radius';
 
-const chakraStyles: ChakraStylesConfig<SearchOption, false, GroupBase<SearchOption>> = {
+const chakraStyles: (
+  colorMode: 'light' | 'dark',
+) => ChakraStylesConfig<SearchOption, false, GroupBase<SearchOption>> = (colorMode) => ({
   dropdownIndicator: (provided) => ({
     ...provided,
     width: '32px',
@@ -26,8 +28,10 @@ const chakraStyles: ChakraStylesConfig<SearchOption, false, GroupBase<SearchOpti
   container: (provided) => ({
     ...provided,
     width: '320px',
+    backgroundColor: colorMode === 'light' ? 'white' : 'gray.600',
+    borderRadius: '15px',
   }),
-};
+});
 
 interface SearchOption extends OptionBase {
   label: string;
@@ -62,6 +66,7 @@ const asyncComponents = {
 };
 
 const GlobalSearchBar = () => {
+  const { colorMode } = useColorMode();
   const navigate = useNavigate();
   const store = useControllerStore((state) => ({
     searchSerialNumber: state.searchSerialNumber,
@@ -125,6 +130,8 @@ const GlobalSearchBar = () => {
     [],
   );
 
+  const styles = React.useMemo(() => chakraStyles(colorMode), [colorMode]);
+
   return (
     <Tooltip
       label={`Search serial numbers and radius clients. For radius clients you can either use the client's username (rad:client@client.com)
@@ -134,7 +141,7 @@ const GlobalSearchBar = () => {
     >
       <AsyncSelect<SearchOption, false, GroupBase<SearchOption>>
         name="global_search"
-        chakraStyles={chakraStyles}
+        chakraStyles={styles}
         closeMenuOnSelect
         placeholder="Search MACs or radius clients"
         components={asyncComponents}

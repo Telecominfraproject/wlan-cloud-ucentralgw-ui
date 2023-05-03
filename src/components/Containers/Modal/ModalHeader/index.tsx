@@ -1,17 +1,26 @@
 import React from 'react';
-import { Flex, LayoutProps, ModalHeader as Header, SpaceProps, Spacer } from '@chakra-ui/react';
+import { HStack, ModalHeader as Header, Spacer, useColorModeValue } from '@chakra-ui/react';
 
-export interface ModalHeaderProps extends LayoutProps, SpaceProps {
+export interface ModalHeaderProps {
   title: string;
-  right?: React.ReactNode;
+  left?: React.ReactNode;
+  right: React.ReactNode;
 }
 
-export const ModalHeader = ({ title, right }: ModalHeaderProps) => (
-  <Header>
-    <Flex justifyContent="center" alignItems="center" maxW="100%" px={1}>
+const _ModalHeader: React.FC<ModalHeaderProps> = ({ title, left, right }) => {
+  const bg = useColorModeValue('blue.50', 'blue.700');
+
+  return (
+    <Header bg={bg}>
       {title}
+      {left ? (
+        <HStack spacing={2} ml={2}>
+          {left}
+        </HStack>
+      ) : null}
       <Spacer />
       {right}
-    </Flex>
-  </Header>
-);
+    </Header>
+  );
+};
+export const ModalHeader = React.memo(_ModalHeader);

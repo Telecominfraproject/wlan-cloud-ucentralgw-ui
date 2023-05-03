@@ -70,8 +70,8 @@ const GeneralInformationProfile = () => {
   }, [isEditing]);
 
   return (
-    <Card p={4}>
-      <CardHeader mb={2}>
+    <Card>
+      <CardHeader>
         <Heading size="md">{t('profile.your_profile')}</Heading>
         <Spacer />
         <HStack>

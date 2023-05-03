@@ -10,9 +10,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { CreateButton } from '../../../components/Buttons/CreateButton';
-import { SaveButton } from '../../../components/Buttons/SaveButton';
-import { Modal } from '../../../components/Modals/Modal';
+import { CreateButton } from '../../components/Buttons/CreateButton';
+import { SaveButton } from '../../components/Buttons/SaveButton';
+import { Modal } from '../../components/Modals/Modal';
 import { useCreateSystemSecret } from 'hooks/Network/Secrets';
 import { AxiosError } from 'models/Axios';
 

@@ -18,7 +18,7 @@ import {
   useToast,
   useBreakpoint,
 } from '@chakra-ui/react';
-import { Plus } from '@phosphor-icons/react';
+import { Note, Plus } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
@@ -26,7 +26,7 @@ import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { DataTable } from 'components/DataTables/DataTable';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import { useGetDevice, useUpdateDevice } from 'hooks/Network/Devices';
-import { Note } from 'models/Note';
+import { Note as TNote } from 'models/Note';
 import { Column } from 'models/Table';
 
 type Props = {
@@ -87,7 +87,7 @@ const DeviceNotes = ({ serialNumber }: Props) => {
     [],
   );
 
-  const columns: Column<Note>[] = React.useMemo(
+  const columns: Column<TNote>[] = React.useMemo(
     () => [
       {
         id: 'created',
@@ -116,8 +116,8 @@ const DeviceNotes = ({ serialNumber }: Props) => {
   );
 
   return (
-    <Card mb={4} p={4}>
-      <CardHeader mb={2}>
+    <Card mb={4}>
+      <CardHeader icon={<Note weight="bold" size={20} />}>
         <Heading size="md">{t('common.notes')}</Heading>
         <Spacer />
         <Popover trigger="click" placement="auto">

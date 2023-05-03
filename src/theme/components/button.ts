@@ -22,6 +22,9 @@ export default {
             boxShadow: 'none',
           },
         },
+        solid: {
+          border: '0.5px solid',
+        },
       },
       baseStyle: {
         borderRadius: '15px',

@@ -41,8 +41,8 @@ const MultiFactorAuthProfile = () => {
   };
 
   return (
-    <Card p={4}>
-      <CardHeader mb={2}>
+    <Card>
+      <CardHeader>
         <Heading size="md">{t('account.mfa')}</Heading>
         <Tag colorScheme={currentMfaMethod ? 'green' : 'red'} fontSize="lg" fontWeight="bold" ml={2}>
           {currentMfaMethod ? t('profile.enabled').toUpperCase() : t('profile.disabled').toUpperCase()}

@@ -15,7 +15,7 @@ const FirmwareDashboardEndpointDisplay = ({ data }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Card variant="widget" w="100%">
+    <Card w="100%">
       <CardHeader>
         <Heading mr={2} my="auto" size="md">
           {t('controller.firmware.endpoints')}

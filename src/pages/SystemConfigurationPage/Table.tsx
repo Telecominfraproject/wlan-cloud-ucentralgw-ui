@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { DataTable } from '../../../components/DataTables/DataTable';
+import { DataTable } from '../../components/DataTables/DataTable';
 import SystemSecretActions from './Actions';
 import { Secret, useGetAllSystemSecrets, useGetSystemSecretsDictionary } from 'hooks/Network/Secrets';
 import { Column } from 'models/Table';
@@ -58,7 +58,7 @@ const SystemSecretsTable = () => {
         columns={columns as Column<object>[]}
         saveSettingsId="system.secrets.table"
         data={getSecrets.data ?? []}
-        obj={t('keys.other')}
+        obj={t('system.secrets')}
         sortBy={[{ id: 'key', desc: false }]}
         showAllRows
         hideControls

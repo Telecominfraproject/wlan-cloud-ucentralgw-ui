@@ -1,101 +1,182 @@
 import React from 'react';
-import { Icon } from '@chakra-ui/react';
 import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, WifiHigh } from '@phosphor-icons/react';
 import { Route } from 'models/Routes';
 
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));
 const DevicePage = React.lazy(() => import('pages/Device'));
-const DevicesPage = React.lazy(() => import('pages/Devices'));
-const FirmwarePage = React.lazy(() => import('pages/Firmware'));
-const NotificationsPage = React.lazy(() => import('pages/Notifications'));
+const DashboardPage = React.lazy(() => import('pages/Devices/Dashboard'));
+const AllDevicesPage = React.lazy(() => import('pages/Devices/ListCard'));
+const BlacklistPage = React.lazy(() => import('pages/Devices/Blacklist'));
+const ControllerLogsPage = React.lazy(() => import('pages/Notifications/GeneralLogs'));
+const DeviceLogsPage = React.lazy(() => import('pages/Notifications/DeviceLogs'));
+const FmsLogsPage = React.lazy(() => import('pages/Notifications/FmsLogs'));
+const SecLogsPage = React.lazy(() => import('pages/Notifications/SecLogs'));
+const FirmwarePage = React.lazy(() => import('pages/Firmware/List'));
+const FirmwareDashboard = React.lazy(() => import('pages/Firmware/Dashboard'));
 const ProfilePage = React.lazy(() => import('pages/Profile'));
 const ScriptsPage = React.lazy(() => import('pages/Scripts'));
-const SystemPage = React.lazy(() => import('pages/SystemPage'));
 const UsersPage = React.lazy(() => import('pages/UsersPage'));
+const EndpointsPage = React.lazy(() => import('pages/EndpointsPage'));
+const SystemConfigurationPage = React.lazy(() => import('pages/SystemConfigurationPage'));
 
 const routes: Route[] = [
   {
+    id: 'devices-group',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
-    path: '/',
     name: 'devices.title',
-    icon: (active: boolean) => (
-      <Icon as={WifiHigh} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
-    component: DevicesPage,
+    icon: () => <WifiHigh size={28} weight="bold" />,
+    children: [
+      {
+        id: 'devices-table',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/',
+        name: 'devices.all',
+        navName: 'devices.title',
+        component: AllDevicesPage,
+      },
+      {
+        id: 'devices-dashboard',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/devices_dashboard',
+        name: 'analytics.dashboard',
+        component: DashboardPage,
+      },
+      {
+        id: 'devices-blacklist',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/devices_blacklist',
+        name: 'controller.devices.blacklist',
+        component: BlacklistPage,
+      },
+    ],
   },
   {
+    id: 'firmware-group',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
-    path: '/firmware',
     name: 'analytics.firmware',
-    icon: (active: boolean) => (
-      <Icon as={FloppyDisk} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
-    component: FirmwarePage,
+    icon: () => <FloppyDisk size={28} weight="bold" />,
+    children: [
+      {
+        id: 'firmware-table',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/firmware',
+        name: 'devices.all',
+        navName: 'analytics.firmware',
+        component: FirmwarePage,
+      },
+      {
+        id: 'firmware-dashboard',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/firmware/dashboard',
+        name: 'analytics.dashboard',
+        component: FirmwareDashboard,
+      },
+    ],
   },
   {
+    id: 'scripts',
     authorized: ['root'],
     path: '/scripts/:id',
     name: 'script.other',
-    icon: (active: boolean) => (
-      <Icon as={TerminalWindow} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
+    icon: () => <TerminalWindow size={28} weight="bold" />,
     component: ScriptsPage,
   },
   {
+    id: 'configurations',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
     path: '/configurations',
     name: 'configurations.title',
-    icon: (active: boolean) => (
-      <Icon as={Barcode} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
+    icon: () => <Barcode size={28} weight="bold" />,
     component: DefaultConfigurationsPage,
   },
   {
+    id: 'logs-group',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
-    path: '/logs',
     name: 'controller.devices.logs',
-    icon: (active: boolean) => (
-      <Icon as={ListBullets} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
-    component: NotificationsPage,
+    icon: () => <ListBullets size={28} weight="bold" />,
+    children: [
+      {
+        id: 'logs-devices',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/logs/devices',
+        name: 'devices.title',
+        navName: (t) => `${t('devices.one')} ${t('controller.devices.logs')}`,
+        component: DeviceLogsPage,
+      },
+      {
+        id: 'logs-controller',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/logs/controller',
+        name: 'simulation.controller',
+        navName: (t) => `${t('simulation.controller')} ${t('controller.devices.logs')}`,
+        component: ControllerLogsPage,
+      },
+      {
+        id: 'logs-security',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/logs/security',
+        name: 'logs.security',
+        navName: (t) => `${t('logs.security')} ${t('controller.devices.logs')}`,
+        component: SecLogsPage,
+      },
+      {
+        id: 'logs-firmware',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/logs/firmware',
+        name: 'logs.firmware',
+        navName: (t) => `${t('logs.firmware')} ${t('controller.devices.logs')}`,
+        component: FmsLogsPage,
+      },
+    ],
   },
   {
+    id: 'device-page',
     hidden: true,
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
     path: '/devices/:id',
     name: 'devices.one',
-    icon: (active: boolean) => (
-      <Icon as={WifiHigh} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
+    navName: 'PATH',
+    icon: () => <WifiHigh size={28} weight="bold" />,
     component: DevicePage,
   },
   {
+    id: 'account-page',
     hidden: true,
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
     path: '/account',
     name: 'account.title',
-    icon: (active: boolean) => (
-      <Icon as={UsersThree} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
+    icon: () => <UsersThree size={28} weight="bold" />,
     component: ProfilePage,
   },
   {
+    id: 'users-page',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
     path: '/users',
     name: 'users.title',
-    icon: (active: boolean) => (
-      <Icon as={UsersThree} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
+    icon: () => <UsersThree size={28} weight="bold" />,
     component: UsersPage,
   },
   {
+    id: 'system-group',
     authorized: ['root', 'partner', 'admin'],
-    path: '/system',
     name: 'system.title',
-    icon: (active: boolean) => (
-      <Icon as={Info} color="inherit" h={active ? '32px' : '24px'} w={active ? '32px' : '24px'} />
-    ),
-    component: SystemPage,
+    icon: () => <Info size={28} weight="bold" />,
+    children: [
+      {
+        id: 'system-services',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/services',
+        name: 'system.services',
+        component: EndpointsPage,
+      },
+      {
+        id: 'system-configuration',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/systemConfiguration',
+        name: 'system.configuration',
+        component: SystemConfigurationPage,
+      },
+    ],
   },
 ];
 

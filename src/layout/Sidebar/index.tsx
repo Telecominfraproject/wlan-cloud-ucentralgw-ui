@@ -12,11 +12,12 @@ import {
   Spacer,
   useBreakpoint,
   VStack,
+  Accordion,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 import { NavLinkButton } from './NavLinkButton';
+import NestedNavButton from './NestedNavButton';
 import { useAuth } from 'contexts/AuthProvider';
 import { Route } from 'models/Routes';
 
@@ -60,14 +61,25 @@ export const Sidebar = ({ routes, isOpen, toggle, logo, version, topNav, childre
   const sidebarContent = React.useMemo(
     () => (
       <>
-        <VStack spacing={2} alignItems="start" w="100%" px={4}>
-          {topNav ? topNav(isRouteActive, toggle) : null}
-          {routes
-            .filter(({ hidden, authorized }) => !hidden && authorized.includes(user?.userRole ?? ''))
-            .map((route) => (
-              <NavLinkButton key={uuid()} isActive={isRouteActive(route.path)} route={route} toggleSidebar={toggle} />
-            ))}
-        </VStack>
+        <Accordion allowToggle>
+          <VStack spacing={2} alignItems="start" w="100%" px={4}>
+            {topNav ? topNav(isRouteActive, toggle) : null}
+            {routes
+              .filter(({ hidden, authorized }) => !hidden && authorized.includes(user?.userRole ?? ''))
+              .map((route) =>
+                route.children ? (
+                  <NestedNavButton key={route.id} isActive={isRouteActive} route={route} />
+                ) : (
+                  <NavLinkButton
+                    key={route.id}
+                    isActive={isRouteActive(route.path)}
+                    route={route}
+                    toggleSidebar={toggle}
+                  />
+                ),
+              )}
+          </VStack>
+        </Accordion>
         <Spacer />
         <Box mb={2}>{children}</Box>
         <Box>
@@ -117,7 +129,8 @@ export const Sidebar = ({ routes, isOpen, toggle, logo, version, topNav, childre
             h="calc(100vh - 32px)"
             my="16px"
             ml="16px"
-            borderRadius="16px"
+            borderRadius="15px"
+            border="0.5px solid"
           >
             {brand}
             <Flex direction="column" h="calc(100vh - 160px)" alignItems="center" overflowY="auto">
