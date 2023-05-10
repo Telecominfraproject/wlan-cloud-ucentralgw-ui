@@ -14,6 +14,25 @@ import { CardBody } from 'components/Containers/Card/CardBody';
 import { CardHeader } from 'components/Containers/Card/CardHeader';
 import { LoadingOverlay } from 'components/LoadingOverlay';
 
+const interfaceNameLabel = (v?: string) => {
+  if (!v) return '';
+
+  if (v.startsWith('up')) {
+    const split = v.split('v');
+    const vlanId = split[split.length - 1];
+
+    return vlanId === '0' ? 'Upstream' : `Upstream - Vlan ${vlanId}`;
+  }
+  if (v.startsWith('down')) {
+    const split = v.split('v');
+    const vlanId = split[split.length - 1];
+
+    return vlanId === '0' ? 'Downstream' : `Downstream - Vlan ${vlanId}`;
+  }
+
+  return v;
+};
+
 type Props = {
   serialNumber: string;
 };
@@ -61,7 +80,7 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
             {parsedData?.interfaces
               ? Object.keys(parsedData.interfaces).map((v) => (
                   <option value={v} key={uuid()}>
-                    {v}
+                    {interfaceNameLabel(v)}
                   </option>
                 ))
               : null}
