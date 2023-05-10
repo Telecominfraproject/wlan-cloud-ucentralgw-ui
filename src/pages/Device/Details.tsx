@@ -112,7 +112,7 @@ const DeviceDetails = ({ serialNumber }: Props) => {
           </GridItem>
           <GridItem colSpan={1}>
             {getTag.data?.extendedInfo?.entity?.name ? (
-              <Link isExternal href={goToProvUi(`entity/${getTag.data?.subscriber}`)}>
+              <Link isExternal href={goToProvUi(`entity/${getTag.data?.entity}`)}>
                 {getTag.data?.extendedInfo?.entity?.name}
               </Link>
             ) : (
