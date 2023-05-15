@@ -61,6 +61,19 @@ const DeviceSummary = ({ serialNumber }: Props) => {
 
     return '-';
   };
+
+  const getDeviceCompatible = () => {
+    if (!getDevice.data?.compatible) return undefined;
+
+    if (!getDevice.data?.compatible.includes('-')) return getDevice.data?.compatible;
+
+    const split = getDevice.data?.compatible.split('-');
+
+    if (split[split.length - 1]?.length === 2) return split[0]?.trim();
+
+    return getDevice.data?.compatible;
+  };
+
   return (
     <Card mb={4}>
       <CardHeader
@@ -74,7 +87,7 @@ const DeviceSummary = ({ serialNumber }: Props) => {
       <CardBody>
         <Flex w="100%" alignItems="center">
           <Image
-            src={`devices/${getDevice.data?.compatible}.png`}
+            src={`devices/${getDeviceCompatible()}.png`}
             alt={getDevice?.data?.compatible}
             fallback={
               <Box minW="220px" w="220px" h="220px" mr={4} display="flex">
