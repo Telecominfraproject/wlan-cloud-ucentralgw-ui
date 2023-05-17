@@ -83,6 +83,7 @@ const parseAssociations = (data: { data: DeviceStatistics; recorded: number }, r
           txMcs: association.tx_rate.mcs ?? '-',
           txNss: association.tx_rate.nss ?? '-',
           recorded: data.recorded,
+          dynamicVlan: association.dynamic_vlan,
         });
       }
     }

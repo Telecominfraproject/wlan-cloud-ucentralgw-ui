@@ -8,6 +8,7 @@ import InterfaceChart from './InterfaceChart';
 import DeviceMemoryChart from './MemoryChart';
 import { useStatisticsCard } from './useStatisticsCard';
 import ViewLastStatsModal from './ViewLastStatsModal';
+import VlanChart from './VlanChart';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
 import { Card } from 'components/Containers/Card';
 import { CardBody } from 'components/Containers/Card/CardBody';
@@ -42,6 +43,7 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
   const { time, setTime, parsedData, isLoading, selected, onSelectInterface, refresh } = useStatisticsCard({
     serialNumber,
   });
+  const [formatChosen, setFormatChosen] = React.useState<'bytes' | 'packets'>('bytes');
 
   const setNewTime = (start: Date, end: Date) => {
     setTime({ start, end });
@@ -50,15 +52,29 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
     setTime(undefined);
   };
 
+  const onFormatChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormatChosen(e.target.value as 'bytes' | 'packets');
+  };
+
   const interfaces = React.useMemo(() => {
     if (!parsedData) return undefined;
 
     return Object.entries(parsedData.interfaces).map(([name, data]) => (
       <Box hidden={name !== selected} key={uuid()}>
-        <InterfaceChart data={data} />
+        <InterfaceChart data={data} format={formatChosen} />
       </Box>
     ));
-  }, [parsedData, selected]);
+  }, [parsedData, selected, formatChosen]);
+  const vlans = React.useMemo(() => {
+    if (!parsedData) return undefined;
+
+    return Object.entries(parsedData.vlans).map(([name, data]) => (
+      <Box hidden={`VLAN-${name}` !== selected} key={uuid()}>
+        <VlanChart data={data} format={formatChosen} />
+      </Box>
+    ));
+  }, [parsedData, selected, formatChosen]);
+
   const memory = React.useMemo(() => {
     if (!parsedData) return undefined;
 
@@ -76,11 +92,24 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
         <Heading size="md">{t('configurations.statistics')}</Heading>
         <Spacer />
         <HStack>
-          <Select value={selected} onChange={onSelectInterface}>
+          {selected === 'memory' ? null : (
+            <Select value={formatChosen} onChange={onFormatChange} w="112px">
+              <option value="bytes">Data</option>
+              <option value="packets">Packets</option>
+            </Select>
+          )}
+          <Select value={selected} onChange={onSelectInterface} w="unset">
             {parsedData?.interfaces
               ? Object.keys(parsedData.interfaces).map((v) => (
                   <option value={v} key={uuid()}>
                     {interfaceNameLabel(v)}
+                  </option>
+                ))
+              : null}
+            {parsedData?.vlans
+              ? Object.keys(parsedData.vlans).map((v) => (
+                  <option value={`VLAN-${v}`} key={uuid()}>
+                    VLAN - {v}
                   </option>
                 ))
               : null}
@@ -123,6 +152,7 @@ const DeviceStatisticsCard = ({ serialNumber }: Props) => {
             <Box>
               {selected === 'memory' && memory}
               {interfaces}
+              {vlans}
             </Box>
           </LoadingOverlay>
         )}
