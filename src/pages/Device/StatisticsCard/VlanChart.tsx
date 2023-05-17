@@ -9,8 +9,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler,
   ChartData,
+  Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -58,7 +58,7 @@ type Props = {
   format: 'bytes' | 'packets';
 };
 
-const InterfaceChart = ({ data, format }: Props) => {
+const VlanChart = ({ data, format }: Props) => {
   const { colorMode } = useColorMode();
 
   const { factor, unit } = getDivisionFactor(data.maxTx);
@@ -183,4 +183,4 @@ const InterfaceChart = ({ data, format }: Props) => {
   );
 };
 
-export default React.memo(InterfaceChart);
+export default React.memo(VlanChart);

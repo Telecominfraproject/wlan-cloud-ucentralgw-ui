@@ -69,7 +69,7 @@ const RestrictionsCard = ({ serialNumber }: Props) => {
           </Tooltip>
         ) : null}
       </CardHeader>
-      <CardBody p={0} display="block">
+      <CardBody display="block">
         <Flex mt={2}>
           <Heading size="sm" mr={2} my="auto">
             {t('restrictions.countries')}:

@@ -39,6 +39,7 @@ type DeviceInterfaceStatistics = {
       ack_signal_avg: number;
       bssid: string;
       connected: number;
+      dynamic_vlan?: number;
       inactive: number;
       ipaddr_v4: string;
       rssi: number;
@@ -116,6 +117,13 @@ export type DeviceStatistics = {
     receive_ms: number;
     transmit_ms: number;
     tx_power: number;
+  }[];
+  dynamic_vlans?: {
+    vid: number;
+    rx_bytes: number;
+    rx_packets: number;
+    tx_bytes: number;
+    tx_packets: number;
   }[];
   unit?: {
     load: [number, number, number];

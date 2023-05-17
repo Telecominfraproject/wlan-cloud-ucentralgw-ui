@@ -26,14 +26,16 @@ export type ParsedAssociation = {
   txMcs: number | string;
   txNss: number | string;
   recorded: number;
+  dynamicVlan?: number;
 };
 
 type Props = {
   data?: ParsedAssociation[];
   ouis?: Record<string, string>;
+  isSingle?: boolean;
 };
 
-const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
+const WifiAnalysisAssocationsTable = ({ data, ouis, isSingle }: Props) => {
   const { t } = useTranslation();
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 
@@ -56,7 +58,7 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
         Header: '',
         Footer: '',
         accessor: 'radio.index',
-        Cell: ({ cell }) => indexCell(cell.row.original),
+        Cell: ({ cell }) => indexCell(cell.row.original) ?? '',
         customWidth: '35px',
         alwaysShow: true,
         disableSortBy: true,
@@ -78,6 +80,14 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
         Cell: (v) => vendorCell(v.cell.row.original.station),
         customWidth: '35px',
         disableSortBy: true,
+      },
+      {
+        id: 'dynamicVlan',
+        Header: 'VLAN',
+        Footer: '',
+        Cell: (v) => (v.cell.row.original.dynamicVlan !== undefined ? `${v.cell.row.original.dynamicVlan}` : '-'),
+        accessor: 'txBytes',
+        customWidth: '35px',
       },
       {
         id: 'mode',
@@ -151,7 +161,7 @@ const WifiAnalysisAssocationsTable = ({ data, ouis }: Props) => {
     <>
       <Flex mt={2}>
         <Heading size="sm" my="auto">
-          {t('devices.associations')} ({data?.length})
+          {isSingle ? 'Association' : `${t('devices.associations')} (${data?.length})`}
         </Heading>
         <Spacer />
         <ColumnPicker
