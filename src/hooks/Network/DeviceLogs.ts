@@ -11,7 +11,7 @@ export type DeviceLog = {
   severity: number;
 };
 
-const getDeviceLogs = (limit: number, serialNumber?: string, logType?: 0 | 1) => async () =>
+const getDeviceLogs = (limit: number, serialNumber?: string, logType?: 0 | 1 | 2) => async () =>
   axiosGw
     .get(`device/${serialNumber}/logs?newest=true&limit=${limit}&logType=${logType}`)
     .then((response) => response.data) as Promise<{
@@ -28,7 +28,7 @@ export const useGetDeviceLogs = ({
   serialNumber?: string;
   limit: number;
   onError?: (e: AxiosError) => void;
-  logType?: 0 | 1;
+  logType?: 0 | 1 | 2;
 }) =>
   useQuery(['devicelogs', serialNumber, { limit, logType }], getDeviceLogs(limit, serialNumber, logType ?? 0), {
     keepPreviousData: true,
@@ -44,7 +44,7 @@ const deleteLogs = async ({
 }: {
   serialNumber: string;
   endDate: number;
-  logType: 0 | 1;
+  logType: 0 | 1 | 2;
 }) => axiosGw.delete(`device/${serialNumber}/logs?endDate=${endDate}&logType=${logType}`);
 export const useDeleteLogs = () => {
   const queryClient = useQueryClient();
@@ -62,7 +62,7 @@ const getLogsBatch = (
   end?: number,
   limit?: number,
   offset?: number,
-  logType?: 0 | 1,
+  logType?: 0 | 1 | 2,
 ) =>
   axiosGw
     .get(
@@ -74,7 +74,7 @@ const getLogsBatch = (
   }>;
 
 const getDeviceLogsWithTimestamps =
-  (serialNumber?: string, start?: number, end?: number, logType?: 0 | 1) => async () => {
+  (serialNumber?: string, start?: number, end?: number, logType?: 0 | 1 | 2) => async () => {
     let offset = 0;
     const limit = 100;
     let logs: DeviceLog[] = [];
@@ -104,7 +104,7 @@ export const useGetDeviceLogsWithTimestamps = ({
   start?: number;
   end?: number;
   onError?: (e: AxiosError) => void;
-  logType?: 0 | 1;
+  logType?: 0 | 1 | 2;
 }) =>
   useQuery(
     ['devicelogs', serialNumber, { start, end, logType }],

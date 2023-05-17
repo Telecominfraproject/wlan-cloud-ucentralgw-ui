@@ -16,7 +16,7 @@ const CustomInputButton = React.forwardRef(
   ),
 );
 
-type Props = { serialNumber: string; logType: 0 | 1 };
+type Props = { serialNumber: string; logType: 0 | 1 | 2 };
 const DeleteLogModal = ({ serialNumber, logType }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();

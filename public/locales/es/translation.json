@@ -644,6 +644,7 @@
 		"notifications": "notificaciones de dispositivos",
 		"one": "Dispositivo",
 		"reassign_already_owned": "¿Reasignar dispositivos que ya existen y son propiedad de otra entidad/lugar/suscriptor?",
+		"reboot_logs": "Reiniciar registros",
 		"restricted": "Restringido",
 		"restricted_overriden": "Este es un dispositivo restringido, pero está en modo de desarrollo. Actualmente se ignoran todas las restricciones.",
 		"restrictions_overriden_title": "MODO DE DESARROLLO",

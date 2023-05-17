@@ -644,6 +644,7 @@
 		"notifications": "Gerätebenachrichtigungen",
 		"one": "Gerät",
 		"reassign_already_owned": "Geräte neu zuweisen, die bereits vorhanden sind und einem anderen Unternehmen/Veranstaltungsort/Abonnenten gehören?",
+		"reboot_logs": "Neustartprotokolle",
 		"restricted": "Beschränkt",
 		"restricted_overriden": "Dies ist ein eingeschränktes Gerät, aber es befindet sich im Entwicklungsmodus. Alle Einschränkungen werden derzeit ignoriert",
 		"restrictions_overriden_title": "Dev-Modus",
