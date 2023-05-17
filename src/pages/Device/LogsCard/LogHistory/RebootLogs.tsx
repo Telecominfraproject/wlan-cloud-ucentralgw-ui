@@ -12,14 +12,14 @@ import { Column } from 'models/Table';
 type Props = {
   serialNumber: string;
 };
-const CrashLogs = ({ serialNumber }: Props) => {
+const RebootLogs = ({ serialNumber }: Props) => {
   const { t } = useTranslation();
   const [limit, setLimit] = React.useState(25);
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const { time, setTime, getCustomLogs, getLogs, columns, modal } = useDeviceLogsTable({
     serialNumber,
     limit,
-    logType: 1,
+    logType: 2,
   });
 
   const setNewTime = (start: Date, end: Date) => {
@@ -52,7 +52,7 @@ const CrashLogs = ({ serialNumber }: Props) => {
             setHiddenColumns={setHiddenColumns}
             preference="gateway.device.logs.hiddenColumns"
           />
-          <DeleteLogModal serialNumber={serialNumber} logType={1} />
+          <DeleteLogModal serialNumber={serialNumber} logType={2} />
           <RefreshButton isCompact isFetching={getLogs.isFetching} onClick={getLogs.refetch} colorScheme="blue" />
         </HStack>
       </Flex>
@@ -91,4 +91,4 @@ const CrashLogs = ({ serialNumber }: Props) => {
   );
 };
 
-export default CrashLogs;
+export default RebootLogs;

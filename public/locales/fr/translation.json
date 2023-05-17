@@ -644,6 +644,7 @@
 		"notifications": "notifications de l'appareil",
 		"one": "Dispositif",
 		"reassign_already_owned": "Réattribuer des appareils qui existent déjà et qui appartiennent à une autre entité/salle/abonné ?",
+		"reboot_logs": "Journaux de redémarrage",
 		"restricted": "Limité",
 		"restricted_overriden": "Il s'agit d'un appareil restreint, mais il est en mode développement. Toutes les restrictions sont actuellement ignorées",
 		"restrictions_overriden_title": "Mode développement",

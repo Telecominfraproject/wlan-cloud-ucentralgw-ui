@@ -644,6 +644,7 @@
 		"notifications": "Device Notifications",
 		"one": "Device",
 		"reassign_already_owned": "Reassign devices which already exist and are owned by another entity/venue/subscriber?",
+		"reboot_logs": "Reboot Logs",
 		"restricted": "Restricted",
 		"restricted_overriden": "This is a restricted device, but it is in development mode. All restrictions are currently ignored",
 		"restrictions_overriden_title": "Dev Mode",

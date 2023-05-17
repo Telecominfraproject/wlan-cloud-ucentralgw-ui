@@ -10,7 +10,7 @@ import { Column } from 'models/Table';
 type Props = {
   serialNumber: string;
   limit: number;
-  logType: 0 | 1;
+  logType: 0 | 1 | 2;
 };
 
 const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
