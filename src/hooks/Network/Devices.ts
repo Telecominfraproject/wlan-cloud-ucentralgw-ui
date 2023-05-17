@@ -44,6 +44,7 @@ export type DeviceWithStatus = {
   associations_6G: number;
   compatible: string;
   connected: boolean;
+  connectReason?: string;
   certificateExpiryDate?: number;
   createdTimestamp: number;
   devicePassword: string;
@@ -81,6 +82,18 @@ export type DeviceWithStatus = {
   venue: string;
   verifiedCertificate: string;
 };
+
+export const getSingleDeviceWithStatus = (serialNumber: string) =>
+  axiosGw
+    .get(`devices?deviceWithStatus=true&select=${serialNumber}`)
+    .then((response) => {
+      const deviceWithStatus: DeviceWithStatus | undefined = response.data.devicesWithStatus[0];
+      if (deviceWithStatus === undefined) {
+        return undefined;
+      }
+      return deviceWithStatus;
+    })
+    .catch(() => undefined);
 
 const getDevices = (limit: number, offset: number) =>
   axiosGw
@@ -136,6 +149,7 @@ export type DeviceStatus = {
   associations_2G: number;
   associations_5G: number;
   connected: boolean;
+  connectReason?: string;
   certificateExpiryDate: number;
   connectionCompletionTime: number;
   firmware: string;

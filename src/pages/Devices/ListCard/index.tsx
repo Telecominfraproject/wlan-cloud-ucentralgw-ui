@@ -104,6 +104,7 @@ const DeviceListCard = () => {
       '2G',
       '5G',
       '6G',
+      'connectReason',
       'certificateExpiryDate',
       'actions',
     ],
@@ -649,6 +650,19 @@ const DeviceListCard = () => {
         },
       },
       {
+        id: 'connectReason',
+        header: 'Connect Reason',
+        footer: '',
+        accessorKey: 'connectReason',
+        cell: (v) => (v.cell.row.original.connectReason ? v.cell.row.original.connectReason : '-'),
+        enableSorting: false,
+        meta: {
+          headerOptions: {
+            tooltip: 'Reason supplied by the device for the last connection',
+          },
+        },
+      },
+      {
         id: 'certificateExpiryDate',
         header: 'Exp',
         footer: '',
@@ -689,7 +703,7 @@ const DeviceListCard = () => {
   }, [getAges, getDevices.data, getDevices.dataUpdatedAt]);
 
   return (
-    <>
+    <Box>
       <DataGrid<DeviceWithStatus>
         controller={tableController}
         header={{
@@ -723,7 +737,7 @@ const DeviceListCard = () => {
       <TelemetryModal modalProps={telemetryModalProps} serialNumber={serialNumber} />
       <RebootModal modalProps={rebootModalProps} serialNumber={serialNumber} />
       {scriptModal.modal}
-    </>
+    </Box>
   );
 };
 

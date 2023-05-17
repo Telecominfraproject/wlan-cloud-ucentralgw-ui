@@ -171,6 +171,14 @@ const DeviceSummary = ({ serialNumber }: Props) => {
                 <FormattedDate date={getStatus.data?.certificateExpiryDate} hidePrefix />
               )}
             </GridItem>
+            <GridItem colSpan={1} alignContent="center" alignItems="center">
+              <Heading size="sm">Connect Reason:</Heading>
+            </GridItem>
+            <GridItem colSpan={1}>
+              {getStatus.data?.connectReason && getStatus.data?.connectReason.length > 0
+                ? getStatus.data?.connectReason
+                : '-'}
+            </GridItem>
           </Grid>
         </Flex>
       </CardBody>
