@@ -18,10 +18,25 @@ const DetailedLogViewModal = ({ modalProps, log }: Props) => {
   const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(log?.log ?? {}, null, 2));
 
   React.useEffect(() => {
-    setValue(JSON.stringify(log?.log ?? {}, null, 2));
+    if (log?.logType === 2) {
+      setValue(JSON.stringify(log.data ?? {}, null, 2));
+    } else {
+      setValue(JSON.stringify(log?.log ?? {}, null, 2));
+    }
   }, [log]);
 
   if (!log) return null;
+
+  const getCodeContent = () => {
+    if (log.logType === 2) {
+      if (log.data.info !== undefined && Array.isArray(log.data.info)) {
+        return log.data.info.map((v) => v).join('\n');
+      }
+      return JSON.stringify(log.data, null, 2);
+    }
+
+    return log.log;
+  };
 
   return (
     <Modal
@@ -45,7 +60,7 @@ const DetailedLogViewModal = ({ modalProps, log }: Props) => {
           {t('controller.devices.config_id')}: {log.UUID}
         </Heading>
         <Code whiteSpace="pre-line" mt={2}>
-          {log.log}
+          {getCodeContent()}
         </Code>
       </Box>
     </Modal>

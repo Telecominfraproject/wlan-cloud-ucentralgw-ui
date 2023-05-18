@@ -53,6 +53,28 @@ const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
     [onOpen],
   );
 
+  const detailsCell = React.useCallback((v: DeviceLog) => {
+    if (logType === 2) {
+      return (
+        <Box display="flex">
+          <IconButton
+            aria-label="Open Log Details"
+            onClick={() => onOpen(v)}
+            colorScheme="blue"
+            icon={<MagnifyingGlass size={16} />}
+            size="xs"
+            mr={2}
+          />
+          <Text my="auto" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+            {JSON.stringify(v.data, null, 0)}
+          </Text>
+        </Box>
+      );
+    }
+
+    return <pre>{JSON.stringify(v.data, null, 0)}</pre>;
+  }, []);
+
   const dateCell = React.useCallback(
     (v: number) => (
       <Box>
@@ -61,8 +83,6 @@ const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
     ),
     [],
   );
-
-  const jsonCell = React.useCallback((v: Record<string, unknown>) => <pre>{JSON.stringify(v, null, 0)}</pre>, []);
 
   const columns: Column<DeviceLog>[] = React.useMemo(
     (): Column<DeviceLog>[] => [
@@ -106,7 +126,7 @@ const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
         Header: t('common.details'),
         Footer: '',
         accessor: 'data',
-        Cell: (v) => jsonCell(v.cell.row.original.data),
+        Cell: (v) => detailsCell(v.cell.row.original),
         disableSortBy: true,
       },
     ],
@@ -114,7 +134,19 @@ const useDeviceLogsTable = ({ serialNumber, limit, logType }: Props) => {
   );
 
   return {
-    columns,
+    columns:
+      logType === 2
+        ? columns
+            .filter((c) => c.id !== 'severity')
+            .map((col) =>
+              col.id === 'log'
+                ? {
+                    ...col,
+                    Header: 'Type',
+                  }
+                : col,
+            )
+        : columns,
     getLogs,
     getCustomLogs,
     time,
