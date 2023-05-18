@@ -117,6 +117,20 @@ const VlanChart = ({ data, format }: Props) => {
     ],
   };
 
+  const dataTick = (value: string | number) => {
+    try {
+      const temp = String(value);
+
+      if (temp.includes('.')) {
+        return Number(temp).toFixed(1);
+      }
+
+      return temp;
+    } catch (e) {
+      return value;
+    }
+  };
+
   const packetsTick = (value: number) => {
     if (packetsFactor.factor === 1) {
       return value.toLocaleString();
@@ -168,7 +182,7 @@ const VlanChart = ({ data, format }: Props) => {
               color: colorMode === 'dark' ? 'white' : undefined,
               callback:
                 format === 'bytes'
-                  ? (tickValue) => `${tickValue} ${unit}`
+                  ? (tickValue) => `${dataTick(tickValue)} ${unit}`
                   : (tickValue) => (typeof tickValue === 'number' ? packetsTick(tickValue) : tickValue),
             },
           },
