@@ -30,11 +30,15 @@ const OverallHealthSimple = ({ data }: Props) => {
       },
     );
 
-    const avg = Math.floor(totalDevices.totalHealth / totalDevices.totalDevices);
+    const avg = totalDevices.totalDevices === 0 ? -1 : Math.floor(totalDevices.totalHealth / totalDevices.totalDevices);
     let color: [string, string] = ['green.300', 'green.300'];
     let icon = Heart;
+    const text = avg === -1 ? '-' : `${avg}%`;
 
-    if (avg >= 80 && avg < 100) {
+    if (avg === -1) {
+      icon = Heart;
+      color = ['gray.300', 'gray.300'];
+    } else if (avg >= 80 && avg < 100) {
       icon = Warning;
       color = ['yellow.300', 'yellow.300'];
     } else if (avg < 80) {
@@ -42,7 +46,7 @@ const OverallHealthSimple = ({ data }: Props) => {
       color = ['red.300', 'red.300'];
     }
 
-    return { title: `${avg}%`, color, icon };
+    return { title: text, color, icon };
   }, [data]);
 
   return (

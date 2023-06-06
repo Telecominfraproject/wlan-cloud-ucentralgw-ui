@@ -11,6 +11,7 @@ import {
   FormLabel,
   Switch,
   Heading,
+  Text,
 } from '@chakra-ui/react';
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -32,6 +33,7 @@ export type FirmwareUpgradeModalProps = {
 
 export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNumber }: FirmwareUpgradeModalProps) => {
   const { t } = useTranslation();
+  const [showDevFirmware, { toggle: toggleDev }] = useBoolean();
   const [formKey, setFormKey] = React.useState(uuid());
   const ref = useRef<
     | FormikProps<{
@@ -72,7 +74,13 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
       <ModalContent maxWidth={{ sm: '90%', md: '900px', lg: '1000px', xl: '80%' }}>
         <ModalHeader
           title={`${t('commands.firmware_upgrade')} #${serialNumber}`}
-          right={<CloseButton ml={2} onClick={closeModal} />}
+          right={
+            <>
+              <Text>{t('controller.firmware.show_dev_releases')}</Text>
+              <Switch mx={2} isChecked={showDevFirmware} onChange={toggleDev} size="lg" />
+              <CloseButton onClick={closeModal} />
+            </>
+          }
         />
         <ModalBody>
           {isUpgrading || isFetchingDevice || isFetchingFirmware ? (
@@ -104,7 +112,11 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
                 </Formik>
               )}
               {firmware?.firmwares && (
-                <FirmwareList firmware={firmware.firmwares} upgrade={submit} isLoading={isUpgrading} />
+                <FirmwareList
+                  firmware={firmware.firmwares.filter((firmw) => showDevFirmware || !firmw.revision.includes('devel'))}
+                  upgrade={submit}
+                  isLoading={isUpgrading}
+                />
               )}
             </>
           )}

@@ -9,7 +9,6 @@ import {
   ThermometerHot,
   WarningCircle,
 } from '@phosphor-icons/react';
-import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Actions from './Actions';
@@ -20,6 +19,7 @@ import AP from './icons/AP.png';
 import IOT from './icons/IOT.png';
 import MESH from './icons/MESH.png';
 import SWITCH from './icons/SWITCH.png';
+import DeviceLocaleCell from './LocaleCell';
 import ProvisioningStatusCell from './ProvisioningStatusCell';
 import DeviceUptimeCell from './Uptime';
 import { DataGrid } from 'components/DataTables/DataGrid';
@@ -50,7 +50,6 @@ const fourDigitNumber = (v?: number) => {
   if (fourthChar === '.') return `${str.slice(0, 3)}`;
   return `${str.slice(0, 4)}`;
 };
-const ICON_STYLE = { width: '24px', height: '24px', borderRadius: '20px' };
 
 const ICONS = {
   AP: <Image borderRadius="full" boxSize="25px" src={AP} left="auto" right="auto" />,
@@ -255,19 +254,7 @@ const DeviceListCard = () => {
     [],
   );
   const uptimeCell = React.useCallback((device: DeviceWithStatus) => <DeviceUptimeCell device={device} />, []);
-  const localeCell = React.useCallback(
-    (device: DeviceWithStatus) => (
-      <Tooltip label={`${device.locale !== '' ? `${device.locale} - ` : ''}${device.ipAddress}`} placement="top">
-        <Box w="100%" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-          {device.locale !== '' && device.ipAddress !== '' && (
-            <ReactCountryFlag style={ICON_STYLE} countryCode={device.locale} svg />
-          )}
-          {`  ${device.ipAddress.length > 0 ? device.ipAddress : '-'}`}
-        </Box>
-      </Tooltip>
-    ),
-    [],
-  );
+  const localeCell = React.useCallback((device: DeviceWithStatus) => <DeviceLocaleCell device={device} />, []);
   const gpsCell = React.useCallback((device: DeviceWithStatus) => <DeviceTableGpsCell device={device} />, []);
   const numberCell = React.useCallback(
     (v?: number) => (
@@ -484,9 +471,9 @@ const DeviceListCard = () => {
         cell: (v) => localeCell(v.cell.row.original),
         enableSorting: false,
         meta: {
-          customMaxWidth: '140px',
-          customWidth: '130px',
-          customMinWidth: '130px',
+          customMaxWidth: '160px',
+          customWidth: '160px',
+          customMinWidth: '160px',
         },
       },
       {
