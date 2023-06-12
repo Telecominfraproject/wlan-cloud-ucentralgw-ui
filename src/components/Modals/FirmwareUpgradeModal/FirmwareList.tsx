@@ -14,7 +14,7 @@ interface Props {
 const FirmwareList: React.FC<Props> = ({ firmware, upgrade, isLoading }) => {
   const { t } = useTranslation();
 
-  const sortedFirmware = useMemo(() => firmware.sort((a, b) => b.created - a.created), [firmware]);
+  const sortedFirmware = useMemo(() => firmware.sort((a, b) => b.imageDate - a.imageDate), [firmware]);
 
   return (
     <Box h="600px" w="100%" overflowY="auto" px={0}>
@@ -34,10 +34,10 @@ const FirmwareList: React.FC<Props> = ({ firmware, upgrade, isLoading }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {sortedFirmware.map(({ created, size, revision, uri }) => (
+          {sortedFirmware.map(({ imageDate, size, revision, uri }) => (
             <Tr key={uuid()}>
               <Td px={0} py={1} w="200px">
-                {compactDate(created)}
+                {compactDate(imageDate)}
               </Td>
               <Td px={0} py={1} width="160px">
                 {bytesString(size)}
