@@ -17,6 +17,7 @@ import {
   Tooltip,
   useBreakpoint,
   Portal,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { ArrowCircleLeft } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
@@ -27,11 +28,20 @@ export type NavbarProps = {
   toggleSidebar: () => void;
   activeRoute?: string;
   languageSwitcher?: React.ReactNode;
+  favoritesButton?: React.ReactNode;
+  rightElements?: React.ReactNode;
 };
 
-export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarProps) => {
+export const Navbar = ({
+  toggleSidebar,
+  activeRoute,
+  languageSwitcher,
+  favoritesButton,
+  rightElements = null,
+}: NavbarProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const menuProps = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
   const breakpoint = useBreakpoint();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -76,6 +86,20 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
 
   window.addEventListener('scroll', changeNavbar);
 
+  let timeout: NodeJS.Timeout;
+  const onMouseEnter = () => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    menuProps.onOpen();
+  };
+  const onMouseLeave = () => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => menuProps.onClose(), 100);
+  };
+
   return (
     <Portal>
       <Flex
@@ -109,11 +133,14 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
           justifyContent="center"
         >
           {isCompact && <HamburgerIcon w="24px" h="24px" onClick={toggleSidebar} mr={10} mt={1} />}
-          <Heading size="lg">{activeRoute}</Heading>
+          {activeRoute && activeRoute.length > 0 ? (
+            <Heading size="lg" mr={4}>
+              {activeRoute}
+            </Heading>
+          ) : null}
           <Tooltip label={t('common.go_back')}>
             <IconButton
               mt={1}
-              ml={4}
               colorScheme="blue"
               aria-label={t('common.go_back')}
               onClick={goBack}
@@ -123,6 +150,8 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
           </Tooltip>
           <Box ms="auto" w={{ base: 'unset' }}>
             <Flex alignItems="center" flexDirection="row">
+              {rightElements}
+              {favoritesButton}
               <Tooltip hasArrow label={t('common.theme')}>
                 <IconButton
                   aria-label={t('common.theme')}
@@ -132,27 +161,33 @@ export const Navbar = ({ toggleSidebar, activeRoute, languageSwitcher }: NavbarP
                 />
               </Tooltip>
               {languageSwitcher}
-              <HStack spacing={{ base: '0', md: '6' }} ml={1} mr={4}>
-                <Menu>
-                  <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
+              <Box ml={1} mr={4}>
+                <Menu {...menuProps} gutter={0}>
+                  <MenuButton
+                    py={2}
+                    transition="all 0.3s"
+                    _focus={{ boxShadow: 'none' }}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                  >
                     <HStack>
                       {!isCompact && <Text fontWeight="bold">{user?.name}</Text>}
                       <Avatar h="40px" w="40px" fontSize="0.8rem" lineHeight="2rem" src={avatar} name={user?.name} />
                     </HStack>
                   </MenuButton>
-                  <Portal>
-                    <MenuList
-                      bg={useColorModeValue('white', 'gray.900')}
-                      borderColor={useColorModeValue('gray.200', 'gray.700')}
-                    >
-                      <MenuItem onClick={goToProfile} w="100%">
-                        {t('account.title')}
-                      </MenuItem>
-                      <MenuItem onClick={logout}>{t('common.logout')}</MenuItem>
-                    </MenuList>
-                  </Portal>
+                  <MenuList
+                    bg={useColorModeValue('white', 'gray.900')}
+                    borderColor={useColorModeValue('gray.200', 'gray.700')}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                  >
+                    <MenuItem onClick={goToProfile} w="100%">
+                      {t('account.title')}
+                    </MenuItem>
+                    <MenuItem onClick={logout}>{t('common.logout')}</MenuItem>
+                  </MenuList>
                 </Menu>
-              </HStack>
+              </Box>
             </Flex>
           </Box>
         </Flex>

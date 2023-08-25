@@ -12,7 +12,7 @@ const getAvailableFirmwareBatch = async (deviceType: string, limit: number, offs
     .get(`firmwares?deviceType=${deviceType}&limit=${limit}&offset=${offset}`)
     .then(({ data }: { data: { firmwares: Firmware[] } }) => data);
 
-const getAllAvailableFirmware = async (deviceType: string) => {
+export const getAllAvailableFirmware = async (deviceType: string) => {
   const limit = 500;
   let offset = 0;
   let data: { firmwares: Firmware[] } = { firmwares: [] };

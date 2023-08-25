@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, IconButton, Tooltip, useBreakpoint, useDisclosure } from '@chakra-ui/react';
-import { Pencil, X } from '@phosphor-icons/react';
+import { Pencil, Stop } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmCloseAlertModal } from '../../Modals/ConfirmCloseAlert';
 
@@ -48,7 +48,7 @@ const _ToggleEditButton: React.FC<ToggleEditButtonProps> = ({
           colorScheme="gray"
           type="button"
           onClick={toggle}
-          rightIcon={isEditing ? <X size={20} /> : <Pencil size={20} />}
+          rightIcon={isEditing ? <Stop size={20} /> : <Pencil size={20} />}
           isLoading={isLoading}
           isDisabled={isDisabled}
           ml={ml}
@@ -68,7 +68,7 @@ const _ToggleEditButton: React.FC<ToggleEditButtonProps> = ({
           colorScheme="gray"
           type="button"
           onClick={toggle}
-          icon={isEditing ? <X size={20} /> : <Pencil size={20} />}
+          icon={isEditing ? <Stop size={20} /> : <Pencil size={20} />}
           isLoading={isLoading}
           isDisabled={isDisabled}
           ml={ml}

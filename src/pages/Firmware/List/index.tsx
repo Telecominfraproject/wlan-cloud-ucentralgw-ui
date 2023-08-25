@@ -55,7 +55,7 @@ const FirmwareListTable = () => {
     [],
   );
   const revisionCell = React.useCallback((v: string) => getRevision(v), []);
-  const uriCell = React.useCallback((v: string) => <UriCell uri={v} />, []);
+  const uriCell = React.useCallback((v: string) => <UriCell key={v} uri={v} />, []);
   const actionCell = React.useCallback(
     (firmw: Firmware) => (
       <Tooltip hasArrow label={t('common.view_details')} placement="top">

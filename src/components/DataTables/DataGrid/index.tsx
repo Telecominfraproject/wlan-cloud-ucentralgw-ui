@@ -149,7 +149,7 @@ export const DataGrid = <TValue extends object>({
     ...tableOptions,
   });
 
-  if (isLoading && data.length === 0) {
+  if (isLoading && !options.showAsCard && data.length === 0) {
     return (
       <Center>
         <Spinner size="xl" />
