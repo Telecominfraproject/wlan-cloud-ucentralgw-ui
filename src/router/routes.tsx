@@ -3,6 +3,7 @@ import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, Wif
 import { Route } from 'models/Routes';
 
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));
+const DefaultFirmwarePage = React.lazy(() => import('pages/DefaultFirmware'));
 const DevicePage = React.lazy(() => import('pages/Device'));
 const DashboardPage = React.lazy(() => import('pages/Devices/Dashboard'));
 const AllDevicesPage = React.lazy(() => import('pages/Devices/ListCard'));
@@ -16,6 +17,7 @@ const FirmwareDashboard = React.lazy(() => import('pages/Firmware/Dashboard'));
 const ProfilePage = React.lazy(() => import('pages/Profile'));
 const ScriptsPage = React.lazy(() => import('pages/Scripts'));
 const UsersPage = React.lazy(() => import('pages/UsersPage'));
+const MonitoringPage = React.lazy(() => import('pages/MonitoringPage'));
 const EndpointsPage = React.lazy(() => import('pages/EndpointsPage'));
 const SystemConfigurationPage = React.lazy(() => import('pages/SystemConfigurationPage'));
 
@@ -82,12 +84,26 @@ const routes: Route[] = [
     component: ScriptsPage,
   },
   {
-    id: 'configurations',
+    id: 'defaults-group',
     authorized: ['root', 'partner', 'admin', 'csr', 'system'],
-    path: '/configurations',
-    name: 'configurations.title',
+    name: 'common.defaults',
     icon: () => <Barcode size={28} weight="bold" />,
-    component: DefaultConfigurationsPage,
+    children: [
+      {
+        id: 'configurations',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/configurations',
+        name: 'configurations.title',
+        component: DefaultConfigurationsPage,
+      },
+      {
+        id: 'default_firmware',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/firmware/defaults',
+        name: 'firmware.one',
+        component: DefaultFirmwarePage,
+      },
+    ],
   },
   {
     id: 'logs-group',
@@ -163,18 +179,25 @@ const routes: Route[] = [
     icon: () => <Info size={28} weight="bold" />,
     children: [
       {
-        id: 'system-services',
-        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
-        path: '/services',
-        name: 'system.services',
-        component: EndpointsPage,
-      },
-      {
         id: 'system-configuration',
         authorized: ['root', 'partner', 'admin', 'csr', 'system'],
         path: '/systemConfiguration',
         name: 'system.configuration',
         component: SystemConfigurationPage,
+      },
+      {
+        id: 'system-monitoring',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/systemMonitoring',
+        name: 'analytics.monitoring',
+        component: MonitoringPage,
+      },
+      {
+        id: 'system-services',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/services',
+        name: 'system.services',
+        component: EndpointsPage,
       },
     ],
   },

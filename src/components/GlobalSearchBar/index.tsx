@@ -24,12 +24,21 @@ const chakraStyles: (
   placeholder: (provided) => ({
     ...provided,
     lineHeight: '1',
+    pointerEvents: 'none',
+    userSelect: 'none',
+    MozUserSelect: 'none',
+    WebkitUserSelect: 'none',
+    msUserSelect: 'none',
   }),
   container: (provided) => ({
     ...provided,
     width: '320px',
     backgroundColor: colorMode === 'light' ? 'white' : 'gray.600',
     borderRadius: '15px',
+  }),
+  input: (provided) => ({
+    ...provided,
+    gridArea: '1 / 2 / 4 / 4 !important',
   }),
 });
 

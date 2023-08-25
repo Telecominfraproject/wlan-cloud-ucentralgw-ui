@@ -175,6 +175,7 @@ const InterfaceChart = ({ data, format }: Props) => {
             },
           },
           y: {
+            beginAtZero: true,
             grid: {
               color: colorMode === 'dark' ? 'white' : undefined,
             },

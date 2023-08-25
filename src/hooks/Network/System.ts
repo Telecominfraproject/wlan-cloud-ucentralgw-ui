@@ -199,3 +199,36 @@ export const useUpdateSystemLogLevels = ({ endpoint, token }: { endpoint: string
     },
   });
 };
+
+export type SystemResources = {
+  currRealMem: number;
+  currVirtMem: number;
+  numberOfFileDescriptors: number;
+  peakRealMem: number;
+  peakVirtMem: number;
+};
+
+export const useGetSystemResources = ({
+  endpoint,
+  token,
+  onSuccess,
+}: {
+  endpoint: string;
+  token: string;
+  onSuccess?: (data: SystemResources) => void;
+}) =>
+  useQuery(
+    ['systemResources', endpoint],
+    () =>
+      axiosInstance
+        .get(`${endpoint}/api/v1/system?command=resources`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(({ data }: { data: SystemResources }) => data),
+    {
+      refetchInterval: 5 * 1000,
+      onSuccess,
+    },
+  );
