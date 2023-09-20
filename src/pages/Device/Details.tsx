@@ -11,7 +11,6 @@ import { compactDate } from 'helpers/dateFormatting';
 import { useGetDevice } from 'hooks/Network/Devices';
 import { useGetProvUi } from 'hooks/Network/Endpoints';
 import { useGetTag } from 'hooks/Network/Inventory';
-import { DeviceConfiguration } from 'models/Device';
 
 type Props = {
   serialNumber: string;
@@ -60,7 +59,7 @@ const DeviceDetails = ({ serialNumber }: Props) => {
         <Heading size="md">{t('common.details')}</Heading>
         <Spacer />
         <ViewCapabilitiesModal serialNumber={serialNumber} />
-        <ViewConfigurationModal configuration={getDevice.data?.configuration as DeviceConfiguration} />
+        <ViewConfigurationModal serialNumber={serialNumber} />
       </CardHeader>
       <CardBody display="block">
         <Grid templateColumns="repeat(2, 1fr)" gap={0} w="100%">

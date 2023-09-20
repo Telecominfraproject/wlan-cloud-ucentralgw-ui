@@ -187,6 +187,8 @@ export const useConfigureDevice = ({ serialNumber }: { serialNumber: string }) =
   return useMutation(configureDevice(serialNumber), {
     onSuccess: () => {
       queryClient.invalidateQueries(['commands', serialNumber]);
+      queryClient.invalidateQueries(['device', serialNumber]);
+      queryClient.invalidateQueries(['devices']);
     },
   });
 };
@@ -248,27 +250,14 @@ const startScript = (data: { serialNumber: string; timeout?: number; [k: string]
     })
     .then((response: { data: DeviceCommandHistory }) => response.data);
 export const useDeviceScript = ({ serialNumber }: { serialNumber: string }) => {
-  const { t } = useTranslation();
-  const toast = useToast();
   const queryClient = useQueryClient();
 
   return useMutation(startScript, {
     onSuccess: () => {
       queryClient.invalidateQueries(['commands', serialNumber]);
     },
-    onError: (e) => {
+    onError: () => {
       queryClient.invalidateQueries(['commands', serialNumber]);
-      if (axios.isAxiosError(e)) {
-        toast({
-          id: 'script-error',
-          title: t('common.error'),
-          description: e?.response?.data?.ErrorDescription,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
-        });
-      }
     },
   });
 };

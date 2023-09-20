@@ -7,7 +7,9 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Center,
   IconButton,
+  Spinner,
   Tooltip,
   useClipboard,
   useColorMode,
@@ -17,19 +19,26 @@ import { JsonViewer } from '@textea/json-viewer';
 import { Barcode } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'components/Modals/Modal';
-import { DeviceConfiguration } from 'models/Device';
+import { useGetDevice } from 'hooks/Network/Devices';
+import { RefreshButton } from 'components/Buttons/RefreshButton';
 
-const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfiguration }) => {
+const ViewConfigurationModal = ({ serialNumber }: { serialNumber: string }) => {
   const { t } = useTranslation();
+  const getDevice = useGetDevice({ serialNumber });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(configuration ?? {}, null, 2));
+  const { hasCopied, onCopy, setValue } = useClipboard(JSON.stringify(getDevice.data?.configuration ?? {}, null, 2));
   const { colorMode } = useColorMode();
 
   React.useEffect(() => {
-    if (configuration) {
-      setValue(JSON.stringify(configuration, null, 2));
+    if (getDevice.data) {
+      setValue(JSON.stringify(getDevice.data.configuration, null, 2));
     }
-  }, [configuration]);
+  }, [getDevice.data?.configuration]);
+
+  const handleOpenClick = () => {
+    getDevice.refetch();
+    onOpen();
+  };
 
   return (
     <>
@@ -37,7 +46,7 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
         <IconButton
           aria-label={t('configurations.one')}
           icon={<Barcode size={20} />}
-          onClick={onOpen}
+          onClick={handleOpenClick}
           colorScheme="purple"
         />
       </Tooltip>
@@ -45,14 +54,17 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
         isOpen={isOpen}
         title={t('configurations.one')}
         topRightButtons={
-          <Button onClick={onCopy} size="md" colorScheme="teal">
-            {hasCopied ? `${t('common.copied')}!` : t('common.copy')}
-          </Button>
+          <>
+            <Button onClick={onCopy} size="md" colorScheme="teal">
+              {hasCopied ? `${t('common.copied')}!` : t('common.copy')}
+            </Button>
+            <RefreshButton onClick={getDevice.refetch} isFetching={getDevice.isFetching} />
+          </>
         }
         onClose={onClose}
       >
         <Box display="inline-block" w="100%">
-          {configuration && (
+          {getDevice.data && !getDevice.isFetching ? (
             <Box maxH="calc(100vh - 250px)" minH="300px" overflowY="auto">
               <Accordion defaultIndex={0} allowToggle>
                 <AccordionItem>
@@ -71,7 +83,7 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
                       enableClipboard={false}
                       theme={colorMode === 'light' ? undefined : 'dark'}
                       defaultInspectDepth={1}
-                      value={configuration as object}
+                      value={getDevice.data.configuration as object}
                       style={{ background: 'unset', display: 'unset' }}
                     />
                   </AccordionPanel>
@@ -86,11 +98,15 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4} overflowX="auto">
-                    <pre>{JSON.stringify(configuration, null, 2)}</pre>
+                    <pre>{JSON.stringify(getDevice.data.configuration, null, 2)}</pre>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
             </Box>
+          ) : (
+            <Center my={12}>
+              <Spinner size="xl" />
+            </Center>
           )}
         </Box>
       </Modal>
@@ -98,4 +114,4 @@ const ViewConfigurationModal = ({ configuration }: { configuration?: DeviceConfi
   );
 };
 
-export default ViewConfigurationModal;
+export default React.memo(ViewConfigurationModal);
