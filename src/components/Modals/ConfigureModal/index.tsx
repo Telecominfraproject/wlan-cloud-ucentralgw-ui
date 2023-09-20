@@ -30,7 +30,7 @@ export type ConfigureModalProps = {
   };
 };
 
-export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps) => {
+const _ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps) => {
   const { t } = useTranslation();
   const toast = useToast();
   const configure = useConfigureDevice({ serialNumber });
@@ -45,6 +45,7 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
   const onImportConfiguration = () => {
     setNewConfig(getDevice.data?.configuration ? JSON.stringify(getDevice.data.configuration, null, 4) : '');
   };
+
   const isValid = React.useMemo(() => {
     try {
       JSON.parse(newConfig);
@@ -71,8 +72,18 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
           modalProps.onClose();
         },
       });
-    } catch (e) {}
+    } catch (e) {
+      // do nothing
+    }
   };
+
+  React.useEffect(() => {
+    if (modalProps.isOpen) {
+      getDevice.refetch();
+    } else {
+      setNewConfig('');
+    }
+  }, [modalProps.isOpen]);
 
   return (
     <Modal
@@ -124,3 +135,5 @@ export const ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps
     </Modal>
   );
 };
+
+export const ConfigureModal = React.memo(_ConfigureModal);
