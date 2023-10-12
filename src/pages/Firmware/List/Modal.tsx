@@ -138,6 +138,7 @@ const FirmwareDetailsModal = ({ modalProps, firmware }: Props) => {
 
   React.useEffect(() => {
     if (firmware) {
+      copy.setValue(firmware?.uri ?? '');
       setNewDescription(firmware?.description);
     }
   }, [firmware]);

@@ -694,7 +694,7 @@ const DeviceListCard = () => {
       <DataGrid<DeviceWithStatus>
         controller={tableController}
         header={{
-          title: `${getCount.data?.count} ${t('devices.title')}`,
+          title: `${getCount.data?.count ?? 0} ${t('devices.title')}`,
           objectListed: t('devices.title'),
           leftContent: <GlobalSearchBar />,
           otherButtons: (
