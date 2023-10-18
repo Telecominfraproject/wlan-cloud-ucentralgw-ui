@@ -18,3 +18,4 @@
 .env.production.local
 
 npm-debug.log*
+.vscode/settings.json
