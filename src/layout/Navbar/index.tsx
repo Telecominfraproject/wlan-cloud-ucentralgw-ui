@@ -123,6 +123,7 @@ export const Navbar = ({
         top="15px"
         border={scrolled ? '0.5px solid' : undefined}
         w={isCompact ? '100%' : 'calc(100% - 254px)'}
+        zIndex={10}
       >
         <Flex
           w="100%"
