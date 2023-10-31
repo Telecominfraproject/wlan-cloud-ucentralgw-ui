@@ -23,7 +23,7 @@ import { CardHeader } from 'components/Containers/Card/CardHeader';
 import FormattedDate from 'components/InformationDisplays/FormattedDate';
 import COUNTRY_LIST from 'constants/countryList';
 import { compactDate, compactSecondsToDetailed } from 'helpers/dateFormatting';
-import { bytesString, getRevision } from 'helpers/stringHelper';
+import { bytesString, getRevision, uppercaseFirstLetter } from 'helpers/stringHelper';
 import { useGetDevice, useGetDeviceStatus } from 'hooks/Network/Devices';
 import { useGetDeviceLastStats } from 'hooks/Network/Statistics';
 
@@ -157,7 +157,11 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               <Heading size="sm">{t('analytics.last_contact')}:</Heading>
             </GridItem>
             <GridItem colSpan={1}>
-              {getStatus?.data?.lastContact ? <FormattedDate date={getStatus.data.lastContact} /> : ''}
+              {getStatus?.data?.lastContact && getStatus?.data.lastContact !== 0 ? (
+                <FormattedDate date={getStatus.data.lastContact} />
+              ) : (
+                <FormattedDate date={getDevice.data?.lastRecordedContact} />
+              )}
             </GridItem>
             <GridItem colSpan={1} alignContent="center" alignItems="center">
               <Heading size="sm">{t('analytics.memory')}:</Heading>
@@ -167,8 +171,10 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               <Heading size="sm">{t('devices.certificate_expires_in')}:</Heading>
             </GridItem>
             <GridItem colSpan={1}>
-              {getStatus.data?.certificateExpiryDate && (
-                <FormattedDate date={getStatus.data?.certificateExpiryDate} hidePrefix />
+              {getDevice.data?.certificateExpiryDate ? (
+                <FormattedDate date={getDevice.data?.certificateExpiryDate} hidePrefix />
+              ) : (
+                '-'
               )}
             </GridItem>
             <GridItem colSpan={1} alignContent="center" alignItems="center">
@@ -176,7 +182,7 @@ const DeviceSummary = ({ serialNumber }: Props) => {
             </GridItem>
             <GridItem colSpan={1}>
               {getStatus.data?.connectReason && getStatus.data?.connectReason.length > 0
-                ? getStatus.data?.connectReason
+                ? uppercaseFirstLetter(getStatus.data.connectReason)
                 : '-'}
             </GridItem>
           </Grid>

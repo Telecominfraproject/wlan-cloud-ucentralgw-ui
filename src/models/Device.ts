@@ -3,6 +3,7 @@ import { Note } from './Note';
 
 export interface GatewayDevice {
   UUID: number;
+  certificateExpiryDate: number;
   compatible: string;
   configuration: unknown;
   createdTimestamp: number;
@@ -16,6 +17,7 @@ export interface GatewayDevice {
   lastConfigurationChange: number;
   lastConfigurationDownload: number;
   lastFWUpdate: number;
+  lastRecordedContact: number;
   locale: string;
   location: string;
   macAddress: string;
