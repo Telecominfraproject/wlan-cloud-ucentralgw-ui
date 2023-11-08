@@ -40,13 +40,16 @@ export type DataGridOptions<TValue extends object> = {
   onRowClick?: (row: TValue) => (() => void) | undefined;
   refetch?: () => void;
   showAsCard?: boolean;
+  hideTablePreferences?: boolean;
+  hideTableTitleRow?: boolean;
 };
 
 export type DataGridProps<TValue extends object> = {
+  innerTableKey?: string | number;
   controller: UseDataGridReturn;
   columns: DataGridColumn<TValue>[];
   header: {
-    title: string;
+    title: string | React.ReactNode;
     objectListed: string;
     leftContent?: React.ReactNode;
     addButton?: React.ReactNode;
@@ -58,6 +61,7 @@ export type DataGridProps<TValue extends object> = {
 };
 
 export const DataGrid = <TValue extends object>({
+  innerTableKey,
   controller,
   columns,
   header,
@@ -149,6 +153,20 @@ export const DataGrid = <TValue extends object>({
     ...tableOptions,
   });
 
+  // If this is a manual DataTable, with a page index that is higher than 0 and higher than the max possible page, we send to index 0
+  React.useEffect(() => {
+    if (
+      options.isManual &&
+      !isLoading &&
+      data &&
+      pagination.pageIndex > 0 &&
+      options.count !== undefined &&
+      Math.ceil(options.count / pagination.pageSize) - 1 < pagination.pageIndex
+    ) {
+      controller.onPaginationChange({ pageIndex: 0, pageSize: pagination.pageSize });
+    }
+  }, [options.count, isLoading, pagination, data]);
+
   if (isLoading && !options.showAsCard && data.length === 0) {
     return (
       <Center>
@@ -160,25 +178,29 @@ export const DataGrid = <TValue extends object>({
   return options.showAsCard ? (
     <Card>
       <CardHeader>
-        <Heading size="md" my="auto" mr={2}>
-          {header.title}
-        </Heading>
+        {typeof header.title === 'string' ? (
+          <Heading size="md" my="auto" mr={2}>
+            {header.title}
+          </Heading>
+        ) : (
+          header.title
+        )}
         {header.leftContent}
         <Spacer />
         <HStack spacing={2}>
           {header.otherButtons}
           {header.addButton}
-          {
+          {options.hideTablePreferences ? null : (
             // @ts-ignore
             <TableSettingsModal<TValue> controller={controller} columns={columns} />
-          }
+          )}
           {options.refetch ? <RefreshButton onClick={options.refetch} isCompact isFetching={isLoading} /> : null}
         </HStack>
       </CardHeader>
       <CardBody display="flex" flexDirection="column">
         <LoadingOverlay isLoading={isLoading}>
           <TableContainer minH={minimumHeight}>
-            <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px">
+            <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px" key={innerTableKey}>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <DataGridHeaderRow<TValue> key={headerGroup.id} headerGroup={headerGroup} />
@@ -206,7 +228,7 @@ export const DataGrid = <TValue extends object>({
     </Card>
   ) : (
     <Box w="100%">
-      <Flex mb={2}>
+      <Flex mb={2} hidden={options.hideTableTitleRow}>
         <Heading size="md" my="auto" mr={2}>
           {header.title}
         </Heading>
@@ -215,16 +237,16 @@ export const DataGrid = <TValue extends object>({
         <HStack spacing={2}>
           {header.otherButtons}
           {header.addButton}
-          {
+          {options.hideTablePreferences ? null : (
             // @ts-ignore
             <TableSettingsModal<TValue> controller={controller} columns={columns} />
-          }
+          )}
           {options.refetch ? <RefreshButton onClick={options.refetch} isCompact isFetching={isLoading} /> : null}
         </HStack>
       </Flex>
       <LoadingOverlay isLoading={isLoading}>
         <TableContainer minH={minimumHeight}>
-          <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px">
+          <Table size="small" variant="simple" textColor={textColor} w="100%" fontSize="14px" key={innerTableKey}>
             <Thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <DataGridHeaderRow<TValue> key={headerGroup.id} headerGroup={headerGroup} />

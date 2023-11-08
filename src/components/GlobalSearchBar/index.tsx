@@ -104,18 +104,43 @@ const GlobalSearchBar = () => {
           .then(() => callback([]));
       }
       if (v.match('^[a-fA-F0-9-*]+$')) {
+        let result: { label: string; value: string; type: 'serial' }[] = [];
+        let tryAgain = true;
+
         await store
           .searchSerialNumber(v)
           .then((res) => {
-            callback(
-              res.map((r) => ({
+            result = res.map((r) => ({
+              label: r,
+              value: r,
+              type: 'serial',
+            }));
+            tryAgain = false;
+          })
+          .catch(() => {
+            result = [];
+          });
+
+        if (tryAgain) {
+          // Wait 1 second and try again
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          await store
+            .searchSerialNumber(v)
+            .then((res) => {
+              result = res.map((r) => ({
                 label: r,
                 value: r,
                 type: 'serial',
-              })),
-            );
-          })
-          .catch(() => []);
+              }));
+              tryAgain = false;
+            })
+            .catch(() => {
+              result = [];
+            });
+        }
+
+        callback(result);
       }
       return callback([]);
     },

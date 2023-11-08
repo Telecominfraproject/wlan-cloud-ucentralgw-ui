@@ -24,7 +24,6 @@ export const DataGridCellRow = <TValue extends object>({
         backgroundColor: hoveredRowBg,
       }}
       onClick={onClick}
-      borderRight="1px solid gray"
     >
       {row.getVisibleCells().map((cell) => (
         <Td
@@ -55,6 +54,7 @@ export const DataGridCellRow = <TValue extends object>({
               : undefined
           }
           border="0.5px solid gray"
+          style={cell.column.columnDef.meta?.rowContentOptions?.style}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </Td>
