@@ -8,7 +8,7 @@ export type DataGridHeaderRowProps<TValue extends object> = {
 };
 
 export const DataGridHeaderRow = <TValue extends object>({ headerGroup }: DataGridHeaderRowProps<TValue>) => (
-  <Tr p={0} borderRight="1px solid gray">
+  <Tr p={0}>
     {headerGroup.headers.map((header) => (
       <Th
         color="gray.400"

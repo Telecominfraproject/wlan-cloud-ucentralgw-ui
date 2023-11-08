@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Alert, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Alert, Heading, VStack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import ResultCard from './ResultCard';
@@ -11,7 +11,7 @@ interface Props {
   setCsvData: (data: DeviceScanResult[]) => void;
 }
 
-const WifiScanResultDisplay: React.FC<Props> = ({ results, setCsvData }) => {
+const WifiScanResultDisplay = ({ results, setCsvData }: Props) => {
   const { t } = useTranslation();
 
   const scanResults = useMemo(() => {
@@ -54,18 +54,18 @@ const WifiScanResultDisplay: React.FC<Props> = ({ results, setCsvData }) => {
   return (
     <>
       {results.errorCode === 1 && (
-        <Heading size="sm">
+        <Heading size="md">
           <Alert colorScheme="red">{t('commands.wifiscan_error_1')}</Alert>
         </Heading>
       )}
-      <Heading size="sm">
+      <Heading size="md" mb={2}>
         {t('commands.execution_time')}: {Math.floor(results.executionTime / 1000)}s
       </Heading>
-      <SimpleGrid minChildWidth="360px" spacing={2}>
+      <VStack spacing={4} align="stretch">
         {scanResults?.scanList.map((channel) => (
           <ResultCard key={uuid()} channelInfo={channel} />
         ))}
-      </SimpleGrid>
+      </VStack>
     </>
   );
 };

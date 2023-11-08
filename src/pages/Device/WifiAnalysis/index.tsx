@@ -162,7 +162,7 @@ const WifiAnalysisCard = ({ serialNumber }: Props) => {
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>
-            <SliderThumb />
+            <SliderThumb zIndex={0} />
           </Slider>
         )}
         <Box />

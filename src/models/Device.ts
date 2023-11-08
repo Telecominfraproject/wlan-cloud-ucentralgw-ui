@@ -114,12 +114,16 @@ interface BssidResult {
   bssid: string;
   capability: number;
   channel: number;
+  /** Channel Utilization percentage (ex.: 28 -> 28% channel utilization) */
+  ch_util?: number;
   frequency: number;
   ht_oper: string;
   ies: { content: unknown; name: string; type: number }[];
   last_seen: number;
   ssid: string;
   signal: number;
+  /** Station count */
+  sta_count?: number;
   tsf: number;
   meshid?: string;
   vht_oper: string;
@@ -144,20 +148,8 @@ export interface WifiScanResult {
   };
 }
 
-export interface DeviceScanResult {
-  bssid: string;
-  capability: number;
-  channel: number;
-  frequency: number;
-  ht_oper: string;
-  ies: { content: unknown; name: string; type: number }[];
-  last_seen: number;
-  ssid: string;
-  signal: number | string;
-  tsf: number;
-  meshid?: string;
-  vht_oper: string;
-}
+export type DeviceScanResult = BssidResult;
+
 export interface ScanChannel {
   channel: number;
   devices: DeviceScanResult[];
