@@ -6,6 +6,7 @@ import { ColumnPicker } from 'components/DataTables/ColumnPicker';
 import { DataTable } from 'components/DataTables/DataTable';
 import DataCell from 'components/TableCells/DataCell';
 import { Column } from 'models/Table';
+import IpCell from './IpCell';
 
 export type ParsedAssociation = {
   radio?: ParsedRadio;
@@ -35,7 +36,7 @@ type Props = {
   isSingle?: boolean;
 };
 
-const WifiAnalysisAssocationsTable = ({ data, ouis, isSingle }: Props) => {
+const WifiAnalysisAssociationsTable = ({ data, ouis, isSingle }: Props) => {
   const { t } = useTranslation();
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 
@@ -50,6 +51,10 @@ const WifiAnalysisAssocationsTable = ({ data, ouis, isSingle }: Props) => {
   );
   const dataCell = React.useCallback((v: number) => <DataCell bytes={v} />, []);
   const indexCell = React.useCallback((assoc: ParsedAssociation) => assoc.radio?.band ?? assoc.radio?.deductedBand, []);
+  const ipCell = React.useCallback(
+    (assoc: ParsedAssociation) => <IpCell ipv4={assoc.ips.ipv4} ipv6={assoc.ips.ipv6} />,
+    [],
+  );
 
   const columns: Column<ParsedAssociation>[] = React.useMemo(
     (): Column<ParsedAssociation>[] => [
@@ -71,6 +76,13 @@ const WifiAnalysisAssocationsTable = ({ data, ouis, isSingle }: Props) => {
         customWidth: '35px',
         isMonospace: true,
         alwaysShow: true,
+      },
+      {
+        id: 'ips',
+        Header: 'IPs',
+        Footer: '',
+        Cell: (v) => ipCell(v.cell.row.original),
+        disableSortBy: true,
       },
       {
         id: 'vendor',
@@ -195,4 +207,4 @@ const WifiAnalysisAssocationsTable = ({ data, ouis, isSingle }: Props) => {
   );
 };
 
-export default WifiAnalysisAssocationsTable;
+export default WifiAnalysisAssociationsTable;
