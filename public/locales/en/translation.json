@@ -269,6 +269,7 @@
 		"map": "Map",
 		"max": "Max",
 		"min": "Min",
+		"miscellaneous": "Miscellaneous",
 		"mode": "Mode",
 		"model": "Model",
 		"modified": "Modified",
@@ -737,6 +738,7 @@
 	"form": {
 		"captive_web_root_explanation": "Please use .tar files only (no compressed files like .targz, for example)",
 		"certificate_file_explanation": "Please use a .pem file that starts with \"-----BEGIN CERTIFICATE-----\" and ends with \"-----END CERTIFICATE-----\"",
+		"invalid_alphanumeric_with_dash": "Accepted chars. are only alphanumeric (letters & numbers)",
 		"invalid_cidr": "Invalid CIDR IPv4 address. Example: 192.168.0.1/12",
 		"invalid_email": "Invalid Email",
 		"invalid_file_content": "Invalid file content, please confirm that it is of the valid format",
@@ -763,7 +765,11 @@
 		"invalid_static_ipv4_e": "Invalid address, this range reserved for experiments (class E). The first octet should be 223 or lower",
 		"invalid_third_party": "Invalid Third Party JSON string. Please confirm that your value is a valid JSON",
 		"key_file_explanation": "Please use a .pem file that starts with \"-----BEGIN PRIVATE KEY-----\" and ends with \"-----END PRIVATE KEY-----\"",
+		"max_length": "Maximum length of {{max}} chars.",
+		"max_value": "Maximum value of {{max}}",
+		"min_length": "Minimum length of {{min}} chars.",
 		"min_max_string": "Value needs to be of a length between {{min}} (inclusive) and {{max}} (inclusive)",
+		"min_value": "Minimum value of {{min}}",
 		"missing_interface_upstream": "You need to have at least one upstream interface. At the moment, all your interfaces are downstream",
 		"new_email_to_notify": "New email to notify",
 		"new_phone_to_notify": "New phone to notify",
@@ -905,6 +911,11 @@
 		"one": "Notification",
 		"other": "Notifications"
 	},
+	"openroaming": {
+		"pool_strategy": "Pool Strategy",
+		"radius_endpoint_one": "Radius Endpoint",
+		"radius_endpoint_other": "Radius Endpoints"
+	},
 	"operator": {
 		"delete_explanation": "Are you sure you want to delete this operator? This operation is not reversible",
 		"delete_operator": "Delete Operator",
@@ -969,6 +980,27 @@
 		"signed_upgrade": "Signed Upgrade Only",
 		"title": "Restrictions",
 		"tty": "TTY Access"
+	},
+	"roaming": {
+		"account_created": "New account created!",
+		"account_deleted": "Deleted account!",
+		"account_one": "Account",
+		"account_other": "Accounts",
+		"certificate_deleted": "Deleted certificate!",
+		"certificate_one": "Certificate",
+		"certificate_other": "Certificates",
+		"city": "City",
+		"common_name": "Common Name",
+		"country": "Country",
+		"global_reach": "GlobalReach",
+		"global_reach_account_id": " Account ID",
+		"invalid_certificate": "Invalid certificate",
+		"invalid_key": "Invalid private key",
+		"location_details_title": "Location",
+		"organization": "Organization",
+		"private_key": "Private Key",
+		"province": "Province",
+		"state": "State"
 	},
 	"rrm": {
 		"algorithm": "Algorithm",
@@ -1091,6 +1123,7 @@
 		"title": "Subscribers"
 	},
 	"system": {
+		"advanced": "Advanced",
 		"backend_logs": "Back-End Logs",
 		"configuration": "Configuration",
 		"could_not_retrieve": "Error: could not retrieve {{name}} system information",
