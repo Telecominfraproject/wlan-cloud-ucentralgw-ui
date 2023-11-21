@@ -269,6 +269,7 @@
 		"map": "Mapa",
 		"max": "Max",
 		"min": "Min",
+		"miscellaneous": "Diverso",
 		"mode": "Modo",
 		"model": "Modelo",
 		"modified": "Modificado",
@@ -737,6 +738,7 @@
 	"form": {
 		"captive_web_root_explanation": "Utilice únicamente archivos .tar (no archivos comprimidos como .targz, por ejemplo)",
 		"certificate_file_explanation": "Utilice un archivo .pem que comience con \"-----BEGIN CERTIFICATE-----\" y termine con \"-----END CERTIFICATE-----\"",
+		"invalid_alphanumeric_with_dash": "Caracteres aceptados. son solo alfanuméricos (letras y números)",
 		"invalid_cidr": "Dirección IPv4 CIDR no válida. Ejemplo: 192.168.0.1/12",
 		"invalid_email": "Email inválido",
 		"invalid_file_content": "Contenido de archivo no válido, confirme que tiene un formato válido",
@@ -763,7 +765,11 @@
 		"invalid_static_ipv4_e": "Dirección no válida, este rango reservado para experimentos (clase E). El primer octeto debe ser 223 o inferior",
 		"invalid_third_party": "Cadena JSON de terceros no válida. Confirme que su valor es un JSON válido",
 		"key_file_explanation": "Utilice un archivo .pem que comience con \"-----BEGIN PRIVATE KEY-----\" y termine con \"-----END PRIVATE KEY-----\"",
+		"max_length": "Longitud máxima de {{max}} caracteres.",
+		"max_value": "Valor máximo de {{max}}",
+		"min_length": "Longitud mínima de {{min}} caracteres.",
 		"min_max_string": "El valor debe tener una longitud entre {{min}} (inclusive) y {{max}} (inclusive)",
+		"min_value": "Valor mínimo de {{min}}",
 		"missing_interface_upstream": "Debe tener al menos una interfaz ascendente. Por el momento, todas sus interfaces están en sentido descendente",
 		"new_email_to_notify": "Nuevo correo electrónico para notificar",
 		"new_phone_to_notify": "Nuevo teléfono para avisar",
@@ -905,6 +911,11 @@
 		"one": "Notificación",
 		"other": "Notificaciones"
 	},
+	"openroaming": {
+		"pool_strategy": "Estrategia de piscina",
+		"radius_endpoint_one": "Punto final del radio",
+		"radius_endpoint_other": "Puntos finales de radio"
+	},
 	"operator": {
 		"delete_explanation": "¿Está seguro de que desea eliminar este operador? Esta operación no es reversible.",
 		"delete_operator": "Eliminar operador",
@@ -969,6 +980,27 @@
 		"signed_upgrade": "Solo actualización firmada",
 		"title": "Las restricciones",
 		"tty": "Acceso TTY"
+	},
+	"roaming": {
+		"account_created": "¡Nueva cuenta creada!",
+		"account_deleted": "¡Cuenta eliminada!",
+		"account_one": "Cuenta",
+		"account_other": "Cuentas",
+		"certificate_deleted": "Certificado eliminado!",
+		"certificate_one": "Certificado",
+		"certificate_other": "Certificados",
+		"city": "ciudad",
+		"common_name": "Nombre común",
+		"country": "País",
+		"global_reach": "Alcance global",
+		"global_reach_account_id": "ID de cuenta ",
+		"invalid_certificate": "Certificado inválido",
+		"invalid_key": "Clave privada no válida",
+		"location_details_title": "Ubicación",
+		"organization": "Organización",
+		"private_key": "Llave privada",
+		"province": "Provincia",
+		"state": "Estado"
 	},
 	"rrm": {
 		"algorithm": "Algoritmo",
@@ -1091,6 +1123,7 @@
 		"title": "Suscriptores"
 	},
 	"system": {
+		"advanced": "Avanzado",
 		"backend_logs": "Registros de back-end",
 		"configuration": "Configuración",
 		"could_not_retrieve": "Error: no se pudo recuperar la información del sistema {{name}} ",

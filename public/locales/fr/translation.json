@@ -269,6 +269,7 @@
 		"map": "Carte",
 		"max": "Max",
 		"min": "Min",
+		"miscellaneous": "Divers",
 		"mode": "Mode",
 		"model": "Modèle",
 		"modified": "Modifié",
@@ -737,6 +738,7 @@
 	"form": {
 		"captive_web_root_explanation": "Veuillez utiliser uniquement des fichiers .tar (pas de fichiers compressés comme .targz, par exemple)",
 		"certificate_file_explanation": "Veuillez utiliser un fichier .pem qui commence par \"-----BEGIN CERTIFICATE-----\" et se termine par \"-----END CERTIFICATE-----\"",
+		"invalid_alphanumeric_with_dash": "Caractères acceptés. sont uniquement alphanumériques (lettres et chiffres)",
 		"invalid_cidr": "Adresse IPv4 CIDR non valide. Exemple : 192.168.0.1/12",
 		"invalid_email": "Email Invalide",
 		"invalid_file_content": "Contenu de fichier non valide, veuillez confirmer qu'il est au format valide",
@@ -763,7 +765,11 @@
 		"invalid_static_ipv4_e": "Adresse invalide, cette plage est réservée aux expérimentations (classe E). Le premier octet doit être 223 ou moins",
 		"invalid_third_party": "Chaîne JSON tierce non valide. Veuillez confirmer que votre valeur est un JSON valide",
 		"key_file_explanation": "Veuillez utiliser un fichier .pem qui commence par \"-----BEGIN PRIVATE KEY-----\" et se termine par \"-----END PRIVATE KEY-----\"",
+		"max_length": "Longueur maximale de {{max}}  caractères.",
+		"max_value": "Valeur maximale de  {{max}}",
+		"min_length": "Longueur minimale de {{min}}  caractères.",
 		"min_max_string": "La valeur doit être d'une longueur comprise entre {{min}} (inclus) et {{max}} (inclus)",
+		"min_value": "Valeur minimale de  {{min}}",
 		"missing_interface_upstream": "Vous devez avoir au moins une interface en amont. Pour le moment, toutes vos interfaces sont en aval",
 		"new_email_to_notify": "Nouvel e-mail à notifier",
 		"new_phone_to_notify": "Nouveau téléphone à notifier",
@@ -905,6 +911,11 @@
 		"one": "Notification",
 		"other": "Les notifications"
 	},
+	"openroaming": {
+		"pool_strategy": "Stratégie de pool",
+		"radius_endpoint_one": "Point final de rayon",
+		"radius_endpoint_other": "Points de terminaison du rayon"
+	},
 	"operator": {
 		"delete_explanation": "Voulez-vous vraiment supprimer cet opérateur ? Cette opération n'est pas réversible",
 		"delete_operator": "Supprimer l'opérateur",
@@ -969,6 +980,27 @@
 		"signed_upgrade": "Mise à niveau signée uniquement",
 		"title": "Restrictions",
 		"tty": "Accès ATS"
+	},
+	"roaming": {
+		"account_created": "Nouveau compte créé !",
+		"account_deleted": "Compte supprimé !",
+		"account_one": "Compte",
+		"account_other": "Comptes",
+		"certificate_deleted": "Certificat supprimé !",
+		"certificate_one": "Certificat",
+		"certificate_other": "Certificats",
+		"city": "Ville",
+		"common_name": "Nom commun",
+		"country": "Pays",
+		"global_reach": "Portée mondiale",
+		"global_reach_account_id": "ID de compte ",
+		"invalid_certificate": "certificat invalide",
+		"invalid_key": "Clé privée invalide",
+		"location_details_title": "Emplacement",
+		"organization": "Organisation",
+		"private_key": "Clé privée",
+		"province": "province",
+		"state": "Etat"
 	},
 	"rrm": {
 		"algorithm": "Algorithme",
@@ -1091,6 +1123,7 @@
 		"title": "Les abonnés"
 	},
 	"system": {
+		"advanced": "Avancée",
 		"backend_logs": "Journaux principaux",
 		"configuration": "Configuration",
 		"could_not_retrieve": "Erreur : impossible de récupérer les informations système {{name}} ",

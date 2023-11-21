@@ -269,6 +269,7 @@
 		"map": "Karte",
 		"max": "Max",
 		"min": "MINDEST",
+		"miscellaneous": "Verschiedenes",
 		"mode": "Modus",
 		"model": "Modell",
 		"modified": "Geändert",
@@ -737,6 +738,7 @@
 	"form": {
 		"captive_web_root_explanation": "Bitte verwenden Sie nur .tar-Dateien (keine komprimierten Dateien wie z. B. .targz)",
 		"certificate_file_explanation": "Bitte verwenden Sie eine .pem-Datei, die mit „-----BEGIN CERTIFICATE-----“ beginnt und mit „-----END CERTIFICATE-----“ endet.",
+		"invalid_alphanumeric_with_dash": "Akzeptierte Zeichen. sind nur alphanumerisch (Buchstaben & Zahlen)",
 		"invalid_cidr": "Ungültige CIDR-IPv4-Adresse. Beispiel: 192.168.0.1/12",
 		"invalid_email": "Ungültige E-Mail",
 		"invalid_file_content": "Ungültiger Dateiinhalt, bitte bestätigen Sie, dass es sich um ein gültiges Format handelt",
@@ -763,7 +765,11 @@
 		"invalid_static_ipv4_e": "Ungültige Adresse, dieser Bereich ist für Experimente reserviert (Klasse E). Das erste Oktett sollte 223 oder niedriger sein",
 		"invalid_third_party": "Ungültige Drittanbieter-JSON-Zeichenfolge. Bitte bestätigen Sie, dass Ihr Wert ein gültiges JSON ist",
 		"key_file_explanation": "Bitte verwenden Sie eine .pem-Datei, die mit „-----BEGIN PRIVATE KEY-----“ beginnt und mit „-----END PRIVATE KEY-----“ endet.",
+		"max_length": "Maximale Länge von {{max}} Zeichen.",
+		"max_value": "Maximalwert von {{max}}",
+		"min_length": "Mindestlänge von {{min}} Zeichen.",
 		"min_max_string": "Der Wert muss eine Länge zwischen {{min}} (einschließlich) und {{max}} (einschließlich) haben.",
+		"min_value": "Mindestwert von {{min}}",
 		"missing_interface_upstream": "Sie müssen mindestens eine Upstream-Schnittstelle haben. Im Moment sind alle Ihre Schnittstellen nachgelagert",
 		"new_email_to_notify": "Neue E-Mail zur Benachrichtigung",
 		"new_phone_to_notify": "Neues Telefon zu benachrichtigen",
@@ -905,6 +911,11 @@
 		"one": "Benachrichtigung",
 		"other": "Benachrichtigungen"
 	},
+	"openroaming": {
+		"pool_strategy": "Pool-Strategie",
+		"radius_endpoint_one": "Radiusendpunkt",
+		"radius_endpoint_other": "Radiusendpunkte"
+	},
 	"operator": {
 		"delete_explanation": "Möchten Sie diesen Operator wirklich löschen? Dieser Vorgang ist nicht umkehrbar",
 		"delete_operator": "Betreiber löschen",
@@ -969,6 +980,27 @@
 		"signed_upgrade": "Nur signiertes Upgrade",
 		"title": "Beschränkungen",
 		"tty": "TTY-Zugriff"
+	},
+	"roaming": {
+		"account_created": "Neues Konto erstellt!",
+		"account_deleted": "Konto gelöscht!",
+		"account_one": "Konto",
+		"account_other": "Konten",
+		"certificate_deleted": "Zertifikat gelöscht!",
+		"certificate_one": "Zertifikat",
+		"certificate_other": "Zertifikate",
+		"city": "Stadt",
+		"common_name": "Gemeinsamen Namen",
+		"country": "Land",
+		"global_reach": "Globale Reichweite",
+		"global_reach_account_id": "Konto-ID",
+		"invalid_certificate": "Ungültiges Zertifikat",
+		"invalid_key": "Ungültiger privater Schlüssel",
+		"location_details_title": "Ort",
+		"organization": "Organisation",
+		"private_key": "Privat Schlüssel",
+		"province": "Provinz",
+		"state": "Zustand"
 	},
 	"rrm": {
 		"algorithm": "Algorithmus",
@@ -1091,6 +1123,7 @@
 		"title": "Abonnenten"
 	},
 	"system": {
+		"advanced": "Erweitert",
 		"backend_logs": "Back-End-Protokolle",
 		"configuration": "Aufbau",
 		"could_not_retrieve": "Fehler: {{name}} Systeminformationen konnten nicht abgerufen werden",

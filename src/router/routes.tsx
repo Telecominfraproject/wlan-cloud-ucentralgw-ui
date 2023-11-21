@@ -2,6 +2,7 @@ import React from 'react';
 import { Barcode, FloppyDisk, Info, ListBullets, TerminalWindow, UsersThree, WifiHigh } from '@phosphor-icons/react';
 import { Route } from 'models/Routes';
 
+const AdvancedSystemPage = React.lazy(() => import('pages/AdvancedSystemPage'));
 const DefaultConfigurationsPage = React.lazy(() => import('pages/DefaultConfigurations'));
 const DefaultFirmwarePage = React.lazy(() => import('pages/DefaultFirmware'));
 const DevicePage = React.lazy(() => import('pages/Device'));
@@ -178,6 +179,13 @@ const routes: Route[] = [
     name: 'system.title',
     icon: () => <Info size={28} weight="bold" />,
     children: [
+      {
+        id: 'system-advanced',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/systemAdvanced',
+        name: 'system.advanced',
+        component: AdvancedSystemPage,
+      },
       {
         id: 'system-configuration',
         authorized: ['root', 'partner', 'admin', 'csr', 'system'],
