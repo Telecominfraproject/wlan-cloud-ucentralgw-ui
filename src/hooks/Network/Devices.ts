@@ -42,6 +42,7 @@ export type DeviceWithStatus = {
   associations_2G: number;
   associations_5G: number;
   associations_6G: number;
+  blackListed?: boolean;
   compatible: string;
   connected: boolean;
   connectReason?: string;

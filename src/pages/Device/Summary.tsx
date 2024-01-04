@@ -129,9 +129,7 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               <Heading size="sm">{t('controller.stats.load')}:</Heading>
             </GridItem>
             <GridItem colSpan={1}>
-              {getStats.data?.unit?.load
-                ? getStats.data?.unit.load.map((l) => `${(l * 100).toFixed(2)}%`).join(' | ')
-                : ''}
+              {getStats.data?.unit?.load?.map((l) => `${l.toFixed(2)}`).join(' | ') ?? ''}
             </GridItem>
             <GridItem colSpan={1} alignContent="center" alignItems="center">
               <Heading size="sm">{t('controller.devices.localtime')}:</Heading>

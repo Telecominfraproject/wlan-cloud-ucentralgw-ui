@@ -8,6 +8,7 @@ import {
   ThermometerCold,
   ThermometerHot,
   WarningCircle,
+  XCircle,
 } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -63,6 +64,7 @@ const BADGE_COLORS: Record<string, string> = {
   NO_CERTIFICATE: 'red',
   MISMATCH_SERIAL: 'yellow',
   VERIFIED: 'green',
+  BLACKLISTED: 'white',
   SIMULATED: 'purple',
 };
 
@@ -159,12 +161,32 @@ const DeviceListCard = () => {
         h="35px"
         w="35px"
         borderRadius="50em"
-        bgColor={BADGE_COLORS[device.simulated ? 'SIMULATED' : device.verifiedCertificate] ?? 'red'}
+        bgColor={
+          BADGE_COLORS[
+            device.simulated ? 'SIMULATED' : device.blackListed ? 'BLACKLISTED' : device.verifiedCertificate
+          ] ?? 'red'
+        }
         alignItems="center"
         display="inline-flex"
         justifyContent="center"
         position="relative"
       >
+        {device.blackListed ? (
+          <Tooltip label="This device is blacklisted. If this was done by mistake, please visit the Blacklist page to correct.">
+            <XCircle
+              size={44}
+              color="#ff2600"
+              weight="duotone"
+              style={{
+                position: 'absolute',
+                // Center vertically and horizontally
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
+          </Tooltip>
+        ) : null}
         <Tooltip
           label={`${device.simulated ? 'SIMULATED' : device.verifiedCertificate} - ${
             device.connected ? t('common.connected') : t('common.disconnected')
@@ -182,6 +204,7 @@ const DeviceListCard = () => {
           bottom={0}
           borderColor="gray.200"
           borderWidth={1}
+          hidden={device.blackListed}
         />
         {device.restrictedDevice && (
           <Box

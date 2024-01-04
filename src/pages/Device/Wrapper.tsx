@@ -108,6 +108,17 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
 
+    if (getDevice.data?.blackListed) {
+      return (
+        <ResponsiveTag
+          label="Blacklisted"
+          tooltip="This device is blacklisted, it will not be able to connect to the network. Please visit the Blacklist page if you wish to remove it from the blacklist."
+          colorScheme="red"
+          icon={LockSimple}
+        />
+      );
+    }
+
     return (
       <ResponsiveTag
         label={getStatus?.data?.connected ? t('common.connected') : t('common.disconnected')}
@@ -115,7 +126,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
         icon={getStatus.data.connected ? WifiHigh : WifiSlash}
       />
     );
-  }, [getStatus.data]);
+  }, [getStatus.data, getDevice.data]);
 
   const healthTag = React.useMemo(() => {
     if (!getStatus.data || !getStatus.data.connected || !getHealth.data || getHealth.data?.values?.length === 0)
