@@ -16,11 +16,10 @@ export default defineConfig({
         /* other options */
       },
       manifest: {
-        name: 'Arilia Controller App',
-        short_name: 'AriController',
-        description: 'Arilia Controller Work App',
+        name: 'OpenWiFi Controller App',
+        short_name: 'OpenWiFiController',
+        description: 'OpenWiFi Controller App',
         theme_color: '#000000',
-
         icons: [
           {
             src: 'android-chrome-192x192.png',
@@ -53,7 +52,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
   server: {
-    port: 3001,
+    port: 3000,
     open: true,
   },
   esbuild: {
