@@ -26,7 +26,7 @@ export const ResponsiveTag = React.memo(({ label, icon, tooltip, isCompact, ...p
   return (
     <Tooltip label={tooltip ?? label}>
       <Tag size="lg" colorScheme="blue" {...props}>
-        <TagLeftIcon boxSize="18px" as={icon} />
+        <TagLeftIcon boxSize="18px" as={icon} mt={-0.5} />
         <TagLabel>{label}</TagLabel>
       </Tag>
     </Tooltip>

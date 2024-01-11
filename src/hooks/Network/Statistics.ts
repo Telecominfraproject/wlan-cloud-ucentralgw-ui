@@ -2,7 +2,24 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosGw } from 'constants/axiosInstances';
 import { AxiosError } from 'models/Axios';
 
-type DeviceInterfaceStatistics = {
+export type DeviceLinkState = {
+  carrier?: number;
+  counters?: {
+    collisions: number;
+    multicast: number;
+    rx_bytes: number;
+    rx_dropped: number;
+    rx_errors: number;
+    rx_packets: number;
+    tx_bytes: number;
+    tx_dropped: number;
+    tx_errors: number;
+    tx_packets: number;
+  };
+  duplex?: string;
+  speed?: number;
+};
+export type DeviceInterfaceStatistics = {
   clients: {
     ipv4_addresses?: string[];
     ipv6_addresses?: string[];
@@ -138,18 +155,10 @@ export type DeviceStatistics = {
   };
   'link-state'?: {
     downstream: {
-      eth1?: {
-        carrier?: number;
-        duplex?: string;
-        speed?: number;
-      };
+      [key: string]: DeviceLinkState;
     };
     upstream: {
-      eth0?: {
-        carrier?: number;
-        duplex?: string;
-        speed?: number;
-      };
+      [key: string]: DeviceLinkState;
     };
   };
   'lldp-peers'?: {
@@ -190,6 +199,7 @@ export const useGetDeviceLastStats = ({
   useQuery(['device', serialNumber, 'last-statistics'], () => getLastStats(serialNumber), {
     enabled: serialNumber !== undefined && serialNumber !== '',
     staleTime: 1000 * 60,
+    refetchInterval: 1000 * 60,
     onError,
   });
 

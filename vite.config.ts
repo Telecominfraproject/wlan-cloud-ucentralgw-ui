@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
@@ -15,10 +16,11 @@ export default defineConfig({
         /* other options */
       },
       manifest: {
-        name: 'OpenWiFi Controller App',
-        short_name: 'OpenWiFiController',
-        description: 'OpenWiFi Controller App',
+        name: 'Arilia Controller App',
+        short_name: 'AriController',
+        description: 'Arilia Controller Work App',
         theme_color: '#000000',
+
         icons: [
           {
             src: 'android-chrome-192x192.png',
@@ -44,13 +46,14 @@ export default defineConfig({
         ],
       },
     }),
+    svgr(),
   ],
   build: {
     outDir: './build',
     chunkSizeWarningLimit: 1000,
   },
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
   },
   esbuild: {
