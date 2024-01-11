@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { Box, Center, Image, Link, Tag, TagLabel, TagRightIcon, Tooltip, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Image,
+  Link,
+  Select,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  Tooltip,
+  useDisclosure,
+} from '@chakra-ui/react';
 import {
   CheckCircle,
   Heart,
@@ -38,7 +49,7 @@ import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import DataCell from 'components/TableCells/DataCell';
 import NumberCell from 'components/TableCells/NumberCell';
-import { DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
+import { DevicePlatform, DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
 import { FirmwareAgeResponse, useGetFirmwareAges } from 'hooks/Network/Firmware';
 
 const fourDigitNumber = (v?: number) => {
@@ -72,6 +83,7 @@ const DeviceListCard = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = React.useState<string>('');
+  const [platform, setPlatform] = React.useState<DevicePlatform>('ALL');
   const scanModalProps = useDisclosure();
   const resetModalProps = useDisclosure();
   const upgradeModalProps = useDisclosure();
@@ -110,13 +122,14 @@ const DeviceListCard = () => {
       'actions',
     ],
   });
-  const getCount = useGetDeviceCount({ enabled: true });
+  const getCount = useGetDeviceCount({ enabled: true, platform });
   const getDevices = useGetDevices({
     pageInfo: {
       limit: tableController.pageInfo.pageSize,
       index: tableController.pageInfo.pageIndex,
     },
     enabled: true,
+    platform,
   });
   const getAges = useGetFirmwareAges({
     serialNumbers: getDevices.data?.devicesWithStatus.map((device) => device.serialNumber),
@@ -556,12 +569,7 @@ const DeviceListCard = () => {
         header: t('analytics.last_connected'),
         footer: '',
         accessorKey: 'lastRecordedContact',
-        cell: (v) =>
-          dateCell(
-            v.cell.row.original.lastContact !== 0
-              ? v.cell.row.original.lastContact
-              : v.cell.row.original.lastRecordedContact,
-          ),
+        cell: (v) => dateCell(v.cell.row.original.lastRecordedContact),
         enableSorting: false,
         meta: {
           headerOptions: {
@@ -719,7 +727,21 @@ const DeviceListCard = () => {
         header={{
           title: `${getCount.data?.count ?? 0} ${t('devices.title')}`,
           objectListed: t('devices.title'),
-          leftContent: <GlobalSearchBar />,
+          leftContent: (
+            <>
+              <GlobalSearchBar />
+              <Select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value as DevicePlatform)}
+                w="max-content"
+                ml={2}
+              >
+                <option value="ALL">All</option>
+                <option value="AP">APs</option>
+                <option value="SWITCH">Switches</option>
+              </Select>
+            </>
+          ),
           otherButtons: (
             <ExportDevicesTableButton currentPageSerialNumbers={data.map((device) => device.serialNumber)} />
           ),

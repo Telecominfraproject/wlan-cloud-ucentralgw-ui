@@ -42,10 +42,13 @@ import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
 import { RebootModal } from 'components/Modals/RebootModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
+import ethernetConnected from './ethernetIconConnected.svg?react';
+import ethernetDisconnected from './ethernetIconDisconnected.svg?react';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import { useDeleteDevice, useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
+import SwitchPortExamination from './SwitchPortExamination';
 
 type Props = {
   serialNumber: string;
@@ -119,11 +122,15 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       );
     }
 
+    let icon = getStatus.data.connected ? WifiHigh : WifiSlash;
+    if (getDevice.data?.deviceType === 'SWITCH')
+      icon = getStatus.data.connected ? ethernetConnected : ethernetDisconnected;
+
     return (
       <ResponsiveTag
         label={getStatus?.data?.connected ? t('common.connected') : t('common.disconnected')}
         colorScheme={getStatus?.data?.connected ? 'green' : 'red'}
-        icon={getStatus.data.connected ? WifiHigh : WifiSlash}
+        icon={icon}
       />
     );
   }, [getStatus.data, getDevice.data]);
@@ -318,7 +325,11 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceSummary serialNumber={serialNumber} />
           <DeviceDetails serialNumber={serialNumber} />
           <DeviceStatisticsCard serialNumber={serialNumber} />
-          <WifiAnalysisCard serialNumber={serialNumber} />
+          {getDevice.data?.deviceType === 'AP' ? (
+            <WifiAnalysisCard serialNumber={serialNumber} />
+          ) : (
+            <SwitchPortExamination serialNumber={serialNumber} />
+          )}
           <DeviceLogsCard serialNumber={serialNumber} />
           {getDevice.data && getDevice.data?.hasRADIUSSessions > 0 ? (
             <RadiusClientsCard serialNumber={serialNumber} />
