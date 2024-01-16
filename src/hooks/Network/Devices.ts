@@ -9,6 +9,7 @@ import { AxiosError } from 'models/Axios';
 import { DeviceRttyApiResponse, GatewayDevice, WifiScanCommand, WifiScanResult } from 'models/Device';
 import { Note } from 'models/Note';
 import { PageInfo } from 'models/Table';
+import { DeviceCommandHistory } from './Commands';
 
 export const DEVICE_PLATFORMS = ['ALL', 'AP', 'SWITCH'] as const;
 export type DevicePlatform = (typeof DEVICE_PLATFORMS)[number];
@@ -460,4 +461,30 @@ export const useDeleteDeviceBatch = () => {
       queryClient.invalidateQueries(['devices']);
     },
   });
+};
+
+export type PowerCyclePort = {
+  /** Ex.: Ethernet0 */
+  name: string;
+  /** Cycle length in MS. Default is 10 000 */
+  cycle?: number;
+};
+
+export type PowerCycleRequest = {
+  serial: string;
+  when: number;
+  ports: PowerCyclePort[];
+};
+
+export const usePowerCycle = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (request: PowerCycleRequest) =>
+      axiosGw.post(`device/${request.serial}/powercycle`, request).then((res) => res.data as DeviceCommandHistory),
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(['commands']);
+      },
+    },
+  );
 };

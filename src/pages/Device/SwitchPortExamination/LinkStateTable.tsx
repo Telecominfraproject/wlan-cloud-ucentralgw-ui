@@ -5,18 +5,23 @@ import DataCell from 'components/TableCells/DataCell';
 import { DataGridColumn, useDataGrid } from 'components/DataTables/DataGrid/useDataGrid';
 import { DataGrid } from 'components/DataTables/DataGrid';
 import { uppercaseFirstLetter } from 'helpers/stringHelper';
+import LinkStateTableActions from './Actions';
 
 type Row = DeviceLinkState & { name: string };
 const dataCell = (v: number) => <DataCell bytes={v} />;
+const actionCell = (row: Row, serialNumber: string) => (
+  <LinkStateTableActions state={row} deviceSerialNumber={serialNumber} />
+);
 
 type Props = {
   statistics?: Row[];
   refetch: () => void;
   isFetching: boolean;
   type: 'upstream' | 'downstream';
+  serialNumber: string;
 };
 
-const LinkStateTable = ({ statistics, refetch, isFetching, type }: Props) => {
+const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber }: Props) => {
   const tableController = useDataGrid({
     tableSettingsId: 'switch.link-state.table',
     defaultOrder: [
@@ -31,6 +36,8 @@ const LinkStateTable = ({ statistics, refetch, isFetching, type }: Props) => {
       'tx_bytes',
       'tx_dropped',
       'tx_error',
+      'tx_packets',
+      'actions',
     ],
     defaultSortBy: [{ id: 'name', desc: false }],
   });
@@ -143,6 +150,12 @@ const LinkStateTable = ({ statistics, refetch, isFetching, type }: Props) => {
         meta: {
           customWidth: '35px',
         },
+      },
+      {
+        id: 'actions',
+        header: '',
+        accessorKey: '',
+        cell: ({ cell }) => actionCell(cell.row.original, serialNumber),
       },
     ],
     [],

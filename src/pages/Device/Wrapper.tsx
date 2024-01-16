@@ -325,11 +325,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceSummary serialNumber={serialNumber} />
           <DeviceDetails serialNumber={serialNumber} />
           <DeviceStatisticsCard serialNumber={serialNumber} />
-          {getDevice.data?.deviceType === 'AP' ? (
-            <WifiAnalysisCard serialNumber={serialNumber} />
-          ) : (
-            <SwitchPortExamination serialNumber={serialNumber} />
-          )}
+          {getDevice.data?.deviceType === 'AP' ? <WifiAnalysisCard serialNumber={serialNumber} /> : null}
+          {getDevice.data?.deviceType === 'SWITCH' ? <SwitchPortExamination serialNumber={serialNumber} /> : null}
           <DeviceLogsCard serialNumber={serialNumber} />
           {getDevice.data && getDevice.data?.hasRADIUSSessions > 0 ? (
             <RadiusClientsCard serialNumber={serialNumber} />
