@@ -166,7 +166,7 @@ const WifiAnalysisAssociationsTable = ({ data, ouis, isSingle }: Props) => {
         customWidth: '35px',
       },
     ],
-    [t],
+    [t, ouis],
   );
 
   return (

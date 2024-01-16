@@ -129,11 +129,21 @@ export type DeviceStatistics = {
     channel: number;
     band?: string[];
     channel_width: string;
-    noise: number;
+    noise?: number;
     phy: string;
     receive_ms: number;
     transmit_ms: number;
+    temperature?: number;
     tx_power: number;
+    frequency?: number[];
+    survey?: {
+      busy: number;
+      frequency: number;
+      noise: number;
+      time: number;
+      time_rx: number;
+      time_tx: number;
+    }[];
   }[];
   dynamic_vlans?: {
     vid: number;

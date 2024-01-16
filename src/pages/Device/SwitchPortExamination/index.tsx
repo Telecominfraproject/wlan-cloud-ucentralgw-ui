@@ -69,6 +69,7 @@ const SwitchPortExamination = ({ serialNumber }: Props) => {
                   refetch={getStats.refetch}
                   isFetching={getStats.isFetching}
                   type="upstream"
+                  serialNumber={serialNumber}
                 />
               ) : (
                 <Spinner size="xl" />
@@ -81,6 +82,7 @@ const SwitchPortExamination = ({ serialNumber }: Props) => {
                   refetch={getStats.refetch}
                   isFetching={getStats.isFetching}
                   type="downstream"
+                  serialNumber={serialNumber}
                 />
               ) : (
                 <Spinner size="xl" />
