@@ -17,7 +17,9 @@ metadata:
   {{- end }}
 
 spec:
-
+{{- if $ingressValue.className }}
+  ingressClassName: {{ $ingressValue.className }}
+{{- end }}
 {{- if $ingressValue.tls }}
   tls:
   {{- range $ingressValue.tls }}
