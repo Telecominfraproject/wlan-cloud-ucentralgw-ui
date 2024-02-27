@@ -30,6 +30,7 @@ const SwitchInterfaceTable = ({ statistics, refetch, isFetching }: Props) => {
       'tx_error',
     ],
     defaultSortBy: [{ id: 'name', desc: false }],
+    showAllRows: true,
   });
 
   const columns: DataGridColumn<DeviceInterfaceStatistics>[] = React.useMemo(
@@ -38,6 +39,7 @@ const SwitchInterfaceTable = ({ statistics, refetch, isFetching }: Props) => {
         id: 'name',
         header: 'Name',
         accessorKey: 'name',
+        sortingFn: 'alphanumericCaseSensitive',
         meta: {
           customWidth: '35px',
         },
