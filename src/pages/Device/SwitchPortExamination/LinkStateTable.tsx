@@ -40,6 +40,7 @@ const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber }:
       'actions',
     ],
     defaultSortBy: [{ id: 'name', desc: false }],
+    showAllRows: true,
   });
 
   const columns: DataGridColumn<Row>[] = React.useMemo(
@@ -48,6 +49,7 @@ const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber }:
         id: 'carrier',
         header: '',
         accessorKey: '',
+        sortingFn: 'alphanumericCaseSensitive',
         cell: ({ cell }) => (cell.row.original.carrier ? '🟢' : '🔴'),
         meta: {
           customWidth: '35px',
