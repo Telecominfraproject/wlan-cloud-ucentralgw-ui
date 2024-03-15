@@ -80,19 +80,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
   const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
 
-  const handleDeleteClick = () =>
+  const handleDeleteClick = () => {
     deleteDevice(serialNumber, {
-      onSuccess: () => {
-        toast({
-          id: `delete-device-success-${serialNumber}`,
-          title: t('common.success'),
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        navigate('/devices');
-      },
       onError: (e) => {
         if (axios.isAxiosError(e)) {
           toast({
@@ -107,6 +96,16 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
         }
       },
     });
+    toast({
+      id: `delete-device-success-${serialNumber}`,
+      title: t('common.success'),
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+      position: 'top-right',
+    });
+    navigate('/');
+  };
 
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
@@ -123,7 +122,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
     }
 
     let icon = getStatus.data.connected ? WifiHigh : WifiSlash;
-    if (getDevice.data?.deviceType === 'SWITCH')
+    if (getDevice.data?.deviceType === 'switch')
       icon = getStatus.data.connected ? ethernetConnected : ethernetDisconnected;
 
     return (
@@ -325,8 +324,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceSummary serialNumber={serialNumber} />
           <DeviceDetails serialNumber={serialNumber} />
           <DeviceStatisticsCard serialNumber={serialNumber} />
-          {getDevice.data?.deviceType === 'AP' ? <WifiAnalysisCard serialNumber={serialNumber} /> : null}
-          {getDevice.data?.deviceType === 'SWITCH' ? <SwitchPortExamination serialNumber={serialNumber} /> : null}
+          {getDevice.data?.deviceType === 'ap' ? <WifiAnalysisCard serialNumber={serialNumber} /> : null}
+          {getDevice.data?.deviceType === 'switch' ? <SwitchPortExamination serialNumber={serialNumber} /> : null}
           <DeviceLogsCard serialNumber={serialNumber} />
           {getDevice.data && getDevice.data?.hasRADIUSSessions > 0 ? (
             <RadiusClientsCard serialNumber={serialNumber} />
