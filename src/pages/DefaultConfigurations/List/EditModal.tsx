@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, SimpleGrid, useBoolean, UseDisclosureReturn, useToast } from '@chakra-ui/react';
+import { Box, Flex, useBoolean, UseDisclosureReturn, useToast } from '@chakra-ui/react';
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -15,6 +15,7 @@ import { useGetDeviceTypes } from 'hooks/Network/Firmware';
 import { useFormModal } from 'hooks/useFormModal';
 import { useFormRef } from 'hooks/useFormRef';
 import { AxiosError } from 'models/Axios';
+import { SelectField } from 'components/Form/Fields/SelectField';
 
 type Props = {
   modalProps: UseDisclosureReturn;
@@ -106,10 +107,28 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
               }}
             >
               <Box>
-                <SimpleGrid spacing={4} minChildWidth="200px">
-                  <StringField name="name" label={t('common.name')} isRequired isDisabled={isDisabled} />
-                  <StringField name="description" label={t('common.description')} isDisabled={isDisabled} />
-                </SimpleGrid>
+                <Flex mb={4}>
+                  <StringField
+                    name="name"
+                    label={t('common.name')}
+                    isRequired
+                    isDisabled={isDisabled}
+                    maxW="340px"
+                    mr={4}
+                  />
+                  <SelectField
+                    name="platform"
+                    label="Platform"
+                    options={[
+                      { label: 'AP', value: 'ap' },
+                      { label: 'Switch', value: 'switch' },
+                    ]}
+                    isRequired
+                    isDisabled
+                    w="max-content"
+                  />
+                </Flex>
+                <StringField name="description" label={t('common.description')} isDisabled={isDisabled} mb={4} />
                 <MultiSelectField
                   name="modelIds"
                   label={t('controller.dashboard.device_types')}
@@ -122,7 +141,13 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
                   }
                   isRequired
                 />
-                <StringField name="configuration" label={t('configurations.one')} isArea isDisabled={isDisabled} />
+                <StringField
+                  name="configuration"
+                  label={t('configurations.one')}
+                  isArea
+                  isDisabled={isDisabled}
+                  mt={4}
+                />
               </Box>
             </Formik>
           )}

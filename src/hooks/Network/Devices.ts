@@ -11,7 +11,7 @@ import { Note } from 'models/Note';
 import { PageInfo } from 'models/Table';
 import { DeviceCommandHistory } from './Commands';
 
-export const DEVICE_PLATFORMS = ['ALL', 'AP', 'SWITCH'] as const;
+export const DEVICE_PLATFORMS = ['all', 'ap', 'switch'] as const;
 export type DevicePlatform = (typeof DEVICE_PLATFORMS)[number];
 
 const getDeviceCount = (platform: DevicePlatform) =>
@@ -19,7 +19,7 @@ const getDeviceCount = (platform: DevicePlatform) =>
     count: number;
   }>;
 
-export const useGetDeviceCount = ({ enabled, platform = 'ALL' }: { enabled: boolean; platform?: DevicePlatform }) => {
+export const useGetDeviceCount = ({ enabled, platform = 'all' }: { enabled: boolean; platform?: DevicePlatform }) => {
   const { t } = useTranslation();
   const toast = useToast();
 
@@ -55,7 +55,7 @@ export type DeviceWithStatus = {
   certificateExpiryDate?: number;
   createdTimestamp: number;
   devicePassword: string;
-  deviceType: 'AP' | 'SWITCH' | 'IOT' | 'MESH';
+  deviceType: 'ap' | 'switch';
   entity: string;
   firmware: string;
   fwUpdatePolicy: string;
@@ -111,7 +111,7 @@ export const useGetDevices = ({
   pageInfo,
   enabled,
   onError,
-  platform = 'ALL',
+  platform = 'all',
 }: {
   pageInfo?: PageInfo;
   enabled: boolean;
@@ -147,7 +147,7 @@ const getAllDevices = async (platform: DevicePlatform) => {
 
 export const useGetAllDevicesWithStatus = ({
   onError,
-  platform = 'ALL',
+  platform = 'all',
 }: {
   onError?: (e: AxiosError) => void;
   platform?: DevicePlatform;
