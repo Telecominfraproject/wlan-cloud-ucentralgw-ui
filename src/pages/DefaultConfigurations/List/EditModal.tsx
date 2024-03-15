@@ -70,40 +70,44 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
               innerRef={formRef as React.Ref<FormikProps<DefaultConfigurationResponse>>}
               initialValues={{
                 ...config,
+                modelIds: config.modelIds.map((v) => ({ label: v, value: v })),
                 configuration: JSON.stringify(config.configuration, null, 2),
               }}
               key={formKey}
               validationSchema={DefaultConfigurationSchema(t)}
               onSubmit={(data, { setSubmitting, resetForm }) => {
-                updateConfig.mutateAsync(data, {
-                  onSuccess: () => {
-                    toast({
-                      id: `config-edit-success`,
-                      title: t('common.success'),
-                      description: t('controller.configurations.update_success'),
-                      status: 'success',
-                      duration: 5000,
-                      isClosable: true,
-                      position: 'top-right',
-                    });
-                    setSubmitting(false);
-                    resetForm();
-                    modalProps.onClose();
+                updateConfig.mutateAsync(
+                  { ...data, modelIds: data.modelIds.map((v) => v.value) },
+                  {
+                    onSuccess: () => {
+                      toast({
+                        id: `config-edit-success`,
+                        title: t('common.success'),
+                        description: t('controller.configurations.update_success'),
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                        position: 'top-right',
+                      });
+                      setSubmitting(false);
+                      resetForm();
+                      modalProps.onClose();
+                    },
+                    onError: (error) => {
+                      const e = error as AxiosError;
+                      toast({
+                        id: `config-edit-error`,
+                        title: t('common.error'),
+                        description: e?.response?.data?.ErrorDescription,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                        position: 'top-right',
+                      });
+                      setSubmitting(false);
+                    },
                   },
-                  onError: (error) => {
-                    const e = error as AxiosError;
-                    toast({
-                      id: `config-edit-error`,
-                      title: t('common.error'),
-                      description: e?.response?.data?.ErrorDescription,
-                      status: 'error',
-                      duration: 5000,
-                      isClosable: true,
-                      position: 'top-right',
-                    });
-                    setSubmitting(false);
-                  },
-                });
+                );
               }}
             >
               <Box>
@@ -139,6 +143,7 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
                       value: devType,
                     })) ?? []
                   }
+                  isCreatable
                   isRequired
                 />
                 <StringField

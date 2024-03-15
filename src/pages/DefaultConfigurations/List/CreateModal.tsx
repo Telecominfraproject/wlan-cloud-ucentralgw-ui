@@ -69,35 +69,38 @@ const CreateDefaultConfigurationModal = () => {
             key={formKey}
             validationSchema={DefaultConfigurationSchema(t)}
             onSubmit={(data, { setSubmitting, resetForm }) => {
-              createConfig.mutateAsync(data, {
-                onSuccess: () => {
-                  toast({
-                    id: `config-create-success`,
-                    title: t('common.success'),
-                    description: t('controller.configurations.create_success'),
-                    status: 'success',
-                    duration: 5000,
-                    isClosable: true,
-                    position: 'top-right',
-                  });
-                  setSubmitting(false);
-                  resetForm();
-                  modalProps.onClose();
+              createConfig.mutateAsync(
+                { ...data, modelIds: data.modelIds.map((v) => v.value) },
+                {
+                  onSuccess: () => {
+                    toast({
+                      id: `config-create-success`,
+                      title: t('common.success'),
+                      description: t('controller.configurations.create_success'),
+                      status: 'success',
+                      duration: 5000,
+                      isClosable: true,
+                      position: 'top-right',
+                    });
+                    setSubmitting(false);
+                    resetForm();
+                    modalProps.onClose();
+                  },
+                  onError: (error) => {
+                    const e = error as AxiosError;
+                    toast({
+                      id: `config-create-error`,
+                      title: t('common.error'),
+                      description: e?.response?.data?.ErrorDescription,
+                      status: 'error',
+                      duration: 5000,
+                      isClosable: true,
+                      position: 'top-right',
+                    });
+                    setSubmitting(false);
+                  },
                 },
-                onError: (error) => {
-                  const e = error as AxiosError;
-                  toast({
-                    id: `config-create-error`,
-                    title: t('common.error'),
-                    description: e?.response?.data?.ErrorDescription,
-                    status: 'error',
-                    duration: 5000,
-                    isClosable: true,
-                    position: 'top-right',
-                  });
-                  setSubmitting(false);
-                },
-              });
+              );
             }}
           >
             <Box>
@@ -133,6 +136,7 @@ const CreateDefaultConfigurationModal = () => {
                     value: devType,
                   })) ?? []
                 }
+                isCreatable
                 isRequired
               />
               <StringField name="configuration" label={t('configurations.one')} isArea isDisabled={isDisabled} mt={4} />

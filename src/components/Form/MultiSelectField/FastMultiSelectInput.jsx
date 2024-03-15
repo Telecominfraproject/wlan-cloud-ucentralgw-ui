@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
-import { Select } from 'chakra-react-select';
+import { CreatableSelect, Select } from 'chakra-react-select';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ const propTypes = {
   isHidden: PropTypes.bool,
   isPortal: PropTypes.bool.isRequired,
   definitionKey: PropTypes.string,
+  isCreatable: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -36,6 +37,7 @@ const defaultProps = {
   isDisabled: false,
   isHidden: false,
   definitionKey: null,
+  isCreatable: false,
 };
 
 const FastMultiSelectInput = ({
@@ -50,6 +52,7 @@ const FastMultiSelectInput = ({
   isRequired,
   isDisabled,
   isHidden,
+  isCreatable,
   isPortal,
   definitionKey,
 }) => {
@@ -61,35 +64,62 @@ const FastMultiSelectInput = ({
         {label}
         <ConfigurationFieldExplanation definitionKey={definitionKey} />
       </FormLabel>
-      <Select
-        chakraStyles={{
-          control: (provided, { isDisabled: isControlDisabled }) => ({
-            ...provided,
-            borderRadius: '15px',
-            opacity: isControlDisabled ? '0.8 !important' : '1',
-            border: '2px solid',
-          }),
-          dropdownIndicator: (provided) => ({
-            ...provided,
-            backgroundColor: 'unset',
-            border: 'unset',
-          }),
-        }}
-        classNamePrefix={isPortal ? 'chakra-react-select' : ''}
-        menuPortalTarget={isPortal ? document.body : undefined}
-        isMulti
-        closeMenuOnSelect={false}
-        options={canSelectAll ? [{ value: '*', label: t('common.all') }, ...options] : options}
-        value={
-          value?.map((val) => {
-            if (val === '*') return { value: val, label: t('common.all') };
-            return options.find((opt) => opt.value === val);
-          }) ?? []
-        }
-        onChange={onChange}
-        onBlur={onBlur}
-        isDisabled={isDisabled}
-      />
+      {isCreatable ? (
+        <CreatableSelect
+          chakraStyles={{
+            control: (provided, { isDisabled: isControlDisabled }) => ({
+              ...provided,
+              borderRadius: '15px',
+              opacity: isControlDisabled ? '0.8 !important' : '1',
+              border: '2px solid',
+            }),
+            dropdownIndicator: (provided) => ({
+              ...provided,
+              backgroundColor: 'unset',
+              border: 'unset',
+            }),
+          }}
+          classNamePrefix={isPortal ? 'chakra-react-select' : ''}
+          menuPortalTarget={isPortal ? document.body : undefined}
+          isMulti
+          closeMenuOnSelect={false}
+          options={options}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          isDisabled={isDisabled}
+        />
+      ) : (
+        <Select
+          chakraStyles={{
+            control: (provided, { isDisabled: isControlDisabled }) => ({
+              ...provided,
+              borderRadius: '15px',
+              opacity: isControlDisabled ? '0.8 !important' : '1',
+              border: '2px solid',
+            }),
+            dropdownIndicator: (provided) => ({
+              ...provided,
+              backgroundColor: 'unset',
+              border: 'unset',
+            }),
+          }}
+          classNamePrefix={isPortal ? 'chakra-react-select' : ''}
+          menuPortalTarget={isPortal ? document.body : undefined}
+          isMulti
+          closeMenuOnSelect={false}
+          options={canSelectAll ? [{ value: '*', label: t('common.all') }, ...options] : options}
+          value={
+            value?.map((val) => {
+              if (val === '*') return { value: val, label: t('common.all') };
+              return options.find((opt) => opt.value === val);
+            }) ?? []
+          }
+          onChange={onChange}
+          onBlur={onBlur}
+          isDisabled={isDisabled}
+        />
+      )}
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   );
