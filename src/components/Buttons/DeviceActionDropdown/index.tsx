@@ -54,6 +54,7 @@ const DeviceActionDropdown = ({
 }: Props) => {
   const { t } = useTranslation();
   const toast = useToast();
+  const deviceType = device?.deviceType ?? 'ap';
   const connectColor = useColorModeValue('blackAlpha', 'gray');
   const addEventListeners = useControllerStore((state) => state.addEventListeners);
   const { refetch: getRtty, isFetching: isRtty } = useGetDeviceRtty({
@@ -172,7 +173,7 @@ const DeviceActionDropdown = ({
           isLoading={isRtty}
           onClick={handleConnectClick}
           colorScheme={connectColor}
-          hidden={isCompact}
+          hidden={isCompact || deviceType !== 'ap'}
         />
       </Tooltip>
       <Tooltip label={t('controller.configure.title')}>
@@ -205,7 +206,7 @@ const DeviceActionDropdown = ({
           isDisabled={isDisabled}
           onClick={handleOpenScan}
           colorScheme="teal"
-          hidden={isCompact}
+          hidden={isCompact || deviceType !== 'ap'}
         />
       </Tooltip>
       <Menu>
@@ -221,7 +222,7 @@ const DeviceActionDropdown = ({
         <Portal>
           <MenuList maxH="315px" overflowY="auto">
             <MenuItem onClick={handleBlinkClick}>{t('commands.blink')}</MenuItem>
-            <MenuItem onClick={handleOpenConfigure} hidden={!isCompact}>
+            <MenuItem onClick={handleOpenConfigure} hidden={!isCompact || deviceType !== 'ap'}>
               {t('controller.configure.title')}
             </MenuItem>
             <MenuItem onClick={handleConnectClick} hidden={!isCompact}>
@@ -239,7 +240,7 @@ const DeviceActionDropdown = ({
             <MenuItem onClick={handleUpdateToLatest} hidden>
               {t('premium.toolbox.upgrade_to_latest')}
             </MenuItem>
-            <MenuItem onClick={handleOpenScan} hidden={!isCompact}>
+            <MenuItem onClick={handleOpenScan} hidden={!isCompact || deviceType !== 'ap'}>
               {t('commands.wifiscan')}
             </MenuItem>
           </MenuList>

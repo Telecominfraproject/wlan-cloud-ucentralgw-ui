@@ -3,6 +3,7 @@ import { Note } from './Note';
 
 export interface GatewayDevice {
   UUID: number;
+  blackListed?: boolean;
   certificateExpiryDate: number;
   compatible: string;
   configuration: unknown;

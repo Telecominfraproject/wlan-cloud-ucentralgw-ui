@@ -174,12 +174,37 @@ export const useGetEventQueue = () => {
 };
 
 const configureDevice = (serialNumber: string) => async (configuration: Record<string, unknown>) =>
-  axiosGw.post<unknown>(`device/${serialNumber}/configure`, {
-    when: 0,
-    UUID: 1,
-    serialNumber,
-    configuration,
-  });
+  axiosGw
+    .post<unknown>(`device/${serialNumber}/configure`, {
+      when: 0,
+      UUID: 1,
+      serialNumber,
+      configuration,
+    })
+    .then(
+      (res) =>
+        res.data as Partial<{
+          UUID: string;
+          attachFile: number;
+          command: string;
+          completed: number;
+          custom: number;
+          deferred: boolean;
+          details: Record<string, unknown>;
+          errorCode: number;
+          errorText: string;
+          executed: number;
+          executionTime: number;
+          lastTry: number;
+          results: Record<string, unknown>;
+          serialNumber: string;
+          status: string;
+          submitted: number;
+          submittedBy: string;
+          waitingForFile: number;
+          when: number;
+        }>,
+    );
 
 export const useConfigureDevice = ({ serialNumber }: { serialNumber: string }) => {
   const queryClient = useQueryClient();

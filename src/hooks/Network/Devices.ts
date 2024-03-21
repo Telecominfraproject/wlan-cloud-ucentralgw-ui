@@ -9,15 +9,21 @@ import { AxiosError } from 'models/Axios';
 import { DeviceRttyApiResponse, GatewayDevice, WifiScanCommand, WifiScanResult } from 'models/Device';
 import { Note } from 'models/Note';
 import { PageInfo } from 'models/Table';
+import { DeviceCommandHistory } from './Commands';
 
-const getDeviceCount = () =>
-  axiosGw.get('devices?countOnly=true').then((response) => response.data) as Promise<{ count: number }>;
+export const DEVICE_PLATFORMS = ['all', 'ap', 'switch'] as const;
+export type DevicePlatform = (typeof DEVICE_PLATFORMS)[number];
 
-export const useGetDeviceCount = ({ enabled }: { enabled: boolean }) => {
+const getDeviceCount = (platform: DevicePlatform) =>
+  axiosGw.get(`devices?countOnly=true&platform=${platform}`).then((response) => response.data) as Promise<{
+    count: number;
+  }>;
+
+export const useGetDeviceCount = ({ enabled, platform = 'all' }: { enabled: boolean; platform?: DevicePlatform }) => {
   const { t } = useTranslation();
   const toast = useToast();
 
-  return useQuery(['devices', 'count'], getDeviceCount, {
+  return useQuery(['devices', 'count', { platform }], () => getDeviceCount(platform), {
     enabled,
     onError: (e: AxiosError) => {
       if (!toast.isActive('inventory-fetching-error'))
@@ -42,13 +48,14 @@ export type DeviceWithStatus = {
   associations_2G: number;
   associations_5G: number;
   associations_6G: number;
+  blackListed?: boolean;
   compatible: string;
   connected: boolean;
   connectReason?: string;
   certificateExpiryDate?: number;
   createdTimestamp: number;
   devicePassword: string;
-  deviceType: 'AP' | 'SWITCH' | 'IOT' | 'MESH';
+  deviceType: 'ap' | 'switch';
   entity: string;
   firmware: string;
   fwUpdatePolicy: string;
@@ -95,25 +102,27 @@ export const getSingleDeviceWithStatus = (serialNumber: string) =>
     })
     .catch(() => undefined);
 
-const getDevices = (limit: number, offset: number) =>
+const getDevices = (limit: number, offset: number, platform: DevicePlatform) =>
   axiosGw
-    .get(`devices?deviceWithStatus=true&limit=${limit}&offset=${offset}`)
+    .get(`devices?deviceWithStatus=true&limit=${limit}&offset=${offset}&platform=${platform}`)
     .then((response) => response.data) as Promise<{ devicesWithStatus: DeviceWithStatus[] }>;
 
 export const useGetDevices = ({
   pageInfo,
   enabled,
   onError,
+  platform = 'all',
 }: {
   pageInfo?: PageInfo;
   enabled: boolean;
   onError?: (e: AxiosError) => void;
+  platform?: DevicePlatform;
 }) => {
   const offset = pageInfo?.limit !== undefined ? pageInfo.limit * pageInfo.index : 0;
 
   return useQuery(
-    ['devices', 'all', { limit: pageInfo?.limit, offset }],
-    () => getDevices(pageInfo?.limit || 0, offset),
+    ['devices', 'all', { limit: pageInfo?.limit, offset, platform }],
+    () => getDevices(pageInfo?.limit || 0, offset, platform),
     {
       keepPreviousData: true,
       enabled: enabled && pageInfo !== undefined,
@@ -123,22 +132,28 @@ export const useGetDevices = ({
   );
 };
 
-const getAllDevices = async () => {
+const getAllDevices = async (platform: DevicePlatform) => {
   let offset = 0;
   let devices: DeviceWithStatus[] = [];
   let devicesResponse: { devicesWithStatus: DeviceWithStatus[] };
   do {
     // eslint-disable-next-line no-await-in-loop
-    devicesResponse = await getDevices(500, offset);
+    devicesResponse = await getDevices(500, offset, platform);
     devices = devices.concat(devicesResponse.devicesWithStatus);
     offset += 500;
   } while (devicesResponse.devicesWithStatus.length === 500);
   return devices;
 };
 
-export const useGetAllDevicesWithStatus = ({ onError }: { onError?: (e: AxiosError) => void }) => {
+export const useGetAllDevicesWithStatus = ({
+  onError,
+  platform = 'all',
+}: {
+  onError?: (e: AxiosError) => void;
+  platform?: DevicePlatform;
+}) => {
   const { isReady } = useEndpointStatus('owgw');
-  return useQuery(['devices', 'all', 'full'], getAllDevices, {
+  return useQuery(['devices', 'all', 'full', { platform }], () => getAllDevices(platform), {
     enabled: isReady && false,
     onError,
   });
@@ -430,4 +445,46 @@ export const useUpdateDevice = ({ serialNumber }: { serialNumber: string }) => {
       queryClient.invalidateQueries(['device', serialNumber]);
     },
   });
+};
+
+const deleteDeviceBatch = async (pattern: string) => {
+  if (pattern.length < 6) throw new Error('Pattern must be at least 6 characters long');
+
+  axiosGw.delete(`devices?macPattern=${pattern}`);
+};
+
+export const useDeleteDeviceBatch = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(deleteDeviceBatch, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['devices']);
+    },
+  });
+};
+
+export type PowerCyclePort = {
+  /** Ex.: Ethernet0 */
+  name: string;
+  /** Cycle length in MS. Default is 10 000 */
+  cycle?: number;
+};
+
+export type PowerCycleRequest = {
+  serial: string;
+  when: number;
+  ports: PowerCyclePort[];
+};
+
+export const usePowerCycle = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (request: PowerCycleRequest) =>
+      axiosGw.post(`device/${request.serial}/powercycle`, request).then((res) => res.data as DeviceCommandHistory),
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(['commands']);
+      },
+    },
+  );
 };

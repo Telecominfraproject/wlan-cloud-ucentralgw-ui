@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, SimpleGrid, useBoolean, UseDisclosureReturn, useToast } from '@chakra-ui/react';
+import { Box, Flex, useBoolean, UseDisclosureReturn, useToast } from '@chakra-ui/react';
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -15,6 +15,7 @@ import { useGetDeviceTypes } from 'hooks/Network/Firmware';
 import { useFormModal } from 'hooks/useFormModal';
 import { useFormRef } from 'hooks/useFormRef';
 import { AxiosError } from 'models/Axios';
+import { SelectField } from 'components/Form/Fields/SelectField';
 
 type Props = {
   modalProps: UseDisclosureReturn;
@@ -69,47 +70,69 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
               innerRef={formRef as React.Ref<FormikProps<DefaultConfigurationResponse>>}
               initialValues={{
                 ...config,
+                modelIds: config.modelIds.map((v) => ({ label: v, value: v })),
                 configuration: JSON.stringify(config.configuration, null, 2),
               }}
               key={formKey}
               validationSchema={DefaultConfigurationSchema(t)}
               onSubmit={(data, { setSubmitting, resetForm }) => {
-                updateConfig.mutateAsync(data, {
-                  onSuccess: () => {
-                    toast({
-                      id: `config-edit-success`,
-                      title: t('common.success'),
-                      description: t('controller.configurations.update_success'),
-                      status: 'success',
-                      duration: 5000,
-                      isClosable: true,
-                      position: 'top-right',
-                    });
-                    setSubmitting(false);
-                    resetForm();
-                    modalProps.onClose();
+                updateConfig.mutateAsync(
+                  { ...data, modelIds: data.modelIds.map((v) => v.value) },
+                  {
+                    onSuccess: () => {
+                      toast({
+                        id: `config-edit-success`,
+                        title: t('common.success'),
+                        description: t('controller.configurations.update_success'),
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                        position: 'top-right',
+                      });
+                      setSubmitting(false);
+                      resetForm();
+                      modalProps.onClose();
+                    },
+                    onError: (error) => {
+                      const e = error as AxiosError;
+                      toast({
+                        id: `config-edit-error`,
+                        title: t('common.error'),
+                        description: e?.response?.data?.ErrorDescription,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                        position: 'top-right',
+                      });
+                      setSubmitting(false);
+                    },
                   },
-                  onError: (error) => {
-                    const e = error as AxiosError;
-                    toast({
-                      id: `config-edit-error`,
-                      title: t('common.error'),
-                      description: e?.response?.data?.ErrorDescription,
-                      status: 'error',
-                      duration: 5000,
-                      isClosable: true,
-                      position: 'top-right',
-                    });
-                    setSubmitting(false);
-                  },
-                });
+                );
               }}
             >
               <Box>
-                <SimpleGrid spacing={4} minChildWidth="200px">
-                  <StringField name="name" label={t('common.name')} isRequired isDisabled={isDisabled} />
-                  <StringField name="description" label={t('common.description')} isDisabled={isDisabled} />
-                </SimpleGrid>
+                <Flex mb={4}>
+                  <StringField
+                    name="name"
+                    label={t('common.name')}
+                    isRequired
+                    isDisabled={isDisabled}
+                    maxW="340px"
+                    mr={4}
+                  />
+                  <SelectField
+                    name="platform"
+                    label="Platform"
+                    options={[
+                      { label: 'AP', value: 'ap' },
+                      { label: 'Switch', value: 'switch' },
+                    ]}
+                    isRequired
+                    isDisabled
+                    w="max-content"
+                  />
+                </Flex>
+                <StringField name="description" label={t('common.description')} isDisabled={isDisabled} mb={4} />
                 <MultiSelectField
                   name="modelIds"
                   label={t('controller.dashboard.device_types')}
@@ -120,9 +143,16 @@ const EditDefaultConfiguration = ({ modalProps, config }: Props) => {
                       value: devType,
                     })) ?? []
                   }
+                  isCreatable
                   isRequired
                 />
-                <StringField name="configuration" label={t('configurations.one')} isArea isDisabled={isDisabled} />
+                <StringField
+                  name="configuration"
+                  label={t('configurations.one')}
+                  isArea
+                  isDisabled={isDisabled}
+                  mt={4}
+                />
               </Box>
             </Formik>
           )}

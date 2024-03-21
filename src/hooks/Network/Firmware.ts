@@ -70,25 +70,66 @@ export const useUpdateDeviceFirmware = ({ serialNumber, onClose }: { serialNumbe
 
   return useMutation(
     ({ keepRedirector, uri, signature }: { keepRedirector: boolean; uri: string; signature?: string }) =>
-      axiosGw.post(`device/${serialNumber}/upgrade${signature ? `?FWsignature=${signature}` : ''}`, {
-        serialNumber,
-        when: 0,
-        keepRedirector,
-        uri,
-        signature,
-      }),
+      axiosGw
+        .post(`device/${serialNumber}/upgrade${signature ? `?FWsignature=${signature}` : ''}`, {
+          serialNumber,
+          when: 0,
+          keepRedirector,
+          uri,
+          signature,
+        })
+        .then(
+          (response) =>
+            response as {
+              data: {
+                errorCode: number;
+                errorText: string;
+                status: string;
+                results?: {
+                  status?: {
+                    error?: number;
+                    resultCode?: number;
+                    text?: string;
+                  };
+                };
+              };
+            },
+        ),
     {
-      onSuccess: () => {
-        toast({
-          id: `device-upgrade-success-${uuid()}`,
-          title: t('common.success'),
-          description: t('commands.firmware_upgrade_success'),
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        onClose();
+      onSuccess: ({ data }) => {
+        if (data.errorCode === 0) {
+          toast({
+            id: `device-upgrade-success-${uuid()}`,
+            title: t('common.success'),
+            description: t('commands.firmware_upgrade_success'),
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          onClose();
+        } else if (data.errorCode === 1) {
+          toast({
+            id: `device-upgrade-warning-${uuid()}`,
+            title: 'Warning',
+            description: `${data?.errorText ?? 'Unknown Warning'}`,
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          onClose();
+        } else {
+          toast({
+            id: `device-upgrade-error-${uuid()}`,
+            title: t('common.error'),
+            description: `${data?.errorText ?? 'Unknown Error'} (Code ${data.errorCode})`,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position: 'top-right',
+          });
+        }
       },
       onError: (e: AxiosError) => {
         toast({

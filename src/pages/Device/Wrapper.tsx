@@ -42,10 +42,13 @@ import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
 import { RebootModal } from 'components/Modals/RebootModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
+import ethernetConnected from './ethernetIconConnected.svg?react';
+import ethernetDisconnected from './ethernetIconDisconnected.svg?react';
 import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import { useDeleteDevice, useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
+import SwitchPortExamination from './SwitchPortExamination';
 
 type Props = {
   serialNumber: string;
@@ -77,19 +80,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
   const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
 
-  const handleDeleteClick = () =>
+  const handleDeleteClick = () => {
     deleteDevice(serialNumber, {
-      onSuccess: () => {
-        toast({
-          id: `delete-device-success-${serialNumber}`,
-          title: t('common.success'),
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        navigate('/devices');
-      },
       onError: (e) => {
         if (axios.isAxiosError(e)) {
           toast({
@@ -104,18 +96,43 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
         }
       },
     });
+    toast({
+      id: `delete-device-success-${serialNumber}`,
+      title: t('common.success'),
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+      position: 'top-right',
+    });
+    navigate('/');
+  };
 
   const connectedTag = React.useMemo(() => {
     if (!getStatus.data) return null;
+
+    if (getDevice.data?.blackListed) {
+      return (
+        <ResponsiveTag
+          label="Blacklisted"
+          tooltip="This device is blacklisted, it will not be able to connect to the network. Please visit the Blacklist page if you wish to remove it from the blacklist."
+          colorScheme="red"
+          icon={LockSimple}
+        />
+      );
+    }
+
+    let icon = getStatus.data.connected ? WifiHigh : WifiSlash;
+    if (getDevice.data?.deviceType === 'switch')
+      icon = getStatus.data.connected ? ethernetConnected : ethernetDisconnected;
 
     return (
       <ResponsiveTag
         label={getStatus?.data?.connected ? t('common.connected') : t('common.disconnected')}
         colorScheme={getStatus?.data?.connected ? 'green' : 'red'}
-        icon={getStatus.data.connected ? WifiHigh : WifiSlash}
+        icon={icon}
       />
     );
-  }, [getStatus.data]);
+  }, [getStatus.data, getDevice.data]);
 
   const healthTag = React.useMemo(() => {
     if (!getStatus.data || !getStatus.data.connected || !getHealth.data || getHealth.data?.values?.length === 0)
@@ -307,7 +324,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
           <DeviceSummary serialNumber={serialNumber} />
           <DeviceDetails serialNumber={serialNumber} />
           <DeviceStatisticsCard serialNumber={serialNumber} />
-          <WifiAnalysisCard serialNumber={serialNumber} />
+          {getDevice.data?.deviceType === 'ap' ? <WifiAnalysisCard serialNumber={serialNumber} /> : null}
+          {getDevice.data?.deviceType === 'switch' ? <SwitchPortExamination serialNumber={serialNumber} /> : null}
           <DeviceLogsCard serialNumber={serialNumber} />
           {getDevice.data && getDevice.data?.hasRADIUSSessions > 0 ? (
             <RadiusClientsCard serialNumber={serialNumber} />

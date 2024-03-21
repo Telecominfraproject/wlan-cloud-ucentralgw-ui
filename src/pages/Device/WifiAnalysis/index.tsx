@@ -16,11 +16,29 @@ type Props = {
   serialNumber: string;
 };
 
-const parseRadios = (t: (str: string) => string, data: { data: DeviceStatistics; recorded: number }) => {
+const parseRadios = (_: (str: string) => string, data: { data: DeviceStatistics; recorded: number }) => {
   const radios: ParsedRadio[] = [];
   if (data.data.radios) {
     for (let i = 0; i < data.data.radios.length; i += 1) {
       const radio = data.data.radios[i];
+      let temperature = radio?.temperature;
+      if (temperature) temperature = temperature > 1000 ? Math.round(temperature / 1000) : temperature;
+
+      const tempNoise = radio?.noise ?? radio?.survey?.[0]?.noise;
+      const noise = tempNoise ? parseDbm(tempNoise) : '-';
+
+      const tempActiveMs = radio?.survey?.[0]?.time ?? radio?.active_ms;
+      const activeMs = tempActiveMs?.toLocaleString() ?? '-';
+
+      const tempBusyMs = radio?.survey?.[0]?.busy ?? radio?.busy_ms;
+      const busyMs = tempBusyMs?.toLocaleString() ?? '-';
+
+      const tempReceiveMs = radio?.survey?.[0]?.time_rx ?? radio?.receive_ms;
+      const receiveMs = tempReceiveMs?.toLocaleString() ?? '-';
+
+      const tempSendMs = radio?.survey?.[0]?.time_tx;
+      const sendMs = tempSendMs?.toLocaleString() ?? '-';
+
       if (radio) {
         radios.push({
           recorded: data.recorded,
@@ -29,12 +47,15 @@ const parseRadios = (t: (str: string) => string, data: { data: DeviceStatistics;
           deductedBand: radio.channel && radio.channel > 16 ? '5G' : '2G',
           channel: radio.channel,
           channelWidth: radio.channel_width,
-          noise: radio.noise ? parseDbm(radio.noise) : '-',
+          noise,
           txPower: radio.tx_power ?? '-',
-          activeMs: compactSecondsToDetailed(radio?.active_ms ? Math.floor(radio.active_ms / 1000) : 0, t),
-          busyMs: compactSecondsToDetailed(radio?.busy_ms ? Math.floor(radio.busy_ms / 1000) : 0, t),
-          receiveMs: compactSecondsToDetailed(radio?.receive_ms ? Math.floor(radio.receive_ms / 1000) : 0, t),
+          activeMs,
+          busyMs,
+          receiveMs,
+          sendMs,
           phy: radio.phy,
+          temperature: temperature ? temperature.toString() : '-',
+          frequency: radio.frequency?.join(', ') ?? '-',
         });
       }
     }

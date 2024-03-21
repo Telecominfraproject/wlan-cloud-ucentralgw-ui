@@ -20,6 +20,7 @@ const propTypes = {
   canSelectAll: PropTypes.bool,
   isPortal: PropTypes.bool,
   definitionKey: PropTypes.string,
+  isCreatable: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -31,6 +32,7 @@ const defaultProps = {
   canSelectAll: false,
   isPortal: false,
   definitionKey: null,
+  isCreatable: false,
 };
 
 const MultiSelectField = ({
@@ -43,25 +45,39 @@ const MultiSelectField = ({
   emptyIsUndefined,
   canSelectAll,
   hasVirtualAll,
+  isCreatable,
   isPortal,
   definitionKey,
 }) => {
   const [{ value }, { touched, error }, { setValue, setTouched }] = useField(name);
 
-  const onChange = useCallback((option) => {
-    const allIndex = option.findIndex((opt) => opt.value === '*');
-    if (option.length === 0 && emptyIsUndefined) {
-      setValue(undefined);
-    } else if (allIndex === 0 && option.length > 1) {
-      const newValues = option.slice(1);
-      setValue(newValues.map((val) => val.value));
-    } else if (allIndex >= 0) {
-      if (!hasVirtualAll) setValue(['*']);
-      else setValue(options.map(({ value: v }) => v));
-    } else if (option.length > 0) setValue(option.map((val) => val.value));
-    else setValue([]);
-    setTouched(true);
-  }, []);
+  const onChange = useCallback(
+    (option) => {
+      if (isCreatable) {
+        if (typeof option === 'string') {
+          setValue([...value, option]);
+        } else {
+          setValue(option);
+        }
+
+        // setValue([...value, option]);
+      } else {
+        const allIndex = option.findIndex((opt) => opt.value === '*');
+        if (option.length === 0 && emptyIsUndefined) {
+          setValue(undefined);
+        } else if (allIndex === 0 && option.length > 1) {
+          const newValues = option.slice(1);
+          setValue(newValues.map((val) => val.value));
+        } else if (allIndex >= 0) {
+          if (!hasVirtualAll) setValue(['*']);
+          else setValue(options.map(({ value: v }) => v));
+        } else if (option.length > 0) setValue(option.map((val) => val.value));
+        else setValue([]);
+        setTouched(true);
+      }
+    },
+    [value],
+  );
 
   const onFieldBlur = useCallback(() => {
     setTouched(true);
@@ -82,6 +98,7 @@ const MultiSelectField = ({
       isHidden={isHidden}
       isPortal={isPortal}
       definitionKey={definitionKey}
+      isCreatable={isCreatable}
     />
   );
 };

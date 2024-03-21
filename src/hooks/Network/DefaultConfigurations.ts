@@ -3,10 +3,12 @@ import { axiosGw } from 'constants/axiosInstances';
 import { useEndpointStatus } from 'hooks/useEndpointStatus';
 import { AxiosError } from 'models/Axios';
 import { DeviceConfiguration } from 'models/Device';
+import { DevicePlatform } from './Devices';
 
 export type DefaultConfigurationResponse = {
   configuration: DeviceConfiguration;
   created: number;
+  platform: DevicePlatform;
   description: string;
   lastModified: number;
   modelIds: string[];

@@ -8,3 +8,4 @@ declare module '*.png' {
   const value: string;
   export = value;
 }
+/// <reference types="vite-plugin-svgr/client" />
