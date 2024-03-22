@@ -17,14 +17,18 @@ export type ParsedRadio = {
   activeMs: string;
   busyMs: string;
   receiveMs: string;
+  sendMs: string;
   phy: string;
+  frequency: string;
+  temperature: string;
 };
 
 type Props = {
   data?: ParsedRadio[];
+  isSingle?: boolean;
 };
 
-const WifiAnalysisRadioTable = ({ data }: Props) => {
+const WifiAnalysisRadioTable = ({ data, isSingle }: Props) => {
   const { t } = useTranslation();
   const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 
@@ -44,16 +48,24 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
       },
       {
         id: 'channel',
-        Header: 'Ch',
+        Header: 'Ch.',
         Footer: '',
         accessor: 'channel',
         customWidth: '35px',
       },
       {
         id: 'channelWidth',
-        Header: t('controller.wifi.channel_width'),
+        Header: 'Ch. W',
         Footer: '',
         accessor: 'channelWidth',
+        customWidth: '35px',
+        disableSortBy: true,
+      },
+      {
+        id: 'tx-power',
+        Header: 'Tx Pow.',
+        Footer: '',
+        accessor: 'txPower',
         customWidth: '35px',
         disableSortBy: true,
       },
@@ -67,25 +79,49 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
       },
       {
         id: 'activeMs',
-        Header: t('controller.wifi.active_ms'),
+        Header: 'Active (ms)',
         Footer: '',
         accessor: 'activeMs',
-        customWidth: '35px',
+        customWidth: '105px',
         disableSortBy: true,
       },
       {
         id: 'busyMs',
-        Header: t('controller.wifi.busy_ms'),
+        Header: 'Busy (ms)',
         Footer: '',
         accessor: 'busyMs',
-        customWidth: '35px',
+        customWidth: '105px',
         disableSortBy: true,
       },
       {
         id: 'receiveMs',
-        Header: t('controller.wifi.receive_ms'),
+        Header: 'Receive (ms)',
         Footer: '',
         accessor: 'receiveMs',
+        customWidth: '105px',
+        disableSortBy: true,
+      },
+      {
+        id: 'sendMs',
+        Header: 'Send (ms)',
+        Footer: '',
+        accessor: 'sendMs',
+        customWidth: '105px',
+        disableSortBy: true,
+      },
+      {
+        id: 'temperature',
+        Header: 'Temp.',
+        Footer: '',
+        accessor: 'temperature',
+        customWidth: '35px',
+        disableSortBy: true,
+      },
+      {
+        id: 'frequency',
+        Header: 'Frequency',
+        Footer: '',
+        accessor: 'frequency',
         customWidth: '35px',
         disableSortBy: true,
       },
@@ -97,7 +133,7 @@ const WifiAnalysisRadioTable = ({ data }: Props) => {
     <>
       <Flex>
         <Heading size="sm" mt={2} my="auto">
-          {t('configurations.radios')} ({data?.length})
+          {isSingle ? 'Radio' : `${t('configurations.radios')} (${data?.length})`}
         </Heading>
         <Spacer />
         <ColumnPicker

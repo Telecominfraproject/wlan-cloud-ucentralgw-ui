@@ -2,7 +2,8 @@ import * as React from 'react';
 import { ColumnDef, PaginationState, SortingColumnDef, SortingState, VisibilityState } from '@tanstack/react-table';
 import { useAuth } from 'contexts/AuthProvider';
 
-const getDefaultSettings = (settings?: string) => {
+const getDefaultSettings = ({ settings, showAllRows }: { settings?: string; showAllRows?: boolean }) => {
+  if (showAllRows) return { pageSize: 1000, pageIndex: 0 };
   let limit = 10;
   let index = 0;
 
@@ -54,9 +55,10 @@ export type UseDataGridProps = {
   tableSettingsId: string;
   defaultOrder: string[];
   defaultSortBy?: SortingState;
+  showAllRows?: boolean;
 };
 
-export const useDataGrid = ({ tableSettingsId, defaultSortBy, defaultOrder }: UseDataGridProps) => {
+export const useDataGrid = ({ tableSettingsId, defaultSortBy, defaultOrder, showAllRows }: UseDataGridProps) => {
   const orderSetting = `${tableSettingsId}.order`;
   const hiddenColumnSetting = `${tableSettingsId}.hiddenColumns`;
   const pageSetting = `${tableSettingsId}.page`;
@@ -66,8 +68,9 @@ export const useDataGrid = ({ tableSettingsId, defaultSortBy, defaultOrder }: Us
   const [columnOrder, setColumnOrder] = React.useState<string[]>(
     getSavedColumnOrder(defaultOrder ?? [], tableSettingsId),
   );
-  const [pageInfo, setPageInfo] = React.useState<PaginationState>(getDefaultSettings(tableSettingsId));
-
+  const [pageInfo, setPageInfo] = React.useState<PaginationState>(
+    getDefaultSettings({ settings: tableSettingsId, showAllRows }),
+  );
   const setNewColumnOrder = React.useCallback(
     (newOrder: string[]) => {
       setColumnOrder(newOrder);

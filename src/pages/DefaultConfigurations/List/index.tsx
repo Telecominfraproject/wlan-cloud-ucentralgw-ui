@@ -59,6 +59,14 @@ const DefaultConfigurationsList = () => {
         customWidth: '50px',
       },
       {
+        id: 'platform',
+        Header: 'Platform',
+        Footer: '',
+        accessor: 'platform',
+        Cell: ({ cell }) => cell.row.original.platform.toUpperCase(),
+        customWidth: '50px',
+      },
+      {
         id: 'modelIds',
         Header: t('controller.dashboard.device_types'),
         Footer: '',

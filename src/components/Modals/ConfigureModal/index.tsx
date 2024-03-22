@@ -59,16 +59,43 @@ const _ConfigureModal = ({ serialNumber, modalProps }: ConfigureModalProps) => {
     try {
       const config = JSON.parse(newConfig);
       configure.mutate(config, {
-        onSuccess: () => {
-          toast({
-            id: `configure-success-${serialNumber}`,
-            title: t('common.success'),
-            description: t('controller.configure.success'),
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-            position: 'top-right',
-          });
+        onSuccess: (data) => {
+          if (data.errorCode === 0) {
+            toast({
+              id: `configure-success-${serialNumber}`,
+              title: t('common.success'),
+              description:
+                data.status === 'pending'
+                  ? 'Command is pending! It will execute once the device connects'
+                  : t('controller.configure.success'),
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+              position: 'top-right',
+            });
+            modalProps.onClose();
+          } else if (data.errorCode === 1) {
+            toast({
+              id: `configure-warning-${serialNumber}`,
+              title: 'Warning',
+              description: `${data?.errorText ?? 'Unknown Warning'}`,
+              status: 'warning',
+              duration: 5000,
+              isClosable: true,
+              position: 'top-right',
+            });
+            modalProps.onClose();
+          } else {
+            toast({
+              id: `config-error-${serialNumber}`,
+              title: t('common.error'),
+              description: `${data?.errorText ?? 'Unknown Error'} (Code ${data.errorCode})`,
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top-right',
+            });
+          }
           modalProps.onClose();
         },
       });

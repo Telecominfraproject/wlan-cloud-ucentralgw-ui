@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { Box, Center, Image, Link, Tag, TagLabel, TagRightIcon, Tooltip, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Image,
+  Link,
+  Select,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  Tooltip,
+  useDisclosure,
+} from '@chakra-ui/react';
 import {
   CheckCircle,
   Heart,
@@ -8,6 +19,7 @@ import {
   ThermometerCold,
   ThermometerHot,
   WarningCircle,
+  XCircle,
 } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +49,7 @@ import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import DataCell from 'components/TableCells/DataCell';
 import NumberCell from 'components/TableCells/NumberCell';
-import { DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
+import { DevicePlatform, DeviceWithStatus, useGetDeviceCount, useGetDevices } from 'hooks/Network/Devices';
 import { FirmwareAgeResponse, useGetFirmwareAges } from 'hooks/Network/Firmware';
 
 const fourDigitNumber = (v?: number) => {
@@ -63,6 +75,7 @@ const BADGE_COLORS: Record<string, string> = {
   NO_CERTIFICATE: 'red',
   MISMATCH_SERIAL: 'yellow',
   VERIFIED: 'green',
+  BLACKLISTED: 'white',
   SIMULATED: 'purple',
 };
 
@@ -70,6 +83,7 @@ const DeviceListCard = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [serialNumber, setSerialNumber] = React.useState<string>('');
+  const [platform, setPlatform] = React.useState<DevicePlatform>('ALL');
   const scanModalProps = useDisclosure();
   const resetModalProps = useDisclosure();
   const upgradeModalProps = useDisclosure();
@@ -108,13 +122,14 @@ const DeviceListCard = () => {
       'actions',
     ],
   });
-  const getCount = useGetDeviceCount({ enabled: true });
+  const getCount = useGetDeviceCount({ enabled: true, platform });
   const getDevices = useGetDevices({
     pageInfo: {
       limit: tableController.pageInfo.pageSize,
       index: tableController.pageInfo.pageIndex,
     },
     enabled: true,
+    platform,
   });
   const getAges = useGetFirmwareAges({
     serialNumbers: getDevices.data?.devicesWithStatus.map((device) => device.serialNumber),
@@ -159,12 +174,32 @@ const DeviceListCard = () => {
         h="35px"
         w="35px"
         borderRadius="50em"
-        bgColor={BADGE_COLORS[device.simulated ? 'SIMULATED' : device.verifiedCertificate] ?? 'red'}
+        bgColor={
+          BADGE_COLORS[
+            device.simulated ? 'SIMULATED' : device.blackListed ? 'BLACKLISTED' : device.verifiedCertificate
+          ] ?? 'red'
+        }
         alignItems="center"
         display="inline-flex"
         justifyContent="center"
         position="relative"
       >
+        {device.blackListed ? (
+          <Tooltip label="This device is blacklisted. If this was done by mistake, please visit the Blacklist page to correct.">
+            <XCircle
+              size={44}
+              color="#ff2600"
+              weight="duotone"
+              style={{
+                position: 'absolute',
+                // Center vertically and horizontally
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
+          </Tooltip>
+        ) : null}
         <Tooltip
           label={`${device.simulated ? 'SIMULATED' : device.verifiedCertificate} - ${
             device.connected ? t('common.connected') : t('common.disconnected')
@@ -182,6 +217,7 @@ const DeviceListCard = () => {
           bottom={0}
           borderColor="gray.200"
           borderWidth={1}
+          hidden={device.blackListed}
         />
         {device.restrictedDevice && (
           <Box
@@ -533,12 +569,7 @@ const DeviceListCard = () => {
         header: t('analytics.last_connected'),
         footer: '',
         accessorKey: 'lastRecordedContact',
-        cell: (v) =>
-          dateCell(
-            v.cell.row.original.lastContact !== 0
-              ? v.cell.row.original.lastContact
-              : v.cell.row.original.lastRecordedContact,
-          ),
+        cell: (v) => dateCell(v.cell.row.original.lastRecordedContact),
         enableSorting: false,
         meta: {
           headerOptions: {
@@ -696,7 +727,21 @@ const DeviceListCard = () => {
         header={{
           title: `${getCount.data?.count ?? 0} ${t('devices.title')}`,
           objectListed: t('devices.title'),
-          leftContent: <GlobalSearchBar />,
+          leftContent: (
+            <>
+              <GlobalSearchBar />
+              <Select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value as DevicePlatform)}
+                w="max-content"
+                ml={2}
+              >
+                <option value="ALL">All</option>
+                <option value="ap">APs</option>
+                <option value="switch">Switches</option>
+              </Select>
+            </>
+          ),
           otherButtons: (
             <ExportDevicesTableButton currentPageSerialNumbers={data.map((device) => device.serialNumber)} />
           ),
