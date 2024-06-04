@@ -59,6 +59,7 @@ export type DeviceInterfaceStatistics = {
       dynamic_vlan?: number;
       inactive: number;
       ipaddr_v4: string;
+      fingerprint?: object;
       rssi: number;
       rx_bytes: number;
       rx_duration: number;

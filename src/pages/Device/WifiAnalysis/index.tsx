@@ -105,6 +105,7 @@ const parseAssociations = (data: { data: DeviceStatistics; recorded: number }, r
           txNss: association.tx_rate.nss ?? '-',
           recorded: data.recorded,
           dynamicVlan: association.dynamic_vlan,
+          fingerprint: association.fingerprint,
         });
       }
     }

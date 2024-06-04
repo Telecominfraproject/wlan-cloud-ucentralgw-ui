@@ -28,6 +28,7 @@ export type ParsedAssociation = {
   txNss: number | string;
   recorded: number;
   dynamicVlan?: number;
+  fingerprint?: object;
 };
 
 type Props = {
@@ -78,10 +79,25 @@ const WifiAnalysisAssociationsTable = ({ data, ouis, isSingle }: Props) => {
         alwaysShow: true,
       },
       {
+        id: 'ssid',
+        Header: 'SSID',
+        Footer: '',
+        accessor: 'ssid',
+        customWidth: '35px',
+        alwaysShow: true,
+      },
+      {
         id: 'ips',
         Header: 'IPs',
         Footer: '',
         Cell: (v) => ipCell(v.cell.row.original),
+        disableSortBy: true,
+      },
+      {
+        id: 'fingerprint',
+        Header: 'Fingerprint',
+        Footer: '',
+        Cell: (v) => Object.values(v.cell.row.original.fingerprint ?? {}).join(', '),
         disableSortBy: true,
       },
       {
