@@ -173,7 +173,7 @@ const DeviceActionDropdown = ({
           isLoading={isRtty}
           onClick={handleConnectClick}
           colorScheme={connectColor}
-          hidden={isCompact || deviceType !== 'ap'}
+          hidden={isCompact}
         />
       </Tooltip>
       <Tooltip label={t('controller.configure.title')}>
