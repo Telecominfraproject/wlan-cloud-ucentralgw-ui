@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from '../Modal';
 import { lowercaseFirstLetter } from 'helpers/stringHelper';
 import { useTelemetry } from 'hooks/Network/Telemetry';
+import { secondsDuration } from 'helpers/dateFormatting';
 
 export type TelemetryModalProps = {
   serialNumber: string;
@@ -146,8 +147,7 @@ const _TelemetryModal = ({ serialNumber, modalProps }: TelemetryModalProps) => {
               {t('controller.telemetry.interval')}: {form.interval} {lowercaseFirstLetter(t('common.seconds'))}
             </p>
             <p>
-              {t('controller.telemetry.duration')}: {form.interval}{' '}
-              {lowercaseFirstLetter(t('controller.telemetry.minutes'))}
+              {t('controller.telemetry.duration')}: {secondsDuration(form.lifetime, t)}
             </p>
             <p>
               {t('controller.telemetry.types')}: {form.types.join(', ')}
