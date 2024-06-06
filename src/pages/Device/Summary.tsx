@@ -65,6 +65,8 @@ const DeviceSummary = ({ serialNumber }: Props) => {
   const getDeviceCompatible = () => {
     if (!getDevice.data?.compatible) return undefined;
 
+    if (getDevice.data.compatible.includes(' ')) return getDevice.data.compatible.replaceAll(' ', '_');
+
     return getDevice.data?.compatible;
   };
 
