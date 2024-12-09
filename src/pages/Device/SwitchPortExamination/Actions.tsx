@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { IconButton, Tooltip, useToast } from '@chakra-ui/react';
-import { Power } from '@phosphor-icons/react';
+import { Power, PlugsConnected } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { usePowerCycle } from 'hooks/Network/Devices';
 import { useNotification } from 'hooks/useNotification';
 import { DeviceLinkState } from 'hooks/Network/Statistics';
+import { CableDiagnosticsModalProps } from 'components/Modals/CableDiagnosticsModal';
 
 type Props = {
   state: DeviceLinkState & { name: string };
   deviceSerialNumber: string;
+  onOpenCableDiagnostics: (port: string) => void;
 };
 
-const LinkStateTableActions = ({ state, deviceSerialNumber }: Props) => {
+const LinkStateTableActions = ({ state, deviceSerialNumber, onOpenCableDiagnostics }: Props) => {
   const { t } = useTranslation();
   const powerCycle = usePowerCycle();
   const toast = useToast();
@@ -54,16 +56,27 @@ const LinkStateTableActions = ({ state, deviceSerialNumber }: Props) => {
   };
 
   return (
-    <Tooltip label="Power Cycle" placement="auto-start">
-      <IconButton
-        aria-label="Power Cycle"
-        icon={<Power size={20} />}
-        colorScheme="green"
-        onClick={onPowerCycle}
-        isLoading={powerCycle.isLoading}
-        size="xs"
-      />
-    </Tooltip>
+    <>
+      <Tooltip label="Power Cycle" placement="auto-start">
+        <IconButton
+          aria-label="Power Cycle"
+          icon={<Power size={20} />}
+          colorScheme="green"
+          onClick={onPowerCycle}
+          isLoading={powerCycle.isLoading}
+          size="xs"
+        />
+      </Tooltip>
+      <Tooltip label="Cable Diagnostics" placement="auto-start">
+        <IconButton
+          aria-label="Cable Diagnostics"
+          icon={<PlugsConnected size={20} />}
+          colorScheme="blue"
+          onClick={() => onOpenCableDiagnostics(state.name)}
+          size="xs"
+        />
+      </Tooltip>
+    </>
   );
 };
 

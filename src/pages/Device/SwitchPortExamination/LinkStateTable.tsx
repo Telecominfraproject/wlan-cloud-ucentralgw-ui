@@ -9,8 +9,12 @@ import LinkStateTableActions from './Actions';
 
 type Row = DeviceLinkState & { name: string };
 const dataCell = (v: number) => <DataCell bytes={v} />;
-const actionCell = (row: Row, serialNumber: string) => (
-  <LinkStateTableActions state={row} deviceSerialNumber={serialNumber} />
+const actionCell = (row: Row, serialNumber: string, onOpenCableDiagnostics: (port: string) => void) => (
+  <LinkStateTableActions
+    state={row}
+    deviceSerialNumber={serialNumber}
+    onOpenCableDiagnostics={onOpenCableDiagnostics}
+  />
 );
 
 type Props = {
@@ -19,9 +23,10 @@ type Props = {
   isFetching: boolean;
   type: 'upstream' | 'downstream';
   serialNumber: string;
+  onOpenCableDiagnostics: (port: string) => void;
 };
 
-const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber }: Props) => {
+const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber, onOpenCableDiagnostics }: Props) => {
   const tableController = useDataGrid({
     tableSettingsId: 'switch.link-state.table',
     defaultOrder: [
@@ -157,10 +162,16 @@ const LinkStateTable = ({ statistics, refetch, isFetching, type, serialNumber }:
         id: 'actions',
         header: '',
         accessorKey: '',
-        cell: ({ cell }) => actionCell(cell.row.original, serialNumber),
+        cell: ({ cell }) => (
+          <LinkStateTableActions
+            state={cell.row.original}
+            deviceSerialNumber={serialNumber}
+            onOpenCableDiagnostics={onOpenCableDiagnostics}
+          />
+        ),
       },
     ],
-    [],
+    [onOpenCableDiagnostics],
   );
 
   if (!statistics || statistics?.length === 0) {

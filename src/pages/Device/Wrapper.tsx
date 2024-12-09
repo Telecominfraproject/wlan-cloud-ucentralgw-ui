@@ -68,6 +68,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const getHealth = useGetDeviceHealthChecks({ serialNumber, limit: 1 });
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
   const scanModalProps = useDisclosure();
+  const cableDiagnosticsModalProps = useDisclosure();
   const resetModalProps = useDisclosure();
   const eventQueueProps = useDisclosure();
   const configureModalProps = useDisclosure();

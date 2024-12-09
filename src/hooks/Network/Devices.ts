@@ -377,6 +377,40 @@ export const useWifiScanDevice = ({ serialNumber }: { serialNumber: string }) =>
   );
 };
 
+export const useCableDiagnostics = ({ serialNumber }: { serialNumber: string }) => {
+  const toast = useToast();
+  const { t } = useTranslation();
+
+  return useMutation(
+    (ports: string[]): Promise<unknown> =>
+      axiosGw
+        .post(`device/${serialNumber}/cable-diagnostics`, {
+          serial: serialNumber,
+          ports,
+          when: 0,
+        })
+        .then(({ data }) => data),
+    {
+      onSuccess: (data) => {
+        console.log('Success data: ', data);
+      },
+      onError: (e: AxiosError) => {
+        toast({
+          id: uuid(),
+          title: t('common.error'),
+          description: t('commands.cablediagnostics_error', {
+            e: e?.response?.data?.ErrorDescription,
+          }),
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      },
+    },
+  );
+};
+
 export const useGetDeviceRtty = ({ serialNumber, extraId }: { serialNumber: string; extraId: string | number }) => {
   const { t } = useTranslation();
   const toast = useToast();
