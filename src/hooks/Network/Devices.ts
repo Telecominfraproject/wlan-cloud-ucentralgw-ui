@@ -166,6 +166,7 @@ export type DeviceStatus = {
   connected: boolean;
   connectReason?: string;
   certificateExpiryDate: number;
+  certificateIssuerName?: string;
   connectionCompletionTime: number;
   firmware: string;
   ipAddress: string;

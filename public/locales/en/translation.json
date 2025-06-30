@@ -622,6 +622,7 @@
 		"all": "All",
 		"associations": "Associations",
 		"certificate_expires_in": "Certificate Expiry",
+		"certificate_issuer": "Certificate Issuer",
 		"certificate_expiry": "Cert. Expires In",
 		"connected": "Connected",
 		"crash_logs": "Crash Logs",
