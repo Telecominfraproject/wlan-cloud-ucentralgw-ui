@@ -172,6 +172,12 @@ const DeviceSummary = ({ serialNumber }: Props) => {
               )}
             </GridItem>
             <GridItem colSpan={1} alignContent="center" alignItems="center">
+              <Heading size="sm">{t('devices.certificate_issuer')}:</Heading>
+            </GridItem>
+            <GridItem colSpan={1}>
+              {getStatus.data?.certificateIssuerName ? getStatus.data.certificateIssuerName.split('CN=')[1] : '-'}
+            </GridItem>
+            <GridItem colSpan={1} alignContent="center" alignItems="center">
               <Heading size="sm">Connect Reason:</Heading>
             </GridItem>
             <GridItem colSpan={1}>
