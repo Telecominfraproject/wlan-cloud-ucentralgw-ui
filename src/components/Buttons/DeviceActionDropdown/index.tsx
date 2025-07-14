@@ -32,6 +32,7 @@ interface Props {
   onOpenTelemetryModal: (serialNumber: string) => void;
   onOpenScriptModal: (device: GatewayDevice) => void;
   onOpenRebootModal: (serialNumber: string) => void;
+  onReEnroll?: () => void;
   size?: 'sm' | 'md' | 'lg';
   isCompact?: boolean;
 }
@@ -49,6 +50,7 @@ const DeviceActionDropdown = ({
   onOpenConfigureModal,
   onOpenScriptModal,
   onOpenRebootModal,
+  onReEnroll,
   size,
   isCompact,
 }: Props) => {
@@ -234,6 +236,7 @@ const DeviceActionDropdown = ({
             <MenuItem onClick={handleRebootClick} hidden={!isCompact}>
               {t('commands.reboot')}
             </MenuItem>
+            {onReEnroll && <MenuItem onClick={onReEnroll}>{t('controller.devices.re_enroll')}</MenuItem>}
             <MenuItem onClick={handleOpenTelemetry}>{t('controller.telemetry.title')}</MenuItem>
             <MenuItem onClick={handleOpenScript}>{t('script.one')}</MenuItem>
             <MenuItem onClick={handleOpenTrace}>{t('controller.devices.trace')}</MenuItem>
