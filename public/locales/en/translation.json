@@ -516,6 +516,8 @@
       "trace_description": "Launch a remote trace of this device for either a specific duration or a number of packets",
       "re_enroll": "Re-enroll",
       "re_enroll_initiated": "Re-enrollment initiated for device {{serialNumber}}",
+      "re_enroll_warning": "This will renew the operational certificate for device {{serialNumber}}.",
+      "confirm_re_enroll": "Renew Certificate for {{serialNumber}}",
       "update_success": "Device updated!",
       "updated_blacklist": "Updated Blacklist!"
     },
