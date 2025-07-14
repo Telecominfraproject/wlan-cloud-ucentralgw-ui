@@ -514,6 +514,8 @@
       "started_upgrade": "{{serialNumber}} just shut down to start the upgrade!",
       "trace": "Trace",
       "trace_description": "Launch a remote trace of this device for either a specific duration or a number of packets",
+      "re_enroll": "Re-enroll",
+      "re_enroll_initiated": "Re-enrollment initiated for device {{serialNumber}}",
       "update_success": "Device updated!",
       "updated_blacklist": "Updated Blacklist!"
     },

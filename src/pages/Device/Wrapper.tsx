@@ -48,6 +48,7 @@ import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import { useDeleteDevice, useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
+import { useReEnroll } from 'hooks/Network/ReEnroll';
 import SwitchPortExamination from './SwitchPortExamination';
 
 type Props = {
@@ -77,6 +78,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const traceModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
   const scriptModal = useScriptModal();
+  const reEnroll = useReEnroll({ serialNumber });
   // Sticky-top styles
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
   const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
@@ -216,6 +218,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   onOpenTelemetryModal={telemetryModalProps.onOpen}
                   onOpenScriptModal={scriptModal.openModal}
                   onOpenRebootModal={rebootModalProps.onOpen}
+                  onReEnroll={() => reEnroll.mutate({ serialNumber, when: 0 })}
                   size="md"
                   isCompact
                 />
@@ -268,6 +271,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenTelemetryModal={telemetryModalProps.onOpen}
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
+                    onReEnroll={() => reEnroll.mutate({ serialNumber, when: 0 })}
                     size="md"
                   />
                 )}
