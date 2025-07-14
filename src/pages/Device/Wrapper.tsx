@@ -41,6 +41,7 @@ import { EventQueueModal } from 'components/Modals/EventQueueModal';
 import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
 import { RebootModal } from 'components/Modals/RebootModal';
+import ReEnrollModal from 'components/Modals/ReEnrollModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import ethernetConnected from './ethernetIconConnected.svg?react';
 import ethernetDisconnected from './ethernetIconDisconnected.svg?react';
@@ -48,7 +49,6 @@ import { TelemetryModal } from 'components/Modals/TelemetryModal';
 import { TraceModal } from 'components/Modals/TraceModal';
 import { WifiScanModal } from 'components/Modals/WifiScanModal';
 import { useDeleteDevice, useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
-import { useReEnroll } from 'hooks/Network/ReEnroll';
 import SwitchPortExamination from './SwitchPortExamination';
 
 type Props = {
@@ -77,8 +77,8 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const telemetryModalProps = useDisclosure();
   const traceModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
+  const reEnrollModalProps = useDisclosure();
   const scriptModal = useScriptModal();
-  const reEnroll = useReEnroll({ serialNumber });
   // Sticky-top styles
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
   const boxShadow = useColorModeValue('0px 7px 23px rgba(0, 0, 0, 0.05)', 'none');
@@ -218,7 +218,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   onOpenTelemetryModal={telemetryModalProps.onOpen}
                   onOpenScriptModal={scriptModal.openModal}
                   onOpenRebootModal={rebootModalProps.onOpen}
-                  onReEnroll={() => reEnroll.mutate({ serialNumber, when: 0 })}
+                  onOpenReEnrollModal={reEnrollModalProps.onOpen}
                   size="md"
                   isCompact
                 />
@@ -271,7 +271,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenTelemetryModal={telemetryModalProps.onOpen}
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
-                    onReEnroll={() => reEnroll.mutate({ serialNumber, when: 0 })}
+                    onOpenReEnrollModal={reEnrollModalProps.onOpen}
                     size="md"
                   />
                 )}
@@ -315,6 +315,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       <ConfigureModal serialNumber={serialNumber} modalProps={configureModalProps} />
       <TelemetryModal serialNumber={serialNumber} modalProps={telemetryModalProps} />
       <RebootModal serialNumber={serialNumber} modalProps={rebootModalProps} />
+      <ReEnrollModal serialNumber={serialNumber} modalProps={reEnrollModalProps} />
       {scriptModal.modal}
       <Box mt={isCompact ? '0px' : '68px'}>
         <Masonry
