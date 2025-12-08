@@ -42,6 +42,7 @@ import FactoryResetModal from 'components/Modals/FactoryResetModal';
 import { FirmwareUpgradeModal } from 'components/Modals/FirmwareUpgradeModal';
 import { RebootModal } from 'components/Modals/RebootModal';
 import ReEnrollModal from 'components/Modals/ReEnrollModal';
+import ExportStatsModal from 'components/Modals/ExportStatsModal';
 import { useScriptModal } from 'components/Modals/ScriptModal/useScriptModal';
 import ethernetConnected from './ethernetIconConnected.svg?react';
 import ethernetDisconnected from './ethernetIconDisconnected.svg?react';
@@ -78,6 +79,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
   const traceModalProps = useDisclosure();
   const rebootModalProps = useDisclosure();
   const reEnrollModalProps = useDisclosure();
+  const exportModalProps = useDisclosure();
   const scriptModal = useScriptModal();
   // Sticky-top styles
   const isCompact = breakpoint === 'base' || breakpoint === 'sm' || breakpoint === 'md';
@@ -219,6 +221,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                   onOpenScriptModal={scriptModal.openModal}
                   onOpenRebootModal={rebootModalProps.onOpen}
                   onOpenReEnrollModal={reEnrollModalProps.onOpen}
+                  onOpenExportModal={exportModalProps.onOpen}
                   size="md"
                   isCompact
                 />
@@ -272,6 +275,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
                     onOpenRebootModal={rebootModalProps.onOpen}
                     onOpenScriptModal={scriptModal.openModal}
                     onOpenReEnrollModal={reEnrollModalProps.onOpen}
+                    onOpenExportModal={exportModalProps.onOpen}
                     size="md"
                   />
                 )}
@@ -316,6 +320,7 @@ const DevicePageWrapper = ({ serialNumber }: Props) => {
       <TelemetryModal serialNumber={serialNumber} modalProps={telemetryModalProps} />
       <RebootModal serialNumber={serialNumber} modalProps={rebootModalProps} />
       <ReEnrollModal serialNumber={serialNumber} modalProps={reEnrollModalProps} />
+      <ExportStatsModal serialNumber={serialNumber} modalProps={exportModalProps} />
       {scriptModal.modal}
       <Box mt={isCompact ? '0px' : '68px'}>
         <Masonry

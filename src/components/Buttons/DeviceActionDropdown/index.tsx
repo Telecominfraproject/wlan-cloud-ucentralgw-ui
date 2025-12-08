@@ -33,6 +33,7 @@ interface Props {
   onOpenScriptModal: (device: GatewayDevice) => void;
   onOpenRebootModal: (serialNumber: string) => void;
   onOpenReEnrollModal?: (serialNumber: string) => void;
+  onOpenExportModal?: (serialNumber: string) => void;
   size?: 'sm' | 'md' | 'lg';
   isCompact?: boolean;
 }
@@ -51,6 +52,7 @@ const DeviceActionDropdown = ({
   onOpenScriptModal,
   onOpenRebootModal,
   onOpenReEnrollModal,
+  onOpenExportModal,
   size,
   isCompact,
 }: Props) => {
@@ -250,6 +252,11 @@ const DeviceActionDropdown = ({
             <MenuItem onClick={handleOpenScan} hidden={!isCompact || deviceType !== 'ap'}>
               {t('commands.wifiscan')}
             </MenuItem>
+            {onOpenExportModal && (
+              <MenuItem onClick={() => onOpenExportModal(device.serialNumber)}>
+                {t('export.title')}
+              </MenuItem>
+            )}
           </MenuList>
         </Portal>
       </Menu>

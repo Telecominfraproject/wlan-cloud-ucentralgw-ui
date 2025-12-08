@@ -303,7 +303,8 @@
     "save": "Save",
     "search": "Search",
     "seconds": "Seconds",
-    "select_all": "Show All",
+    "select_all": "Select All",
+    "select_none": "Select None",
     "select_value": "Select Value",
     "sending": "Sending",
     "sent_code": "Sent Code!",
@@ -707,6 +708,19 @@
     "tree": "Entity Tree",
     "update_success": "Entity updated!",
     "venues_under_root": "Venues cannot be created directly under the root entity"
+  },
+  "export": {
+    "title": "Export Device Data",
+    "select_data": "Select the data you want to include in the export:",
+    "select_at_least_one": "Please select at least one option to export",
+    "success": "Data exported successfully!",
+    "error": "Error exporting data",
+    "device_info_desc": "Serial number, MAC, manufacturer, firmware, etc.",
+    "configuration_desc": "Current device configuration",
+    "status_desc": "Connection status, IP address, associations",
+    "statistics_desc": "Interface metrics, memory usage, VLAN data",
+    "health_checks_desc": "Device health check history",
+    "provisioning_desc": "Entity, venue, and subscriber information"
   },
   "firmware": {
     "confirm_default_data": "Please confirm the information below and click 'Confirm' once you are ready to start the process",
