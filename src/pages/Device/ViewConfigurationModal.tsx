@@ -16,7 +16,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { JsonViewer } from '@textea/json-viewer';
-import { Barcode } from '@phosphor-icons/react';
+import { Barcode, DownloadSimple } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'components/Modals/Modal';
 import { useGetDevice } from 'hooks/Network/Devices';
@@ -34,6 +34,17 @@ const ViewConfigurationModal = ({ serialNumber }: { serialNumber: string }) => {
       setValue(JSON.stringify(getDevice.data.configuration, null, 2));
     }
   }, [getDevice.data?.configuration]);
+
+  const handleDownload = () => {
+    const jsonString = JSON.stringify(getDevice.data?.configuration ?? {}, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${serialNumber}-configuration.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   const handleOpenClick = () => {
     getDevice.refetch();
@@ -58,6 +69,14 @@ const ViewConfigurationModal = ({ serialNumber }: { serialNumber: string }) => {
             <Button onClick={onCopy} size="md" colorScheme="teal">
               {hasCopied ? `${t('common.copied')}!` : t('common.copy')}
             </Button>
+            <Tooltip label={t('common.download')} hasArrow>
+              <IconButton
+                aria-label={t('common.download')}
+                icon={<DownloadSimple size={20} />}
+                onClick={handleDownload}
+                colorScheme="blue"
+              />
+            </Tooltip>
             <RefreshButton onClick={getDevice.refetch} isFetching={getDevice.isFetching} />
           </>
         }
