@@ -11,6 +11,7 @@ const AllDevicesPage = React.lazy(() => import('pages/Devices/ListCard'));
 const BlacklistPage = React.lazy(() => import('pages/Devices/Blacklist'));
 const ControllerLogsPage = React.lazy(() => import('pages/Notifications/GeneralLogs'));
 const DeviceLogsPage = React.lazy(() => import('pages/Notifications/DeviceLogs'));
+const ExportAllLogsPage = React.lazy(() => import('pages/Notifications/ExportAll'));
 const FmsLogsPage = React.lazy(() => import('pages/Notifications/FmsLogs'));
 const SecLogsPage = React.lazy(() => import('pages/Notifications/SecLogs'));
 const FirmwarePage = React.lazy(() => import('pages/Firmware/List'));
@@ -143,6 +144,13 @@ const routes: Route[] = [
         name: 'logs.firmware',
         navName: (t) => `${t('logs.firmware')} ${t('controller.devices.logs')}`,
         component: FmsLogsPage,
+      },
+      {
+        id: 'logs-export',
+        authorized: ['root', 'partner', 'admin', 'csr', 'system'],
+        path: '/logs/export',
+        name: 'logs.export_all',
+        component: ExportAllLogsPage,
       },
     ],
   },
