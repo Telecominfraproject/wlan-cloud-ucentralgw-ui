@@ -16,6 +16,8 @@ import { Modal } from 'components/Modals/Modal';
 import { useGetDevice, useGetDeviceHealthChecks, useGetDeviceStatus } from 'hooks/Network/Devices';
 import { useGetDeviceLastStats, useGetDeviceNewestStats } from 'hooks/Network/Statistics';
 import { useGetTag } from 'hooks/Network/Inventory';
+import { useGetCommandHistory } from 'hooks/Network/Commands';
+import { useGetDeviceLogs } from 'hooks/Network/DeviceLogs';
 
 type Props = {
   serialNumber: string;
@@ -42,6 +44,10 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
   const getNewestStats = useGetDeviceNewestStats({ serialNumber, limit: 30 });
   const getHealth = useGetDeviceHealthChecks({ serialNumber, limit: 50 });
   const getTag = useGetTag({ serialNumber });
+  const getCommands = useGetCommandHistory({ serialNumber, limit: 100 });
+  const getLogs = useGetDeviceLogs({ serialNumber, limit: 100, logType: 0 });
+  const getCrashes = useGetDeviceLogs({ serialNumber, limit: 100, logType: 1 });
+  const getReboots = useGetDeviceLogs({ serialNumber, limit: 100, logType: 2 });
 
   const onToggle = (value: string) => (e: { target: { checked: boolean } }) => {
     if (e.target.checked) {
@@ -134,8 +140,24 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
       };
     }
 
+    if (selectedOptions.includes('commands') && getCommands.data?.commands) {
+      exportData.commands = getCommands.data.commands;
+    }
+
+    if (selectedOptions.includes('logs') && getLogs.data?.values) {
+      exportData.logs = getLogs.data.values;
+    }
+
+    if (selectedOptions.includes('crashes') && getCrashes.data?.values) {
+      exportData.crashes = getCrashes.data.values;
+    }
+
+    if (selectedOptions.includes('reboots') && getReboots.data?.values) {
+      exportData.reboots = getReboots.data.values;
+    }
+
     return exportData;
-  }, [selectedOptions, getDevice.data, getStatus.data, getStats.data, getNewestStats.data, getHealth.data, getTag.data, serialNumber]);
+  }, [selectedOptions, getDevice.data, getStatus.data, getStats.data, getNewestStats.data, getHealth.data, getTag.data, getCommands.data, getLogs.data, getCrashes.data, getReboots.data, serialNumber]);
 
   const handleExport = () => {
     if (selectedOptions.length === 0) {
@@ -196,7 +218,11 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
     getStats.isFetching ||
     getNewestStats.isFetching ||
     getHealth.isFetching ||
-    getTag.isFetching;
+    getTag.isFetching ||
+    getCommands.isFetching ||
+    getLogs.isFetching ||
+    getCrashes.isFetching ||
+    getReboots.isFetching;
 
   return (
     <Modal
@@ -226,14 +252,14 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
             <Stack spacing={3} mt={2}>
               <Box>
                 <Checkbox
-                  colorScheme="blue"
-                  isChecked={selectedOptions.includes('deviceInfo')}
-                  onChange={onToggle('deviceInfo')}
+                  colorScheme="pink"
+                  isChecked={selectedOptions.includes('commands')}
+                  onChange={onToggle('commands')}
                 >
-                  {t('common.details')}
+                  {t('controller.devices.commands')}
                 </Checkbox>
                 <Text fontSize="xs" color="gray.500" ml={6}>
-                  {t('export.device_info_desc')}
+                  {t('export.commands_desc')}
                 </Text>
               </Box>
               <Box>
@@ -250,26 +276,26 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
               </Box>
               <Box>
                 <Checkbox
-                  colorScheme="green"
-                  isChecked={selectedOptions.includes('status')}
-                  onChange={onToggle('status')}
+                  colorScheme="red"
+                  isChecked={selectedOptions.includes('crashes')}
+                  onChange={onToggle('crashes')}
                 >
-                  {t('common.status')}
+                  {t('devices.crash_logs')}
                 </Checkbox>
                 <Text fontSize="xs" color="gray.500" ml={6}>
-                  {t('export.status_desc')}
+                  {t('export.crashes_desc')}
                 </Text>
               </Box>
               <Box>
                 <Checkbox
-                  colorScheme="teal"
-                  isChecked={selectedOptions.includes('statistics')}
-                  onChange={onToggle('statistics')}
+                  colorScheme="blue"
+                  isChecked={selectedOptions.includes('deviceInfo')}
+                  onChange={onToggle('deviceInfo')}
                 >
-                  {t('configurations.statistics')}
+                  {t('common.details')}
                 </Checkbox>
                 <Text fontSize="xs" color="gray.500" ml={6}>
-                  {t('export.statistics_desc')}
+                  {t('export.device_info_desc')}
                 </Text>
               </Box>
               <Box>
@@ -286,6 +312,18 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
               </Box>
               <Box>
                 <Checkbox
+                  colorScheme="yellow"
+                  isChecked={selectedOptions.includes('logs')}
+                  onChange={onToggle('logs')}
+                >
+                  {t('controller.devices.logs')}
+                </Checkbox>
+                <Text fontSize="xs" color="gray.500" ml={6}>
+                  {t('export.logs_desc')}
+                </Text>
+              </Box>
+              <Box>
+                <Checkbox
                   colorScheme="cyan"
                   isChecked={selectedOptions.includes('provisioning')}
                   onChange={onToggle('provisioning')}
@@ -294,6 +332,42 @@ const ExportStatsModal = ({ serialNumber, modalProps }: Props) => {
                 </Checkbox>
                 <Text fontSize="xs" color="gray.500" ml={6}>
                   {t('export.provisioning_desc')}
+                </Text>
+              </Box>
+              <Box>
+                <Checkbox
+                  colorScheme="gray"
+                  isChecked={selectedOptions.includes('reboots')}
+                  onChange={onToggle('reboots')}
+                >
+                  {t('devices.reboot_logs')}
+                </Checkbox>
+                <Text fontSize="xs" color="gray.500" ml={6}>
+                  {t('export.reboots_desc')}
+                </Text>
+              </Box>
+              <Box>
+                <Checkbox
+                  colorScheme="teal"
+                  isChecked={selectedOptions.includes('statistics')}
+                  onChange={onToggle('statistics')}
+                >
+                  {t('configurations.statistics')}
+                </Checkbox>
+                <Text fontSize="xs" color="gray.500" ml={6}>
+                  {t('export.statistics_desc')}
+                </Text>
+              </Box>
+              <Box>
+                <Checkbox
+                  colorScheme="green"
+                  isChecked={selectedOptions.includes('status')}
+                  onChange={onToggle('status')}
+                >
+                  {t('common.status')}
+                </Checkbox>
+                <Text fontSize="xs" color="gray.500" ml={6}>
+                  {t('export.status_desc')}
                 </Text>
               </Box>
             </Stack>

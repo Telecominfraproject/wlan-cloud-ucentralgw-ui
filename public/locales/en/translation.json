@@ -720,7 +720,11 @@
     "status_desc": "Connection status, IP address, associations",
     "statistics_desc": "Interface metrics, memory usage, VLAN data",
     "health_checks_desc": "Device health check history",
-    "provisioning_desc": "Entity, venue, and subscriber information"
+    "provisioning_desc": "Entity, venue, and subscriber information",
+    "commands_desc": "Command history (configure, reboot, upgrade, etc.)",
+    "logs_desc": "Device log entries",
+    "crashes_desc": "Crash log records",
+    "reboots_desc": "Reboot log records"
   },
   "firmware": {
     "confirm_default_data": "Please confirm the information below and click 'Confirm' once you are ready to start the process",
