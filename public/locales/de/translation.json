@@ -533,6 +533,8 @@
 			"show_dev_releases": "Entwicklerversionen",
 			"status_explanation": "Verbindungsstatus von Geräten, die sich mit diesem Firmware-Server verbunden haben",
 			"unrecognized": "Unbekannte Firmware",
+			"recognized_firmware": "Bekannte Firmware",
+			"recognized_firmware_explanation": "Firmware-Revisionen, die derzeit von Geräten verwendet werden und von diesem Firmware-Server erkannt werden",
 			"unrecognized_firmware": "Unbekannte Firmware",
 			"unrecognized_firmware_explanation": "Firmware, die derzeit von Geräten verwendet wird und von diesem Firmware-Server nicht erkannt wird",
 			"up_to_date": "Aktuelle Geräte",

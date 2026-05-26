@@ -533,6 +533,8 @@
 			"show_dev_releases": "Versions de développement",
 			"status_explanation": "État de connexion des appareils qui se sont connectés à ce serveur de micrologiciel",
 			"unrecognized": "Micrologiciel non reconnu",
+			"recognized_firmware": "Micrologiciel reconnu",
+			"recognized_firmware_explanation": "Révisions de micrologiciel actuellement utilisées par les appareils et reconnues par ce serveur de firmware",
 			"unrecognized_firmware": "Micrologiciel non reconnu",
 			"unrecognized_firmware_explanation": "Firmware actuellement utilisé par les appareils et non reconnu par ce serveur de firmware",
 			"up_to_date": "Appareils à jour",

@@ -533,6 +533,8 @@
 			"show_dev_releases": "Lançamentos do desenvolvedor",
 			"status_explanation": "Status da conexão dos dispositivos que se conectaram a este servidor de firmware",
 			"unrecognized": "Firmware não reconhecido",
+			"recognized_firmware": "Firmware reconhecido",
+			"recognized_firmware_explanation": "Revisões de firmware atualmente em uso por dispositivos que são reconhecidas por este servidor de firmware",
 			"unrecognized_firmware": "Firmware não reconhecido",
 			"unrecognized_firmware_explanation": "Firmware que é usado atualmente por dispositivos e não é reconhecido por este servidor de firmware",
 			"up_to_date": "Dispositivos atualizados",
