@@ -22,6 +22,7 @@ import DeviceTypesPieChart from './DeviceTypesPieChart';
 import FirmwareDashboardEndpointDisplay from './EndpointsDisplay';
 import FirmwareLatestPieChart from './LatestPieChart';
 import OuisBarChart from './OuisBarChart';
+import RecognizedFirmwareBarChart from './RecognizedFirmwareBarChart';
 import UnknownFirmwareBarChart from './UnknownFirmwareBarChart';
 import UpToDateDevicesSimple from './UpToDateDevices';
 import { RefreshButton } from 'components/Buttons/RefreshButton';
@@ -93,11 +94,12 @@ const FirmwareDashboard = () => {
               <UpToDateDevicesSimple data={getDashboard.data} />
               <AverageFirmwareAge data={getDashboard.data} />
               <FirmwareLatestPieChart data={getDashboard.data} />
+              <RecognizedFirmwareBarChart data={getDashboard.data.revisions} />
               <UnknownFirmwareBarChart data={getDashboard.data.unknownFirmwares} />
-              <FirmwareDashboardEndpointDisplay data={getDashboard.data.endPoints} />
               <OuisBarChart data={getDashboard.data.ouis} />
               <ConnectedPieChart data={getDashboard.data} />
               <DeviceTypesPieChart data={getDashboard.data.deviceTypes} />
+              <FirmwareDashboardEndpointDisplay data={getDashboard.data.endPoints} />
             </Masonry>
           )}
         </>
