@@ -12,17 +12,26 @@ import {
   Switch,
   Heading,
   Text,
+  Button,
 } from '@chakra-ui/react';
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';
+import CustomUpgrade from './CustomUpgrade';
 import FirmwareList from './FirmwareList';
 import { CloseButton } from 'components/Buttons/CloseButton';
-import { ModalHeader } from 'components/Containers/Modal/ModalHeader';
-import { SignatureField } from 'components/Form/Fields/SignatureField';
+import {
+  ModalHeader,
+} from 'components/Containers/Modal/ModalHeader';
+import {
+  SignatureField,
+} from 'components/Form/Fields/SignatureField';
 import { useGetDevice } from 'hooks/Network/Devices';
-import { useGetAvailableFirmware, useUpdateDeviceFirmware } from 'hooks/Network/Firmware';
+import {
+  useGetAvailableFirmware,
+  useUpdateDeviceFirmware,
+} from 'hooks/Network/Firmware';
 import useCommandModal from 'hooks/useCommandModal';
 import { ModalProps } from 'models/Modal';
 
@@ -31,9 +40,17 @@ export type FirmwareUpgradeModalProps = {
   serialNumber: string;
 };
 
-export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNumber }: FirmwareUpgradeModalProps) => {
+export const FirmwareUpgradeModal = (
+  {
+    modalProps: { isOpen, onClose },
+    serialNumber,
+  }: FirmwareUpgradeModalProps,
+) => {
   const { t } = useTranslation();
-  const [showDevFirmware, { toggle: toggleDev }] = useBoolean();
+  const [showDevFirmware, { toggle: toggleDev }] =
+    useBoolean();
+  const [showCustom, { toggle: toggleCustom }] =
+    useBoolean(false);
   const [formKey, setFormKey] = React.useState(uuid());
   const ref = useRef<
     | FormikProps<{
@@ -42,15 +59,29 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
     | undefined
   >();
   const [isRedirector, { toggle }] = useBoolean(false);
-  const { data: device, isFetching: isFetchingDevice } = useGetDevice({ serialNumber, onClose });
-  const { data: firmware, isFetching: isFetchingFirmware } = useGetAvailableFirmware({
+  const {
+    data: device,
+    isFetching: isFetchingDevice,
+  } = useGetDevice({ serialNumber, onClose });
+  const {
+    data: firmware,
+    isFetching: isFetchingFirmware,
+  } = useGetAvailableFirmware({
     deviceType: device?.compatible ?? '',
   });
-  const { mutateAsync: upgrade, isLoading: isUpgrading } = useUpdateDeviceFirmware({
+  const {
+    mutateAsync: upgrade,
+    isLoading: isUpgrading,
+  } = useUpdateDeviceFirmware({
     serialNumber,
     onClose,
   });
-  const { isConfirmOpen, closeConfirm, closeModal, closeCancelAndForm } = useCommandModal({
+  const {
+    isConfirmOpen,
+    closeConfirm,
+    closeModal,
+    closeCancelAndForm,
+  } = useCommandModal({
     isLoading: isUpgrading,
     onModalClose: onClose,
   });
@@ -60,7 +91,10 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
       keepRedirector: isRedirector,
       uri,
       signature:
-        device?.restrictedDevice && !device?.restrictionDetails?.developer ? ref.current?.values?.signature : undefined,
+        device?.restrictedDevice &&
+        !device?.restrictionDetails?.developer
+          ? ref.current?.values?.signature
+          : undefined,
     });
   };
 
@@ -71,49 +105,103 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
   return (
     <Modal onClose={closeModal} isOpen={isOpen} size="xl">
       <ModalOverlay />
-      <ModalContent maxWidth={{ sm: '90%', md: '900px', lg: '1000px', xl: '80%' }}>
+      <ModalContent
+        maxWidth={{
+          sm: '90%',
+          md: '900px',
+          lg: '1000px',
+          xl: '80%',
+        }}
+      >
         <ModalHeader
           title={`${t('commands.firmware_upgrade')} #${serialNumber}`}
           right={
             <>
-              <Text>{t('controller.firmware.show_dev_releases')}</Text>
-              <Switch mx={2} isChecked={showDevFirmware} onChange={toggleDev} size="lg" />
+              <Button
+                size="sm"
+                colorScheme={showCustom ? 'blue' : 'gray'}
+                variant={showCustom ? 'solid' : 'outline'}
+                onClick={toggleCustom}
+                mr={2}
+              >
+                {t('commands.custom_url')}
+              </Button>
+              <Text>
+                {t(
+                  'controller.firmware.show_dev_releases',
+                )}
+              </Text>
+              <Switch
+                mx={2}
+                isChecked={showDevFirmware}
+                onChange={toggleDev}
+                size="lg"
+              />
               <CloseButton onClick={closeModal} />
             </>
           }
         />
         <ModalBody>
-          {isUpgrading || isFetchingDevice || isFetchingFirmware ? (
+          {isUpgrading ||
+          isFetchingDevice ||
+          isFetchingFirmware ? (
             <Center>
               <Spinner size="lg" />
             </Center>
           ) : (
             <>
               <Heading size="sm" mb={4}>
-                {t('devices.current_firmware')}: {device?.firmware}
+                {t('devices.current_firmware')}:{' '}
+                {device?.firmware}
               </Heading>
               <FormControl>
-                <FormLabel ms="4px" fontSize="md" fontWeight="normal">
+                <FormLabel
+                  ms="4px"
+                  fontSize="md"
+                  fontWeight="normal"
+                >
                   {t('commands.keep_redirector')}
                 </FormLabel>
-                <Switch isChecked={isRedirector} onChange={toggle} borderRadius="15px" size="lg" />
+                <Switch
+                  isChecked={isRedirector}
+                  onChange={toggle}
+                  borderRadius="15px"
+                  size="lg"
+                />
               </FormControl>
-              {device?.restrictedDevice && !device?.restrictionDetails?.developer && (
-                <Formik<{ signature?: string }>
-                  innerRef={ref as Ref<FormikProps<{ signature?: string | undefined }>> | undefined}
-                  key={formKey}
-                  enableReinitialize
-                  initialValues={{
-                    signature: undefined,
-                  }}
-                  onSubmit={() => {}}
-                >
-                  <SignatureField name="signature" />
-                </Formik>
+              {device?.restrictedDevice &&
+                !device?.restrictionDetails?.developer && (
+                  <Formik<{ signature?: string }>
+                    innerRef={
+                      ref as Ref<
+                        FormikProps<{
+                          signature?: string | undefined;
+                        }>
+                      > | undefined
+                    }
+                    key={formKey}
+                    enableReinitialize
+                    initialValues={{
+                      signature: undefined,
+                    }}
+                    onSubmit={() => {}}
+                  >
+                    <SignatureField name="signature" />
+                  </Formik>
+                )}
+              {showCustom && (
+                <CustomUpgrade
+                  upgrade={submit}
+                  isLoading={isUpgrading}
+                />
               )}
               {firmware?.firmwares && (
                 <FirmwareList
-                  firmware={firmware.firmwares.filter((firmw) => showDevFirmware || !firmw.revision.includes('devel'))}
+                  firmware={firmware.firmwares.filter(
+                    (firmw) =>
+                      showDevFirmware ||
+                      !firmw.revision.includes('devel'),
+                  )}
                   upgrade={submit}
                   isLoading={isUpgrading}
                 />
@@ -123,7 +211,11 @@ export const FirmwareUpgradeModal = ({ modalProps: { isOpen, onClose }, serialNu
         </ModalBody>
       </ModalContent>
       <ConfirmIgnoreCommand
-        modalProps={{ isOpen: isConfirmOpen, onOpen: () => {}, onClose: closeConfirm }}
+        modalProps={{
+          isOpen: isConfirmOpen,
+          onOpen: () => {},
+          onClose: closeConfirm,
+        }}
         confirm={closeCancelAndForm}
         cancel={closeConfirm}
       />
