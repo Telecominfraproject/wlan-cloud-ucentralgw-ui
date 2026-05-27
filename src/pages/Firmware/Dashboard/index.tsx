@@ -94,7 +94,11 @@ const FirmwareDashboard = () => {
               <UpToDateDevicesSimple data={getDashboard.data} />
               <AverageFirmwareAge data={getDashboard.data} />
               <FirmwareLatestPieChart data={getDashboard.data} />
-              <RecognizedFirmwareBarChart data={getDashboard.data.revisions} />
+              <RecognizedFirmwareBarChart data={getDashboard.data.revisions.filter(
+                (r) => !getDashboard.data!.unknownFirmwares.some(
+                  (u) => u.tag === r.tag,
+                ),
+              )} />
               <UnknownFirmwareBarChart data={getDashboard.data.unknownFirmwares} />
               <OuisBarChart data={getDashboard.data.ouis} />
               <ConnectedPieChart data={getDashboard.data} />
