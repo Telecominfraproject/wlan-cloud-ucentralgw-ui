@@ -4,9 +4,16 @@ import {
   AlertIcon,
   Box,
   Button,
+  ButtonGroup,
   Center,
   FormControl,
   FormLabel,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Select,
   SimpleGrid,
   Spinner,
@@ -31,6 +38,8 @@ type FormValues = {
   waitForResponse: boolean;
   duration: string;
   packets: string;
+  snaplen: string;
+  filter: string;
 };
 
 export const TraceModal = ({ serialNumber, modalProps }: TraceModalProps) => {
@@ -41,6 +50,8 @@ export const TraceModal = ({ serialNumber, modalProps }: TraceModalProps) => {
     waitForResponse: true,
     duration: '20',
     packets: '100',
+    snaplen: '65535',
+    filter: '',
   });
   const traceDevice = useTrace({ serialNumber, alertOnCompletion: !form.waitForResponse });
   const download = useDownloadTrace({ serialNumber, commandId: traceDevice.data?.data.UUID ?? '' });
@@ -65,14 +76,17 @@ export const TraceModal = ({ serialNumber, modalProps }: TraceModalProps) => {
   };
 
   const onStart = () => {
+    const rawSnaplen = parseInt(form.snaplen, 10);
+    const snaplenValue = isNaN(rawSnaplen) ? 65535 : Math.max(1, Math.min(65535, rawSnaplen));
     traceDevice.mutate({
       serialNumber,
       type: form.type,
       network: form.network,
       waitForResponse: form.waitForResponse,
-      // @ts-ignore
       duration: form.type === 'duration' ? parseInt(form.duration, 10) : undefined,
-      packets: form.type === 'packets' ? parseInt(form.packets, 10) : undefined,
+      numberOfPackets: form.type === 'packets' ? parseInt(form.packets, 10) : undefined,
+      snaplen: snaplenValue !== 65535 ? snaplenValue : undefined,
+      filter: form.filter.trim() !== '' ? form.filter.trim() : undefined,
     });
     if (!form.waitForResponse) {
       modalProps.onClose();
@@ -164,6 +178,44 @@ export const TraceModal = ({ serialNumber, modalProps }: TraceModalProps) => {
                   name="waitForResponse"
                   isChecked={form.waitForResponse}
                   onChange={onToggleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>{t('controller.trace.snaplen')}</FormLabel>
+                <ButtonGroup size="sm" isAttached mb={1}>
+                  {(['96', '512', '65535'] as const).map((preset) => (
+                    <Button
+                      key={preset}
+                      variant={form.snaplen === preset ? 'solid' : 'outline'}
+                      colorScheme={form.snaplen === preset ? 'blue' : 'gray'}
+                      onClick={() => setForm({ ...form, snaplen: preset })}
+                    >
+                      {preset}
+                    </Button>
+                  ))}
+                </ButtonGroup>
+                <NumberInput
+                  value={form.snaplen}
+                  min={1}
+                  max={65535}
+                  onChange={(val) => setForm({ ...form, snaplen: val })}
+                  w="120px"
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>{t('controller.trace.filter')}</FormLabel>
+                <Input
+                  name="filter"
+                  value={form.filter}
+                  onChange={onFormChange}
+                  placeholder="host 192.168.1.1 and port 443"
+                  size="sm"
                 />
               </FormControl>
             </SimpleGrid>

@@ -47,12 +47,16 @@ const startTrace = async (
         when?: number;
         network: 'up' | 'down';
         duration: number;
+        snaplen?: number;
+        filter?: string;
       }
     | {
         serialNumber: string;
         when?: number;
         network: 'up' | 'down';
         numberOfPackets: number;
+        snaplen?: number;
+        filter?: string;
       },
 ) =>
   axiosGw.post<TraceResponse>(`device/${traceData.serialNumber}/trace`, {

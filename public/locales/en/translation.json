@@ -591,6 +591,8 @@
       "duration": "Duration",
       "network": "Network",
       "packets": "Packets",
+      "filter": "BPF Filter",
+      "snaplen": "Snap Length",
       "success": "Completed trace on device #{{serialNumber}}. You can now download the result",
       "up": "Up",
       "wait": "Wait for the results?"
