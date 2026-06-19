@@ -582,8 +582,10 @@
 			"down": "BAIXA",
 			"download": "Baixar rastreamento",
 			"duration": "Duração",
+			"filter": "BPF Filter",
 			"network": "Rede",
 			"packets": "Pacotes",
+			"snaplen": "Snap Length",
 			"success": "Rastreamento concluído no dispositivo #{{serialNumber}}. Agora você pode baixar o resultado",
 			"up": "acima",
 			"wait": "Esperar os resultados?"

@@ -582,8 +582,10 @@
 			"down": "ABAJO",
 			"download": "Descargar seguimiento",
 			"duration": "Duración",
+			"filter": "BPF Filter",
 			"network": "Red",
 			"packets": "Paquetes",
+			"snaplen": "Snap Length",
 			"success": "Rastreo completado en el dispositivo #{{serialNumber}}. Ya puedes descargar el resultado.",
 			"up": "Arriba",
 			"wait": "¿Esperar los resultados?"

@@ -582,8 +582,10 @@
 			"down": "VERS LE BAS",
 			"download": "Télécharger Trace",
 			"duration": "Durée",
+			"filter": "BPF Filter",
 			"network": "Réseau",
 			"packets": "Paquets",
+			"snaplen": "Snap Length",
 			"success": "Suivi terminé sur l'appareil n° {{serialNumber}}. Vous pouvez maintenant télécharger le résultat",
 			"up": "UP",
 			"wait": "Attendre les résultats ?"
