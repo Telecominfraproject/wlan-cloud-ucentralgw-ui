@@ -17,6 +17,7 @@ import {
 import { Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
+import ConfirmFirmwareUpgrade from '../ConfirmFirmwareUpgrade';
 import ConfirmIgnoreCommand from '../ConfirmIgnoreCommand';
 import CustomUpgrade from './CustomUpgrade';
 import FirmwareList from './FirmwareList';
@@ -86,16 +87,25 @@ export const FirmwareUpgradeModal = (
     onModalClose: onClose,
   });
 
-  const submit = (uri: string) => {
-    upgrade({
-      keepRedirector: isRedirector,
-      uri,
-      signature:
-        device?.restrictedDevice &&
-        !device?.restrictionDetails?.developer
-          ? ref.current?.values?.signature
-          : undefined,
-    });
+  const [pendingUri, setPendingUri] = React.useState<string>();
+
+  const submit = (uri: string) => setPendingUri(uri);
+
+  const cancelUpgrade = () => setPendingUri(undefined);
+
+  const confirmUpgrade = () => {
+    if (pendingUri) {
+      upgrade({
+        keepRedirector: isRedirector,
+        uri: pendingUri,
+        signature:
+          device?.restrictedDevice &&
+          !device?.restrictionDetails?.developer
+            ? ref.current?.values?.signature
+            : undefined,
+      });
+    }
+    setPendingUri(undefined);
   };
 
   React.useEffect(() => {
@@ -210,6 +220,15 @@ export const FirmwareUpgradeModal = (
           )}
         </ModalBody>
       </ModalContent>
+      <ConfirmFirmwareUpgrade
+        isOpen={pendingUri !== undefined}
+        explanation={t(
+          'commands.confirm_firmware_upgrade_explanation',
+          { serialNumber, uri: pendingUri },
+        )}
+        confirm={confirmUpgrade}
+        cancel={cancelUpgrade}
+      />
       <ConfirmIgnoreCommand
         modalProps={{
           isOpen: isConfirmOpen,
